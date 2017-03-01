@@ -1,0 +1,75 @@
+---
+title: "Interactive Mapping"
+author: "Whalen Dillon"
+date: "March 1, 2017"
+output: html_document
+---
+
+```{r load libraries, include=FALSE}
+library(rgdal); library(maptools); library(sf); library(sp)
+library(dplyr); 
+library(leaflet); library(maps)
+library(htmltools)
+```
+
+```{r load data, include=F}
+cogongrass <- st_read("data/Imperata/points.shp")
+blanding_cogon <- st_read("data/CampBlanding/Cogon_Infestations.shp")
+blanding_cogon <- st_transform(blanding_cogon, 4326)
+microstegium <- st_read("data/Microstegium/points.shp")
+```
+
+```{r convert to spatial objects, eval=F, echo=F}
+# cogongrass <- as(cogongrass, "Spatial")
+# blanding_cogon <- as(blanding_cogon, "Spatial")
+# microstegium <- as(microstegium, "Spatial")
+```
+
+```{r}
+florida <- map("county", "florida")
+cogon_icon <- makeIcon(
+      iconUrl = "cogongrass.png",
+      iconWidth = 28, iconHeight = 65,
+      iconAnchorX = 22, iconAnchorY = 94
+      )
+micst_icon <- makeIcon(
+      iconUrl = "microstegium.png",
+      iconWidth = 28, iconHeight = 65,
+      iconAnchorX = 22, iconAnchorY = 94
+)
+
+blanding_labels <- sprintf(
+  "<strong>%s</strong><br/>%g Acres<sup>2</sup>",
+  blanding_cogon$Site_Name, blanding_cogon$Acres
+) %>% lapply(htmltools::HTML)
+
+m <- leaflet() %>%
+      addTiles() %>%  # Add default OpenStreetMap map tiles
+      addMarkers(data = cogongrass, icon = cogon_icon,
+                 label = "Imperata", group = "Imperata",
+                 labelOptions = labelOptions(offset = c(-10,-50)), 
+                 clusterOptions = markerClusterOptions()) %>%
+      addMarkers(data = microstegium, icon = micst_icon,
+                 label = "Microstegium", group = "Microstegium",
+                 labelOptions = labelOptions(offset = c(0,-50)),
+                 clusterOptions = markerClusterOptions()) %>% 
+      addPolygons(data = blanding_cogon, group = "Camp Blanding Imperata Infestation",
+                  color = "orange", fillOpacity = 0.3,
+                  highlightOptions = highlightOptions(
+                        color = "white", weight = 2,
+                        bringToFront = TRUE),
+                  label = blanding_labels,
+                  labelOptions = labelOptions(
+                        style = list("font-weight" = "normal", 
+                                     padding = "3px 8px"),
+                        textsize = "15px",
+                        direction = "auto")) %>% 
+      addLayersControl(
+            # baseGroups = c("OSM (default)", "Toner", "Toner Lite"),
+            overlayGroups = c("Imperata", "Microstegium", "Camp Blanding Imperata Infestation"),
+            options = layersControlOptions(collapsed = FALSE)
+  )
+m
+```
+
+
