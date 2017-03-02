@@ -7,6 +7,8 @@ output:
     self_contained: no
 ---
 
+Some mapping of abundant invasive plant species using the `leaflet` package.
+
 ```{r load libraries, include=FALSE}
 library(rgdal); library(maptools); library(sf); library(sp)
 library(dplyr); 
@@ -28,6 +30,7 @@ microstegium <- st_read("data/Microstegium/points.shp")
 ```
 
 ## Cogongrass & Microstegium in the U.S.
+This is the first map I've made using `leaflet`. It shows point observations of cogongrass (*Imperata cylindrica*) and *Microstegium* in the United States.
 ```{r interactive map, echo=F}
 # florida <- map("county", "florida", plot=F)
 cogon_icon <- makeIcon(
