@@ -1,0 +1,13 @@
+---
+pagetitle: "Climate Change, Fire, Plant Invasions, & Tick-borne Disease"
+output: html_document
+---
+
+# Abstract
+Tick-borne diseases (TBDs) represent a major public health threat in North America, particularly for military personnel training on Department of Defense (DoD) installations. Ecological theory predicts that climate change will likely alter vector-borne disease transmission by a variety of direct and indirect pathways. We propose to explore several of the predicted consequences of climate change, including altered fire regimes and plant communities, and their interactions with wildlife, for human risk of exposure to TBDs in the southeastern U.S. We will undertake an integrated research effort to understand the consequences of climate change for TBD risk and human health, and to make specific, actionable recommendations to predict and ameliorate future changes in pathogen exposure pathways. Our specific objectives are to:
+
+1. Evaluate the interactions between fire and plant invasions spanning a gradient in fire management, invasive plant distribution and abundance, and climatic conditions across the southeastern U.S.
+
+2. Quantify the effects of fire and plant invasions, and their interactions, for variation in wildlife abundance, tick abundance, tick infection rates, and TBD risk to humans.
+
+3. Calibrate a spatially explicit model of TBD risk in response to fire-invasion interactions and incorporate simulations of climate change scenarios to examine the responses of fire, plant invasions, wildlife, TBD risk, and their interactions.
