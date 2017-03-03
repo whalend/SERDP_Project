@@ -2,9 +2,7 @@
 title: "Interactive Mapping"
 author: ""
 date: ""
-output: 
-  html_document: 
-    self_contained: no
+output: html_document
 ---
 
 Some mapping of abundant invasive plant species using the `leaflet` package.
