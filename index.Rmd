@@ -1,5 +1,5 @@
 ---
-pagetitle: "Climate Change, Fire, Plant Invasions, & Tick-borne Disease"
+title: "Climate Change, Fire, Plant Invasions, & Tick-borne Disease"
 output: html_document
 ---
 
