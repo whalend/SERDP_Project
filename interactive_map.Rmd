@@ -1,7 +1,5 @@
 ---
 title: "Interactive Mapping"
-author: ""
-date: ""
 output: html_document
 ---
 
