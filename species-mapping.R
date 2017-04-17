@@ -34,15 +34,8 @@ plot(st_geometry(blanding_cogon), col = "red")
 plot(st_geometry(cogongrass), add = T)
 
 
+# Convert to Spatial Object -----------------------------------------------
 
-# Cogongrass Heatmap ------------------------------------------------------
-
-library(ggplot2)
-library(ggmap)
-
-southeast_us <- get_map(location = c(lon = -95.3632715, lat = 29.7632836),
-                        zoom = 5, maptype = "satellite")
-ggmap(southeast_us)
 
 
 
