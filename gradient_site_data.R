@@ -53,7 +53,7 @@ ggplot(biomass, aes(x = cogon*16, y = cogon_standingdead*16)) +
       ylab("Standing Dead") +
       theme_bw()
 
-ggsave("images/cogondeadlive.png", width = 6, height = 6, dpi = 600)
+# ggsave("images/cogondeadlive.png", width = 6, height = 6, dpi = 600)
 
 # Uninvaded  Plots
 uninvaded_plot <- ggplot(uninvaded)
