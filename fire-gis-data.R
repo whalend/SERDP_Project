@@ -1,15 +1,21 @@
 # Fire Data
-library(sp); library(rgdal); library(maptools); library(rgeos)
-library(dplyr);
+library(sp); library(rgdal); library(maptools); library(rgeos); #library(RSAGA)
+library(plyr); library(dplyr);
 library(ggplot2)
 # library(sf);
+
 # Camp Blanding Fire Data -------------------------------------------------
 
-
-blanding_fire <- readOGR("data/Camp-Blanding/Camp_Blanding_Fire.shp")
+blanding_fire <- readOGR("data/Camp-Blanding/Camp_Blanding_Fire.shp", integer64 = "allow.loss")
 summary(blanding_fire)
 blanding_fire@data$installation <- "Camp Blanding"
 blanding_fire@data$FID <- seq(1,nrow(blanding_fire@data),1)
+blanding_fire@data <- blanding_fire@data %>%
+      select(-sdsFeatu_1, -wildland_1) %>%
+      select(FID, everything()) %>%
+      rename(eventDy = dateEvent, fArea = featureAre, fPeri = featurePer,
+             risklvl = riskLevel, fireCat = wildlandFi, fireTyp = wildland_2,
+             burnDt = Burn_date, ignite = ignSource, FireYr = Fire_Year)
 
 cogon_fire <- readOGR("data/fire-cogon-intersect.shp")
 summary(cogon_fire)
@@ -22,20 +28,26 @@ cogon_fire@data <- right_join(cogon_fire@data %>%
 
 plot(cogon_fire, col = cogon_fire$fire_frequency)
 
-rxfire <- blanding_fire[blanding_fire$wildland_2 == "prescribed_fire",]
-rxfire@data$Burn_date <- as.Date(rxfire@data$Burn_date)
+rxfire <- blanding_fire[blanding_fire$fireTyp == "prescribed_fire",]
+rxfire@data$burnDt <- as.Date(rxfire@data$burnDt)
 summary(rxfire)
+rxfire@data <- droplevels(rxfire@data %>%
+      select(-ignite, -fireCat))
+
 library(lubridate)
 rxfire@data <- mutate(rxfire@data,
-                 burn_year = year(Burn_date),
-                 burn_month = month(Burn_date),
-                 burn_month2 = round_date(Burn_date, "month"))
+                 burnYr = year(burnDt),
+                 burnMo = month(burnDt),
+                 burnMo2 = round_date(burnDt, "month"))
 detach("package:lubridate", unload=TRUE)
+writeOGR(rxfire, "data/Camp-Blanding/","rxfires", "ESRI Shapefile",
+         overwrite_layer = T)
 
+summary(readOGR("data/Camp-Blanding/rxfires.shp"))
 
-ggplot(rxfire@data %>% group_by(burn_month2) %>%
-             summarise(fires = length(Burn_date)),
-       aes(burn_month2, fires)) +
+ggplot(rxfire@data %>% group_by(burnMo2) %>%
+             summarise(fires = length(burnDt)),
+       aes(burnMo2, fires)) +
       geom_bar(stat = "identity") +
       # geom_point() +
       # geom_line() +
@@ -43,9 +55,9 @@ ggplot(rxfire@data %>% group_by(burn_month2) %>%
       # scale_y_continuous(limits = c(0, 13)) +
       theme_bw()
 
-ggplot(rxfire@data %>% group_by(burn_year) %>%
-             summarise(area = sum(featureAre)),
-       aes(burn_year, area)) +
+ggplot(rxfire@data %>% group_by(burnYr) %>%
+             summarise(area = sum(fArea)),
+       aes(burnYr, area)) +
       geom_bar(stat = "identity") +
       # geom_point() +
       # geom_line() +
@@ -54,36 +66,95 @@ ggplot(rxfire@data %>% group_by(burn_year) %>%
       theme_bw()
 
 
-
-yr <- seq(2002,2017,1)
+yr <- seq(2001,2017,1)
 for(y in yr){
-      df <- rxfire[rxfire@data$burn_year == y,]
+      df <- rxfire[rxfire@data$burnYr == y,]
       writeOGR(df,
                dsn = "data/Camp-Blanding/rxfire_by_year/",
-               layer = paste("Blanding-rxfire", y, sep=""),
+               layer = paste("rxfire", y, sep=""),
                driver = "ESRI Shapefile", overwrite_layer = T)
-
+      assign(paste("rxfire", y, sep=""), df)
 }
 
-shp_list <- list.files("data/Camp-Blanding/rxfire_by_year/", pattern = ".shp")
-shp_list <- strsplit(shp_list, ".shp")
-for(shp in shp_list){
-      assign(shp,
-             readOGR(dsn = "data/Camp-Blanding/rxfire_by_year/", layer = shp))
-}
+# Read in shapefiles from directory ####
+# shp_list <- list.files("data/Camp-Blanding/rxfire_by_year/", pattern = ".shp")
+# shp_list <- strsplit(shp_list, ".shp")
+# for(shp in shp_list){
+#       assign(shp,
+#              readOGR(dsn = "data/Camp-Blanding/rxfire_by_year/", layer = shp))
+# }
 
+
+# Intersect shapefiles ####
+## Goal: calculate fire return interval for polygons of time since last fire
 library(raster)
-rxfire2017polys <- intersect(rxfire2017,rxfire)
-summary(rxfire2017polys)
-plot(rxfire2017polys, col = rxfire2017polys$burn_yr)
+
+# intersecting polygons, ends up including small overlapping or touching areas
+rxfire2017intersect <- intersect(rxfire2017,rxfire)
+summary(rxfire2017intersect)
+plot(rxfire2017intersect, col = rxfire2017intersect$burn_year)
 plot(rxfire2017, add = T)
 
-rxfire2017polys@data <- rxfire2017polys@data %>%
-      group_by(FID.1) %>%
-      length(FID.2)
-      summarise(fire_frequency = (max(burn_yr)-min(burn_yr))/length(FID.2))
+# rxfire2017@data <- left_join(
+#       rxfire2017@data,
+#       rxfire2017intersect@data %>%
+#       group_by(FID.1) %>%
+#       # length(FID.2)
+#       summarise(
+#             fires = length(FID.2),
+#             fire_frequency = length(FID.2)/(max(burn_year)-min(burn_year))
+#             ),
+#       by = c("FID"="FID.1"))
 
 
+# rxfire2015intersect <- intersect(rxfire2015,rxfire)
+# summary(rxfire2015intersect)
+# plot(rxfire2015intersect, col = rxfire2015intersect$burn_year)
+# plot(rxfire2015, add = T)
+# filter(rxfire2015intersect@data, FID==578)
+
+# crs(plot_locations)
+# plot_locations <- spTransform(plot_locations, CRSobj = crs(rxfire))
+# intrsct <- intersect(plot_locations, rxfire)
+# intrsct@data %>% group_by(name) %>% summarise(fri = length(name))
+
+## Tool in development that might get what we want directly at some point
+# devtools::install_github("openfigis/RFigisGeo")
+# # library(RFigisGeo)
+# rxfire2015intersect2 <- RFigisGeo::intersection(rxfire2015, rxfire)
+# filter(rxfire2015intersect2@data, FID==578)
+
+
+## Generate polygon centroids, intersect these with all Rx fires and join the attributes back to the original polygon shapefile
+rxfire2015centroids <- gCentroid(rxfire2015, byid = T)
+rxfire2015centroids <- SpatialPointsDataFrame(
+      rxfire2015centroids, #SpatialPoints object
+      rxfire2015[1]@data #Dataframe
+      )
+names(rxfire2015centroids) <- "ptFID"
+# extract(rxfire2015, rxfire2015centroids)
+## Check to make sure 'FID' numbers match up between centroids and polygons
+intersect(rxfire2015centroids, rxfire2015)@data
+
+## Intersect the identified centroids with the multipolygon shapefile
+rxfire2015centroids <- intersect(rxfire2015centroids, rxfire)
+# length(unique(rxfire2015centroids$FID))
+
+detach("package:raster", unload=TRUE)
+
+## Join data back to the 2015 prescribed fire polygon shapefile attributes
+rxfire2015@data <- left_join(
+      rxfire2015@data,
+      ## Summarise data to calculate number of fires and fire frequency
+      rxfire2015centroids@data %>%
+            filter(burnYr <= 2015) %>%
+            group_by(ptFID) %>%
+            summarise(
+                  fires = length(FID),
+                  fri10yr = 10/fires
+            ),
+      by = c("FID"="ptFID")
+      )
 
 # blanding_fire <- readOGR("data/CampBlanding/Camp_Blanding_Fire.shp")
 # summary(blanding_fire)
