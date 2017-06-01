@@ -43,7 +43,7 @@ detach("package:lubridate", unload=TRUE)
 writeOGR(rxfire, "data/Camp-Blanding/","rxfires", "ESRI Shapefile",
          overwrite_layer = T)
 
-summary(readOGR("data/Camp-Blanding/rxfires.shp"))
+# summary(readOGR("data/Camp-Blanding/rxfires.shp"))
 
 ggplot(rxfire@data %>% group_by(burnMo2) %>%
              summarise(fires = length(burnDt)),
@@ -66,15 +66,33 @@ ggplot(rxfire@data %>% group_by(burnYr) %>%
       theme_bw()
 
 
-yr <- seq(2001,2017,1)
+yr <- seq(2007,2017,1)
+library(raster)
 for(y in yr){
       df <- rxfire[rxfire@data$burnYr == y,]
+      centroids <- gCentroid(df, byid = T)
+      centroids <- SpatialPointsDataFrame(
+            centroids, #SpatialPoints object
+            df[1]@data #Dataframe
+            )
+      names(centroids) <- "ptFID"
+      centroids <- intersect(centroids, rxfire)
+      df@data <- left_join(
+            df@data,
+            ## Summarise data to calculate number of fires and fire frequency
+            centroids@data %>%
+                  filter(burnYr <= y) %>%
+                  group_by(ptFID) %>%
+                  summarise(fires = length(FID), fri2002 = (y-2002)/fires),
+            by = c("FID"="ptFID")
+            )
       writeOGR(df,
                dsn = "data/Camp-Blanding/rxfire_by_year/",
                layer = paste("rxfire", y, sep=""),
                driver = "ESRI Shapefile", overwrite_layer = T)
       assign(paste("rxfire", y, sep=""), df)
 }
+detach("package:raster", unload=TRUE)
 
 # Read in shapefiles from directory ####
 # shp_list <- list.files("data/Camp-Blanding/rxfire_by_year/", pattern = ".shp")
@@ -87,7 +105,6 @@ for(y in yr){
 
 # Intersect shapefiles ####
 ## Goal: calculate fire return interval for polygons of time since last fire
-library(raster)
 
 # intersecting polygons, ends up including small overlapping or touching areas
 rxfire2017intersect <- intersect(rxfire2017,rxfire)
@@ -126,6 +143,7 @@ plot(rxfire2017, add = T)
 
 
 ## Generate polygon centroids, intersect these with all Rx fires and join the attributes back to the original polygon shapefile
+
 rxfire2015centroids <- gCentroid(rxfire2015, byid = T)
 rxfire2015centroids <- SpatialPointsDataFrame(
       rxfire2015centroids, #SpatialPoints object
@@ -140,7 +158,6 @@ intersect(rxfire2015centroids, rxfire2015)@data
 rxfire2015centroids <- intersect(rxfire2015centroids, rxfire)
 # length(unique(rxfire2015centroids$FID))
 
-detach("package:raster", unload=TRUE)
 
 ## Join data back to the 2015 prescribed fire polygon shapefile attributes
 rxfire2015@data <- left_join(
