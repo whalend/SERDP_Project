@@ -28,18 +28,19 @@ cogon_fire@data <- right_join(cogon_fire@data %>%
 
 plot(cogon_fire, col = cogon_fire$fire_frequency)
 
-rxfire <- blanding_fire[blanding_fire$fireTyp == "prescribed_fire",]
+blanding_fire@data$fireCat[is.na(blanding_fire@data$fireCat)] <- "TBD"
+rxfire <- blanding_fire[blanding_fire$fireCat == "Prescribed",]
 rxfire@data$burnDt <- as.Date(rxfire@data$burnDt)
 summary(rxfire)
 rxfire@data <- droplevels(rxfire@data %>%
       select(-ignite, -fireCat))
 
-library(lubridate)
+# library(lubridate)
 rxfire@data <- mutate(rxfire@data,
-                 burnYr = year(burnDt),
-                 burnMo = month(burnDt),
-                 burnMo2 = round_date(burnDt, "month"))
-detach("package:lubridate", unload=TRUE)
+                 burnYr = lubridate::year(burnDt),
+                 burnMo = lubridate::month(burnDt),
+                 burnMo2 = lubridate::round_date(burnDt, "month"))
+# detach("package:lubridate", unload=TRUE)
 writeOGR(rxfire, "data/Camp-Blanding/","rxfires", "ESRI Shapefile",
          overwrite_layer = T)
 
@@ -65,9 +66,23 @@ ggplot(rxfire@data %>% group_by(burnYr) %>%
       # scale_y_continuous(limits = c(0, 13)) +
       theme_bw()
 
+temp <- gCentroid(rxfire, byid = T)
+temp <- SpatialPointsDataFrame(temp, rxfire[1]@data)
+names(temp) <- "ptFID"
+temp <- raster::intersect(temp, rxfire)
+df <- temp@data %>%
+      group_by(ptFID) %>%
+      summarise(fires = length(FID),
+                fri15yr = (2017-2002)/fires,
+                lastBrn = (2018)-max(burnYr),
+                frindex = (1/fri15yr)/lastBrn)
+rxfire@data <- left_join(rxfire@data, df, by = c("FID" = "ptFID"))
+plot(rxfire, col = rxfire$fri15yr)
+
+writeOGR(rxfire, "data/Camp-Blanding/","rxfires2","ESRI Shapefile")
 
 yr <- seq(2007,2017,1)
-library(raster)
+# library(raster)
 for(y in yr){
       df <- rxfire[rxfire@data$burnYr == y,]
       centroids <- gCentroid(df, byid = T)
@@ -76,14 +91,17 @@ for(y in yr){
             df[1]@data #Dataframe
             )
       names(centroids) <- "ptFID"
-      centroids <- intersect(centroids, rxfire)
+      centroids <- raster::intersect(centroids, rxfire)
       df@data <- left_join(
             df@data,
             ## Summarise data to calculate number of fires and fire frequency
             centroids@data %>%
-                  filter(burnYr <= y) %>%
                   group_by(ptFID) %>%
-                  summarise(fires = length(FID), fri2002 = (y-2002)/fires),
+                  summarise(fires = length(FID),
+                            fri15yr = (2017-2002)/fires,
+                            lastBrn = max(burnYr)
+                            # frindex = (1/fri15yr)/range(burnYr)
+                            ),
             by = c("FID"="ptFID")
             )
       writeOGR(df,
@@ -94,6 +112,8 @@ for(y in yr){
 }
 detach("package:raster", unload=TRUE)
 
+plot(gDifference(rxfire2012, rxfire[rxfire$burnYr>2012,], byid = T), col='red',pbg='white')
+plot(gDifference(rxfire2012, rxfire2015), col='red',pbg='white', add=T)
 # Read in shapefiles from directory ####
 # shp_list <- list.files("data/Camp-Blanding/rxfire_by_year/", pattern = ".shp")
 # shp_list <- strsplit(shp_list, ".shp")
@@ -184,6 +204,11 @@ rxfire2015@data <- left_join(
 ## how do i randomly distribute points into a multi-polygon shapefile?
 # test_sample <- lapply(rxfire2016,spsample(n=4, type="random"))
 # tmp <- as.SpatialPolygons.owin(rxfire2016)
+
+
+
+
+# Camp Blanding Plots -----------------------------------------------------
 
 
 # Eglin AFB  --------------------------------------------------------------
