@@ -3,8 +3,9 @@
 library(readxl)
 library(plyr); library(dplyr); library(ggplot2)
 
-quadrat_data <- read_excel("data/serdp-plot-data.xlsx", sheet = 5)
-species_data <- read_excel("data/serdp-plot-data.xlsx", sheet = 6)
+quadrat_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "quadrat1m")
+species_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "species1m")
+tree_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "trees")
 
 summary(quadrat_data)
 hist(quadrat_data$pct_green)
@@ -59,3 +60,46 @@ species_sub_plot +
       # summarise(occurrence = length(unique(plotid))) %>%
       # arrange(desc(occurrence))
 
+
+
+# Tree Data ---------------------------------------------------------------
+tree_data
+
+tree_data_sub <- filter(tree_data, plotid != "bland03" & plotid != "bland02")
+
+tree_data_sub %>% group_by(installation, plotid, species) %>%
+      summarise(total_dbh = sum(dbh)) %>%
+      mutate(id = paste(installation,plotid, sep = "_"))
+
+ggplot(tree_data_sub %>%
+             group_by(installation, plotid, species) %>%
+             summarise(total_dbh = sum(dbh)),
+       aes(species, total_dbh)
+      ) +
+      geom_bar(aes(fill = plotid), stat = "identity", position = "dodge") +
+      facet_grid(.~installation) +
+      theme_bw()
+
+ggplot(tree_data_sub %>% group_by(plotid), aes(plotid, dbh, color = species)) +
+      geom_point(position = "jitter") +
+      facet_grid(.~installation) +
+      theme_bw()
+
+
+
+# Quadrat Species Data ----------------------------------------------------
+
+head(species_data)
+
+ggplot(species_data %>% filter(pct_cover >=0, date > "2017-06-01", plot_id != "bland02", plot_id != "bland03") %>% group_by(installation, plot_id) %>%
+             summarise(richness = length(unique(veg_id))),
+       aes(plot_id, richness)) +
+      geom_point() +
+      facet_grid(.~installation) +
+      theme_bw()
+
+ggplot(species_data %>% filter(pct_cover >=0, date > "2017-06-01", plot_id != "bland02", plot_id != "bland03") %>% group_by(installation, plot_id),
+       aes(plot_id, pct_cover, color = veg_id)) +
+      geom_point(position = "jitter") +
+      facet_grid(.~installation) +
+      theme_bw()
