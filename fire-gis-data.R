@@ -279,3 +279,59 @@ plot(`Eglin-rxfire2015`)
 plot(`Eglin-rxfire2006`)
 plot(gDifference(`Eglin-rxfire2006`, `Eglin-rxfire2015`), add = T, col = "blue")
 plot(`Eglin-rxfire2015`, add = T, col = "orange")
+
+
+# Avon Park AFB -----------------------------------------------------------
+# burn2017 <- readOGR("data/Avon-Park/fire_shapefiles/Burns_2017.shp")
+
+shp_list <- list.files("data/Avon-Park/fire_shapefiles/", pattern = "[shp]$")
+shp_list <- strsplit(shp_list, ".shp")
+for(shp in shp_list){
+      # df <- readOGR(dsn = "data/Avon-Park/fire_shapefiles/", layer = shp)
+      # df <-
+      assign(shp,
+             readOGR(dsn = "data/Avon-Park/fire_shapefiles/", layer = shp))
+}
+summary(burn06)
+burn06$Type[burn06$Type=="prescribed"] <- "Prescribed"
+burn06@data <- droplevels(burn06@data)
+writeOGR(burn06, "data/Avon-Park/fire_shapefiles/", "Burns_2006", driver = "ESRI Shapefile", overwrite_layer = T)
+summary(burn07)
+summary(burn08)
+summary(Burns_2009)
+Burns_2009$Type[Burns_2009$Type=="Prescibed"] <- "Prescribed"
+Burns_2009@data <- droplevels(Burns_2009@data)
+writeOGR(Burns_2009, "data/Avon-Park/fire_shapefiles/", "Burns_2009", driver = "ESRI Shapefile", overwrite_layer = T)
+summary(Burns_2010)
+summary(Burns_2011)
+summary(Burns_2012)
+summary(Burns_2013)
+summary(Burns_2014)
+summary(Burns_2015)
+Burns_2015$Type[Burns_2015$Type=="Prescibed"|Burns_2015$Type=="Presrcibed"] <- "Prescribed"
+Burns_2015@data <- droplevels(Burns_2015@data)
+writeOGR(Burns_2015, "data/Avon-Park/fire_shapefiles/", "Burns_2015", driver = "ESRI Shapefile", overwrite_layer = T)
+summary(Burns_2016)
+summary(Burns_2017)
+
+rm(shp)
+shp_list <- as.list(.GlobalEnv)
+for(shp in shp_list){
+      df <- shp[shp@data$Type=="Prescribed",]
+      # df <-
+      writeOGR(df,
+               dsn = "data/Avon-Park/fire_shapefiles/",
+               layer = paste("AvonPark_rxfire", sep=""),
+               driver = "ESRI Shapefile", overwrite_layer = T)
+}
+
+all_invasives <- readOGR("data/Avon-Park/APAFR_AllInvasives_Merge2.shp")
+summary(all_invasives)
+unique(all_invasives$CommonName)
+avp_cogongrass <- all_invasives[all_invasives$CommonName=="Cogon Grass",]
+avp_cogongrass@data <- droplevels(avp_cogongrass@data)
+writeOGR(avp_cogongrass, "data/Avon-Park/", "avp_cogon", driver = "ESRI Shapefile")
+
+
+readShapePoly()
+sf::read_sf("data/Avon-Park/FireBreaks.shp")
