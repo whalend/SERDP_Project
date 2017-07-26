@@ -1,0 +1,85 @@
+---
+title: "Visualizing Temperatures from Experimental & Prescribed Fires"
+author: "Whalen Dillon"
+output: 
+  html_document:
+    toc: yes
+---
+
+```{r set options, echo=F}
+knitr::opts_chunk$set(fig.width = 8)
+knitr::opts_chunk$set(echo = F)
+knitr::opts_chunk$set(warning = F)
+knitr::opts_chunk$set(message = F)
+```
+
+```{r load packages}
+library(plyr); library(dplyr)
+library(readr); library(ggplot2)
+```
+
+# Plot Experimental FABIO Burns: Cogongrass & Wiregrass
+```{r fabio burn temperatures}
+d1 <- read_csv("data/fabio_burns_data.csv")
+
+time_abv150 <- d1 %>% filter(probe_type == "old") %>%
+             group_by(location,fire_id, pct_green, standing_biomass, litter_biomass, biomass_type) %>%
+             filter(tempC>150) %>%
+             summarise(s_abv150 = length(tempC))
+
+max_temp <- d1 %>%
+      filter(probe_type == "old") %>%
+      group_by(location,fire_id, pct_green, standing_biomass, litter_biomass, biomass_type) %>%
+      summarise(max_temp = max(tempC))
+
+d2 <- left_join(max_temp,time_abv150)
+d2$s_abv150[is.na(d2$s_abv150)] <- 0
+
+ggplot(d2, aes(s_abv150, max_temp, color = factor(pct_green))) +
+      geom_point(aes(size = standing_biomass)) +
+      # scale_fill_continuous(low = "yellow", high = "red") +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      facet_grid(location~litter_biomass) +
+      ylab("Maximum Temperature ºC") +
+      xlab("Seconds >150 ºC") +
+      theme_bw()
+
+ggplot(d2 %>% filter(litter_biomass==0),
+       aes(s_abv150, max_temp, color = factor(pct_green))) +
+      geom_point(aes(size = standing_biomass, shape = biomass_type)) +
+      # scale_fill_continuous(low = "yellow", high = "red") +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      facet_grid(location~.) +
+      ylab("Maximum Temperature ºC") +
+      xlab("Seconds >150 ºC") +
+      theme_bw()
+
+
+ggplot(d2, aes(standing_biomass, max_temp)) +
+      geom_point(aes(color = factor(pct_green), shape = biomass_type)) +
+      # geom_line(aes(color = factor(pct_green))) +
+      # geom_line(aes(color = factor(pct_green))) +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      facet_grid(location~litter_biomass) +
+      ylab("Maximum Temperature ºC") +
+      xlab("Standing Biomass (g)") +
+      theme_bw()
+
+levels(d2$location)
+d2$location <- factor(d2$location, levels = c("50cm", "25cm", "0cm"))
+ggplot(d2, aes(standing_biomass, s_abv150)) +
+      geom_point(aes(color = factor(pct_green), shape = biomass_type)) +
+      # geom_line(aes(color = factor(pct_green))) +
+      # geom_line(aes(color = factor(pct_green))) +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      facet_grid(locate~litter_biomass) +
+      ylab("Seconds >150 ºC") +
+      xlab("Standing Biomass (g)") +
+      theme_bw()
+```
+
+# Plot Prescribed Fire Temperatures from Flame Height Sensors
+```{r flame height sensors}
+
+```
+
