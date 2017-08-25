@@ -114,6 +114,7 @@ detach("package:raster", unload=TRUE)
 
 plot(gDifference(rxfire2012, rxfire[rxfire$burnYr>2012,], byid = T), col='red',pbg='white')
 plot(gDifference(rxfire2012, rxfire2015), col='red',pbg='white', add=T)
+
 # Read in shapefiles from directory ####
 # shp_list <- list.files("data/Camp-Blanding/rxfire_by_year/", pattern = ".shp")
 # shp_list <- strsplit(shp_list, ".shp")
@@ -204,37 +205,6 @@ rxfire2015@data <- left_join(
 ## how do i randomly distribute points into a multi-polygon shapefile?
 # test_sample <- lapply(rxfire2016,spsample(n=4, type="random"))
 # tmp <- as.SpatialPolygons.owin(rxfire2016)
-
-
-
-
-# Plot Locations -----------------------------------------------------
-library(sp); library(rgdal); library(dplyr)
-waypts <- readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_26-MAY-17.gpx",
-                  layer = "waypoints")
-# ogrListLayers(("/Volumes/GARMIN/Garmin/GPX/Waypoints_26-MAY-17.gpx"))
-all_plots <- readOGR("data/plot-locations.shp")
-summary(all_plots)
-summary(waypts)
-# all_plots@coords
-## Add elevation coordinats to match dimentions of 'all_plots' coords slot
-waypts@coords <- cbind(waypts@coords, waypts@data$ele)
-
-names(all_plots); names(waypts)
-waypts@data <- select(waypts@data, time, name, ele) %>%
-      rename(elevGPS = ele) %>%
-      mutate(descriptio = "Semipermanent plot", blockID = "", blockDesc = "")
-waypts <- waypts[-7,]
-waypts@data <- droplevels(
-      select(waypts@data, time, name, descriptio:blockDesc, elevGPS))
-
-all_plots <- rbind(all_plots, waypts)
-# spRbind(all_plots, waypts)
-
-summary(all_plots)
-
-writeOGR(all_plots, "data", "plot-locations",
-         "ESRI Shapefile", overwrite_layer = T)
 
 
 # Eglin AFB  --------------------------------------------------------------
@@ -333,5 +303,30 @@ avp_cogongrass@data <- droplevels(avp_cogongrass@data)
 writeOGR(avp_cogongrass, "data/Avon-Park/", "avp_cogon", driver = "ESRI Shapefile")
 
 
-readShapePoly()
-sf::read_sf("data/Avon-Park/FireBreaks.shp")
+# readShapePoly()
+# sf::read_sf("data/Avon-Park/FireBreaks.shp")
+
+
+
+# Camp Shelby -------------------------------------------------------------
+shelby_fire <- readOGR("data/Camp-Shelby/FireManagementArea.shp")
+plot(shelby_fire)
+summary(shelby_fire)
+
+shelby_cogon <- readOGR("data/Camp-Shelby/NuisanceSpeciesManagement.shp")
+summary(shelby_cogon)
+
+shelby_cogon_untrt <- shelby_cogon[shelby_cogon$Status=="MAPPED ONLY",]
+summary(shelby_cogon_untrt)
+shelby_cogon_untrt@data <- droplevels(select(
+      shelby_cogon_untrt@data,
+      OBJECTID:dateDesign,featureAre,featurePer,narrative,sdsFeatu_1,
+      treatmentT,user_flag,Date_sampl,pop_year,Shape_STAr,Shape_STLe))
+shelby_cogon_untrt$sdsFeatu_1[shelby_cogon_untrt$sdsFeatu_1=="IMPERATA CYLINDRICA, INVASIVE"] <- "COGONGRASS"
+shelby_cogon_untrt$sdsFeatu_1 <- tolower(droplevels(shelby_cogon_untrt$sdsFeatu_1))
+writeOGR(shelby_cogon_untrt, "data/Camp-Shelby/", "untreated_cogon", driver = "ESRI Shapefile")
+
+
+# Moody AFB ---------------------------------------------------------------
+moody_rx2017 <- readOGR("data/Moody-AFB/fire-shapefiles/RXBurnedAreaFY2017MoodyAFB.shp")
+
