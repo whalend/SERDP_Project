@@ -6,7 +6,7 @@ library(ggplot2)
 
 # Camp Blanding Fire Data -------------------------------------------------
 
-blanding_fire <- readOGR("data/Camp-Blanding/Camp_Blanding_Fire.shp", integer64 = "allow.loss")
+blanding_fire <- readOGR("data/CampBlanding/Camp_Blanding_Fire.shp", integer64 = "allow.loss")
 summary(blanding_fire)
 blanding_fire@data$installation <- "Camp Blanding"
 blanding_fire@data$FID <- seq(1,nrow(blanding_fire@data),1)
@@ -116,11 +116,11 @@ plot(gDifference(rxfire2012, rxfire[rxfire$burnYr>2012,], byid = T), col='red',p
 plot(gDifference(rxfire2012, rxfire2015), col='red',pbg='white', add=T)
 
 # Read in shapefiles from directory ####
-# shp_list <- list.files("data/Camp-Blanding/rxfire_by_year/", pattern = ".shp")
+# shp_list <- list.files("data/CampBlanding/rxfire_by_year/", pattern = ".shp")
 # shp_list <- strsplit(shp_list, ".shp")
 # for(shp in shp_list){
 #       assign(shp,
-#              readOGR(dsn = "data/Camp-Blanding/rxfire_by_year/", layer = shp))
+#              readOGR(dsn = "data/CampBlanding/rxfire_by_year/", layer = shp))
 # }
 
 
@@ -208,7 +208,7 @@ rxfire2015@data <- left_join(
 
 
 # Eglin AFB  --------------------------------------------------------------
-eglin_fires <- readOGR("data/Eglin-AFB/Eglin_Fire_History_2006_2017.shp", integer64 = "allow.loss")
+eglin_fires <- readOGR("data/EglinAFB/Eglin_Fire_History_2006_2017.shp", integer64 = "allow.loss")
 summary(eglin_fires)
 eglin_fires@data <- select(eglin_fires@data, -SDSMETADAT, -AREASIZEUO, -(PERIMETERS:MGRSCENTRO), -CONTAINDAT, -INSTALLATI, -(CREATEDATE:SHAPE_LEN))
 str(eglin_fires@data)
@@ -254,24 +254,24 @@ plot(`Eglin-rxfire2015`, add = T, col = "orange")
 # Avon Park AFB -----------------------------------------------------------
 # burn2017 <- readOGR("data/Avon-Park/fire_shapefiles/Burns_2017.shp")
 
-shp_list <- list.files("data/Avon-Park/fire_shapefiles/", pattern = "[shp]$")
+shp_list <- list.files("data/AvonPark/fire_shapefiles/", pattern = "[shp]$")
 shp_list <- strsplit(shp_list, ".shp")
 for(shp in shp_list){
       # df <- readOGR(dsn = "data/Avon-Park/fire_shapefiles/", layer = shp)
       # df <-
       assign(shp,
-             readOGR(dsn = "data/Avon-Park/fire_shapefiles/", layer = shp))
+             readOGR(dsn = "data/AvonPark/fire_shapefiles/", layer = shp))
 }
 summary(burn06)
 burn06$Type[burn06$Type=="prescribed"] <- "Prescribed"
 burn06@data <- droplevels(burn06@data)
-writeOGR(burn06, "data/Avon-Park/fire_shapefiles/", "Burns_2006", driver = "ESRI Shapefile", overwrite_layer = T)
+writeOGR(burn06, "data/AvonPark/fire_shapefiles/", "Burns_2006", driver = "ESRI Shapefile", overwrite_layer = T)
 summary(burn07)
 summary(burn08)
 summary(Burns_2009)
 Burns_2009$Type[Burns_2009$Type=="Prescibed"] <- "Prescribed"
 Burns_2009@data <- droplevels(Burns_2009@data)
-writeOGR(Burns_2009, "data/Avon-Park/fire_shapefiles/", "Burns_2009", driver = "ESRI Shapefile", overwrite_layer = T)
+writeOGR(Burns_2009, "data/AvonPark/fire_shapefiles/", "Burns_2009", driver = "ESRI Shapefile", overwrite_layer = T)
 summary(Burns_2010)
 summary(Burns_2011)
 summary(Burns_2012)
@@ -280,7 +280,7 @@ summary(Burns_2014)
 summary(Burns_2015)
 Burns_2015$Type[Burns_2015$Type=="Prescibed"|Burns_2015$Type=="Presrcibed"] <- "Prescribed"
 Burns_2015@data <- droplevels(Burns_2015@data)
-writeOGR(Burns_2015, "data/Avon-Park/fire_shapefiles/", "Burns_2015", driver = "ESRI Shapefile", overwrite_layer = T)
+writeOGR(Burns_2015, "data/AvonPark/fire_shapefiles/", "Burns_2015", driver = "ESRI Shapefile", overwrite_layer = T)
 summary(Burns_2016)
 summary(Burns_2017)
 
@@ -290,17 +290,17 @@ for(shp in shp_list){
       df <- shp[shp@data$Type=="Prescribed",]
       # df <-
       writeOGR(df,
-               dsn = "data/Avon-Park/fire_shapefiles/",
+               dsn = "data/AvonPark/fire_shapefiles/",
                layer = paste("AvonPark_rxfire", sep=""),
                driver = "ESRI Shapefile", overwrite_layer = T)
 }
 
-all_invasives <- readOGR("data/Avon-Park/APAFR_AllInvasives_Merge2.shp")
+all_invasives <- readOGR("data/AvonPark/APAFR_AllInvasives_Merge2.shp")
 summary(all_invasives)
 unique(all_invasives$CommonName)
 avp_cogongrass <- all_invasives[all_invasives$CommonName=="Cogon Grass",]
 avp_cogongrass@data <- droplevels(avp_cogongrass@data)
-writeOGR(avp_cogongrass, "data/Avon-Park/", "avp_cogon", driver = "ESRI Shapefile")
+writeOGR(avp_cogongrass, "data/AvonPark/", "avp_cogon", driver = "ESRI Shapefile")
 
 
 # readShapePoly()
@@ -309,11 +309,11 @@ writeOGR(avp_cogongrass, "data/Avon-Park/", "avp_cogon", driver = "ESRI Shapefil
 
 
 # Camp Shelby -------------------------------------------------------------
-shelby_fire <- readOGR("data/Camp-Shelby/FireManagementArea.shp")
+shelby_fire <- readOGR("data/CampShelby/FireManagementArea.shp")
 plot(shelby_fire)
 summary(shelby_fire)
 
-shelby_cogon <- readOGR("data/Camp-Shelby/NuisanceSpeciesManagement.shp")
+shelby_cogon <- readOGR("data/CampShelby/NuisanceSpeciesManagement.shp")
 summary(shelby_cogon)
 
 shelby_cogon_untrt <- shelby_cogon[shelby_cogon$Status=="MAPPED ONLY",]
@@ -324,9 +324,9 @@ shelby_cogon_untrt@data <- droplevels(select(
       treatmentT,user_flag,Date_sampl,pop_year,Shape_STAr,Shape_STLe))
 shelby_cogon_untrt$sdsFeatu_1[shelby_cogon_untrt$sdsFeatu_1=="IMPERATA CYLINDRICA, INVASIVE"] <- "COGONGRASS"
 shelby_cogon_untrt$sdsFeatu_1 <- tolower(droplevels(shelby_cogon_untrt$sdsFeatu_1))
-writeOGR(shelby_cogon_untrt, "data/Camp-Shelby/", "untreated_cogon", driver = "ESRI Shapefile")
+writeOGR(shelby_cogon_untrt, "data/CampShelby/", "untreated_cogon", driver = "ESRI Shapefile")
 
 
 # Moody AFB ---------------------------------------------------------------
-moody_rx2017 <- readOGR("data/Moody-AFB/fire-shapefiles/RXBurnedAreaFY2017MoodyAFB.shp")
+moody_rx2017 <- readOGR("data/MoodyAFB/fire-shapefiles/RXBurnedAreaFY2017MoodyAFB.shp")
 
