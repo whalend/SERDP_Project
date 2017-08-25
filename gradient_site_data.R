@@ -1,29 +1,36 @@
 # Gradient Site Data
 
-library(readr); library(readxl)
-library(dplyr); library(tidyr)
+library(readr); library(readxl); library(tidyr)
+# library(plyr); library(dplyr);
 library(ggplot2)
 
 # read in data
-biomass <- read_excel("data/gradient-sites/Biomass_July2015_FINAL.xlsx")
+gradient_biomass <- read_excel("data/gradient-sites/Biomass_July2015_FINAL.xlsx")
 # Collected biomass of all plants (live and standing dead) plus litter within the confines of one 0.25 x 0.25 m quadrat per plot. Vines whose leaves projected areally over the quadrats were collected even if they were not rooted in the quadrat. For all other species, we made an effort to only collected aboveground biomass from plants rooted in the plot.
-str(biomass)
-biomass$avetillerlength <- as.numeric(biomass$avetillerlength)
-summary(biomass)
+str(gradient_biomass)
+gradient_biomass$avetillerlength <- as.numeric(gradient_biomass$avetillerlength)
+summary(gradient_biomass)
 # cogon: green, live
 # cogon_standingdead: rooted in plot, but dead/senesced >60% of tiller)
-biomass <- biomass %>% mutate(dead_live_ratio = cogon_standingdead/cogon)
+gradient_biomass <- gradient_biomass %>% mutate(dead_live_ratio = cogon_standingdead/cogon)
 
 
-uninvaded <- filter(biomass, trt == "UN")
+uninvaded <- filter(gradient_biomass, trt == "UN")
 uninvaded <- gather(uninvaded, type, biomass, cogon:unknown)
 
-cogon_sites <- filter(biomass, trt == "REF")
+
+cogon_sites <- filter(gradient_biomass, trt == "REF")
 summary(cogon_sites)
 # rearrange data
 cogon_sites <- gather(cogon_sites, type, biomass, cogon:unknown)
 # ?gather
 summary(cogon_sites)
+
+gradient_cogon <- cogon_sites %>%
+      filter(type=="cogon"|type=="cogon_standingdead", biomass>0) %>%
+      group_by(site, plot) %>%
+      mutate(tot_biomass = biomass*16) %>%
+      select(site,plot,tot_biomass)
 
 cogon_data_plot <- ggplot(cogon_sites)
 cogon_data_plot +
@@ -42,7 +49,7 @@ cogon_data_plot +
       ylab("site") +
       theme_bw()
 
-ggplot(biomass, aes(x = cogon*16, y = cogon_standingdead*16)) +
+ggplot(gradient_biomass, aes(x = cogon*16, y = cogon_standingdead*16)) +
       geom_point(shape = 1) +
       scale_x_continuous(limits = c(0,1000)) +
       scale_y_continuous(limits = c(0,1000)) +
@@ -65,4 +72,36 @@ uninvaded_plot +
       ylab("type") +
       theme_bw()
 
+# All untreated biomass
+uninvaded %>%
+      group_by(type) %>%
+      summarise()
 
+all_biomass <- rbind(
+      gradient_biomass %>%
+            filter(trt=="UN") %>%
+            select(othergrass:totalnative,unknown) %>%
+            mutate(biomass = rowSums(.), type = "native") %>%
+            select(type, biomass) %>%
+            mutate(biomass = biomass*16),
+      gradient_biomass %>%
+            filter(trt=="REF") %>%
+            select(cogon,cogon_standingdead) %>%
+            mutate(biomass = rowSums(.), type = "cogongrass") %>%
+            select(type, biomass) %>%
+            mutate(biomass = biomass*16)
+)
+
+all_biomass$type <- factor(all_biomass$type, levels = c("native","cogongrass"))
+ggplot(all_biomass, aes(type,total_biomass*16, fill = type)) +
+      geom_boxplot(outlier.shape = 21, outlier.color = "tan") +
+      theme_bw() +
+      scale_fill_discrete(h = c(160,60)) +
+      theme(legend.position = "none",
+            axis.title = element_text(size = 30),
+            axis.text = element_text(size = 24)) +
+      labs(fill = "Fuel Type",
+           x = "",
+           # expression(paste("mpg (  ", m^{-2}, ")")))
+           y = expression(paste("Biomass (g/", m^{2}, ")")))
+ggsave("figures/gradient_site_cogon_other_comparison.eps", dpi = 600, width = 12, height = 9)
