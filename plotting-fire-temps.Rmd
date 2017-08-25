@@ -7,7 +7,9 @@ output:
 ---
 
 ```{r set options, echo=F}
-knitr::opts_chunk$set(fig.width = 8)
+# knitr::opts_chunk$set(fig.height = 10)
+# knitr::opts_chunk$set(fig.width = 8)
+knitr::opts_chunk$set(dpi = 600)
 knitr::opts_chunk$set(echo = F)
 knitr::opts_chunk$set(warning = F)
 knitr::opts_chunk$set(message = F)
@@ -26,6 +28,11 @@ time_abv150 <- d1 %>% filter(probe_type == "old") %>%
              group_by(location,fire_id, pct_green, standing_biomass, litter_biomass, biomass_type) %>%
              filter(tempC>150) %>%
              summarise(s_abv150 = length(tempC))
+time_abv300 <- d1 %>% filter(probe_type == "old") %>%
+             group_by(location,fire_id, pct_green, standing_biomass, litter_biomass, biomass_type) %>%
+             filter(tempC>300) %>%
+             summarise(s_abv300 = length(tempC))
+
 
 max_temp <- d1 %>%
       filter(probe_type == "old") %>%
@@ -33,53 +40,371 @@ max_temp <- d1 %>%
       summarise(max_temp = max(tempC))
 
 d2 <- left_join(max_temp,time_abv150)
+d2 <- left_join(d2,time_abv300)
+d2$s_abv300[is.na(d2$s_abv300)] <- 0
 d2$s_abv150[is.na(d2$s_abv150)] <- 0
+levels(d2$location)
+d2$location <- factor(d2$location, levels = c("50cm", "25cm", "0cm"))
+d2$fire_id <- as.character(d2$fire_id)
+d2$total_biomass <- d2$standing_biomass+d2$litter_biomass
+```
 
-ggplot(d2, aes(s_abv150, max_temp, color = factor(pct_green))) +
-      geom_point(aes(size = standing_biomass)) +
-      # scale_fill_continuous(low = "yellow", high = "red") +
-      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
-      facet_grid(location~litter_biomass) +
+## Figures of wiregrass vs. cogongrass fire temperatures
+```{r wiregrass vs cogongrass time above 150 ºC}
+ggplot(filter(d2, pct_green>0, litter_biomass==0, location=="25cm"), 
+       aes(standing_biomass, s_abv150)) +
+      geom_point(aes(color = factor(pct_green),
+                     shape = biomass_type),
+                 size = 2) +
+      geom_line(aes(color = factor(pct_green), 
+                    linetype = biomass_type)) +
+      
+      # facet_grid(location~.) +
+      ylab("Seconds >150 ºC") +
+      xlab("Standing Biomass (g)") +
+      theme_bw() +
+      theme(legend.position = "bottom", panel.grid.minor = element_blank()) +
+      labs(color = "% Green", 
+           linetype = "Fuel\nType",
+           shape = "Fuel\nType") +
+      ggtitle("Wiregrass & Cogongrass Fire Time >150 ºC",subtitle = "No litter")
+ggsave("figures/standing_wiregrass_cogon_timeabv150.png", dpi = 600)
+
+lm1 <- lm(s_abv150 ~ total_biomass + factor(pct_green) + factor(biomass_type), 
+          data = filter(d2, pct_green>0, location=="25cm"))
+lm2 <- lm(s_abv150 ~ total_biomass, 
+          data = filter(d2, pct_green==75, location=="25cm", biomass_type=="wiregrass"))
+lm3 <- lm(s_abv150 ~ total_biomass, 
+          data = filter(d2, pct_green==25, location=="25cm", biomass_type=="wiregrass"))
+
+ggplot(filter(d2, pct_green>0, location=="25cm"), 
+       aes(total_biomass, s_abv150)) +
+      geom_point(aes(color = factor(pct_green),
+                     shape = biomass_type),
+                 size = 4) +
+      # geom_line(aes(color = factor(pct_green), 
+      #               linetype = biomass_type), size = 1.2) +
+      geom_smooth(aes(color = factor(pct_green), linetype = biomass_type), 
+                  method = "lm", se = F, size = 1.2) +
+      geom_vline(xintercept = 550, linetype = "dotted", size = 1) +
+      geom_vline(xintercept = 2070, linetype = "longdash", size = 1) +
+      # facet_grid(location~.) +
+      ylab("Seconds >150 ºC at 25cm") +
+      xlab(expression(paste("Total Biomass (g/", m^{2}, ")"))) +
+      
+      theme_bw() +
+      theme(legend.position = c(.8,.2), 
+            panel.grid.minor = element_blank(),
+            axis.title = element_text(size = 30, family = "serif"),
+            axis.text = element_text(size = 24, family = "serif"),
+            title = element_text(size = 30, family = "serif"),
+            legend.text = element_text(family = "serif", size = 20)) +
+      labs(color = "Standing %Green", 
+           linetype = "Fuel Type",
+           shape = "Fuel Type") +
+      ggtitle("Fire Intensity of Standing + Litter Biomass")
+ggsave("figures/total_wiregrass_cogon_timeabv150.png", dpi = 600, width = 12, height = 9)
+```
+
+```{r fire profiles wiregrass vs cogongrass}
+fire_profile1 <- filter(d1,
+                        litter_biomass==0, probe_type=="old",
+                        standing_biomass==1000|standing_biomass==600|
+                              standing_biomass==3000
+                        )
+fp1 <- fire_profile1 %>% 
+      group_by(standing_biomass, biomass_type, location, pct_green) %>% 
+      filter(tempC>80) %>%
+      mutate(seconds = seq(1,length(time),1)) %>% 
+      select(tempC,location,standing_biomass,pct_green,biomass_type,seconds)
+fp1$pct_green <- factor(fp1$pct_green, labels = c("25%","75%"))
+
+ggplot(fp1 %>% filter(location=="25cm"), aes(seconds, tempC)) +
+      geom_line(aes(linetype = biomass_type, color = pct_green), size = 1.2) +
+      # geom_hline(yintercept = 150, linetype = "F1") +
+      # geom_point(aes(shape = biomass_type, color = factor(pct_green)))
+      facet_grid(standing_biomass~., scales="free_y") +
+      theme_bw() +
+      xlab("Seconds") +
+      ylab("Temperature ºC at 25cm") +
+      theme(legend.position = c(.8,.83),
+            axis.title = element_text(size = 30, family = "serif"),
+            # axis.text = element_text(size = 24),
+            axis.text = element_text(size = 24, family = "serif"),
+            legend.text = element_text(size = 20, family = "serif"),
+            title = element_text(size = 30, family = "serif")) +
+      labs(color = "%\ Green", linetype = "Fuel Type") +
+      ggtitle("Fire Profiles for Temperatures >80 ºC")
+ggsave("figures/cogongrass-wiregrass-fire-profiles.png", dpi = 600, width = 12, height = 9)
+```
+
+```{r wiregrass vs cogongrass max temp}
+ggplot(filter(d2, pct_green>0, litter_biomass==0), 
+       aes(standing_biomass, max_temp)) +
+      geom_point(aes(color = factor(pct_green),
+                     shape = biomass_type),
+                 size = 2) +
+      geom_line(aes(color = factor(pct_green),
+                    linetype = biomass_type)) +
+      # geom_smooth(method = "rlm",
+                  # aes(color = factor(pct_green), linetype = biomass_type)) +
+      
+      facet_grid(location~.) +
+      scale_x_continuous(breaks = seq(200,3000,400)) +
+      scale_y_continuous(breaks = seq(0,1000,100)) +
       ylab("Maximum Temperature ºC") +
-      xlab("Seconds >150 ºC") +
-      theme_bw()
+      xlab("Standing Biomass (g)") +
+      theme_bw() +
+      theme(legend.position = "bottom", panel.grid.minor = element_blank()) +
+      labs(color = "% Green", 
+           linetype = "Fuel\nType",
+           shape = "Fuel\nType") +
+      ggtitle("Wiregrass & Cogongrass Fire Maximum Temperature",subtitle = "No litter")
+ggsave("figures/wiregrass_cogon_maxtemp.png", dpi = 300)
+```
 
+
+```{r wiregrass vs cogongrass max temp vs time above 150 ºC}
 ggplot(d2 %>% filter(litter_biomass==0),
-       aes(s_abv150, max_temp, color = factor(pct_green))) +
-      geom_point(aes(size = standing_biomass, shape = biomass_type)) +
+       aes(s_abv150, max_temp)) +
+      geom_point(aes(color = factor(pct_green), 
+                     size = standing_biomass, 
+                     shape = biomass_type
+                     )
+                 ) +
       # scale_fill_continuous(low = "yellow", high = "red") +
       # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
       facet_grid(location~.) +
       ylab("Maximum Temperature ºC") +
       xlab("Seconds >150 ºC") +
-      theme_bw()
+      theme_bw() +
+      scale_size_continuous(breaks = c(200, 1000, 2000, 3000)) +
+      theme(legend.position = "bottom", panel.grid.minor = element_blank()) +
+      labs(color = "% Green", 
+           size = "Standing\nBiomass", 
+           shape = "Fuel\nType") +
+      ggtitle("Wiregrass & Cogongrass Fire Maximum Temperature vs Time Above 150º C", subtitle = "No litter")
+ggsave("figures/wiregrass_cogon_max_timeabv150.png", dpi = 300)
 
-
-ggplot(d2, aes(standing_biomass, max_temp)) +
-      geom_point(aes(color = factor(pct_green), shape = biomass_type)) +
-      # geom_line(aes(color = factor(pct_green))) +
-      # geom_line(aes(color = factor(pct_green))) +
+ggplot(d2 %>% filter(pct_green>0),
+       aes(s_abv150, max_temp)) +
+      geom_point(aes(color = factor(pct_green), 
+                     size = standing_biomass, 
+                     shape = biomass_type,
+                     alpha = litter_biomass
+                     )
+                 ) +
+      # scale_fill_continuous(low = "yellow", high = "red") +
       # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
-      facet_grid(location~litter_biomass) +
+      facet_grid(location~.) +
       ylab("Maximum Temperature ºC") +
-      xlab("Standing Biomass (g)") +
-      theme_bw()
+      xlab("Seconds >150 ºC") +
+      theme_bw() +
+      scale_size_continuous(breaks = c(200, 1000, 2000, 3000)) +
+      theme(legend.position = "right", panel.grid.minor = element_blank()) +
+      labs(color = "% Green", 
+           size = "Standing\nBiomass", 
+           shape = "Fuel\nType",
+           alpha = "Litter\nBiomass") +
+      ggtitle("Wiregrass & Cogongrass Fire Maximum Temperature vs Time Above 150º C")
+ggsave("figures/wiregrass_cogon_max_timeabv150_shading.png", dpi = 300)
+```
 
-levels(d2$location)
-d2$location <- factor(d2$location, levels = c("50cm", "25cm", "0cm"))
-ggplot(d2, aes(standing_biomass, s_abv150)) +
-      geom_point(aes(color = factor(pct_green), shape = biomass_type)) +
+## Cogongrass Only Figures with Litter Biomass
+```{r cogongrass time above 150 ºC}
+ggplot(filter(d2, pct_green>0, biomass_type=="cogongrass"), 
+       aes(standing_biomass, s_abv150)) +
+      geom_point(aes(color = factor(pct_green),
+                     # shape = factor(litter_biomass)
+                     alpha = litter_biomass
+                     ), size = 2
+                 ) +
       # geom_line(aes(color = factor(pct_green))) +
-      # geom_line(aes(color = factor(pct_green))) +
-      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
-      facet_grid(locate~litter_biomass) +
+      facet_grid(location~.) +
+      scale_x_continuous(breaks = seq(0,max(d2$total_biomass),500)) +
+      # scale_y_continuous(breaks = seq(0,1400,200)) +
       ylab("Seconds >150 ºC") +
       xlab("Standing Biomass (g)") +
-      theme_bw()
+      theme_bw() +
+      theme(legend.position = "bottom", panel.grid.minor = element_blank()) +
+      ggtitle("Cogongrass only") +
+      labs(color = "% Green",
+           # shape = "Litter\nBiomass (g)"
+           alpha = "Litter\nBiomass (g)"
+           )
+ggsave("figures/cogon_timeabv150_shading.png", dpi = 300)
+```
+
+```{r cogongrass maximum temperature}
+ggplot(filter(d2, pct_green>0, biomass_type=="cogongrass"), 
+       aes(standing_biomass, max_temp)) +
+      geom_point(aes(color = factor(pct_green),
+                     shape = factor(litter_biomass)
+                     # alpha = litter_biomass
+                     ), size = 2, position = "jitter"
+                 ) +
+      
+      facet_grid(location~.) +
+      scale_x_continuous(breaks = seq(0,max(d2$standing_biomass),500)) +
+      scale_y_continuous(breaks = seq(0,1400,200)) +
+      ylab("Maximum Temperature ºC") +
+      xlab("Standing Biomass (g)") +
+      theme_bw() +
+      theme(legend.position = "bottom", panel.grid.minor = element_blank()) +
+      ggtitle("Cogongrass only") +
+      labs(color = "% Green",
+           shape = "Litter\nBiomass (g)"
+           # alpha = "Litter\nBiomass (g)"
+           )
+ggsave("figures/cogon_maxtemp_shape.png", dpi = 300)
+```
+
+```{r cogongrass max temp vs time above 150 ºC}
+ggplot(d2 %>% filter(biomass_type=="cogongrass", pct_green>0),
+       aes(s_abv150, max_temp)) +
+      
+      geom_point(aes(size = standing_biomass, 
+                     color = factor(pct_green),
+                     shape = factor(litter_biomass)
+                     # alpha = litter_biomass
+                     )
+                 ) +
+      
+      facet_grid(location~.) +
+      ylab("Maximum Temperature ºC") +
+      xlab("Seconds >150 ºC") +
+      theme_bw() +
+      theme(legend.position = "bottom", panel.grid.minor = element_blank()) +
+      ggtitle("Cogongrass") +
+      labs(color = "% Green",
+           size = "Standing\nBiomass (g)",
+           # alpha = "Litter\nBiomass (g)"
+           shape = "Litter \nBiomass (g)"
+           )
+ggsave("figures/cogon_maxtemp_timeabv150_shape.png", dpi = 300)
 ```
 
 # Plot Prescribed Fire Temperatures from Flame Height Sensors
-```{r flame height sensors}
+```{r flame height sensors data}
+pfire_data <- read_csv("data/flame_sensor_fire_data.csv")
+pfire_data <- pfire_data %>% 
+      select(date:unit,green_ht:flame_ht2) %>% 
+      mutate(biomass_type = "native") %>% 
+      rename(standing_biomass=standing_mass_wet,
+             litter_biomass=litter_mass_wet,
+             fire_id=id) %>% 
+      mutate(standing_biomass = standing_biomass*16,
+             litter_biomass = litter_biomass*16)
+summary(pfire_data)
 
+pfire_time_abv150 <- pfire_data %>%
+      group_by(location,fire_id, pct_green, standing_biomass, litter_biomass, biomass_type) %>%
+      filter(tempC>150) %>%
+      summarise(s_abv150 = length(tempC))
+
+pfire_max_temp <- pfire_data %>%
+      group_by(location,fire_id, pct_green, standing_biomass, litter_biomass, biomass_type) %>%
+      summarise(max_temp = max(tempC))
+
+pfire_data_summary <- left_join(pfire_max_temp,pfire_time_abv150)
+pfire_data_summary$s_abv150[is.na(pfire_data_summary$s_abv150)] <- 0
+pfire_data_summary$location <- factor(pfire_data_summary$location, levels = c("50cm", "25cm", "0cm"))
+```
+
+```{r flame height sensors time above 150 ºC}
+ggplot(pfire_data_summary,
+       aes(standing_biomass, s_abv150, color = factor(pct_green))) +
+      geom_point(aes(size = litter_biomass)) +
+      # scale_fill_continuous(low = "yellow", high = "red") +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      facet_grid(location~.) +
+      ylab("Seconds >150 ºC") +
+      xlab("Standing Biomass (g/m2)") +
+      theme_bw() +
+      ggtitle("Prescribed Fire Temperatures from Flame Height Sensors")
+```
+
+```{r flame height sensors max temp}
+ggplot(pfire_data_summary,
+       aes(standing_biomass, max_temp, color = factor(pct_green))) +
+      geom_point(aes(size = litter_biomass)) +
+      # scale_fill_continuous(low = "yellow", high = "red") +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      facet_grid(location~.) +
+      ylab("Maximum Temperature ºC") +
+      xlab("Standing Biomass (g/m2)") +
+      theme_bw() +
+      ggtitle("Prescribed Fire Temperatures from Flame Height Sensors")
+
+ggplot(pfire_data_summary,
+       aes(s_abv150, max_temp 
+           # color = factor(pct_green)
+           )) +
+      geom_point(aes(size = standing_biomass)) +
+      geom_line(aes(color = location)) +
+      # scale_fill_continuous(low = "yellow", high = "red") +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      # facet_grid(location~.) +
+      ylab("Maximum Temperature ºC") +
+      xlab("Seconds >150 ºC") +
+      theme_bw() +
+      ggtitle("Prescribed Fire Temperatures from Flame Height Sensors")
+```
+
+
+# Plot Experimental & Prescribed Fire Temperatures
+```{r fabio and prescribed fire}
+# levels(d2$location)
+pfire_data_summary$pct_green[pfire_data_summary$pct_green<50] <- 25
+d3 <- rbind(d2,pfire_data_summary)
+d3$fire_type <- "experimental"
+d3$fire_type[d3$biomass_type=="native"] <- "prescribed"
+d3$biomass_type[d3$biomass_type=="wiregrass"] <- "native"
+d3$location <- factor(d3$location, levels = c("50cm", "25cm", "0cm"))
+d3$total_biomass = d3$standing_biomass+d3$litter_biomass
+
+ggplot(filter(d3, pct_green==25), 
+       aes(s_abv150, max_temp, color = litter_biomass)) +
+      geom_point(aes(size = standing_biomass, shape = biomass_type)) +
+      # scale_fill_continuous(low = "yellow", high = "red") +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      facet_grid(location~pct_green) +
+      ylab("Maximum Temperature ºC") +
+      xlab("Seconds >150 ºC") +
+      theme_bw() +
+      ggtitle("Fire Temperatures from Experimental & Prescribed Fires")
+
+ggplot(filter(d3, litter_biomass<=500, pct_green==25, standing_biomass<1500, location == "25cm"),
+       aes(standing_biomass, s_abv150)) +
+      geom_point(aes(shape = fire_type, color = biomass_type), position = "jitter") +
+      # scale_fill_continuous(low = "yellow", high = "red") +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      # facet_grid(factor(pct_green)~.) +
+      ylab("Seconds >150 ºC") +
+      xlab("Standing Biomass (g)") +
+      theme_bw() +
+      ggtitle("Fire Temperatures from Experimental & Prescribed Fires")
+
+ggplot(filter(d3, litter_biomass<=500, between(standing_biomass,1,1500)), 
+       aes(standing_biomass, max_temp, color = factor(pct_green))) +
+      geom_point(aes(shape = biomass_type)) +
+      # scale_fill_continuous(low = "yellow", high = "red") +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      facet_grid(location~fire_type) +
+      ylab("Maximum Temperature ºC") +
+      xlab("Standing Biomass (g)") +
+      theme_bw() +
+      ggtitle("Fire Temperatures from Experimental & Prescribed Fires")
+
+ggplot(filter(d3, litter_biomass<=500, between(standing_biomass,1,1500)), 
+       aes(total_biomass, max_temp, color = factor(pct_green))) +
+      geom_point(aes(shape = biomass_type)) +
+      # scale_fill_continuous(low = "yellow", high = "red") +
+      # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
+      facet_grid(location~fire_type) +
+      ylab("Maximum Temperature ºC") +
+      xlab("Total Biomass (g)") +
+      theme_bw() +
+      ggtitle("Fire Temperatures from Experimental & Prescribed Fires")
 ```
 
