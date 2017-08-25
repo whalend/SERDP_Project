@@ -238,11 +238,11 @@ fabio2_50cm_old <- mutate(fabio2_50cm_old, location = "50cm", probe_type = "old"
 d1 <- rbind(fabio1_0cm_old, fabio1_25cm_old, fabio1_50cm_old,
             fabio1_0cm_new, fabio1_25cm_new, fabio1_50cm_new)
 
-# qplot(time, tempC, data = d1, facets = location~., color = probe_type) +
-#       geom_line() +
-#       theme_bw() +
-#       ggtitle("FABIO 1 Burns 7/12/2017")
-# ggsave(filename = "figures/fabio1_burns_20170712.png")
+qplot(time, tempC, data = d1, facets = location~., color = probe_type, linetype=probe_type, geom ="line", alpha = 0.5) +
+      # geom_line() +
+      theme_bw() +
+      ggtitle("FABIO 1 Burns 7/12/2017 - Old vs New Temp Probes")
+ggsave(filename = "figures/fabio1_burns_oldVSnew_20170712.png", width = 8, height = 10, dpi = 300)
 
 # par(mfrow=c(3,1))
 # plot(fabio2_0cm_old$time, fabio2_0cm_old$tempC, main = "FABIO 2 Burns 7/12/2017")
@@ -536,47 +536,54 @@ flame_veg_data <- readxl::read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-pl
 
 # qplot(time,tempC,data=filter(flame1, between(time, 43240,43340)),facets = location~.)
 flame1 <- filter(flame1, between(time, 43240,43340))
-flame1 <- left_join(flame1, filter(flame_veg_data, date == "2017-07-06") %>%
+flame1 <- left_join(flame1, flame_veg_data %>%
+                          filter(date > "2017-06-01") %>%
                           select(-date),
                     by = "id")
 
 # qplot(time,tempC,data=filter(flame3, between(time, 42800,42990)),facets = location~.)
 flame3 <- filter(flame3, between(time, 42800,42990))
-flame3 <- left_join(flame3, filter(flame_veg_data, date == "2017-07-06") %>%
+flame3 <- left_join(flame3, flame_veg_data %>%
+                          filter(date > "2017-06-01") %>%
                           select(-date),
                     by = "id")
 
 # qplot(time,tempC,data=flame4,facets = location~.)
 # qplot(time,tempC,data=filter(flame4, between(time, 44680,44810)),facets = location~.)
 flame4 <- filter(flame4, between(time, 44680,44810))
-flame4 <- left_join(flame4, filter(flame_veg_data, date == "2017-07-06") %>%
+flame4 <- left_join(flame4, flame_veg_data %>%
+                          filter(date > "2017-06-01") %>%
                           select(-date),
                     by = "id")
 
 # qplot(time,tempC,data=flame5,facets = location~.)
 # qplot(time,tempC,data=filter(flame5, between(time, 44680,44810)),facets = location~.)
 flame5 <- filter(flame5, between(time, 44680,44810))
-flame5 <- left_join(flame5, filter(flame_veg_data, date == "2017-07-06") %>%
+flame5 <- left_join(flame5, flame_veg_data %>%
+                          filter(date > "2017-06-01") %>%
                           select(-date),
                     by = "id")
 
 # qplot(time,tempC,data=filter(flame6, between(time, 43310,43550)),facets = location~.)
 flame6 <- filter(flame6, between(time, 43310,43550))
-flame6 <- left_join(flame6, filter(flame_veg_data, date == "2017-07-06") %>%
+flame6 <- left_join(flame6, flame_veg_data %>%
+                          filter(date > "2017-06-01") %>%
                           select(-date),
                     by = "id")
 
 # qplot(time,tempC,data=flame7,facets = location~.)
 # qplot(time,tempC,data=filter(flame7, between(time, 41300,41600)),facets = location~.)
 flame7 <- filter(flame7, between(time, 41300,41600))
-flame7 <- left_join(flame7, filter(flame_veg_data, date == "2017-07-06") %>%
+flame7 <- left_join(flame7, flame_veg_data %>%
+                          filter(date > "2017-06-01") %>%
                           select(-date),
                     by = "id")
 
 # qplot(time,tempC,data=flame8,facets = location~.)
 # qplot(time,tempC,data=filter(flame8, between(time, 40800,41060)),facets = location~.)
 flame8 <- filter(flame8, between(time, 40800,41060))
-flame8 <- left_join(flame8, filter(flame_veg_data, date == "2017-07-06") %>%
+flame8 <- left_join(flame8, flame_veg_data %>%
+                          filter(date > "2017-06-01") %>%
                           select(-date),
                     by = "id")
 
