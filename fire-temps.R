@@ -5,14 +5,14 @@ library(readr); library(ggplot2)
 
 
 #+ Load Bivens Test Burn Data ----------------------------------------------
-ground <- read_csv("data/fire-temperatures/bivens-testburn-20170407-ground.csv")
+ground <- read_csv("data/fire_temperatures/bivens-testburn-20170407-ground.csv")
 names(ground) <- c("date","time","tempC")# rename columns
 # str(ground)
 
-twelve <- read_csv("data/fire-temperatures/bivens-testburn-20170407-12cm.csv")
+twelve <- read_csv("data/fire_temperatures/bivens-testburn-20170407-12cm.csv")
 names(twelve) <- c("date","time","tempC")
 
-fifty <- read_csv("data/fire-temperatures/bivens-testburn-20170407-50cm.csv")
+fifty <- read_csv("data/fire_temperatures/bivens-testburn-20170407-50cm.csv")
 names(fifty) <- c("date","time","tempC")
 
 # par(mfrow=c(3,1))
@@ -54,18 +54,47 @@ test_burn_thatch$fuel_type <- "litter"
 # library(lubridate)
 
 
-#+ Load FABIO Burn Data ----------------------------------------------------
-fabio_burns_biomass <- readxl::read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "FABIO_Burns")
-fabio_burns_biomass <- select(fabio_burns_biomass, fire_id:biomass_type)
+#+ Load FABIO Burn Biomass Data ----------------------------------------------------
+fabio_burns <- read_csv("~/Dropbox (UF)/SERDP-Project/data/fabio_burns.csv")
+fabio_burns$date <- as.Date(fabio_burns$date, format = "%m/%d/%y")
+
+fabio_burns_biomass <- select(fabio_burns, fire_id:notes)
+
+fires_biomass <- fabio_burns %>%
+      select(fire_id:pct_green, remaining_biomass:notes) %>%
+      mutate(pct_green = factor(pct_green, levels = c("25","75")),
+             f_litter_biomass = factor(litter_biomass,
+                                     levels = c("0","500","1000","2000")),
+             total_biomass = standing_biomass + litter_biomass,
+             pct_consumed = 100*(total_biomass - remaining_biomass)/total_biomass,
+             pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass)
+
+# View(fires_biomass %>% filter(biomass_type=="wiregrass") %>%
+#            arrange(litter_biomass)
+#      )
+
+
+ggplot(fires_biomass, aes(litter_biomass, standing_biomass)) +
+      geom_point(aes(color = pct_green, shape = biomass_type), position = "jitter") +
+      theme_bw()
+
+ggplot(fires_biomass, aes(total_biomass, pct_consumed)) +
+      geom_point(aes(color = pct_green, shape = f_litter_biomass), position = "jitter") +
+      theme_bw()
+
+ggplot(fires_biomass, aes(pct_fuel_moisture, pct_consumed)) +
+      geom_point(aes(color = pct_green, size = standing_biomass), position = "jitter") +
+      theme_bw()
+
 
 #+ Load FABIO Prescribed Burn Data 2017/07/06 ------------------------------
-fabio_blanding_0cm <- read_csv("data/fire-temperatures/fabio-bland-c-0cm-20170706.csv")
+fabio_blanding_0cm <- read_csv("data/fire_temperatures/fabio-bland-c-0cm-20170706.csv")
 names(fabio_blanding_0cm) <- c("date","time","tempC")
 fabio_blanding_0cm <- mutate(fabio_blanding_0cm, location = "0cm", probe_type = "old")
-fabio_blanding_25cm <- read_csv("data/fire-temperatures/fabio-bland-c-25cm-20170706.csv")
+fabio_blanding_25cm <- read_csv("data/fire_temperatures/fabio-bland-c-25cm-20170706.csv")
 names(fabio_blanding_25cm) <- c("date","time","tempC")
 fabio_blanding_25cm <- mutate(fabio_blanding_25cm, location = "25cm", probe_type = "old")
-fabio_blanding_50cm <- read_csv("data/fire-temperatures/fabio-bland-c-50cm-20170706.csv")
+fabio_blanding_50cm <- read_csv("data/fire_temperatures/fabio-bland-c-50cm-20170706.csv")
 names(fabio_blanding_50cm) <- c("date","time","tempC")
 fabio_blanding_50cm <- mutate(fabio_blanding_50cm, location = "50cm", probe_type = "old")
 
@@ -87,26 +116,26 @@ fabio_blanding_prescribe <- rbind(
 #+ Experimental Burns July 5, 2017: Fire IDs 1-8 ####
 
 # load data from FABIO 1 sensors
-fabio1_0cm <- read_csv("data/fire-temperatures/fabio1-0cm-20170705.csv")
+fabio1_0cm <- read_csv("data/fire_temperatures/fabio1-0cm-20170705.csv")
 names(fabio1_0cm) <- c("date","time","tempC")
-fabio1_0cm <- mutate(fabio1_0cm, location = "0cm", probe_type = "old", fabio_id = as.factor(1))
-fabio1_25cm <- read_csv("data/fire-temperatures/fabio1-25cm-20170705.csv")
+fabio1_0cm <- mutate(fabio1_0cm, location = "0cm", probe_type = "old")
+fabio1_25cm <- read_csv("data/fire_temperatures/fabio1-25cm-20170705.csv")
 names(fabio1_25cm) <- c("date","time","tempC")
-fabio1_25cm <- mutate(fabio1_25cm, location = "25cm", probe_type = "old", fabio_id = as.factor(1))
-fabio1_50cm <- read_csv("data/fire-temperatures/fabio1-50cm-20170705.csv")
+fabio1_25cm <- mutate(fabio1_25cm, location = "25cm", probe_type = "old")
+fabio1_50cm <- read_csv("data/fire_temperatures/fabio1-50cm-20170705.csv")
 names(fabio1_50cm) <- c("date","time","tempC")
-fabio1_50cm <- mutate(fabio1_50cm, location = "50cm", probe_type = "old", fabio_id = as.factor(1))
+fabio1_50cm <- mutate(fabio1_50cm, location = "50cm", probe_type = "old")
 
 # load data from FABIO 2 sensors
-fabio2_0cm <- read_csv("data/fire-temperatures/fabio2-0cm-20170705.csv")
+fabio2_0cm <- read_csv("data/fire_temperatures/fabio2-0cm-20170705.csv")
 names(fabio2_0cm) <- c("date","time","tempC")
-fabio2_0cm <- mutate(fabio2_0cm, location = "0cm", probe_type = "old", fabio_id = as.factor(2))
-fabio2_25cm <- read_csv("data/fire-temperatures/fabio2-25cm-20170705.csv")
+fabio2_0cm <- mutate(fabio2_0cm, location = "0cm", probe_type = "old")
+fabio2_25cm <- read_csv("data/fire_temperatures/fabio2-25cm-20170705.csv")
 names(fabio2_25cm) <- c("date","time","tempC")
-fabio2_25cm <- mutate(fabio2_25cm, location = "25cm", probe_type = "old", fabio_id = as.factor(2))
-fabio2_50cm <- read_csv("data/fire-temperatures/fabio2-50cm-20170705.csv")
+fabio2_25cm <- mutate(fabio2_25cm, location = "25cm", probe_type = "old")
+fabio2_50cm <- read_csv("data/fire_temperatures/fabio2-50cm-20170705.csv")
 names(fabio2_50cm) <- c("date","time","tempC")
-fabio2_50cm <- mutate(fabio2_50cm, location = "50cm", probe_type = "old", fabio_id = as.factor(2))
+fabio2_50cm <- mutate(fabio2_50cm, location = "50cm", probe_type = "old")
 
 # plot all data from sensors
 # par(mfrow=c(3,1))
@@ -125,7 +154,7 @@ fireid1 <- rbind(
       filter(fabio1_50cm, between(time, 45330,45400))
       ) %>%
       mutate(fire_id = 1)
-fireid1 <- left_join(fireid1, select(fabio_burns_biomass, -fabio_id))
+# fireid1 <- left_join(fireid1, select(fabio_burns_biomass, -fabio_id))
 
 fireid2 <- rbind(
       filter(fabio2_0cm, between(time, 47500,48000)),
@@ -133,7 +162,7 @@ fireid2 <- rbind(
       filter(fabio2_50cm, between(time, 47500,48000))
       ) %>%
       mutate(fire_id = 2)
-fireid2 <- left_join(fireid2, select(fabio_burns_biomass, -fabio_id))
+# fireid2 <- left_join(fireid2, select(fabio_burns_biomass, -fabio_id))
 
 fireid3 <- rbind(
       filter(fabio2_0cm, between(time, 53820,53940)),
@@ -141,7 +170,7 @@ fireid3 <- rbind(
       filter(fabio2_50cm, between(time, 53820,53940))
       ) %>%
       mutate(fire_id = 3)
-fireid3 <- left_join(fireid3, select(fabio_burns_biomass, -fabio_id))
+# fireid3 <- left_join(fireid3, select(fabio_burns_biomass, -fabio_id))
 
 fireid4 <- rbind(
       filter(fabio1_0cm, between(time, 54930,55000)),
@@ -149,7 +178,7 @@ fireid4 <- rbind(
       filter(fabio1_50cm, between(time, 54930,55000))
       ) %>%
       mutate(fire_id = 4)
-fireid4 <- left_join(fireid4, select(fabio_burns_biomass, -fabio_id))
+# fireid4 <- left_join(fireid4, select(fabio_burns_biomass, -fabio_id))
 
 fireid5 <- rbind(
       filter(fabio2_0cm, between(time, 55900,56100)),
@@ -157,7 +186,7 @@ fireid5 <- rbind(
       filter(fabio2_50cm, between(time, 55900,56100))
       ) %>%
       mutate(fire_id = 5)
-fireid5 <- left_join(fireid5, select(fabio_burns_biomass, -fabio_id))
+# fireid5 <- left_join(fireid5, select(fabio_burns_biomass, -fabio_id))
 
 fireid6 <- rbind(
       filter(fabio1_0cm, between(time, 59600,60240)),
@@ -165,7 +194,7 @@ fireid6 <- rbind(
       filter(fabio1_50cm, between(time, 59600,60240))
       ) %>%
       mutate(fire_id = 6)
-fireid6 <- left_join(fireid6, select(fabio_burns_biomass, -fabio_id))
+# fireid6 <- left_join(fireid6, select(fabio_burns_biomass, -fabio_id))
 
 fireid7 <- rbind(
       filter(fabio_blanding_0cm, between(time, 48500,48880)),
@@ -173,7 +202,7 @@ fireid7 <- rbind(
       filter(fabio_blanding_50cm, between(time, 48500,48880))
       ) %>%
       mutate(fire_id = 7)
-fireid7 <- left_join(fireid7, fabio_burns_biomass)
+# fireid7 <- left_join(fireid7, fabio_burns_biomass)
 
 fireid8 <- rbind(
       filter(fabio_blanding_0cm, between(time, 49620,50200)),
@@ -181,44 +210,44 @@ fireid8 <- rbind(
       filter(fabio_blanding_50cm, between(time, 49620,50200))
       ) %>%
       mutate(fire_id = 8)
-fireid8 <- left_join(fireid8, fabio_burns_biomass)
+# fireid8 <- left_join(fireid8, fabio_burns_biomass)
 
 
 #+ Experimental Burns July 12, 2017: Fire IDs 9-17 ####
 # load data from FABIO 1 sensors
-fabio1_0cm_new <- read_csv("data/fire-temperatures/fabio1-0cm-new-20170712.csv")
+fabio1_0cm_new <- read_csv("data/fire_temperatures/fabio1-0cm-new-20170712.csv")
 names(fabio1_0cm_new) <- c("date","time","tempC")
-fabio1_0cm_new <- mutate(fabio1_0cm_new, location = "0cm", probe_type = "new", fabio_id = as.factor(1))
-fabio1_0cm_old <- read_csv("data/fire-temperatures/fabio1-0cm-old-20170712.csv")
+fabio1_0cm_new <- mutate(fabio1_0cm_new, location = "0cm", probe_type = "new")
+fabio1_0cm_old <- read_csv("data/fire_temperatures/fabio1-0cm-old-20170712.csv")
 names(fabio1_0cm_old) <- c("date","time","tempC")
-fabio1_0cm_old <- mutate(fabio1_0cm_old, location = "0cm", probe_type = "old", fabio_id = as.factor(1))
+fabio1_0cm_old <- mutate(fabio1_0cm_old, location = "0cm", probe_type = "old")
 
-fabio1_25cm_new <- read_csv("data/fire-temperatures/fabio1-25cm-new-20170712.csv")
+fabio1_25cm_new <- read_csv("data/fire_temperatures/fabio1-25cm-new-20170712.csv")
 names(fabio1_25cm_new) <- c("date","time","tempC")
-fabio1_25cm_new <- mutate(fabio1_25cm_new, location = "25cm", probe_type = "new", fabio_id = as.factor(1))
-fabio1_25cm_old <- read_csv("data/fire-temperatures/fabio1-25cm-old-20170712.csv")
+fabio1_25cm_new <- mutate(fabio1_25cm_new, location = "25cm", probe_type = "new")
+fabio1_25cm_old <- read_csv("data/fire_temperatures/fabio1-25cm-old-20170712.csv")
 names(fabio1_25cm_old) <- c("date","time","tempC")
-fabio1_25cm_old <- mutate(fabio1_25cm_old, location = "25cm", probe_type = "old", fabio_id = as.factor(1))
+fabio1_25cm_old <- mutate(fabio1_25cm_old, location = "25cm", probe_type = "old")
 
-fabio1_50cm_new <- read_csv("data/fire-temperatures/fabio1-50cm-new-20170712.csv")
+fabio1_50cm_new <- read_csv("data/fire_temperatures/fabio1-50cm-new-20170712.csv")
 names(fabio1_50cm_new) <- c("date","time","tempC")
-fabio1_50cm_new <- mutate(fabio1_50cm_new, location = "50cm", probe_type = "new", fabio_id = as.factor(1))
-fabio1_50cm_old <- read_csv("data/fire-temperatures/fabio1-50cm-old-20170712.csv")
+fabio1_50cm_new <- mutate(fabio1_50cm_new, location = "50cm", probe_type = "new")
+fabio1_50cm_old <- read_csv("data/fire_temperatures/fabio1-50cm-old-20170712.csv")
 names(fabio1_50cm_old) <- c("date","time","tempC")
-fabio1_50cm_old <- mutate(fabio1_50cm_old, location = "50cm", probe_type = "old", fabio_id = as.factor(1))
+fabio1_50cm_old <- mutate(fabio1_50cm_old, location = "50cm", probe_type = "old")
 
 # load data from FABIO 2 sensors
-fabio2_0cm_old <- read_csv("data/fire-temperatures/fabio2-0cm-old-20170712.csv")
+fabio2_0cm_old <- read_csv("data/fire_temperatures/fabio2-0cm-old-20170712.csv")
 names(fabio2_0cm_old) <- c("date","time","tempC")
-fabio2_0cm_old <- mutate(fabio2_0cm_old, location = "0cm", probe_type = "old", fabio_id = as.factor(2))
+fabio2_0cm_old <- mutate(fabio2_0cm_old, location = "0cm", probe_type = "old")
 
-fabio2_25cm_old <- read_csv("data/fire-temperatures/fabio2-25cm-old-20170712.csv")
+fabio2_25cm_old <- read_csv("data/fire_temperatures/fabio2-25cm-old-20170712.csv")
 names(fabio2_25cm_old) <- c("date","time","tempC")
-fabio2_25cm_old <- mutate(fabio2_25cm_old, location = "25cm", probe_type = "old", fabio_id = as.factor(2))
+fabio2_25cm_old <- mutate(fabio2_25cm_old, location = "25cm", probe_type = "old")
 
-fabio2_50cm_old <- read_csv("data/fire-temperatures/fabio2-50cm-old-20170712.csv")
+fabio2_50cm_old <- read_csv("data/fire_temperatures/fabio2-50cm-old-20170712.csv")
 names(fabio2_50cm_old) <- c("date","time","tempC")
-fabio2_50cm_old <- mutate(fabio2_50cm_old, location = "50cm", probe_type = "old", fabio_id = as.factor(2))
+fabio2_50cm_old <- mutate(fabio2_50cm_old, location = "50cm", probe_type = "old")
 
 #+ Slice Experimental Burn Temperatures: Fire IDs 9-17 ####
 # plot all data from sensors
@@ -238,11 +267,11 @@ fabio2_50cm_old <- mutate(fabio2_50cm_old, location = "50cm", probe_type = "old"
 d1 <- rbind(fabio1_0cm_old, fabio1_25cm_old, fabio1_50cm_old,
             fabio1_0cm_new, fabio1_25cm_new, fabio1_50cm_new)
 
-qplot(time, tempC, data = d1, facets = location~., color = probe_type, linetype=probe_type, geom ="line", alpha = 0.5) +
-      # geom_line() +
-      theme_bw() +
-      ggtitle("FABIO 1 Burns 7/12/2017 - Old vs New Temp Probes")
-ggsave(filename = "figures/fabio1_burns_oldVSnew_20170712.png", width = 8, height = 10, dpi = 300)
+# qplot(time, tempC, data = d1, facets = location~., color = probe_type, linetype=probe_type, geom ="line", alpha = 0.5) +
+#       # geom_line() +
+#       theme_bw() +
+#       ggtitle("FABIO 1 Burns 7/12/2017 - Old vs New Temp Probes")
+# ggsave(filename = "figures/fabio1_burns_oldVSnew_20170712.png", width = 8, height = 10, dpi = 300)
 
 # par(mfrow=c(3,1))
 # plot(fabio2_0cm_old$time, fabio2_0cm_old$tempC, main = "FABIO 2 Burns 7/12/2017")
@@ -255,7 +284,7 @@ fireid9 <- rbind(
       filter(fabio2_50cm_old, between(time, 37300,39030))
       ) %>%
       mutate(fire_id = 9)
-fireid9 <- left_join(fireid9, select(fabio_burns_biomass, -fabio_id))
+# fireid9 <- left_join(fireid9, select(fabio_burns_biomass, -fabio_id))
 
 fireid10 <- rbind(
       filter(fabio2_0cm_old, between(time, 41600,42120)),
@@ -263,7 +292,7 @@ fireid10 <- rbind(
       filter(fabio2_50cm_old, between(time, 41600,42120))
       ) %>%
       mutate(fire_id = 10)
-fireid10 <- left_join(fireid10, select(fabio_burns_biomass, -fabio_id))
+# fireid10 <- left_join(fireid10, select(fabio_burns_biomass, -fabio_id))
 
 fireid11 <- rbind(
       filter(fabio1_0cm_old, between(time, 41700,42160)),
@@ -271,7 +300,7 @@ fireid11 <- rbind(
       filter(fabio1_50cm_old, between(time, 41700,42160))
       ) %>%
       mutate(fire_id = 11)
-fireid11 <- left_join(fireid11, select(fabio_burns_biomass, -fabio_id))
+# fireid11 <- left_join(fireid11, select(fabio_burns_biomass, -fabio_id))
 
 fireid12 <- rbind(
       filter(fabio2_0cm_old, between(time, 46150,47700)),
@@ -279,7 +308,7 @@ fireid12 <- rbind(
       filter(fabio2_50cm_old, between(time, 46150,47700))
       ) %>%
       mutate(fire_id = 12)
-fireid12 <- left_join(fireid12, select(fabio_burns_biomass, -fabio_id))
+# fireid12 <- left_join(fireid12, select(fabio_burns_biomass, -fabio_id))
 
 fireid13 <- rbind(
       filter(fabio1_0cm_old, between(time, 46970,47600)),
@@ -287,7 +316,7 @@ fireid13 <- rbind(
       filter(fabio1_50cm_old, between(time, 46970,47600))
       ) %>%
       mutate(fire_id = 13)
-fireid13 <- left_join(fireid13, select(fabio_burns_biomass, -fabio_id))
+# fireid13 <- left_join(fireid13, select(fabio_burns_biomass, -fabio_id))
 
 fireid14 <- rbind(
       filter(fabio2_0cm_old, between(time, 49180,50120)),
@@ -295,7 +324,7 @@ fireid14 <- rbind(
       filter(fabio2_50cm_old, between(time, 49180,50120))
       ) %>%
       mutate(fire_id = 14)
-fireid14 <- left_join(fireid14, select(fabio_burns_biomass, -fabio_id))
+# fireid14 <- left_join(fireid14, select(fabio_burns_biomass, -fabio_id))
 
 fireid15 <- rbind(
       filter(fabio1_0cm_old, between(time, 49120,49560)),
@@ -303,7 +332,7 @@ fireid15 <- rbind(
       filter(fabio1_50cm_old, between(time, 49120,49560))
       ) %>%
       mutate(fire_id = 15)
-fireid15 <- left_join(fireid15, select(fabio_burns_biomass, -fabio_id))
+# fireid15 <- left_join(fireid15, select(fabio_burns_biomass, -fabio_id))
 
 fireid16 <- rbind(
       filter(fabio1_0cm_old, between(time, 51930,52160)),
@@ -311,7 +340,7 @@ fireid16 <- rbind(
       filter(fabio1_50cm_old, between(time, 51930,52160))
       ) %>%
       mutate(fire_id = 16)
-fireid16 <- left_join(fireid16, select(fabio_burns_biomass, -fabio_id))
+# fireid16 <- left_join(fireid16, select(fabio_burns_biomass, -fabio_id))
 
 fireid17 <- rbind(
       filter(fabio2_0cm_old, between(time, 54120,55300)),
@@ -319,35 +348,35 @@ fireid17 <- rbind(
       filter(fabio2_50cm_old, between(time, 54120,55300))
       ) %>%
       mutate(fire_id = 17)
-fireid17 <- left_join(fireid17, select(fabio_burns_biomass, -fabio_id))
+# fireid17 <- left_join(fireid17, select(fabio_burns_biomass, -fabio_id))
 
 
 #+ Experimental Burns July 14, 2017: Fire IDs 18-24 ####
-fabio2_0cm_old <- read_csv("data/fire-temperatures/fabio2-0cm-old-20170714.csv")
+fabio2_0cm_old <- read_csv("data/fire_temperatures/fabio2-0cm-old-20170714.csv")
 names(fabio2_0cm_old) <- c("date","time","tempC")
-fabio2_0cm_old <- mutate(fabio2_0cm_old, location = "0cm", probe_type = "old", fabio_id = as.factor(2))
+fabio2_0cm_old <- mutate(fabio2_0cm_old, location = "0cm", probe_type = "old")
 
-fabio2_25cm_old <- read_csv("data/fire-temperatures/fabio2-25cm-old-20170714.csv")
+fabio2_25cm_old <- read_csv("data/fire_temperatures/fabio2-25cm-old-20170714.csv")
 names(fabio2_25cm_old) <- c("date","time","tempC")
-fabio2_25cm_old <- mutate(fabio2_25cm_old, location = "25cm", probe_type = "old", fabio_id = as.factor(2))
+fabio2_25cm_old <- mutate(fabio2_25cm_old, location = "25cm", probe_type = "old")
 
-fabio2_50cm_old <- read_csv("data/fire-temperatures/fabio2-50cm-old-20170714.csv")
+fabio2_50cm_old <- read_csv("data/fire_temperatures/fabio2-50cm-old-20170714.csv")
 names(fabio2_50cm_old) <- c("date","time","tempC")
-fabio2_50cm_old <- mutate(fabio2_50cm_old, location = "50cm", probe_type = "old", fabio_id = as.factor(2))
+fabio2_50cm_old <- mutate(fabio2_50cm_old, location = "50cm", probe_type = "old")
 
-fabio2_0cm_new <- read_csv("data/fire-temperatures/fabio2-0cm-new-20170714.csv")
+fabio2_0cm_new <- read_csv("data/fire_temperatures/fabio2-0cm-new-20170714.csv")
 names(fabio2_0cm_new) <- c("date","time","tempC")
-fabio2_0cm_new <- mutate(fabio2_0cm_new, location = "0cm", probe_type = "new", fabio_id = as.factor(2))
+fabio2_0cm_new <- mutate(fabio2_0cm_new, location = "0cm", probe_type = "new")
 
-fabio2_25cm_new <- read_csv("data/fire-temperatures/fabio2-25cm-new-20170714.csv")
+fabio2_25cm_new <- read_csv("data/fire_temperatures/fabio2-25cm-new-20170714.csv")
 names(fabio2_25cm_new) <- c("date","time","tempC")
-fabio2_25cm_new <- mutate(fabio2_25cm_new, location = "25cm", probe_type = "new", fabio_id = as.factor(2))
+fabio2_25cm_new <- mutate(fabio2_25cm_new, location = "25cm", probe_type = "new")
 
-fabio2_50cm_new <- read_csv("data/fire-temperatures/fabio2-50cm-new-20170714.csv")
+fabio2_50cm_new <- read_csv("data/fire_temperatures/fabio2-50cm-new-20170714.csv")
 names(fabio2_50cm_new) <- c("date","time","tempC")
-fabio2_50cm_new <- mutate(fabio2_50cm_new, location = "50cm", probe_type = "new", fabio_id = as.factor(2))
+fabio2_50cm_new <- mutate(fabio2_50cm_new, location = "50cm", probe_type = "new")
 
-#+ Slice Experimental Burn Temperatures: Fire IDs 9-17 ####
+#+ Slice Experimental Burn Temperatures: Fire IDs 18-24 ####
 d1 <- rbind(fabio2_0cm_new,fabio2_0cm_old,fabio2_25cm_new,fabio2_25cm_old,fabio2_50cm_new,fabio2_50cm_old)
 # ggplot(filter(d1, probe_type=="old"), aes(time, tempC)) +
 #       geom_line() +
@@ -359,34 +388,150 @@ d1 <- rbind(fabio2_0cm_new,fabio2_0cm_old,fabio2_25cm_new,fabio2_25cm_old,fabio2
 
 fireid18 <- filter(d1, probe_type == "old", between(time, 56120,56180)) %>%
       mutate(fire_id = 18)
-fireid18 <- left_join(fireid18, select(fabio_burns_biomass, -fabio_id))
+# fireid18 <- left_join(fireid18, select(fabio_burns_biomass, -fabio_id))
 
 fireid19 <- filter(d1, probe_type == "old", between(time, 57240,57600)) %>%
       mutate(fire_id = 19)
-fireid19 <- left_join(fireid19, select(fabio_burns_biomass, -fabio_id))
+# fireid19 <- left_join(fireid19, select(fabio_burns_biomass, -fabio_id))
 
 fireid20 <- filter(d1, probe_type == "old", between(time, 58830,58920)) %>%
       mutate(fire_id = 20)
-fireid20 <- left_join(fireid20, select(fabio_burns_biomass, -fabio_id))
+# fireid20 <- left_join(fireid20, select(fabio_burns_biomass, -fabio_id))
 
 fireid21 <- filter(d1, probe_type == "old", between(time, 61000,61110)) %>%
       mutate(fire_id = 21)
-fireid21 <- left_join(fireid21, select(fabio_burns_biomass, -fabio_id))
+# fireid21 <- left_join(fireid21, select(fabio_burns_biomass, -fabio_id))
 
 fireid22 <- filter(d1, probe_type == "old", between(time, 62140,62210))%>%
       mutate(fire_id = 22)
-fireid22 <- left_join(fireid22, select(fabio_burns_biomass, -fabio_id))
+# fireid22 <- left_join(fireid22, select(fabio_burns_biomass, -fabio_id))
 
 fireid23 <- filter(d1, probe_type == "old", between(time, 63310,63400))%>%
       mutate(fire_id = 23)
-fireid23 <- left_join(fireid23, select(fabio_burns_biomass, -fabio_id))
+# fireid23 <- left_join(fireid23, select(fabio_burns_biomass, -fabio_id))
 
 fireid24 <- filter(d1, probe_type == "old", between(time, 64320,64400))%>%
       mutate(fire_id = 24)
-fireid24 <- left_join(fireid24, select(fabio_burns_biomass, -fabio_id))
+# fireid24 <- left_join(fireid24, select(fabio_burns_biomass, -fabio_id))
 
-d1 <- rbind(fireid1,fireid2,fireid3,fireid4,fireid5,fireid6,fireid7,fireid8,fireid9,fireid10,fireid11,fireid12,fireid13,fireid14,fireid15,fireid16,fireid17,fireid18,fireid19,fireid20,fireid21,fireid22,fireid23,fireid24)
 
+#+ Experimental Burns September 7, 2017: Fire IDs 25-37 ####
+# list.files("data/fire_temperatures/")
+
+fabio2_0cm_old <- read_csv("data/fire_temperatures/fabio2-0cm-old-20170907.csv")
+fabio2_0cm_new <- read_csv("data/fire_temperatures/fabio2-0cm-new-20170907.csv")
+names(fabio2_0cm_old) <- c("date","time","tempC")
+fabio2_0cm_old <- mutate(fabio2_0cm_old, location = "0cm", probe_type = "old")
+names(fabio2_0cm_new) <- c("date","time","tempC")
+fabio2_0cm_new <- mutate(fabio2_0cm_new, location = "0cm", probe_type = "new")
+
+fabio2_25cm_old <- read_csv("data/fire_temperatures/fabio2-25cm-old-20170907.csv")
+fabio2_25cm_new <- read_csv("data/fire_temperatures/fabio2-25cm-new-20170907.csv")
+names(fabio2_25cm_old) <- c("date","time","tempC")
+fabio2_25cm_old <- mutate(fabio2_25cm_old, location = "25cm", probe_type = "old")
+names(fabio2_25cm_new) <- c("date","time","tempC")
+fabio2_25cm_new <- mutate(fabio2_25cm_new, location = "25cm", probe_type = "new")
+
+fabio2_50cm_old <- read_csv("data/fire_temperatures/fabio2-50cm-old-20170907.csv")
+fabio2_50cm_new <- read_csv("data/fire_temperatures/fabio-50cm-new-20170907.csv")
+names(fabio2_50cm_old) <- c("date","time","tempC")
+fabio2_50cm_old <- mutate(fabio2_50cm_old, location = "50cm", probe_type = "old")
+names(fabio2_50cm_new) <- c("date","time","tempC")
+fabio2_50cm_new <- mutate(fabio2_50cm_new, location = "50cm", probe_type = "new")
+
+#+ Slice Experimental Burn Temperatures: Fire IDs 25-37 ####
+d1 <- rbind(fabio2_0cm_new,fabio2_0cm_old,fabio2_25cm_new,fabio2_25cm_old,fabio2_50cm_new,fabio2_50cm_old)
+
+# ggplot(filter(d1, probe_type=="old"), aes(time, tempC)) +
+#       geom_line() +
+#       # geom_point() +
+#       facet_grid(location~.) +
+#       theme_bw()
+# ggsave("fire-temps.png", width = 10, height = 8, dpi = 150)
+# ggplot(filter(d1, probe_type == "old", between(time, 37780,37970)),
+#        aes(time, tempC)) +
+#       geom_line() +
+#       facet_grid((location~.))
+
+fireid25 <- filter(d1, probe_type == "old", between(time, 36060,36200)) %>%
+      mutate(fire_id = 25)
+fireid26 <- filter(d1, probe_type == "old", between(time, 37780,37970)) %>%
+      mutate(fire_id = 26)
+fireid27 <- filter(d1, probe_type == "old", between(time, 39750,39940)) %>%
+      mutate(fire_id = 27)
+fireid28 <- filter(d1, probe_type == "old", between(time, 41360,41640)) %>%
+      mutate(fire_id = 28)
+fireid29 <- filter(d1, probe_type == "old", between(time, 43160,43400)) %>%
+      mutate(fire_id = 29)
+fireid30 <- filter(d1, probe_type == "old", between(time, 46030,46200)) %>%
+      mutate(fire_id = 30)
+fireid31 <- filter(d1, probe_type == "old", between(time, 47210,47340)) %>%
+      mutate(fire_id = 31)
+fireid32 <- filter(d1, probe_type == "old", between(time, 49240,49500)) %>%
+      mutate(fire_id = 32)
+fireid33 <- filter(d1, probe_type == "old", between(time, 51240,51440)) %>%
+      mutate(fire_id = 33)
+fireid34 <- filter(d1, probe_type == "old", between(time, 52830,53000)) %>%
+      mutate(fire_id = 34)
+fireid35 <- filter(d1, probe_type == "old", between(time, 56270,56415)) %>%
+      mutate(fire_id = 35)
+fireid36 <- filter(d1, probe_type == "old", between(time, 58030,58210)) %>%
+      mutate(fire_id = 36)
+fireid37 <- filter(d1, probe_type == "old", between(time, 59460,59840)) %>%
+      mutate(fire_id = 37)
+
+
+#+ Experimental Burns September 8, 2017: Fire IDs 38-42 ####
+fabio2_0cm_old <- read_csv("data/fire_temperatures/fabio2-0cm-old-20170908.csv")
+fabio2_0cm_new <- read_csv("data/fire_temperatures/fabio2-0cm-new-20170908.csv")
+names(fabio2_0cm_old) <- c("date","time","tempC")
+fabio2_0cm_old <- mutate(fabio2_0cm_old, location = "0cm", probe_type = "old")
+names(fabio2_0cm_new) <- c("date","time","tempC")
+fabio2_0cm_new <- mutate(fabio2_0cm_new, location = "0cm", probe_type = "new")
+
+fabio2_25cm_old <- read_csv("data/fire_temperatures/fabio2-25cm-old-20170908.csv")
+fabio2_25cm_new <- read_csv("data/fire_temperatures/fabio2-25cm-new-20170908.csv")
+names(fabio2_25cm_old) <- c("date","time","tempC")
+fabio2_25cm_old <- mutate(fabio2_25cm_old, location = "25cm", probe_type = "old")
+names(fabio2_25cm_new) <- c("date","time","tempC")
+fabio2_25cm_new <- mutate(fabio2_25cm_new, location = "25cm", probe_type = "new")
+
+fabio2_50cm_old <- read_csv("data/fire_temperatures/fabio2-50cm-old-20170908.csv")
+fabio2_50cm_new <- read_csv("data/fire_temperatures/fabio2-50cm-new-20170908.csv")
+names(fabio2_50cm_old) <- c("date","time","tempC")
+fabio2_50cm_old <- mutate(fabio2_50cm_old, location = "50cm", probe_type = "old")
+names(fabio2_50cm_new) <- c("date","time","tempC")
+fabio2_50cm_new <- mutate(fabio2_50cm_new, location = "50cm", probe_type = "new")
+
+#+ Slice Experimental Burn Temperatures: Fire IDs 38-42 ####
+d1 <- rbind(fabio2_0cm_new,fabio2_0cm_old,fabio2_25cm_new,fabio2_25cm_old,fabio2_50cm_new,fabio2_50cm_old)
+
+# ggplot(filter(d1, probe_type=="old"), aes(time, tempC)) +
+#       geom_line() +
+#       # geom_point() +
+#       facet_grid(location~.) +
+#       theme_bw()
+# ggsave("fire-temps.png", width = 10, height = 8, dpi = 150)
+# ggplot(filter(d1, probe_type == "old", between(time, 41830,41940)),
+#        aes(time, tempC)) +
+#       geom_line() +
+#       facet_grid((location~.))
+
+fireid38 <- filter(d1, probe_type == "old", between(time, 41830,41940)) %>%
+      mutate(fire_id = 38)
+fireid39 <- filter(d1, probe_type == "old", between(time, 44690,44810)) %>%
+      mutate(fire_id = 39)
+fireid40 <- filter(d1, probe_type == "old", between(time, 46180,46340)) %>%
+      mutate(fire_id = 40)
+fireid41 <- filter(d1, probe_type == "old", between(time, 47570,47700)) %>%
+      mutate(fire_id = 41)
+fireid42 <- filter(d1, probe_type == "old", between(time, 48360,48700)) %>%
+      mutate(fire_id = 42)
+
+#+ Join fire data into single file ####
+d1 <- rbind(fireid1,fireid2,fireid3,fireid4,fireid5,fireid6,fireid7,fireid8,fireid9,fireid10,fireid11,fireid12,fireid13,fireid14,fireid15,fireid16,fireid17,fireid18,fireid19,fireid20,fireid21,fireid22,fireid23,fireid24,fireid25,fireid26,fireid27,fireid28,fireid29,fireid30,fireid31,fireid32,fireid33,fireid34,fireid35,fireid36,fireid37,fireid38,fireid39,fireid40,fireid41,fireid42)
+
+d1 <- left_join(d1, fabio_burns_biomass, by = "fire_id")
 write_csv(d1,"data/fabio_burns_data.csv")
 
 #+ Plot Experimental FABIO Burns ####
@@ -453,73 +598,73 @@ ggplot(d2 %>% filter(litter_biomass==0), aes(standing_biomass, s_abv150)) +
       theme_bw()
 
 #+ Load Flame Height Temperature Sensor Data -------------------------------
-flame1_0cm <- read_csv("data/fire-temperatures/bland-c-f1-0cm-20170706.csv")
+flame1_0cm <- read_csv("data/fire_temperatures/bland-c-f1-0cm-20170706.csv")
 names(flame1_0cm) <- c("date","time","tempC")
 flame1_0cm <- mutate(flame1_0cm, location = "0cm", probe_type = "old")
-flame1_25cm <- read_csv("data/fire-temperatures/bland-c-f1-25cm-20170706.csv")
+flame1_25cm <- read_csv("data/fire_temperatures/bland-c-f1-25cm-20170706.csv")
 names(flame1_25cm) <- c("date","time","tempC")
 flame1_25cm <- mutate(flame1_25cm, location = "25cm", probe_type = "old")
-flame1_50cm <- read_csv("data/fire-temperatures/bland-c-f1-50cm-20170706.csv")
+flame1_50cm <- read_csv("data/fire_temperatures/bland-c-f1-50cm-20170706.csv")
 names(flame1_50cm) <- c("date","time","tempC")
 flame1_50cm <- mutate(flame1_50cm, location = "50cm", probe_type = "old")
 
-flame3_0cm <- read_csv("data/fire-temperatures/bland-c-f3-0cm-20170706.csv")
+flame3_0cm <- read_csv("data/fire_temperatures/bland-c-f3-0cm-20170706.csv")
 names(flame3_0cm) <- c("date","time","tempC")
 flame3_0cm <- mutate(flame3_0cm, location = "0cm", probe_type = "old")
-flame3_25cm <- read_csv("data/fire-temperatures/bland-c-f3-25cm-20170706.csv")
+flame3_25cm <- read_csv("data/fire_temperatures/bland-c-f3-25cm-20170706.csv")
 names(flame3_25cm) <- c("date","time","tempC")
 flame3_25cm <- mutate(flame3_25cm, location = "25cm", probe_type = "old")
-# flame3_50cm <- read_csv("data/fire-temperatures/bland-c-f3-50cm-20170706.csv")
+# flame3_50cm <- read_csv("data/fire_temperatures/bland-c-f3-50cm-20170706.csv")
 # names(flame3_50cm) <- c("date","time","tempC")
 ## This logger had failure in correctly recording temperature.
 
-flame4_0cm <- read_csv("data/fire-temperatures/bland-c-f4-0cm-20170706.csv")
+flame4_0cm <- read_csv("data/fire_temperatures/bland-c-f4-0cm-20170706.csv")
 names(flame4_0cm) <- c("date","time","tempC")
 flame4_0cm <- mutate(flame4_0cm, location = "0cm", probe_type = "old")
-flame4_25cm <- read_csv("data/fire-temperatures/bland-c-f4-25cm-20170706.csv")
+flame4_25cm <- read_csv("data/fire_temperatures/bland-c-f4-25cm-20170706.csv")
 names(flame4_25cm) <- c("date","time","tempC")
 flame4_25cm <- mutate(flame4_0cm, location = "25cm", probe_type = "old")
-flame4_50cm <- read_csv("data/fire-temperatures/bland-c-f4-50cm-20170706.csv")
+flame4_50cm <- read_csv("data/fire_temperatures/bland-c-f4-50cm-20170706.csv")
 names(flame4_50cm) <- c("date","time","tempC")
 flame4_50cm <- mutate(flame4_50cm, location = "50cm", probe_type = "old")
 
-flame5_0cm <- read_csv("data/fire-temperatures/bland-c-f5-0cm-20170706.csv")
+flame5_0cm <- read_csv("data/fire_temperatures/bland-c-f5-0cm-20170706.csv")
 names(flame5_0cm) <- c("date","time","tempC")
 flame5_0cm <- mutate(flame5_0cm, location = "0cm", probe_type = "old")
-flame5_25cm <- read_csv("data/fire-temperatures/bland-c-f5-25cm-20170706.csv")
+flame5_25cm <- read_csv("data/fire_temperatures/bland-c-f5-25cm-20170706.csv")
 names(flame5_25cm) <- c("date","time","tempC")
 flame5_25cm <- mutate(flame5_25cm, location = "25cm", probe_type = "old")
-flame5_50cm <- read_csv("data/fire-temperatures/bland-c-f5-50cm-20170706.csv")
+flame5_50cm <- read_csv("data/fire_temperatures/bland-c-f5-50cm-20170706.csv")
 names(flame5_50cm) <- c("date","time","tempC")
 flame5_50cm <- mutate(flame5_50cm, location = "50cm", probe_type = "old")
 
-flame6_0cm <- read_csv("data/fire-temperatures/bland-c-f6-0cm-20170706.csv")
+flame6_0cm <- read_csv("data/fire_temperatures/bland-c-f6-0cm-20170706.csv")
 names(flame6_0cm) <- c("date","time","tempC")
 flame6_0cm <- mutate(flame6_0cm, location = "0cm", probe_type = "old")
-flame6_25cm <- read_csv("data/fire-temperatures/bland-c-f6-25cm-20170706.csv")
+flame6_25cm <- read_csv("data/fire_temperatures/bland-c-f6-25cm-20170706.csv")
 names(flame6_25cm) <- c("date","time","tempC")
 flame6_25cm <- mutate(flame6_25cm, location = "25cm", probe_type = "old")
-flame6_50cm <- read_csv("data/fire-temperatures/bland-c-f6-50cm-20170706.csv")
+flame6_50cm <- read_csv("data/fire_temperatures/bland-c-f6-50cm-20170706.csv")
 names(flame6_50cm) <- c("date","time","tempC")
 flame6_50cm <- mutate(flame6_50cm, location = "50cm", probe_type = "old")
 
-flame7_0cm <- read_csv("data/fire-temperatures/bland-c-f7-0cm-20170706.csv")
+flame7_0cm <- read_csv("data/fire_temperatures/bland-c-f7-0cm-20170706.csv")
 names(flame7_0cm) <- c("date","time","tempC")
 flame7_0cm <- mutate(flame7_0cm, location = "0cm", probe_type = "old")
-flame7_25cm <- read_csv("data/fire-temperatures/bland-c-f7-25cm-20170706.csv")
+flame7_25cm <- read_csv("data/fire_temperatures/bland-c-f7-25cm-20170706.csv")
 names(flame7_25cm) <- c("date","time","tempC")
 flame7_25cm <- mutate(flame7_25cm, location = "25cm", probe_type = "old")
-flame7_50cm <- read_csv("data/fire-temperatures/bland-c-f7-50cm-20170706.csv")
+flame7_50cm <- read_csv("data/fire_temperatures/bland-c-f7-50cm-20170706.csv")
 names(flame7_50cm) <- c("date","time","tempC")
 flame7_50cm <- mutate(flame7_50cm, location = "50cm", probe_type = "old")
 
-flame8_0cm <- read_csv("data/fire-temperatures/bland-c-f8-0cm-20170706.csv")
+flame8_0cm <- read_csv("data/fire_temperatures/bland-c-f8-0cm-20170706.csv")
 names(flame8_0cm) <- c("date","time","tempC")
 flame8_0cm <- mutate(flame8_0cm, location = "0cm", probe_type = "old")
-flame8_25cm <- read_csv("data/fire-temperatures/bland-c-f8-25cm-20170706.csv")
+flame8_25cm <- read_csv("data/fire_temperatures/bland-c-f8-25cm-20170706.csv")
 names(flame8_25cm) <- c("date","time","tempC")
 flame8_25cm <- mutate(flame8_25cm, location = "25cm", probe_type = "old")
-flame8_50cm <- read_csv("data/fire-temperatures/bland-c-f8-50cm-20170706.csv")
+flame8_50cm <- read_csv("data/fire_temperatures/bland-c-f8-50cm-20170706.csv")
 names(flame8_50cm) <- c("date","time","tempC")
 flame8_50cm <- mutate(flame8_50cm, location = "50cm", probe_type = "old")
 
