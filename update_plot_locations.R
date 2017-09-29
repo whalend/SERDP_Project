@@ -23,7 +23,7 @@ library(sp); library(rgdal); library(dplyr)
 # avonpark_plots3 <- readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_29-JUN-17.gpx",
 #               layer = "waypoints")
 
-# list.files("/Volumes/GARMIN/Garmin/GPX", pattern = "7")
+list.files("/Volumes/GARMIN/Garmin/GPX", pattern = "AUG-17")
 
 # blandingF1 <- readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_21-JUN-17.gpx",
 #         layer = "waypoints")
@@ -31,22 +31,23 @@ library(sp); library(rgdal); library(dplyr)
 #         layer = "waypoints")
 
 waypts <-
-# ogrListLayers(("/Volumes/GARMIN/Garmin/GPX/Waypoints_26-MAY-17.gpx"))
+readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_30-AUG-17.gpx", layer = "waypoints")
 all_plots <- readOGR("data/plot-locations.shp")
 summary(all_plots)
 summary(waypts)
 # all_plots@coords
-## Add elevation coordinats to match dimentions of 'all_plots' coords slot
+## Add elevation coordinates to match dimentions of 'all_plots' coords slot
 # waypts@coords <- cbind(waypts@coords, waypts@data$ele)
 
 names(all_plots)
 names(waypts)
 waypts@data <- select(waypts@data, time, name, ele) %>%
       rename(elevGPS = ele) %>%
-      mutate(descriptio = "Semipermanent plot", blockID = "", blockDesc = "")
+      mutate(descriptio = "Semipermanent plot", blockID = "", blockDesc = "",
+             fire_year = "")
 # waypts <- waypts[-7,]
 waypts@data <- droplevels(
-      select(waypts@data, time, name, descriptio:blockDesc, elevGPS))
+      select(waypts@data, time, name, descriptio:blockDesc, elevGPS, fire_year))
 
 all_plots <- rbind(all_plots, waypts)
 # spRbind(all_plots, waypts)
