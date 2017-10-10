@@ -5,7 +5,7 @@ date: ""
 output: html_document
 ---
 
-Some mapping of abundant invasive plant species using the `leaflet` package.
+Some mapping of DoD installations for the SERDP project using the `leaflet` package.
 
 ```{r load libraries, include=FALSE}
 library(rgdal); library(maptools); library(sf); library(sp)
@@ -15,10 +15,18 @@ library(htmltools)
 ```
 
 ```{r load data, include=F}
-cogongrass <- st_read("data/Imperata/points.shp")
+all_dod <- read_sf("data/DoD-installations.shp")
+all_dod <- st_transform(all_dod, 4326)
 blanding_cogon <- st_read("data/CampBlanding/Cogon_Infestations.shp")
 blanding_cogon <- st_transform(blanding_cogon, 4326)
-microstegium <- st_read("data/Microstegium/points.shp")
+se_dod <- st_read("data/SE-DoD-installations.shp")
+se_dod <- st_transform(se_dod, 4326)
+
+cities <- readOGR("data/citiesx010g_shp/citiesx010g.shp")  
+cities <- cities[cities$STATE=="FL"|cities$STATE=="LA"|cities$STATE=="GA"|cities$STATE=="AL"|cities$STATE=="MS"|cities$STATE=="SC",]
+cities <- cities[cities$NAME=="New Orleans"&cities$STATE=="LA"|cities$NAME=="Orlando"|cities$NAME=="Atlanta"&cities$STATE=="GA"|cities$NAME=="Birmingham",]
+writeOGR(cities, "data/", "majorCities", driver="ESRI Shapefile")
+
 ```
 
 ```{r convert to spatial objects, eval=F, echo=F}
@@ -28,36 +36,67 @@ microstegium <- st_read("data/Microstegium/points.shp")
 ```
 
 ## Cogongrass & Microstegium in the U.S.
-This is the first map I've made using `leaflet`. It shows point observations of cogongrass (*Imperata cylindrica*) and *Microstegium* in the United States.
+This is the first map I've made using `leaflet`. It shows potential DoD installations to do sampling for the SERDP project.
 ```{r interactive map, echo=F}
 # florida <- map("county", "florida", plot=F)
-cogon_icon <- makeIcon(
-      iconUrl = "cogongrass.png",
-      iconWidth = 28, iconHeight = 65,
-      iconAnchorX = 22, iconAnchorY = 94
-      )
-micst_icon <- makeIcon(
-      iconUrl = "microstegium.png",
-      iconWidth = 28, iconHeight = 65,
-      iconAnchorX = 22, iconAnchorY = 94
-)
+# cogon_icon <- makeIcon(
+#       iconUrl = "cogongrass.png",
+#       iconWidth = 28, iconHeight = 65,
+#       iconAnchorX = 22, iconAnchorY = 94
+#       )
+# micst_icon <- makeIcon(
+#       iconUrl = "microstegium.png",
+#       iconWidth = 28, iconHeight = 65,
+#       iconAnchorX = 22, iconAnchorY = 94
+# )
 
 blanding_labels <- sprintf(
   "<strong>%s</strong><br/>%g Acres<sup>2</sup>",
   blanding_cogon$Site_Name, blanding_cogon$Acres
 ) %>% lapply(htmltools::HTML)
 
+all_dod_labels <- sprintf(
+  # "<strong>%s</strong><br/>%g Acres<sup>2</sup>",
+  all_dod$FULLNAME
+)
+se_dod_labels <- sprintf(
+  # "<strong>%s</strong><br/>%g Acres<sup>2</sup>",
+  as.character(droplevels(se_dod$FULLNAME))
+)
+
 m <- leaflet() %>%
       # addTiles() %>%  # Add default OpenStreetMap map tiles
       addProviderTiles(providers$Esri.WorldImagery) %>% 
-      addMarkers(data = cogongrass, icon = cogon_icon,
-                 label = "Imperata", group = "Imperata",
-                 labelOptions = labelOptions(offset = c(-10,-50)), 
-                 clusterOptions = markerClusterOptions()) %>%
-      addMarkers(data = microstegium, icon = micst_icon,
-                 label = "Microstegium", group = "Microstegium",
-                 labelOptions = labelOptions(offset = c(0,-50)),
-                 clusterOptions = markerClusterOptions()) %>% 
+      addPolygons(data = all_dod, group = "All DoD Installations",
+                  color = "red", fillOpacity = 0.3,
+                  highlightOptions = highlightOptions(
+                        color = "white", weight = 2,
+                        bringToFront = TRUE),
+                  label = all_dod_labels,
+                  labelOptions = labelOptions(
+                        style = list("font-weight" = "normal", 
+                                     padding = "3px 8px"),
+                        textsize = "15px",
+                        direction = "auto")) %>% 
+      addPolygons(data = se_dod, group = "SE DoD Installations",
+                  color = "yellow", fillOpacity = 0.3,
+                  highlightOptions = highlightOptions(
+                        color = "white", weight = 2,
+                        bringToFront = TRUE),
+                  label = se_dod_labels,
+                  labelOptions = labelOptions(
+                        style = list("font-weight" = "normal", 
+                                     padding = "3px 8px"),
+                        textsize = "15px",
+                        direction = "auto")) %>% 
+      # addMarkers(data = cogongrass, icon = cogon_icon,
+      #            label = "Imperata", group = "Imperata",
+      #            labelOptions = labelOptions(offset = c(-10,-50)), 
+      #            clusterOptions = markerClusterOptions()) %>%
+      # addMarkers(data = microstegium, icon = micst_icon,
+      #            label = "Microstegium", group = "Microstegium",
+      #            labelOptions = labelOptions(offset = c(0,-50)),
+      #            clusterOptions = markerClusterOptions()) %>% 
       addPolygons(data = blanding_cogon, group = "Camp Blanding Imperata Infestation",
                   color = "orange", fillOpacity = 0.3,
                   highlightOptions = highlightOptions(
@@ -71,7 +110,7 @@ m <- leaflet() %>%
                         direction = "auto")) %>% 
       addLayersControl(
             # baseGroups = c("OSM (default)", "Toner", "Toner Lite"),
-            overlayGroups = c("Imperata", "Microstegium", "Camp Blanding Imperata Infestation"),
+            overlayGroups = c("All DoD Installations", "Southeast DoD Installations", "Camp Blanding IMCY Infestation"),
             options = layersControlOptions(collapsed = FALSE)
   )
 m
