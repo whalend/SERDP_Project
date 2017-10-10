@@ -328,5 +328,23 @@ writeOGR(shelby_cogon_untrt, "data/CampShelby/", "untreated_cogon", driver = "ES
 
 
 # Moody AFB ---------------------------------------------------------------
-moody_rx2017 <- readOGR("data/MoodyAFB/fire-shapefiles/RXBurnedAreaFY2017MoodyAFB.shp")
+shp_list <- list.files("data/MoodyAFB/fire-shapefiles/", pattern = "[shp]$")
+shp_list <- strsplit(shp_list, ".shp")
+for(shp in shp_list){
+      # df <- readOGR(dsn = "data/Avon-Park/fire_shapefiles/", layer = shp)
+      # df <-
+      assign(shp,
+             readOGR(dsn = "data/MoodyAFB/fire-shapefiles/", layer = shp))
+}
+# rm(shp)
+# rm(shp_list)
+
+# Assign and fill new field with fire fiscal year
+# shp_list <- as.list(.GlobalEnv)
+# fy <- 1996
+# for(shp in shp_list){
+#       shp$fire_fiscal_year <- fy
+#       fy <- fy + 1
+# }
+
 
