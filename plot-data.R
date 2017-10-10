@@ -13,6 +13,14 @@ plot_data <- plot_data %>%
       mutate(plot_id = tolower(stri_sub(name, -2,-1)),
              installation = tolower(stri_sub(name,1,-3))) %>%
       select(installation, plot_id, fire_year, years_since_fire, imcy_inv)
+## Add labels column for installation names
+plot_data$full_names[plot_data$installation=="blanding"] <- "Camp Blanding"
+plot_data$full_names[plot_data$installation=="eglin"] <- "Eglin AFB"
+plot_data$full_names[plot_data$installation=="tyndall"] <- "Tyndall AFB"
+plot_data$full_names[plot_data$installation=="avonpark"] <- "Avon Park AFR"
+plot_data$full_names[plot_data$installation=="shelby"] <- "Camp Shelby"
+plot_data$full_names[plot_data$installation=="moody"] <- "Moody AFB"
+
 
 ggplot(plot_data, aes(installation)) +
       geom_bar() +
@@ -298,14 +306,14 @@ ggplot(species_data %>%
 
 #' ## Tree Stem Data
 #+ tree data ####
-tree_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "trees")
+tree_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/tree-data.csv")
 tree_data
 
-tree_data_sub <- filter(tree_data, date>"2017-06-01", plot_id != "bland03", plot_id != "bland02")
+tree_data_sub <- filter(tree_data, date>"2017-06-01", plotid != "bland03", plotid != "bland02")
 
 tree_data_sub <- left_join(
       tree_data_sub,
-      select(plot_data, installation,plot_id,last_fire_year:years_since_fire),
+      select(plot_data, installation:full_names),
       by = c("installation","plot_id"))
 
 ggplot(tree_data_sub %>%
@@ -340,14 +348,14 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-height-jitter.png", height=7)
 #' ## Biomass data sampled at 25cm quadrats
 #'
 #+ 25cm biomass data ####
-biomass_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "quadrat25cm")
+biomass_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/quadrat25cm.csv")
 
 biomass_data <- filter(biomass_data, date>"2017-04-25", plot_id!="bland02", plot_id!="bland03")
 summary(biomass_data)
 biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
 biomass_data <- left_join(
       select(biomass_data, installation,plot_id,fuel_mass_wet,litter_mass_wet),
-      select(plot_data, installation,plot_id,last_fire_year:years_since_fire),
+      select(plot_data, installation:full_names),
       by = c("installation","plot_id")
 )
 # biomass_data$last_fire_year <- as.integer(biomass_data$last_fire_year)
@@ -406,17 +414,41 @@ tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
 
 tick_data <- left_join(
       tick_data,
-      select(plot_data, installation,plot_id,last_fire_year:cogongrass,years_since_fire),
+      select(plot_data, installation,plot_id,fire_year:full_names),
       by = c("installation", "plot_id")
 )
+summary(tick_data)
+filter(tick_data, is.na(years_since_fire))
+# "extra" ticks at Moody AFB were from an area last burned in 2005
+tick_data$years_since_fire[tick_data$installation=="moody"] <- 2017-2005
+
 
 ggplot(tick_data %>%
              group_by(installation,years_since_fire,Species) %>%
              summarise(tick_number = sum(count)),
-       aes(years_since_fire, tick_number, color = Species)) +
-      geom_point(position = "jitter") +
-      theme_bw()
+       aes(as.factor(years_since_fire), tick_number)) +
+      # geom_point(position = "jitter") +
+      geom_bar(fill = "#124873", stat = "identity", position = "dodge") +
+      # facet_grid(installation~., scales = "free_y") +
+      xlab("Years since fire") +
+      ylab("Tick abundance") +
+      theme_bw() +
+      theme(axis.text = element_text(size = 18),
+            axis.title = element_text(size = 22))
+
+ggplot(tick_data %>%
+             group_by(full_names, years_since_fire, Species) %>%
+             summarise(tick_number = sum(count)),
+       aes(as.factor(years_since_fire), tick_number, fill = Species)) +
+      # geom_point(position = "jitter") +
+      geom_bar(stat = "identity", position = "dodge") +
+      facet_grid(full_names~., scales = "free_y") +
+      xlab("Years since fire") +
+      ylab("Tick abundance") +
+      theme_bw() +
+      theme(axis.text = element_text(size = 18),
+            axis.title = element_text(size = 22))
 
 #' ## Host Abundance Estimates
 #+ dung data ####
-dung_data <- tick_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "dung")
+dung_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/dung.csv")
