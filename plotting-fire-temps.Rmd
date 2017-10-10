@@ -85,7 +85,7 @@ ggplot(filter(d2, pct_green>0, location=="25cm"),
       # geom_line(aes(color = factor(pct_green), 
       #               linetype = biomass_type), size = 1.2) +
       geom_smooth(aes(color = factor(pct_green), linetype = biomass_type), 
-                  method = "lm", se = F, size = 1.2) +
+                  method = "loess", se = F, size = 1.2) +
       geom_vline(xintercept = 550, linetype = "dotted", size = 1) +
       geom_vline(xintercept = 2070, linetype = "longdash", size = 1) +
       # facet_grid(location~.) +
@@ -212,12 +212,12 @@ ggsave("figures/wiregrass_cogon_max_timeabv150_shading.png", dpi = 300)
 
 ## Cogongrass Only Figures with Litter Biomass
 ```{r cogongrass time above 150 ºC}
-ggplot(filter(d2, pct_green>0, biomass_type=="cogongrass"), 
+ggplot(filter(d2, pct_green>0, biomass_type=="cogongrass", litter_biomass < 501), 
        aes(standing_biomass, s_abv150)) +
-      geom_point(aes(color = factor(pct_green),
-                     # shape = factor(litter_biomass)
-                     alpha = litter_biomass
-                     ), size = 2
+      geom_point(aes(shape = factor(litter_biomass),
+                     color = factor(pct_green)
+                     # alpha = litter_biomass
+                     ), size = 2, position = position_jitterdodge()
                  ) +
       # geom_line(aes(color = factor(pct_green))) +
       facet_grid(location~.) +
@@ -229,10 +229,11 @@ ggplot(filter(d2, pct_green>0, biomass_type=="cogongrass"),
       theme(legend.position = "bottom", panel.grid.minor = element_blank()) +
       ggtitle("Cogongrass only") +
       labs(color = "% Green",
-           # shape = "Litter\nBiomass (g)"
-           alpha = "Litter\nBiomass (g)"
+           shape = "Litter\nBiomass (g)"
+           # alpha = "Litter\nBiomass (g)"
            )
-ggsave("figures/cogon_timeabv150_shading.png", dpi = 300)
+ggsave("figures/cogon_timeabv150_litter_pctgreen.png", dpi = 300, width = 10,
+       height = 8)
 ```
 
 ```{r cogongrass maximum temperature}
