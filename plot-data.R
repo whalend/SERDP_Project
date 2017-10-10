@@ -1,85 +1,251 @@
-#plot data
+library(plyr); library(dplyr); library(ggplot2); library(readr)
+library(stringi)
 
-library(readxl)
-library(plyr); library(dplyr); library(ggplot2)
+#+ plot data ####
+# plot_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/plot_info.csv")
 
-plot_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "plotinfo")
-plot_data$years_since_fire <- 2017 - plot_data$last_fire_year
+plot_locations <- rgdal::readOGR("data/plot-locations.shp")
+plot_data <- plot_locations@data
+plot_data$fire_year <- as.integer(as.character(plot_data$fire_year))
+plot_data$years_since_fire <- 2017 - plot_data$fire_year
+plot_data <- plot_data %>%
+      filter(is.na(fire_year)==FALSE) %>%
+      mutate(plot_id = tolower(stri_sub(name, -2,-1)),
+             installation = tolower(stri_sub(name,1,-3))) %>%
+      select(installation, plot_id, fire_year, years_since_fire, imcy_inv)
 
+ggplot(plot_data, aes(installation)) +
+      geom_bar() +
+      ylab("Number of plots") +
+      ggtitle("Number of plots established at each installation") +
+      theme_bw()
 
-tick_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "ticks")
-dung_data <- tick_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "dung")
+ggplot(plot_data, aes(as.factor(years_since_fire))) +
+      geom_bar(aes(fill = imcy_inv), position = "dodge") +
+      ylab("Number of plots") +
+      xlab("Years since last fire") +
+      ggtitle("Plots sampled across burn units") +
+      theme_bw()
+# Number of burn units sampled
+length(unique(plot_data$fire_year))
+
+ggplot(plot_data, aes(as.factor(years_since_fire))) +
+      geom_bar() +
+      facet_grid(installation ~ .) +
+      ylab("Number of plots") +
+      xlab("Years since last fire") +
+      ggtitle("Number of plots across burn units by installation") +
+      theme_bw()
+
+ggplot(plot_data, aes(imcy_inv)) +
+      geom_bar() +
+      ylab("Number of plots") +
+      xlab("") +
+      ggtitle("Invaded plots: 8, Uninvaded plots: 21") +
+      theme_bw()
 
 
 #' ## Quadrat Data
-#' Total % cover
+#' Percent cover
 #'
-#'    -litter
-#'    -bare ground
+#'    - litter
+#'    - bare ground
+#'    - green
+#'
+#' Heights
+#'
+#'    - woody vegetation
+#'    - grassy/herbaceous vegetation
+#'    - litter (depth)
+#'
 #+ quadrat data ####
-quadrat_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "quadrat1m")
+quadrat_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/quadrat1m.csv")
+quadrat_data$date <- as.Date(quadrat_data$date, format = "%m/%d/%Y")
+quadrat_data <- filter(quadrat_data, date > "2017-06-01")# discard early data collection at Camp Blanding
+
 summary(quadrat_data)
+
+quadrat_data$woody_veg_ht1[is.na(quadrat_data$woody_veg_ht1)] <- 0
+# quadrat_data$woody_veg_ht1 <- as.numeric(quadrat_data$woody_veg_ht1)
+quadrat_data$veg_ht1[is.na(quadrat_data$veg_ht1)] <- 0
+# quadrat_data$veg_ht1 <- as.numeric(quadrat_data$veg_ht1)
+quadrat_data$pct_green[quadrat_data$pct_green=="<1"] <- 0.5
+quadrat_data$pct_green <- as.numeric(quadrat_data$pct_green)
+
 hist(quadrat_data$pct_green)
 hist(quadrat_data$pct_litter)
 
-quadrat_sub <- filter(quadrat_data, plot_id != "bland03" & plot_id != "bland02")
-quadrat_sub <- (filter(quadrat_data, !quadrat_id %in% c("w2","w4","n2","n4","s2","s4","e2","e4")))
-summary(quadrat_sub)
-hist(quadrat_sub$pct_green)
+quadrat_summaries <- quadrat_data %>%
+      group_by(installation, plot_id) %>%
+      summarise(
+            avg_woody_ht1 = mean(woody_veg_ht1),
+            avg_woody_ht_all = mean(
+                  c(woody_veg_ht1,woody_veg_ht2,woody_veg_ht3), na.rm = T),
+            avg_herb_ht1 = mean(veg_ht1),
+            avg_herb_ht_all = mean(c(veg_ht1,veg_ht2,veg_ht3), na.rm = T),
+            avg_litter_depth1 = mean(litter_ht1),
+            avg_litter_depth_all =
+                  mean(c(litter_ht1,litter_ht2,litter_ht3), na.rm = T),
+            avg_pct_green = mean(pct_green),
+            avg_pct_litter = mean(pct_litter),
+            avg_pct_wood = mean(pct_wood),
+            avg_pct_bare = mean(pct_bare))
 
-t.test(quadrat_data$pct_green,quadrat_sub$pct_green)
-t.test(quadrat_data$pct_litter,quadrat_sub$pct_litter)
+quadrat10m_summaries <- quadrat_data %>%
+      filter(quadrat_id == "n10"|quadrat_id == "e10"|quadrat_id=="s10"|quadrat_id=="w10") %>%
+      group_by(installation, plot_id) %>%
+      summarise(
+            avg_woody_ht1 = mean(woody_veg_ht1),
+            avg_woody_ht_all = mean(
+                  c(woody_veg_ht1,woody_veg_ht2,woody_veg_ht3), na.rm = T),
+            avg_herb_ht1 = mean(veg_ht1),
+            avg_herb_ht_all = mean(c(veg_ht1,veg_ht2,veg_ht3), na.rm = T),
+            avg_litter_depth1 = mean(litter_ht1),
+            avg_litter_depth_all =
+                  mean(c(litter_ht1,litter_ht2,litter_ht3), na.rm = T),
+            avg_pct_green = mean(pct_green),
+            avg_pct_litter = mean(pct_litter),
+            avg_pct_wood = mean(pct_wood),
+            avg_pct_bare = mean(pct_bare))
 
+summary(quadrat_summaries)
+summary(quadrat10m_summaries)
+
+#' ## Compare All Quadrat Data to Subset of Data
+#' Test for differences in means of data summarized across all quadrats (12) to data from the quadrats at 10-meters (4).
+#'
+#+ compare all quadrats to subset of 4 at 10m ####
+par(mfrow=c(1,2))
+hist(log(quadrat_summaries$avg_woody_ht1))
+hist(log(quadrat10m_summaries$avg_woody_ht1))
+t.test(log(quadrat_summaries$avg_woody_ht1),log(quadrat10m_summaries$avg_woody_ht1), var.equal = F)
+
+hist(log(quadrat_summaries$avg_woody_ht_all))
+var(log(quadrat_summaries$avg_woody_ht_all))
+hist(log(quadrat10m_summaries$avg_woody_ht_all))
+var(log(quadrat10m_summaries$avg_woody_ht_all))
+t.test(log(quadrat_summaries$avg_woody_ht_all),log(quadrat10m_summaries$avg_woody_ht_all), var.equal = F)
+
+hist(log(quadrat_summaries$avg_herb_ht1))
+var(log(quadrat_summaries$avg_herb_ht1))
+hist(log(quadrat10m_summaries$avg_herb_ht1))
+var(log(quadrat10m_summaries$avg_herb_ht1))
+t.test(log(quadrat_summaries$avg_herb_ht1),
+       log(quadrat10m_summaries$avg_herb_ht1), var.equal = F)
+
+hist(log(quadrat_summaries$avg_herb_ht_all))
+var(log(quadrat_summaries$avg_herb_ht_all))
+hist(log(quadrat10m_summaries$avg_herb_ht_all))
+var(log(quadrat10m_summaries$avg_herb_ht_all))
+t.test(log(quadrat_summaries$avg_herb_ht_all),
+       log(quadrat10m_summaries$avg_herb_ht_all), var.equal = F)
+
+hist(log(quadrat_summaries$avg_litter_depth1))
+var(log(quadrat_summaries$avg_litter_depth1))
+hist(log(quadrat10m_summaries$avg_litter_depth1))
+var(log(quadrat10m_summaries$avg_litter_depth1))
+t.test(log(quadrat_summaries$avg_litter_depth1),
+       log(quadrat10m_summaries$avg_litter_depth1), var.equal = F)
+
+hist(log(quadrat_summaries$avg_litter_depth_all))
+var(log(quadrat_summaries$avg_litter_depth_all))
+hist(log(quadrat10m_summaries$avg_litter_depth_all))
+var(log(quadrat10m_summaries$avg_litter_depth_all))
+t.test(log(quadrat_summaries$avg_litter_depth_all),
+       log(quadrat10m_summaries$avg_litter_depth_all), var.equal = T)
+
+hist((quadrat_summaries$avg_pct_green))
+var((quadrat_summaries$avg_pct_green))
+hist((quadrat10m_summaries$avg_pct_green))
+var((quadrat10m_summaries$avg_pct_green))
+t.test((quadrat_summaries$avg_pct_green),
+       (quadrat10m_summaries$avg_pct_green), var.equal = F)
+
+hist(log(quadrat_summaries$avg_pct_litter))
+var(log(quadrat_summaries$avg_pct_litter))
+hist(log(quadrat10m_summaries$avg_pct_litter))
+var(log(quadrat10m_summaries$avg_pct_litter))
+t.test(log(quadrat_summaries$avg_pct_litter),
+       log(quadrat10m_summaries$avg_pct_litter), var.equal = F)
+
+hist(log1p(quadrat_summaries$avg_pct_bare))
+var((quadrat_summaries$avg_pct_bare))
+hist(log1p(quadrat10m_summaries$avg_pct_bare))
+var((quadrat10m_summaries$avg_pct_bare))
+t.test(log1p(quadrat_summaries$avg_pct_bare),
+       log1p(quadrat10m_summaries$avg_pct_bare), var.equal = F)
+
+#' There are no statistical differences in the means of these variables, which are aggregated to the plot level, based on these t-tests.
+
+#' ## Canopy Cover Data
+#'
+#+ load canopy cover data ####
+canopy_cover <- read_csv("~/Dropbox (UF)/SERDP-Project/data/densiometer_canopy_cover.csv")
+
+canopy_cover_summary <- canopy_cover %>%
+      group_by(installation, plot_id) %>%
+      summarise(avg_canopy_cover = mean(pct_canopy_cover),
+                sd_canopy_cover = sd(pct_canopy_cover),
+                n_obs = 12)
+
+#+ join data summarised at plot level ####
+plot_data1 <- left_join(ungroup(plot_data), ungroup(canopy_cover_summary))
+plot_data1 <- left_join(ungroup(plot_data), ungroup(quadrat_summaries))
 
 #' ## Species Data - 1-meter Quadrats
 #'
 #+ species data ####
-species_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "species1m")
-species_data <- filter(species_data, date>"2017-06-01", plot_id != "bland03" & plot_id != "bland02")
-summary(species_data)
+species_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/species1m.csv")
+species_data$date <- as.Date(species_data$date, format = "%m/%d/%Y")
+species_data <- filter(species_data, date>"2017-06-01")
+species_data$veg_id <- tolower(species_data$veg_id)
 length(unique(species_data$veg_id))
 species_data <- left_join(
       species_data,
-      select(plot_data, installation, plot_id, last_fire_year:years_since_fire),
+      select(plot_data, installation, plot_id, fire_year:imcy_inv),
       by = c("installation","plot_id")
 )
+summary(species_data)
 
-species_sub <- (filter(species_data, !quadrat_id %in% c("w2","w4","n2","n4","s2","s4","e2","e4")))
+species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10")))
 length(unique(species_sub$veg_id))
+summary(species_sub)
 
 ## Testing for differences in dense vs. less dense data collection
-# hist(species_data$pct_cover)
-# hist(species_sub$pct_cover)
-# t.test(species_data$pct_cover,species_sub$pct_cover)
+hist(log(species_data$pct_cover))
+var(log(species_data$pct_cover))
+hist(log(species_sub$pct_cover))
+var(log(species_sub$pct_cover))
+t.test(log(species_data$pct_cover), log(species_sub$pct_cover),
+       var.equal = T, paired = F)
 
-species_over_5pct <- species_sub %>%
-      filter(pct_cover>5) %>%
-      select(installation,plot_id,veg_id,pct_cover,`Scientific Name`,years_since_fire, cogongrass, land_use)
-species_over_5pct <- filter(species_over_5pct, cogongrass != "NA")
+
+species_over_5pct <- filter(species_data, pct_cover>5)
+# species_sub_over_5pct <- filter(species_sub_over_5pct, cogongrass != "NA")
 
 ggplot(species_over_5pct,
-       aes(years_since_fire,pct_cover, color = `Scientific Name`)) +
+       aes(years_since_fire, pct_cover, color = veg_id)) +
       geom_point(position="jitter") +
       theme_bw() +
-      facet_grid(installation~cogongrass) +
+      facet_grid(installation~imcy_inv) +
       ylab("% cover") +
       xlab("Years since fire") +
-      ggtitle("Range of species cover at 1-meter quadrats")
+      ggtitle("Range of species cover (>5%) at 1-meter quadrats")
 ggsave("~/Dropbox (UF)/SERDP-Project/figures/species-pct-cover.png",
        height = 7)
 
 # datac$se <- datac$sd / sqrt(datac$N)
-avg_species_cover <- species_over_5pct %>%
-             group_by(installation, cogongrass, years_since_fire) %>%
+avg_species_cover <- species_data %>%
+             group_by(installation, imcy_inv, years_since_fire) %>%
              summarise(avg_pct_cover = mean(pct_cover),
-                       occurrence = length(veg_id),
+                       # n_obs = length(veg_id),
                        max_pct_cover = max(pct_cover),
                        se = sd(pct_cover)/sqrt(length(pct_cover)))
 ggplot(avg_species_cover,
-      aes(years_since_fire, avg_pct_cover, fill = cogongrass)) +
+      aes(as.factor(years_since_fire), avg_pct_cover, fill = imcy_inv)) +
       geom_bar(stat = "identity", position = "dodge") +
       geom_errorbar(aes(ymin = avg_pct_cover + se, ymax = avg_pct_cover - se),
-                    width = .2) +
+                    width = .2, position=position_dodge(width = .9)) +
       facet_grid(installation~.) +
       theme_bw() +
       ylab("Average % cover") +
@@ -110,14 +276,17 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/avg-pct-cover-bars.png",
 
 head(species_data)
 
-ggplot(species_data %>% filter(pct_cover >=0, date > "2017-06-01", plot_id != "bland02", plot_id != "bland03") %>% group_by(installation, plot_id) %>%
+ggplot(species_data %>%
+             group_by(installation, plot_id) %>%
              summarise(richness = length(unique(veg_id))),
        aes(plot_id, richness)) +
       geom_point() +
       facet_grid(.~installation) +
       theme_bw()
 
-ggplot(species_data %>% filter(pct_cover >=0, date > "2017-06-01", plot_id != "bland02", plot_id != "bland03") %>% group_by(installation, plot_id),
+ggplot(species_data %>%
+             filter(pct_cover > 1) %>%
+             group_by(installation, plot_id),
        aes(plot_id, pct_cover, color = veg_id)) +
       geom_point(position = "jitter") +
       facet_grid(.~installation) +
@@ -228,10 +397,12 @@ ggplot(cogon_biomass, aes(years_since_fire, biomass)) +
 ggsave("~/Dropbox (UF)/SERDP-Project/figures/cogon-biomass.png", height = 7)
 
 
-#' ## Tick Data
+#' ## Tick Abundance Estimates
 #+ tick data ####
-tick_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "ticks")
+tick_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/ticks.csv")
+
 tick_data$plot_id <- tolower(tick_data$plot_id)
+tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
 
 tick_data <- left_join(
       tick_data,
@@ -245,3 +416,7 @@ ggplot(tick_data %>%
        aes(years_since_fire, tick_number, color = Species)) +
       geom_point(position = "jitter") +
       theme_bw()
+
+#' ## Host Abundance Estimates
+#+ dung data ####
+dung_data <- tick_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "dung")
