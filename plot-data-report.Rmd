@@ -1,6 +1,9 @@
 ---
 title: "Fire-Plant Invasions-TBD Year 1 Report"
-output: html_document
+output: 
+   html_document:
+     self_contained: no
+     toc: yes
 ---
 
 ```{r set options, echo=F}
@@ -12,17 +15,29 @@ knitr::opts_chunk$set(warning = F)
 knitr::opts_chunk$set(message = F)
 ```
 
-
 ```{r load libraries}
 library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi)
+```
+
+```{r assign global variables}
+def_theme <- theme(legend.title = element_blank(),
+            legend.text = element_text(size = 18),
+            legend.position = "right",
+            axis.text = element_text(size = 18),
+            axis.title = element_text(size = 18),
+            plot.title = element_text(size = 20)
+            )
+invasion_color <- scale_color_manual(values = c("darkorange","green4"))
+invasion_fill <- scale_fill_manual(values = c("darkorange","green4"))
+no_legend_title <- theme(legend.title = element_blank())
 ```
 
 
 ```{r plot data manipulation}
 # plot_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/plot_info.csv")
 
-plot_locations <- rgdal::readOGR("data/plot-locations.shp")
+plot_locations <- rgdal::readOGR("data/plot-locations.shp", verbose = F)
 plot_data <- plot_locations@data
 plot_data$fire_year <- as.integer(as.character(plot_data$fire_year))
 plot_data$years_since_fire <- 2017 - plot_data$fire_year
@@ -41,11 +56,11 @@ plot_data$full_names[plot_data$installation=="moody"] <- "Moody AFB"
 ```
 
 # Installations Visited and Plots Sampled
-* `r n_distinct(plot_data$installation)` installations
-* `r n_distinct(plot_data$years_since_fire)` burn units 
-* `r length(plot_data$plot_id)` plots 
+* **`r n_distinct(plot_data$installation)` installations**
+* **`r n_distinct(plot_data$years_since_fire)` burn units**
+* **`r length(plot_data$plot_id)` plots**
 
-```{r summary of plots visited}
+```{r summary of plots visited, fig.width=10}
 # ggplot(plot_data, aes(installation)) +
 #       geom_bar() +
 #       ylab("Number of plots") +
@@ -60,30 +75,17 @@ ggplot(plot_data, aes(full_names)) +
       ylab("Number of plots") +
       xlab("") +
       # ggtitle("Plots in Burn Units Across Installations") +
-      theme_bw() +
-      theme(legend.title = element_blank(),
-            legend.text = element_text(size = 18),
-            legend.position = "right",
-            axis.text = element_text(size = 18),
-            axis.title = element_text(size = 18),
-            plot.title = element_text(size = 20)
-            )
-
+      theme_bw()
+      
 ggplot(plot_data, aes(as.factor(years_since_fire))) +
       geom_bar(aes(fill = imcy_inv), position = "dodge") +
-      scale_fill_brewer(palette = "Dark2", type = "div", direction = 1) +
+      invasion_fill +
       # scale_fill_discrete(h = c(249,200)) +
       ylab("Number of plots") +
       xlab("Years since last fire") +
       ggtitle("Invaded vs. Uninvaded Plots Across Burn Units") +
       theme_bw() +
-      theme(legend.title = element_blank(),
-            legend.text = element_text(size = 18),
-            legend.position = "right",
-            axis.text = element_text(size = 18),
-            axis.title = element_text(size = 18),
-            plot.title = element_text(size = 20)
-            )
+      theme(legend.title = element_blank())
 
 # ggplot(plot_data, aes(imcy_inv)) +
 #       geom_bar() +
@@ -93,7 +95,387 @@ ggplot(plot_data, aes(as.factor(years_since_fire))) +
 #       theme_bw()
 ```
 
-# General Vegetation Data 
+# Species Data - 1-meter Quadrats
+
+```{r load species data}
+species_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/species1m.csv")
+species_data$date <- as.Date(species_data$date, format = "%m/%d/%Y")
+species_data <- filter(species_data, date>"2017-06-01")
+species_data$veg_id <- tolower(species_data$veg_id)
+# length(unique(species_data$veg_id))
+species_data <- left_join(
+      species_data,
+      select(plot_data, installation:full_names),
+      by = c("installation","plot_id")
+)
+# summary(species_data)
+
+species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10")))
+# length(unique(species_sub$veg_id))
+# summary(species_sub)
+```
+
+```{r average species cover, fig.height=9}
+# datac$se <- datac$sd / sqrt(datac$N)
+avg_species_cover <- species_data %>%
+             group_by(full_names, plot_id, imcy_inv, years_since_fire, quadrat_id) %>%
+      summarise(veg_cover = sum(pct_cover)) %>% 
+      ungroup(.) %>% 
+      group_by(full_names, plot_id, imcy_inv, years_since_fire) %>% 
+             summarise(avg_veg_cover = mean(veg_cover),
+                       # n_obs = length(veg_id),
+                       max_veg_cover = max(veg_cover),
+                       se_veg_cover = sd(veg_cover)/sqrt(length(veg_cover)))
+ggplot(avg_species_cover,
+      aes(as.factor(years_since_fire), avg_veg_cover, fill = imcy_inv)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      invasion_fill +
+      geom_errorbar(aes(ymin = avg_veg_cover + se_veg_cover, ymax = avg_veg_cover - se_veg_cover),
+                    width = .2, position=position_dodge(width = .9)) +
+      facet_grid(full_names~.) +
+      theme_bw() +
+      ylab("% Cover") +
+      xlab("Years since fire") +
+      ggtitle("Average Vegetation Cover Across 1-meter Quadrats") +
+      theme(legend.title = element_blank())
+
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/avg-pct-cover-bars.png", height = 7)
+```
+
+```{r species richness, eval=F}
+species_over_5pct <- filter(species_data, pct_cover>5)
+# species_sub_over_5pct <- filter(species_sub_over_5pct, cogongrass != "NA")
+
+ggplot(species_over_5pct,
+       aes(years_since_fire, pct_cover, color = veg_id)) +
+      geom_point(position="jitter") +
+      theme_bw() +
+      facet_grid(installation~imcy_inv) +
+      ylab("% cover") +
+      xlab("Years since fire") +
+      ggtitle("Range of species cover (>5%) at 1-meter quadrats")
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/species-pct-cover.png", height = 7)
+
+
+
+# species_sub <- (filter(species_data2, !quadrat_id %in% c("w2","w4","n2","n4","s2","s4","e2","e4")))
+# species_sub_plot <- ggplot(species_sub %>%
+#                              filter(pct_cover > 5) %>%
+#                              group_by(plot_id, veg_id) %>%
+#                              summarise(avg_pct_cover = mean(pct_cover),
+#                                        occurrence = length(veg_id)),
+#       aes(veg_id,avg_pct_cover, label = occurrence))
+
+# species_sub_plot +
+#       geom_bar(stat = "identity") +
+#       facet_grid(plot_id ~.) +
+#       theme_bw() +
+#       ggtitle("12 quadrats per plot")
+
+      # dbh_census_years %>%
+      # group_by(sample_year, speciesid, stem_status) %>%
+      # summarise(occurrence = length(unique(plotid))) %>%
+      # arrange(desc(occurrence))
+
+head(species_data)
+
+ggplot(species_data %>%
+             group_by(installation, years_since_fire) %>%
+             summarise(richness = length(unique(veg_id))),
+       aes(years_since_fire, richness)) +
+      geom_point() +
+      facet_grid(.~installation) +
+      theme_bw()
+
+ggplot(species_data %>%
+             filter(pct_cover > 1) %>%
+             group_by(installation, years_since_fire),
+       aes(years_since_fire, pct_cover, color = veg_id)) +
+      geom_point(position = "jitter") +
+      facet_grid(.~installation) +
+      theme_bw()
+```
+
+# Tree Data
+
+```{r load tree data}
+tree_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/tree-data.csv")
+# tree_data
+tree_data$date <- as.Date(tree_data$date, format = "%m/%d/%y")
+
+tree_data <- filter(tree_data, date>"2017-06-01", plot_id != "bland03", plot_id != "bland02")  
+tree_data$plot_id <- tolower(tree_data$plot_id)
+
+tree_data <- left_join(
+      tree_data,
+      select(plot_data, installation:full_names),
+      by = c("installation","plot_id"))
+
+tree_data$species[tree_data$species=="divi5"] <- "divi"
+# tree_data$genus <- tree_data$species
+
+tree_data$genus[tree_data$species=="divi"] <- "Diospyros"
+tree_data$genus[tree_data$species=="cr"] <- "Crataegus"
+tree_data$genus[tree_data$species=="acru"] <- "Acer"
+tree_data$genus[tree_data$species=="sweetgum"] <- "Liquidambar"
+tree_data$genus[agrep("qu", tree_data$species, max.distance = 0)] <- "Quercus"
+tree_data$genus[agrep("pi", tree_data$species, max.distance = 0)] <- "Pinus"
+tree_data$genus[is.na(tree_data$species)] <- "Unknown (dead)"
+tree_data$labels <- tree_data$genus
+tree_data$labels[!(tree_data$labels %in% c("Quercus","Pinus"))] <- "Other"
+```
+
+```{r plot tree data, fig.height=9}
+ggplot(tree_data %>%
+             group_by(full_names, labels, years_since_fire) %>%
+             mutate(basal_area = pi*((.5*dbh/100)^2)) %>% 
+             summarise(total_basal_area = sum(basal_area),
+                       avg_basal_area = mean(basal_area),
+                       se_basal_area = sd(basal_area)/sqrt(length(basal_area))),
+       aes(as.factor(years_since_fire), total_basal_area)
+      ) +
+      geom_bar(aes(fill = labels), stat = "identity", position = "dodge") +
+      # geom_errorbar(aes(ymin = total_basal_area + se_veg_cover, ymax = avg_veg_cover - se_veg_cover), width = .2, position=position_dodge(width = .9)) +
+      scale_fill_brewer(palette = "Dark2") +
+      facet_grid(full_names~.) +
+      theme_bw() +
+      xlab("Years since fire") +
+      ylab(expression(paste("Basal Area (", m^{2}, ")"))) +
+      no_legend_title
+
+
+ggplot(tree_data %>%
+             group_by(full_names, labels, years_since_fire, imcy_inv),
+       aes(as.factor(years_since_fire), dbh, color = labels)) +
+      geom_point(position = "jitter") +
+      scale_fill_brewer(palette = "Dark2") +
+      facet_grid(full_names~imcy_inv) +
+      theme_bw() +
+      xlab("Years since fire") +
+      ylab("Diameter at breast height") +
+      no_legend_title
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-dbh-jitter.png", height=7)
+
+
+ggplot(tree_data %>%
+             group_by(full_names, labels, years_since_fire, imcy_inv),
+       aes(years_since_fire, height, color = labels)) +
+      geom_point(position = "jitter") +
+      scale_fill_brewer(palette = "Dark2") +
+      facet_grid(full_names~imcy_inv) +
+      theme_bw() +
+      xlab("Years since fire") +
+      ylab("Tree height") +
+      no_legend_title
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-height-jitter.png", height=7)
+```
+
+# Biomass data sampled at 25cm quadrats
+
+```{r 25cm biomass data}
+biomass_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/quadrat25cm.csv")
+biomass_data$date <- as.Date(biomass_data$date, format="%m/%d/%Y")
+biomass_data <- filter(biomass_data, date>"2017-04-25", plot_id!="bland02", plot_id!="bland03")
+# summary(biomass_data)
+biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
+biomass_data <- left_join(
+      select(biomass_data, installation,plot_id,fuel_mass_wet,litter_mass_wet),
+      select(plot_data, installation:full_names),
+      by = c("installation","plot_id")
+)
+# biomass_data$last_fire_year <- as.integer(biomass_data$last_fire_year)
+# biomass_data$years_since_fire <- 2017 - biomass_data$last_fire_year
+
+avg_biomass_data <- biomass_data %>% 
+      group_by(installation, plot_id, years_since_fire) %>% 
+      mutate(standing_gm2 = fuel_mass_wet*16,
+             litter_gm2 = litter_mass_wet*16) %>% 
+      summarise(avg_standing_gm2 = mean(standing_gm2),
+                avg_litter_gm2 = mean(litter_gm2),
+                se_standing = sd(standing_gm2)/sqrt(length(standing_gm2)),
+                se_litter = sd(litter_gm2)/sqrt(length(litter_gm2)))
+
+ggplot(biomass_data,
+       aes(years_since_fire, (fuel_mass_wet*16))) +
+      geom_point(aes(color = imcy_inv)) +
+      invasion_color +
+      # facet_grid(.~installation) +
+      geom_smooth(method = "loess") +
+      theme_bw() +
+      ylab(expression(paste("Standing biomass (g/", m^{2}, ")"))) +
+      xlab("Years since last fire") +
+      ggtitle("Fresh standing biomass across burn units at each installation",
+              subtitle = "(measurements at 25cm quadrats)") +
+      theme(legend.title = element_blank())
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass-hitter.png", height=7)
+
+ggplot(biomass_data,
+        aes((years_since_fire), litter_mass_wet*16)) +
+      geom_point(color = "#124873") +
+      geom_smooth(method = "lm") +
+      # facet_grid(.~installation) +
+      theme_bw() +
+      ylab(expression(paste("Litter biomass (g/", m^{2}, ")"))) +
+      xlab("Years since last fire") +
+      ggtitle("Fresh litter biomass across burn units at each installation",
+              subtitle = "(measurements at 25cm quadrats)")
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass-jitter.png", height=7)
+```
+
+# Tick Abundance Estimates
+
+```{r tick data QC}
+tick_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/ticks.csv")
+
+tick_data$plot_id <- tolower(tick_data$plot_id)
+tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
+
+tick_data <- left_join(
+      tick_data,
+      select(plot_data, installation,plot_id,fire_year:full_names),
+      by = c("installation", "plot_id")
+)
+# summary(tick_data)
+# filter(tick_data, is.na(years_since_fire))
+# "extra" ticks at Moody AFB were from an area last burned in 2005
+tick_data$years_since_fire[tick_data$installation=="moody"] <- 2017-2005
+tick_data <- tick_data[is.na(tick_data$years_since_fire)==FALSE,]
+tick_data$full_names[tick_data$installation=="moody"] <- "Moody AFB"
+```
+
+The high tick abundance for 8-years post-fire is driven by a single plot at Camp Blanding.
+```{r plot tick abundance summary}
+ggplot(tick_data %>%
+             group_by(years_since_fire) %>%
+             summarise(tick_number = sum(count)),
+       aes(as.factor(years_since_fire), tick_number)) +
+      # geom_point(position = "jitter") +
+      geom_bar(fill = "#124873", stat = "identity", position = "dodge") +
+      # facet_grid(installation~., scales = "free_y") +
+      xlab("Years since fire") +
+      ylab("Tick abundance") +
+      theme_bw() +
+      theme(axis.text = element_text(size = 18),
+            axis.title = element_text(size = 22))
+```
+
+**Note the different scales of the y-axes on these plots**
+```{r plot tick species data, fig.height=9}
+ggplot(tick_data %>%
+             group_by(full_names, years_since_fire, Species) %>%
+             summarise(tick_number = sum(count)),
+       aes(as.factor(years_since_fire), tick_number, fill = Species)) +
+      # geom_point(position = "jitter") +
+      geom_bar(stat = "identity", position = "dodge") +
+      facet_grid(full_names~., scales = "free_y") +
+      xlab("Years since fire") +
+      ylab("Tick abundance") +
+      theme_bw() +
+      theme(axis.text = element_text(size = 18),
+            axis.title = element_text(size = 22))
+```
+
+```{r scatterplots tick abundance}
+tick_data_sum <- tick_data %>% 
+      group_by(installation, plot_id, full_names, years_since_fire) %>% 
+      summarise(total_ticks = sum(count))
+biomass_data_sub <- ungroup(avg_biomass_data) %>% 
+      select(installation:avg_litter_gm2)
+
+# plot_data
+d1 <- left_join(plot_data, tick_data_sum)
+d1$total_ticks[is.na(d1$total_ticks)] <- 0
+d1 <- left_join(d1, biomass_data_sub)
+d1 <- left_join(d1, select(avg_species_cover, full_names:max_veg_cover))
+
+ggplot(d1, aes(years_since_fire, log1p(total_ticks))) +
+      geom_point(aes(color = imcy_inv), position = "jitter") +
+      invasion_color +
+      geom_smooth(method = "lm") +
+      theme_bw() +
+      xlab("Years Since Fire") +
+      ylab("Tick Abundance (ln)") +
+      def_theme
+
+ggplot(d1, aes(avg_veg_cover, log1p(total_ticks))) +
+      geom_point(aes(color = imcy_inv), position = "jitter") +
+      invasion_color +
+      geom_smooth(method = "lm") +
+      theme_bw() +
+      xlab("Average Vegetation Cover (%)") +
+      ylab("Tick Abundance (ln)") +
+      def_theme
+
+ggplot(d1, aes(avg_standing_gm2, log1p(total_ticks))) +
+      geom_point(aes(color = imcy_inv), position = "jitter") +
+      invasion_color +
+      geom_smooth(method = "lm") +
+      theme_bw() +
+      xlab(expression(paste("Average Standing Biomass (g/", m^{2}, ")"))) +
+      ylab("Tick Abundance (ln)") +
+      def_theme
+
+ggplot(d1, aes(avg_litter_gm2, log1p(total_ticks))) +
+      geom_point(aes(color = imcy_inv), position = "jitter") +
+      invasion_color +
+      geom_smooth(method = "lm") +
+      theme_bw() +
+      xlab(expression(paste("Average Litter Biomass (g/", m^{2}, ")"))) +
+      ylab("Tick Abundance (ln)") +
+      def_theme
+```
+
+Summary of linear models between some of the variables plotted above.
+```{r linear models ticks}
+summary(lm(log1p(total_ticks) ~ years_since_fire, data = d1))
+summary(lm(log1p(total_ticks) ~ avg_litter_gm2, data = d1))
+summary(lm(avg_litter_gm2 ~ years_since_fire, data = d1))
+```
+
+
+# Cogongrass Data Sampled from Invasions
+
+```{r cogongrass data, eval=F}
+cogon_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "CogonData")
+cogon_biomass <- cogon_data %>%
+      # select(site,plot_id,Quad,fresh_biomass) %>%
+      filter(site!="NA") %>%
+      mutate(biomass=fresh_biomass*16)
+cogon_biomass <- left_join(
+      cogon_biomass,
+      select(plot_data, installation,plot_id,years_since_fire),
+      by=c("site"="installation","plot_id"))
+ggplot(cogon_biomass, aes(years_since_fire, biomass)) +
+      geom_point() +
+      theme_bw() +
+      xlab("Years since fire") +
+      ylab(expression(paste("Standing biomass (g/", m^{2}, ")"))) +
+      ggtitle("Cogongrass invasion subsample at Avon Park AFR")
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/cogon-biomass.png", height = 7)
+```
+
+# Host Abundance Estimates
+
+```{r dung data}
+dung_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/dung.csv")
+```
+
+# Canopy Cover Data
+```{r load canopy cover data}
+canopy_cover <- read_csv("~/Dropbox (UF)/SERDP-Project/data/densiometer_canopy_cover.csv")
+
+canopy_cover_summary <- canopy_cover %>%
+      group_by(installation, plot_id) %>%
+      summarise(avg_canopy_cover = mean(pct_canopy_cover),
+                sd_canopy_cover = sd(pct_canopy_cover),
+                n_obs = 12)
+
+# plot_data1 <- left_join(ungroup(plot_data), ungroup(canopy_cover_summary))
+# plot_data1 <- left_join(ungroup(plot_data), ungroup(quadrat_summaries))
+```
+
+# Compare All Quadrat Data to Subset of Data
+
 Percent cover
 
  * litter
@@ -108,7 +490,7 @@ Heights
  
 * If there was no vegetation or litter height to measure then the first vegetation measurement was assigned a value of zero and the other two `r NA`.
 
-## Compare All Quadrat Data to Subset of Data
+
 We (Drew and I) have been talking about the possibility of further reducing the amount of effort expended to sample vegetation and set up the plot by revising the plot design. 
 
 **The alternative:** We use the 12.6m circular plot with just four vegetation sampling quadrats at 10 meters. Tick traps would be placed near the outside edge of the plot in each of the cardinal directions (north, east, south, west), and one in plot center.
@@ -232,29 +614,6 @@ t.test(log1p(quadrat_summaries$avg_pct_bare),
        log1p(quadrat10m_summaries$avg_pct_bare), var.equal = F)
 ```
 
-Based on these t-tests there were no statistical differences in the means of these variables aggregated to the plot level. 
-
-
-## Species Data - 1-meter Quadrats
-
-```{r load species data}
-species_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/species1m.csv")
-species_data$date <- as.Date(species_data$date, format = "%m/%d/%Y")
-species_data <- filter(species_data, date>"2017-06-01")
-species_data$veg_id <- tolower(species_data$veg_id)
-# length(unique(species_data$veg_id))
-species_data <- left_join(
-      species_data,
-      select(plot_data, installation:full_names),
-      by = c("installation","plot_id")
-)
-# summary(species_data)
-
-species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10")))
-# length(unique(species_sub$veg_id))
-# summary(species_sub)
-```
-
 Using all 12 qudrats we have `r n_distinct(species_data$veg_id)` species, while using the four quadrats at 10 meters we have `r n_distinct(species_sub$veg_id)` species. This suggests a major difference in species richness, however, some of these are as yet unidentified/grouped and are likely duplicates for both data sets. 
 
 ```{r t-test species cover quadrat subset}
@@ -268,295 +627,4 @@ t.test(log(species_data$pct_cover), log(species_sub$pct_cover),
 ```
 A t-test of the log-transformed means for percent cover indicate no statistical difference.
 
-
-```{r average species cover}
-# datac$se <- datac$sd / sqrt(datac$N)
-avg_species_cover <- species_data %>%
-             group_by(full_names, plot_id, imcy_inv, years_since_fire, quadrat_id) %>%
-      summarise(veg_cover = sum(pct_cover)) %>% 
-      ungroup(.) %>% 
-      group_by(full_names, plot_id, imcy_inv, years_since_fire) %>% 
-             summarise(avg_veg_cover = mean(veg_cover),
-                       # n_obs = length(veg_id),
-                       max_veg_cover = max(veg_cover),
-                       se_veg_cover = sd(veg_cover)/sqrt(length(veg_cover)))
-ggplot(avg_species_cover,
-      aes(as.factor(years_since_fire), avg_veg_cover, fill = imcy_inv)) +
-      geom_bar(stat = "identity", position = "dodge") +
-      scale_fill_brewer(palette = "Dark2") +
-      geom_errorbar(aes(ymin = avg_veg_cover + se_veg_cover, ymax = avg_veg_cover - se_veg_cover),
-                    width = .2, position=position_dodge(width = .9)) +
-      facet_grid(full_names~.) +
-      theme_bw() +
-      ylab("% Cover") +
-      xlab("Years since fire") +
-      ggtitle("Average Vegetation Cover Across 1-meter Quadrats") +
-      theme(legend.title = element_blank(),
-            legend.text = element_text(size = 18),
-            legend.position = "right",
-            axis.text = element_text(size = 18),
-            axis.title = element_text(size = 18),
-            plot.title = element_text(size = 20)
-            )
-
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/avg-pct-cover-bars.png", height = 7)
-```
-
-```{r species richness, eval=F}
-species_over_5pct <- filter(species_data, pct_cover>5)
-# species_sub_over_5pct <- filter(species_sub_over_5pct, cogongrass != "NA")
-
-ggplot(species_over_5pct,
-       aes(years_since_fire, pct_cover, color = veg_id)) +
-      geom_point(position="jitter") +
-      theme_bw() +
-      facet_grid(installation~imcy_inv) +
-      ylab("% cover") +
-      xlab("Years since fire") +
-      ggtitle("Range of species cover (>5%) at 1-meter quadrats")
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/species-pct-cover.png", height = 7)
-
-
-
-# species_sub <- (filter(species_data2, !quadrat_id %in% c("w2","w4","n2","n4","s2","s4","e2","e4")))
-# species_sub_plot <- ggplot(species_sub %>%
-#                              filter(pct_cover > 5) %>%
-#                              group_by(plot_id, veg_id) %>%
-#                              summarise(avg_pct_cover = mean(pct_cover),
-#                                        occurrence = length(veg_id)),
-#       aes(veg_id,avg_pct_cover, label = occurrence))
-
-# species_sub_plot +
-#       geom_bar(stat = "identity") +
-#       facet_grid(plot_id ~.) +
-#       theme_bw() +
-#       ggtitle("12 quadrats per plot")
-
-      # dbh_census_years %>%
-      # group_by(sample_year, speciesid, stem_status) %>%
-      # summarise(occurrence = length(unique(plotid))) %>%
-      # arrange(desc(occurrence))
-
-head(species_data)
-
-ggplot(species_data %>%
-             group_by(installation, years_since_fire) %>%
-             summarise(richness = length(unique(veg_id))),
-       aes(years_since_fire, richness)) +
-      geom_point() +
-      facet_grid(.~installation) +
-      theme_bw()
-
-ggplot(species_data %>%
-             filter(pct_cover > 1) %>%
-             group_by(installation, years_since_fire),
-       aes(years_since_fire, pct_cover, color = veg_id)) +
-      geom_point(position = "jitter") +
-      facet_grid(.~installation) +
-      theme_bw()
-```
-
-## Tree Data
-
-```{r load tree data}
-tree_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/tree-data.csv")
-tree_data
-tree_data$date <- as.Date(tree_data$date, format = "%m/%d/%y")
-
-tree_data <- filter(tree_data, date>"2017-06-01", plot_id != "bland03", plot_id != "bland02")  
-tree_data$plot_id <- tolower(tree_data$plot_id)
-
-tree_data <- left_join(
-      tree_data,
-      select(plot_data, installation:full_names),
-      by = c("installation","plot_id"))
-
-tree_data$species[tree_data$species=="divi5"] <- "divi"
-# tree_data$genus <- tree_data$species
-
-tree_data$genus[tree_data$species=="divi"] <- "Diospyros"
-tree_data$genus[tree_data$species=="cr"] <- "Crataegus"
-tree_data$genus[tree_data$species=="acru"] <- "Acer"
-tree_data$genus[tree_data$species=="sweetgum"] <- "Liquidambar"
-tree_data$genus[agrep("qu", tree_data$species, max.distance = 0)] <- "Quercus"
-tree_data$genus[agrep("pi", tree_data$species, max.distance = 0)] <- "Pinus"
-tree_data$genus[is.na(tree_data$species)] <- "Unknown (dead)"
-tree_data$labels <- tree_data$genus
-tree_data$labels[!(tree_data$labels %in% c("Quercus","Pinus"))] <- "Other"
-```
-
-```{r plot tree data}
-ggplot(tree_data %>%
-             group_by(full_names, labels, years_since_fire) %>%
-             mutate(basal_area = pi*((.5*dbh/100)^2)) %>% 
-             summarise(total_basal_area = sum(basal_area),
-                       avg_basal_area = mean(basal_area),
-                       se_basal_area = sd(basal_area)/sqrt(length(basal_area))),
-       aes(as.factor(years_since_fire), total_basal_area)
-      ) +
-      geom_bar(aes(fill = labels), stat = "identity", position = "dodge") +
-      # geom_errorbar(aes(ymin = total_basal_area + se_veg_cover, ymax = avg_veg_cover - se_veg_cover), width = .2, position=position_dodge(width = .9)) +
-      scale_fill_brewer(palette = "Dark2") +
-      facet_grid(full_names~.) +
-      theme_bw() +
-      xlab("Years since fire") +
-      ylab("Total Basal Area (m^2)") +
-      theme(legend.title = element_blank(),
-            legend.text = element_text(size = 18),
-            legend.position = "right",
-            axis.text = element_text(size = 18),
-            axis.title = element_text(size = 18),
-            plot.title = element_text(size = 20)
-            )
-
-
-ggplot(tree_data %>%
-             group_by(installation, labels, years_since_fire, imcy_inv),
-       aes(as.factor(years_since_fire), dbh, color = labels)) +
-      geom_point(position = "jitter") +
-      facet_grid(installation~imcy_inv) +
-      theme_bw() +
-      xlab("Years since fire") +
-      ylab("Diameter at breast height")
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-dbh-jitter.png", height=7)
-
-
-ggplot(tree_data %>%
-             group_by(installation, labels, years_since_fire, imcy_inv),
-       aes(years_since_fire, height, color = labels)) +
-      geom_point(position = "jitter") +
-      facet_grid(installation~imcy_inv) +
-      theme_bw() +
-      xlab("Years since fire") +
-      ylab("Tree height")
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-height-jitter.png", height=7)
-```
-
-## Biomass data sampled at 25cm quadrats
-
-
-```{r 25cm biomass data ####}
-biomass_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/quadrat25cm.csv")
-
-biomass_data <- filter(biomass_data, date>"2017-04-25", plot_id!="bland02", plot_id!="bland03")
-summary(biomass_data)
-biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
-biomass_data <- left_join(
-      select(biomass_data, installation,plot_id,fuel_mass_wet,litter_mass_wet),
-      select(plot_data, installation:full_names),
-      by = c("installation","plot_id")
-)
-# biomass_data$last_fire_year <- as.integer(biomass_data$last_fire_year)
-# biomass_data$years_since_fire <- 2017 - biomass_data$last_fire_year
-
-ggplot(biomass_data,
-       aes(years_since_fire, fuel_mass_wet*16)) +
-      geom_point(aes(color = installation), position = "jitter") +
-      # facet_grid(.~installation) +
-      # geom_smooth(method = "loess")
-      theme_bw() +
-      ylab(expression(paste("Standing biomass (g/", m^{2}, ")"))) +
-      xlab("Years since last fire") +
-      ggtitle("Fresh standing biomass across burn units at each installation",
-              subtitle = "(measurements at 25cm quadrats)")
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass-hitter.png", height=7)
-
-ggplot(biomass_data %>% group_by(installation, last_fire_year),
-        aes(years_since_fire, litter_mass_wet*16)) +
-      geom_point(aes(color = installation), position = "jitter") +
-      # facet_grid(.~installation) +
-      theme_bw() +
-      ylab(expression(paste("Litter biomass (g/", m^{2}, ")"))) +
-      xlab("Years since last fire") +
-      ggtitle("Fresh litter biomass across burn units at each installation",
-              subtitle = "(measurements at 25cm quadrats)")
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass-jitter.png", height=7)
-```
-
-## Cogongrass Data Sampled from Invasions
-
-
-```{r cogongrass data ####}
-cogon_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "CogonData")
-cogon_biomass <- cogon_data %>%
-      # select(site,plot_id,Quad,fresh_biomass) %>%
-      filter(site!="NA") %>%
-      mutate(biomass=fresh_biomass*16)
-cogon_biomass <- left_join(
-      cogon_biomass,
-      select(plot_data, installation,plot_id,years_since_fire),
-      by=c("site"="installation","plot_id"))
-ggplot(cogon_biomass, aes(years_since_fire, biomass)) +
-      geom_point() +
-      theme_bw() +
-      xlab("Years since fire") +
-      ylab(expression(paste("Standing biomass (g/", m^{2}, ")"))) +
-      ggtitle("Cogongrass invasion subsample at Avon Park AFR")
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/cogon-biomass.png", height = 7)
-```
-
-## Tick Abundance Estimates
-
-```{r tick data ####}
-tick_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/ticks.csv")
-
-tick_data$plot_id <- tolower(tick_data$plot_id)
-tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
-
-tick_data <- left_join(
-      tick_data,
-      select(plot_data, installation,plot_id,fire_year:full_names),
-      by = c("installation", "plot_id")
-)
-summary(tick_data)
-filter(tick_data, is.na(years_since_fire))
-# "extra" ticks at Moody AFB were from an area last burned in 2005
-tick_data$years_since_fire[tick_data$installation=="moody"] <- 2017-2005
-
-
-ggplot(tick_data %>%
-             group_by(installation,years_since_fire,Species) %>%
-             summarise(tick_number = sum(count)),
-       aes(as.factor(years_since_fire), tick_number)) +
-      # geom_point(position = "jitter") +
-      geom_bar(fill = "#124873", stat = "identity", position = "dodge") +
-      # facet_grid(installation~., scales = "free_y") +
-      xlab("Years since fire") +
-      ylab("Tick abundance") +
-      theme_bw() +
-      theme(axis.text = element_text(size = 18),
-            axis.title = element_text(size = 22))
-
-ggplot(tick_data %>%
-             group_by(full_names, years_since_fire, Species) %>%
-             summarise(tick_number = sum(count)),
-       aes(as.factor(years_since_fire), tick_number, fill = Species)) +
-      # geom_point(position = "jitter") +
-      geom_bar(stat = "identity", position = "dodge") +
-      facet_grid(full_names~., scales = "free_y") +
-      xlab("Years since fire") +
-      ylab("Tick abundance") +
-      theme_bw() +
-      theme(axis.text = element_text(size = 18),
-            axis.title = element_text(size = 22))
-```
-
-# Host Abundance Estimates
-
-```{r dung data ####}
-dung_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/dung.csv")
-```
-
-# Canopy Cover Data
-```{r load canopy cover data ####}
-canopy_cover <- read_csv("~/Dropbox (UF)/SERDP-Project/data/densiometer_canopy_cover.csv")
-
-canopy_cover_summary <- canopy_cover %>%
-      group_by(installation, plot_id) %>%
-      summarise(avg_canopy_cover = mean(pct_canopy_cover),
-                sd_canopy_cover = sd(pct_canopy_cover),
-                n_obs = 12)
-
-# plot_data1 <- left_join(ungroup(plot_data), ungroup(canopy_cover_summary))
-# plot_data1 <- left_join(ungroup(plot_data), ungroup(quadrat_summaries))
-```
+Based on these t-tests there were no statistical differences in the means of these variables aggregated to the plot level. 
