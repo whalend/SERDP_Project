@@ -54,29 +54,35 @@ test_burn_thatch$fuel_type <- "litter"
 # library(lubridate)
 
 
-#+ Load FABIO Burn Biomass Data ----------------------------------------------------
+#+ Load FABIO Burn Biomass Data ----
 fabio_burns <- read_csv("~/Dropbox (UF)/SERDP-Project/data/fabio_burns.csv")
 fabio_burns$date <- as.Date(fabio_burns$date, format = "%m/%d/%y")
 
 fabio_burns_biomass <- select(fabio_burns, fire_id:notes)
 
 fires_biomass <- fabio_burns %>%
-      select(fire_id:pct_green, remaining_biomass:notes) %>%
       mutate(pct_green = factor(pct_green, levels = c("25","75")),
              f_litter_biomass = factor(litter_biomass,
                                      levels = c("0","500","1000","2000")),
              total_biomass = standing_biomass + litter_biomass,
              pct_consumed = 100*(total_biomass - remaining_biomass)/total_biomass,
-             pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass)
+             pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass,
+             avg_flame_ht = rowMeans(cbind(flame_ht1,flame_ht2), na.rm=T),
+             avg_litter_depth = rowMeans(cbind(litter_depth1,litter_depth2,litter_depth3), na.rm=T),
+             avg_green_ht = rowMeans(cbind(green_ht1,green_ht2,green_ht3), na.rm=T),
+             avg_brown_ht = rowMeans(cbind(brown_ht1,brown_ht2,brown_ht3), na.rm=T)) %>%
+      select(fire_id:pct_green, remaining_biomass:avg_brown_ht)
 
 # View(fires_biomass %>% filter(biomass_type=="wiregrass") %>%
 #            arrange(litter_biomass)
 #      )
 
 
-ggplot(fires_biomass, aes(litter_biomass, standing_biomass)) +
-      geom_point(aes(color = pct_green, shape = biomass_type), position = "jitter") +
+ggplot(fires_biomass, aes(f_litter_biomass, factor(standing_biomass))) +
+      geom_point(aes(color = pct_green, shape = biomass_type), size = 2,
+                 position = position_jitterdodge(jitter.width = 0)) +
       theme_bw()
+
 
 ggplot(fires_biomass, aes(total_biomass, pct_consumed)) +
       geom_point(aes(color = pct_green, shape = f_litter_biomass), position = "jitter") +
@@ -740,6 +746,15 @@ fabio_blanding_prescribe <- mutate(
       fabio_blanding_prescribe, id = "fabio naturale")
 
 prescribed_fire_temps <- rbind(prescribed_fire_temps, fabio_blanding_prescribe)
+
+ggplot(prescribed_fire_temps, aes(time,tempC, color = id)) +
+      scale_color_brewer(palette = "Spectral", type = "div") +
+      geom_line(aes(linetype = location)) +
+      theme_bw() +
+      ggtitle("Temperatures from Camp Blanding Prescribed Fire")
+# flame 5 temperature sensors did not record anyting that looks like fire
+prescribed_fire_temps <- filter(prescribed_fire_temps, id!="flame5")
+
 write_csv(prescribed_fire_temps, "data/prescribed-fire-temps.csv")
 
 #+ Plot Test Burn Fire Temperatures -------------------------------------
