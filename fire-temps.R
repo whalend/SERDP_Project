@@ -547,7 +547,7 @@ fireid42 <- filter(d1, probe_type == "old", between(time, 48360,48700)) %>%
 #+ Join fire data into single file ####
 d1 <- rbind(fireid1,fireid2,fireid3,fireid4,fireid5,fireid6,fireid7,fireid8,fireid9,fireid10,fireid11,fireid12,fireid13,fireid14,fireid15,fireid16,fireid17,fireid18,fireid19,fireid20,fireid21,fireid22,fireid23,fireid24,fireid25,fireid26,fireid27,fireid28,fireid29,fireid30,fireid31,fireid32,fireid33,fireid34,fireid35,fireid36,fireid37,fireid38,fireid39,fireid40,fireid41,fireid42)
 
-write_csv(d1,"data/fabio_burns_temperatures.csv")
+write_csv(d1,"data/fabio-fires-temperatures.csv")
 d1 <- left_join(d1, fabio_burns_biomass, by = "fire_id")
 
 #+ Plot Experimental FABIO Burns ####
