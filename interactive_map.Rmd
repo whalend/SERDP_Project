@@ -15,6 +15,7 @@ library(htmltools)
 ```
 
 ```{r load data, include=F}
+
 all_dod <- read_sf("data/DoD-installations.shp")
 all_dod <- st_transform(all_dod, 4326)
 blanding_cogon <- st_read("data/CampBlanding/Cogon_Infestations.shp")
@@ -25,7 +26,7 @@ se_dod <- st_transform(se_dod, 4326)
 cities <- readOGR("data/citiesx010g_shp/citiesx010g.shp")  
 cities <- cities[cities$STATE=="FL"|cities$STATE=="LA"|cities$STATE=="GA"|cities$STATE=="AL"|cities$STATE=="MS"|cities$STATE=="SC",]
 cities <- cities[cities$NAME=="New Orleans"&cities$STATE=="LA"|cities$NAME=="Orlando"|cities$NAME=="Atlanta"&cities$STATE=="GA"|cities$NAME=="Birmingham",]
-writeOGR(cities, "data/", "majorCities", driver="ESRI Shapefile")
+writeOGR(cities, "data/", "majorCities", driver="ESRI Shapefile", overwrite_layer = T)
 
 ```
 
@@ -67,17 +68,17 @@ se_dod_labels <- sprintf(
 m <- leaflet() %>%
       # addTiles() %>%  # Add default OpenStreetMap map tiles
       addProviderTiles(providers$Esri.WorldImagery) %>% 
-      addPolygons(data = all_dod, group = "All DoD Installations",
-                  color = "red", fillOpacity = 0.3,
-                  highlightOptions = highlightOptions(
-                        color = "white", weight = 2,
-                        bringToFront = TRUE),
-                  label = all_dod_labels,
-                  labelOptions = labelOptions(
-                        style = list("font-weight" = "normal", 
-                                     padding = "3px 8px"),
-                        textsize = "15px",
-                        direction = "auto")) %>% 
+      # addPolygons(data = all_dod, group = "All DoD Installations",
+      #             color = "red", fillOpacity = 0.3,
+      #             highlightOptions = highlightOptions(
+      #                   color = "white", weight = 2,
+      #                   bringToFront = TRUE),
+      #             label = all_dod_labels,
+      #             labelOptions = labelOptions(
+      #                   style = list("font-weight" = "normal", 
+      #                                padding = "3px 8px"),
+      #                   textsize = "15px",
+      #                   direction = "auto")) %>% 
       addPolygons(data = se_dod, group = "SE DoD Installations",
                   color = "yellow", fillOpacity = 0.3,
                   highlightOptions = highlightOptions(
