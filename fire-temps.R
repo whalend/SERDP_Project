@@ -54,6 +54,23 @@ test_burn_thatch$fuel_type <- "litter"
 # library(lubridate)
 
 
+
+#+ Load FABIO Prescribed Burn Data 2017/07/06 ------------------------------
+fabio_blanding_0cm <- read_csv("data/fire_temperatures/fabio-bland-c-0cm-20170706.csv")
+names(fabio_blanding_0cm) <- c("date","time","tempC")
+fabio_blanding_0cm <- mutate(fabio_blanding_0cm, location = "0cm", probe_type = "old")
+fabio_blanding_25cm <- read_csv("data/fire_temperatures/fabio-bland-c-25cm-20170706.csv")
+names(fabio_blanding_25cm) <- c("date","time","tempC")
+fabio_blanding_25cm <- mutate(fabio_blanding_25cm, location = "25cm", probe_type = "old")
+fabio_blanding_50cm <- read_csv("data/fire_temperatures/fabio-bland-c-50cm-20170706.csv")
+names(fabio_blanding_50cm) <- c("date","time","tempC")
+fabio_blanding_50cm <- mutate(fabio_blanding_50cm, location = "50cm", probe_type = "old")
+
+# par(mfrow=c(3,1))
+# plot(fabio_blanding_0cm$time, fabio_blanding_0cm$tempC, main = "FABIO Prescribed Fire 7/6/2017")
+# plot(fabio_blanding_25cm$time, fabio_blanding_25cm$tempC)
+# plot(fabio_blanding_50cm$time, fabio_blanding_50cm$tempC)
+
 #+ Load FABIO Burn Biomass Data ----
 fabio_burns <- read_csv("~/Dropbox (UF)/SERDP-Project/data/fabio_burns.csv")
 fabio_burns$date <- as.Date(fabio_burns$date, format = "%m/%d/%y")
@@ -73,6 +90,8 @@ fires_biomass <- fabio_burns %>%
              avg_brown_ht = rowMeans(cbind(brown_ht1,brown_ht2,brown_ht3), na.rm=T)) %>%
       select(fire_id:pct_green, remaining_biomass:avg_brown_ht)
 
+write_csv(fires_biomass, "data/fabio-fires-biomass.csv")
+
 # View(fires_biomass %>% filter(biomass_type=="wiregrass") %>%
 #            arrange(litter_biomass)
 #      )
@@ -85,11 +104,27 @@ ggplot(fires_biomass, aes(f_litter_biomass, factor(standing_biomass))) +
 
 
 ggplot(fires_biomass, aes(total_biomass, pct_consumed)) +
-      geom_point(aes(color = pct_green, shape = f_litter_biomass), position = "jitter") +
-      theme_bw()
+      # geom_point(aes(color = pct_green, shape = f_litter_biomass),
+      #            position = "jitter", size = 2) +
+      geom_bar(aes(fill=pct_green), position = "dodge", stat = "identity") +
+      theme_bw() +
+      facet_grid(litter_biomass ~.)
 
-ggplot(fires_biomass, aes(pct_fuel_moisture, pct_consumed)) +
-      geom_point(aes(color = pct_green, size = standing_biomass), position = "jitter") +
+ggplot(filter(fires_biomass, pct_green!="NA", litter_biomass < 3000),
+       aes(pct_fuel_moisture, pct_consumed)) +
+      geom_point(aes(color = standing_biomass, shape = pct_green),
+                 size = 4) +
+      scale_color_gradientn(colours = RColorBrewer::brewer.pal(6, name = "Greens")) +
+      theme_bw() +
+      facet_grid(litter_biomass ~.)
+
+
+ggplot(filter(fires_biomass, pct_green!="NA"),
+       aes(pct_green, pct_fuel_moisture)) +
+      # geom_boxplot(aes(fill = pct_green)) +
+      scale_fill_discrete(h=c(60,120)) +
+      # geom_dotplot() +
+      # geom_point() +
       theme_bw()
 
 
@@ -229,6 +264,9 @@ fabio2_50cm_old <- read_csv("data/fire_temperatures/fabio2-50cm-old-20170712.csv
 names(fabio2_50cm_old) <- c("date","time","tempC")
 fabio2_50cm_old <- mutate(fabio2_50cm_old, location = "50cm", probe_type = "old")
 
+d1 <- rbind(fabio1_0cm_old, fabio1_25cm_old, fabio1_50cm_old,
+            fabio1_0cm_new, fabio1_25cm_new, fabio1_50cm_new)
+
 #+ Slice Experimental Burn Temperatures: Fire IDs 9-17 ####
 # plot all data from sensors
 # par(mfrow=c(2,2))
@@ -244,8 +282,6 @@ fabio2_50cm_old <- mutate(fabio2_50cm_old, location = "50cm", probe_type = "old"
 #      main = "FABIO 1 Burns 7/12/2017-old")
 # plot(fabio1_50cm_new$time, fabio1_50cm_new$tempC,
 #      main = "FABIO 1 Burns 7/12/2017-new")
-d1 <- rbind(fabio1_0cm_old, fabio1_25cm_old, fabio1_50cm_old,
-            fabio1_0cm_new, fabio1_25cm_new, fabio1_50cm_new)
 
 # qplot(time, tempC, data = d1, facets = location~., color = probe_type, linetype=probe_type, geom ="line", alpha = 0.5) +
 #       # geom_line() +
@@ -511,8 +547,8 @@ fireid42 <- filter(d1, probe_type == "old", between(time, 48360,48700)) %>%
 #+ Join fire data into single file ####
 d1 <- rbind(fireid1,fireid2,fireid3,fireid4,fireid5,fireid6,fireid7,fireid8,fireid9,fireid10,fireid11,fireid12,fireid13,fireid14,fireid15,fireid16,fireid17,fireid18,fireid19,fireid20,fireid21,fireid22,fireid23,fireid24,fireid25,fireid26,fireid27,fireid28,fireid29,fireid30,fireid31,fireid32,fireid33,fireid34,fireid35,fireid36,fireid37,fireid38,fireid39,fireid40,fireid41,fireid42)
 
+write_csv(d1,"data/fabio_burns_temperatures.csv")
 d1 <- left_join(d1, fabio_burns_biomass, by = "fire_id")
-write_csv(d1,"data/fabio_burns_data.csv")
 
 #+ Plot Experimental FABIO Burns ####
 time_abv150 <- d1 %>% filter(probe_type == "old") %>%
@@ -715,22 +751,6 @@ prescribed_fire_temps <- rbind(flame1,flame3,flame4,flame5,flame6,flame7,flame8)
 
 unique(filter(prescribed_fire_temps, id=="flame5")$location)
 
-
-#+ Load FABIO Prescribed Burn Data 2017/07/06 ------------------------------
-fabio_blanding_0cm <- read_csv("data/fire_temperatures/fabio-bland-c-0cm-20170706.csv")
-names(fabio_blanding_0cm) <- c("date","time","tempC")
-fabio_blanding_0cm <- mutate(fabio_blanding_0cm, location = "0cm", probe_type = "old")
-fabio_blanding_25cm <- read_csv("data/fire_temperatures/fabio-bland-c-25cm-20170706.csv")
-names(fabio_blanding_25cm) <- c("date","time","tempC")
-fabio_blanding_25cm <- mutate(fabio_blanding_25cm, location = "25cm", probe_type = "old")
-fabio_blanding_50cm <- read_csv("data/fire_temperatures/fabio-bland-c-50cm-20170706.csv")
-names(fabio_blanding_50cm) <- c("date","time","tempC")
-fabio_blanding_50cm <- mutate(fabio_blanding_50cm, location = "50cm", probe_type = "old")
-
-# par(mfrow=c(3,1))
-# plot(fabio_blanding_0cm$time, fabio_blanding_0cm$tempC, main = "FABIO Prescribed Fire 7/6/2017")
-# plot(fabio_blanding_25cm$time, fabio_blanding_25cm$tempC)
-# plot(fabio_blanding_50cm$time, fabio_blanding_50cm$tempC)
 
 #+ Slice FABIO Prescribed Fire Temperature Data ####
 fabio_blanding_prescribe <- rbind(
