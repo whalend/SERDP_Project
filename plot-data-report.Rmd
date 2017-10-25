@@ -436,7 +436,7 @@ summary(lm(avg_litter_gm2 ~ years_since_fire, data = d1))
 # Cogongrass Data Sampled from Invasions
 
 ```{r cogongrass data, eval=F}
-cogon_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "CogonData")
+cogon_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/cogon_data.csv")
 cogon_biomass <- cogon_data %>%
       # select(site,plot_id,Quad,fresh_biomass) %>%
       filter(site!="NA") %>%
