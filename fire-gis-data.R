@@ -4,6 +4,7 @@ library(plyr); library(dplyr);
 library(ggplot2)
 # library(sf);
 
+
 # Camp Blanding Fire Data -------------------------------------------------
 
 blanding_fire <- readOGR("data/CampBlanding/Camp_Blanding_Fire.shp", integer64 = "allow.loss")
