@@ -72,10 +72,10 @@ fabio_blanding_50cm <- mutate(fabio_blanding_50cm, location = "50cm", probe_type
 # plot(fabio_blanding_50cm$time, fabio_blanding_50cm$tempC)
 
 #+ Load FABIO Burn Biomass Data ----
-fabio_burns <- read_csv("~/Dropbox (UF)/SERDP-Project/data/fabio_burns.csv")
+fabio_burns <- read_csv("~/Dropbox (UF)/SERDP-Project/data/fabio-burns.csv")
 fabio_burns$date <- as.Date(fabio_burns$date, format = "%m/%d/%y")
 
-fabio_burns_biomass <- select(fabio_burns, fire_id:notes)
+# fabio_burns_biomass <- select(fabio_burns, fire_id:notes)
 
 fires_biomass <- fabio_burns %>%
       mutate(pct_green = factor(pct_green, levels = c("25","75")),
@@ -84,6 +84,8 @@ fires_biomass <- fabio_burns %>%
              total_biomass = standing_biomass + litter_biomass,
              pct_consumed = 100*(total_biomass - remaining_biomass)/total_biomass,
              pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass,
+             max_flame_ht = apply(cbind(flame_ht1,flame_ht2), 1, function(x) max(x, na.rm = T)),
+             max_fuel_ht = apply(cbind(green_ht1,green_ht2,green_ht3,brown_ht1,brown_ht2,brown_ht3), 1, max),
              avg_flame_ht = rowMeans(cbind(flame_ht1,flame_ht2), na.rm=T),
              avg_litter_depth = rowMeans(cbind(litter_depth1,litter_depth2,litter_depth3), na.rm=T),
              avg_green_ht = rowMeans(cbind(green_ht1,green_ht2,green_ht3), na.rm=T),
