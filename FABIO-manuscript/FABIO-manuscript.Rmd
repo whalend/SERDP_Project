@@ -1,0 +1,305 @@
+---
+title: Experimental methodology for testing effects of variation in naturally structured
+  fine fuel loads on fire intensity
+
+author:
+- affilnum: 1
+  email: wdillon@ufl.edu/whalendillon@gmail.com
+  name: Whalen W. Dillon
+- affilnum: 1
+  name: Drew T. Hiatt
+- affilnum: 1
+  name: S. Luke Flory
+affiliation:
+- affil: Agronomy Department, University of Florida, Gainesville, FL, 32611, USA
+  affilnum: 1
+- affil: null
+  affilnum: 2
+- affil: null
+  affilnum: 3
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 7
+    fig_width: 7
+    includes:
+      in_header: header.tex
+    keep_tex: yes
+    number_sections: no
+    template: manuscript.latex
+  html_document: null
+  word_document: null
+capsize: normalsize
+classoption: a4paper
+csl: ecology.csl
+documentclass: article
+fontsize: 11pt
+footerdate: yes
+geometry: margin=1in
+linenumbers: yes
+bibliography:
+- references.bib
+- knitcitations.bib
+spacing: doublespacing
+abstract: no
+---
+
+
+```{r setup, include=FALSE, cache=FALSE, message = FALSE}
+
+library(knitr); library(plyr); library(dplyr); library(readr); library(ggplot2)
+
+#opts_knit$set(root.dir=normalizePath('../'))
+
+### Chunk options: see http://yihui.name/knitr/options/ ###
+
+## Text results
+opts_chunk$set(echo = F, warning = F, message = F, include = TRUE)
+
+## Code decoration
+opts_chunk$set(tidy = TRUE, comment = NA, highlight = TRUE)
+
+## Cache
+opts_chunk$set(cache = 2, cache.path = "cache/")
+
+## Plots
+opts_chunk$set(fig.path = "figures/")
+
+```
+
+
+```{r knitcitations, cache = F}
+
+library(knitcitations)
+cleanbib()   
+cite_options(citation_format = "pandoc")
+library(bibtex)
+library(RefManageR)
+
+```
+
+\singlespace
+
+\vspace{2mm}\hrule
+
+Write your abstract here.
+
+\vspace{3mm}\hrule
+
+*Keywords*: experiment, fire intensity, fuel load, fuel characteristics, Fire Aboveground Biomass Incineration Organizer
+
+\doublespace
+
+\bleft
+
+
+# INTRODUCTION
+
+1. Fuel characteristics - load (mass), structure, type, moisture, particle size - drive fire intensity and severity.
+
+2. Studies in fire ecology that experimentally manipulate fuel characteristics often only change the fuel load and/or type of fuel, sacrificing some realism in fuel structure.
+
+3. We present a methodology for maintaining realism in fuel structure in experiments where fine fuels with typical vertical structure, e.g. grasses, are manipulated.
+
+4. We demonstrate how the Fire Aboveground Biomass Incineration Organizer (FABIO) maintains realistic fuel structure while experimentally manipulating other fuel characteristics.
+
+
+## Compare Temperature Metrics to Bowman et al. 2017
+
+`r citep("Bowman 2017 Journal of Ecology")` *Differential demographic filtering by surface fires: How fuel type and fuel load affect sapling mortality of an obligate seeder savanna tree.*
+
+In this study, "Grass fuels had to be laid horizontally rather than standing vertically." The context provided is that the native sorghum flattens easily after it dries and does not remain vertical throughout the dry season. 
+
+    - This reads like a response to a reviewer comment, which might indicate a gap that the FABIO methodology can fill. 
+ 
+    - Average flame height was measured "when the fire was within 15cm of the tree stem using a metal grid placed verically against a steel picket placed next to the stem."
+
+Additional references given where fuels have been laid flat when testing flammability:
+
+1. `r citep("Jaureguiberry 2011 Austral Ecology")`
+
+2. `r citep("Simpson 2016 Journal of Ecology")`
+
+3. `r citep("Wyse 2016 International Journal of Wildland Fire")`
+
+
+```{r compare_maxtemp}
+
+bowman_maxtemp <- read_csv("~/Documents/SERDP_Project/data/bowman-etal-maxtemp.csv")
+fabio_burns <- read_csv("~/Documents/SERDP_Project/data/experimental-fire-data-summary.csv")
+
+names(bowman_maxtemp)
+bowman_maxtemp <- filter(bowman_maxtemp, biomass_type == "grass")
+fabio_maxtemp <- fabio_burns %>% 
+      filter(litter_biomass == 0, biomass_type == "cogongrass", pct_green == 25, standing_biomass < 2000) %>% 
+      select(standing_biomass, max_temp, location, biomass_type) %>% 
+      rename(biomass = standing_biomass, tempC = max_temp) %>% 
+      mutate(source = "FABIO Burn")
+maxtemp_df <- rbind(bowman_maxtemp,fabio_maxtemp)
+maxtemp_df <- maxtemp_df %>% 
+      filter(location != "25cm")
+# unique(maxtemp_df$location)
+maxtemp_df$location[maxtemp_df$location!="50cm"] <- "near ground"
+
+maxtemp_comparison <- ggplot(maxtemp_df, aes(biomass, tempC)) +
+      geom_point(aes(color = location, shape = source), size = 3) +
+      scale_color_discrete(h.start = 15) +
+      theme_bw()
+maxtemp_comparison +
+      geom_line(aes(color = location, linetype = source)) +
+      xlab(expression(paste("Fuel Load (g/", m^{2}, ")"))) +
+      ylab("Maximum Temperature ºC")
+
+```      
+
+```{r compare_sAbv100 }
+
+bowman_s_abv100 <- read_csv("~/Documents/SERDP_Project/data/bowman-etal-s_abv100.csv")
+
+names(bowman_s_abv100)
+bowman_s_abv100 <- filter(bowman_s_abv100, biomass_type == "grass")
+fabio_s_abv100 <- fabio_burns %>% 
+      filter(litter_biomass == 0, biomass_type == "cogongrass", pct_green == 25, standing_biomass < 2000) %>% 
+      select(standing_biomass, s_abv100, location, biomass_type) %>% 
+      rename(biomass = standing_biomass) %>% 
+      mutate(source = "FABIO Burn")
+s_abv100_df <- rbind(bowman_s_abv100,fabio_s_abv100)
+s_abv100_df <- s_abv100_df %>% 
+      filter(location != "25cm")
+# unique(s_abv100_df$location)
+s_abv100_df$location[s_abv100_df$location!="50cm"] <- "near ground"
+
+s_abv100_comparison <- ggplot(s_abv100_df, aes(biomass, s_abv100)) +
+      geom_point(aes(color = location, shape = source), size = 3) +
+      geom_line(aes(color = location, linetype = source)) +
+      scale_color_discrete(h.start = 15) +
+      theme_bw()
+s_abv100_comparison +
+      xlab(expression(paste("Fuel Load (g/", m^{2}, ")"))) +
+      ylab("Seconds Above 100 ºC")
+
+```
+
+
+
+Write your introduction here. You can cite bibliography like this [@Yan2011; @Sutherland2011], if you provide a `BibTeX` file with references. See http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html for more information. Or you could also use [knitcitations](https://cran.r-project.org/web/packages/knitcitations/index.html) or [RefManageR](https://cran.r-project.org/web/packages/RefManageR/index.html) to fetch bibliographic metadata automatically from the web. For example, citing a paper can be as easy as providing its DOI `r citep("10.1016/j.tree.2006.03.016")` or even just a few keywords `r citep("Ricklefs 2008 American Naturalist")`. They will then automagically appear in the list of cited references.
+
+You can even specifiy the desired output format for your bibliography by including a style file for a specific journal (e.g. "ecology.csl"). Many different bibliography styles (CSL files) can be obtained at http://citationstyles.org/ or https://github.com/citation-style-language/styles.
+
+
+
+# METHODS
+
+
+## Study Area
+
+We worked in a **beautiful** place with lots of trees, like *Quercus suber* and *Laurus nobilis*.
+
+
+## Data collection and analysis
+
+```{r read_data, eval = FALSE, echo = FALSE}
+dataset <- read.csv("mydata.csv")
+```
+
+We applied a linear model where
+
+$$
+y_{i} = \alpha + \beta*x_{i} 
+$$
+
+```{r model, echo = FALSE, eval = FALSE}
+model <- lm(y ~ x)
+```
+
+We used the statistical language `R` `r citep(citation())` for all our analyses. These were implemented in dynamic rmarkdown documents using `knitr` `r citep(citation("knitr"))` and `rmarkdown` `r citep(citation("rmarkdown"))` packages. All the multilevel models were fitted with `lme4` `r citep(citation("lme4"))`. 
+
+
+
+
+# RESULTS
+
+Trees in forest A grew taller than those in forest B (mean height: `r mean(25, 31, 28)` versus `r mean(13, 19, 16)` m). And many more cool results that get updated dynamically.
+
+
+
+
+# DISCUSSION
+
+Discuss.
+
+
+
+# CONCLUSIONS
+
+
+
+# ACKNOWLEDGEMENTS
+
+
+
+# REFERENCES
+
+```{r write_citations, cache=FALSE, include=FALSE}
+write.bibtex(file="knitcitations.bib")
+```
+
+<div id = "refs"></div>
+
+
+\eleft
+
+\clearpage
+
+
+\listoftables
+
+
+\newpage
+
+```{r Table1, results='asis', echo=FALSE, cache=FALSE}
+kable(head(iris), caption = "A glimpse of the famous *Iris* dataset.")
+```
+
+
+\newpage
+
+```{r Table2, results='asis', echo=FALSE, cache=FALSE}
+kable(mtcars[10:16, ], caption = "Now a subset of mtcars dataset.")
+```
+
+
+\clearpage
+
+\listoffigures
+
+
+\newpage
+
+```{r Fig1, echo=FALSE, fig.cap="Just my first figure with a very fantastic caption.", cache=FALSE}
+x <- rnorm(100)
+y <- jitter(x, 1000)
+plot(x, y)
+```
+
+\newpage
+
+\blandscape
+
+```{r Fig2, echo=FALSE, fig.cap="Second figure in landscape format.", cache=FALSE}
+a <- sort(rnorm(100))
+b <- c(rep("Group Small", 35), rep("Group Big", 65))
+boxplot(a ~ b)
+```
+
+\elandscape
+
+\clearpage
+
+
+
+```{r sessioninfo, echo = FALSE, eval = FALSE}
+# set eval = FALSE if you don't want this info (useful for reproducibility) to appear 
+sessionInfo()
+```
+

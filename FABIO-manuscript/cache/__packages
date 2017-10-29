@@ -1,0 +1,10 @@
+base
+knitr
+plyr
+dplyr
+knitcitations
+bibtex
+RefManageR
+readr
+ggplot2
+bindrcpp
