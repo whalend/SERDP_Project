@@ -79,8 +79,7 @@ fabio_burns$date <- as.Date(fabio_burns$date, format = "%m/%d/%y")
 
 fires_biomass <- fabio_burns %>%
       mutate(pct_green = factor(pct_green, levels = c("25","75")),
-             f_litter_biomass = factor(litter_biomass,
-                                     levels = c("0","500","1000","2000")),
+             f_litter_biomass = factor(litter_biomass, levels = c("0","500","1000","2000"), labels = c("0g litter","500g litter","1000g litter","2000g litter")),
              total_biomass = standing_biomass + litter_biomass,
              pct_consumed = 100*(total_biomass - remaining_biomass)/total_biomass,
              pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass,
@@ -102,31 +101,6 @@ write_csv(fires_biomass, "data/fabio-fires-biomass.csv")
 ggplot(fires_biomass, aes(f_litter_biomass, factor(standing_biomass))) +
       geom_point(aes(color = pct_green, shape = biomass_type), size = 2,
                  position = position_jitterdodge(jitter.width = 0)) +
-      theme_bw()
-
-
-ggplot(fires_biomass, aes(total_biomass, pct_consumed)) +
-      # geom_point(aes(color = pct_green, shape = f_litter_biomass),
-      #            position = "jitter", size = 2) +
-      geom_bar(aes(fill=pct_green), position = "dodge", stat = "identity") +
-      theme_bw() +
-      facet_grid(litter_biomass ~.)
-
-ggplot(filter(fires_biomass, pct_green!="NA", litter_biomass < 3000),
-       aes(pct_fuel_moisture, pct_consumed)) +
-      geom_point(aes(color = standing_biomass, shape = pct_green),
-                 size = 4) +
-      scale_color_gradientn(colours = RColorBrewer::brewer.pal(6, name = "Greens")) +
-      theme_bw() +
-      facet_grid(litter_biomass ~.)
-
-
-ggplot(filter(fires_biomass, pct_green!="NA"),
-       aes(pct_green, pct_fuel_moisture)) +
-      # geom_boxplot(aes(fill = pct_green)) +
-      scale_fill_discrete(h=c(60,120)) +
-      # geom_dotplot() +
-      # geom_point() +
       theme_bw()
 
 
