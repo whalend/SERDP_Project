@@ -5,21 +5,32 @@ library(stringi)
 # plot_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/plot_info.csv")
 
 plot_locations <- rgdal::readOGR("data/plot-locations.shp")
+plot_locations@data$xcoord_lon <- plot_locations@coords[,1]
+plot_locations@data$ycoord_lat <- plot_locations@coords[,2]
+
 plot_data <- plot_locations@data
-plot_data$fire_year <- as.integer(as.character(plot_data$fire_year))
-plot_data$years_since_fire <- 2017 - plot_data$fire_year
+plot_data$last_fire_year <- as.integer(as.character(plot_data$fire_year))
 plot_data <- plot_data %>%
-      filter(is.na(fire_year)==FALSE) %>%
-      mutate(plot_id = tolower(stri_sub(name, -2,-1)),
-             installation = tolower(stri_sub(name,1,-3))) %>%
-      select(installation, plot_id, fire_year, years_since_fire, imcy_inv)
+      # filter(is.na(last_fire_year)==FALSE) %>%
+      rename(plot_id = name, description = descriptio, installation = instal) %>%
+      mutate(burn_unit_id = stri_sub(plot_id,1,-2)) %>%
+      select(plot_id, description, imcy_inv:burn_unit_id)
+
+plot_data$burn_unit_id[plot_data$burn_unit_id=="Flame"] <- "BlandingC"
+plot_data$last_fire_year[is.na(plot_data$last_fire_year)] <-
+plot_data$imcy_inv[is.na(plot_data$imcy_inv)] <- "uninvaded"
+plot_data$plot_id <- tolower(plot_data$plot_id)
+
+plot_data$years_since_fire <- 2017 - plot_data$last_fire_year
 ## Add labels column for installation names
-plot_data$full_names[plot_data$installation=="blanding"] <- "Camp Blanding"
-plot_data$full_names[plot_data$installation=="eglin"] <- "Eglin AFB"
-plot_data$full_names[plot_data$installation=="tyndall"] <- "Tyndall AFB"
-plot_data$full_names[plot_data$installation=="avonpark"] <- "Avon Park AFR"
-plot_data$full_names[plot_data$installation=="shelby"] <- "Camp Shelby"
-plot_data$full_names[plot_data$installation=="moody"] <- "Moody AFB"
+plot_data$installation_full_name[plot_data$installation=="blanding"] <- "Camp Blanding"
+plot_data$installation_full_name[plot_data$installation=="eglin"] <- "Eglin AFB"
+plot_data$installation_full_name[plot_data$installation=="tyndall"] <- "Tyndall AFB"
+plot_data$installation_full_name[plot_data$installation=="avonpark"] <- "Avon Park AFR"
+plot_data$installation_full_name[plot_data$installation=="shelby"] <- "Camp Shelby"
+plot_data$installation_full_name[plot_data$installation=="moody"] <- "Moody AFB"
+
+##
 
 
 ggplot(plot_data, aes(installation)) +
@@ -387,7 +398,7 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass-jitter.png", height=
 #' ## Cogongrass Data Sampled from Invasions
 #'
 #+ cogongrass data ####
-cogon_data <- read_excel("~/Dropbox (UF)/SERDP-Project/data/serdp-plot-data.xlsx", sheet = "CogonData")
+cogon_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/cogon-data.csv")
 cogon_biomass <- cogon_data %>%
       # select(site,plot_id,Quad,fresh_biomass) %>%
       filter(site!="NA") %>%
@@ -401,7 +412,7 @@ ggplot(cogon_biomass, aes(years_since_fire, biomass)) +
       theme_bw() +
       xlab("Years since fire") +
       ylab(expression(paste("Standing biomass (g/", m^{2}, ")"))) +
-      ggtitle("Cogongrass invasion subsample at Avon Park AFR")
+      ggtitle("Cogongrass invasion subsample")
 ggsave("~/Dropbox (UF)/SERDP-Project/figures/cogon-biomass.png", height = 7)
 
 
