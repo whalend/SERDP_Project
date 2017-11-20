@@ -56,6 +56,7 @@ plot_data$full_names[plot_data$installation=="moody"] <- "Moody AFB"
 ```
 
 # Installations Visited and Plots Sampled
+
 * **`r n_distinct(plot_data$installation)` installations**
 * **`r n_distinct(plot_data$years_since_fire)` burn units**
 * **`r length(plot_data$plot_id)` plots**
@@ -436,7 +437,7 @@ summary(lm(avg_litter_gm2 ~ years_since_fire, data = d1))
 # Cogongrass Data Sampled from Invasions
 
 ```{r cogongrass data, eval=F}
-cogon_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/cogon_data.csv")
+cogon_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/cogon-data.csv")
 cogon_biomass <- cogon_data %>%
       # select(site,plot_id,Quad,fresh_biomass) %>%
       filter(site!="NA") %>%
@@ -446,13 +447,15 @@ cogon_biomass <- left_join(
       select(plot_data, installation,plot_id,years_since_fire),
       by=c("site"="installation","plot_id"))
 ggplot(cogon_biomass, aes(years_since_fire, biomass)) +
-      geom_point() +
+      geom_point(aes(color = site)) +
       theme_bw() +
       xlab("Years since fire") +
-      ylab(expression(paste("Standing biomass (g/", m^{2}, ")"))) +
-      ggtitle("Cogongrass invasion subsample at Avon Park AFR")
+      ylab(expression(paste("Standing biomass fresh weight (g/", m^{2}, ")"))) +
+      ggtitle("Cogongrass Invasions Biomass")
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/cogon-biomass.png", height = 7)
 ```
+
+Maximum cogongrass biomass estimated from 25cm quadrat samples from invasions at DoD installations: `r max(cogon_biomass$biomass)`g/m^2^
 
 # Host Abundance Estimates
 
