@@ -36,7 +36,7 @@ all_plots <- readOGR("data/plot-locations.shp")
 summary(all_plots)
 summary(waypts)
 # all_plots@coords
-## Add elevation coordinates to match dimentions of 'all_plots' coords slot
+## Add elevation coordinates to match dimensions of 'all_plots' coords slot
 # waypts@coords <- cbind(waypts@coords, waypts@data$ele)
 
 names(all_plots)
@@ -53,8 +53,12 @@ all_plots <- rbind(all_plots, waypts)
 # spRbind(all_plots, waypts)
 
 summary(all_plots)
-all_plots$name
 
+# flame_height_locations <- all_plots[all_plots$descriptio!="Semipermanent plot",]
+# plot_locations <- all_plots[all_plots$descriptio=="Semipermanent plot",]
 
-writeOGR(all_plots, "data", "plot-locations",
+# writeOGR(all_plots, "data", "all-locations",
+#          "ESRI Shapefile", overwrite_layer = T)
+
+writeOGR(plot_locations, "data", "plot-locations",
          "ESRI Shapefile", overwrite_layer = T)
