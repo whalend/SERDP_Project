@@ -178,7 +178,7 @@ Write your abstract here.
 \vspace{3mm}\hrule
 
 \emph{Keywords}: experiment, fire intensity, fuel load, fuel
-characteristics, Fire Aboveground Biomass Incineration Organizer
+characteristics, FABIO, Fire Aboveground Biomass Incineration Organizer
 
 \doublespace
 
@@ -202,7 +202,10 @@ characteristics, Fire Aboveground Biomass Incineration Organizer
 \item
   We demonstrate how the Fire Aboveground Biomass Incineration Organizer
   (FABIO) maintains realistic fuel structure while experimentally
-  manipulating other fuel characteristics.
+  manipulating other fuel characteristics. It can also be deployed in
+  the field or in a more controlled ``laboratory'' setting. Using the
+  exotic invasive cogongrass, we illustrate how changing the fuel
+  structure can substantially alter flammability characteristics.
 \end{enumerate}
 
 \subsection{Compare Temperature Metrics to Bowman et al.
@@ -217,11 +220,15 @@ standing vertically.'' The context provided is that the native sorghum
 flattens easily after it dries and does not remain vertical throughout
 the dry season.
 
-\begin{verbatim}
-- This reads like a response to a reviewer comment, which might indicate a gap that the FABIO methodology can fill. 
-
-- Average flame height was measured "when the fire was within 15cm of the tree stem using a metal grid placed verically against a steel picket placed next to the stem."
-\end{verbatim}
+\begin{itemize}
+\item
+  This reads like a response to a reviewer comment, which might indicate
+  a gap that the FABIO methodology can fill.
+\item
+  Average flame height was measured ``when the fire was within 15cm of
+  the tree stem using a metal grid placed verically against a steel
+  picket placed next to the stem.''
+\end{itemize}
 
 Additional references given where fuels have been laid flat when testing
 flammability:
@@ -230,25 +237,40 @@ flammability:
 \def\labelenumi{\arabic{enumi}.}
 \item
   (JAUREGUIBERRY et al. 2011)
+
+  \begin{itemize}
+  \item
+    Built the Bar-B-Q apparatus to fill a need to quantify flammability
+    of whole plants of many species
+  \item
+    Quantified flammability characteristics of 34 species using ``whole
+    plant''
+  \item
+    Fuels are still burnt horizontally, so no vertical structure
+  \item
+    Length of fuel limited by size of burning surface
+  \end{itemize}
 \item
   (Simpson 2016)
 \item
   (Conard et al. 2016)
 \end{enumerate}
 
-\begin{verbatim}
-[1] "biomass"      "tempC"        "location"     "biomass_type"
-[5] "source"      
-\end{verbatim}
+All of these studies assessed flammability of multiple species, or
+multiple fuel complexes.
+
+Temperature metrics are influenced by fuel structure. In general, fuels
+with greater vertical arrangement will achieve higher maxium
+temperatures, but will also burn faster. Faster burning should result in
+less exposure above temperature thresholds that cause tissue damage to
+plants. We show these differences in maximum temperature and time above
+100 ºC for standing and piled fuels.
 
 \includegraphics{figures/compare_maxtemp-1.pdf}
 
-\begin{verbatim}
-[1] "biomass"      "s_abv100"     "location"     "biomass_type"
-[5] "source"      
-\end{verbatim}
-
 \includegraphics{figures/compare_sAbv100-1.pdf}
+
+\includegraphics{figures/compare flame height-1.pdf}
 
 Write your introduction here. You can cite bibliography like this (Yan
 and Gerstein 2011, Sutherland et al. 2011), if you provide a
