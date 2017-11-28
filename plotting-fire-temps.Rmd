@@ -377,7 +377,7 @@ ggplot(d2 %>% filter(pct_green>0),
 
 
 ## Cogongrass Only Figures with Litter Biomass
-```{r cogongrass time above 100 ºC}
+```{r cogongrass time above 100 ºC, fig.width=8}
 reg_eqn <- function(df) {
   y = (df$s_abv100)
   x = (df$standing_biomass)
