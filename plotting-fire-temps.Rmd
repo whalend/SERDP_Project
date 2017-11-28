@@ -98,10 +98,15 @@ ggplot(filter(d2, pct_fuel_moisture!="NA", location == "0cm"),
        aes(pct_fuel_moisture, est_pct_fuel_moisture)) +
       geom_point() +
       geom_abline(slope = 1) +
-      scale_x_continuous(limits = c(0,60), breaks = seq(0,60,10)) +
-      scale_y_continuous(limits = c(0,60), breaks = seq(0,60,10)) +
+      scale_x_continuous(limits = c(0,61), breaks = seq(0,61,10)) +
+      scale_y_continuous(limits = c(0,61), breaks = seq(0,61,10)) +
       theme_bw()
 # The estimated fuel moisture higher than the pre-burn fuel moisture, which makes me think that we (I mostly) didn't do a sufficient job of sampling the fuels used in the fire. 
+
+d2 %>% filter(pct_fuel_moisture!="NA", location == "0cm") %>% 
+      # select(pct_fuel_moisture, est_pct_fuel_moisture) %>% 
+      mutate(diff_pct_fuel_moisture = pct_fuel_moisture - est_pct_fuel_moisture) %>% 
+      filter
 
 
 ## Average & Median Fuel Moisture Check
