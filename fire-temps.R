@@ -82,7 +82,8 @@ fires_biomass <- fabio_burns %>%
              f_litter_biomass = factor(litter_biomass, levels = c("0","500","1000","2000"), labels = c("0g litter","500g litter","1000g litter","2000g litter")),
              total_biomass = standing_biomass + litter_biomass,
              pct_consumed = 100*(total_biomass - remaining_biomass)/total_biomass,
-             pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass,
+             est_pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass,
+             pct_fuel_moisture = 100*(fuel_moisture_wet - fuel_moisture_dry)/fuel_moisture_wet,
              max_flame_ht = apply(cbind(flame_ht1,flame_ht2), 1, function(x) max(x, na.rm = T)),
              max_fuel_ht = apply(cbind(green_ht1,green_ht2,green_ht3,brown_ht1,brown_ht2,brown_ht3), 1, max),
              avg_flame_ht = rowMeans(cbind(flame_ht1,flame_ht2), na.rm=T),
@@ -536,6 +537,7 @@ max_temp <- d1 %>%
       filter(probe_type == "old") %>%
       group_by(location,fire_id, pct_green, standing_biomass, litter_biomass, biomass_type) %>%
       summarise(max_temp = max(tempC))
+
 
 d2 <- left_join(max_temp,time_abv150)
 d2$s_abv150[is.na(d2$s_abv150)] <- 0
