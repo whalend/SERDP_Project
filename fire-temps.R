@@ -83,7 +83,7 @@ fires_biomass <- fabio_burns %>%
              total_biomass = standing_biomass + litter_biomass,
              pct_consumed = 100*(total_biomass - remaining_biomass)/total_biomass,
              est_pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass,
-             pct_fuel_moisture = 100*(fuel_moisture_wet - fuel_moisture_dry)/fuel_moisture_wet,
+             pct_fuel_moisture = 100*(fuel_moisture_wet - fuel_moisture_dry),
              max_flame_ht = apply(cbind(flame_ht1,flame_ht2), 1, function(x) max(x, na.rm = T)),
              max_fuel_ht = apply(cbind(green_ht1,green_ht2,green_ht3,brown_ht1,brown_ht2,brown_ht3), 1, max),
              avg_flame_ht = rowMeans(cbind(flame_ht1,flame_ht2), na.rm=T),
