@@ -46,11 +46,20 @@ time_abv300 <- d1 %>% filter(probe_type == "old") %>%
 # d1$flame_ht2 <- as.integer(d1$flame_ht2)
 max_temp <- d1 %>%
       filter(probe_type == "old") %>%
-      group_by(location,fire_id) %>%
+      group_by(location, fire_id) %>%
       summarise(max_temp = max(tempC)) %>% 
       ungroup(.)
 
-d1 <- join_all(list(max_temp, time_abv100, time_abv300), type = "full", match = "all")
+avg_max_temp <- d1 %>% 
+      filter(probe_type == "old") %>%
+      group_by(location, fire_id) %>% 
+      arrange(desc(tempC)) %>% 
+      summarise(avg_max_temp = mean(tempC[1:5])) %>% 
+      ungroup(.)
+
+
+d1 <- join_all(list(max_temp, avg_max_temp, time_abv100, time_abv300), 
+               type = "full", match = "all")
 # summary(d1)
 d1$s_abv300[is.na(d1$s_abv300)] <- 0
 d1$s_abv100[is.na(d1$s_abv100)] <- 0
@@ -84,6 +93,16 @@ fm_plot +
 
       # facet_grid(.~pct_green) +
       # geom_errorbar() +
+
+ggplot(filter(d2, pct_fuel_moisture!="NA", location == "0cm"),
+       aes(pct_fuel_moisture, est_pct_fuel_moisture)) +
+      geom_point() +
+      geom_abline(slope = 1) +
+      scale_x_continuous(limits = c(0,60), breaks = seq(0,60,10)) +
+      scale_y_continuous(limits = c(0,60), breaks = seq(0,60,10)) +
+      theme_bw()
+# The estimated fuel moisture higher than the pre-burn fuel moisture, which makes me think that we (I mostly) didn't do a sufficient job of sampling the fuels used in the fire. 
+
 
 ## Average & Median Fuel Moisture Check
 # filter(d2, location == "0cm", pct_green!="NA") %>% 
