@@ -84,13 +84,13 @@ fires_biomass <- fabio_burns %>%
              pct_consumed = 100*(total_biomass - remaining_biomass)/total_biomass,
              est_pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass,
              pct_fuel_moisture = 100*(fuel_moisture_wet - fuel_moisture_dry)/fuel_moisture_wet,
+             max_fuel_ht = apply(cbind(green_ht1,green_ht2,green_ht3,brown_ht1,brown_ht2,brown_ht3), 1, function(x) max(x, na.rm=T)),
              max_flame_ht = apply(cbind(flame_ht1,flame_ht2), 1, function(x) max(x, na.rm = T)),
-             max_fuel_ht = apply(cbind(green_ht1,green_ht2,green_ht3,brown_ht1,brown_ht2,brown_ht3), 1, max),
              avg_flame_ht = rowMeans(cbind(flame_ht1,flame_ht2), na.rm=T),
              avg_litter_depth = rowMeans(cbind(litter_depth1,litter_depth2,litter_depth3), na.rm=T),
              avg_green_ht = rowMeans(cbind(green_ht1,green_ht2,green_ht3), na.rm=T),
              avg_brown_ht = rowMeans(cbind(brown_ht1,brown_ht2,brown_ht3), na.rm=T)) %>%
-      select(fire_id:pct_green, remaining_biomass:avg_brown_ht)
+      select(date:pct_green, remaining_biomass:rate_of_spread_51cm)
 
 write_csv(fires_biomass, "data/fabio-fires-biomass.csv")
 
@@ -520,6 +520,18 @@ fireid41 <- filter(d1, probe_type == "old", between(time, 47570,47700)) %>%
       mutate(fire_id = 41)
 fireid42 <- filter(d1, probe_type == "old", between(time, 48360,48700)) %>%
       mutate(fire_id = 42)
+
+
+#+ Experimental Burns December 1, 2017: Fire IDs 43-50, Piled vs. Standing ####
+piled_0cmM <- read_csv("data/fire_temperatures/piled-0cmM-new-20171201.csv")
+names(piled_0cmM) <- c("date","time","tempC")
+piled_0cmM <- mutate(piled_0cmM, location = "0cm", probe_type = "new", position = "middle")
+piled_0cmL <- read_csv("data/fire_temperatures/piled-0cmL-new-20171201.csv")
+names(piled_0cmL) <- c("date","time","tempC")
+piled_0cmL <- mutate(piled_0cmM, location = "0cm", probe_type = "new", position = "left")
+piled_0cmR <- read_csv("data/fire_temperatures/piled-0cmR-new-20171201.csv")
+names(piled_0cmR) <- c("date","time","tempC")
+piled_0cmM <- mutate(piled_0cmM, location = "0cm", probe_type = "new", position = "right")
 
 #+ Join fire data into single file ####
 d1 <- rbind(fireid1,fireid2,fireid3,fireid4,fireid5,fireid6,fireid7,fireid8,fireid9,fireid10,fireid11,fireid12,fireid13,fireid14,fireid15,fireid16,fireid17,fireid18,fireid19,fireid20,fireid21,fireid22,fireid23,fireid24,fireid25,fireid26,fireid27,fireid28,fireid29,fireid30,fireid31,fireid32,fireid33,fireid34,fireid35,fireid36,fireid37,fireid38,fireid39,fireid40,fireid41,fireid42)
