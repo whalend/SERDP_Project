@@ -100,10 +100,51 @@ ggplot(plot_data, aes(as.factor(years_since_fire))) +
 
 ```{r load species data}
 species_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/species1m.csv")
-species_data$date <- as.Date(species_data$date, format = "%m/%d/%Y")
+species_data$date <- as.Date(species_data$date, format = "%m/%d/%y")
 species_data <- filter(species_data, date>"2017-06-01")
 species_data$veg_id <- tolower(species_data$veg_id)
+species_data <- rename(species_data, sci_name = scientific_name)
 # length(unique(species_data$veg_id))
+
+species_table <- read_csv("data/plant_species_list.csv")
+species_table$species[is.na(species_table$species)] <- ""
+species_table$scientific_name <- paste(
+      species_table$genus, species_table$species, sep = " ")
+
+species_table %>% arrange(scientific_name)
+
+unique(species_data$veg_id)
+
+species_data <- left_join(species_data, species_table, 
+          by = c("veg_id"="code"))
+
+
+unique(species_data$scientific_name)
+dsub <- select(species_data, veg_id, scientific_name, sci_name, pct_cover) %>% 
+      filter(is.na(scientific_name), pct_cover > 10)
+sort(unique(dsub$veg_id))
+
+
+
+species_data$scientific_name[species_data$veg_id=="qula"] <- "Quercus laevis"
+species_data$scientific_name[species_data$veg_id=="wiregrass"] <- "Aristida stricta"
+species_data$scientific_name[species_data$veg_id=="limi"] <- "Licania michauxii"
+species_data$scientific_name[species_data$veg_id=="pipa"] <- "Pinus palustris"
+species_data$scientific_name[species_data$veg_id=="quni"] <- "Quercus nigra"
+species_data$scientific_name[species_data$veg_id=="rhco"] <- "Rhus copallinum"
+species_data$scientific_name[species_data$veg_id=="moce"] <- "Morella cerifera"
+species_data$scientific_name[species_data$veg_id=="qula2"] <- "Quercus laurifolia"
+species_data$scientific_name[species_data$veg_id=="quge"] <- "Quercus geminata"
+species_data$scientific_name[species_data$veg_id=="divi"] <- "Diospyros virginiana"
+species_data$scientific_name[species_data$veg_id=="quge"] <- "Quercus geminata"
+
+
+
+filter(species_data, veg_id=="sf", 
+       # scientific_name!="NA"
+       )
+
+
 species_data <- left_join(
       species_data,
       select(plot_data, installation:full_names),
