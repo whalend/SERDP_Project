@@ -153,26 +153,32 @@ We worked in a **beautiful** place with lots of trees, like *Quercus suber* and 
 
 ## Data collection and analysis
 
+```{r load data from FABIO experiment}
+fabio_fires_biomass <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-biomass.csv")
+pile_vs_stand <- filter(fabio_fires_biomass, date > "2017-11-30")
+
+# fabio_burns <- read_csv("~/Documents/SERDP_Project/data/experimental-fire-data-summary.csv")
+# fabio_burns <- mutate(fabio_burns, source = "FABIO Burn (vertical)")
+```
+
+
 ```{r compare_maxtemp}
 
-bowman_maxtemp <- read_csv("~/Documents/SERDP_Project/data/bowman-etal-maxtemp.csv")
-bowman_maxtemp$source <- "Piled (Bowman et al.)"
-
-fabio_burns <- read_csv("~/Documents/SERDP_Project/data/experimental-fire-data-summary.csv")
-fabio_burns <- mutate(fabio_burns, source = "FABIO Burn (vertical)")
-
-# names(bowman_maxtemp)
-bowman_maxtemp <- filter(bowman_maxtemp, biomass_type == "grass")
-fabio_maxtemp <- fabio_burns %>% 
-      filter(litter_biomass == 0, biomass_type == "cogongrass", pct_green == 25, standing_biomass < 2000) %>% 
-      select(standing_biomass, max_temp, location, biomass_type, source) %>% 
-      rename(biomass = standing_biomass, tempC = max_temp)
-
-maxtemp_df <- rbind(bowman_maxtemp,fabio_maxtemp)
-maxtemp_df <- maxtemp_df %>% 
-      filter(location != "25cm")
-# unique(maxtemp_df$location)
-maxtemp_df$location[maxtemp_df$location!="50cm"] <- "near ground"
+# bowman_maxtemp <- read_csv("~/Documents/SERDP_Project/data/bowman-etal-maxtemp.csv")
+# bowman_maxtemp$source <- "Piled (Bowman et al.)"
+# 
+# # names(bowman_maxtemp)
+# bowman_maxtemp <- filter(bowman_maxtemp, biomass_type == "grass")
+# fabio_maxtemp <- fabio_burns %>% 
+#       filter(litter_biomass == 0, biomass_type == "cogongrass", pct_green == 25, standing_biomass < 2000) %>% 
+#       select(standing_biomass, max_temp, location, biomass_type, source) %>% 
+#       rename(biomass = standing_biomass, tempC = max_temp)
+# 
+# maxtemp_df <- rbind(bowman_maxtemp,fabio_maxtemp)
+# maxtemp_df <- maxtemp_df %>% 
+#       filter(location != "25cm")
+# # unique(maxtemp_df$location)
+# maxtemp_df$location[maxtemp_df$location!="50cm"] <- "near ground"
 
 maxtemp_comparison <- ggplot(maxtemp_df, aes(biomass, tempC)) +
       geom_line(aes(color = source, linetype = location)) +
@@ -194,6 +200,7 @@ maxtemp_comparison +
             )
 
 ```      
+
 
 ```{r compare_sAbv100 }
 
@@ -234,25 +241,26 @@ s_abv100_comparison +
 
 ```
 
+
 ```{r compare flame height}
 
-bowman_flame_ht <- read_csv("~/Documents/SERDP_Project/data/bowman-etal-flame-height.csv")
-bowman_flame_ht$source <- "Piled (Bowman et al.)"
+# bowman_flame_ht <- read_csv("~/Documents/SERDP_Project/data/bowman-etal-flame-height.csv")
+# bowman_flame_ht$source <- "Piled (Bowman et al.)"
+# 
+# bowman_flame_ht <- filter(bowman_flame_ht, biomass_type == "grass")
+# fabio_flame_ht <- fabio_burns %>% 
+#       filter(litter_biomass == 0, biomass_type == "cogongrass", 
+#              pct_green == 25, standing_biomass < 2000, max_flame_ht != -Inf,
+#              location == "0cm") %>% 
+#       select(standing_biomass, max_flame_ht, biomass_type, source) %>%
+#       rename(biomass = standing_biomass)
+# 
+# max_flame_ht_df <- rbind(bowman_flame_ht, fabio_flame_ht)
 
-bowman_flame_ht <- filter(bowman_flame_ht, biomass_type == "grass")
-fabio_flame_ht <- fabio_burns %>% 
-      filter(litter_biomass == 0, biomass_type == "cogongrass", 
-             pct_green == 25, standing_biomass < 2000, max_flame_ht != -Inf,
-             location == "0cm") %>% 
-      select(standing_biomass, max_flame_ht, biomass_type, source) %>%
-      rename(biomass = standing_biomass)
-
-
-max_flame_ht_df <- rbind(bowman_flame_ht, fabio_flame_ht)
-
-ggplot(max_flame_ht_df, aes(biomass, max_flame_ht)) +
-      geom_line(aes(color = source)) +
-      geom_point(aes(color = source), size = 3) +
+ggplot(pile_vs_stand, aes(biomass, max_flame_ht)) +
+      # geom_line(aes(color = structure)) +
+      geom_point(aes(color = structure), size = 3) +
+      geom_smooth(aes(color = structure), method = "lm") +
       scale_color_discrete(h.start = 20) +
       theme_bw() +
       xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
@@ -260,6 +268,104 @@ ggplot(max_flame_ht_df, aes(biomass, max_flame_ht)) +
       theme(legend.title = element_blank(), 
             # legend.direction = "vertical",
             legend.position = c(.02,.98),
+            legend.justification = c("left","top"),
+            legend.spacing = unit(x = -.3, units = "cm"),
+            axis.title = element_text(size = 16),
+            axis.text = element_text(size = 12),
+            plot.margin = unit(c(.5,.5,.5,.5), "cm")
+            )
+
+ggplot(pile_vs_stand, aes(biomass, avg_flame_ht, color = structure)) +
+      geom_point(aes(color = structure), size = 3) +
+      geom_smooth(aes(color = structure), method = "lm") +
+      scale_color_discrete(h.start = 20) +
+      theme_bw() +
+      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
+      ylab("Average flame height (cm)") +
+      theme(legend.title = element_blank(), 
+            # legend.direction = "vertical",
+            legend.position = c(.02,.98),
+            legend.justification = c("left","top"),
+            legend.spacing = unit(x = -.3, units = "cm"),
+            axis.title = element_text(size = 16),
+            axis.text = element_text(size = 12),
+            plot.margin = unit(c(.5,.5,.5,.5), "cm")
+            )
+
+
+# d1 <- pile_vs_stand
+# d1$biomass[d1$fire_id==59|d1$fire_id==60] <- 1200
+# 
+# a <- ggplot(pile_vs_stand, aes(biomass, avg_fuel_ht, color = structure)) +
+#       geom_point(aes(color = structure), size = 3) +
+#       scale_color_discrete(h.start = 20) +
+#       theme_bw() +
+#       ggtitle("Kept at 1500g")
+# b <- ggplot(d1, aes(biomass, avg_fuel_ht, color = structure)) +
+#       geom_point(aes(color = structure), size = 3) +
+#       scale_color_discrete(h.start = 20) +
+#       theme_bw() +
+#       ggtitle("Changed to 1000g")
+# 
+# c <- xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
+#       # ylab("Average fuel height (cm)") +
+#       theme(legend.title = element_blank(), 
+#             # legend.direction = "vertical",
+#             # legend.position = c(.02,.98),
+#             legend.justification = c("left","top"),
+#             legend.spacing = unit(x = -.3, units = "cm"),
+#             axis.title = element_text(size = 16),
+#             axis.text = element_text(size = 12),
+#             plot.margin = unit(c(.5,.5,.5,.5), "cm")
+#             )
+# 
+# a1 <- a + c 
+# a2 <- b + c
+# 
+# library(cowplot)
+# plot_grid(a1, a2)
+
+```
+
+```{r compare biomass consumption}
+
+# ggplot(pile_vs_stand, aes(biomass, remaining_biomass, color = structure)) +
+#       geom_point(size = 2, position = "jitter") +
+#       scale_color_discrete(h.start = 20) +
+#       theme_bw()
+
+ggplot(pile_vs_stand, aes(biomass, pct_consumed)) +
+      # geom_line(aes(color = structure)) +
+      geom_point(aes(color = structure), size = 3) +
+      scale_color_discrete(h.start = 20) +
+      theme_bw() +
+      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
+      ylab("Percent consumed") +
+      theme(legend.title = element_blank(), 
+            # legend.direction = "vertical",
+            legend.position = c(.8,.4),
+            legend.justification = c("left","top"),
+            legend.spacing = unit(x = -.3, units = "cm"),
+            axis.title = element_text(size = 16),
+            axis.text = element_text(size = 12),
+            plot.margin = unit(c(.5,.5,.5,.5), "cm")
+            )
+
+# ggplot(pile_vs_stand, aes(biomass, pct_consumed, color = structure)) +
+#       geom_point(size = 2) +
+#       scale_color_discrete(h.start = 20) +
+#       theme_bw()
+
+
+ggplot(d1, aes(biomass, rate_of_spread_50cm, color = structure)) +
+      geom_point(size = 3) +
+      scale_color_discrete(h.start = 20) +
+      theme_bw() +
+      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
+      ylab("Rate of spread (s/50cm") +
+      theme(legend.title = element_blank(), 
+            # legend.direction = "vertical",
+            # legend.position = c(.02,.98),
             legend.justification = c("left","top"),
             legend.spacing = unit(x = -.3, units = "cm"),
             axis.title = element_text(size = 16),
