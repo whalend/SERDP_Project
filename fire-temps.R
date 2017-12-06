@@ -80,17 +80,18 @@ fabio_burns$date <- as.Date(fabio_burns$date, format = "%m/%d/%y")
 fires_biomass <- fabio_burns %>%
       mutate(pct_green = factor(pct_green, levels = c("25","75")),
              f_litter_biomass = factor(litter_biomass, levels = c("0","500","1000","2000"), labels = c("0g litter","500g litter","1000g litter","2000g litter")),
-             total_biomass = standing_biomass + litter_biomass,
+             total_biomass = biomass + litter_biomass,
              pct_consumed = 100*(total_biomass - remaining_biomass)/total_biomass,
              est_pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass,
              pct_fuel_moisture = 100*(fuel_moisture_wet - fuel_moisture_dry)/fuel_moisture_wet,
-             max_fuel_ht = apply(cbind(green_ht1,green_ht2,green_ht3,brown_ht1,brown_ht2,brown_ht3), 1, function(x) max(x, na.rm=T)),
              max_flame_ht = apply(cbind(flame_ht1,flame_ht2), 1, function(x) max(x, na.rm = T)),
              avg_flame_ht = rowMeans(cbind(flame_ht1,flame_ht2), na.rm=T),
+             max_fuel_ht = apply(cbind(green_ht1,green_ht2,green_ht3,brown_ht1,brown_ht2,brown_ht3), 1, function(x) max(x, na.rm=T)),
              avg_litter_depth = rowMeans(cbind(litter_depth1,litter_depth2,litter_depth3), na.rm=T),
              avg_green_ht = rowMeans(cbind(green_ht1,green_ht2,green_ht3), na.rm=T),
-             avg_brown_ht = rowMeans(cbind(brown_ht1,brown_ht2,brown_ht3), na.rm=T)) %>%
-      select(date:pct_green, remaining_biomass:rate_of_spread_51cm)
+             avg_brown_ht = rowMeans(cbind(brown_ht1,brown_ht2,brown_ht3), na.rm=T),
+             avg_fuel_ht = rowMeans(cbind(avg_green_ht,avg_brown_ht), na.rm=T)) %>%
+      select(date:pct_green, biomass_type, structure, rate_of_spread_50cm:avg_fuel_ht, -notes)
 
 write_csv(fires_biomass, "data/fabio-fires-biomass.csv")
 
@@ -99,9 +100,10 @@ write_csv(fires_biomass, "data/fabio-fires-biomass.csv")
 #      )
 
 
-ggplot(fires_biomass, aes(f_litter_biomass, factor(standing_biomass))) +
+ggplot(fires_biomass, aes(f_litter_biomass, factor(biomass))) +
       geom_point(aes(color = pct_green, shape = biomass_type), size = 2,
                  position = position_jitterdodge(jitter.width = 0)) +
+      scale_color_discrete(h.start = 20) +
       theme_bw()
 
 
@@ -521,8 +523,23 @@ fireid41 <- filter(d1, probe_type == "old", between(time, 47570,47700)) %>%
 fireid42 <- filter(d1, probe_type == "old", between(time, 48360,48700)) %>%
       mutate(fire_id = 42)
 
+d1 <- rbind(fireid1,fireid2,fireid3,fireid4,fireid5,fireid6,fireid7,fireid8,fireid9,fireid10,fireid11,fireid12,fireid13,fireid14,fireid15,fireid16,fireid17,fireid18,fireid19,fireid20,fireid21,fireid22,fireid23,fireid24,fireid25,fireid26,fireid27,fireid28,fireid29,fireid30,fireid31,fireid32,fireid33,fireid34,fireid35,fireid36,fireid37,fireid38,fireid39,fireid40,fireid41,fireid42)
+
+d1 <- d1 %>%
+      mutate(position = "middle") %>%
+      select(date:probe_type, position, fire_id)
 
 #+ Experimental Burns December 1, 2017: Fire IDs 43-50, Piled vs. Standing ####
+
+## Temperatures from piled fuels
+# flist <- c(
+#       list.files("data/fire_temperatures", pattern = "piled", full.names = T),
+#       list.files("data/fire_temperatures", pattern = "stand", full.names = T))
+# flist <- flist[grep(".csv", flist, fixed=T)]
+#
+# library(data.table)
+# piled_temps <- ldply(flist, function(x){fread(x)})
+
 piled_0cmM <- read_csv("data/fire_temperatures/piled-0cmM-new-20171201.csv")
 names(piled_0cmM) <- c("date","time","tempC")
 piled_0cmM <- mutate(piled_0cmM, location = "0cm", probe_type = "new", position = "middle")
@@ -531,23 +548,82 @@ names(piled_0cmL) <- c("date","time","tempC")
 piled_0cmL <- mutate(piled_0cmM, location = "0cm", probe_type = "new", position = "left")
 piled_0cmR <- read_csv("data/fire_temperatures/piled-0cmR-new-20171201.csv")
 names(piled_0cmR) <- c("date","time","tempC")
-piled_0cmM <- mutate(piled_0cmM, location = "0cm", probe_type = "new", position = "right")
+piled_0cmR <- mutate(piled_0cmM, location = "0cm", probe_type = "new", position = "right")
+
+piled_25cmM <- read_csv("data/fire_temperatures/piled-25cmM-new-20171201.csv")
+names(piled_25cmM) <- c("date","time","tempC")
+piled_25cmM <- mutate(piled_25cmM, location = "25cm", probe_type = "new", position = "middle")
+piled_25cmL <- read_csv("data/fire_temperatures/piled-25cmL-new-20171201.csv")
+names(piled_25cmL) <- c("date","time","tempC")
+piled_25cmL <- mutate(piled_25cmM, location = "25cm", probe_type = "new", position = "left")
+piled_25cmR <- read_csv("data/fire_temperatures/piled-25cmR-new-20171201.csv")
+names(piled_25cmR) <- c("date","time","tempC")
+piled_25cmM <- mutate(piled_25cmM, location = "25cm", probe_type = "new", position = "right")
+
+piled_50cmM <- read_csv("data/fire_temperatures/piled-50cmM-new-20171201.csv")
+names(piled_50cmM) <- c("date","time","tempC")
+piled_50cmM <- mutate(piled_50cmM, location = "50cm", probe_type = "new", position = "middle")
+piled_50cmL <- read_csv("data/fire_temperatures/piled-50cmL-new-20171201.csv")
+names(piled_50cmL) <- c("date","time","tempC")
+piled_50cmL <- mutate(piled_50cmM, location = "50cm", probe_type = "new", position = "left")
+piled_50cmR <- read_csv("data/fire_temperatures/piled-50cmR-new-20171201.csv") %>%
+      names(c("date", "time", "tempC")) %>%
+      mutate(location = "50cm", probe_type = "new", position = "right")
+
+piled_temps <- rbind()
+# plot all data from sensors
+# par(mfrow=c(3,1))
+# plot(fabio1_0cm$time, fabio1_0cm$tempC, main = "FABIO 1 Burns 7/5/2017")
+# plot(fabio1_25cm$time, fabio1_25cm$tempC)
+# plot(fabio1_50cm$time, fabio1_50cm$tempC)
+
+## Temperatures from standing fuels
+standing_0cmM <- read_csv("data/fire_temperatures/standing-0cmM-new-20171201.csv")
+names(standing_0cmM) <- c("date","time","tempC")
+standing_0cmM <- mutate(standing_0cmM, location = "0cm", probe_type = "new", position = "middle")
+standing_0cmL <- read_csv("data/fire_temperatures/standing-0cmL-new-20171201.csv")
+names(standing_0cmL) <- c("date","time","tempC")
+standing_0cmL <- mutate(standing_0cmM, location = "0cm", probe_type = "new", position = "left")
+standing_0cmR <- read_csv("data/fire_temperatures/standing-0cmR-new-20171201.csv")
+names(standing_0cmR) <- c("date","time","tempC")
+standing_0cmM <- mutate(standing_0cmM, location = "0cm", probe_type = "new", position = "right")
+
+standing_25cmM <- read_csv("data/fire_temperatures/standing-25cmM-new-20171201.csv")
+names(standing_25cmM) <- c("date","time","tempC")
+standing_25cmM <- mutate(standing_25cmM, location = "25cm", probe_type = "new", position = "middle")
+standing_25cmL <- read_csv("data/fire_temperatures/standing-25cmL-new-20171201.csv")
+names(standing_25cmL) <- c("date","time","tempC")
+standing_25cmL <- mutate(standing_25cmM, location = "25cm", probe_type = "new", position = "left")
+standing_25cmR <- read_csv("data/fire_temperatures/standing-25cmR-new-20171201.csv")
+names(standing_25cmR) <- c("date","time","tempC")
+standing_25cmM <- mutate(standing_25cmM, location = "25cm", probe_type = "new", position = "right")
+
+standing_50cmM <- read_csv("data/fire_temperatures/standing-50cmM-new-20171201.csv")
+names(standing_50cmM) <- c("date","time","tempC")
+standing_50cmM <- mutate(standing_50cmM, location = "50cm", probe_type = "new", position = "middle")
+standing_50cmL <- read_csv("data/fire_temperatures/standing-50cmL-new-20171201.csv")
+names(standing_50cmL) <- c("date","time","tempC")
+standing_50cmL <- mutate(standing_50cmM, location = "50cm", probe_type = "new", position = "left")
+standing_50cmR <- read_csv("data/fire_temperatures/standing-50cmR-new-20171201.csv")
+names(standing_50cmR) <- c("date","time","tempC")
+standing_50cmM <- mutate(standing_50cmM, location = "50cm", probe_type = "new", position = "right")
+
 
 #+ Join fire data into single file ####
-d1 <- rbind(fireid1,fireid2,fireid3,fireid4,fireid5,fireid6,fireid7,fireid8,fireid9,fireid10,fireid11,fireid12,fireid13,fireid14,fireid15,fireid16,fireid17,fireid18,fireid19,fireid20,fireid21,fireid22,fireid23,fireid24,fireid25,fireid26,fireid27,fireid28,fireid29,fireid30,fireid31,fireid32,fireid33,fireid34,fireid35,fireid36,fireid37,fireid38,fireid39,fireid40,fireid41,fireid42)
+
 
 write_csv(d1,"data/fabio-fires-temperatures.csv")
 d1 <- left_join(d1, fabio_burns_biomass, by = "fire_id")
 
 #+ Plot Experimental FABIO Burns ####
 time_abv150 <- d1 %>% filter(probe_type == "old") %>%
-             group_by(location,fire_id, pct_green, standing_biomass, litter_biomass, biomass_type) %>%
+             group_by(location,fire_id, pct_green, biomass, litter_biomass, biomass_type) %>%
              filter(tempC>150) %>%
              summarise(s_abv150 = length(tempC))
 
 max_temp <- d1 %>%
       filter(probe_type == "old") %>%
-      group_by(location,fire_id, pct_green, standing_biomass, litter_biomass, biomass_type) %>%
+      group_by(location,fire_id, pct_green, biomass, litter_biomass, biomass_type) %>%
       summarise(max_temp = max(tempC))
 
 
@@ -555,7 +631,7 @@ d2 <- left_join(max_temp,time_abv150)
 d2$s_abv150[is.na(d2$s_abv150)] <- 0
 
 ggplot(d2, aes(s_abv150, max_temp, color = factor(pct_green))) +
-      geom_point(aes(size = standing_biomass)) +
+      geom_point(aes(size = biomass)) +
       # scale_fill_continuous(low = "yellow", high = "red") +
       # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
       facet_grid(location~litter_biomass) +
@@ -565,7 +641,7 @@ ggplot(d2, aes(s_abv150, max_temp, color = factor(pct_green))) +
 
 ggplot(d2 %>% filter(litter_biomass==0),
        aes(s_abv150, max_temp, color = factor(pct_green))) +
-      geom_point(aes(size = standing_biomass, shape = biomass_type)) +
+      geom_point(aes(size = biomass, shape = biomass_type)) +
       # scale_fill_continuous(low = "yellow", high = "red") +
       # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
       facet_grid(location~.) +
@@ -573,7 +649,7 @@ ggplot(d2 %>% filter(litter_biomass==0),
       xlab("Seconds >150 ºC") +
       theme_bw()
 
-ggplot(d2, aes(standing_biomass, max_temp)) +
+ggplot(d2, aes(biomass, max_temp)) +
       geom_point(aes(color = factor(pct_green), shape = biomass_type)) +
       # geom_line(aes(color = factor(pct_green))) +
       # geom_line(aes(color = factor(pct_green))) +
@@ -583,7 +659,7 @@ ggplot(d2, aes(standing_biomass, max_temp)) +
       xlab("Standing Biomass (g)") +
       theme_bw()
 
-ggplot(d2, aes(standing_biomass, s_abv150)) +
+ggplot(d2, aes(biomass, s_abv150)) +
       geom_point(aes(color = factor(pct_green), shape = biomass_type)) +
       # geom_line(aes(color = factor(pct_green))) +
       # geom_line(aes(color = factor(pct_green))) +
@@ -593,7 +669,7 @@ ggplot(d2, aes(standing_biomass, s_abv150)) +
       xlab("Standing Biomass (g)") +
       theme_bw()
 
-ggplot(d2 %>% filter(litter_biomass==0), aes(standing_biomass, s_abv150)) +
+ggplot(d2 %>% filter(litter_biomass==0), aes(biomass, s_abv150)) +
       geom_point(aes(color = factor(pct_green))) +
       # geom_smooth(aes(color = factor(pct_green), linetype = biomass_type)) +
       geom_line(aes(color = factor(pct_green))) +
