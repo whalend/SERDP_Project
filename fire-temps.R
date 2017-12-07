@@ -1,5 +1,5 @@
 #' #Fire Temperature Data
-#+ load packages
+#+ load packages ####
 library(plyr); library(dplyr)
 library(readr); library(ggplot2)
 
@@ -529,7 +529,7 @@ d1 <- d1 %>%
       mutate(position = "middle") %>%
       select(date:probe_type, position, fire_id)
 
-#+ Experimental Burns December 1, 2017: Fire IDs 43-74, Piled vs. Standing ####
+#+ Experimental Burns December 1,4-5, 2017: Fire IDs 43-74, Piled vs. Standing ####
 
 ## Temperatures from piled fuels
 flist <- list.files("data/fire_temperatures", pattern = "piled", full.names = T)
@@ -568,11 +568,16 @@ piled_temps <- rbind(
       ldply(piled_50cmR, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
             mutate(location = "50cm", probe_type = "new", position = "right")
 )
-
 summary(piled_temps)
 
 
 t <- filter(piled_temps, date=="2017-12-01")
+ggplot(t, aes(time, tempC)) +
+      geom_line() +
+      facet_grid(location~position) +
+      theme_bw() +
+      ggtitle("Piled fuels temperatures")
+# time is 1-hour off for some of the loggers
 
 t1 <- filter(t, location=="50cm", position=="middle" | position=="right")
 t2 <- filter(t, location=="25cm", position=="left"| position=="right")
@@ -589,17 +594,28 @@ sum(c(length(b$date),length(t4$date)))# should = obs of piled_temps
 piled_temps <- union(b,t4)
 
 
-ggplot(filter(piled_temps, date=="2017-12-05"), aes(time, tempC)) +
-      geom_line() +
-      facet_grid(location~position) +
-      theme_bw() +
-      ggtitle("Piled fuels temperatures")
+t <- filter(piled_temps, date=="2017-12-01")
 
-# plot all data from sensors
-# par(mfrow=c(3,1))
-# plot(fabio1_0cm$time, fabio1_0cm$tempC, main = "FABIO 1 Burns 7/5/2017")
-# plot(fabio1_25cm$time, fabio1_25cm$tempC)
-# plot(fabio1_50cm$time, fabio1_50cm$tempC)
+ggplot(fireid61, aes(as.numeric(time), tempC)) +
+      geom_line(aes(color = position, linetype = location)) +
+      # facet_grid(location~position) +
+      theme_bw() +
+      ggtitle("Piled fuels temperatures") +
+      geom_hline(yintercept = 50, color = "grey")
+
+dec_4 <- filter(piled_temps, date=="2017-12-04")
+fireid61 <- filter(dec_4, between(time, 58600, 60100))
+fireid59 <- filter(dec_4, between(time, 55500, 56700))
+fireid57 <- filter(dec_4, between(time, 53350, 54600))
+fireid55 <- filter(dec_4, between(time, 49500, 50300))
+fireid53 <- filter(dec_4, between(time, 47350, 47850))
+fireid51 <- filter(dec_4, between(time, 45500, 46830))
+
+dec_1 <- filter(piled_temps, date=="2017-12-01")
+fireid49 <- filter(dec_1, between(time, 61700, 62560))
+fireid47 <- filter(dec_1, between(time, 60500, 61000))
+fireid45 <- filter(dec_1, between(time, 53700, 54200))
+fireid43 <- filter(dec_1, between(time, 51850, 52300))
 
 ## Temperatures from standing fuels
 
