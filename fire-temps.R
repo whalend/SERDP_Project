@@ -688,16 +688,21 @@ standing_temps <- union(b,t4)
 
 t <- filter(standing_temps, date=="2017-12-01")
 
-ggplot(dec_5, aes(as.numeric(time), tempC)) +
+ggplot(fireid74, aes(as.numeric(time), tempC)) +
       geom_line(aes(color = position, linetype = location)) +
-      facet_grid(location~position) +
+      # facet_grid(location~position) +
       theme_bw() +
       ggtitle("Standing fuels temperatures") +
       geom_hline(yintercept = 50, color = "purple", linetype = "dashed") +
       geom_hline(yintercept = 60, color = "brown", linetype = "dashed")
 
 dec_5 <- filter(standing_temps, date=="2017-12-05")
-
+fireid74 <- filter(dec_5, between(time, 54220, 54430))
+fireid72 <- filter(dec_5, between(time, 51650, 52000))
+fireid70 <- filter(dec_5, between(time, 49200, 49400))
+fireid68 <- filter(dec_5, between(time, 47200, 47420))
+fireid66 <- filter(dec_5, between(time, 45600, 45830))
+fireid64 <- filter(dec_5, between(time, 44000, 44160))
 
 dec_4 <- filter(standing_temps, date=="2017-12-04")
 fireid62 <- filter(dec_4, between(time, 59150, 59450))
