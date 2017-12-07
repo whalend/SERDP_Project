@@ -596,19 +596,29 @@ piled_temps <- union(b,t4)
 
 t <- filter(piled_temps, date=="2017-12-01")
 
-ggplot(fireid61, aes(as.numeric(time), tempC)) +
+ggplot(fireid73, aes(as.numeric(time), tempC)) +
       geom_line(aes(color = position, linetype = location)) +
       # facet_grid(location~position) +
       theme_bw() +
       ggtitle("Piled fuels temperatures") +
-      geom_hline(yintercept = 50, color = "grey")
+      geom_hline(yintercept = 50, color = "purple", linetype = "dashed") +
+      geom_hline(yintercept = 60, color = "brown", linetype = "dashed")
+
+dec_5 <- filter(piled_temps, date=="2017-12-05")
+fireid73 <- filter(dec_5, between(time, 53930, 55060))
+fireid71 <- filter(dec_5, between(time, 51000, 52500))
+fireid69 <- filter(dec_5, between(time, 48800, 49600))
+fireid67 <- filter(dec_5, between(time, 46920, 47520))
+fireid65 <- filter(dec_5, between(time, 45400, 45850))
+fireid63 <- filter(dec_5, between(time, 43750, 44200))
 
 dec_4 <- filter(piled_temps, date=="2017-12-04")
-fireid61 <- filter(dec_4, between(time, 58600, 60100))
-fireid59 <- filter(dec_4, between(time, 55500, 56700))
-fireid57 <- filter(dec_4, between(time, 53350, 54600))
-fireid55 <- filter(dec_4, between(time, 49500, 50300))
-fireid53 <- filter(dec_4, between(time, 47350, 47850))
+# exclue inaccurate measures from 0cm-right sensor after fire id 51
+fireid61 <- filter(dec_4, location!="0cm" | position!="right", between(time, 58600, 60100))
+fireid59 <- filter(dec_4, location!="0cm" | position!="right", between(time, 55500, 56700))
+fireid57 <- filter(dec_4, location!="0cm" | position!="right", between(time, 53350, 54600))
+fireid55 <- filter(dec_4, location!="0cm" | position!="right", between(time, 49500, 50300))
+fireid53 <- filter(dec_4, location!="0cm" | position!="right", between(time, 47350, 47850))
 fireid51 <- filter(dec_4, between(time, 45500, 46830))
 
 dec_1 <- filter(piled_temps, date=="2017-12-01")
