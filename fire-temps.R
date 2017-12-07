@@ -596,7 +596,7 @@ piled_temps <- union(b,t4)
 
 t <- filter(piled_temps, date=="2017-12-01")
 
-ggplot(fireid73, aes(as.numeric(time), tempC)) +
+ggplot(fireid71, aes(as.numeric(time), tempC)) +
       geom_line(aes(color = position, linetype = location)) +
       # facet_grid(location~position) +
       theme_bw() +
@@ -607,6 +607,8 @@ ggplot(fireid73, aes(as.numeric(time), tempC)) +
 dec_5 <- filter(piled_temps, date=="2017-12-05")
 fireid73 <- filter(dec_5, between(time, 53930, 55060))
 fireid71 <- filter(dec_5, between(time, 51000, 52500))
+maxtemp71 <- max(fireid71$tempC)
+fireid71 <- filter(fireid71, tempC != maxtemp71)
 fireid69 <- filter(dec_5, between(time, 48800, 49600))
 fireid67 <- filter(dec_5, between(time, 46920, 47520))
 fireid65 <- filter(dec_5, between(time, 45400, 45850))
@@ -627,8 +629,8 @@ fireid47 <- filter(dec_1, between(time, 60500, 61000))
 fireid45 <- filter(dec_1, between(time, 53700, 54200))
 fireid43 <- filter(dec_1, between(time, 51850, 52300))
 
-## Temperatures from standing fuels
 
+## Temperatures from standing fuels
 flist <- list.files("data/fire_temperatures", pattern = "standing", full.names = T)
 flist <- flist[grep(".csv", flist, fixed=T)]
 
@@ -686,11 +688,31 @@ standing_temps <- union(b,t4)
 
 t <- filter(standing_temps, date=="2017-12-01")
 
-ggplot(t, aes(time, tempC)) +
-      geom_line() +
+ggplot(dec_5, aes(as.numeric(time), tempC)) +
+      geom_line(aes(color = position, linetype = location)) +
       facet_grid(location~position) +
       theme_bw() +
-      ggtitle("Standing fuels temperatures")
+      ggtitle("Standing fuels temperatures") +
+      geom_hline(yintercept = 50, color = "purple", linetype = "dashed") +
+      geom_hline(yintercept = 60, color = "brown", linetype = "dashed")
+
+dec_5 <- filter(standing_temps, date=="2017-12-05")
+
+
+dec_4 <- filter(standing_temps, date=="2017-12-04")
+fireid62 <- filter(dec_4, between(time, 59150, 59450))
+fireid60 <- filter(dec_4, between(time, 55750, 56030))
+fireid58 <- filter(dec_4, between(time, 53570, 53900))
+fireid56 <- filter(dec_4, between(time, 49400, 49700))
+fireid54 <- filter(dec_4, between(time, 47780, 48000))
+fireid52 <- filter(dec_4, between(time, 45850, 46100))
+
+dec_1 <- filter(standing_temps, date=="2017-12-01")
+fireid50 <- filter(dec_1, between(time, 60900, 61250))
+fireid48 <- filter(dec_1, between(time, 56030, 56400))
+fireid46 <- filter(dec_1, between(time, 53630, 54030))
+fireid44 <- filter(dec_1, between(time, 51750, 52100))
+
 
 
 #+ Join fire data into single file ####
