@@ -164,14 +164,15 @@ fire_temps <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-temperatures.
 fire_temps <- filter(fire_temps, date > "2017-11-30") %>% select(-probe_type)
 fire_temps <- left_join(
       fire_temps,
-      select(fires_biomass, fire_id, structure)
+      select(fires_biomass, fire_id, structure, biomass)
                         )
       
 # average the temperature across each vertical level "location"
 fire_temps_avg <- fire_temps %>% 
-      group_by(date, time, location, structure, fire_id) %>% 
+      group_by(date, time, biomass, location, structure, fire_id) %>% 
       summarise(tempC = mean(tempC)) %>% 
       arrange(fire_id)
+# write_csv(fire_temps_avg, "~/Documents/SERDP_Project/data/piled-vs-stand-avg-fire-temps.csv")
 
 time_abv100 <- fire_temps_avg %>%
       group_by(location, structure, fire_id) %>%
@@ -205,6 +206,7 @@ fabio_fires <- left_join(fabio_fires, fires_biomass) %>%
       mutate(location = as.factor(location),
              structure = as.factor(structure),
              f_biomass = as.factor(biomass))
+# write_csv(fabio_fires, "~/Documents/SERDP_Project/data/piled-vs-stand-aggregate.csv")
 
 fabio_fires_summary <- fabio_fires %>%
       group_by(location, structure, biomass) %>%
@@ -218,7 +220,7 @@ fabio_fires_summary <- fabio_fires %>%
                 avg2_max_temp_avg = mean(avg2_max_temp),
                 se_avg2_max_temp = sd(avg2_max_temp)/sqrt(n_obs)
                 )
-
+# write_csv(fabio_fires_summary, "~/Documents/SERDP_Project/data/piled-vs-stand-summary.csv")
 
 ```
 
