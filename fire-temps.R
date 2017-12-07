@@ -568,41 +568,41 @@ piled_temps <- rbind(
       ldply(piled_50cmR, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
             mutate(location = "50cm", probe_type = "new", position = "right")
 )
-summary(piled_temps)
+# summary(piled_temps)
 
 
 t <- filter(piled_temps, date=="2017-12-01")
-ggplot(t, aes(time, tempC)) +
-      geom_line() +
-      facet_grid(location~position) +
-      theme_bw() +
-      ggtitle("Piled fuels temperatures")
+# ggplot(t, aes(time, tempC)) +
+#       geom_line() +
+#       facet_grid(location~position) +
+#       theme_bw() +
+#       ggtitle("Piled fuels temperatures")
 # time is 1-hour off for some of the loggers
 
 t1 <- filter(t, location=="50cm", position=="middle" | position=="right")
 t2 <- filter(t, location=="25cm", position=="left"| position=="right")
 t3 <- filter(t, location=="0cm", position=="left")
 t4 <- rbind(t1,t2,t3)
-str(t4)
+# str(t4)
 
 b <- anti_join(piled_temps, t4)
 
 t4$time <- t4$time - 3600
 t4$time <- hms::as.hms(t4$time)
 
-sum(c(length(b$date),length(t4$date)))# should = obs of piled_temps
+# sum(c(length(b$date),length(t4$date)))# should = obs of piled_temps
 piled_temps <- union(b,t4)
 
 
 t <- filter(piled_temps, date=="2017-12-01")
 
-ggplot(fireid71, aes(as.numeric(time), tempC)) +
-      geom_line(aes(color = position, linetype = location)) +
-      # facet_grid(location~position) +
-      theme_bw() +
-      ggtitle("Piled fuels temperatures") +
-      geom_hline(yintercept = 50, color = "purple", linetype = "dashed") +
-      geom_hline(yintercept = 60, color = "brown", linetype = "dashed")
+# ggplot(fireid71, aes(as.numeric(time), tempC)) +
+#       geom_line(aes(color = position, linetype = location)) +
+#       # facet_grid(location~position) +
+#       theme_bw() +
+#       ggtitle("Piled fuels temperatures") +
+#       geom_hline(yintercept = 50, color = "purple", linetype = "dashed") +
+#       geom_hline(yintercept = 60, color = "brown", linetype = "dashed")
 
 dec_5 <- filter(piled_temps, date=="2017-12-05")
 fireid73 <- filter(dec_5, between(time, 53930, 55060)) %>%
@@ -683,7 +683,7 @@ standing_temps <- rbind(
       ldply(standing_50cmR, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
             mutate(location = "50cm", probe_type = "new", position = "right")
 )
-summary(standing_temps)
+# summary(standing_temps)
 
 
 t <- filter(standing_temps, date=="2017-12-01")
@@ -692,25 +692,25 @@ t1 <- filter(t, location=="50cm", position=="left")
 t2 <- filter(t, location=="25cm", position=="left" | position=="right")
 t3 <- filter(t, location=="0cm", position=="right")
 t4 <- rbind(t1,t2,t3)
-str(t4)
+# str(t4)
 
 b <- anti_join(standing_temps, t4)
 
 t4$time <- t4$time - 3600
 t4$time <- hms::as.hms(t4$time)
 
-sum(c(length(b$date),length(t4$date)))# should = obs of piled_temps
+# sum(c(length(b$date),length(t4$date)))# should = obs of piled_temps
 standing_temps <- union(b,t4)
 
 t <- filter(standing_temps, date=="2017-12-01")
 
-ggplot(fireid74, aes(as.numeric(time), tempC)) +
-      geom_line(aes(color = position, linetype = location)) +
-      # facet_grid(location~position) +
-      theme_bw() +
-      ggtitle("Standing fuels temperatures") +
-      geom_hline(yintercept = 50, color = "purple", linetype = "dashed") +
-      geom_hline(yintercept = 60, color = "brown", linetype = "dashed")
+# ggplot(fireid74, aes(as.numeric(time), tempC)) +
+#       geom_line(aes(color = position, linetype = location)) +
+#       # facet_grid(location~position) +
+#       theme_bw() +
+#       ggtitle("Standing fuels temperatures") +
+#       geom_hline(yintercept = 50, color = "purple", linetype = "dashed") +
+#       geom_hline(yintercept = 60, color = "brown", linetype = "dashed")
 
 dec_5 <- filter(standing_temps, date=="2017-12-05")
 fireid74 <- filter(dec_5, between(time, 54220, 54430)) %>%
@@ -753,6 +753,12 @@ fireid44 <- filter(dec_1, between(time, 51750, 52100)) %>%
 
 
 #+ Join fire data into single file ####
+
+n <- (seq(43,74,1))
+n <- paste("fireid", n, sep="")
+n <- noquote(paste(n,",", sep = ""))
+
+rbind(d1, fireid43, fireid44, fireid45, fireid46, fireid47, fireid48, fireid49, fireid50, fireid51, fireid52, fireid53, fireid54, fireid55, fireid56, fireid57, fireid58, fireid59, fireid60, fireid61, fireid62, fireid63, fireid64, fireid65, fireid66, fireid67, fireid68, fireid69, fireid70, fireid71, fireid72, fireid73, fireid74)
 
 
 write_csv(d1,"data/fabio-fires-temperatures.csv")
