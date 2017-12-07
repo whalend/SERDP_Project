@@ -80,6 +80,7 @@ fabio_burns$date <- as.Date(fabio_burns$date, format = "%m/%d/%y")
 fires_biomass <- fabio_burns %>%
       mutate(pct_green = factor(pct_green, levels = c("25","75")),
              f_litter_biomass = factor(litter_biomass, levels = c("0","500","1000","2000"), labels = c("0g litter","500g litter","1000g litter","2000g litter")),
+             f_biomass = factor(biomass, levels = sort(unique(biomass)), labels = paste(sort(unique(biomass)), "g", sep="")),
              total_biomass = biomass + litter_biomass,
              pct_consumed = 100*(total_biomass - remaining_biomass)/total_biomass,
              est_pct_fuel_moisture = 100*(remaining_biomass - dry_remaining_biomass)/remaining_biomass,
@@ -714,7 +715,7 @@ t <- filter(standing_temps, date=="2017-12-01")
 
 dec_5 <- filter(standing_temps, date=="2017-12-05")
 fireid74 <- filter(dec_5, between(time, 54220, 54430)) %>%
-      mutate(fire_id = "fireid74")
+      mutate(fire_id = 74)
 fireid72 <- filter(dec_5, between(time, 51650, 52000)) %>%
       mutate(fire_id = 72)
 fireid70 <- filter(dec_5, between(time, 49200, 49400)) %>%
@@ -758,11 +759,11 @@ n <- (seq(43,74,1))
 n <- paste("fireid", n, sep="")
 n <- noquote(paste(n,",", sep = ""))
 
-rbind(d1, fireid43, fireid44, fireid45, fireid46, fireid47, fireid48, fireid49, fireid50, fireid51, fireid52, fireid53, fireid54, fireid55, fireid56, fireid57, fireid58, fireid59, fireid60, fireid61, fireid62, fireid63, fireid64, fireid65, fireid66, fireid67, fireid68, fireid69, fireid70, fireid71, fireid72, fireid73, fireid74)
+d1 <- rbind(d1, fireid43, fireid44, fireid45, fireid46, fireid47, fireid48, fireid49, fireid50, fireid51, fireid52, fireid53, fireid54, fireid55, fireid56, fireid57, fireid58, fireid59, fireid60, fireid61, fireid62, fireid63, fireid64, fireid65, fireid66, fireid67, fireid68, fireid69, fireid70, fireid71, fireid72, fireid73, fireid74)
 
 
 write_csv(d1,"data/fabio-fires-temperatures.csv")
-d1 <- left_join(d1, fabio_burns_biomass, by = "fire_id")
+d1 <- left_join(d1, fires_biomass, by = "fire_id")
 
 #+ Plot Experimental FABIO Burns ####
 time_abv150 <- d1 %>% filter(probe_type == "old") %>%
@@ -1039,4 +1040,3 @@ filter(flame6, tempC > 300) %>% group_by(location) %>%
       summarize(max_temp = max(tempC), time_above_300C = length(tempC))
 filter(flame8, tempC > 300) %>% group_by(location) %>%
       summarize(max_temp = max(tempC), time_above_300C = length(tempC))
-
