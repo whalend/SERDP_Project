@@ -605,29 +605,45 @@ ggplot(fireid71, aes(as.numeric(time), tempC)) +
       geom_hline(yintercept = 60, color = "brown", linetype = "dashed")
 
 dec_5 <- filter(piled_temps, date=="2017-12-05")
-fireid73 <- filter(dec_5, between(time, 53930, 55060))
+fireid73 <- filter(dec_5, between(time, 53930, 55060)) %>%
+      mutate(fire_id = 73)
 fireid71 <- filter(dec_5, between(time, 51000, 52500))
 maxtemp71 <- max(fireid71$tempC)
-fireid71 <- filter(fireid71, tempC != maxtemp71)
-fireid69 <- filter(dec_5, between(time, 48800, 49600))
-fireid67 <- filter(dec_5, between(time, 46920, 47520))
-fireid65 <- filter(dec_5, between(time, 45400, 45850))
-fireid63 <- filter(dec_5, between(time, 43750, 44200))
+fireid71 <- filter(fireid71, tempC != maxtemp71) %>%
+      mutate(fire_id = 71)
+fireid69 <- filter(dec_5, between(time, 48800, 49600)) %>%
+      mutate(fire_id = 69)
+fireid67 <- filter(dec_5, between(time, 46920, 47520)) %>%
+      mutate(fire_id = 67)
+fireid65 <- filter(dec_5, between(time, 45400, 45850)) %>%
+      mutate(fire_id = 65)
+fireid63 <- filter(dec_5, between(time, 43750, 44200)) %>%
+      mutate(fire_id = 63)
 
 dec_4 <- filter(piled_temps, date=="2017-12-04")
 # exclue inaccurate measures from 0cm-right sensor after fire id 51
-fireid61 <- filter(dec_4, location!="0cm" | position!="right", between(time, 58600, 60100))
-fireid59 <- filter(dec_4, location!="0cm" | position!="right", between(time, 55500, 56700))
-fireid57 <- filter(dec_4, location!="0cm" | position!="right", between(time, 53350, 54600))
-fireid55 <- filter(dec_4, location!="0cm" | position!="right", between(time, 49500, 50300))
-fireid53 <- filter(dec_4, location!="0cm" | position!="right", between(time, 47350, 47850))
-fireid51 <- filter(dec_4, between(time, 45500, 46830))
+fireid61 <- filter(dec_4, location!="0cm" | position!="right", between(time, 58600, 60100)) %>%
+      mutate(fire_id = 61)
+fireid59 <- filter(dec_4, location!="0cm" | position!="right", between(time, 55500, 56700)) %>%
+      mutate(fire_id = 59)
+fireid57 <- filter(dec_4, location!="0cm" | position!="right", between(time, 53350, 54600)) %>%
+      mutate(fire_id = 57)
+fireid55 <- filter(dec_4, location!="0cm" | position!="right", between(time, 49500, 50300)) %>%
+      mutate(fire_id = 55)
+fireid53 <- filter(dec_4, location!="0cm" | position!="right", between(time, 47350, 47850)) %>%
+      mutate(fire_id = 53)
+fireid51 <- filter(dec_4, between(time, 45500, 46830)) %>%
+      mutate(fire_id = 51)
 
 dec_1 <- filter(piled_temps, date=="2017-12-01")
-fireid49 <- filter(dec_1, between(time, 61700, 62560))
-fireid47 <- filter(dec_1, between(time, 60500, 61000))
-fireid45 <- filter(dec_1, between(time, 53700, 54200))
-fireid43 <- filter(dec_1, between(time, 51850, 52300))
+fireid49 <- filter(dec_1, between(time, 61700, 62560)) %>%
+      mutate(fire_id = 49)
+fireid47 <- filter(dec_1, between(time, 60500, 61000)) %>%
+      mutate(fire_id = 47)
+fireid45 <- filter(dec_1, between(time, 53700, 54200)) %>%
+      mutate(fire_id = 45)
+fireid43 <- filter(dec_1, between(time, 51850, 52300)) %>%
+      mutate(fire_id = 43)
 
 
 ## Temperatures from standing fuels
@@ -697,26 +713,42 @@ ggplot(fireid74, aes(as.numeric(time), tempC)) +
       geom_hline(yintercept = 60, color = "brown", linetype = "dashed")
 
 dec_5 <- filter(standing_temps, date=="2017-12-05")
-fireid74 <- filter(dec_5, between(time, 54220, 54430))
-fireid72 <- filter(dec_5, between(time, 51650, 52000))
-fireid70 <- filter(dec_5, between(time, 49200, 49400))
-fireid68 <- filter(dec_5, between(time, 47200, 47420))
-fireid66 <- filter(dec_5, between(time, 45600, 45830))
-fireid64 <- filter(dec_5, between(time, 44000, 44160))
+fireid74 <- filter(dec_5, between(time, 54220, 54430)) %>%
+      mutate(fire_id = "fireid74")
+fireid72 <- filter(dec_5, between(time, 51650, 52000)) %>%
+      mutate(fire_id = 72)
+fireid70 <- filter(dec_5, between(time, 49200, 49400)) %>%
+      mutate(fire_id = 70)
+fireid68 <- filter(dec_5, between(time, 47200, 47420)) %>%
+      mutate(fire_id = 68)
+fireid66 <- filter(dec_5, between(time, 45600, 45830)) %>%
+      mutate(fire_id = 66)
+fireid64 <- filter(dec_5, between(time, 44000, 44160)) %>%
+      mutate(fire_id = 64)
 
 dec_4 <- filter(standing_temps, date=="2017-12-04")
-fireid62 <- filter(dec_4, between(time, 59150, 59450))
-fireid60 <- filter(dec_4, between(time, 55750, 56030))
-fireid58 <- filter(dec_4, between(time, 53570, 53900))
-fireid56 <- filter(dec_4, between(time, 49400, 49700))
-fireid54 <- filter(dec_4, between(time, 47780, 48000))
-fireid52 <- filter(dec_4, between(time, 45850, 46100))
+fireid62 <- filter(dec_4, between(time, 59150, 59450)) %>%
+      mutate(fire_id = 62)
+fireid60 <- filter(dec_4, between(time, 55750, 56030)) %>%
+      mutate(fire_id = 60)
+fireid58 <- filter(dec_4, between(time, 53570, 53900)) %>%
+      mutate(fire_id = 58)
+fireid56 <- filter(dec_4, between(time, 49400, 49700)) %>%
+      mutate(fire_id = 56)
+fireid54 <- filter(dec_4, between(time, 47780, 48000)) %>%
+      mutate(fire_id = 54)
+fireid52 <- filter(dec_4, between(time, 45850, 46100)) %>%
+      mutate(fire_id = 52)
 
 dec_1 <- filter(standing_temps, date=="2017-12-01")
-fireid50 <- filter(dec_1, between(time, 60900, 61250))
-fireid48 <- filter(dec_1, between(time, 56030, 56400))
-fireid46 <- filter(dec_1, between(time, 53630, 54030))
-fireid44 <- filter(dec_1, between(time, 51750, 52100))
+fireid50 <- filter(dec_1, between(time, 60900, 61250)) %>%
+      mutate(fire_id = 50)
+fireid48 <- filter(dec_1, between(time, 56030, 56400)) %>%
+      mutate(fire_id = 48)
+fireid46 <- filter(dec_1, between(time, 53630, 54030)) %>%
+      mutate(fire_id = 46)
+fireid44 <- filter(dec_1, between(time, 51750, 52100)) %>%
+      mutate(fire_id = 44)
 
 
 
