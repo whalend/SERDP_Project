@@ -46,8 +46,6 @@ abstract: no
 
 ```{r setup, include=FALSE, cache=FALSE, message = FALSE}
 
-library(knitr); library(plyr); library(dplyr); library(readr); library(ggplot2)
-
 #opts_knit$set(root.dir=normalizePath('../'))
 
 ### Chunk options: see http://yihui.name/knitr/options/ ###
@@ -153,12 +151,54 @@ We worked in a **beautiful** place with lots of trees, like *Quercus suber* and 
 
 ## Data collection and analysis
 
-```{r load data from FABIO experiment}
-fabio_fires_biomass <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-biomass.csv")
-pile_vs_stand <- filter(fabio_fires_biomass, date > "2017-11-30")
+```{r load data from FABIO experiment, results='hide'}
+library(knitr); library(plyr); library(dplyr); library(readr); library(ggplot2)
 
-# fabio_burns <- read_csv("~/Documents/SERDP_Project/data/experimental-fire-data-summary.csv")
-# fabio_burns <- mutate(fabio_burns, source = "FABIO Burn (vertical)")
+# source("~/Documents/SERDP_Project/fire-temps.R")
+fires_biomass <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-biomass.csv")
+fires_biomass <- filter(fires_biomass, date > "2017-11-30")
+summary(fires_biomass)
+fires_biomass <- select(fires_biomass, date, fire_id, biomass, biomass_type:max_fuel_ht, avg_fuel_ht)
+
+fire_temps <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-temperatures.csv")
+fire_temps <- filter(fire_temps, date > "2017-11-30") %>% 
+      select(-probe_type) %>% 
+      mutate(location = factor(location, levels = c("50cm", "25cm", "0cm")),
+             position = as.factor(position))
+
+# average the temperature across each vertical level "location"
+fire_temps_avg <- fire_temps %>% 
+      group_by(date, time, location, fire_id) %>% 
+      summarise(tempC = mean(tempC)) %>% 
+      arrange(fire_id)
+
+time_abv100 <- fire_temps_avg %>%
+      group_by(location, fire_id) %>%
+      filter(tempC>100) %>%
+      summarise(s_abv100 = length(tempC)) %>%
+      ungroup(.)
+
+# d1$flame_ht2 <- as.integer(d1$flame_ht2)
+max_temp <- fire_temps_avg %>%
+      group_by(location, fire_id) %>%
+      summarise(max_temp = max(tempC)) %>% 
+      ungroup(.)
+
+avg_max_temp <- fire_temps_avg %>% 
+      group_by(location, fire_id) %>% 
+      arrange(desc(tempC)) %>% 
+      summarise(avg_max_temp = mean(tempC[1:5])) %>% 
+      ungroup(.)
+
+
+fabio_fires <- join_all(list(max_temp, avg_max_temp, time_abv100), 
+               type = "full", match = "all")
+
+summary(fabio_fires)
+fabio_fires$s_abv100[is.na(fabio_fires$s_abv100)] <- 0
+
+fabio_fires <- left_join(fabio_fires, fires_biomass)
+
 ```
 
 
