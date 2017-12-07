@@ -529,48 +529,72 @@ d1 <- d1 %>%
       mutate(position = "middle") %>%
       select(date:probe_type, position, fire_id)
 
-#+ Experimental Burns December 1, 2017: Fire IDs 43-50, Piled vs. Standing ####
+#+ Experimental Burns December 1, 2017: Fire IDs 43-74, Piled vs. Standing ####
 
 ## Temperatures from piled fuels
-# flist <- c(
-#       list.files("data/fire_temperatures", pattern = "piled", full.names = T),
-#       list.files("data/fire_temperatures", pattern = "stand", full.names = T))
-# flist <- flist[grep(".csv", flist, fixed=T)]
-#
-# library(data.table)
-# piled_temps <- ldply(flist, function(x){fread(x)})
+flist <- list.files("data/fire_temperatures", pattern = "piled", full.names = T)
+flist <- flist[grep(".csv", flist, fixed=T)]
 
-piled_0cmM <- read_csv("data/fire_temperatures/piled-0cmM-new-20171201.csv")
-names(piled_0cmM) <- c("date","time","tempC")
-piled_0cmM <- mutate(piled_0cmM, location = "0cm", probe_type = "new", position = "middle")
-piled_0cmL <- read_csv("data/fire_temperatures/piled-0cmL-new-20171201.csv")
-names(piled_0cmL) <- c("date","time","tempC")
-piled_0cmL <- mutate(piled_0cmM, location = "0cm", probe_type = "new", position = "left")
-piled_0cmR <- read_csv("data/fire_temperatures/piled-0cmR-new-20171201.csv")
-names(piled_0cmR) <- c("date","time","tempC")
-piled_0cmR <- mutate(piled_0cmM, location = "0cm", probe_type = "new", position = "right")
+piled_0cmL <- flist[grep("-0cmL", flist, fixed = T)]
+piled_0cmM <- flist[grep("-0cmM", flist, fixed = T)]
+piled_0cmR <- flist[grep("-0cmR", flist, fixed = T)]
 
-piled_25cmM <- read_csv("data/fire_temperatures/piled-25cmM-new-20171201.csv")
-names(piled_25cmM) <- c("date","time","tempC")
-piled_25cmM <- mutate(piled_25cmM, location = "25cm", probe_type = "new", position = "middle")
-piled_25cmL <- read_csv("data/fire_temperatures/piled-25cmL-new-20171201.csv")
-names(piled_25cmL) <- c("date","time","tempC")
-piled_25cmL <- mutate(piled_25cmM, location = "25cm", probe_type = "new", position = "left")
-piled_25cmR <- read_csv("data/fire_temperatures/piled-25cmR-new-20171201.csv")
-names(piled_25cmR) <- c("date","time","tempC")
-piled_25cmM <- mutate(piled_25cmM, location = "25cm", probe_type = "new", position = "right")
+piled_25cmL <- flist[grep("-25cmL", flist, fixed = T)]
+piled_25cmM <- flist[grep("-25cmM", flist, fixed = T)]
+piled_25cmR <- flist[grep("-25cmR", flist, fixed = T)]
 
-piled_50cmM <- read_csv("data/fire_temperatures/piled-50cmM-new-20171201.csv")
-names(piled_50cmM) <- c("date","time","tempC")
-piled_50cmM <- mutate(piled_50cmM, location = "50cm", probe_type = "new", position = "middle")
-piled_50cmL <- read_csv("data/fire_temperatures/piled-50cmL-new-20171201.csv")
-names(piled_50cmL) <- c("date","time","tempC")
-piled_50cmL <- mutate(piled_50cmM, location = "50cm", probe_type = "new", position = "left")
-piled_50cmR <- read_csv("data/fire_temperatures/piled-50cmR-new-20171201.csv") %>%
-      names(c("date", "time", "tempC")) %>%
-      mutate(location = "50cm", probe_type = "new", position = "right")
+piled_50cmL <- flist[grep("-50cmL", flist, fixed = T)]
+piled_50cmM <- flist[grep("-50cmM", flist, fixed = T)]
+piled_50cmR <- flist[grep("-50cmR", flist, fixed = T)]
 
-piled_temps <- rbind()
+cnames <- c("date", "time", "tempC")
+piled_temps <- rbind(
+      ldply(piled_0cmL, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "0cm", probe_type = "new", position = "left"),
+      ldply(piled_0cmM, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "0cm", probe_type = "new", position = "middle"),
+      ldply(piled_0cmR, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "0cm", probe_type = "new", position = "right"),
+      ldply(piled_25cmL, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "25cm", probe_type = "new", position = "left"),
+      ldply(piled_25cmM, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "25cm", probe_type = "new", position = "middle"),
+      ldply(piled_25cmR, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "25cm", probe_type = "new", position = "right"),
+      ldply(piled_50cmL, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "50cm", probe_type = "new", position = "left"),
+      ldply(piled_50cmM, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "50cm", probe_type = "new", position = "middle"),
+      ldply(piled_50cmR, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "50cm", probe_type = "new", position = "right")
+)
+
+summary(piled_temps)
+
+
+t <- filter(piled_temps, date=="2017-12-01")
+
+t1 <- filter(t, location=="50cm", position=="middle" | position=="right")
+t2 <- filter(t, location=="25cm", position=="left"| position=="right")
+t3 <- filter(t, location=="0cm", position=="left")
+t4 <- rbind(t1,t2,t3)
+str(t4)
+
+b <- anti_join(piled_temps, t4)
+
+t4$time <- t4$time - 3600
+t4$time <- hms::as.hms(t4$time)
+
+sum(c(length(b$date),length(t4$date)))# should = obs of piled_temps
+piled_temps <- union(b,t4)
+
+
+ggplot(filter(piled_temps, date=="2017-12-05"), aes(time, tempC)) +
+      geom_line() +
+      facet_grid(location~position) +
+      theme_bw() +
+      ggtitle("Piled fuels temperatures")
+
 # plot all data from sensors
 # par(mfrow=c(3,1))
 # plot(fabio1_0cm$time, fabio1_0cm$tempC, main = "FABIO 1 Burns 7/5/2017")
@@ -578,35 +602,69 @@ piled_temps <- rbind()
 # plot(fabio1_50cm$time, fabio1_50cm$tempC)
 
 ## Temperatures from standing fuels
-standing_0cmM <- read_csv("data/fire_temperatures/standing-0cmM-new-20171201.csv")
-names(standing_0cmM) <- c("date","time","tempC")
-standing_0cmM <- mutate(standing_0cmM, location = "0cm", probe_type = "new", position = "middle")
-standing_0cmL <- read_csv("data/fire_temperatures/standing-0cmL-new-20171201.csv")
-names(standing_0cmL) <- c("date","time","tempC")
-standing_0cmL <- mutate(standing_0cmM, location = "0cm", probe_type = "new", position = "left")
-standing_0cmR <- read_csv("data/fire_temperatures/standing-0cmR-new-20171201.csv")
-names(standing_0cmR) <- c("date","time","tempC")
-standing_0cmM <- mutate(standing_0cmM, location = "0cm", probe_type = "new", position = "right")
 
-standing_25cmM <- read_csv("data/fire_temperatures/standing-25cmM-new-20171201.csv")
-names(standing_25cmM) <- c("date","time","tempC")
-standing_25cmM <- mutate(standing_25cmM, location = "25cm", probe_type = "new", position = "middle")
-standing_25cmL <- read_csv("data/fire_temperatures/standing-25cmL-new-20171201.csv")
-names(standing_25cmL) <- c("date","time","tempC")
-standing_25cmL <- mutate(standing_25cmM, location = "25cm", probe_type = "new", position = "left")
-standing_25cmR <- read_csv("data/fire_temperatures/standing-25cmR-new-20171201.csv")
-names(standing_25cmR) <- c("date","time","tempC")
-standing_25cmM <- mutate(standing_25cmM, location = "25cm", probe_type = "new", position = "right")
+flist <- list.files("data/fire_temperatures", pattern = "standing", full.names = T)
+flist <- flist[grep(".csv", flist, fixed=T)]
 
-standing_50cmM <- read_csv("data/fire_temperatures/standing-50cmM-new-20171201.csv")
-names(standing_50cmM) <- c("date","time","tempC")
-standing_50cmM <- mutate(standing_50cmM, location = "50cm", probe_type = "new", position = "middle")
-standing_50cmL <- read_csv("data/fire_temperatures/standing-50cmL-new-20171201.csv")
-names(standing_50cmL) <- c("date","time","tempC")
-standing_50cmL <- mutate(standing_50cmM, location = "50cm", probe_type = "new", position = "left")
-standing_50cmR <- read_csv("data/fire_temperatures/standing-50cmR-new-20171201.csv")
-names(standing_50cmR) <- c("date","time","tempC")
-standing_50cmM <- mutate(standing_50cmM, location = "50cm", probe_type = "new", position = "right")
+standing_0cmL <- flist[grep("-0cmL", flist, fixed = T)]
+standing_0cmM <- flist[grep("-0cmM", flist, fixed = T)]
+standing_0cmR <- flist[grep("-0cmR", flist, fixed = T)]
+
+standing_25cmL <- flist[grep("-25cmL", flist, fixed = T)]
+standing_25cmM <- flist[grep("-25cmM", flist, fixed = T)]
+standing_25cmR <- flist[grep("-25cmR", flist, fixed = T)]
+
+standing_50cmL <- flist[grep("-50cmL", flist, fixed = T)]
+standing_50cmM <- flist[grep("-50cmM", flist, fixed = T)]
+standing_50cmR <- flist[grep("-50cmR", flist, fixed = T)]
+
+cnames <- c("date", "time", "tempC")
+standing_temps <- rbind(
+      ldply(standing_0cmL, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "0cm", probe_type = "new", position = "left"),
+      ldply(standing_0cmM, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "0cm", probe_type = "new", position = "middle"),
+      ldply(standing_0cmR, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "0cm", probe_type = "new", position = "right"),
+      ldply(standing_25cmL, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "25cm", probe_type = "new", position = "left"),
+      ldply(standing_25cmM, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "25cm", probe_type = "new", position = "middle"),
+      ldply(standing_25cmR, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "25cm", probe_type = "new", position = "right"),
+      ldply(standing_50cmL, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "50cm", probe_type = "new", position = "left"),
+      ldply(standing_50cmM, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "50cm", probe_type = "new", position = "middle"),
+      ldply(standing_50cmR, function(x){read_csv(x, col_names = cnames, skip = 1)}) %>%
+            mutate(location = "50cm", probe_type = "new", position = "right")
+)
+summary(standing_temps)
+
+
+t <- filter(standing_temps, date=="2017-12-01")
+
+t1 <- filter(t, location=="50cm", position=="left")
+t2 <- filter(t, location=="25cm", position=="left" | position=="right")
+t3 <- filter(t, location=="0cm", position=="right")
+t4 <- rbind(t1,t2,t3)
+str(t4)
+
+b <- anti_join(standing_temps, t4)
+
+t4$time <- t4$time - 3600
+t4$time <- hms::as.hms(t4$time)
+
+sum(c(length(b$date),length(t4$date)))# should = obs of piled_temps
+standing_temps <- union(b,t4)
+
+t <- filter(standing_temps, date=="2017-12-01")
+
+ggplot(t, aes(time, tempC)) +
+      geom_line() +
+      facet_grid(location~position) +
+      theme_bw() +
+      ggtitle("Standing fuels temperatures")
 
 
 #+ Join fire data into single file ####
