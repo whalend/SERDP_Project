@@ -316,21 +316,27 @@ ggplot(tree_data %>%
 
 ```{r 25cm biomass data}
 biomass_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/quadrat25cm.csv")
-biomass_data$date <- as.Date(biomass_data$date, format="%m/%d/%Y")
+biomass_data$date <- as.Date(biomass_data$date, format="%m/%d/%y")
 biomass_data <- filter(biomass_data, date>"2017-04-25", plot_id!="bland02", plot_id!="bland03")
 # summary(biomass_data)
-biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
+biomass_data$standing_fuel_mass_wet <- round(
+      biomass_data$standing_fuel_mass_wet, 2)
+
 biomass_data <- left_join(
-      select(biomass_data, installation,plot_id,fuel_mass_wet,litter_mass_wet),
+      select(biomass_data, installation, plot_id, standing_fuel_ht:standing_biomass_type),
       select(plot_data, installation:full_names),
-      by = c("installation","plot_id")
-)
+      by = c("installation","plot_id")) %>% 
+      mutate(pct_std_moisture = 
+                   100*(standing_fuel_mass_wet - standing_fuel_mass_dry)/standing_fuel_mass_wet,
+             pct_lit_moisture = 
+                   100*(litter_mass_wet - litter_mass_dry)/litter_mass_wet)
+
 # biomass_data$last_fire_year <- as.integer(biomass_data$last_fire_year)
 # biomass_data$years_since_fire <- 2017 - biomass_data$last_fire_year
 
 avg_biomass_data <- biomass_data %>% 
       group_by(installation, plot_id, years_since_fire) %>% 
-      mutate(standing_gm2 = fuel_mass_wet*16,
+      mutate(standing_gm2 = standing_fuel_mass_wet*16,
              litter_gm2 = litter_mass_wet*16) %>% 
       summarise(avg_standing_gm2 = mean(standing_gm2),
                 avg_litter_gm2 = mean(litter_gm2),
@@ -338,11 +344,11 @@ avg_biomass_data <- biomass_data %>%
                 se_litter = sd(litter_gm2)/sqrt(length(litter_gm2)))
 
 ggplot(biomass_data,
-       aes(years_since_fire, (fuel_mass_wet*16))) +
+       aes(years_since_fire, (standing_fuel_mass_wet*16))) +
       geom_point(aes(color = imcy_inv)) +
       invasion_color +
       # facet_grid(.~installation) +
-      geom_smooth(method = "loess") +
+      geom_smooth(aes(color = imcy_inv), method = "loess", se = F) +
       theme_bw() +
       ylab(expression(paste("Standing biomass (g/", m^{2}, ")"))) +
       xlab("Years since last fire") +
@@ -353,13 +359,14 @@ ggplot(biomass_data,
 
 ggplot(biomass_data,
         aes((years_since_fire), litter_mass_wet*16)) +
-      geom_point(color = "#124873") +
-      geom_smooth(method = "lm") +
+      geom_point(aes(color = imcy_inv)) +
+      invasion_color +
+      geom_smooth(aes(color = imcy_inv), method = "lm", se = F) +
       # facet_grid(.~installation) +
       theme_bw() +
       ylab(expression(paste("Litter biomass (g/", m^{2}, ")"))) +
       xlab("Years since last fire") +
-      ggtitle("Fresh litter biomass across burn units at each installation",
+      ggtitle("Fresh litter biomass across burn units",
               subtitle = "(measurements at 25cm quadrats)")
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass-jitter.png", height=7)
 ```
@@ -371,6 +378,7 @@ tick_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/ticks.csv")
 
 tick_data$plot_id <- tolower(tick_data$plot_id)
 tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
+tick_data$Date <- as.Date(tick_data$Date, format = "%m/%d/%Y")
 
 tick_data <- left_join(
       tick_data,
@@ -400,6 +408,30 @@ ggplot(tick_data %>%
       theme(axis.text = element_text(size = 18),
             axis.title = element_text(size = 22))
 ```
+
+```{r tick-abundance-by-date}
+tick_data$week <- lubridate::week((tick_data$Date))
+ggplot(tick_data %>% 
+             group_by(Date, full_names) %>% 
+             summarise(abundance = sum(count)),
+       aes(Date, abundance)) +
+      # geom_point(aes(color = installation), size = 2) +
+      geom_bar(aes(fill = full_names), stat = "identity") +
+      scale_fill_brewer(type = "div") +
+      scale_x_date() +
+      # geom_smooth() +
+      theme_bw() +
+      ylab("Tick abundance") +
+      xlab("") +
+      theme(axis.text = element_text(size = 18),
+            axis.title = element_text(size = 22),
+            legend.title = element_blank(),
+            legend.text = element_text(size = 11),
+            legend.position = c(.85,.8),
+            legend.background = element_rect(color="black"))
+      
+```
+
 
 **Note the different scales of the y-axes on these plots**
 ```{r plot tick species data, fig.height=9}
@@ -433,7 +465,9 @@ d1 <- left_join(d1, select(avg_species_cover, full_names:max_veg_cover))
 ggplot(d1, aes(years_since_fire, log1p(total_ticks))) +
       geom_point(aes(color = imcy_inv), position = "jitter") +
       invasion_color +
-      geom_smooth(method = "lm") +
+      geom_smooth(aes(color = imcy_inv), method = "lm", se = F) +
+      geom_smooth(aes(color = imcy_inv), method = "loess", 
+                  linetype = "dashed", se = F) +
       theme_bw() +
       xlab("Years Since Fire") +
       ylab("Tick Abundance (ln)") +
@@ -442,16 +476,16 @@ ggplot(d1, aes(years_since_fire, log1p(total_ticks))) +
 ggplot(d1, aes(avg_veg_cover, log1p(total_ticks))) +
       geom_point(aes(color = imcy_inv), position = "jitter") +
       invasion_color +
-      geom_smooth(method = "lm") +
+      geom_smooth(aes(color = imcy_inv) , method = "lm", se = F) +
       theme_bw() +
       xlab("Average Vegetation Cover (%)") +
       ylab("Tick Abundance (ln)") +
       def_theme
 
 ggplot(d1, aes(avg_standing_gm2, log1p(total_ticks))) +
-      geom_point(aes(color = imcy_inv), position = "jitter") +
+      geom_point(aes(color = imcy_inv)) +
       invasion_color +
-      geom_smooth(method = "lm") +
+      geom_smooth(aes(color = imcy_inv), method = "lm", se = F) +
       theme_bw() +
       xlab(expression(paste("Average Standing Biomass (g/", m^{2}, ")"))) +
       ylab("Tick Abundance (ln)") +
