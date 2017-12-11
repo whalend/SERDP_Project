@@ -53,6 +53,7 @@ plot_data$full_names[plot_data$installation=="tyndall"] <- "Tyndall AFB"
 plot_data$full_names[plot_data$installation=="avonpark"] <- "Avon Park AFR"
 plot_data$full_names[plot_data$installation=="shelby"] <- "Camp Shelby"
 plot_data$full_names[plot_data$installation=="moody"] <- "Moody AFB"
+
 ```
 
 # Installations Visited and Plots Sampled
@@ -96,7 +97,97 @@ ggplot(plot_data, aes(as.factor(years_since_fire))) +
 #       theme_bw()
 ```
 
+
+# Canopy Cover Data
+```{r load canopy cover data}
+canopy_cover <- read_csv("~/Dropbox (UF)/SERDP-Project/data/densiometer-canopy-cover.csv")
+
+canopy_cover_summary <- canopy_cover %>%
+      group_by(installation, plot_id) %>%
+      summarise(avg_canopy_cover = mean(pct_canopy_cover),
+                sd_canopy_cover = sd(pct_canopy_cover),
+                n_obs = 12,
+                se_canopy_cover = sd_canopy_cover/sqrt(n_obs))
+
+cc_inv <- left_join(canopy_cover_summary, plot_data)
+
+ggplot(cc_inv, aes(as.factor(years_since_fire), avg_canopy_cover)) +
+      geom_bar(aes(fill = imcy_inv), stat = "identity", position = "dodge") +
+      invasion_fill +
+      # scale_fill_discrete(h = c(249,200)) +
+      ylab("% canopy cover") +
+      xlab("Years since last fire") +
+      # ggtitle("Invaded vs. Uninvaded Plots Across Burn Units") +
+      theme_bw() +
+      theme(legend.title = element_blank())
+
+
+
+# plot_data1 <- left_join(ungroup(plot_data), ungroup(canopy_cover_summary))
+# plot_data1 <- left_join(ungroup(plot_data), ungroup(quadrat_summaries))
+```
+
+
 # Species Data - 1-meter Quadrats
+
+```{r load 1m quadrat data}
+quadrat_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/quadrat1m.csv")
+quadrat_data$date <- as.Date(quadrat_data$date, format = "%m/%d/%Y")
+quadrat_data <- filter(quadrat_data, date > "2017-06-01")# discard early data collection at Camp Blanding
+
+# summary(quadrat_data)
+
+quadrat_data$woody_veg_ht1[is.na(quadrat_data$woody_veg_ht1)] <- 0
+# quadrat_data$woody_veg_ht1 <- as.numeric(quadrat_data$woody_veg_ht1)
+quadrat_data$herb_veg_ht1[is.na(quadrat_data$herb_veg_ht1)] <- 0
+# quadrat_data$herb_veg_ht1 <- as.numeric(quadrat_data$herb_veg_ht1)
+quadrat_data$pct_green[quadrat_data$pct_green=="<1"] <- 0.5
+quadrat_data$pct_green <- as.numeric(quadrat_data$pct_green)
+```
+
+```{r summarize 1m quadrat data}
+quadrat_summaries <- quadrat_data %>%
+      group_by(installation, plot_id) %>%
+      summarise(
+            avg_woody_ht1 = mean(woody_veg_ht1),
+            avg_woody_ht_all = mean(
+                  c(woody_veg_ht1,woody_veg_ht2,woody_veg_ht3), na.rm = T),
+            avg_herb_ht1 = mean(herb_veg_ht1),
+            avg_herb_ht_all = mean(c(herb_veg_ht1, herb_veg_ht2, herb_veg_ht3), na.rm = T),
+            avg_litter_depth1 = mean(litter_ht1),
+            avg_litter_depth_all =
+                  mean(c(litter_ht1,litter_ht2,litter_ht3), na.rm = T),
+            avg_pct_green = mean(pct_green),
+            avg_pct_litter = mean(pct_litter),
+            avg_pct_wood = mean(pct_wood_litter),
+            avg_pct_bare = mean(pct_bare))
+
+quadrat_summaries <- left_join(
+      quadrat_summaries,
+      select(plot_data, installation:full_names),
+      by = c("installation","plot_id")
+)
+
+quadrat10m_summaries <- quadrat_data %>%
+      filter(quadrat_id == "n10"|quadrat_id == "e10"|quadrat_id=="s10"|quadrat_id=="w10") %>%
+      group_by(installation, plot_id) %>%
+      summarise(
+            avg_woody_ht1 = mean(woody_veg_ht1),
+            avg_woody_ht_all = mean(
+                  c(woody_veg_ht1,woody_veg_ht2,woody_veg_ht3), na.rm = T),
+            avg_herb_ht1 = mean(herb_veg_ht1),
+            avg_herb_ht_all = mean(c(herb_veg_ht1, herb_veg_ht2, herb_veg_ht3), na.rm = T),
+            avg_litter_depth1 = mean(litter_ht1),
+            avg_litter_depth_all =
+                  mean(c(litter_ht1,litter_ht2,litter_ht3), na.rm = T),
+            avg_pct_green = mean(pct_green),
+            avg_pct_litter = mean(pct_litter),
+            avg_pct_wood = mean(pct_wood_litter),
+            avg_pct_bare = mean(pct_bare))
+
+# summary(quadrat_summaries)
+# summary(quadrat10m_summaries)
+```
 
 ```{r load species data}
 species_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/species1m.csv")
@@ -140,7 +231,7 @@ species_data$scientific_name[species_data$veg_id=="quge"] <- "Quercus geminata"
 
 
 
-filter(species_data, veg_id=="sf", 
+filter(species_data, veg_id=="sf" 
        # scientific_name!="NA"
        )
 
@@ -371,6 +462,34 @@ ggplot(biomass_data,
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass-jitter.png", height=7)
 ```
 
+
+# Host Abundance Estimates
+
+```{r dung data}
+
+dung_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/dung.csv")
+dung_data$plot_id <- tolower(dung_data$plot_id)
+dung_data$Species <- tolower(dung_data$Species)
+dung_data$Location <- tolower(dung_data$Location)
+dung_data <- rename(dung_data, clusters1m = `1m`, clusters2m = `2m`)
+dung_data_avg <- dung_data %>% 
+      group_by(installation, plot_id) %>% 
+      summarise(avg_clusters1m = mean(clusters1m))
+dung_data_avg <- left_join(dung_data_avg, plot_data)
+
+
+ggplot(dung_data_avg, 
+       aes((years_since_fire), log1p(avg_clusters1m))) +
+      geom_point(size = 2) +
+      geom_smooth() +
+      # geom_bar(aes(fill = installation), stat = "identity", position = "dodge") +
+      theme_bw() +
+      xlab("Years since fire") +
+      ylab("Dung clusters")
+
+```
+
+
 # Tick Abundance Estimates
 
 ```{r tick data QC}
@@ -449,7 +568,7 @@ ggplot(tick_data %>%
             axis.title = element_text(size = 22))
 ```
 
-```{r scatterplots tick abundance}
+```{r summarize-tick-abundance-data}
 tick_data_sum <- tick_data %>% 
       group_by(installation, plot_id, full_names, years_since_fire) %>% 
       summarise(total_ticks = sum(count))
@@ -461,6 +580,15 @@ d1 <- left_join(plot_data, tick_data_sum)
 d1$total_ticks[is.na(d1$total_ticks)] <- 0
 d1 <- left_join(d1, biomass_data_sub)
 d1 <- left_join(d1, select(avg_species_cover, full_names:max_veg_cover))
+d1 <- left_join(d1, quadrat_summaries)
+d1 <- left_join(d1, 
+                select(canopy_cover_summary, installation:avg_canopy_cover)
+                )
+d1 <- left_join(d1, select(dung_data_avg, installation:avg_clusters1m))
+
+```
+
+```{r scatterplots-tick-abundance}
 
 ggplot(d1, aes(years_since_fire, log1p(total_ticks))) +
       geom_point(aes(color = imcy_inv), position = "jitter") +
@@ -473,10 +601,13 @@ ggplot(d1, aes(years_since_fire, log1p(total_ticks))) +
       ylab("Tick Abundance (ln)") +
       def_theme
 
+
 ggplot(d1, aes(avg_veg_cover, log1p(total_ticks))) +
       geom_point(aes(color = imcy_inv), position = "jitter") +
       invasion_color +
       geom_smooth(aes(color = imcy_inv) , method = "lm", se = F) +
+      geom_smooth(aes(color = imcy_inv), method = "loess", 
+                  linetype = "dashed", se = F) +
       theme_bw() +
       xlab("Average Vegetation Cover (%)") +
       ylab("Tick Abundance (ln)") +
@@ -487,18 +618,51 @@ ggplot(d1, aes(avg_standing_gm2, log1p(total_ticks))) +
       invasion_color +
       geom_smooth(aes(color = imcy_inv), method = "lm", se = F) +
       theme_bw() +
-      xlab(expression(paste("Average Standing Biomass (g/", m^{2}, ")"))) +
+      xlab(expression(paste("Average Biomass (g/", m^{2}, ")"))) +
+      ylab("Tick Abundance (ln)") +
+      ggtitle("Understory standing biomass") +
+      def_theme
+
+
+ggplot(d1, aes(avg_pct_litter, log1p(total_ticks))) +
+      geom_point(aes(color = imcy_inv), position = "jitter") +
+      invasion_color +
+      geom_smooth(aes(color = imcy_inv), method = "lm", se = F) +
+      theme_bw() +
+      xlab(expression(paste("Average Litter Cover (%)"))) +
       ylab("Tick Abundance (ln)") +
       def_theme
 
 ggplot(d1, aes(avg_litter_gm2, log1p(total_ticks))) +
       geom_point(aes(color = imcy_inv), position = "jitter") +
       invasion_color +
-      geom_smooth(method = "lm") +
+      geom_smooth(aes(color = imcy_inv), method = "lm", se = F) +
       theme_bw() +
-      xlab(expression(paste("Average Litter Biomass (g/", m^{2}, ")"))) +
+      xlab(expression(paste("Average Biomass (g/", m^{2}, ")"))) +
+      ylab("Tick Abundance (ln)") +
+      ggtitle("Litter Biomass") +
+      def_theme
+
+
+ggplot(d1, aes(avg_canopy_cover, log1p(total_ticks))) +
+      geom_point(aes(color = imcy_inv)) +
+      invasion_color +
+      geom_smooth(method = "lm", se = F) +
+      theme_bw() +
+      xlab(expression(paste("Average Canopy Cover (%)"))) +
       ylab("Tick Abundance (ln)") +
       def_theme
+
+
+ggplot(d1, aes(log1p(avg_clusters1m), log1p(total_ticks))) +
+      geom_point() +
+      invasion_color +
+      geom_smooth(method = "loess", se = F) +
+      theme_bw() +
+      xlab(expression(paste("Average # of dung clusters"))) +
+      ylab("Tick Abundance (ln)") +
+      def_theme
+
 ```
 
 Summary of linear models between some of the variables plotted above.
@@ -532,25 +696,6 @@ ggplot(cogon_biomass, aes(years_since_fire, biomass)) +
 
 Maximum cogongrass biomass estimated from 25cm quadrat samples from invasions at DoD installations: `r max(cogon_biomass$biomass)`g/m^2^
 
-# Host Abundance Estimates
-
-```{r dung data}
-dung_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/dung.csv")
-```
-
-# Canopy Cover Data
-```{r load canopy cover data}
-canopy_cover <- read_csv("~/Dropbox (UF)/SERDP-Project/data/densiometer_canopy_cover.csv")
-
-canopy_cover_summary <- canopy_cover %>%
-      group_by(installation, plot_id) %>%
-      summarise(avg_canopy_cover = mean(pct_canopy_cover),
-                sd_canopy_cover = sd(pct_canopy_cover),
-                n_obs = 12)
-
-# plot_data1 <- left_join(ungroup(plot_data), ungroup(canopy_cover_summary))
-# plot_data1 <- left_join(ungroup(plot_data), ungroup(quadrat_summaries))
-```
 
 # Compare All Quadrat Data to Subset of Data
 
@@ -577,58 +722,6 @@ We (Drew and I) have been talking about the possibility of further reducing the 
 
 My first step was to see how this plays out in the data by testing for differences in means of data summarized across all quadrats (12) to data from the quadrats at 10 meters (4). I subset the data and conducted a series of t-test on the means (averaging across all the 1 meter quadrats in each data set) of woody vegetation height, herbaceous vegetation height, litter depth; and percent covers of bare ground, green vegetation, and litter. 
 
-```{r load 1m quadrat data}
-quadrat_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/quadrat1m.csv")
-quadrat_data$date <- as.Date(quadrat_data$date, format = "%m/%d/%Y")
-quadrat_data <- filter(quadrat_data, date > "2017-06-01")# discard early data collection at Camp Blanding
-
-# summary(quadrat_data)
-
-quadrat_data$woody_veg_ht1[is.na(quadrat_data$woody_veg_ht1)] <- 0
-# quadrat_data$woody_veg_ht1 <- as.numeric(quadrat_data$woody_veg_ht1)
-quadrat_data$veg_ht1[is.na(quadrat_data$veg_ht1)] <- 0
-# quadrat_data$veg_ht1 <- as.numeric(quadrat_data$veg_ht1)
-# quadrat_data$pct_green[quadrat_data$pct_green=="<1"] <- 0.5
-quadrat_data$pct_green <- as.numeric(quadrat_data$pct_green)
-```
-
-```{r summarize quadrat data}
-quadrat_summaries <- quadrat_data %>%
-      group_by(installation, plot_id) %>%
-      summarise(
-            avg_woody_ht1 = mean(woody_veg_ht1),
-            avg_woody_ht_all = mean(
-                  c(woody_veg_ht1,woody_veg_ht2,woody_veg_ht3), na.rm = T),
-            avg_herb_ht1 = mean(veg_ht1),
-            avg_herb_ht_all = mean(c(veg_ht1,veg_ht2,veg_ht3), na.rm = T),
-            avg_litter_depth1 = mean(litter_ht1),
-            avg_litter_depth_all =
-                  mean(c(litter_ht1,litter_ht2,litter_ht3), na.rm = T),
-            avg_pct_green = mean(pct_green),
-            avg_pct_litter = mean(pct_litter),
-            avg_pct_wood = mean(pct_wood),
-            avg_pct_bare = mean(pct_bare))
-
-quadrat10m_summaries <- quadrat_data %>%
-      filter(quadrat_id == "n10"|quadrat_id == "e10"|quadrat_id=="s10"|quadrat_id=="w10") %>%
-      group_by(installation, plot_id) %>%
-      summarise(
-            avg_woody_ht1 = mean(woody_veg_ht1),
-            avg_woody_ht_all = mean(
-                  c(woody_veg_ht1,woody_veg_ht2,woody_veg_ht3), na.rm = T),
-            avg_herb_ht1 = mean(veg_ht1),
-            avg_herb_ht_all = mean(c(veg_ht1,veg_ht2,veg_ht3), na.rm = T),
-            avg_litter_depth1 = mean(litter_ht1),
-            avg_litter_depth_all =
-                  mean(c(litter_ht1,litter_ht2,litter_ht3), na.rm = T),
-            avg_pct_green = mean(pct_green),
-            avg_pct_litter = mean(pct_litter),
-            avg_pct_wood = mean(pct_wood),
-            avg_pct_bare = mean(pct_bare))
-
-# summary(quadrat_summaries)
-# summary(quadrat10m_summaries)
-```
 
 ```{r compare all 12 quadrats to subset of 4 at 10m }
 par(mfrow=c(1,2))
