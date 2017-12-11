@@ -481,11 +481,12 @@ dung_data_avg <- left_join(dung_data_avg, plot_data)
 ggplot(dung_data_avg, 
        aes((years_since_fire), log1p(avg_clusters1m))) +
       geom_point(size = 2) +
-      geom_smooth() +
+      geom_smooth(method = "loess", se = F) +
       # geom_bar(aes(fill = installation), stat = "identity", position = "dodge") +
       theme_bw() +
       xlab("Years since fire") +
-      ylab("Dung clusters")
+      ylab("Dung clusters (ln)") +
+      def_theme
 
 ```
 
@@ -659,7 +660,7 @@ ggplot(d1, aes(log1p(avg_clusters1m), log1p(total_ticks))) +
       invasion_color +
       geom_smooth(method = "loess", se = F) +
       theme_bw() +
-      xlab(expression(paste("Average # of dung clusters"))) +
+      xlab(expression(paste("Average # of dung clusters (0-1m)"))) +
       ylab("Tick Abundance (ln)") +
       def_theme
 
@@ -670,12 +671,13 @@ Summary of linear models between some of the variables plotted above.
 summary(lm(log1p(total_ticks) ~ years_since_fire, data = d1))
 summary(lm(log1p(total_ticks) ~ avg_litter_gm2, data = d1))
 summary(lm(avg_litter_gm2 ~ years_since_fire, data = d1))
+summary(lm(log1p(total_ticks) ~ avg_canopy_cover, data = d1))
 ```
 
 
 # Cogongrass Data Sampled from Invasions
 
-```{r cogongrass data, eval=F}
+```{r cogongrass data, eval=T}
 cogon_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/cogon-data.csv")
 cogon_biomass <- cogon_data %>%
       # select(site,plot_id,Quad,fresh_biomass) %>%
