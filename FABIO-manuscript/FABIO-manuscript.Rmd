@@ -225,6 +225,16 @@ fabio_fires_summary <- fabio_fires %>%
 ```
 
 
+```{r eval=F}
+
+ggplot(fire_temps_avg, aes(time, tempC)) +
+      geom_line(aes(color = structure)) +
+      facet_grid(biomass~location) +
+      theme_bw()
+
+```
+
+
 ```{r compare_maxtemp}
 
 # bowman_maxtemp <- read_csv("~/Documents/SERDP_Project/data/bowman-etal-maxtemp.csv")
