@@ -9,19 +9,25 @@ plot_locations@data$xcoord_lon <- plot_locations@coords[,1]
 plot_locations@data$ycoord_lat <- plot_locations@coords[,2]
 
 plot_data <- plot_locations@data
+
+summary(plot_data)
+
+
 plot_data$last_fire_year <- as.integer(as.character(plot_data$fire_year))
 plot_data <- plot_data %>%
       # filter(is.na(last_fire_year)==FALSE) %>%
       rename(plot_id = name, description = descriptio, installation = instal) %>%
-      mutate(burn_unit_id = stri_sub(plot_id,1,-2)) %>%
-      select(plot_id, description, imcy_inv:burn_unit_id)
+      mutate(burn_unit_id = stri_sub(plot_id,1,-2),
+             plot_id = tolower(stri_sub(plot_id, -2,-1))) %>%
+      select(installation, plot_id, description, imcy_inv:burn_unit_id)
 
-plot_data$burn_unit_id[plot_data$burn_unit_id=="Flame"] <- "BlandingC"
-plot_data$last_fire_year[is.na(plot_data$last_fire_year)] <-
+
+# plot_data[is.na(plot_data$last_fire_year),] <-
 plot_data$imcy_inv[is.na(plot_data$imcy_inv)] <- "uninvaded"
-plot_data$plot_id <- tolower(plot_data$plot_id)
+# plot_data$plot_id <- tolower(plot_data$plot_id)
 
-plot_data$years_since_fire <- 2017 - plot_data$last_fire_year
+summary(plot_data)
+
 ## Add labels column for installation names
 plot_data$installation_full_name[plot_data$installation=="blanding"] <- "Camp Blanding"
 plot_data$installation_full_name[plot_data$installation=="eglin"] <- "Eglin AFB"
@@ -29,6 +35,13 @@ plot_data$installation_full_name[plot_data$installation=="tyndall"] <- "Tyndall 
 plot_data$installation_full_name[plot_data$installation=="avonpark"] <- "Avon Park AFR"
 plot_data$installation_full_name[plot_data$installation=="shelby"] <- "Camp Shelby"
 plot_data$installation_full_name[plot_data$installation=="moody"] <- "Moody AFB"
+
+plot_visit_data <- plot_data %>%
+      mutate(years_since_fire = 2017 - last_fire_year) %>%
+      select(installation, plot_id, imcy_inv, last_fire_year, years_since_fire)
+plot_data <- select(plot_data, -last_fire_year)
+
+write_csv(plot_data, "data/plot_data.csv")
 
 ##
 
@@ -39,16 +52,16 @@ ggplot(plot_data, aes(installation)) +
       ggtitle("Number of plots established at each installation") +
       theme_bw()
 
-ggplot(plot_data, aes(as.factor(years_since_fire))) +
+ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       geom_bar(aes(fill = imcy_inv), position = "dodge") +
       ylab("Number of plots") +
       xlab("Years since last fire") +
       ggtitle("Plots sampled across burn units") +
       theme_bw()
 # Number of burn units sampled
-length(unique(plot_data$fire_year))
+length(unique(plot_visit_data$fire_year))
 
-ggplot(plot_data, aes(as.factor(years_since_fire))) +
+ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       geom_bar() +
       facet_grid(installation ~ .) +
       ylab("Number of plots") +
@@ -79,8 +92,27 @@ ggplot(plot_data, aes(imcy_inv)) +
 #'
 #+ quadrat data ####
 quadrat_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/quadrat1m.csv")
-quadrat_data$date <- as.Date(quadrat_data$date, format = "%m/%d/%Y")
-quadrat_data <- filter(quadrat_data, date > "2017-06-01")# discard early data collection at Camp Blanding
+quadrat_data$visit_date <- as.Date(quadrat_data$date, format = "%m/%d/%Y")
+# quadrat_data$date <- gsub("-","", as.character(quadrat_data$visit_date))
+
+# as.Date(gsub("-","", as.character(quadrat_data$date)), format = "%Y%m%d")
+
+# plot_visit_data <- left_join(plot_visit_data,
+#           quadrat_data %>% select(installation, plot_id, visit_date) %>%
+#                 filter(visit_date>"2017-06-01") %>%
+#                 unique(.))
+# plot_visit_data <- plot_visit_data %>%
+#       mutate(date = gsub("-","", visit_date),
+#              visit_id = paste(date, installation, plot_id, sep = "_"))
+
+# write_csv(plot_visit_data, "data/plot_visit_data.csv")
+
+lubridate::year(quadrat_data$visit_date)
+lubridate::month(quadrat_data$visit_date)
+lubridate::day(quadrat_data$visit_date)
+
+write_csv(quadrat_data, "data/quadrat1m.csv")
+quadrat_data <- filter(quadrat_data, visit_date > "2017-06-01")# discard early data collection at Camp Blanding
 
 summary(quadrat_data)
 
@@ -199,7 +231,10 @@ t.test(log1p(quadrat_summaries$avg_pct_bare),
 #' ## Canopy Cover Data
 #'
 #+ load canopy cover data ####
-canopy_cover <- read_csv("~/Dropbox (UF)/SERDP-Project/data/densiometer_canopy_cover.csv")
+canopy_cover <- read_csv("~/Dropbox (UF)/SERDP-Project/data/densiometer-canopy-cover.csv")
+summary(canopy_cover)
+canopy_cover$date <- as.Date(canopy_cover$date, format = "%m/%d/%y")
+write_csv(canopy_cover, "data/canopy-cover.csv")
 
 canopy_cover_summary <- canopy_cover %>%
       group_by(installation, plot_id) %>%
