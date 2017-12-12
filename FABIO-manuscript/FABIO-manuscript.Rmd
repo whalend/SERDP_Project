@@ -101,7 +101,9 @@ Write your abstract here.
 
 3. We present a methodology for maintaining realism in fuel structure in experiments where fine fuels with typical vertical structure, e.g. grasses, are manipulated.
 
-4. We demonstrate how the Fire Aboveground Biomass Incineration Organizer (FABIO) maintains realistic fuel structure while experimentally manipulating other fuel characteristics. It can also be deployed in the field or in a more controlled "laboratory" setting. Using the exotic invasive cogongrass, we illustrate how changing the fuel structure can substantially alter flammability characteristics.
+4. We demonstrate how the Fine Aboveground Biomass Incineration Organizer (FABIO) can maintain realistic fuel structure while experimentally manipulating fuel load and density. Using the exotic invasive cogongrass, we illustrate how changing the fuel structure can substantially alter flammability characteristics. 
+
+It can be deployed in the field or in a more controlled "laboratory" setting. 
 
 
 ## Compare Temperature Metrics to piled fuels in Bowman et al. 2017
@@ -128,6 +130,8 @@ Additional references given where fuels have been laid flat when testing flammab
 
 2. `r citep("Simpson 2016 Journal of Ecology")`
 
+
+
 3. `r citep("Wyse 2016 International Journal of Wildland Fire")`
 
 All of these studies assessed flammability of multiple species, or multiple fuel complexes.
@@ -135,7 +139,11 @@ All of these studies assessed flammability of multiple species, or multiple fuel
 Temperature metrics are influenced by fuel structure. In general, fuels with greater vertical arrangement will achieve higher maxium temperatures, but will also burn faster. Faster burning should result in less exposure above temperature thresholds that cause tissue damage to plants. We show these differences in maximum temperature and time above 100 ºC for standing and piled fuels.
 
 
-Write your introduction here. You can cite bibliography like this [@Yan2011; @Sutherland2011], if you provide a `BibTeX` file with references. See http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html for more information. Or you could also use [knitcitations](https://cran.r-project.org/web/packages/knitcitations/index.html) or [RefManageR](https://cran.r-project.org/web/packages/RefManageR/index.html) to fetch bibliographic metadata automatically from the web. For example, citing a paper can be as easy as providing its DOI `r citep("10.1016/j.tree.2006.03.016")` or even just a few keywords `r citep("Ricklefs 2008 American Naturalist")`. They will then automagically appear in the list of cited references.
+Write your introduction here. You can cite bibliography like this [@Yan2011; @Sutherland2011], if you provide a `BibTeX` file with references. See http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html for more information. 
+
+Or you could also use [knitcitations](https://cran.r-project.org/web/packages/knitcitations/index.html) or [RefManageR](https://cran.r-project.org/web/packages/RefManageR/index.html) to fetch bibliographic metadata automatically from the web. 
+
+For example, citing a paper can be as easy as providing its DOI `r citep("10.1016/j.tree.2006.03.016")` or even just a few keywords `r citep("Ricklefs 2008 American Naturalist")`. They will then automagically appear in the list of cited references.
 
 You can even specifiy the desired output format for your bibliography by including a style file for a specific journal (e.g. "ecology.csl"). Many different bibliography styles (CSL files) can be obtained at http://citationstyles.org/ or https://github.com/citation-style-language/styles.
 
@@ -143,13 +151,19 @@ You can even specifiy the desired output format for your bibliography by includi
 
 # METHODS
 
+## Fine Aboveground Biomass Incineration Organizer (FABIO) Design
+
+
 
 ## Study Area
 
-We worked in a **beautiful** place with lots of trees, like *Quercus suber* and *Laurus nobilis*.
+We harvested ~50 kg of standing cogongrass from an invasion at the Biven's Arm Research Station (BARS), Florida, USA. The fuel was initially stored in a shed for 48-hours to protect it from rainfall, and then spread outside in a cleared area to dry for ~72 hours. We raked through the pile each day to increase drying, while carefully maintaining stem orientation in the same direction. We found that consistent stem orientation was more efficient for weighing and loading fuels vertically into the FABIO. 
 
 
 ## Data collection and analysis
+
+Our experimental desing was to conduct three burns for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. 
+
 
 ```{r load data from FABIO experiment, results='hide'}
 library(knitr); library(plyr); library(dplyr); library(readr); library(ggplot2)
