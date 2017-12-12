@@ -16,8 +16,11 @@ knitr::opts_chunk$set(message = F)
 ```
 
 ```{r load libraries}
+# source(plot-data.R)
+
 library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi)
+
 ```
 
 ```{r assign global variables}
@@ -45,7 +48,8 @@ plot_data <- plot_data %>%
       filter(is.na(fire_year)==FALSE) %>%
       mutate(plot_id = tolower(stri_sub(name, -2,-1)),
              installation = tolower(stri_sub(name,1,-3))) %>%
-      select(installation, plot_id, fire_year, years_since_fire, imcy_inv)
+      rename(last_fire_year = fire_year) %>% 
+      select(installation, plot_id, last_fire_year, years_since_fire, imcy_inv)
 ## Add labels column for installation names
 plot_data$full_names[plot_data$installation=="blanding"] <- "Camp Blanding"
 plot_data$full_names[plot_data$installation=="eglin"] <- "Eglin AFB"
@@ -53,6 +57,9 @@ plot_data$full_names[plot_data$installation=="tyndall"] <- "Tyndall AFB"
 plot_data$full_names[plot_data$installation=="avonpark"] <- "Avon Park AFR"
 plot_data$full_names[plot_data$installation=="shelby"] <- "Camp Shelby"
 plot_data$full_names[plot_data$installation=="moody"] <- "Moody AFB"
+
+plot_data <- read_csv("data/plot_data.csv")
+plot_visit_data <- read_csv("data/plot_visit_data.csv")
 
 ```
 
@@ -71,7 +78,7 @@ plot_data$full_names[plot_data$installation=="moody"] <- "Moody AFB"
 # plot_data$inv_colors[plot_data$imcy_inv=="invaded"] <- "#d8b365"
 # plot_data$inv_colors[plot_data$imcy_inv=="uninvaded"] <- "#5ab4ac"
 
-ggplot(plot_data, aes(full_names)) +
+ggplot(plot_data, aes(installation_full_name)) +
       geom_bar(fill = "#124873") +
       # facet_grid(full_names ~ ., scales = "free_y") +
       ylab("Number of plots") +
@@ -79,7 +86,7 @@ ggplot(plot_data, aes(full_names)) +
       # ggtitle("Plots in Burn Units Across Installations") +
       theme_bw()
       
-ggplot(plot_data, aes(as.factor(years_since_fire))) +
+ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       geom_bar(aes(fill = imcy_inv), position = "dodge") +
       invasion_fill +
       # scale_fill_discrete(h = c(249,200)) +
