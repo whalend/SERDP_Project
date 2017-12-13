@@ -250,13 +250,13 @@ plot_data1 <- left_join(ungroup(plot_data), ungroup(quadrat_summaries))
 #'
 #+ species data ####
 species_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/species1m.csv")
-species_data$date <- as.Date(species_data$date, format = "%m/%d/%Y")
+species_data$date <- as.Date(species_data$date, format = "%m/%d/%y")
 species_data <- filter(species_data, date>"2017-06-01")
 species_data$veg_id <- tolower(species_data$veg_id)
 length(unique(species_data$veg_id))
 species_data <- left_join(
       species_data,
-      select(plot_data, installation, plot_id, fire_year:imcy_inv),
+      select(plot_visit_data, installation, plot_id, fire_year:imcy_inv),
       by = c("installation","plot_id")
 )
 summary(species_data)
