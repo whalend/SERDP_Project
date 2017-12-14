@@ -1,4 +1,6 @@
-[US-IALE 2018 Abstract](http://www.usiale.org/annual-meeting.html) for oral presentation
+US-IALE 2018 - (http://www.usiale.org/annual-meeting.html) 
+
+Abstract for oral presentation
 
 Title: **Fire regimes, plant invasions, and tick-borne disease across a climate gradient in the southeast U.S.**
 
