@@ -686,7 +686,7 @@ ggplot(d1, aes(avg_veg_cover, log1p(total_ticks))) +
 
 ```{r tick-veg-biomass}
 
-ggplot(d1, aes(log(avg_standing_gm2), log1p(total_ticks))) +
+ggplot(d1, aes((avg_standing_gm2), log1p(total_ticks))) +
       geom_point(aes(color = imcy_inv)) +
       invasion_color +
       geom_smooth(aes(color = imcy_inv), method = "lm", se = F) +
