@@ -544,6 +544,8 @@ tick_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/ticks.csv")
 tick_data$plot_id <- tolower(tick_data$plot_id)
 tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
 # tick_data$Date <- as.Date(tick_data$Date, format = "%Y-%m-%d-")
+tick_data$excel_date <- gsub("-","",tick_data$date)
+write_csv(tick_data, "data/tick-data.csv")
 
 tick_data <- left_join(tick_data, plot_visit_data, 
                        by = c("installation", "plot_id"))
