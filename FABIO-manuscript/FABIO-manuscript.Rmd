@@ -85,7 +85,7 @@ Write your abstract here.
 
 \vspace{3mm}\hrule
 
-*Keywords*: experiment, fire intensity, fuel load, fuel characteristics, FABIO, Fine Aboveground Biomass Incineration Organizer
+*Keywords*: experiment, fine fuels, fire intensity, fuel load, fuel structure
 
 \doublespace
 
@@ -94,8 +94,16 @@ Write your abstract here.
 
 # INTRODUCTION
 
+Fine surface fuels play a major role in the ignition, spread, and intensity of fires. The influence of fuels on fire is determined by fuel charateristics, including load, moisture, compactness, continuity, and structure. 
+
+ - more exposed to atmosphere
+ - coupled to changing ambient conditions
+ 
+
+
 1. Fuel characteristics - load (mass), structure, type, moisture, particle size - drive fire intensity and severity.
 
+We strive to understand how fuel characteristics influence fire intensity, severity, and behavior. Methods range from *in situ* approaches where measurements are made before, during, and after prescribed fires, to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings. 
 
 2. Studies in fire ecology that experimentally manipulate fuel characteristics often only change the fuel load and/or type of fuel, sacrificing some realism in fuel structure.
 
@@ -106,7 +114,7 @@ Write your abstract here.
 It can be deployed in the field or in a more controlled "laboratory" setting. 
 
 
-## Compare Temperature Metrics to piled fuels in Bowman et al. 2017
+## Other experimental fire ecology studies
 
 `r citep("Bowman 2017 Journal of Ecology")` *Differential demographic filtering by surface fires: How fuel type and fuel load affect sapling mortality of an obligate seeder savanna tree.*
 
@@ -136,7 +144,7 @@ Additional references given where fuels have been laid flat when testing flammab
 
 All of these studies assessed flammability of multiple species, or multiple fuel complexes.
 
-Temperature metrics are influenced by fuel structure. In general, fuels with greater vertical arrangement will achieve higher maxium temperatures, but will also burn faster. Faster burning should result in less exposure above temperature thresholds that cause tissue damage to plants. We show these differences in maximum temperature and time above 100 ºC for standing and piled fuels.
+Temperature metrics are influenced by fuel structure. In general, fuels with greater vertical arrangement will achieve higher maximum temperatures, but will also burn faster. Faster burning should result in less exposure above temperature thresholds that cause tissue damage to plants. We show these differences in maximum temperature and time above 100 ºC for standing and piled fuels.
 
 
 Write your introduction here. You can cite bibliography like this [@Yan2011; @Sutherland2011], if you provide a `BibTeX` file with references. See http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html for more information. 
@@ -151,7 +159,8 @@ You can even specifiy the desired output format for your bibliography by includi
 
 # METHODS
 
-## Fine Aboveground Biomass Incineration Organizer (FABIO) Design
+## Fine Aboveground Biomass Incineration Organizer (FABIO)
+
 
 
 
