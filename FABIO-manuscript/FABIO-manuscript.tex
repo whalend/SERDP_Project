@@ -146,10 +146,6 @@ S. Luke Flory \textsuperscript{1}
 \footnotesize \emph{ 
 \\*
 \textsuperscript{1}Agronomy Department, University of Florida, Gainesville, FL, 32611, USA\\*
-\\*
-\textsuperscript{2}\\*
-\\*
-\textsuperscript{3}\\*
 }
 %%Adds corresponding author email(s) from YAML
 \newcounter{num}
@@ -177,8 +173,8 @@ Write your abstract here.
 
 \vspace{3mm}\hrule
 
-\emph{Keywords}: experiment, fire intensity, fuel load, fuel
-characteristics, FABIO, Fire Aboveground Biomass Incineration Organizer
+\emph{Keywords}: experiment, fine fuels, fire intensity, fuel load, fuel
+structure
 
 \doublespace
 
@@ -186,39 +182,45 @@ characteristics, FABIO, Fire Aboveground Biomass Incineration Organizer
 
 \section{INTRODUCTION}\label{introduction}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Fuel characteristics - load (mass), structure, type, moisture,
-  particle size - drive fire intensity and severity.
-\item
-  Studies in fire ecology that experimentally manipulate fuel
-  characteristics often only change the fuel load and/or type of fuel,
-  sacrificing some realism in fuel structure.
-\item
-  We present a methodology for maintaining realism in fuel structure in
-  experiments where fine fuels with typical vertical structure,
-  e.g.~grasses, are manipulated.
-\item
-  We demonstrate how the Fire Aboveground Biomass Incineration Organizer
-  (FABIO) maintains realistic fuel structure while experimentally
-  manipulating other fuel characteristics. It can also be deployed in
-  the field or in a more controlled ``laboratory'' setting. Using the
-  exotic invasive cogongrass, we illustrate how changing the fuel
-  structure can substantially alter flammability characteristics.
-\end{enumerate}
+Fine surface fuels play a major role in the ignition, spread, and
+intensity of fires. The influence of fuels on fire is determined by fuel
+charateristics, including load, moisture, compactness, continuity, and
+structure.
 
-\subsection{Compare Temperature Metrics to Bowman et al.
-2017}\label{compare-temperature-metrics-to-bowman-et-al.-2017}
+\begin{verbatim}
+  - more exposed to atmosphere
 
-(Bowman 2017) \emph{Differential demographic filtering by surface fires:
+  - coupled to changing ambient conditions
+\end{verbatim}
+
+Fuel characteristics, such as load (mass), structure, type, moisture,
+particle size, drive fire intensity and severity.
+
+We strive to understand how fuel characteristics influence fire
+intensity, severity, and behavior. Methods range from \emph{in situ}
+approaches where measurements are made before, during, and after
+prescribed fires, to laboratory bench approaches where small amounts of
+fuel are combusted in highly controlled settings.
+
+Studies in fire ecology that experimentally manipulate fuel
+characteristics often only change the fuel load and/or type of fuel,
+necessarily sacrificing some realism in fuel structure.
+
+\begin{verbatim}
+  - still provding valuable data
+\end{verbatim}
+
+\subsection{Other experimental fire ecology
+studies}\label{other-experimental-fire-ecology-studies}
+
+(Bowman 2018) \emph{Differential demographic filtering by surface fires:
 How fuel type and fuel load affect sapling mortality of an obligate
 seeder savanna tree.}
 
 In this study, ``Grass fuels had to be laid horizontally rather than
 standing vertically.'' The context provided is that the native sorghum
-flattens easily after it dries and does not remain vertical throughout
-the dry season.
+grass flattens easily after it dries and does not remain vertical
+throughout the dry season.
 
 \begin{itemize}
 \item
@@ -233,57 +235,65 @@ the dry season.
 Additional references given where fuels have been laid flat when testing
 flammability:
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  (JAUREGUIBERRY et al. 2011)
+\begin{verbatim}
+  1. [@JAUREGUIBERRY_2011]
 
-  \begin{itemize}
-  \item
-    Built the Bar-B-Q apparatus to fill a need to quantify flammability
-    of whole plants of many species
-  \item
-    Quantified flammability characteristics of 34 species using ``whole
-    plant''
-  \item
-    Fuels are still burnt horizontally, so no vertical structure
-  \item
-    Length of fuel limited by size of burning surface
-  \end{itemize}
-\item
-  (Simpson 2016)
-\item
-  (Conard et al. 2016)
-\end{enumerate}
+        - Built the "Bar-B-Q"" apparatus to fill a need to quantify flammability of whole plants of many species
+
+        - Quantified flammability characteristics of 34 species using "whole plant"
+
+        - Fuels are still burnt horizontally, so no vertical structure
+
+        - Length of fuel limited by size of burning surface
+
+  2. [@Simpson_2016]
+
+  3. [@Hunter_2016]
+\end{verbatim}
 
 All of these studies assessed flammability of multiple species, or
 multiple fuel complexes.
 
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  We present a methodology for maintaining realism in fuel structure in
+  experiments where fine fuels with typical vertical structure,
+  e.g.~grasses, are manipulated.
+\item
+  We demonstrate how the Fine Aboveground Biomass Incineration Organizer
+  (FABIO) can maintain realistic fuel structure while experimentally
+  manipulating fuel load and density. Using the exotic invasive
+  cogongrass, we illustrate how changing the fuel structure can
+  substantially alter flammability characteristics.
+\end{enumerate}
+
+It can be deployed in the field or in a more controlled ``laboratory''
+setting.
+
 Temperature metrics are influenced by fuel structure. In general, fuels
-with greater vertical arrangement will achieve higher maxium
+with greater vertical arrangement will achieve higher maximum
 temperatures, but will also burn faster. Faster burning should result in
 less exposure above temperature thresholds that cause tissue damage to
 plants. We show these differences in maximum temperature and time above
 100 ºC for standing and piled fuels.
 
-\includegraphics{figures/compare_maxtemp-1.pdf}
-
-\includegraphics{figures/compare_sAbv100-1.pdf}
-
-\includegraphics{figures/compare flame height-1.pdf}
-
 Write your introduction here. You can cite bibliography like this (Yan
 and Gerstein 2011, Sutherland et al. 2011), if you provide a
 \texttt{BibTeX} file with references. See
 \url{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}
-for more information. Or you could also use
+for more information.
+
+Or you could also use
 \href{https://cran.r-project.org/web/packages/knitcitations/index.html}{knitcitations}
 or
 \href{https://cran.r-project.org/web/packages/RefManageR/index.html}{RefManageR}
-to fetch bibliographic metadata automatically from the web. For example,
-citing a paper can be as easy as providing its DOI (Clark and Gelfand
-2006) or even just a few keywords (Ricklefs 2008). They will then
-automagically appear in the list of cited references.
+to fetch bibliographic metadata automatically from the web.
+
+For example, citing a paper can be as easy as providing its DOI (Clark
+and Gelfand 2006) or even just a few keywords (Ricklefs 2008). They will
+then automagically appear in the list of cited references.
 
 You can even specifiy the desired output format for your bibliography by
 including a style file for a specific journal (e.g. ``ecology.csl'').
@@ -293,13 +303,119 @@ Many different bibliography styles (CSL files) can be obtained at
 
 \section{METHODS}\label{methods}
 
+\subsection{Fine Aboveground Biomass Incineration Organizer
+(FABIO)}\label{fine-aboveground-biomass-incineration-organizer-fabio}
+
 \subsection{Study Area}\label{study-area}
 
-We worked in a \textbf{beautiful} place with lots of trees, like
-\emph{Quercus suber} and \emph{Laurus nobilis}.
+We harvested \textasciitilde{}50 kg of standing cogongrass from an
+invasion at the Biven's Arm Research Station (BARS), Florida, USA. The
+fuel was stored in a shed for 48-hours to protect it from rainfall, and
+then spread outside in a cleared area to dry for \textasciitilde{}72
+hours. We raked through the pile each day to increase drying, while
+carefully maintaining stem orientation in the same direction. We found
+that consistent stem orientation was more efficient for weighing and
+loading fuels vertically into the FABIO.
 
 \subsection{Data collection and
 analysis}\label{data-collection-and-analysis}
+
+Our experimental desing was to conduct three burns for each of five fuel
+loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of
+cogongrass biomass observed from field measurements across Florida, USA.
+
+\begin{table}
+
+\caption{\label{tab:fire-weather-table}Summary of weather for each fire (means ± SE). Fire IDs 54, 56, 70, & 74 were assigned values from their paired fires 53, 55, 69, & 73 due to missing data.}
+\centering
+\begin{tabular}[t]{c|c|c|c|c|c|c}
+\hline
+Fire ID & Date & Structure & Biomass & Air temperature (ºC) & RH (\%) & Wind Speed (m s\textasciicircum{}-1\textasciicircum{})\\
+\hline
+43 & 2017-12-01 & piled & 250 & 27.88  ±  0.08 & 36.8  ±  0.08 & 0.88  ±  0.08\\
+\hline
+44 & 2017-12-01 & standing & 250 & 28.11  ±  0.09 & 36.33  ±  0.1 & 0.84  ±  0.09\\
+\hline
+45 & 2017-12-01 & piled & 500 & 27.82  ±  0.09 & 37.51  ±  0.05 & 0.38  ±  0.09\\
+\hline
+46 & 2017-12-01 & standing & 500 & 27.82  ±  0.09 & 37.2  ±  0.06 & 0.43  ±  0.09\\
+\hline
+47 & 2017-12-01 & piled & 1000 & 22.81  ±  0.02 & 64.44  ±  0.06 & 0  ±  0.02\\
+\hline
+48 & 2017-12-01 & standing & 1000 & 26.08  ±  0.02 & 44.83  ±  0.12 & 0.35  ±  0.02\\
+\hline
+49 & 2017-12-01 & piled & 1500 & 22.27  ±  0.03 & 67.71  ±  0.05 & 0  ±  0.03\\
+\hline
+50 & 2017-12-01 & standing & 1500 & 22.76  ±  0.02 & 65.97  ±  0.06 & 0  ±  0.02\\
+\hline
+51 & 2017-12-04 & piled & 2000 & 26.69  ±  0.06 & 55.88  ±  0.13 & 0.58  ±  0.06\\
+\hline
+52 & 2017-12-04 & standing & 2000 & 28.21  ±  0.15 & 54.27  ±  0.23 & 0.44  ±  0.15\\
+\hline
+53 & 2017-12-04 & piled & 250 & 25.75  ±  0.04 & 55.15  ±  0.12 & 0.02  ±  0.04\\
+\hline
+54 & 2017-12-04 & standing & 250 & 25.75  ±  0.04 & 55.15  ±  0.12 & 0.02  ±  0.04\\
+\hline
+55 & 2017-12-04 & piled & 500 & 25.26  ±  0.06 & 57.39  ±  0.14 & 0.25  ±  0.06\\
+\hline
+56 & 2017-12-04 & standing & 500 & 25.26  ±  0.06 & 57.39  ±  0.14 & 0.25  ±  0.06\\
+\hline
+57 & 2017-12-04 & piled & 1000 & 24.25  ±  0.04 & 60.04  ±  0.1 & 0.37  ±  0.04\\
+\hline
+58 & 2017-12-04 & standing & 1000 & 23.57  ±  0.01 & 61.57  ±  0.1 & 0.77  ±  0.01\\
+\hline
+59 & 2017-12-04 & piled & 1000 & 25.38  ±  0.04 & 59.71  ±  0.09 & 0.1  ±  0.04\\
+\hline
+60 & 2017-12-04 & standing & 1000 & 25.79  ±  0.04 & 58.32  ±  0.15 & 0  ±  0.04\\
+\hline
+61 & 2017-12-04 & piled & 2000 & 24.3  ±  0.01 & 63.52  ±  0.15 & 0  ±  0.01\\
+\hline
+62 & 2017-12-04 & standing & 2000 & 24.2  ±  0 & 62.53  ±  0.01 & 0  ±  0\\
+\hline
+63 & 2017-12-05 & piled & 250 & 26.91  ±  0.05 & 60.61  ±  0.08 & 1.09  ±  0.05\\
+\hline
+64 & 2017-12-05 & standing & 250 & 27.08  ±  0.09 & 60.48  ±  0.06 & 1.1  ±  0.09\\
+\hline
+65 & 2017-12-05 & piled & 500 & 28.71  ±  0.09 & 56.63  ±  0.13 & 0.72  ±  0.09\\
+\hline
+66 & 2017-12-05 & standing & 500 & 29.28  ±  0.15 & 55.86  ±  0.2 & 0.69  ±  0.15\\
+\hline
+67 & 2017-12-05 & piled & 1000 & 28.22  ±  0.1 & 55.96  ±  0.21 & 0.49  ±  0.1\\
+\hline
+68 & 2017-12-05 & standing & 1000 & 27.72  ±  0.1 & 56.96  ±  0.14 & 0.59  ±  0.1\\
+\hline
+69 & 2017-12-05 & piled & 1500 & 27.11  ±  0.05 & 59.57  ±  0.08 & 1.02  ±  0.05\\
+\hline
+70 & 2017-12-05 & standing & 1500 & 27.11  ±  0.05 & 59.57  ±  0.08 & 1.02  ±  0.05\\
+\hline
+71 & 2017-12-05 & piled & 2000 & 28.47  ±  0.06 & 52.05  ±  0.11 & 0.71  ±  0.06\\
+\hline
+72 & 2017-12-05 & standing & 2000 & 28.35  ±  0.17 & 52.16  ±  0.09 & 0.43  ±  0.17\\
+\hline
+73 & 2017-12-05 & piled & 1500 & 30.33  ±  0.01 & 47.63  ±  0.02 & 0  ±  0.01\\
+\hline
+74 & 2017-12-05 & standing & 1500 & 30.33  ±  0.01 & 47.63  ±  0.02 & 0  ±  0.01\\
+\hline
+\end{tabular}
+\end{table}
+
+\includegraphics{figures/compare_maxtemp-1.pdf}
+\includegraphics{figures/compare_maxtemp-2.pdf}
+\includegraphics{figures/compare_maxtemp-3.pdf}
+\includegraphics{figures/compare_maxtemp-4.pdf}
+
+\includegraphics{figures/compare_secsAbv100-1.pdf}
+\includegraphics{figures/compare_secsAbv100-2.pdf}
+
+\includegraphics{figures/compare_heatFlux_abv100-1.pdf}
+\includegraphics{figures/compare_heatFlux_abv100-2.pdf}
+
+\includegraphics{figures/compare flame height-1.pdf}
+\includegraphics{figures/compare flame height-2.pdf}
+\includegraphics{figures/compare flame height-3.pdf}
+
+\includegraphics{figures/compare biomass consumption-1.pdf}
+\includegraphics{figures/compare biomass consumption-2.pdf}
 
 We applied a linear model where
 
@@ -330,9 +446,9 @@ Discuss.
 
 \hypertarget{refs}{}
 \hypertarget{ref-Allaire_2017}{}
-Allaire, J., J. Cheng, Y. Xie, J. McPherson, W. Chang, J. Allen, H.
-Wickham, A. Atkins, R. Hyndman, and R. Arslan. 2017. Rmarkdown: Dynamic
-documents for r.
+Allaire, J., Y. Xie, J. McPherson, J. Luraschi, K. Ushey, A. Atkins, H.
+Wickham, J. Cheng, and W. Chang. 2017. Rmarkdown: Dynamic documents for
+r.
 
 \hypertarget{ref-Bates_2015}{}
 Bates, D., M. Mächler, B. Bolker, and S. Walker. 2015. Fitting linear
@@ -340,22 +456,12 @@ mixed-effects models using lme4. Journal of Statistical Software
 67:1--48.
 
 \hypertarget{ref-Bowman}{}
-Bowman, J. P. 2017. Contributions to microbial systematics and ecology.
+Bowman, J. P. 2018. Contributions to microbial systematics and ecology.
 PhD thesis, University of Queensland Library.
 
 \hypertarget{ref-Clark_2006}{}
 Clark, J. S., and A. E. Gelfand. 2006. A future for models and data in
 environmental science. Trends in Ecology \& Evolution 21:375--380.
-
-\hypertarget{ref-Conard_2016}{}
-Conard, S. G., S. Doerr, and J. Foster. 2016. Twenty-five years of
-international journal of wildland fire. International Journal of
-Wildland Fire 25:i.
-
-\hypertarget{ref-JAUREGUIBERRY_2011}{}
-JAUREGUIBERRY, P., G. BERTONE, and S. D\a'IAZ. 2011. Device for the
-standard measurement of shoot flammability in the field. Austral Ecology
-36:821--829.
 
 \hypertarget{ref-R_Core_Team_2017}{}
 R Core Team. 2017. R: A language and environment for statistical
@@ -364,10 +470,6 @@ computing. R Foundation for Statistical Computing, Vienna, Austria.
 \hypertarget{ref-Ricklefs_2008}{}
 Ricklefs, R. E. 2008. Disintegration of the ecological community. The
 American Naturalist 172:741--750.
-
-\hypertarget{ref-Simpson_2016}{}
-Simpson, C. 2016. Understanding macroevolution through the origin of
-higher taxa. Ecology 97:3246--3248.
 
 \hypertarget{ref-Sutherland2011}{}
 Sutherland, W. J., D. Goulson, S. G. Potts, and L. V. Dicks. 2011.
