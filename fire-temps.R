@@ -73,7 +73,8 @@ fabio_blanding_50cm <- mutate(fabio_blanding_50cm, location = "50cm", probe_type
 
 #+ Load FABIO Burn Biomass Data ----
 fabio_burns <- read_csv("~/Dropbox (UF)/SERDP-Project/data/fabio-burns.csv")
-fabio_burns$date <- as.Date(fabio_burns$date, format = "%m/%d/%y")
+fabio_burns$date <- as.Date(
+      as.character(fabio_burns$date), format = "%Y%m%d")
 
 # fabio_burns_biomass <- select(fabio_burns, fire_id:notes)
 
