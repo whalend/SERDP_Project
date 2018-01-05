@@ -15,9 +15,7 @@ affiliation:
 #   affilnum: 2
 # - affil: null
 #   affilnum: 3
-output:
-  html_document: null
-  word_document: null
+output: 
   pdf_document:
     fig_caption: yes
     # fig_height:
@@ -27,6 +25,8 @@ output:
     keep_tex: yes
     number_sections: no
     template: manuscript.latex
+  html_document: null
+  word_document: null
 capsize: normalsize
 classoption: a4paper
 csl: ecology.csl
@@ -36,7 +36,8 @@ footerdate: yes
 geometry: margin=1in
 linenumbers: yes
 bibliography:
-- knitcitations.bib
+      - knitcitations.bib
+      - references.bib
 spacing: doublespacing
 abstract: no
 ---
@@ -61,7 +62,7 @@ opts_chunk$set(cache = 2, cache.path = "cache/")
 ## Plots
 opts_chunk$set(fig.path = "figures/")
 opts_chunk$set(dpi = 1200)
-opts_chunk$set(dev = c("pdf","png"))
+opts_chunk$set(dev = c("png"))
 
 ```
 
@@ -84,7 +85,7 @@ Write your abstract here.
 
 \vspace{3mm}\hrule
 
-*Keywords*: experiment, fine fuels, fire intensity, fuel load, fuel structure
+*Keywords*: fine fuels, fire intensity, fuel load, fuel structure
 
 \doublespace
 
@@ -109,7 +110,7 @@ Studies in fire ecology that experimentally manipulate fuel characteristics ofte
 
 ## Other experimental fire ecology studies
 
-`r citep("Bowman 2017 Journal of Ecology")` *Differential demographic filtering by surface fires: How fuel type and fuel load affect sapling mortality of an obligate seeder savanna tree.*
+[@Bowman2017] *Differential demographic filtering by surface fires: How fuel type and fuel load affect sapling mortality of an obligate seeder savanna tree.*
 
 In this study, "Grass fuels had to be laid horizontally rather than standing vertically." The context provided is that the native sorghum grass flattens easily after it dries and does not remain vertical throughout the dry season. 
 
@@ -280,7 +281,7 @@ fires_biomass <- left_join(
 
 ```
 
-```{r fire-weather-table}
+```{r Table1 fire-weather-table, results='asis'}
 
 # fires_biomass
 fire_wx_table <- left_join(
@@ -301,9 +302,12 @@ fire_wx_table <- left_join(
 
 wxtable_col_names <- c("Fire ID", "Date", "Structure", "Biomass", "Air temperature (ºC)", "RH (%)", "Wind Speed (m s^-1^)")
 
-(knitr::kable(fire_wx_table, col.names = wxtable_col_names,
-              align = 'c',
-              caption = "Summary of weather for each fire (means ± SE). Fire IDs 54, 56, 70, & 74 were assigned values from their paired fires 53, 55, 69, & 73 due to missing data."))
+wxtable <- knitr::kable(
+      fire_wx_table, col.names = wxtable_col_names, align = 'c',
+      caption = "Summary of weather for each fire (means ± SE). Fire IDs 54, 56, 70, & 74 were assigned values from their paired fires 53, 55, 69, & 73 due to missing data.")
+wxtable
+
+# xtable::xtable(fire_wx_table)
 
 ```
 
@@ -549,8 +553,8 @@ ggplot(fabio_fires_summary, aes(biomass, avg_heat_flux_abv100)) +
 # max_flame_ht_df <- rbind(bowman_flame_ht, fabio_flame_ht)
 
 piled_fires <- filter(fires_biomass, structure=="piled")
-pairs(select(piled_fires, biomass, rate_of_spread_50cm, pct_consumed:avg_wind_speed),
-      lower.panel = panel.cor, diag.panel = panel.hist)
+# pairs(select(piled_fires, biomass, rate_of_spread_50cm, pct_consumed:avg_wind_speed),
+#       lower.panel = panel.cor, diag.panel = panel.hist)
 
 ggplot(fires_biomass, aes(biomass, max_flame_ht)) +
       # geom_line(aes(color = structure)) +
@@ -732,9 +736,6 @@ kable(head(iris), caption = "A glimpse of the famous *Iris* dataset.")
 
 \newpage
 
-```{r Table2, results='asis', echo=FALSE, cache=FALSE}
-kable(mtcars[10:16, ], caption = "Now a subset of mtcars dataset.")
-```
 
 
 \clearpage
@@ -744,11 +745,13 @@ kable(mtcars[10:16, ], caption = "Now a subset of mtcars dataset.")
 
 \newpage
 
-```{r Fig1, echo=FALSE, fig.cap="Just my first figure with a very fantastic caption.", cache=FALSE}
-x <- rnorm(100)
-y <- jitter(x, 1000)
-plot(x, y)
-```
+![Figure 1](figures/Fig2_3panel.pdf)
+\newpage
+
+
+\newpage
+
+![](figures/timeandmaxtempPanels2x2.pdf)
 
 \newpage
 
