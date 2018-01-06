@@ -176,6 +176,8 @@ Our experimental design was to conduct three burns for each of five fuel loads (
 ```{r load data from FABIO experiment, results='hide'}
 
 # source("~/Documents/SERDP_Project/fire-temps.R")
+# source("~/Documents/SERDP_Project/fire-weather-data.R")
+
 fires_biomass <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-biomass.csv")
 fires_biomass <- filter(fires_biomass, date > "2017-11-30")
 summary(fires_biomass)
