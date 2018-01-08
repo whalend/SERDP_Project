@@ -19,7 +19,7 @@ output:
   pdf_document:
     fig_caption: yes
     # fig_height:
-    fig_width: 8
+    fig_width: 7.5
     includes:
       in_header: header.tex
     keep_tex: yes
@@ -374,40 +374,56 @@ ggplot(fire_temps_avg, aes(time, tempC)) +
 # # unique(maxtemp_df$location)
 # maxtemp_df$location[maxtemp_df$location!="50cm"] <- "near ground"
 
-maxtemp <- ggplot(fabio_fires, aes(biomass, max_temp)) +
-      # geom_line(aes(color = location, linetype = structure)) +
-      geom_point(aes(color = structure)) +
-      facet_grid(location~.) +
-      # scale_shape_manual(values = 21) +
-      scale_color_discrete(h.start = 20) +
-      theme_bw()
-maxtemp +
-      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
-      ylab("Maximum Temperature ºC") +
-      theme(legend.title = element_blank(), 
-            # legend.direction = "vertical",
-            # legend.position = c(.02,.98),
-            legend.justification = c("left","top"),
-            legend.spacing = unit(x = -.3, units = "cm"),
-            axis.title = element_text(size = 16),
-            axis.text = element_text(size = 12),
-            plot.margin = unit(c(.5,.5,.5,.5), "cm")
-            )
-
-ggplot(fabio_fires_summary, aes(biomass, avg_max_temp)) +
-      geom_point(aes(color = structure, shape = structure), size = 2) +
-      scale_color_discrete(h.start = 20) +
-      facet_grid(location~.) +
+# maxtemp <- ggplot(fabio_fires, aes(biomass, max_temp)) +
+#       # geom_line(aes(color = location, linetype = structure)) +
+#       geom_point(aes(color = structure)) +
+#       facet_grid(.~location) +
+#       # scale_shape_manual(values = 21) +
+#       scale_color_discrete(h.start = 20) +
+#       theme_bw()
+# maxtemp +
+#       xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
+#       ylab("Maximum Temperature ºC") +
+#       theme(legend.title = element_blank(), 
+#             # legend.direction = "vertical",
+#             # legend.position = c(.02,.98),
+#             legend.justification = c("left","top"),
+#             legend.spacing = unit(x = -.3, units = "cm"),
+#             axis.title = element_text(size = 16),
+#             axis.text = element_text(size = 12),
+#             plot.margin = unit(c(.5,.5,.5,.5), "cm")
+#             )
+fabio_fires_summary$structure <- stringr::str_to_title(fabio_fires_summary$structure)
+avg_max_temp_plot <- ggplot(fabio_fires_summary, aes(biomass, avg_max_temp)) +
+      # scale_color_discrete(h.start = 20) +
+      scale_color_grey(start = .3, end = .8) +
+      facet_grid(.~location) +
       # geom_bar(stat = "identity", fill = "grey60") +
       # scale_fill_continuous(low = "yellow", high = "red") +
       geom_errorbar(aes(ymin = avg_max_temp + se_max_temp, 
                         ymax = avg_max_temp - se_max_temp),
                     width = .1) +
+      # geom_line(aes(color = structure, linetype = structure)) +
+      geom_smooth(aes(color = structure, linetype = structure), method = "lm",
+                  se = F, size = .8) +
+      geom_point(aes(color = structure, shape = structure), size = 2) +
       # facet_grid(location~.) +
       ylab("Maximum Temperature") +
       xlab("Fuel Load (g)") +
-      theme_bw()
-
+      theme_bw() +
+      # theme_classic() +
+      theme(legend.title = element_blank(),
+            legend.text = element_text(size = 12),
+            legend.position = c(.92, .1),
+            legend.background = element_blank(),
+            strip.background = element_blank(),
+            panel.grid = element_blank(),
+            axis.title = element_text(size = 14)
+            # panel.border = element_blank(),
+            # panel.background = element_blank(),
+            # axis.line = element_line(colour = "black")
+            )
+avg_max_temp_plot
 
 # maxtemp_avg <- ggplot(fabio_fires, aes(biomass, avg2_max_temp)) +
 #       # geom_line(aes(color = location, linetype = structure)) +
@@ -429,21 +445,57 @@ ggplot(fabio_fires_summary, aes(biomass, avg_max_temp)) +
 #             )
 # maxtemp_avg
 
-ggplot(fabio_fires_summary, aes(biomass, avg2_max_temp_avg)) +
-      geom_point(aes(shape = structure), size = 2) +
-      scale_color_discrete(h.start = 20) +
-      facet_grid(.~location) +
-      # geom_bar(stat = "identity", fill = "grey60") +
-      # scale_fill_continuous(low = "yellow", high = "red") +
-      geom_errorbar(aes(ymin = avg2_max_temp_avg + se_avg2_max_temp, 
-                        ymax = avg2_max_temp_avg - se_avg2_max_temp),
-                    width = .1) +
-      # facet_grid(location~.) +
-      ylab("Average Max Temperature") +
-      xlab("Fuel Load (g)") +
-      theme_bw()
+# ggplot(fabio_fires_summary, aes(biomass, avg2_max_temp_avg)) +
+#       geom_point(aes(shape = structure), size = 2) +
+#       scale_color_discrete(h.start = 20) +
+#       facet_grid(.~location) +
+#       # geom_bar(stat = "identity", fill = "grey60") +
+#       # scale_fill_continuous(low = "yellow", high = "red") +
+#       geom_errorbar(aes(ymin = avg2_max_temp_avg + se_avg2_max_temp, 
+#                         ymax = avg2_max_temp_avg - se_avg2_max_temp),
+#                     width = .1) +
+#       # facet_grid(location~.) +
+#       ylab("Average Max Temperature") +
+#       xlab("Fuel Load (g)") +
+#       theme_bw()
 
 ```      
+```{r maxtemp_linear_models}
+
+model_data <- select(fabio_fires, max_temp, s_abv100, heat_flux_abv100, avg_flame_ht, max_flame_ht, rate_of_spread_50cm, biomass, structure, location, pct_fuel_moisture, avg_air_temp, avg_rh, avg_wind_speed)
+
+# pairs(model_data, lower.panel = panel.cor, diag.panel = panel.hist, 
+#       main = "All Levels")
+# 
+# pairs(filter(model_data, location == "0cm"), main = "Ground Level",
+#       lower.panel = panel.cor, diag.panel = panel.hist)
+
+
+max_temp_lm_full <- glm(max_temp ~ biomass + biomass:structure + biomass:location + structure:location + avg_air_temp + pct_fuel_moisture, 
+                  data = fabio_fires, na.action = "na.fail")
+# summary(max_temp_lm_full)
+
+library(MuMIn)
+dd <- dredge(max_temp_lm_full, extra = c("adjR^2"))
+# filter(dd, delta < 10)
+
+my_row_names <- c("(Intercept)", "Biomass", "Structure: standing")
+max_temp_0cm <- glm(max_temp ~ (biomass) + structure, data = filter(fabio_fires, location == "0cm"))
+coef0cm <- as.data.frame(summary(max_temp_0cm)$coefficients)
+rownames(coef0cm) <- my_row_names
+kable(coef0cm, digits = 3, caption = "Max temperature at ground level")
+
+max_temp_25cm <- lm(max_temp ~ (biomass) + structure, data = filter(fabio_fires, location == "25cm"))
+coef25cm <- as.data.frame(summary(max_temp_25cm)$coefficients)
+rownames(coef25cm) <- my_row_names
+kable(coef25cm, digits = 3, caption = "Max temperature at 25cm")
+
+max_temp_50cm <- lm(max_temp ~ (biomass) + structure, data = filter(fabio_fires, location == "50cm"))
+coef50cm <-  as.data.frame(summary(max_temp_50cm)$coefficients)
+rownames(coef50cm) <- my_row_names
+kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
+
+```
 
 
 ```{r compare_secsAbv100 }
@@ -467,11 +519,10 @@ ggplot(fabio_fires_summary, aes(biomass, avg2_max_temp_avg)) +
 s_abv100 <- ggplot(fabio_fires, aes(biomass, s_abv100)) +
       # geom_line(aes(color = source, linetype = location)) +
       geom_point(aes(color = structure)) +
-      scale_color_discrete(h.start = 20) +
+      scale_color_grey(start = .2, end = .8) +
       facet_grid(location~.) +
       # scale_shape_manual(values = 21) +
-      theme_bw()
-s_abv100 +
+      theme_bw() +
       xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
       ylab("Seconds above 100 ºC") +
       theme(legend.title = element_blank(), 
@@ -484,23 +535,62 @@ s_abv100 +
             plot.margin = unit(c(.5,.5,.5,.5), "cm")
             )
 
-ggplot(fabio_fires_summary, aes(biomass, avg_s_abv100)) +
-      geom_point(aes(shape = structure), size = 2) +
-      scale_color_discrete(h.start = 20) +
+s_abv100_avg_plot <- ggplot(fabio_fires_summary, aes(biomass, avg_s_abv100)) +
+      # scale_color_discrete(h.start = 20) +
+      scale_color_grey(start = .3, end = .8) +
+      # scale_color_brewer(palette = "Set1") +
       facet_grid(.~location) +
       # geom_bar(stat = "identity", fill = "grey60") +
       # scale_fill_continuous(low = "yellow", high = "red") +
       geom_errorbar(aes(ymin = avg_s_abv100 + se_s_abv100, 
                         ymax = avg_s_abv100 - se_s_abv100),
                     width = .1) +
+      geom_smooth(aes(color = structure, linetype = structure), method = "lm", se = F, size = .8) +
+      geom_point(aes(color = structure, shape = structure), size = 2) +
       # facet_grid(location~.) +
       ylab("Seconds >100 ºC") +
       xlab("Fuel Load (g)") +
-      theme_bw()
+      theme_bw() +
+      theme(legend.title = element_blank(),
+            legend.text = element_text(size = 12),
+            legend.position = c(.92, .9),
+            legend.background = element_blank(),
+            strip.background = element_blank(),
+            panel.grid = element_blank(),
+            axis.title = element_text(size = 14)
+            )
+s_abv100_avg_plot
+
+```
+```{r s_abv100_linear_models}
+
+s_abv100_lm <- lm(log1p(s_abv100) ~ biomass + biomass*structure + biomass*location + structure*location + avg_air_temp + avg_rh + pct_fuel_moisture + avg_wind_speed, 
+                  data = fabio_fires, na.action = na.fail)
+# summary(s_abv100_lm)
+
+dd <- dredge(update(s_abv100_lm, .~. -avg_air_temp -avg_rh -pct_fuel_moisture), extra = c("adjR^2"))
+# filter(dd, delta < 10)
+
+
+s_abv100_0cm <- lm(s_abv100 ~ (biomass) + structure, data = filter(fabio_fires, location == "0cm"))
+coef0cm <- as.data.frame(summary(s_abv100_0cm)$coefficients)
+rownames(coef0cm) <- my_row_names
+kable(coef0cm, digits = 3, caption = "Time above 100 ºC (seconds) at ground level")
+
+s_abv100_25cm <- lm(s_abv100 ~ (biomass) + structure, data = filter(fabio_fires, location == "25cm"))
+coef25cm <- as.data.frame(summary(s_abv100_0cm)$coefficients)
+rownames(coef25cm) <- my_row_names
+kable(coef25cm, digits = 3, caption = "Time above 100 ºC (seconds) at 25cm")
+
+s_abv100_50cm <- lm(s_abv100 ~ (biomass) + structure, data = filter(fabio_fires, location == "50cm"))
+coef50cm <- as.data.frame(summary(s_abv100_0cm)$coefficients)
+rownames(coef50cm) <- my_row_names
+kable(coef50cm, digits = 3, caption = "Time above 100 ºC (seconds) at 50cm")
 
 ```
 
-```{r compare_heatFlux_abv100}
+
+```{r compare_heatFlux_abv100, eval=F}
 flux_abv100 <- ggplot(fabio_fires, aes(biomass, heat_flux_abv100)) +
       # geom_line(aes(color = source, linetype = location)) +
       geom_point(aes(color = structure)) +
@@ -536,7 +626,6 @@ ggplot(fabio_fires_summary, aes(biomass, avg_heat_flux_abv100)) +
       theme_bw()
 
 ```
-
 
 
 ```{r compare flame height}
@@ -627,6 +716,7 @@ ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
 # plot_grid(a1, a2)
 
 ```
+
 
 ```{r compare biomass consumption}
 
