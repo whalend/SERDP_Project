@@ -100,7 +100,7 @@ Fine surface fuels play a major role in the ignition, spread, and intensity of f
  
       - coupled to changing ambient conditions
  
-Fuel characteristics, such as load (mass), structure, type, moisture, particle size, drive fire intensity and severity.
+Fuel characteristics, such as load (mass), structure, type, moisture, and particle size, affect fire intensity and severity.
 
 We strive to understand how fuel characteristics influence fire intensity, severity, and behavior. Methods range from *in situ* approaches where measurements are made before, during, and after prescribed fires, to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings. 
 
@@ -309,6 +309,7 @@ wxtable
 
 ```
 
+
 ```{r pairs-panel-fxns}
 panel.cor <- function(x, y, digits = 2, cex.cor, ...)
 {
@@ -351,7 +352,7 @@ pairs(model_data, lower.panel = panel.cor, diag.panel = panel.hist,
 pairs(filter(model_data, location == "0cm"), main = "Ground Level",
       lower.panel = panel.cor, diag.panel = panel.hist)
 
-model_data2 <- select(fires_biomass, rate_of_spread_50cm, pct_consumed, max_flame_ht, avg_flame_ht, biomass, f_structure, pct_fuel_moisture, max_fuel_ht:avg_wind_speed)
+model_data2 <- select(fires_biomass, rate_of_spread_ms, pct_consumed, max_flame_ht, avg_flame_ht, biomass, f_structure, pct_fuel_moisture, max_fuel_ht:avg_wind_speed)
 
 pairs(model_data2, lower.panel = panel.cor, diag.panel = panel.hist,
       main = "Aggregate Fire Data")
