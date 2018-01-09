@@ -148,19 +148,20 @@ Temperature metrics are influenced by fuel structure. In general, fuels with gre
 
 # METHODS
 
-## Fine Aboveground Biomass Incineration Organizer (FABIO)
-
-![](figures/FABIOdraft.jpg)
-
-
-## Study Area
-
+## Study site
 We harvested ~50 kg of standing cogongrass from an invasion at the Biven's Arm Research Station (BARS), Florida, USA. The fuel was stored in a shed for 48-hours to protect it from rainfall, and then spread outside in a cleared area to dry for ~72 hours. We raked through the pile each day to increase drying, while carefully maintaining stem orientation in the same direction. We found that consistent stem orientation was more efficient for weighing and loading fuels vertically into the FABIO. 
 
+### Fine Aboveground Biomass Incineration Organizer (FABIO)
+![](figures/FABIOdraft.jpg)
 
 ## Data collection and analysis
 
-Our experimental design was to conduct three burns for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. 
+Our experimental design was to conduct six burns, three piled and three standing, for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. 
+
+Thermocouple sensor specs
+Thermocouple logger specs
+
+Weather data was recorded at a two second interval during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA) mounted on a tripod to be ~1 m above the ground.
 
 
 ```{r load data from FABIO experiment, results='hide'}
