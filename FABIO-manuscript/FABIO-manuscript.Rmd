@@ -174,9 +174,8 @@ summary(fires_biomass)
 fires_biomass <- fires_biomass %>% 
       select(date, fire_id, biomass, structure:max_fuel_ht, avg_fuel_ht) %>% 
       mutate(f_structure = as.factor(structure),
-             rate_of_spread_ms = )
-
-
+             rate_of_spread_ms = 1/rate_of_spread_50cm*2)
+fires_biomass$rate_of_spread_ms[fires_biomass$rate_of_spread_ms=="Inf"] <- 0
 
 
 fire_temps <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-temperatures.csv")
