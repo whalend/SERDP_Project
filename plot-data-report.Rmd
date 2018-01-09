@@ -210,12 +210,12 @@ quadrat10m_summaries <- quadrat_data %>%
 # summary(quadrat10m_summaries)
 ```
 
-```{r load species data}
+```{r load species data, results='hide'}
 species_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/species1m.csv")
-species_data$date <- as.Date(species_data$date, format = "%m/%d/%y")
+species_data$date <- as.Date(as.character(species_data$date), format = "%Y%m%d")
 species_data <- filter(species_data, date>"2017-06-01")
 species_data$veg_id <- tolower(species_data$veg_id)
-species_data <- rename(species_data, sci_name = scientific_name)
+# species_data <- rename(species_data, sci_name = scientific_name)
 # length(unique(species_data$veg_id))
 
 species_table <- read_csv("data/plant_species_list.csv")
@@ -225,7 +225,11 @@ species_table$scientific_name <- paste(
 
 species_table %>% arrange(scientific_name)
 
-unique(species_data$veg_id)
+length(unique(species_data$scientific_name))
+sort(unique(species_data$scientific_name))
+n_distinct(species_data$veg_id)
+sort(unique(species_data$veg_id))
+
 
 species_data <- left_join(species_data, species_table, 
           by = c("veg_id"="code"))
@@ -237,24 +241,20 @@ dsub <- select(species_data, veg_id, scientific_name, sci_name, pct_cover) %>%
 sort(unique(dsub$veg_id))
 
 
+# species_data$scientific_name[species_data$veg_id=="qula"] <- "Quercus laevis"
+# species_data$scientific_name[species_data$veg_id=="wiregrass"] <- "Aristida stricta"
+# species_data$scientific_name[species_data$veg_id=="limi"] <- "Licania michauxii"
+# species_data$scientific_name[species_data$veg_id=="pipa"] <- "Pinus palustris"
+# species_data$scientific_name[species_data$veg_id=="quni"] <- "Quercus nigra"
+# species_data$scientific_name[species_data$veg_id=="rhco"] <- "Rhus copallinum"
+# species_data$scientific_name[species_data$veg_id=="moce"] <- "Morella cerifera"
+# species_data$scientific_name[species_data$veg_id=="qula2"] <- "Quercus laurifolia"
+# species_data$scientific_name[species_data$veg_id=="quge"] <- "Quercus geminata"
+# species_data$scientific_name[species_data$veg_id=="divi"] <- "Diospyros virginiana"
+# species_data$scientific_name[species_data$veg_id=="quge"] <- "Quercus geminata"
 
-species_data$scientific_name[species_data$veg_id=="qula"] <- "Quercus laevis"
-species_data$scientific_name[species_data$veg_id=="wiregrass"] <- "Aristida stricta"
-species_data$scientific_name[species_data$veg_id=="limi"] <- "Licania michauxii"
-species_data$scientific_name[species_data$veg_id=="pipa"] <- "Pinus palustris"
-species_data$scientific_name[species_data$veg_id=="quni"] <- "Quercus nigra"
-species_data$scientific_name[species_data$veg_id=="rhco"] <- "Rhus copallinum"
-species_data$scientific_name[species_data$veg_id=="moce"] <- "Morella cerifera"
-species_data$scientific_name[species_data$veg_id=="qula2"] <- "Quercus laurifolia"
-species_data$scientific_name[species_data$veg_id=="quge"] <- "Quercus geminata"
-species_data$scientific_name[species_data$veg_id=="divi"] <- "Diospyros virginiana"
-species_data$scientific_name[species_data$veg_id=="quge"] <- "Quercus geminata"
-
-
-
-filter(species_data, veg_id=="sf" 
-       # scientific_name!="NA"
-       )
+# filter(species_data, veg_id=="sf" # scientific_name!="NA",
+#        )
 
 
 species_data <- left_join(species_data, plot_visit_data, 
@@ -266,6 +266,8 @@ species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10"))
 # summary(species_sub)
 
 ```
+
+
 
 ```{r average species cover, fig.height=9}
 # datac$se <- datac$sd / sqrt(datac$N)
@@ -299,7 +301,7 @@ species_over_5pct <- filter(species_data, pct_cover>5)
 # species_sub_over_5pct <- filter(species_sub_over_5pct, cogongrass != "NA")
 
 ggplot(species_over_5pct,
-       aes(years_since_fire, pct_cover, color = veg_id)) +
+       aes(years_since_fire, pct_cover, color = scientific_name)) +
       geom_point(position="jitter") +
       theme_bw() +
       facet_grid(installation~imcy_inv) +
@@ -329,21 +331,30 @@ ggplot(species_over_5pct,
       # summarise(occurrence = length(unique(plotid))) %>%
       # arrange(desc(occurrence))
 
-head(species_data)
+# head(species_data)
 
 species_richness <- species_data %>%
       group_by(installation, years_since_fire, imcy_inv) %>%
       summarise(richness = length(unique(veg_id))) %>% 
       mutate(ln_richness = log(richness))
 
+invaded_quadrats <- species_data %>% 
+      filter(scientific_name=="Imperata cylndrica") %>% 
+      mutate(quadrat_invaded = "yes") %>% 
+      select(installation:quadrat_id, quadrat_invaded)
+
+species_data <- left_join(species_data, invaded_quadrats)
+species_data$quadrat_invaded[is.na(species_data$quadrat_invaded)] <- "no"
+
 quadrat_species_richness <- species_data %>%
-      group_by(installation, years_since_fire, imcy_inv, quadrat_id) %>%
+      group_by(installation, years_since_fire, quadrat_invaded, quadrat_id) %>%
       summarise(richness = length(unique(veg_id))) %>% 
       mutate(ln_richness = log(richness))
       
-ggplot(quadrat_species_richness, aes(installation, richness)) +
-      geom_point(aes(color = imcy_inv)) +
-      geom_smooth(aes(color = imcy_inv), method = "loess") +
+ggplot(quadrat_species_richness, aes(quadrat_invaded, richness)) +
+      geom_boxplot(notch = F) +
+      # geom_point(aes(color = imcy_inv), position = "jitter") +
+      # geom_smooth(aes(color = imcy_inv), method = "loess") +
       # facet_grid(.~installation) +
       theme_bw()
 
