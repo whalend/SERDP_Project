@@ -339,7 +339,7 @@ species_richness <- species_data %>%
       mutate(ln_richness = log(richness))
 
 invaded_quadrats <- species_data %>% 
-      filter(scientific_name=="Imperata cylndrica") %>% 
+      filter(scientific_name=="Imperata cylindrica") %>% 
       mutate(quadrat_invaded = "yes") %>% 
       select(installation:quadrat_id, quadrat_invaded)
 
@@ -351,9 +351,9 @@ quadrat_species_richness <- species_data %>%
       summarise(richness = length(unique(veg_id))) %>% 
       mutate(ln_richness = log(richness))
       
-ggplot(quadrat_species_richness, aes(quadrat_invaded, richness)) +
-      geom_boxplot(notch = F) +
-      # geom_point(aes(color = imcy_inv), position = "jitter") +
+ggplot(quadrat_species_richness, aes(installation, richness)) +
+      # geom_boxplot(notch = F) +
+      geom_point(aes(color = quadrat_invaded), position = "jitter") +
       # geom_smooth(aes(color = imcy_inv), method = "loess") +
       # facet_grid(.~installation) +
       theme_bw()
