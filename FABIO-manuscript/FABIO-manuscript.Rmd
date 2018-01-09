@@ -171,7 +171,13 @@ Our experimental design was to conduct three burns for each of five fuel loads (
 fires_biomass <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-biomass.csv")
 fires_biomass <- filter(fires_biomass, date > "2017-11-30")
 summary(fires_biomass)
-fires_biomass <- select(fires_biomass, date, fire_id, biomass, structure:max_fuel_ht, avg_fuel_ht)
+fires_biomass <- fires_biomass %>% 
+      select(date, fire_id, biomass, structure:max_fuel_ht, avg_fuel_ht) %>% 
+      mutate(f_structure = as.factor(structure),
+             rate_of_spread_ms = )
+
+
+
 
 fire_temps <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-temperatures.csv")
 fire_temps <- filter(fire_temps, date > "2017-11-30") %>% select(-probe_type)
@@ -219,6 +225,7 @@ fabio_fires$heat_flux_abv100[is.na(fabio_fires$heat_flux_abv100)] <- 0
 fabio_fires <- left_join(fabio_fires, fires_biomass) %>% 
       mutate(location = as.factor(location),
              structure = as.factor(structure),
+             # struc_indicator = as.factor(ifelse(structure=="piled", 0, 1)),
              f_biomass = as.factor(biomass))
 
 fire_weather_summary <- read_csv(
@@ -335,6 +342,23 @@ panel.hist <- function(x, ...)
 }
 ```
 
+```{r explore model data, eval=F}
+
+model_data <- select(fabio_fires, max_temp, s_abv100, heat_flux_abv100, avg_flame_ht, max_flame_ht, rate_of_spread_50cm, biomass, structure, location, pct_fuel_moisture, avg_air_temp, avg_rh, avg_wind_speed)
+
+pairs(model_data, lower.panel = panel.cor, diag.panel = panel.hist,
+      main = "All Levels of Temperature")
+
+pairs(filter(model_data, location == "0cm"), main = "Ground Level",
+      lower.panel = panel.cor, diag.panel = panel.hist)
+
+model_data2 <- select(fires_biomass, rate_of_spread_50cm, pct_consumed, max_flame_ht, avg_flame_ht, biomass, f_structure, pct_fuel_moisture, max_fuel_ht:avg_wind_speed)
+
+pairs(model_data2, lower.panel = panel.cor, diag.panel = panel.hist,
+      main = "Aggregate Fire Data")
+
+```
+
 
 ```{r eval=F}
 
@@ -345,6 +369,8 @@ ggplot(fire_temps_avg, aes(time, tempC)) +
 
 ```
 
+
+### Linear models of maximum temperature
 
 ```{r compare_maxtemp}
 
@@ -450,43 +476,45 @@ avg_max_temp_plot
 #       theme_bw()
 
 ```      
+
 ```{r maxtemp_linear_models}
-
-model_data <- select(fabio_fires, max_temp, s_abv100, heat_flux_abv100, avg_flame_ht, max_flame_ht, rate_of_spread_50cm, biomass, structure, location, pct_fuel_moisture, avg_air_temp, avg_rh, avg_wind_speed)
-
-# pairs(model_data, lower.panel = panel.cor, diag.panel = panel.hist, 
-#       main = "All Levels")
-# 
-# pairs(filter(model_data, location == "0cm"), main = "Ground Level",
-#       lower.panel = panel.cor, diag.panel = panel.hist)
-
 
 max_temp_lm_full <- glm(max_temp ~ biomass + biomass:structure + biomass:location + structure:location + avg_air_temp + pct_fuel_moisture, 
                   data = fabio_fires, na.action = "na.fail")
 # summary(max_temp_lm_full)
 
+options(na.action = "na.fail")
 library(MuMIn)
-dd <- dredge(max_temp_lm_full, extra = c("adjR^2"))
+dd <- dredge(max_temp_lm_full, extra = c("R^2"))
 # filter(dd, delta < 10)
 
 my_row_names <- c("(Intercept)", "Biomass", "Structure: standing")
-max_temp_0cm <- glm(max_temp ~ (biomass) + structure, data = filter(fabio_fires, location == "0cm"))
+
+fabio_fires_0cm <- filter(fabio_fires, location == "0cm")
+max_temp_0cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_0cm)
+dredge(max_temp_0cm, extra = c("R^2"))
 coef0cm <- as.data.frame(summary(max_temp_0cm)$coefficients)
 rownames(coef0cm) <- my_row_names
 kable(coef0cm, digits = 3, caption = "Max temperature at ground level")
 
-max_temp_25cm <- lm(max_temp ~ (biomass) + structure, data = filter(fabio_fires, location == "25cm"))
+fabio_fires_25cm <- filter(fabio_fires, location == "25cm")
+max_temp_25cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_25cm)
+dredge(max_temp_25cm, extra = c("R^2"))
 coef25cm <- as.data.frame(summary(max_temp_25cm)$coefficients)
 rownames(coef25cm) <- my_row_names
 kable(coef25cm, digits = 3, caption = "Max temperature at 25cm")
 
-max_temp_50cm <- lm(max_temp ~ (biomass) + structure, data = filter(fabio_fires, location == "50cm"))
+fabio_fires_50cm <- filter(fabio_fires, location == "50cm")
+max_temp_50cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_50cm)
+dredge(max_temp_50cm, extra = c("R^2"))
 coef50cm <-  as.data.frame(summary(max_temp_50cm)$coefficients)
 rownames(coef50cm) <- my_row_names
 kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
 
 ```
 
+
+### Linear models of time above 100 ºC
 
 ```{r compare_secsAbv100 }
 
@@ -552,6 +580,7 @@ s_abv100_avg_plot <- ggplot(fabio_fires_summary, aes(biomass, avg_s_abv100)) +
 s_abv100_avg_plot
 
 ```
+
 ```{r s_abv100_linear_models}
 
 s_abv100_lm <- lm(log1p(s_abv100) ~ biomass + biomass*structure + biomass*location + structure*location + avg_air_temp + avg_rh + pct_fuel_moisture + avg_wind_speed, 
@@ -617,6 +646,8 @@ ggplot(fabio_fires_summary, aes(biomass, avg_heat_flux_abv100)) +
 
 ```
 
+
+### Linear models of flame height
 
 ```{r compare flame height}
 
@@ -708,6 +739,7 @@ ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
 ```
 
 
+### Linear models of biomass consumed
 ```{r compare biomass consumption}
 
 # ggplot(pile_vs_stand, aes(biomass, remaining_biomass, color = structure)) +
@@ -771,7 +803,7 @@ ggplot(fires_biomass, aes(biomass, rate_of_spread_50cm, color = structure)) +
 We applied a linear model where
 
 $$
-y_{i} = \alpha + \beta*x_{i} 
+y_{i} = \alpha + \beta_{1}*x_{i} + \beta_{2} 
 $$
 
 ```{r model, echo = FALSE, eval = FALSE}
