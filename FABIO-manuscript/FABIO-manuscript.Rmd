@@ -94,19 +94,31 @@ Write your abstract here.
 
 # INTRODUCTION
 
-Fine surface fuels play a major role in the ignition, spread, and intensity of fires. The influence of fuels on fire is determined by fuel charateristics, including load, moisture, compactness, continuity, and structure. 
+Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire intensity is determined by weather conditions and fuel charateristics, including load, moisture, continuity, and structure. 
 
-      - more exposed to atmosphere
- 
-      - coupled to changing ambient conditions
- 
-Fuel characteristics, such as load (mass), structure, type, moisture, and particle size, affect fire intensity and severity.
+Fuel load has been shown to be a particularly important driver of combustibility, sustainability, and rate of spread, characteristics. 
 
-We strive to understand how fuel characteristics influence fire intensity, severity, and behavior. Methods range from *in situ* approaches where measurements are made before, during, and after prescribed fires, to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings. 
 
-Studies in fire ecology that experimentally manipulate fuel characteristics often only change the fuel load and/or type of fuel, necessarily sacrificing some realism in fuel structure.
+Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an itegral part of the landscape. Methods range from *in situ* approaches where measurements are made before, during, and after prescribed fires, to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings. 
 
-      - still provding valuable data
+Studies in fire ecology that experimentally manipulate fuel often only change the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are typically laid horizontally even though fuel complexes are often more heterogeneous with subtantial vertical structure. 
+
+
+We aim to provide an experimental apparatus that can bridge the gap between bench-scale and field-scale measurements of flammability. The Fine Aboveground Biomass Incineration Organizer (FABIO) enables experimental manipulation of fuel characteristics such as load and structure. We expect this will be most useful for grasses or grass-like fuels, but can be generalized to additional fuel types such as small shrubs and trees.
+
+
+
+Also, density, dead:live ratio 
+
+Grasses in particular fuel lots of fires, fuel loads are often increased in landscapes invaded by non-native grasses.  
+
+3. We present a methodology for maintaining realism in fuel structure in experiments where fine fuels with typical vertical structure, e.g. grasses, are manipulated.
+
+ Using the exotic invasive cogongrass, we illustrate how changing the fuel structure can substantially alter flammability characteristics. 
+
+It can be deployed in the field or in a more controlled "laboratory" setting. 
+
+Temperature metrics are influenced by fuel structure. In general, fuels with greater vertical arrangement will achieve higher maximum temperatures, but will also burn faster. Faster burning should result in less exposure to temperatures that cause plant tissue damage. We show these differences in maximum temperature and time above 100 ºC for standing and piled fuels.
 
 ## Other experimental fire ecology studies
 
@@ -118,9 +130,12 @@ In this study, "Grass fuels had to be laid horizontally rather than standing ver
 
 - Average flame height was measured "when the fire was within 15cm of the tree stem using a metal grid placed verically against a steel picket placed next to the stem."
 
+- 
+
 Additional references given where fuels have been laid flat when testing flammability:
 
- - `r citep("Jaureguiberry 2011 Austral Ecology")`
+ - **`r citep("Jaureguiberry 2011 Austral Ecology")`**
+
 
       - Built the "Bar-B-Q"" apparatus to fill a need to quantify flammability of whole plants of many species
     
@@ -130,20 +145,22 @@ Additional references given where fuels have been laid flat when testing flammab
     
       - Length of fuel limited by size of burning surface
 
- - `r citep("Simpson 2016 Journal of Ecology")`
 
- - `r citep("Wyse 2016 International Journal of Wildland Fire")`
+ - **[@Simpson2016]**
+ 
+ 
+      - Assessed flammability of 25 savanna grass species
+      
+      - five plant traits: biomass quantity, biomass density, biomass moisture content, leaf surface-area:volume ratio, leaf effective heat combustion
+      
+      - related plant traits to three components of flammability: ignitability, sustainability, combustibility at leaf and plant scales
+      
+      - Results: total above-ground biomass drove combustibility and sustainability - high biomass was more intense for longer; moisture content was main driver of ignitability and also reduced combustion rate; estimates of whole-plant combustion rates showed >20-fold variation; Showed that there was significant variation between species in flammability at the plant-level and leaf-level
+ 
 
-All of these studies assessed flammability of multiple species, or multiple fuel complexes.
+ - **[@Wyse2016]**
 
-3. We present a methodology for maintaining realism in fuel structure in experiments where fine fuels with typical vertical structure, e.g. grasses, are manipulated.
-
-4. We demonstrate how the Fine Aboveground Biomass Incineration Organizer (FABIO) can maintain realistic fuel structure while experimentally manipulating fuel load and density. Using the exotic invasive cogongrass, we illustrate how changing the fuel structure can substantially alter flammability characteristics. 
-
-It can be deployed in the field or in a more controlled "laboratory" setting. 
-
-
-Temperature metrics are influenced by fuel structure. In general, fuels with greater vertical arrangement will achieve higher maximum temperatures, but will also burn faster. Faster burning should result in less exposure above temperature thresholds that cause tissue damage to plants. We show these differences in maximum temperature and time above 100 ºC for standing and piled fuels.
+*All of these studies assessed flammability of multiple species, or multiple fuel complexes.*
 
 
 # METHODS
@@ -162,6 +179,14 @@ Thermocouple sensor specs
 Thermocouple logger specs
 
 Weather data was recorded at a two second interval during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA) mounted on a tripod to be ~1 m above the ground.
+
+We used linear regression to model the average maximum temperature and time above 100 ºC at each probe height, and the average flame height, rate of spread, and percent consumed from each fire. Fuel load (mass) and fuel structure (piled vs. standing) were used as explanatory variables, with fuel load treated as continuous. We tested the main effects and interaction of these variables. If the interaction did not have a strong effect we fit a new model with only main effects. We report results from models that
+
+We applied a linear model where
+
+$$
+y_{i} = \alpha + \beta_{1}*biomass_{i} + \beta_{2}*biomass_{i}*structure_{i} 
+$$
 
 
 ```{r load data from FABIO experiment, results='hide'}
@@ -276,7 +301,11 @@ fabio_fireid_summary_0cm_piled <- ungroup(fabio_fireid_summary) %>%
 
 fires_biomass <- left_join(
       fires_biomass, 
-      select(fire_weather_summary, fire_id, starts_with("avg")))
+      select(fire_weather_summary, fire_id, starts_with("avg"))
+      )
+
+fires_biomass_summary <- fires_biomass %>% 
+      group_by()
 
 ```
 
@@ -372,6 +401,7 @@ ggplot(fire_temps_avg, aes(time, tempC)) +
 
 
 ### Linear models of maximum temperature
+The "maximum temperature" at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient (Fig. 3). 
 
 ```{r compare_maxtemp}
 
@@ -489,27 +519,44 @@ library(MuMIn)
 dd <- dredge(max_temp_lm_full, extra = c("R^2"))
 # filter(dd, delta < 10)
 
-my_row_names <- c("(Intercept)", "Biomass", "Structure: standing")
 
 fabio_fires_0cm <- filter(fabio_fires, location == "0cm")
 max_temp_0cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_0cm)
+summary(max_temp_0cm)
 dredge(max_temp_0cm, extra = c("R^2"))
+## Interaction not p<.05 significant, eaual support for additive model
+max_temp_0cm <- lm(max_temp ~ biomass + structure -1, data = fabio_fires_0cm)
+
+my_row_names <- c("(Intercept)", "Biomass", "Structure-standing")
 coef0cm <- as.data.frame(summary(max_temp_0cm)$coefficients)
 rownames(coef0cm) <- my_row_names
+coef0cm <- cbind(coef0cm, confint(max_temp_0cm))
 kable(coef0cm, digits = 3, caption = "Max temperature at ground level")
 
 fabio_fires_25cm <- filter(fabio_fires, location == "25cm")
 max_temp_25cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_25cm)
+summary(max_temp_25cm)
 dredge(max_temp_25cm, extra = c("R^2"))
+## Interaction marginal p=.07, biomass-only model teensy bit better
+max_temp_25cm <- lm(max_temp ~ biomass, data = fabio_fires_25cm)
+
+my_row_names <- c("(Intercept)", "Biomass")
 coef25cm <- as.data.frame(summary(max_temp_25cm)$coefficients)
 rownames(coef25cm) <- my_row_names
+coef25cm <- cbind(coef25cm, confint(max_temp_25cm))
 kable(coef25cm, digits = 3, caption = "Max temperature at 25cm")
+
 
 fabio_fires_50cm <- filter(fabio_fires, location == "50cm")
 max_temp_50cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_50cm)
+summary(max_temp_50cm)
 dredge(max_temp_50cm, extra = c("R^2"))
+## Interaction significant, but not structure main effect 
+
+my_row_names <- c("(Intercept)", "Biomass", "Structure-standing", "Biomass:Standing")
 coef50cm <-  as.data.frame(summary(max_temp_50cm)$coefficients)
 rownames(coef50cm) <- my_row_names
+coef50cm <- cbind(coef50cm, confint(max_temp_50cm))
 kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
 
 ```
@@ -608,7 +655,6 @@ rownames(coef50cm) <- my_row_names
 kable(coef50cm, digits = 3, caption = "Time above 100 ºC (seconds) at 50cm")
 
 ```
-
 
 ```{r compare_heatFlux_abv100, eval=F}
 flux_abv100 <- ggplot(fabio_fires, aes(biomass, heat_flux_abv100)) +
@@ -741,6 +787,7 @@ ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
 
 
 ### Linear models of biomass consumed
+
 ```{r compare biomass consumption}
 
 # ggplot(pile_vs_stand, aes(biomass, remaining_biomass, color = structure)) +
@@ -773,6 +820,9 @@ ggplot(fires_biomass, aes(biomass, pct_consumed)) +
 ```
 
 
+### Linear models of rate of spread
+Rate of spread was measured by recording the number of seconds it took the fire-line to travel 50 cm and then converted to units of m s^-1^.
+
 ```{r rate_of_spread}
 
 # Analyze rate of spread with zeroes and with zeroes excluded as NA.
@@ -780,11 +830,11 @@ ggplot(fires_biomass, aes(biomass, pct_consumed)) +
 ## convert rate of spread to m/s
 
 # View(filter(fires_biomass, rate_of_spread_50cm>62, structure=="standing"))
-ggplot(fires_biomass, aes(biomass, rate_of_spread_50cm, color = structure)) +
+ggplot(fires_biomass, aes(biomass, rate_of_spread_ms, color = structure)) +
       theme_bw() +
       xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
-      ylab("Rate of spread (s/50cm)") +
-      geom_smooth(aes(color = structure, linetype = structure), method = "lm") +
+      ylab(expression(paste("Rate of spread (m", s^{-1}, ")"))) +
+      geom_smooth(aes(linetype = structure), method = "lm") +
       geom_point(size = 3) +
       scale_color_discrete(h.start = 20) +
       theme(legend.title = element_blank(), 
@@ -799,17 +849,6 @@ ggplot(fires_biomass, aes(biomass, rate_of_spread_50cm, color = structure)) +
 
 ```
 
-
-
-We applied a linear model where
-
-$$
-y_{i} = \alpha + \beta_{1}*x_{i} + \beta_{2} 
-$$
-
-```{r model, echo = FALSE, eval = FALSE}
-model <- lm(y ~ x)
-```
 
 We used the statistical language `R` `r citep(citation())` for all our analyses. These were implemented in dynamic rmarkdown documents using `knitr` `r citep(citation("knitr"))` and `rmarkdown` `r citep(citation("rmarkdown"))` packages. All the multilevel models were fitted with `lme4` `r citep(citation("lme4"))`. 
 
