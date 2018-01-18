@@ -94,21 +94,24 @@ Write your abstract here.
 
 # INTRODUCTION
 
-Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire intensity is determined by weather conditions and fuel charateristics, including load, moisture, continuity, and structure. 
+Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from ~1-m^2^ to landscape (hectares) scales is driven by weather conditions and fuel charateristics, including load, structure, moisture, and continuity. 
 
 Fuel load has been shown to be a particularly important driver of combustibility, sustainability, and rate of spread, characteristics. 
 
 
 Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an itegral part of the landscape. Methods range from *in situ* approaches where measurements are made before, during, and after prescribed fires, to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings. 
 
-Studies in fire ecology that experimentally manipulate fuel often only change the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are typically laid horizontally even though fuel complexes are often more heterogeneous with subtantial vertical structure. 
+Studies in fire ecology that experimentally manipulate fuel often only change the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often laid horizontally (e.g.  @Thaxton2006, @Jaureguiberry2011, @Simpson2016, @Wyse2016, @Bowman2017) even though fuel complexes are often more heterogeneous with subtantial vertical structure, especially when composed of grasses. 
+
+For example, @Bowman2017 laid sorghum grass fuels horizontally in a field experiment examining how fine fuel loads of different types affected fire intensity and survival of tree seedlings. 
+
 
 
 We aim to provide an experimental apparatus that can bridge the gap between bench-scale and field-scale measurements of flammability. The Fine Aboveground Biomass Incineration Organizer (FABIO) enables experimental manipulation of fuel characteristics such as load and structure. We expect this will be most useful for grasses or grass-like fuels, but can be generalized to additional fuel types such as small shrubs and trees.
 
 
 
-Also, density, dead:live ratio 
+Also, density, dead:live ratio - the more flammable dead fuels can disproportionately influence fire behavior.
 
 Grasses in particular fuel lots of fires, fuel loads are often increased in landscapes invaded by non-native grasses.  
 
