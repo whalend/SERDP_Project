@@ -8,7 +8,7 @@ output:
 
 ```{r set options, echo=F}
 # knitr::opts_chunk$set(fig.height = 10)
-# knitr::opts_chunk$set(fig.width = 8)
+knitr::opts_chunk$set(fig.width = 7.5)
 knitr::opts_chunk$set(dpi = 600)
 knitr::opts_chunk$set(echo = F)
 knitr::opts_chunk$set(warning = F)
@@ -24,6 +24,7 @@ library(stringi)
 ```
 
 ```{r assign global variables}
+
 def_theme <- theme(legend.title = element_blank(),
             legend.text = element_text(size = 18),
             legend.position = "right",
@@ -34,6 +35,7 @@ def_theme <- theme(legend.title = element_blank(),
 invasion_color <- scale_color_manual(values = c("darkorange","green4"))
 invasion_fill <- scale_fill_manual(values = c("darkorange","green4"))
 no_legend_title <- theme(legend.title = element_blank())
+
 ```
 
 
