@@ -89,7 +89,7 @@ Write your abstract here.
 
 \doublespace
 
-\blefts
+\bleft
 
 
 # INTRODUCTION
@@ -186,12 +186,12 @@ y_{i} = \alpha + \beta_{1}*biomass_{i} + \beta_{2}*biomass_{i}*structure_{i}
 $$
 
 
-```{r load data from FABIO experiment, results='hide'}
+```{r load data from FABIO experiment}
 
-# source("~/Documents/SERDP_Project/fire-temps.R")
-# source("~/Documents/SERDP_Project/fire-weather-data.R")
+# source("~/SERDP_Project/fire-temps.R")
+# source("~/SERDP_Project/fire-weather-data.R")
 
-fires_biomass <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-biomass.csv")
+fires_biomass <- read_csv("~/SERDP_Project/data/fabio-fires-biomass.csv")
 fires_biomass <- filter(fires_biomass, date > "2017-11-30")
 summary(fires_biomass)
 fires_biomass <- fires_biomass %>% 
@@ -201,7 +201,7 @@ fires_biomass <- fires_biomass %>%
 fires_biomass$rate_of_spread_ms[fires_biomass$rate_of_spread_ms=="Inf"] <- 0
 
 
-fire_temps <- read_csv("~/Documents/SERDP_Project/data/fabio-fires-temperatures.csv")
+fire_temps <- read_csv("~/SERDP_Project/data/fabio-fires-temperatures.csv")
 fire_temps <- filter(fire_temps, date > "2017-11-30") %>% select(-probe_type)
 fire_temps <- left_join(
       fire_temps,
@@ -214,7 +214,7 @@ fire_temps_avg <- fire_temps %>%
       group_by(date, time, biomass, location, structure, fire_id) %>% 
       summarise(tempC = mean(tempC)) %>% 
       arrange(fire_id)
-# write_csv(fire_temps_avg, "~/Documents/SERDP_Project/data/piled-vs-stand-avg-fire-temps.csv")
+# write_csv(fire_temps_avg, "~/SERDP_Project/data/piled-vs-stand-avg-fire-temps.csv")
 
 time_abv100 <- fire_temps_avg %>%
       group_by(location, structure, fire_id) %>%
@@ -251,11 +251,11 @@ fabio_fires <- left_join(fabio_fires, fires_biomass) %>%
              f_biomass = as.factor(biomass))
 
 fire_weather_summary <- read_csv(
-      "~/Documents/SERDP_Project/data/piled-vs-standing-fire-wx-summary.csv"
+      "~/SERDP_Project/data/piled-vs-standing-fire-wx-summary.csv"
       )
 fabio_fires <- left_join(fabio_fires,fire_weather_summary)
 
-# write_csv(fabio_fires, "~/Documents/SERDP_Project/data/piled-vs-stand-aggregate.csv")
+# write_csv(fabio_fires, "~/SERDP_Project/data/piled-vs-stand-aggregate.csv")
 
 fabio_fires_summary <- fabio_fires %>%
       group_by(location, structure, biomass) %>%
@@ -269,7 +269,7 @@ fabio_fires_summary <- fabio_fires %>%
                 avg2_max_temp_avg = mean(avg2_max_temp),
                 se_avg2_max_temp = sd(avg2_max_temp)/sqrt(n_obs)
                 )
-# write_csv(fabio_fires_summary, "~/Documents/SERDP_Project/data/piled-vs-stand-summary.csv")
+# write_csv(fabio_fires_summary, "~/SERDP_Project/data/piled-vs-stand-summary.csv")
 
 fabio_fireid_summary <- fabio_fires %>%
       group_by(location, structure, biomass, fire_id) %>%
@@ -285,7 +285,7 @@ fabio_fireid_summary <- fabio_fires %>%
                 )
 
 fire_weather_summary <- read_csv(
-      "~/Documents/SERDP_Project/data/piled-vs-standing-fire-wx-summary.csv"
+      "~/SERDP_Project/data/piled-vs-standing-fire-wx-summary.csv"
       )
 fabio_fireid_summary <- left_join(
       select(fabio_fireid_summary, -n_obs), 
@@ -300,9 +300,6 @@ fires_biomass <- left_join(
       fires_biomass, 
       select(fire_weather_summary, fire_id, starts_with("avg"))
       )
-
-fires_biomass_summary <- fires_biomass %>% 
-      group_by()
 
 ```
 
@@ -369,6 +366,42 @@ panel.hist <- function(x, ...)
 }
 ```
 
+
+### Fuel moisture
+
+```{r fuel_moisture}
+
+library(skimr)
+skim(fires_biomass, pct_fuel_moisture)
+fires_biomass %>% 
+      group_by(date, structure) %>% 
+      skim(pct_fuel_moisture)
+# names(fires_biomass)
+
+ggplot(fires_biomass, aes(structure, pct_fuel_moisture, color = structure)) +
+      
+      stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = .5)) +
+      scale_color_manual(values = c("blue","orange")) +
+      theme_classic() +
+      ylab("Fuel moisture (%)") +
+      xlab("Date")
+
+```
+
+Across all fires, fuel moisture content ranged from 4.6 to 19.6 % (11.49±0.56). 
+
+
+
+```{r eval=F}
+
+ggplot(fire_temps_avg, aes(time, tempC)) +
+      geom_line(aes(color = structure)) +
+      facet_grid(biomass~location) +
+      theme_bw()
+
+```
+
+
 ```{r explore model data, eval=F}
 
 model_data <- select(fabio_fires, max_temp, s_abv100, heat_flux_abv100, avg_flame_ht, max_flame_ht, rate_of_spread_50cm, biomass, structure, location, pct_fuel_moisture, avg_air_temp, avg_rh, avg_wind_speed)
@@ -386,23 +419,12 @@ pairs(model_data2, lower.panel = panel.cor, diag.panel = panel.hist,
 
 ```
 
-
-```{r eval=F}
-
-ggplot(fire_temps_avg, aes(time, tempC)) +
-      geom_line(aes(color = structure)) +
-      facet_grid(biomass~location) +
-      theme_bw()
-
-```
-
-
 ### Linear models of maximum temperature
 The "maximum temperature" at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient (Fig. 3). 
 
 ```{r compare_maxtemp}
 
-# bowman_maxtemp <- read_csv("~/Documents/SERDP_Project/data/bowman-etal-maxtemp.csv")
+# bowman_maxtemp <- read_csv("~/SERDP_Project/data/bowman-etal-maxtemp.csv")
 # bowman_maxtemp$source <- "Piled (Bowman et al.)"
 # 
 # # names(bowman_maxtemp)
@@ -563,7 +585,7 @@ kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
 
 ```{r compare_secsAbv100 }
 
-# bowman_s_abv100 <- read_csv("~/Documents/SERDP_Project/data/bowman-etal-s_abv100.csv")
+# bowman_s_abv100 <- read_csv("~/SERDP_Project/data/bowman-etal-s_abv100.csv")
 # bowman_s_abv100$source <- "Piled (Bowman et al.)"
 # 
 # # names(bowman_s_abv100)
@@ -695,7 +717,7 @@ ggplot(fabio_fires_summary, aes(biomass, avg_heat_flux_abv100)) +
 
 ```{r compare flame height}
 
-# bowman_flame_ht <- read_csv("~/Documents/SERDP_Project/data/bowman-etal-flame-height.csv")
+# bowman_flame_ht <- read_csv("~/SERDP_Project/data/bowman-etal-flame-height.csv")
 # bowman_flame_ht$source <- "Piled (Bowman et al.)"
 # 
 # bowman_flame_ht <- filter(bowman_flame_ht, biomass_type == "grass")
