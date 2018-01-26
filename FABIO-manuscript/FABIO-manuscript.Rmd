@@ -85,43 +85,40 @@ Write your abstract here.
 
 \vspace{3mm}\hrule
 
-*Keywords*: fine fuels, fire intensity, fuel load, fuel structure
+*Keywords*: fine fuels, fire heterogeneity, fire intensity, fuel load, fuel structure
 
 \doublespace
 
-\bleft
+\blefts
 
 
 # INTRODUCTION
 
-Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from ~1-m^2^ to landscape (hectares) scales is driven by weather conditions and fuel charateristics, including load, structure, moisture, and continuity. 
+Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from ~1-m^2^ to landscape (hectares) scales is driven by weather conditions and fuel charateristics, including load, structure, moisture, and continuity. Fuel load has been shown to be a particularly important driver of combustibility, sustainability, and rate of spread, characteristics. 
 
-Fuel load has been shown to be a particularly important driver of combustibility, sustainability, and rate of spread, characteristics. 
+Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an integral part of the landscape. However, specific information is know about relatively few species, and while valuable, this information is often obtained by studies conducted across a spectrum of realistic conditions. Methods range from *in situ* approaches where measurements are made before, during, and after prescribed fires (high realism, low replication), to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings (low realism, highly replicable). 
 
+Studies in fire ecology that experimentally manipulate fuel often only change the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often laid horizontally (e.g.  @Thaxton2006, @JAUREGUIBERRY2011, @Simpson2016, @Wyse2016, @Bowman2017) even though fuel complexes are often more heterogeneous with subtantial vertical structure. For example, @Bowman2017 laid sorghum grass fuels horizontally in a field experiment examining how fine fuel loads of different types affected fire intensity and survival of tree seedlings. 
 
-Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an itegral part of the landscape. Methods range from *in situ* approaches where measurements are made before, during, and after prescribed fires, to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings. 
-
-Studies in fire ecology that experimentally manipulate fuel often only change the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often laid horizontally (e.g.  @Thaxton2006, @Jaureguiberry2011, @Simpson2016, @Wyse2016, @Bowman2017) even though fuel complexes are often more heterogeneous with subtantial vertical structure, especially when composed of grasses. 
-
-For example, @Bowman2017 laid sorghum grass fuels horizontally in a field experiment examining how fine fuel loads of different types affected fire intensity and survival of tree seedlings. 
+In this paper, we present an experimental apparatus that can bridge the gap between making measurements of flammability at the lab bench versus prescribed fires. The Fine Aboveground Biomass Incineration Organizer (FABIO) enables experimental manipulation of fuel characteristics such as load and structure at a realtively small but realistic and relevant scale of 1-m^2^ (@Loudermilk2014). We expect our design will be most useful for grasses or grass-like fuels, but it could be used or adapted for other fuel types such as small shrubs and trees. 
 
 
 
-We aim to provide an experimental apparatus that can bridge the gap between bench-scale and field-scale measurements of flammability. The Fine Aboveground Biomass Incineration Organizer (FABIO) enables experimental manipulation of fuel characteristics such as load and structure. We expect this will be most useful for grasses or grass-like fuels, but can be generalized to additional fuel types such as small shrubs and trees.
-
-
+Temperature metrics are influenced by fuel structure. In general, fuels with greater vertical arrangement will achieve higher maximum temperatures, but will also burn faster. Faster burning should result in less exposure to temperatures that cause plant tissue damage. We show these differences in maximum temperature and time above 100 ºC for standing and piled fuels.
 
 Also, density, dead:live ratio - the more flammable dead fuels can disproportionately influence fire behavior.
 
 Grasses in particular fuel lots of fires, fuel loads are often increased in landscapes invaded by non-native grasses.  
 
-3. We present a methodology for maintaining realism in fuel structure in experiments where fine fuels with typical vertical structure, e.g. grasses, are manipulated.
 
- Using the exotic invasive cogongrass, we illustrate how changing the fuel structure can substantially alter flammability characteristics. 
+We present a methodology for maintaining realism in fuel structure in experiments where fine fuels with typical vertical structure, e.g. grasses, are manipulated.
+
+
+Using the exotic invasive cogongrass, we illustrate how changing the fuel structure can substantially alter flammability characteristics. 
 
 It can be deployed in the field or in a more controlled "laboratory" setting. 
 
-Temperature metrics are influenced by fuel structure. In general, fuels with greater vertical arrangement will achieve higher maximum temperatures, but will also burn faster. Faster burning should result in less exposure to temperatures that cause plant tissue damage. We show these differences in maximum temperature and time above 100 ºC for standing and piled fuels.
+
 
 ## Other experimental fire ecology studies
 
@@ -133,12 +130,10 @@ In this study, "Grass fuels had to be laid horizontally rather than standing ver
 
 - Average flame height was measured "when the fire was within 15cm of the tree stem using a metal grid placed verically against a steel picket placed next to the stem."
 
-- 
 
 Additional references given where fuels have been laid flat when testing flammability:
 
  - **`r citep("Jaureguiberry 2011 Austral Ecology")`**
-
 
       - Built the "Bar-B-Q"" apparatus to fill a need to quantify flammability of whole plants of many species
     
@@ -150,7 +145,6 @@ Additional references given where fuels have been laid flat when testing flammab
 
 
  - **[@Simpson2016]**
- 
  
       - Assessed flammability of 25 savanna grass species
       
@@ -188,7 +182,7 @@ We used linear regression to model the average maximum temperature and time abov
 We applied a linear model where
 
 $$
-y_{i} = \alpha + \beta_{1}*biomass_{i} + \beta_{2}*biomass_{i}*structure_{i} 
+y_{i} = \alpha + \beta_{1}*biomass_{i} + \beta_{2}*biomass_{i}*structure_{i}
 $$
 
 
