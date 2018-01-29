@@ -32,8 +32,8 @@ def_theme <- theme(legend.title = element_blank(),
             axis.title = element_text(size = 18),
             plot.title = element_text(size = 20)
             )
-invasion_color <- scale_color_manual(values = c("darkorange","green4"))
-invasion_fill <- scale_fill_manual(values = c("darkorange","green4"))
+invasion_color <- scale_color_manual(values = c("blue","darkorange"))
+invasion_fill <- scale_fill_manual(values = c("blue","darkorange"))
 no_legend_title <- theme(legend.title = element_blank())
 
 ```
@@ -80,6 +80,8 @@ plot_visit_data <- plot_visit_data[is.na(plot_visit_data$visit_date)==FALSE,]
 
 ```{r summary of plots visited, fig.width=10}
 
+plot_visit_data$imcy_inv <- factor(plot_visit_data$imcy_inv, levels=c("uninvaded","invaded"))
+
 # ggplot(plot_data, aes(installation)) +
 #       geom_bar() +
 #       ylab("Number of plots") +
@@ -113,10 +115,10 @@ ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
 #       ggtitle("Invaded plots: 8, Uninvaded plots: 21") +
 #       theme_bw()
 
-ggplot(plot_visit_data, aes(ycoord_lat, years_since_fire)) +
-      geom_point(aes(color = installation, shape = imcy_inv), size = 2) +
-      # geom_bar(stat = "identity") +
-      theme_bw()
+# ggplot(plot_visit_data, aes(ycoord_lat, years_since_fire)) +
+#       geom_point(aes(color = installation, shape = imcy_inv), size = 2) +
+#       # geom_bar(stat = "identity") +
+#       theme_bw()
 
 ```
 
@@ -155,7 +157,7 @@ ggplot(cc_inv, aes(years_since_fire, avg_canopy_cover)) +
 
 ```{r load 1m quadrat data}
 quadrat_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/quadrat1m.csv")
-quadrat_data$date <- as.Date(quadrat_data$date, format = "%m/%d/%Y")
+quadrat_data$date <- as.Date(as.character(quadrat_data$date), format = "%Y/%m/%d")
 quadrat_data <- filter(quadrat_data, date > "2017-06-01")# discard early data collection at Camp Blanding
 
 # summary(quadrat_data)
@@ -218,7 +220,7 @@ species_data$date <- as.Date(as.character(species_data$date), format = "%Y%m%d")
 species_data <- filter(species_data, date>"2017-06-01")
 species_data$veg_id <- tolower(species_data$veg_id)
 # species_data <- rename(species_data, sci_name = scientific_name)
-# length(unique(species_data$veg_id))
+
 
 species_table <- read_csv("data/plant_species_list.csv")
 species_table$species[is.na(species_table$species)] <- ""
@@ -233,14 +235,15 @@ n_distinct(species_data$veg_id)
 sort(unique(species_data$veg_id))
 
 
-species_data <- left_join(species_data, species_table, 
-          by = c("veg_id"="code"))
+# species_data <- left_join(species_data, species_table, by = c("veg_id"="code"))
 
 
 unique(species_data$scientific_name)
-dsub <- select(species_data, veg_id, scientific_name, sci_name, pct_cover) %>% 
-      filter(is.na(scientific_name), pct_cover > 10)
+dsub <- select(species_data, veg_id, scientific_name, pct_cover) %>% 
+      filter(scientific_name=="-", pct_cover < 10)
 sort(unique(dsub$veg_id))
+filter(species_data, veg_id=="shrub 11:29")
+filter(species_data, veg_id=="tls")
 
 
 # species_data$scientific_name[species_data$veg_id=="qula"] <- "Quercus laevis"
@@ -264,7 +267,8 @@ species_data <- left_join(species_data, plot_visit_data,
 # summary(species_data)
 
 species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10")))
-# length(unique(species_sub$veg_id))
+n_distinct(species_sub$scientific_name)
+sort(unique(species_sub$scientific_name))
 # summary(species_sub)
 
 ```
@@ -273,6 +277,8 @@ species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10"))
 
 ```{r average species cover, fig.height=9}
 # datac$se <- datac$sd / sqrt(datac$N)
+species_data$imcy_inv <- factor(species_data$imcy_inv, levels = c("uninvaded","invaded"))
+
 avg_species_cover <- species_data %>%
              group_by(installation_full_name, plot_id, imcy_inv, years_since_fire, quadrat_id) %>%
       summarise(veg_cover = sum(pct_cover)) %>% 
@@ -282,6 +288,7 @@ avg_species_cover <- species_data %>%
                        # n_obs = length(veg_id),
                        max_veg_cover = max(veg_cover),
                        se_veg_cover = sd(veg_cover)/sqrt(length(veg_cover)))
+
 ggplot(avg_species_cover,
       aes(as.factor(years_since_fire), avg_veg_cover, fill = imcy_inv)) +
       geom_bar(stat = "identity", position = "dodge") +
@@ -290,7 +297,7 @@ ggplot(avg_species_cover,
                     width = .2, position=position_dodge(width = .9)) +
       facet_grid(installation_full_name~.) +
       theme_bw() +
-      ylab("% Cover") +
+      ylab("Vegetation cover (%)") +
       xlab("Years since fire") +
       ggtitle("Average Vegetation Cover Across 1-meter Quadrats") +
       theme(legend.title = element_blank())
@@ -306,12 +313,12 @@ ggplot(species_over_5pct,
        aes(years_since_fire, pct_cover, color = scientific_name)) +
       geom_point(position="jitter") +
       theme_bw() +
+      no_legend_title +
       facet_grid(installation~imcy_inv) +
       ylab("% cover") +
       xlab("Years since fire") +
       ggtitle("Range of species cover (>5%) at 1-meter quadrats")
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/species-pct-cover.png", height = 7)
-
 
 
 # species_sub <- (filter(species_data2, !quadrat_id %in% c("w2","w4","n2","n4","s2","s4","e2","e4")))
