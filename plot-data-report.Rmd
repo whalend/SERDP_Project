@@ -80,6 +80,8 @@ plot_visit_data <- plot_visit_data[is.na(plot_visit_data$visit_date)==FALSE,]
 * **`r n_distinct(plot_visit_data$years_since_fire)` burn units**
 * **`r length(plot_visit_data$plot_id)` plots**
 
+![](figures/DoD-installations-map2017.png)
+
 ```{r summary of plots visited, fig.width=10}
 
 plot_visit_data$imcy_inv <- factor(plot_visit_data$imcy_inv, levels=c("uninvaded","invaded"), labels = c("Uninvaded","Invaded"))
@@ -943,8 +945,8 @@ summary(lm(avg_litter_gm2 ~ years_since_fire, data = tick_data_sum))
 summary(lm(log1p(total_ticks) ~ avg_canopy_cover, data = tick_data_sum))
 ```
 
-```{r}
-install.packages("GGally")
+```{r ggpairs plot}
+# install.packages("GGally")
 library(GGally)
 library(GGally)
 ggpairs(select(tick_data_sum, years_since_fire, ycoord_lat, total_ticks, avg_litter_gm2:avg_veg_cover, avg_pct_bare:avg_basal_area)) +
@@ -987,7 +989,7 @@ We really just didn't find very much host evidence, and for the most part it is 
       geom_smooth(aes(color = imcy_inv), method = "lm", se = F) +
       theme_classic() +
       xlab(expression(paste("Canopy cover (%)"))) +
-      ylab("Dung clusters (1m)") +
+      ylab("Dung clusters (log)") +
       def_theme
 
 ```
