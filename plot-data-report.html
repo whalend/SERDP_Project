@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Fire-Plant Invasions-TBD Year 1 Report</title>
+
+<script src="plot-data-report_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="plot-data-report_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="plot-data-report_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="plot-data-report_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="plot-data-report_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="plot-data-report_files/navigation-1.1/tabsets.js"></script>
+<link href="plot-data-report_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="plot-data-report_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Fire-Plant Invasions-TBD Year 1 Report</h1>
+<h4 class="date"><em>2018-02-16 17:41:14</em></h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#installations-visited-and-plots-sampled">Installations Visited and Plots Sampled</a></li>
+<li><a href="#canopy-cover-data">Canopy Cover Data</a></li>
+<li><a href="#species-data---1-meter-quadrats">Species Data - 1-meter Quadrats</a><ul>
+<li><a href="#understory-vegetation-cover">Understory vegetation cover</a></li>
+<li><a href="#understory-species-richness">Understory species richness</a></li>
+</ul></li>
+<li><a href="#tree-data">Tree Data</a><ul>
+<li><a href="#tree-richness">Tree richness</a></li>
+<li><a href="#tree-basal-area">Tree basal area</a></li>
+<li><a href="#tree-dbh">Tree dbh</a></li>
+<li><a href="#tree-height">Tree height</a></li>
+</ul></li>
+<li><a href="#biomass-data-sampled-at-25cm-quadrats">Biomass data sampled at 25cm quadrats</a></li>
+<li><a href="#host-abundance-estimates">Host Abundance Estimates</a></li>
+<li><a href="#tick-abundance">Tick Abundance</a><ul>
+<li><a href="#total-ticks-collected-across-burn-units">Total ticks collected across burn units</a></li>
+<li><a href="#tick-species">Tick species</a></li>
+<li><a href="#tickfire-log-linear-relationship">Tick~fire log-linear relationship</a></li>
+<li><a href="#seasonal-sampling">Seasonal sampling</a></li>
+<li><a href="#tick-abundance-vs.latitude">Tick abundance vs. latitude</a></li>
+</ul></li>
+<li><a href="#tick-abundance-vs.plot-level-averages">Tick abundance vs. plot-level averages</a><ul>
+<li><a href="#understory-vegetation-cover-1">Understory vegetation cover</a></li>
+<li><a href="#understory-biomass">Understory biomass</a></li>
+<li><a href="#litter-percent-cover">Litter percent cover</a></li>
+<li><a href="#litter-biomass">Litter biomass</a></li>
+<li><a href="#canopy-cover">Canopy cover</a></li>
+<li><a href="#estimated-host-abundance">Estimated host abundance</a></li>
+</ul></li>
+<li><a href="#initialexploratory-linear-ols-models">Initial/exploratory linear (OLS) models</a></li>
+<li><a href="#host-abundance">Host abundance</a></li>
+<li><a href="#cogongrass-data-sampled-from-invasions">Cogongrass Data Sampled from Invasions</a></li>
+<li><a href="#compare-all-quadrat-data-to-subset-of-data">Compare All Quadrat Data to Subset of Data</a></li>
+</ul>
+</div>
+
+<section id="installations-visited-and-plots-sampled" class="level1">
+<h1>Installations Visited and Plots Sampled</h1>
+<ul>
+<li><strong>6 installations</strong></li>
+<li><strong>12 burn units</strong></li>
+<li><strong>29 plots</strong></li>
+</ul>
+<p><img src="figures/DoD-installations-map2017.png" /></p>
+<p><img src="plot-data-report_files/figure-html/summary%20of%20plots%20visited-1.png" width="6000" /><img src="plot-data-report_files/figure-html/summary%20of%20plots%20visited-2.png" width="6000" /></p>
+</section>
+<section id="canopy-cover-data" class="level1">
+<h1>Canopy Cover Data</h1>
+<p><img src="plot-data-report_files/figure-html/load%20canopy%20cover%20data-1.png" width="4500" /></p>
+</section>
+<section id="species-data---1-meter-quadrats" class="level1">
+<h1>Species Data - 1-meter Quadrats</h1>
+<section id="understory-vegetation-cover" class="level2">
+<h2>Understory vegetation cover</h2>
+<p><img src="plot-data-report_files/figure-html/average%20species%20cover-1.png" width="4500" /></p>
+</section>
+<section id="understory-species-richness" class="level2">
+<h2>Understory species richness</h2>
+<p>There were 24 (7.3 %) 1-m quadrats located in invaded areas representing 6 different years since fire at 3 different installations (Tyndall AFB, Avon Park AFR, Camp Shelby).</p>
+<p><img src="plot-data-report_files/figure-html/quadrat%20richness-1.png" width="4500" /></p>
+<p><img src="plot-data-report_files/figure-html/plot%20richness-1.png" width="4500" /></p>
+<p>There is no clear effect of cogongrass invasion on diversity in these data, however, the representation of invasion is very small within each time since fire grouping. In two cases we have only a single sampling point, so no estimate of variation. We do see a non-linear relationship with the time since last fire, where richness is initially highest a few months following a fire, then decreases for 1-2 years before increasing small amount and then declining again after about 6 years after the last fire.</p>
+</section>
+</section>
+<section id="tree-data" class="level1">
+<h1>Tree Data</h1>
+<section id="tree-richness" class="level2">
+<h2>Tree richness</h2>
+<p><img src="plot-data-report_files/figure-html/tree%20richness-1.png" width="4500" /></p>
+</section>
+<section id="tree-basal-area" class="level2">
+<h2>Tree basal area</h2>
+<p><img src="plot-data-report_files/figure-html/tree%20basal%20area-1.png" width="4500" /></p>
+</section>
+<section id="tree-dbh" class="level2">
+<h2>Tree dbh</h2>
+<p><img src="plot-data-report_files/figure-html/tree%20dbh-1.png" width="4500" /></p>
+</section>
+<section id="tree-height" class="level2">
+<h2>Tree height</h2>
+<p><img src="plot-data-report_files/figure-html/tree%20height-1.png" width="4500" /></p>
+</section>
+</section>
+<section id="biomass-data-sampled-at-25cm-quadrats" class="level1">
+<h1>Biomass data sampled at 25cm quadrats</h1>
+<p><img src="plot-data-report_files/figure-html/standing%20biomass%20fig-1.png" width="4500" /></p>
+<p><img src="plot-data-report_files/figure-html/litter%20biomass%20fig-1.png" width="4500" /></p>
+</section>
+<section id="host-abundance-estimates" class="level1">
+<h1>Host Abundance Estimates</h1>
+<p><img src="plot-data-report_files/figure-html/dung%20fig-1.png" width="4500" /></p>
+</section>
+<section id="tick-abundance" class="level1">
+<h1>Tick Abundance</h1>
+<section id="total-ticks-collected-across-burn-units" class="level2">
+<h2>Total ticks collected across burn units</h2>
+<p>The high tick abundance for 8-years post-fire is driven by a single plot at Camp Blanding.</p>
+<p><img src="plot-data-report_files/figure-html/tick-abundance-fire-summary-1.png" width="4500" /></p>
+</section>
+<section id="tick-species" class="level2">
+<h2>Tick species</h2>
+<p><strong>Note the different scales of the y-axes</strong></p>
+<p><img src="plot-data-report_files/figure-html/tick-species-fig-1.png" width="4500" /></p>
+<pre><code>## [1] &quot;Camp Blanding&quot; &quot;Eglin AFB&quot;     &quot;Tyndall AFB&quot;   &quot;Avon Park AFR&quot;
+## [5] &quot;Camp Shelby&quot;   &quot;Moody AFB&quot;</code></pre>
+<pre><code>## [1] &quot;Avon Park AFR&quot; &quot;Camp Blanding&quot; &quot;Camp Shelby&quot;   &quot;Eglin AFB&quot;    
+## [5] &quot;Moody AFB&quot;     &quot;Tyndall AFB&quot;</code></pre>
+</section>
+<section id="tickfire-log-linear-relationship" class="level2">
+<h2>Tick~fire log-linear relationship</h2>
+<p><img src="plot-data-report_files/figure-html/tick-fire-1.png" width="4500" /></p>
+</section>
+<section id="seasonal-sampling" class="level2">
+<h2>Seasonal sampling</h2>
+<p><img src="plot-data-report_files/figure-html/tick-abundance-by-date-1.png" width="4500" /></p>
+</section>
+<section id="tick-abundance-vs.latitude" class="level2">
+<h2>Tick abundance vs. latitude</h2>
+<p>No relationship, which is expected, though our range of latitude is very small. I plan to use an actual climate variable in the model, e.g. PRISM 30-year normals, WorldClim, DayMet, or possibly data from local weather stations.</p>
+</section>
+</section>
+<section id="tick-abundance-vs.plot-level-averages" class="level1">
+<h1>Tick abundance vs. plot-level averages</h1>
+<section id="understory-vegetation-cover-1" class="level2">
+<h2>Understory vegetation cover</h2>
+<p><img src="plot-data-report_files/figure-html/tick-veg-cover-1.png" width="4500" /></p>
+</section>
+<section id="understory-biomass" class="level2">
+<h2>Understory biomass</h2>
+<p>Log-linear relationship, very noisy trends with many zeroes.</p>
+<p><img src="plot-data-report_files/figure-html/tick-veg-biomass-1.png" width="4500" /></p>
+</section>
+<section id="litter-percent-cover" class="level2">
+<h2>Litter percent cover</h2>
+<p><img src="plot-data-report_files/figure-html/tick-litter-cover-1.png" width="4500" /></p>
+</section>
+<section id="litter-biomass" class="level2">
+<h2>Litter biomass</h2>
+<p><img src="plot-data-report_files/figure-html/tick-litter-mass-1.png" width="4500" /></p>
+</section>
+<section id="canopy-cover" class="level2">
+<h2>Canopy cover</h2>
+<p>Log-linear relationship, where there are more ticks in plots with more canopy cover. <img src="plot-data-report_files/figure-html/tick-canopy-cover-1.png" width="4500" /></p>
+</section>
+<section id="estimated-host-abundance" class="level2">
+<h2>Estimated host abundance</h2>
+<p>Log-log relationship <img src="plot-data-report_files/figure-html/tick-hosts-1.png" width="4500" /></p>
+<p>Loess lines are dashed, lines from the linear model are solid, and the gray solid line is the overall trend when pooling the data across invaded and uninvaded plots.</p>
+</section>
+</section>
+<section id="initialexploratory-linear-ols-models" class="level1">
+<h1>Initial/exploratory linear (OLS) models</h1>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ years_since_fire, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.2704 -0.7469 -0.3151  0.6708  2.8802 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)       0.49458    0.34500   1.434  0.16317   
+## years_since_fire  0.25235    0.07167   3.521  0.00155 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.239 on 27 degrees of freedom
+## Multiple R-squared:  0.3147, Adjusted R-squared:  0.2893 
+## F-statistic:  12.4 on 1 and 27 DF,  p-value: 0.001547</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ avg_litter_gm2, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.5319 -0.8741 -0.3563  1.1402  3.3049 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)    0.3588595  0.5154039   0.696   0.4922  
+## avg_litter_gm2 0.0018265  0.0007873   2.320   0.0281 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.367 on 27 degrees of freedom
+## Multiple R-squared:  0.1662, Adjusted R-squared:  0.1353 
+## F-statistic: 5.383 on 1 and 27 DF,  p-value: 0.02814</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = avg_litter_gm2 ~ years_since_fire, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -648.64 -168.98   38.76  132.75  519.75 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        321.37      67.35   4.772 5.62e-05 ***
+## years_since_fire    69.27      13.99   4.951 3.47e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 241.9 on 27 degrees of freedom
+## Multiple R-squared:  0.4759, Adjusted R-squared:  0.4564 
+## F-statistic: 24.51 on 1 and 27 DF,  p-value: 3.474e-05</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ avg_canopy_cover, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.3212 -0.9998  0.1136  0.6686  3.7339 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)      -0.36380    0.87775  -0.414   0.6819  
+## avg_canopy_cover  0.03469    0.01645   2.109   0.0447 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.41 on 26 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.1461, Adjusted R-squared:  0.1132 
+## F-statistic: 4.448 on 1 and 26 DF,  p-value: 0.04473</code></pre>
+<p><img src="plot-data-report_files/figure-html/ggpairs%20plot-1.png" width="4500" /><img src="plot-data-report_files/figure-html/ggpairs%20plot-2.png" width="4500" /></p>
+<pre><code>## 
+  |                                                                       
+  |                                                                 |   0%
+  |                                                                       
+  |====                                                             |   6%
+  |                                                                       
+  |========                                                         |  12%
+  |                                                                       
+  |============                                                     |  19%
+  |                                                                       
+  |================                                                 |  25%
+  |                                                                       
+  |====================                                             |  31%
+  |                                                                       
+  |========================                                         |  38%
+  |                                                                       
+  |============================                                     |  44%
+  |                                                                       
+  |================================                                 |  50%
+  |                                                                       
+  |=====================================                            |  56%
+  |                                                                       
+  |=========================================                        |  62%
+  |                                                                       
+  |=============================================                    |  69%
+  |                                                                       
+  |=================================================                |  75%
+  |                                                                       
+  |=====================================================            |  81%
+  |                                                                       
+  |=========================================================        |  88%
+  |                                                                       
+  |=============================================================    |  94%
+  |                                                                       
+  |=================================================================| 100%</code></pre>
+<pre><code>## $missing.paths
+##                               missing.path estimate std.error   df
+## 1  years_since_fire ~ avg_clusters1m + ...   0.0629    0.1045 21.0
+## 2      avg_pct_bare ~ avg_clusters1m + ...   0.6554    0.2830 25.6
+## 3    avg_basal_area ~ avg_clusters1m + ...  -0.0105    0.0274 24.7
+## 4   log1p(richness) ~ avg_clusters1m + ...   0.0134    0.0142 26.0
+## 5   years_since_fire ~ avg_veg_cover + ...  -0.0274    0.0323  5.8
+## 6       avg_pct_bare ~ avg_veg_cover + ...  -0.2046    0.0872  9.6
+## 7     avg_basal_area ~ avg_veg_cover + ...   0.0276    0.0086 25.8
+## 8    log1p(richness) ~ avg_veg_cover + ...  -0.0102    0.0041 26.0
+## 9           total_ticks ~ ycoord_lat + ...   0.1344    0.5058   NA
+## 10         avg_pct_bare ~ ycoord_lat + ...  -0.5769    2.0693  4.4
+## 11       avg_basal_area ~ ycoord_lat + ...   0.1894    0.2293  4.5
+## 12      log1p(richness) ~ ycoord_lat + ...   0.0869    0.0794 26.0
+## 13     log1p(richness) ~ total_ticks + ...   0.0001    0.0021 22.0
+## 14     avg_basal_area ~ avg_pct_bare + ...   0.0085    0.0151  9.3
+## 15    log1p(richness) ~ avg_pct_bare + ...  -0.0017    0.0081 26.0
+## 16  log1p(richness) ~ avg_basal_area + ...  -0.2051    0.0905 26.0
+##    crit.value p.value   
+## 1      0.6014  0.6238   
+## 2      2.3156  0.0565   
+## 3     -0.3845  0.7304   
+## 4      0.9485  0.3516   
+## 5     -0.8497  0.5457   
+## 6     -2.3465  0.0963   
+## 7      3.2202  0.0078 **
+## 8     -2.4555  0.0211  *
+## 9      0.2656  0.7905   
+## 10    -0.2788  0.7967   
+## 11     0.8260  0.4614   
+## 12     1.0933  0.2843   
+## 13     0.0523  0.9588   
+## 14     0.5608  0.6646   
+## 15    -0.2104  0.8350   
+## 16    -2.2667  0.0320  *
+## 
+## $Fisher.C
+##   fisher.c df p.value
+## 1    45.86 32   0.053
+## 
+## $AIC
+##     AIC   AICc  K  n
+## 1 97.86 799.86 26 29</code></pre>
+<pre><code>##           response        predictor     estimate  std.error p.value   
+## 1      total_ticks years_since_fire  0.322313135 0.14397942  0.0252  *
+## 2      total_ticks   avg_basal_area -1.169807199 0.87433549  0.1809   
+## 3      total_ticks   avg_clusters1m -0.036774890 0.06633387  0.5793   
+## 4      total_ticks     avg_pct_bare -0.014542476 0.03746121  0.6979   
+## 5      total_ticks    avg_veg_cover  0.002905417 0.02672662  0.9134   
+## 6  log1p(richness) years_since_fire  0.093465148 0.02593186  0.0012 **
+## 7     avg_pct_bare years_since_fire -2.225938183 0.75594427  0.0177  *
+## 8   avg_basal_area years_since_fire -0.061055161 0.04656308  0.2595   
+## 9 years_since_fire       ycoord_lat  0.747543276 0.55439178  0.2417</code></pre>
+<pre><code>##      Class            Family     Link  n   Marginal Conditional
+## 1 glmerMod Negative Binomial      log 29 0.47213740  0.59185864
+## 2       lm          gaussian identity 29 0.32484283          NA
+## 3  lmerMod          gaussian identity 29 0.31194550  0.67431394
+## 4  lmerMod          gaussian identity 29 0.04550380  0.31657522
+## 5  lmerMod          gaussian identity 29 0.06097585  0.06097585</code></pre>
+</section>
+<section id="host-abundance" class="level1">
+<h1>Host abundance</h1>
+<p>We really just didn’t find very much host evidence, and for the most part it is uniform across canopy cover.</p>
+<p><img src="plot-data-report_files/figure-html/hosts-canopy-cover-1.png" width="4500" /></p>
+</section>
+<section id="cogongrass-data-sampled-from-invasions" class="level1">
+<h1>Cogongrass Data Sampled from Invasions</h1>
+<p><img src="plot-data-report_files/figure-html/cogongrass%20data-1.png" width="4500" /></p>
+<p>To quantify cogongrass biomass, we collected samples of aboveground plant material in a 25cm x 25cm area. Up to three samples were collected in each invaded area in addition to sampling done as part of the larger plot. Maximum cogongrass biomass estimated from 25cm quadrat samples from invasions at DoD installations: -g/m<sup>2</sup></p>
+<p><img src="plot-data-report_files/figure-html/invaded-vs-uninvaded-biomass-1.png" width="4500" /></p>
+<p>This is a quick and dirty estimate because there may be some overlap in the data. I need to clean up the calculation be separating out quadrats that have cogongrass in the plot data.</p>
+</section>
+<section id="compare-all-quadrat-data-to-subset-of-data" class="level1">
+<h1>Compare All Quadrat Data to Subset of Data</h1>
+<p>Percent cover</p>
+<ul>
+<li>litter</li>
+<li>bare ground</li>
+<li>green</li>
+</ul>
+<p>Heights</p>
+<ul>
+<li>woody vegetation (3 measurements)</li>
+<li>grassy/herbaceous vegetation (3 measurements)</li>
+<li><p>litter (depth)</p></li>
+<li><p>If there was no vegetation or litter height to measure then the first vegetation measurement was assigned a value of zero and the other two NA.</p></li>
+</ul>
+<p>We (Drew and I) have been talking about the possibility of further reducing the amount of effort expended to sample vegetation and set up the plot by revising the plot design.</p>
+<p><strong>The alternative:</strong> We use the 12.6m circular plot with just four vegetation sampling quadrats at 10 meters. Tick traps would be placed near the outside edge of the plot in each of the cardinal directions (north, east, south, west), and one in plot center.</p>
+<p><strong>The caveats:</strong> 1. Tick trap deployment and vegetation measurements would have to be on different days. 2. We still need to do transects for dung surveys.</p>
+<p>My first step was to see how this plays out in the data by testing for differences in means of data summarized across all quadrats (12) to data from the quadrats at 10 meters (4). I subset the data and conducted a series of t-test on the means (averaging across all the 1 meter quadrats in each data set) of woody vegetation height, herbaceous vegetation height, litter depth; and percent covers of bare ground, green vegetation, and litter.</p>
+<p><img src="plot-data-report_files/figure-html/compare%20all%2012%20quadrats%20to%20subset%20of%204%20at%2010m-1.png" width="4500" /></p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  log(quadrat_summaries$avg_woody_ht1) and log(quadrat10m_summaries$avg_woody_ht1)
+## t = 0.75033, df = 53.959, p-value = 0.4563
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.2198400  0.4828017
+## sample estimates:
+## mean of x mean of y 
+##  4.043408  3.911927</code></pre>
+<pre><code>## [1] 0.2792676</code></pre>
+<p><img src="plot-data-report_files/figure-html/compare%20all%2012%20quadrats%20to%20subset%20of%204%20at%2010m-2.png" width="4500" /></p>
+<pre><code>## [1] 0.4197447</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  log(quadrat_summaries$avg_woody_ht_all) and log(quadrat10m_summaries$avg_woody_ht_all)
+## t = 0.47065, df = 53.826, p-value = 0.6398
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.2382191  0.3843589
+## sample estimates:
+## mean of x mean of y 
+##  3.985136  3.912066</code></pre>
+<pre><code>## [1] 0.2068844</code></pre>
+<p><img src="plot-data-report_files/figure-html/compare%20all%2012%20quadrats%20to%20subset%20of%204%20at%2010m-3.png" width="4500" /></p>
+<pre><code>## [1] 0.2902766</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  log(quadrat_summaries$avg_herb_ht1) and log(quadrat10m_summaries$avg_herb_ht1)
+## t = -0.044775, df = 54.468, p-value = 0.9645
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.268316  0.256591
+## sample estimates:
+## mean of x mean of y 
+##  3.417550  3.423412</code></pre>
+<pre><code>## [1] 0.17159</code></pre>
+<p><img src="plot-data-report_files/figure-html/compare%20all%2012%20quadrats%20to%20subset%20of%204%20at%2010m-4.png" width="4500" /></p>
+<pre><code>## [1] 0.2726634</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  log(quadrat_summaries$avg_herb_ht_all) and log(quadrat10m_summaries$avg_herb_ht_all)
+## t = 0.027443, df = 53.244, p-value = 0.9782
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.2448286  0.2516218
+## sample estimates:
+## mean of x mean of y 
+##  3.371574  3.368177</code></pre>
+<pre><code>## [1] 0.2595551</code></pre>
+<p><img src="plot-data-report_files/figure-html/compare%20all%2012%20quadrats%20to%20subset%20of%204%20at%2010m-5.png" width="4500" /></p>
+<pre><code>## [1] 0.3187528</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  log(quadrat_summaries$avg_litter_depth1) and log(quadrat10m_summaries$avg_litter_depth1)
+## t = 1.0527, df = 55.419, p-value = 0.2971
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.1342980  0.4316078
+## sample estimates:
+## mean of x mean of y 
+##  1.562233  1.413578</code></pre>
+<pre><code>## [1] 0.2234018</code></pre>
+<p><img src="plot-data-report_files/figure-html/compare%20all%2012%20quadrats%20to%20subset%20of%204%20at%2010m-6.png" width="4500" /></p>
+<pre><code>## [1] 0.244361</code></pre>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  log(quadrat_summaries$avg_litter_depth_all) and log(quadrat10m_summaries$avg_litter_depth_all)
+## t = 0.67376, df = 56, p-value = 0.5032
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.1688481  0.3399869
+## sample estimates:
+## mean of x mean of y 
+##  1.482692  1.397123</code></pre>
+<pre><code>## [1] 302.8514</code></pre>
+<p><img src="plot-data-report_files/figure-html/compare%20all%2012%20quadrats%20to%20subset%20of%204%20at%2010m-7.png" width="4500" /></p>
+<pre><code>## [1] 391.3231</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  (quadrat_summaries$avg_pct_green) and (quadrat10m_summaries$avg_pct_green)
+## t = -0.14213, df = 55.105, p-value = 0.8875
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -10.499873   9.109069
+## sample estimates:
+## mean of x mean of y 
+##  32.73132  33.42672</code></pre>
+<pre><code>## [1] 0.1980256</code></pre>
+<p><img src="plot-data-report_files/figure-html/compare%20all%2012%20quadrats%20to%20subset%20of%204%20at%2010m-8.png" width="4500" /></p>
+<pre><code>## [1] 0.4505528</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  log(quadrat_summaries$avg_pct_litter) and log(quadrat10m_summaries$avg_pct_litter)
+## t = 0.2841, df = 48.628, p-value = 0.7775
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.2580999  0.3430746
+## sample estimates:
+## mean of x mean of y 
+##  3.986847  3.944360</code></pre>
+<pre><code>## [1] 181.3391</code></pre>
+<p><img src="plot-data-report_files/figure-html/compare%20all%2012%20quadrats%20to%20subset%20of%204%20at%2010m-9.png" width="4500" /></p>
+<pre><code>## [1] 254.167</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  log1p(quadrat_summaries$avg_pct_bare) and log1p(quadrat10m_summaries$avg_pct_bare)
+## t = 0.67075, df = 55.243, p-value = 0.5052
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.3828709  0.7681543
+## sample estimates:
+## mean of x mean of y 
+##  2.246826  2.054185</code></pre>
+<p>Using all 12 qudrats we have 242 species, while using the four quadrats at 10 meters we have 135 species. This suggests a major difference in species richness, however, some of these are as yet unidentified/grouped and are likely duplicates for both data sets.</p>
+<p><img src="plot-data-report_files/figure-html/t-test%20species%20cover%20quadrat%20subset-1.png" width="4500" /></p>
+<pre><code>## [1] 2.009322</code></pre>
+<p><img src="plot-data-report_files/figure-html/t-test%20species%20cover%20quadrat%20subset-2.png" width="4500" /></p>
+<pre><code>## [1] 2.022247</code></pre>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  log(species_data$pct_cover) and log(species_sub$pct_cover)
+## t = -0.62074, df = 2398, p-value = 0.5348
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.17284381  0.08972747
+## sample estimates:
+## mean of x mean of y 
+## 0.9157132 0.9572714</code></pre>
+<p>A t-test of the log-transformed means for percent cover indicate no statistical difference.</p>
+<p>Based on these t-tests there were no statistical differences in the means of these variables aggregated to the plot level.</p>
+</section>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
