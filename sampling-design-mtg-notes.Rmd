@@ -1,0 +1,38 @@
+---
+title: "Sampling design meeting notes"
+author: "W.W. Dillon"
+date: "3/22/2018"
+output: html_document
+---
+
+# Overview
+
+1. Reviewed installations visited and goal of revisiting these plus 6+ new installations.
+
+2. Reminded everyone of new plot design
+
+![New plot design](figures/plot-design-revised.png)
+
+We think we can get three or so of these done per day, on average.
+
+**It would be useful for Tess implementing the ED2 model if we also had stem density of other herbaceous species in addition to cogongrass**
+
+# Main goal: how do we best balance our sampling effort?
+
+**We need to sample installations across the latitudinal gradient during the same season.** Last season focused on southerly sites as we familiarized ourselves with the sampling effort. 
+
+We have three-ish nested organizational levels of sampling:
+
+1. Installation
+
+    2. Burn unit (which has a time-since-fire & fire return interval)
+    
+        3. Plot
+
+Resampling at installations will first focus on taking measurements at plots that were burned during the last year. Subject to change, additional sampling effort will then be focused on establishing plots new plots in *new, previously unsampled* burn units. However, resampling the same plots does help address  changes in vegetation, and tick and tick host abundances; these changes may be more rapid in the first 1-3 years following fire, so in a situation where sampling new burn units it may be beneficial to resample plots in these time-since-fire stratifications. 
+
+    - Tess needs change in vegetation, especially for cogongrass
+
+We will also establish at least **three plots per installation in "reference" oak-dominated habitat**, which we expect will have greater tick abundance relative to the sparseness encountered thus far in the pine dominated habitats.
+
+
