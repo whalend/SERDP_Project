@@ -5,7 +5,7 @@ library(readr); library(readxl); library(tidyr)
 library(ggplot2)
 
 # read in data
-gradient_biomass <- read_excel("data/gradient-sites/Biomass_July2015_FINAL.xlsx")
+gradient_biomass <- read_excel("data/gradient_sites/Biomass_July2015_FINAL.xlsx")
 # Collected biomass of all plants (live and standing dead) plus litter within the confines of one 0.25 x 0.25 m quadrat per plot. Vines whose leaves projected areally over the quadrats were collected even if they were not rooted in the quadrat. For all other species, we made an effort to only collected aboveground biomass from plants rooted in the plot.
 str(gradient_biomass)
 gradient_biomass$avetillerlength <- as.numeric(gradient_biomass$avetillerlength)
@@ -92,16 +92,28 @@ all_biomass <- rbind(
             mutate(biomass = biomass*16)
 )
 
-all_biomass$type <- factor(all_biomass$type, levels = c("native","cogongrass"))
-ggplot(all_biomass, aes(type,total_biomass*16, fill = type)) +
-      geom_boxplot(outlier.shape = 21, outlier.color = "tan") +
+all_biomass$type <- factor(all_biomass$type, levels = c("native","cogongrass"), labels = c("Native","Cogongrass"))
+
+
+def_theme <- theme(legend.title = element_blank(),
+                   legend.text = element_text(size = 18),
+                   legend.position = "right",
+                   axis.text = element_text(size = 18),
+                   axis.title = element_text(size = 18),
+                   plot.title = element_text(size = 20),
+                   strip.background = element_blank(),
+                   panel.grid = element_blank()
+)
+invasion_color <- scale_color_manual(values = c("blue","darkorange"))
+invasion_fill <- scale_fill_manual(values = c("blue","darkorange"))
+
+ggplot(all_biomass, aes(type,biomass, fill = type)) +
+      geom_boxplot(outlier.shape = 21, outlier.color = "tan", show.legend = F) +
       theme_bw() +
-      scale_fill_discrete(h = c(160,60)) +
-      theme(legend.position = "none",
-            axis.title = element_text(size = 30),
-            axis.text = element_text(size = 24)) +
+      invasion_fill +
+      def_theme +
       labs(fill = "Fuel Type",
            x = "",
            # expression(paste("mpg (  ", m^{-2}, ")")))
-           y = expression(paste("Biomass (g/", m^{2}, ")")))
-ggsave("figures/gradient_site_cogon_other_comparison.eps", dpi = 600, width = 12, height = 9)
+           y = expression(paste("Fuel load (g/", m^{2}, ")")))
+ggsave("figures/gradient_site_cogon_other_comparison.eps", dpi = 300)
