@@ -1,5 +1,5 @@
 ---
-title: "Fire-Plant Invasions-TBD Year 1 Report"
+title: "Fire-Plant Invasions-TBD"
 date: "`r Sys.time()`"
 output: 
    html_document:
@@ -10,7 +10,7 @@ output:
 ```{r set options, echo=F}
 # knitr::opts_chunk$set(fig.height = 10)
 knitr::opts_chunk$set(fig.width = 7.5)
-knitr::opts_chunk$set(dpi = 600)
+knitr::opts_chunk$set(dpi = 300)
 knitr::opts_chunk$set(echo = F)
 knitr::opts_chunk$set(warning = F)
 knitr::opts_chunk$set(message = F)
@@ -86,6 +86,8 @@ plot_visit_data <- plot_visit_data[is.na(plot_visit_data$visit_date)==FALSE,]
 
 plot_visit_data$imcy_inv <- factor(plot_visit_data$imcy_inv, levels=c("uninvaded","invaded"), labels = c("Uninvaded","Invaded"))
 
+xtabs(~ imcy_inv + years_since_fire + installation_full_name, data = plot_visit_data)
+
 # ggplot(plot_data, aes(installation)) +
 #       geom_bar() +
 #       ylab("Number of plots") +
@@ -110,6 +112,16 @@ ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       xlab("Years since last fire") +
       # ggtitle("Invaded vs. Uninvaded Plots Across Burn Units") +
       theme_classic() +
+      def_theme
+
+ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
+      geom_bar(aes(fill = imcy_inv), position = "dodge") +
+      invasion_fill +
+      facet_grid(installation_full_name~.) +
+      ylab("Number of plots") +
+      xlab("Years since last fire") +
+      # ggtitle("Invaded vs. Uninvaded Plots Across Burn Units") +
+      theme_bw() +
       def_theme
 
 # ggplot(plot_data, aes(imcy_inv)) +
