@@ -21,6 +21,7 @@ knitr::opts_chunk$set(message = F)
 
 library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi)
+library(tidyr)
 
 ```
 
@@ -1021,12 +1022,51 @@ ggplot(tick_data_sum, aes(avg_basal_area, (avg_clusters1m))) +
 # Cogongrass Data Sampled from Invasions
 
 ```{r cogongrass data, eval=T}
-cogon_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/cogon-data.csv")
+cogon_data <- read_csv("data/raw_data/cogon-data.csv")
 cogon_biomass <- cogon_data %>%
       # select(site,plot_id,Quad,fresh_biomass) %>%
       filter(site!="NA") %>%
       mutate(fresh_biomass_gm2 = fresh_biomass*16,
              dry_biomass_gm2 = dry_biomass*16)
+
+d1 <- cogon_data %>% 
+      mutate(avg_height = rowMeans(cbind(height1,height2,height3)),
+             avg_width = rowMeans(cbind(width_1,width_2,width_3))) %>% 
+      select(site:CogonSampleID,tiller_density,avg_height,avg_width) %>%
+      mutate(est_leaf_area_cm = avg_height*avg_width*tiller_density,
+             est_LAI = est_leaf_area_cm/10000)
+
+
+cogon_ht <- cogon_data %>% 
+      select(site:height3) %>% 
+      mutate(id = as.integer(seq(1,23,1))) %>% 
+      gather(key = fid, value = height_cm, -site, -plot_id, -Quadrant, -CogonSampleID, -id) %>% 
+      select(-fid,-id)
+
+cogon_width <- cogon_data %>% 
+      select(site:CogonSampleID,width_1:width_3) %>% 
+      mutate(id = as.integer(seq(1,23,1))) %>% 
+      gather(key = fid, value = width_cm, -site, -plot_id, -Quadrant, -CogonSampleID, -id) %>% 
+      select(width_cm)
+
+cogon_ht_width <- bind_cols(cogon_ht, cogon_width) %>% 
+      mutate(est_leaf_area_cm = height_cm*width_cm)
+summary(cogon_ht_width)
+
+cogon_leaf_area <- left_join(
+      select(cogon_data, site:CogonSampleID,tiller_density),
+      cogon_ht_width %>%
+      group_by(site,plot_id,Quadrant,CogonSampleID) %>% 
+      summarise(avg_est_leaf_area_cm = mean(est_leaf_area_cm))
+) %>% 
+      mutate(total_est_leaf_area = tiller_density*avg_est_leaf_area_cm,
+             est_LAI = total_est_leaf_area/10000)
+
+skimr::skim(cogon_leaf_area)
+skimr::skim(d1)
+
+
+
 cogon_biomass <- left_join(
       cogon_biomass,
       select(plot_visit_data, installation, visit_date, plot_id,years_since_fire, installation_full_name),
