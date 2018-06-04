@@ -1,11 +1,10 @@
 ---
 title: "Tick Survival Assay - Invaded vs. Uninvaded"
 output:
-  html_document: default
+  word_document: default
   pdf_document: default
-bibliography:
-      - tick-assay-citations.bib
-      
+  html_document: default
+bibliography: tick-assay-citations.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -28,7 +27,7 @@ library(RefManageR)
 
 *Background from proposal*  
 
-Recent studies demonstrate that invasive plants can alter TBD risk via both direct effects on tick survival and indirect effects mediated by tick hosts. For example, *Microstegium vimineum* has been shown experimentally to reduce survival of *A. americanum* and *Dermacentor variabilis* (American dog tick) relative to native vegetation `r citep("Civitello 2008 Journal of Medical Entomology")`; conversely the removal of invasive *Berberis thunbergii* (Japanese barberry) significantly reduces the survival of *I. scapularis* `r citep("10.1603/EN10131")`. Thus both positive and negative direct effects of invasive plants on tick survival have the potential to influence tick population dynamics. There is also growing evidence of indirect effects mediated by host responses to plant invasions, including increased infestation of *Peromyscus leucopus* (white-footed mice) by *I. scapularis* in mixed stands of invasive shrubs `r citep("10.1603/0022-2585(2006)43[1142:DBREUA]2.0.CO;2")` `r citep("10.1603/022.038.0404")` and increased abundance of *A. americanum* due to attraction of WTD to dense thickets of *Lonicera maackii* (Amur honeysuckle) `r citep("10.1073/pnas.1008362107")`. 
+Recent studies demonstrate that invasive plants can alter TBD risk via both direct effects on tick survival and indirect effects mediated by tick hosts. For example, *Microstegium vimineum* has been shown experimentally to reduce survival of *A. americanum* and *Dermacentor variabilis* (American dog tick) relative to native vegetation `r citep("Civitello 2008 Journal of Medical Entomology")`; conversely the removal of invasive *Berberis thunbergii* (Japanese barberry) significantly reduces the survival of *I. scapularis* `r citep("10.1603/EN10131")`. Thus both positive and negative direct effects of invasive plants on tick survival have the potential to influence tick population dynamics. There is also growing evidence of indirect effects mediated by host responses to plant invasions, including increased infestation of *Peromyscus leucopus* (white-footed mice) by *I. scapularis* in mixed stands of invasive shrubs `r citep(list("10.1603/0022-2585(2006)43[1142:DBREUA]2.0.CO;2", "10.1603/022.038.0404"))` and increased abundance of *A. americanum* due to attraction of WTD to dense thickets of *Lonicera maackii* (Amur honeysuckle) `r citep("10.1073/pnas.1008362107")`.
 
 **No ecological studies have addressed the effects of plant invasions and potential interactions with climate change or fire regimes for TBD risk.**
 
@@ -39,7 +38,7 @@ We will perform a second assay during 2019 to determine the effects of fire, and
 
 # Experimental Design - Plant invasion & microclimate suitability (2018)
 
-For this assay we will deploy **3** mesh bags each containing **5 nymph** and **5 adult** life stage *A. americanum* ticks in **6** invaded and **6** uninvaded plots (1 m x 1 m) in a pine dominated and an oak dominated forest habitat. We aim to identify forests with invaded and uninvaded habiatat that were last burned during the past 12-24 months.
+For this assay we will deploy **3** mesh bags each containing **10 nymph** and **10 adult** life stage *A. americanum* ticks in **6** invaded and **6** uninvaded plots (1 m x 1 m) in a pine dominated and an oak dominated forest habitat. We aim to identify forests with invaded and uninvaded habiatat that were last burned during the past 12-24 months.
 
 Each mesh bag will be partially buried under the litter and protected from wildlife predation by a cage made of hardware cloth. Bags will be examined weekly to determine the number of nymphs and adults surviving, until all ticks in all bags have succumbed to desiccation. 
 
