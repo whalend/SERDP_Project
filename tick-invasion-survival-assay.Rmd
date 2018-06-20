@@ -38,15 +38,15 @@ We will perform a second assay during 2019 to determine the effects of fire, and
 
 # Experimental Design - Plant invasion & microclimate suitability (2018)
 
-For this assay we will deploy **3** mesh bags each containing **10 nymph** and **10 adult** life stage *A. americanum* ticks in **6** invaded and **6** uninvaded plots (1 m x 1 m) in a pine dominated and an oak dominated forest habitat. We aim to identify forests with invaded and uninvaded habiatat that were last burned during the past 12-24 months.
+For this assay we will deploy **1** mesh bag containing **10 nymph** and **10 adult** life stage *A. americanum* ticks in **12** invaded and **12** uninvaded plots (1 m x 1 m) in a pine dominated forest habitat. ~~We aim to identify forests with invaded and uninvaded habitat that were last burned during the past 12-24 months.~~
 
-Each mesh bag will be partially buried under the litter and protected from wildlife predation by a cage made of hardware cloth. Bags will be examined weekly to determine the number of nymphs and adults surviving, until all ticks in all bags have succumbed to desiccation. 
+Each mesh bag will be partially buried under the existing litter and protected from wildlife predation by a cage made of hardware cloth. Bags were examined weekly to determine the number of nymphs and adults surviving until all ticks succumbed to desiccation. 
 
-We will collect microclimate data by placing a remote temperature and humidity logger in the center of each plot.
+We will collect microclimate data by placing a temperature/relative humidity logger adjacent to each mesh bag. Each logger was housed in a capped 18-inch length of 1.5 inch diameter PVC pipe to protect it from rainfall and direct sunlight. Holes were drilled around the bottom six inches of the pipe to allow greater airflow and better reflect ambient temperature and relative humidity. The temperature/RH logger and tick cage were secured in place by wiring them to a piece of rebar sunk Xinches into the ground.
 
-In each plot, we will collect data on understory vegetation composition (species, functional groups), cover, and stem density. We will quantify the amount of litter cover vs. bare ground, and the overstory canopy cover.
+In each plot area, we collected data on understory vegetation composition (species, functional groups), stem density, and cover of vegetation, litter, and bare ground. We also measured litter depth, vegetation height, and quantified the overstory canopy cover.
 
-Survival results will be analyzed using Cox proportional hazards regression models. 
+Survival results were analyzed using Cox proportional hazards regression models.
 
 
 # Experimental Design - Interaction of plant invasion and fire (2018)
@@ -66,7 +66,7 @@ Similar to 2018 design, but will explicitly address the time since fire (will ex
 
 - 1mm gap size nylon mesh bags, 3 per plot (72 total)
 - Binder clips for each bag, 72
-- Temperature/RH loggers, 1 per plot (24 total)
+- Temperature/RH loggers, 1 per plot (24 available)
 - PVC housings as solar shield for loggers/probes
 - Rebar to suspend PVC housing allowing probe to "float"
 - Flags to mark plots and mesh bag locations
