@@ -85,7 +85,7 @@ Write your abstract here.
 
 \vspace{3mm}\hrule
 
-*Keywords*: fine fuels, fire heterogeneity, fire intensity, fuel load, fuel structure
+*Keywords*: fine fuels, fire heterogeneity, fire intensity, fuel load, fuel structure, fire behavior
 
 \doublespace
 
@@ -94,15 +94,18 @@ Write your abstract here.
 
 # INTRODUCTION
 
-Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from ~1-m^2^ to landscape (hectares) scales is driven by weather conditions and fuel charateristics, including load, structure, moisture, and continuity. Fuel load has been shown to be a particularly important driver of combustibility, sustainability, and rate of spread, characteristics. 
+Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from ~1-m^2^ to landscape (hectares) scales is driven by weather conditions and fuel characteristics, including fuel load, structure, moisture, and continuity. Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an integral part of the landscape. However, specific information is know about relatively few species, and while valuable, this information is often obtained by studies conducted across a spectrum of realism. Methods range from *in situ* approaches where measurements are made before, during, and after prescribed fires (high realism, low replication), to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings (low realism, highly replicable) EXPAND ON GAPS & REALISM/REPLICATION TRADEOFF (@Fernandes2012).
 
-Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an integral part of the landscape. However, specific information is know about relatively few species, and while valuable, this information is often obtained by studies conducted across a spectrum of realistic conditions. Methods range from *in situ* approaches where measurements are made before, during, and after prescribed fires (high realism, low replication), to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings (low realism, highly replicable). 
+Fire ecology experiments in the field often only manipulate the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often piled horizontally even though fuel complexes are typically more heterogeneous with subtantial vertical structure that affects fire behavior (@Loudermilk2014). For example, in a grass-savanna landscape @Bowman2017 piled fuels horizontally for a field experiment examining how fine fuel loads of different types affected fire intensity and survival of tree saplings. They found that sapling mortality increased with fire intensity (maximum temperature at 5 cm). Fire intensity increased with fuel load, and grass-only and grass-litter fuel complexes produced greater fire intensities than litter-only fuels. Similarly, @Thaxton2006 altered fuel loads in a longleaf pine system to examine groundcover shrub survival. They added fixed amounts of fuel by piling either longleaf pine needles or pieces of pine wood, or removing a fixed amount of fine fuels from plots. The fuel addition treatments resulted in greater fire temperatures and shrub mortality compared to the removal and control treatments. 
 
-Studies in fire ecology that experimentally manipulate fuel often only change the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often laid horizontally (e.g.  @Thaxton2006, @JAUREGUIBERRY2011, @Simpson2016, @Wyse2016, @Bowman2017) even though fuel complexes are often more heterogeneous with subtantial vertical structure. For example, @Bowman2017 laid sorghum grass fuels horizontally in a field experiment examining how fine fuel loads of different types affected fire intensity and survival of tree seedlings. 
+Each of these studies provide useful information that is applicable to the conditions of their study area and for the scale of the question, however, they also necessarily sacrifice some realism in fuel structure.  
 
-In this paper, we present an experimental apparatus that can bridge the gap between making measurements of flammability at the lab bench versus prescribed fires. The Fine Aboveground Biomass Incineration Organizer (FABIO) enables experimental manipulation of fuel characteristics such as load and structure at a realtively small but realistic and relevant scale of 1-m^2^ (@Loudermilk2014). We expect our design will be most useful for grasses or grass-like fuels, but it could be used or adapted for other fuel types such as small shrubs and trees. 
+@JAUREGUIBERRY2011, @Simpson2016, @Wyse2016
+
+In this paper we present an experimental apparatus that can bridge the gap between making measurements of flammability at the lab bench and the limited replication of prescribed fires. The Fine Aboveground Biomass Incineration Organizer (FABIO) enables experimental manipulation of fuel load and structure at a realtively small but realistic and relevant scale of 1-m^2^. We expect our design will be most useful for grasses or grass-like fuels, but it could be used or adapted for other fuel types such as small shrubs and trees. 
 
 
+Fuel load has been shown to be a particularly important driver of combustibility, sustainability, and rate of spread. 
 
 Temperature metrics are influenced by fuel structure. In general, fuels with greater vertical arrangement will achieve higher maximum temperatures, but will also burn faster. Faster burning should result in less exposure to temperatures that cause plant tissue damage. We show these differences in maximum temperature and time above 100 ºC for standing and piled fuels.
 
@@ -110,60 +113,51 @@ Also, density, dead:live ratio - the more flammable dead fuels can disproportion
 
 Grasses in particular fuel lots of fires, fuel loads are often increased in landscapes invaded by non-native grasses.  
 
-
 We present a methodology for maintaining realism in fuel structure in experiments where fine fuels with typical vertical structure, e.g. grasses, are manipulated.
 
-
-Using the exotic invasive cogongrass, we illustrate how changing the fuel structure can substantially alter flammability characteristics. 
+Using the exotic invasive cogongrass we illustrate how changing the fuel structure can substantially alter flammability characteristics. 
 
 It can be deployed in the field or in a more controlled "laboratory" setting. 
 
 
-
-## Other experimental fire ecology studies
-
-[@Bowman2017] *Differential demographic filtering by surface fires: How fuel type and fuel load affect sapling mortality of an obligate seeder savanna tree.*
-
-In this study, "Grass fuels had to be laid horizontally rather than standing vertically." The context provided is that the native sorghum grass flattens easily after it dries and does not remain vertical throughout the dry season. 
-
-- This reads like a response to a reviewer comment, which might indicate a gap that the FABIO methodology can fill. 
-
-- Average flame height was measured "when the fire was within 15cm of the tree stem using a metal grid placed verically against a steel picket placed next to the stem."
-
-
-Additional references given where fuels have been laid flat when testing flammability:
-
- - **`r citep("Jaureguiberry 2011 Austral Ecology")`**
-
-      - Built the "Bar-B-Q"" apparatus to fill a need to quantify flammability of whole plants of many species
-    
-      - Quantified flammability characteristics of 34 species using "whole plant"
-    
-      - Fuels are still burnt horizontally, so no vertical structure
-    
-      - Length of fuel limited by size of burning surface
-
-
- - **[@Simpson2016]**
- 
-      - Assessed flammability of 25 savanna grass species
-      
-      - five plant traits: biomass quantity, biomass density, biomass moisture content, leaf surface-area:volume ratio, leaf effective heat combustion
-      
-      - related plant traits to three components of flammability: ignitability, sustainability, combustibility at leaf and plant scales
-      
-      - Results: total above-ground biomass drove combustibility and sustainability - high biomass was more intense for longer; moisture content was main driver of ignitability and also reduced combustion rate; estimates of whole-plant combustion rates showed >20-fold variation; Showed that there was significant variation between species in flammability at the plant-level and leaf-level
- 
-
- - **[@Wyse2016]**
-
-*All of these studies assessed flammability of multiple species, or multiple fuel complexes.*
 
 
 # METHODS
 
 ## Study site
 We harvested ~50 kg of standing cogongrass from an invasion at the Biven's Arm Research Station (BARS), Florida, USA. The fuel was stored in a shed for 48-hours to protect it from rainfall, and then spread outside in a cleared area to dry for ~72 hours. We raked through the pile each day to increase drying, while carefully maintaining stem orientation in the same direction. We found that consistent stem orientation was more efficient for weighing and loading fuels vertically into the FABIO. 
+
+1.	Study Species
+a.	Collection of materials
+b.	Drying to a “constant” fuel moisture
+
+2.	Burning Location	
+a.	BARS
+b.	Weather measurements
+i.	Kestral data
+
+3.	Experimental treatments
+a.	Piled vs Standing
+b.	Number of burns
+i.	Blocked by day 
+1.	(Burning all biomass levels, standing and piled, per day)
+
+4.	Flammability measurements
+a.	All fires were ignited with a drip torch (Brand XX style XX)
+i.	All were lighted as head fires
+ii.	If failed to burn, was attempted 3 times from 3 sides before deemed a failure.
+b.	Fire temperature was measured every second with XX type thermocouples
+i.	Locations of sensors
+ii.	Determined maximum temperature
+iii.	Determined time above 100C
+c.	Rate of spread
+i.	50cm distance and stop watch
+d.	Flame height
+i.	String soaked in Foscheck
+e.	Remaining biomass was collected to determine percent consumed
+
+5.	Statistical Analysis
+
 
 ### Fine Aboveground Biomass Incineration Organizer (FABIO)
 ![](figures/FABIOdraft.jpg)
@@ -388,7 +382,7 @@ ggplot(fires_biomass, aes(structure, pct_fuel_moisture, color = structure)) +
 
 ```
 
-Across all fires, fuel moisture content ranged from 4.6 to 19.6 % (11.49±0.56). 
+Across all fires fuel moisture content ranged from 4.6 to 19.6% (mean = 11.49±0.56%). 
 
 
 
@@ -397,7 +391,8 @@ Across all fires, fuel moisture content ranged from 4.6 to 19.6 % (11.49±0.56).
 ggplot(fire_temps_avg, aes(time, tempC)) +
       geom_line(aes(color = structure)) +
       facet_grid(biomass~location) +
-      theme_bw()
+      theme_bw() +
+      theme(panel.grid = element_blank())
 
 ```
 
@@ -422,7 +417,7 @@ pairs(model_data2, lower.panel = panel.cor, diag.panel = panel.hist,
 ### Linear models of maximum temperature
 The "maximum temperature" at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient (Fig. 3). 
 
-```{r compare_maxtemp}
+```{r maxtemp-figure}
 
 # bowman_maxtemp <- read_csv("~/SERDP_Project/data/bowman-etal-maxtemp.csv")
 # bowman_maxtemp$source <- "Piled (Bowman et al.)"
@@ -460,23 +455,23 @@ The "maximum temperature" at each height is the average of the maximum temperatu
 #             plot.margin = unit(c(.5,.5,.5,.5), "cm")
 #             )
 fabio_fires_summary$structure <- stringr::str_to_title(fabio_fires_summary$structure)
-avg_max_temp_plot <- ggplot(fabio_fires_summary, aes(biomass, avg_max_temp)) +
+(max_temp_fig <- ggplot(fabio_fires, aes(biomass, max_temp)) +
       # scale_color_discrete(h.start = 20) +
-      scale_color_grey(start = .3, end = .8) +
+      scale_color_manual(values=c("red","blue")) +
       facet_grid(.~location) +
       # geom_bar(stat = "identity", fill = "grey60") +
       # scale_fill_continuous(low = "yellow", high = "red") +
-      geom_errorbar(aes(ymin = avg_max_temp + se_max_temp, 
-                        ymax = avg_max_temp - se_max_temp),
-                    width = .1) +
+      # geom_errorbar(aes(ymin = avg_max_temp + se_max_temp, 
+      #                   ymax = avg_max_temp - se_max_temp),
+      #               width = .1) +
       # geom_line(aes(color = structure, linetype = structure)) +
-      geom_smooth(aes(color = structure, linetype = structure), method = "lm",
-                  se = F, size = .8) +
-      geom_point(aes(color = structure, shape = structure), size = 2) +
+      geom_smooth(aes(color = structure, linetype = structure, fill = structure), method = "lm", se = T, size = .8, alpha = .2) +
+      geom_point(aes(color = structure, shape = structure), size = 1.5) +
       # facet_grid(location~.) +
-      ylab("Maximum Temperature") +
-      xlab("Fuel Load (g)") +
+      ylab("Maximum temperature (ºC)") +
+      xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
       theme_bw() +
+      scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
       # theme_classic() +
       theme(legend.title = element_blank(),
             legend.text = element_text(size = 12),
@@ -484,12 +479,13 @@ avg_max_temp_plot <- ggplot(fabio_fires_summary, aes(biomass, avg_max_temp)) +
             legend.background = element_blank(),
             strip.background = element_blank(),
             panel.grid = element_blank(),
-            axis.title = element_text(size = 14)
+            axis.title = element_text(size = 14),
+            strip.text = element_text(size = 12)
             # panel.border = element_blank(),
             # panel.background = element_blank(),
             # axis.line = element_line(colour = "black")
             )
-avg_max_temp_plot
+)
 
 # maxtemp_avg <- ggplot(fabio_fires, aes(biomass, avg2_max_temp)) +
 #       # geom_line(aes(color = location, linetype = structure)) +
@@ -533,18 +529,19 @@ max_temp_lm_full <- glm(max_temp ~ biomass + biomass:structure + biomass:locatio
                   data = fabio_fires, na.action = "na.fail")
 # summary(max_temp_lm_full)
 
-options(na.action = "na.fail")
-library(MuMIn)
-dd <- dredge(max_temp_lm_full, extra = c("R^2"))
+# options(na.action = "na.fail")
+# library(MuMIn)
+# dd <- dredge(max_temp_lm_full, extra = c("R^2"))
 # filter(dd, delta < 10)
 
-
+# 0cm location ####
 fabio_fires_0cm <- filter(fabio_fires, location == "0cm")
 max_temp_0cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_0cm)
 summary(max_temp_0cm)
-dredge(max_temp_0cm, extra = c("R^2"))
+# dredge(max_temp_0cm, extra = c("R^2"))
 ## Interaction not p<.05 significant, eaual support for additive model
-max_temp_0cm <- lm(max_temp ~ biomass + structure -1, data = fabio_fires_0cm)
+max_temp_0cm <- lm(max_temp ~ biomass + structure, data = fabio_fires_0cm)
+summary(max_temp_0cm)
 
 my_row_names <- c("(Intercept)", "Biomass", "Structure-standing")
 coef0cm <- as.data.frame(summary(max_temp_0cm)$coefficients)
@@ -552,12 +549,14 @@ rownames(coef0cm) <- my_row_names
 coef0cm <- cbind(coef0cm, confint(max_temp_0cm))
 kable(coef0cm, digits = 3, caption = "Max temperature at ground level")
 
+# 25cm location ####
 fabio_fires_25cm <- filter(fabio_fires, location == "25cm")
 max_temp_25cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_25cm)
 summary(max_temp_25cm)
-dredge(max_temp_25cm, extra = c("R^2"))
+# dredge(max_temp_25cm, extra = c("R^2"))
 ## Interaction marginal p=.07, biomass-only model teensy bit better
-max_temp_25cm <- lm(max_temp ~ biomass, data = fabio_fires_25cm)
+max_temp_25cm <- lm(max_temp ~ biomass + structure, data = fabio_fires_25cm)
+summary(max_temp_25cm)
 
 my_row_names <- c("(Intercept)", "Biomass")
 coef25cm <- as.data.frame(summary(max_temp_25cm)$coefficients)
@@ -565,11 +564,11 @@ rownames(coef25cm) <- my_row_names
 coef25cm <- cbind(coef25cm, confint(max_temp_25cm))
 kable(coef25cm, digits = 3, caption = "Max temperature at 25cm")
 
-
+# 50cm location ####
 fabio_fires_50cm <- filter(fabio_fires, location == "50cm")
 max_temp_50cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_50cm)
 summary(max_temp_50cm)
-dredge(max_temp_50cm, extra = c("R^2"))
+# dredge(max_temp_50cm, extra = c("R^2"))
 ## Interaction significant, but not structure main effect 
 
 my_row_names <- c("(Intercept)", "Biomass", "Structure-standing", "Biomass:Standing")
@@ -581,7 +580,7 @@ kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
 ```
 
 
-### Linear models of time above 100 ºC
+### Time above 100 ºC figure
 
 ```{r compare_secsAbv100 }
 
@@ -601,15 +600,17 @@ kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
 # # unique(s_abv100_df$location)
 # s_abv100_df$location[s_abv100_df$location!="50cm"] <- "near ground"
 
-s_abv100 <- ggplot(fabio_fires, aes(biomass, s_abv100)) +
+(s_abv100_fig <- ggplot(fabio_fires, aes(biomass, s_abv100)) +
       # geom_line(aes(color = source, linetype = location)) +
-      geom_smooth(aes(color = structure, linetype = structure), method = "lm", se = T, size = .8) +
-      geom_point(aes(color = structure)) +
-      scale_color_grey(start = .2, end = .8) +
+      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2) +
+      geom_point(aes(color = structure, shape = structure)) +
+      # scale_color_grey(start = .2, end = .8) +
+      scale_color_manual(values=c("red","blue")) +
       facet_grid(.~location) +
       # scale_shape_manual(values = 21) +
       theme_bw() +
-      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
+       scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
+      xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
       ylab("Seconds above 100 ºC") +
       theme(legend.title = element_blank(),
             legend.text = element_text(size = 12),
@@ -617,34 +618,37 @@ s_abv100 <- ggplot(fabio_fires, aes(biomass, s_abv100)) +
             legend.background = element_blank(),
             strip.background = element_blank(),
             panel.grid = element_blank(),
-            axis.title = element_text(size = 14)
+            axis.title = element_text(size = 14),
+            strip.text = element_text(size = 12)
             )
+)
 
-s_abv100_avg_plot <- ggplot(fabio_fires_summary, aes(biomass, avg_s_abv100)) +
-      # scale_color_discrete(h.start = 20) +
-      scale_color_grey(start = .3, end = .8) +
-      # scale_color_brewer(palette = "Set1") +
-      facet_grid(.~location) +
-      # geom_bar(stat = "identity", fill = "grey60") +
-      # scale_fill_continuous(low = "yellow", high = "red") +
-      geom_errorbar(aes(ymin = avg_s_abv100 + se_s_abv100, 
-                        ymax = avg_s_abv100 - se_s_abv100),
-                    width = .1) +
-      geom_smooth(aes(color = structure, linetype = structure), method = "lm", se = F, size = .8) +
-      geom_point(aes(color = structure, shape = structure), size = 2) +
-      # facet_grid(location~.) +
-      ylab("Seconds >100 ºC") +
-      xlab("Fuel Load (g)") +
-      theme_bw() +
-      theme(legend.title = element_blank(),
-            legend.text = element_text(size = 12),
-            legend.position = c(.92, .9),
-            legend.background = element_blank(),
-            strip.background = element_blank(),
-            panel.grid = element_blank(),
-            axis.title = element_text(size = 14)
-            )
-s_abv100_avg_plot
+
+# s_abv100_avg_plot <- ggplot(fabio_fires_summary, aes(biomass, avg_s_abv100)) +
+#       # scale_color_discrete(h.start = 20) +
+#       scale_color_grey(start = .3, end = .8) +
+#       # scale_color_brewer(palette = "Set1") +
+#       facet_grid(.~location) +
+#       # geom_bar(stat = "identity", fill = "grey60") +
+#       # scale_fill_continuous(low = "yellow", high = "red") +
+#       geom_errorbar(aes(ymin = avg_s_abv100 + se_s_abv100, 
+#                         ymax = avg_s_abv100 - se_s_abv100),
+#                     width = .1) +
+#       geom_smooth(aes(color = structure, linetype = structure), method = "lm", se = F, size = .8) +
+#       geom_point(aes(color = structure, shape = structure), size = 2) +
+#       # facet_grid(location~.) +
+#       ylab("Seconds >100 ºC") +
+#       xlab("Fuel Load (g)") +
+#       theme_bw() +
+#       theme(legend.title = element_blank(),
+#             legend.text = element_text(size = 12),
+#             legend.position = c(.92, .9),
+#             legend.background = element_blank(),
+#             strip.background = element_blank(),
+#             panel.grid = element_blank(),
+#             axis.title = element_text(size = 14)
+#             )
+# s_abv100_avg_plot
 
 ```
 
@@ -713,9 +717,23 @@ ggplot(fabio_fires_summary, aes(biomass, avg_heat_flux_abv100)) +
 ```
 
 
-### Linear models of flame height
+```{r}
+cowplot::plot_grid(
+      max_temp_fig +
+            xlab("") +
+            theme(legend.position = c (.08, .88)),
+      s_abv100_fig +
+            theme(strip.text = element_blank(),
+                  legend.position = "none"), 
+                   ncol = 1)
 
-```{r compare flame height}
+ggsave("figures/temperature-fig.png", width = 7.75, height = 6)
+```
+
+
+### Flame height figure
+
+```{r flame height fig}
 
 # bowman_flame_ht <- read_csv("~/SERDP_Project/data/bowman-etal-flame-height.csv")
 # bowman_flame_ht$source <- "Piled (Bowman et al.)"
@@ -730,33 +748,37 @@ ggplot(fabio_fires_summary, aes(biomass, avg_heat_flux_abv100)) +
 # 
 # max_flame_ht_df <- rbind(bowman_flame_ht, fabio_flame_ht)
 
-piled_fires <- filter(fires_biomass, structure=="piled")
+# piled_fires <- filter(fires_biomass, structure=="piled")
 # pairs(select(piled_fires, biomass, rate_of_spread_50cm, pct_consumed:avg_wind_speed),
 #       lower.panel = panel.cor, diag.panel = panel.hist)
 
-ggplot(fires_biomass, aes(biomass, max_flame_ht)) +
-      # geom_line(aes(color = structure)) +
-      geom_point(aes(color = structure), size = 3) +
-      geom_smooth(aes(color = structure), method = "lm") +
-      scale_color_discrete(h.start = 20) +
-      theme_bw() +
-      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
-      ylab("Max flame height (cm)") +
-      theme(legend.title = element_blank(), 
-            # legend.direction = "vertical",
-            legend.position = c(.02,.98),
-            legend.justification = c("left","top"),
-            legend.spacing = unit(x = -.3, units = "cm"),
-            axis.title = element_text(size = 16),
-            axis.text = element_text(size = 12),
-            plot.margin = unit(c(.5,.5,.5,.5), "cm")
-            )
+# ggplot(fires_biomass, aes(biomass, max_flame_ht)) +
+#       # geom_line(aes(color = structure)) +
+#       geom_point(aes(color = structure), size = 3) +
+#       geom_smooth(aes(color = structure), method = "lm") +
+#       scale_color_discrete(h.start = 20) +
+#       theme_bw() +
+#       xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
+#       ylab("Max flame height (cm)") +
+#       theme_classic() +
+#       theme(legend.title = element_blank(), 
+#             # legend.direction = "vertical",
+#             legend.position = c(.02,.98),
+#             legend.justification = c("left","top"),
+#             legend.spacing = unit(x = -.3, units = "cm"),
+#             axis.title = element_text(size = 16),
+#             axis.text = element_text(size = 12),
+#             plot.margin = unit(c(.5,.5,.5,.5), "cm")
+#             )
 
-ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
-      geom_point(aes(color = structure), size = 3) +
-      geom_smooth(aes(color = structure), method = "lm") +
-      scale_color_discrete(h.start = 20) +
-      theme_bw() +
+(flame_height_fig <- ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
+      scale_color_grey(start = .3, end = .8) +
+      # stat_smooth(se = F, show.legend = F, method = "lm") +
+      stat_summary(fun.data = "mean_se", geom = "pointrange") +
+      # geom_point(aes(color = structure), size = 3) +
+      # geom_smooth(aes(color = structure), method = "lm") +
+      # scale_color_discrete(h.start = 20) +
+      theme_classic() +
       xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
       ylab("Average flame height (cm)") +
       theme(legend.title = element_blank(), 
@@ -768,7 +790,7 @@ ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
             axis.text = element_text(size = 12),
             plot.margin = unit(c(.5,.5,.5,.5), "cm")
             )
-
+)
 
 # d1 <- pile_vs_stand
 # d1$biomass[d1$fire_id==59|d1$fire_id==60] <- 1200
@@ -804,8 +826,34 @@ ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
 
 ```
 
+```{r fuel height, eval=F}
+ggplot(fires_biomass, aes(biomass, avg_fuel_ht, color = structure)) +
+      scale_color_grey(start = .3, end = .8) +
+      stat_smooth(se = F, show.legend = F, method = "lm") +
+      stat_summary(fun.data = "mean_se", geom = "pointrange") +
+      # geom_point(aes(color = structure), size = 3) +
+      # geom_smooth(aes(color = structure), method = "lm") +
+      # scale_color_discrete(h.start = 20) +
+      theme_classic() +
+      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
+      ylab("Average fuel height (cm)") +
+      theme(legend.title = element_blank(), 
+            # legend.direction = "vertical",
+            legend.position = c(.5,.5),
+            legend.justification = c("left","top"),
+            legend.spacing = unit(x = -.3, units = "cm"),
+            axis.title = element_text(size = 16),
+            axis.text = element_text(size = 12),
+            plot.margin = unit(c(.5,.5,.5,.5), "cm")
+            )
 
-### Linear models of biomass consumed
+ggplot(fires_biomass, aes(avg_fuel_ht, avg_flame_ht, color = structure)) +
+      geom_point()
+
+```
+
+
+### Biomass consumed figure
 
 ```{r compare biomass consumption}
 
@@ -814,13 +862,16 @@ ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
 #       scale_color_discrete(h.start = 20) +
 #       theme_bw()
 
-ggplot(fires_biomass, aes(biomass, pct_consumed)) +
+(pct_consumed_fig <- ggplot(fires_biomass, aes(biomass, pct_consumed, color = structure)) +
       # geom_line(aes(color = structure)) +
-      geom_point(aes(color = structure), size = 3) +
-      scale_color_discrete(h.start = 20) +
-      theme_bw() +
-      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
-      ylab("Percent consumed") +
+      scale_color_grey(start = .3, end = .8) +
+      # stat_smooth(se = F, show.legend = F, method = "loess") +
+      stat_summary(fun.data = "mean_se", geom = "pointrange") +
+      # geom_point(aes(color = structure), size = 3) +
+      # scale_color_discrete(h.start = 20) +
+      theme_classic() +
+      xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
+      ylab("Mass consumed (%)") +
       theme(legend.title = element_blank(), 
             # legend.direction = "vertical",
             legend.position = c(.8,.4),
@@ -830,6 +881,8 @@ ggplot(fires_biomass, aes(biomass, pct_consumed)) +
             axis.text = element_text(size = 12),
             plot.margin = unit(c(.5,.5,.5,.5), "cm")
             )
+)
+
 
 # ggplot(pile_vs_stand, aes(biomass, pct_consumed, color = structure)) +
 #       geom_point(size = 2) +
@@ -839,7 +892,7 @@ ggplot(fires_biomass, aes(biomass, pct_consumed)) +
 ```
 
 
-### Linear models of rate of spread
+### Rate of spread figure
 Rate of spread was measured by recording the number of seconds it took the fire-line to travel 50 cm and then converted to units of m s^-1^.
 
 ```{r rate_of_spread}
@@ -849,22 +902,25 @@ Rate of spread was measured by recording the number of seconds it took the fire-
 ## convert rate of spread to m/s
 
 # View(filter(fires_biomass, rate_of_spread_50cm>62, structure=="standing"))
-ggplot(fires_biomass, aes(biomass, rate_of_spread_ms, color = structure)) +
-      theme_bw() +
-      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
-      ylab(expression(paste("Rate of spread (m", s^{-1}, ")"))) +
-      geom_smooth(aes(linetype = structure), method = "lm") +
-      geom_point(size = 3) +
-      scale_color_discrete(h.start = 20) +
+(ros_fig <- ggplot(filter(fires_biomass, rate_of_spread_ms<1), 
+       aes(biomass, rate_of_spread_ms, color = structure)) +
+      scale_color_grey(start = .3, end = .8) +
+      # stat_smooth(se = F, show.legend = F, method = "loess") +
+      stat_summary(fun.data = "mean_se", geom = "pointrange") +
+      # geom_point() +
+      theme_classic() +
+      xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
+      ylab(expression(paste("Rate of spread (m ", s^{-1}, ")"))) +
       theme(legend.title = element_blank(), 
             # legend.direction = "vertical",
-            # legend.position = c(.02,.98),
+            legend.position = c(.02,.98),
             legend.justification = c("left","top"),
             legend.spacing = unit(x = -.3, units = "cm"),
             axis.title = element_text(size = 16),
             axis.text = element_text(size = 12),
             plot.margin = unit(c(.5,.5,.5,.5), "cm")
             )
+)
 
 ```
 
@@ -958,3 +1014,42 @@ boxplot(a ~ b)
 sessionInfo()
 ```
 
+
+## Key experimental fire ecology studies for reference
+
+[@Bowman2017] *Differential demographic filtering by surface fires: How fuel type and fuel load affect sapling mortality of an obligate seeder savanna tree.*
+
+In this study, "Grass fuels had to be laid horizontally rather than standing vertically." The context provided is that the native sorghum grass flattens easily after it dries and does not remain vertical throughout the dry season. 
+
+- This reads like a response to a reviewer comment, which might indicate a gap that the FABIO methodology can fill. 
+
+- Average flame height was measured "when the fire was within 15cm of the tree stem using a metal grid placed verically against a steel picket placed next to the stem."
+
+
+Additional references given where fuels have been laid flat when testing flammability:
+
+ - **`r citep("Jaureguiberry 2011 Austral Ecology")`**
+
+      - Built the "Bar-B-Q"" apparatus to fill a need to quantify flammability of whole plants of many species
+    
+      - Quantified flammability characteristics of 34 species using "whole plant"
+    
+      - Fuels are still burnt horizontally, so no vertical structure
+    
+      - Length of fuel limited by size of burning surface
+
+
+ - **[@Simpson2016]**
+ 
+      - Assessed flammability of 25 savanna grass species
+      
+      - five plant traits: biomass quantity, biomass density, biomass moisture content, leaf surface-area:volume ratio, leaf effective heat combustion
+      
+      - related plant traits to three components of flammability: ignitability, sustainability, combustibility at leaf and plant scales
+      
+      - Results: total above-ground biomass drove combustibility and sustainability - high biomass was more intense for longer; moisture content was main driver of ignitability and also reduced combustion rate; estimates of whole-plant combustion rates showed >20-fold variation; Showed that there was significant variation between species in flammability at the plant-level and leaf-level
+ 
+
+ - **[@Wyse2016]**
+
+*All of these studies assessed flammability of multiple species, or multiple fuel complexes.*
