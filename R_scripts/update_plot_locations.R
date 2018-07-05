@@ -1,6 +1,6 @@
 
 # Plot Locations -----------------------------------------------------
-library(sp); library(rgdal); library(dplyr)
+library(sp); library(rgdal); library(plyr); library(dplyr)
 # eglin_plots <- rbind(
 #       readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_19-AUG-17.gpx",
 #               layer = "waypoints"),
@@ -23,34 +23,53 @@ library(sp); library(rgdal); library(dplyr)
 # avonpark_plots3 <- readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_29-JUN-17.gpx",
 #               layer = "waypoints")
 
-list.files("/Volumes/GARMIN/Garmin/GPX", pattern = "AUG-17")
-
 # blandingF1 <- readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_21-JUN-17.gpx",
 #         layer = "waypoints")
 # blandingE1H1 <- readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_14-JUN-17.gpx",
 #         layer = "waypoints")
 
-waypts <-
-readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_30-AUG-17.gpx", layer = "waypoints")
+flist <- list.files("/Volumes/GARMIN/Garmin/GPX", pattern = "-18", full.names = T)
+# flist <- strsplit(flist, ".gpx")
+waypt <- 1
+for(f in flist){
+      assign(paste("waypts",waypt,sep = ""), readOGR(dsn = paste(f), layer = "waypoints"))
+      waypt = waypt+1
+}
+
+
+
+new_waypts <- rbind(waypts1,waypts2,waypts3,waypts4,waypts5,waypts6,waypts7,waypts8,waypts9,waypts10,waypts11,waypts12,waypts13,waypts14,waypts15)
+
+# waypts <-
+# readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_24-MAY-18.gpx", layer = "waypoints")
+
+
 all_plots <- readOGR("data/plot-locations.shp")
 summary(all_plots)
-summary(waypts)
+summary(new_waypts)
 # all_plots@coords
 ## Add elevation coordinates to match dimensions of 'all_plots' coords slot
 # waypts@coords <- cbind(waypts@coords, waypts@data$ele)
 
 names(all_plots)
-names(waypts)
-waypts@data <- select(waypts@data, time, name, ele) %>%
+names(new_waypts)
+new_waypts@data <- select(new_waypts@data, time, name, ele) %>%
       rename(elevGPS = ele) %>%
-      mutate(descriptio = "Semipermanent plot", blockID = "", blockDesc = "",
-             fire_year = "")
-# waypts <- waypts[-7,]
-waypts@data <- droplevels(
-      select(waypts@data, time, name, descriptio:blockDesc, elevGPS, fire_year))
+      mutate(descriptio = "Semipermanent plot", fire_year = "", imcy_inv = "")
 
-all_plots <- rbind(all_plots, waypts)
+new_waypts@data$name <- as.character(new_waypts@data$name)
+new_waypts@data <- mutate(new_waypts@data,
+                          instal = tolower(substr(new_waypts@data$name, start = 1, stop = nchar(new_waypts@data$name)-2)),
+                          instal = stringr::str_trim(instal,side = "both"))
+
+# waypts <- waypts[-7,]
+# new_waypts@data <- droplevels(
+      # select(new_waypts@data, time, name, descriptio:blockDesc, elevGPS, fire_year))
+
+all_plots <- rbind(all_plots, new_waypts)
 # spRbind(all_plots, waypts)
+# duplicated(all_plots$name)
+all_plots <- remove.duplicates(all_plots)
 
 summary(all_plots)
 
@@ -60,5 +79,5 @@ summary(all_plots)
 # writeOGR(all_plots, "data", "all-locations",
 #          "ESRI Shapefile", overwrite_layer = T)
 
-writeOGR(plot_locations, "data", "plot-locations",
+writeOGR(all_plots, "data", "plot-locations",
          "ESRI Shapefile", overwrite_layer = T)
