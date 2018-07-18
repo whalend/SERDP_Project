@@ -23,7 +23,7 @@ plot_data <- plot_data %>%
 
 
 # plot_data[is.na(plot_data$last_fire_year),] <-
-plot_data$imcy_inv[is.na(plot_data$imcy_inv)] <- "uninvaded"
+# plot_data$imcy_inv[is.na(plot_data$imcy_inv)] <- "uninvaded"
 # plot_data$plot_id <- tolower(plot_data$plot_id)
 
 summary(plot_data)
@@ -36,10 +36,10 @@ plot_data$installation_full_name[plot_data$installation=="avonpark"] <- "Avon Pa
 plot_data$installation_full_name[plot_data$installation=="shelby"] <- "Camp Shelby"
 plot_data$installation_full_name[plot_data$installation=="moody"] <- "Moody AFB"
 
-plot_visit_data <- plot_data %>%
-      mutate(years_since_fire = 2017 - last_fire_year) %>%
-      select(installation, plot_id, imcy_inv, last_fire_year, years_since_fire)
-plot_data <- select(plot_data, -last_fire_year)
+# plot_visit_data <- plot_data %>%
+#       mutate(years_since_fire = 2017 - last_fire_year) %>%
+#       select(installation, plot_id, imcy_inv, last_fire_year, years_since_fire)
+plot_data <- select(plot_data, installation, plot_id, installation_full_name, xcoord_lon, ycoord_lat)
 
 write_csv(plot_data, "data/plot_data.csv")
 
@@ -347,15 +347,15 @@ ggplot(species_data %>%
       theme_bw()
 
 
-
-#' ## Tree Stem Data
-
 #' ## Tree Stem Data
 #+ tree data ####
-tree_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/tree-data.csv")
-tree_data
+tree_data <- read_csv("data/raw_data/trees.csv")
+tree_data_sub <- filter(tree_data, date>"2017-06-01", plot_id != "bland03", plot_id != "bland02")
 
-tree_data_sub <- filter(tree_data, date>"2017-06-01", plotid != "bland03", plotid != "bland02")
+str(tree_data)
+n_distinct(tree_data$tag)
+# tail(tree_data)
+# summary(as.numeric(tree_data$tag))
 
 tree_data_sub <- left_join(
       tree_data_sub,
