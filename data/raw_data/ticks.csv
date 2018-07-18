@@ -96,20 +96,34 @@
 "shelby","g1","center",20170926,"trap","Am. am","A",1,0,NA
 "shelby","g1","extra",20170926,"people","Am. am","N",17,0,NA
 "shelby","extra","extra",20170926,"people","Am. am","A",1,0,NA
-"blanding","i1","NW",20180620,"trap","Am. Am","A",2,NA,NA
-"blanding","i1","NE",20180620,"trap",NA,NA,0,NA,NA
-"blanding","i1","SW",20180620,"trap","Am. Am","A",1,NA,NA
-"blanding","i1","SE",20180620,"trap","Am. Am","A",1,NA,NA
-"blanding","n1","NW",20180620,"trap",NA,NA,0,NA,NA
-"blanding","n1","NE",20180620,"trap",NA,NA,0,NA,NA
-"blanding","n1","SW",20180620,"trap","Am. Am","A",1,NA,NA
-"blanding","n1","SE",20180620,"trap","Am. Am","A",1,NA,NA
-"blanding","n1","SE",20180620,"trap","Am. Am","N",1,NA,NA
-"eglin","j1","NW",20180615,"trap","Am. Am","N",1,NA,NA
-"eglin","j1","NE",20180615,"trap","Am. Am","A",1,NA,NA
-"eglin","j1","SW",20180615,"trap","Am. Am","N",1,NA,NA
-"eglin","j1","SW",20180615,"trap","Am. Am","A",1,NA,NA
-"eglin","j1","SE",20180615,"trap","Am. Am","A",2,NA,NA
+"blanding","k1","nw",20180524,"trap","Am. am","A",11,NA,NA
+"blanding","k1","nw",20180524,"trap","Am. am","N",5,NA,NA
+"blanding","k1","ne",20180524,"trap","Am. am","A",5,NA,NA
+"blanding","k1","ne",20180524,"trap","Am. am","N",7,NA,NA
+"blanding","k1","sw",20180524,"trap","Am. am","A",4,NA,NA
+"blanding","k1","sw",20180524,"trap","Am. am","N",17,NA,NA
+"blanding","k1","se",20180524,"trap","Am. am","A",13,NA,NA
+"blanding","k1","se",20180524,"trap","Am. am","N",4,NA,NA
+"blanding","k1","se",20180524,"trap","Am. Mac","A",1,NA,NA
+"blanding","m1","nw",20180524,"trap","De. Var","A",1,NA,NA
+"blanding","k1","extra",20180524,"people","Am. Am","A",1,NA,NA
+"blanding","k1","extra",20180524,"people","Am. Am","N",1,NA,NA
+"blanding","h1","se",20180524,"trap","Am. Am","A",3,NA,NA
+"blanding","h1","se",20180524,"trap","Am. Am","N",2,NA,NA
+"blanding","h1","nw",20180524,"trap","Am. Am","A",1,NA,NA
+"blanding","h1","nw",20180524,"trap","Am. Am","N",1,NA,NA
+"blanding","h1","sw",20180524,"trap","Am. Am","A",1,NA,NA
+"blanding","m1","sw",20180524,"trap","Am. Am","A",1,NA,NA
+"blanding","g1","se",20180524,"trap","Am. Am","A",1,NA,NA
+"blanding","g1","se",20180524,"trap","Am. Am","N",1,NA,NA
+"blanding","g1","nw",20180524,"trap","Am. Am","N",1,NA,NA
+"blanding","m1","se",20180524,"trap","Am. Am","A",1,NA,NA
+"blanding","m1","sw",20180524,"trap","Am. Am","A",2,NA,NA
+"blanding","m1","sw",20180524,"trap","Am. Am","N",1,NA,NA
+"blanding","n1","extra",20180524,"people","Am. Am","A",1,NA,NA
+"blanding","c1","sw",20180524,"trap","Am. Am","N",1,NA,NA
+"blanding","extra","extra",20180524,"people","Am. Am","N",3,NA,NA
+"avonpark","E2","west",20180529,"people","de. Var","A",1,NA,NA
 "eglin","i1","NW",20180612,"trap",NA,NA,0,NA,NA
 "eglin","i1","NE",20180612,"trap","Am. Am","N",4,NA,NA
 "eglin","i1","NE",20180612,"trap","Am. Am","A",1,NA,NA
@@ -120,13 +134,28 @@
 "eglin","i1","extra",20180612,"people","Am. Am","A",3,NA,NA
 "eglin","i1","extra",20180612,"people","Am. Am","N",7,NA,NA
 "eglin","i1","extra",20180612,"people","rh. san","A",3,NA,NA
-"eglin","i1","extra",20180615,"people","Am. Am","A",1,NA,NA
-"eglin","extra","extra",20180613,"people","am. am","A",1,NA,NA
-"eglin","extra","extra",20180613,"people","am. am","N",1,NA,NA
+"eglin","extra","extra",20180613,"people","Am. Am","A",2,NA,NA
+"eglin","extra","extra",20180613,"people","Am. Am","N",1,NA,NA
 "eglin","extra","extra",20180613,"people","rh. san","A",1,NA,NA
-"eglin","extra","extra",20180615,"people","Am. Am","A",3,NA,NA
+"eglin","j1","NW",20180615,"trap","Am. Am","N",1,NA,NA
+"eglin","j1","NE",20180615,"trap","Am. Am","A",1,NA,NA
+"eglin","j1","SW",20180615,"trap","Am. Am","N",1,NA,NA
+"eglin","j1","SW",20180615,"trap","Am. Am","A",1,NA,NA
+"eglin","j1","SE",20180615,"trap","Am. Am","A",2,NA,NA
+"eglin","i1","extra",20180615,"people","Am. Am","A",1,NA,NA
+"eglin","extra","extra",20180615,"people","Am. Am","A",1,NA,NA
 "eglin","extra","extra",20180615,"people","rh. san","A",1,NA,NA
 "eglin","g1","extra",20180615,"people","Am. Am","A",2,NA,NA
+"eglin","F1","extra",20180615,"people","am. Am","A",1,NA,NA
+"blanding","i1","NW",20180620,"trap","Am. Am","A",2,NA,NA
+"blanding","i1","NE",20180620,"trap",NA,NA,0,NA,NA
+"blanding","i1","SW",20180620,"trap","Am. Am","A",1,NA,NA
+"blanding","i1","SE",20180620,"trap","Am. Am","A",1,NA,NA
+"blanding","n1","NW",20180620,"trap",NA,NA,0,NA,NA
+"blanding","n1","NE",20180620,"trap",NA,NA,0,NA,NA
+"blanding","n1","SW",20180620,"trap","Am. Am","A",1,NA,NA
+"blanding","n1","SE",20180620,"trap","Am. Am","A",1,NA,NA
+"blanding","n1","SE",20180620,"trap","Am. Am","N",1,NA,NA
 "blanding","j1","NW",20180620,"trap","Am. Am","A",1,NA,NA
 "blanding","j1","NW",20180620,"trap","rh. san","A",1,NA,NA
 "blanding","j1","NE",20180620,"trap","Am. Am","N",9,NA,NA
@@ -137,6 +166,9 @@
 "blanding","j1","SE",20180620,"trap","rh. san","A",1,NA,NA
 "blanding","j1","extra",20180620,"people","Am. Am","N",1,NA,NA
 "blanding","j1","extra",20180620,"people","Am. Am","L",1,NA,NA
+"tyndall","c1","extra",20180626,"people","Am. Am","A",3,NA,NA
+"tyndall","c1","extra",20180626,"people","Am. Am","N",7,NA,NA
+"tyndall","c2","extra",20180626,"people","Am. Am","A",2,NA,NA
 "tyndall","d2","NW",20180627,"trap","Am. Am","N",2,NA,NA
 "tyndall","d2","NW",20180627,"trap","Am. Am","A",4,NA,NA
 "tyndall","d2","NE",20180627,"trap","Am. Am","N",2,NA,NA
@@ -147,6 +179,7 @@
 "tyndall","d2","SW",20180627,"trap","Am. Am","A",2,NA,NA
 "tyndall","d2","SW",20180627,"trap","de. Var","A",1,NA,NA
 "tyndall","d2","SE",20180627,"trap","Am. Am","N",1,NA,NA
+"tyndall","d2","SE",20180627,"trap","De. Var","A",1,NA,NA
 "tyndall","d2","SE",20180627,"trap","Am. Am","A",4,NA,NA
 "tyndall","d2","extra",20180627,"people","Am. Am","A",4,NA,NA
 "tyndall","d2","extra",20180627,"people","Am. Am","N",3,NA,NA
@@ -161,9 +194,9 @@
 "tyndall","b2","NE",20180627,"trap","Am. Am","N",1,NA,NA
 "tyndall","b2","SW",20180627,"trap",NA,NA,0,NA,NA
 "tyndall","b2","SE",20180627,"trap",NA,NA,0,NA,NA
+"tyndall","b3","extra",20180627,"people","Am. Am","N",1,NA,NA
+"tyndall","extra","extra",20180627,"people","Am. Am","A",1,NA,NA
 "tyndall","c","extra",20180628,"people","Am. Am","N",1,NA,NA
-"tyndall","c1","extra",20180626,"people","Am. Am","A",3,NA,NA
-"tyndall","c1","extra",20180626,"people","Am. Am","N",7,NA,NA
 "tyndall","c1","NW",20180628,"trap","Am. Am","N",42,NA,NA
 "tyndall","c1","NE",20180628,"trap","Am. Am","N",1,NA,NA
 "tyndall","c1","NE",20180628,"trap","Am. Am","A",1,NA,NA
@@ -186,40 +219,63 @@
 "tyndall","b3","NE",20180629,"trap",NA,NA,0,NA,NA
 "tyndall","b3","SW",20180629,"trap",NA,NA,0,NA,NA
 "tyndall","b3","SE",20180629,"trap","Am. Mac","A",2,NA,NA
-"tyndall","b3","extra",20180627,"people","Am. Am","N",1,NA,NA
 "tyndall","b4","NW",20180629,"trap",NA,NA,0,NA,NA
 "tyndall","b4","NE",20180629,"trap",NA,NA,0,NA,NA
 "tyndall","b4","SW",20180629,"trap",NA,NA,0,NA,NA
 "tyndall","b4","SE",20180629,"trap",NA,NA,0,NA,NA
-"blanding","k1","nw",20180524,"trap","Am. am","A",11,NA,NA
-"blanding","k1","nw",20180524,"trap","Am. am","N",5,NA,NA
-"blanding","k1","ne",20180524,"trap","Am. am","A",5,NA,NA
-"blanding","k1","ne",20180524,"trap","Am. am","N",7,NA,NA
-"blanding","k1","sw",20180524,"trap","Am. am","A",4,NA,NA
-"blanding","k1","sw",20180524,"trap","Am. am","N",17,NA,NA
-"blanding","k1","se",20180524,"trap","Am. am","A",13,NA,NA
-"blanding","k1","se",20180524,"trap","Am. am","N",4,NA,NA
-"blanding","k1","se",20180524,"trap","Am. Mac","A",1,NA,NA
-"blanding","m1","nw",20180524,"trap","De. Var","A",1,NA,NA
-"blanding","k1","extra",20180524,"people","Am. Am","A",1,NA,NA
-"blanding","k1","extra",20180524,"people","Am. Am","N",1,NA,NA
-"blanding","h1","se",20180524,"trap","Am. Am","A",3,NA,NA
-"blanding","h1","se",20180524,"trap","Am. Am","N",2,NA,NA
-"blanding","h1","nw",20180524,"trap","Am. Am","A",1,NA,NA
-"blanding","h1","nw",20180524,"trap","Am. Am","N",1,NA,NA
-"blanding","m1","sw",20180524,"trap","Am. Am","A",1,NA,NA
-"blanding","g1","se",20180524,"trap","Am. Am","A",1,NA,NA
-"blanding","g1","se",20180524,"trap","Am. Am","N",1,NA,NA
-"blanding","g1","nw",20180524,"trap","Am. Am","N",1,NA,NA
-"blanding","m1","se",20180524,"trap","Am. Am","A",1,NA,NA
-"blanding","m1","sw",20180524,"trap","Am. Am","A",2,NA,NA
-"blanding","m1","sw",20180524,"trap","Am. Am","N",1,NA,NA
-"blanding","n1","extra",20180524,"people","Am. Am","A",1,NA,NA
-"blanding","c1","sw",20180524,"trap","Am. Am","N",1,NA,NA
-"blanding","extra","extra",20180524,"people","Am. Am","N",3,NA,NA
-"tyndall","extra","extra",20180627,"people","Am. Am","A",1,NA,NA
 "tyndall","extra","extra",20180629,"people","Am. Am","N",9,NA,NA
 "tyndall","extra","extra",20180629,"people","Am. Am","A",2,NA,NA
 "tyndall","extra","extra",20180629,"people","Am. Mac","A",1,NA,NA
-"avonpark","E2","west",20180529,"people","de. Var","A",1,NA,NA
-"eglin","F1","extra",20180615,"people","am. Am","A",1,NA,NA
+"jackson","b1","NW",20180711,"trap",NA,NA,0,NA,NA
+"jackson","b1","NE",20180711,"trap",NA,NA,0,NA,NA
+"jackson","b1","SW",20180711,"trap",NA,NA,0,NA,NA
+"jackson","b1","SE",20180711,"trap",NA,NA,0,NA,NA
+"jackson","g1","NW",20180712,"trap",NA,"N",1,NA,NA
+"jackson","g1","NE",20180712,"trap",NA,"L",4,NA,NA
+"jackson","g1","SW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","g1","SE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","f1","NW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","f1","NE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","f1","SW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","f1","SE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","c1","NW",20180711,"trap",NA,NA,0,NA,NA
+"jackson","c1","NE",20180711,"trap",NA,NA,0,NA,NA
+"jackson","c1","SW",20180711,"trap",NA,NA,0,NA,NA
+"jackson","c1","SE",20180711,"trap",NA,NA,0,NA,NA
+"jackson","a1","NW",20180711,"trap",NA,NA,0,NA,NA
+"jackson","a1","NE",20180711,"trap",NA,NA,0,NA,NA
+"jackson","a1","SW",20180711,"trap",NA,NA,0,NA,NA
+"jackson","a1","SE",20180711,"trap",NA,NA,0,NA,NA
+"jackson","d1","NW",20180711,"trap",NA,NA,0,NA,NA
+"jackson","d1","NE",20180711,"trap",NA,NA,0,NA,NA
+"jackson","d1","SW",20180711,"trap",NA,NA,0,NA,NA
+"jackson","d1","SE",20180711,"trap",NA,"N",2,NA,NA
+"jackson","d1","SE",20180711,"trap",NA,"A",1,NA,NA
+"jackson","e1","NW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","e1","NE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","e1","SW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","e1","SE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","h1","NW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","h1","NE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","h1","SW",20180712,"trap",NA,"A",1,NA,NA
+"jackson","h1","SE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","i1","NW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","i1","NE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","i1","SW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","i1","SE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","j1","NW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","j1","NE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","j1","SW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","j1","SE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","k1","NW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","k1","NE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","k1","SW",20180712,"trap",NA,NA,0,NA,NA
+"jackson","k1","SE",20180712,"trap",NA,NA,0,NA,NA
+"jackson","l1","NW",20180713,"trap",NA,NA,0,NA,NA
+"jackson","l1","NE",20180713,"trap",NA,"A",1,NA,NA
+"jackson","l1","SW",20180713,"trap",NA,NA,0,NA,NA
+"jackson","l1","SE",20180713,"trap",NA,NA,0,NA,NA
+"jackson","m1","NW",20180713,"trap",NA,"A",1,NA,NA
+"jackson","m1","NE",20180713,"trap",NA,NA,0,NA,NA
+"jackson","m1","SW",20180713,"trap",NA,NA,0,NA,NA
+"jackson","m1","SE",20180713,"trap",NA,NA,0,NA,NA
