@@ -208,6 +208,11 @@ rxfire2015@data <- left_join(
 # test_sample <- lapply(rxfire2016,spsample(n=4, type="random"))
 # tmp <- as.SpatialPolygons.owin(rxfire2016)
 
+blanding_fire_2018 <- readOGR("data/CampBlanding/Fire_Layer_for_Whalen.shp")
+summary(blanding_fire_2018)
+blanding_fire_2018$wildlandFi <- as.character(blanding_fire_2018$wildlandFi)
+blanding_rx_fire <- blanding_fire_2018[blanding_fire$wildlandFi=="Prescribed",]
+
 
 # Eglin AFB  --------------------------------------------------------------
 eglin_fires <- readOGR("data/EglinAFB/Eglin_Fire_History_2006_2017.shp", integer64 = "allow.loss")
