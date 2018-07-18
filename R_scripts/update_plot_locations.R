@@ -36,9 +36,15 @@ for(f in flist){
       waypt = waypt+1
 }
 
+blanding_k1 <- readOGR("/Volumes/GARMIN/Garmin/GPX/BlandingK1.gpx", layer = "waypoints")
+blanding_m1 <- readOGR("/Volumes/GARMIN/Garmin/GPX/BlandingM1.gpx", layer = "waypoints")
 
+jacks_j1 <- readOGR("/Volumes/GARMIN/Garmin/GPX/JacksonJ1.gpx", layer = "waypoints")
+jacks_k1 <- readOGR("/Volumes/GARMIN/Garmin/GPX/JacksonK1.gpx", layer = "waypoints")
+jacks_l1 <- readOGR("/Volumes/GARMIN/Garmin/GPX/JacksonL1.gpx", layer = "waypoints")
+jacks_m1 <- readOGR("/Volumes/GARMIN/Garmin/GPX/JacksonM1.gpx", layer = "waypoints")
 
-new_waypts <- rbind(waypts1,waypts2,waypts3,waypts4,waypts5,waypts6,waypts7,waypts8,waypts9,waypts10,waypts11,waypts12,waypts13,waypts14,waypts15)
+new_waypts <- rbind(waypts1,waypts2,waypts3,waypts4,waypts5,waypts6,waypts7,waypts8,waypts9,waypts10,waypts11,waypts12,waypts13,waypts14,waypts15,waypts16,waypts17,waypts18, blanding_k1,blanding_m1, jacks_j1,jacks_k1,jacks_l1,jacks_m1)
 
 # waypts <-
 # readOGR("/Volumes/GARMIN/Garmin/GPX/Waypoints_24-MAY-18.gpx", layer = "waypoints")
@@ -72,6 +78,7 @@ all_plots <- rbind(all_plots, new_waypts)
 all_plots <- remove.duplicates(all_plots)
 
 summary(all_plots)
+
 
 # flame_height_locations <- all_plots[all_plots$descriptio!="Semipermanent plot",]
 # plot_locations <- all_plots[all_plots$descriptio=="Semipermanent plot",]
