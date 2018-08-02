@@ -724,7 +724,7 @@ skimr::skim(ungroup(tree_data_plot_summary))
 ```
 
 ## Tree richness
-```{r tree richness}
+```{r tree richness figure}
 
 # tree_richness <- tree_data %>% 
 #       group_by(installation_full_name, years_since_fire, imcy_inv, pid) %>% 
@@ -745,10 +745,12 @@ skimr::skim(ungroup(tree_data_plot_summary))
       ggtitle("Tree diversity vs. time since fire")
 )
 
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-richness-by-fire.png", height=7)
+
 ```
 
 ## Tree basal area
-```{r tree basal area}
+```{r tree basal area figure}
 
 # plot_basal_area <- tree_data %>%
 #       group_by(installation_full_name, labels, years_since_fire, plot_id) %>%
@@ -789,9 +791,11 @@ skimr::skim(ungroup(tree_data_plot_summary))
       def_theme
 )
 
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/total-dbh-by-fire.png", height=7)
+
 ```
 
-```{r proportion pine dbh}
+```{r proportion pine dbh figure}
 
 (pct_pine_fig <- ggplot(tree_data_plot_summary, 
        aes(years_since_fire, pct_pinus_dbh, color = imcy_inv)
@@ -807,6 +811,8 @@ skimr::skim(ungroup(tree_data_plot_summary))
       # ggtitle("Total tree DBH across plots") +
       def_theme
 )
+
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/pct-pine-dbh.png", height=7)
 
 ```
 
@@ -850,8 +856,8 @@ ggplot(tree_data %>%
 
 ```
 
-```{r char height}
-tree_data_plot_summary
+```{r char height figure}
+# tree_data_plot_summary
 ggplot(tree_data_plot_summary,
        aes(imcy_inv, avg_char_ht, fill = imcy_inv, color = imcy_inv)) +
       stat_summary(fun.data = "mean_se", geom = "pointrange") +
@@ -864,7 +870,10 @@ ggplot(tree_data_plot_summary,
       theme_classic() +
       xlab("") +
       ylab("Char height (m)") +
-      def_theme
+      def_theme +
+      theme(legend.position = "top")
+
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/char-height.png", height=7)
 
 ```
 
@@ -912,8 +921,11 @@ summary(subplot_plot_summary)
       def_theme +
       ggtitle("Shrub & sapling stem density") +
       xlab("Years since fire") +
-      ylab(expression(paste("Stem density (100 ", {m}^-2,")")))
+      ylab(expression(paste("Stem density (100 ", {m}^-2,")"))) +
+       theme(legend.position = c(.85,.85))
 )
+
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/subplot_density.png", height=7)
 
 ```
 
@@ -980,7 +992,7 @@ biomass_plot_summary <- filter(biomass_plot_summary, !is.na(years_since_fire))
       def_theme
 )
 
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass-hitter.png", height=7)
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass.png", height=7)
 
 ```
 
@@ -999,10 +1011,11 @@ biomass_plot_summary <- filter(biomass_plot_summary, !is.na(years_since_fire))
       xlab("Years since last fire") +
       ggtitle("Dry litter biomass",
               subtitle = "(measurements at 25cm quadrats)") +
-      def_theme
+      def_theme +
+       theme(legend.position = c(.85,.85))
 )
 
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass-jitter.png", height=7)
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass.png", height=7)
 
 ```
 
@@ -1032,7 +1045,7 @@ filter(dung_data, is.na(dung1m))
 
 # dung_data <- rename(dung_data, clusters1m = `1m`, clusters2m = `2m`)
 dung_plot_avg_data <- dung_data %>% 
-      group_by(installation, plot_id, visit_year, years_since_fire, imcy_inv) %>% 
+      group_by(installation, pid, visit_year, years_since_fire, imcy_inv) %>% 
       summarise(avg_clusters1m = mean(dung1m, na.rm = T),
                 avg_clusters1m_2m = mean(rowSums(cbind(dung1m,dung2m)))
                 )
@@ -1052,11 +1065,13 @@ summary(dung_plot_avg_data)
       # geom_smooth(aes(linetype = imcy_inv), se = F, alpha = .1) +
       # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .1, method = "lm") +
       theme_classic() +
-      ylab("log(Number of dung clusters)") +
+      ylab("log( # of dung clusters )") +
       xlab("Years since fire") +
       # ylab("Dung clusters") +
       def_theme
 )
+
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-species.png", height=7)
 
 ```
 
@@ -1076,12 +1091,14 @@ dung_plot_avg_data_noNA <- filter(dung_plot_avg_data, !is.na(avg_clusters1m))
       # geom_smooth(aes(linetype = imcy_inv), se = F, alpha = .1) +
       # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .1, method = "lm") +
       theme_classic() +
-      ylab("log(Number of dung clusters)") +
+      ylab("log( # of dung clusters )") +
       xlab("Years since fire") +
       # ylab("Dung clusters") +
       def_theme +
       theme(legend.position = c(.8,.9))      
 )
+
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-vs-fire.png", height=7)
       
 ```
 
@@ -1111,6 +1128,10 @@ tick_data <- tick_data %>%
 tick_data <- left_join(tick_data, 
                        select(plot_visit_data, -notes))
 
+tick_data$life_stage <- factor(
+      tick_data$life_stage, 
+      levels = c("A","N","L"),
+      labels = c("Adult","Nymph","Larval"))
 # summary(tick_data)
 filter(tick_data, is.na(years_since_fire))
 filter(tick_data, is.na(imcy_inv))
@@ -1127,25 +1148,26 @@ filter(tick_data, is.na(imcy_inv))
 
 The high tick abundance for 8-years post-fire is driven by a single plot at Camp Blanding.
 
-```{r tick vs fire figure}
+```{r tick life stage vs fire figure}
 
 ggplot(tick_data %>% 
              filter(!is.na(imcy_inv), !is.na(life_stage)), 
-       aes(years_since_fire, log1p(count), color = imcy_inv)) +
-      # geom_bar(fill = "white", stat = "identity", position = "dodge", show.legend = F) +
+       aes(years_since_fire, log1p(count), color = imcy_inv, fill = imcy_inv)) +
+      # geom_bar(stat = "identity", position = "dodge", show.legend = F) +
+      geom_violin(aes(fill = imcy_inv), alpha = .3) +
       geom_point(alpha = .3, position = "jitter", size = .5) +
       stat_summary(fun.data = "mean_se", geom = "pointrange") +
       invasion_color +
       invasion_fill +
-      # geom_violin(aes(fill = imcy_inv)) +
+      scale_x_continuous(breaks = c(seq(0,11,1))) +
       # geom_dotplot(aes(fill = imcy_inv),
       #            binaxis = "y",         # which axis to bin along
       #            binwidth = .2,       # Minimal difference considered different
       #            stackdir = "center"    # Centered
       #            ) +
-      facet_grid(life_stage~., scales = "free_y") +
+      facet_grid(life_stage~.) +
       xlab("Years since fire") +
-      ylab("log(tick abundance)") +
+      ylab("log( tick abundance )") +
       # theme_classic() +
       theme_bw() +
       def_theme
@@ -1158,53 +1180,83 @@ ggplot(tick_data %>%
 #       theme_classic() +
 #       def_theme
 
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/tick-life-stage-vs-fire.png", height=7)
+
 ```
 
 ## Tick species
 
 **Note the different scales of the y-axes**
 
-```{r tick-species-fig, fig.height=9}
+```{r tick species vs fire fig, fig.height=9}
 
-ggplot(tick_data %>%
-             group_by(installation_full_name, years_since_fire, species) %>%
+ggplot(tick_data %>% 
+             filter(!is.na(years_since_fire)) %>% 
+             group_by(installation_full_name, years_since_fire, species,) %>%
              summarise(tick_number = sum(count)),
-       aes(as.factor(years_since_fire), tick_number, fill = species)) +
+       aes(installation_full_name, tick_number, fill = installation_full_name)) +
       # geom_point(position = "jitter") +
       geom_bar(stat = "identity", position = "dodge") +
       scale_fill_brewer(palette = "Set1") +
-      facet_grid(installation_full_name~., scales = "free_y") +
-      xlab("Years since fire") +
+      # facet_grid(.~installation_full_name, scales = "free_y") +
+      xlab("") +
       ylab("Tick abundance") +
-      theme_bw() +
-      def_theme
+      # theme_bw() +
+      theme_classic() +
+      def_theme +
+      theme(legend.position = c(.85,.85))
+
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/tick-species-installation.png", height=7)
 
 ```
 
 ```{r summarize-tick-abundance-data}
 tick_data_plot_summary <- tick_data %>% 
-      group_by(pid, visit_year, years_since_fire, installation_full_name) %>% 
-      summarise(total_ticks = sum(count))
+      group_by(pid, visit_year, life_stage, years_since_fire, imcy_inv, installation_full_name, species, date) %>% 
+      summarise(total_ticks = sum(count)) %>% 
+      ungroup(.)
 
-biomass_data_sub <- ungroup(avg_biomass_data) %>% 
-      select(installation:avg_litter_gm2)
+summary(tick_data_plot_summary)
+filter(tick_data_plot_summary, is.na(life_stage))
+
 
 # plot_data
 # tick_data_sum <- left_join(plot_visit_data, tick_data_sum)
 # tick_data_sum$total_ticks[is.na(tick_data_sum$total_ticks)] <- 0
-tick_data_sum <- left_join(tick_data_sum, biomass_data_sub)
-tick_data_sum <- left_join(tick_data_sum, select(avg_species_cover, installation_full_name:max_veg_cover))
-tick_data_sum <- left_join(tick_data_sum, quadrat_summaries)
-tick_data_sum <- left_join(tick_data_sum, 
-                select(canopy_cover_summary, installation:avg_canopy_cover)
-                )
-tick_data_sum <- left_join(tick_data_sum, select(dung_data_avg, installation:avg_clusters1m))
 
-unique(tick_data_sum$installation_full_name)
-unique(tree_data_summary$installation_full_name)
-tick_data_sum <- left_join(tick_data_sum, tree_data_summary)
+tick_biomass_data <- left_join(
+      tick_data_plot_summary, 
+      ungroup(biomass_plot_summary))
 
-tick_data_sum$imcy_inv <- factor(tick_data_sum$imcy_inv, levels = c("Uninvaded","Invaded"), labels = c("Uninvaded","Invaded"))
+tick_quad10_data <- left_join(
+      tick_data_plot_summary,
+      select(ungroup(quadrat10_summaries), -date))
+
+tick_canopycover_data <- left_join(
+      tick_data_plot_summary, 
+      select(ungroup(canopy_cover_summary), -date))
+
+tick_host_data <- left_join(
+      tick_data_plot_summary, 
+      ungroup(dung_plot_avg_data))
+
+tick_tree_data <- left_join(
+      tick_data_plot_summary, 
+      ungroup(tree_data_plot_summary))
+
+tick_subplot_data <- left_join(
+      tick_data_plot_summary,
+      ungroup(subplot_plot_summary)
+)
+
+tick_data_sum <- join_all(list(tick_biomass_data, tick_canopycover_data, tick_quad10_data, tick_host_data, tick_host_data, tick_tree_data, tick_subplot_data))
+summary(tick_data_sum)
+
+# unique(tick_data_sum$installation_full_name)
+# unique(tree_data_summary$installation_full_name)
+
+
+# tick_data_sum$imcy_inv <- factor(tick_data_sum$imcy_inv, levels = c("Uninvaded","Invaded"), labels = c("Uninvaded","Invaded"))
 
 # skimr::skim(tick_data_sum)
 ```
@@ -1213,17 +1265,20 @@ tick_data_sum$imcy_inv <- factor(tick_data_sum$imcy_inv, levels = c("Uninvaded",
 ## Tick~fire log-linear relationship 
 ```{r tick-fire}
 
-ggplot(tick_data_sum, aes(years_since_fire, log1p(total_ticks), color = imcy_inv)) +
-      geom_point() +
+ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
+       aes(years_since_fire, log1p(total_ticks), color = imcy_inv)) +
+      geom_point(position = "jitter", alpha = .3) +
       invasion_color +
       invasion_fill +
-      geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", alpha = .2) +
+      geom_smooth(aes(fill = imcy_inv), se = T, method = "lm", alpha = .2) +
       # geom_smooth(aes(color = imcy_inv), method = "loess",
                   # linetype = "dashed", se = F) +
       theme_classic() +
       xlab("Years since fire") +
-      ylab("Tick abundance (log)") +
+      ylab("log( tick abundance )") +
       def_theme
+
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-vs-fire.png", height=7)
 
 ```
 
@@ -1237,9 +1292,10 @@ tick_data$week <- lubridate::week((tick_data$date))
               # group_by(date, installation_full_name) %>% 
              # summarise(abundance = sum(count))
        
-ggplot(tick_data,
-       aes(date, count, color = installation)) +
-      geom_point(size = 2) +
+ggplot(filter(tick_data, !is.na(life_stage)),
+       aes(date, count)) +
+      geom_path(aes(linetype = life_stage)) +
+      geom_point(aes(color = installation, shape = life_stage), size = 3) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       # geom_bar(aes(fill = installation_full_name), stat = "identity") +
       # scale_fill_brewer(type = "div") +
@@ -1249,9 +1305,11 @@ ggplot(tick_data,
       theme_classic() +
       ylab("Tick abundance") +
       xlab("") +
-      # def_theme +
-      theme(legend.position = c(.8, .85),
+      def_theme +
+      theme(legend.position = ,
             legend.background = element_rect(color="black"))
+
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-week.png", height=7)
       
 ```
 
