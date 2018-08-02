@@ -471,6 +471,22 @@ avg_species_cover <- species_data %>%
 summary(avg_species_cover)
 avg_species_cover <- filter(avg_species_cover, !is.na(years_since_fire))
 
+
+veg_cover_plot_data <- species_data %>%
+      filter(quadrat_id %in% c("w10","e10","n10","s10")) %>% 
+      group_by(installation_full_name, visit_year, plot_id, pid, imcy_inv, years_since_fire, quadrat_id) %>%
+      summarise(veg_cover = sum(pct_cover, na.rm = T)) %>% 
+      ungroup(.) %>% 
+      group_by(pid, visit_year, imcy_inv, years_since_fire, installation_full_name) %>% 
+      summarise(
+            avg_veg_cover = mean(veg_cover, na.rm = T),
+            n_obs = length(veg_cover),
+            # max_veg_cover = max(veg_cover, na.rm = T),
+            sd_veg_cover = sd(veg_cover, na.rm = T),
+            se_veg_cover = sd_veg_cover / sqrt(length(veg_cover))) %>% 
+      ungroup(.)
+
+
 (veg_cover_fig <- ggplot(avg_species_cover,
       aes(as.factor(years_since_fire), avg_veg_cover)) +
       # geom_bar(aes(fill = imcy_inv), stat = "identity", position = "dodge") +
@@ -1253,6 +1269,12 @@ tick_quad10_data <- left_join(
       tick_data_plot_summary,
       select(ungroup(quadrat10_summaries), -date))
 
+tick_vegcover_data <- left_join(
+      tick_data_plot_summary,
+      ungroup(veg_cover_data) %>% 
+            group_by(pid, visit_year)
+)
+
 tick_canopycover_data <- left_join(
       tick_data_plot_summary, 
       select(ungroup(canopy_cover_summary), -date))
@@ -1342,9 +1364,8 @@ No relationship, which is expected, though our range of latitude is very small. 
 
 ```{r tick-abundance-latitude, eval=F}
 
-plot_visit_data
-
-ggplot(tick_data_sum, aes(ycoord_lat, log1p(total_ticks), color = imcy_inv)) +
+ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
+       aes(ycoord_lat, log1p(total_ticks), color = imcy_inv)) +
       geom_point(position = "jitter") +
       invasion_color +
       invasion_fill + 
@@ -1353,8 +1374,10 @@ ggplot(tick_data_sum, aes(ycoord_lat, log1p(total_ticks), color = imcy_inv)) +
                   linetype = "dashed", se = F) +
       theme_classic() +
       xlab("Latitude") +
-      ylab("Tick Abundance") +
+      ylab("log( tick abundance )") +
       def_theme
+
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-latitude.png", height=7)
 
 ```
 
