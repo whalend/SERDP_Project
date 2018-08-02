@@ -1032,7 +1032,7 @@ filter(dung_data, is.na(dung1m))
 
 # dung_data <- rename(dung_data, clusters1m = `1m`, clusters2m = `2m`)
 dung_plot_avg_data <- dung_data %>% 
-      group_by(installation, plot_id, date, years_since_fire, imcy_inv) %>% 
+      group_by(installation, plot_id, visit_year, years_since_fire, imcy_inv) %>% 
       summarise(avg_clusters1m = mean(dung1m, na.rm = T),
                 avg_clusters1m_2m = mean(rowSums(cbind(dung1m,dung2m)))
                 )
@@ -1079,37 +1079,41 @@ dung_plot_avg_data_noNA <- filter(dung_plot_avg_data, !is.na(avg_clusters1m))
       ylab("log(Number of dung clusters)") +
       xlab("Years since fire") +
       # ylab("Dung clusters") +
-      def_theme
+      def_theme +
+      theme(legend.position = c(.8,.9))      
 )
       
 ```
 
 # Tick Abundance
 
-```{r tick data QC}
+```{r tick data QC, results='hide'}
 
 tick_data <- read_csv("data/raw_data/ticks.csv")
-
 tick_data$plot_id <- tolower(tick_data$plot_id)
+tick_data$location <- tolower(tick_data$location)
+tick_data$species <- tolower(tick_data$species)
+sort(unique(tick_data$plot_id))
+sort(unique(tick_data$installation))
+sort(unique(tick_data$species))
+
 tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
 # tick_data$Date <- as.Date(tick_data$Date, format = "%Y-%m-%d-")
 # tick_data$excel_date <- gsub("-","",tick_data$date)
 # write_csv(tick_data, "data/tick-data.csv")
 tick_data$date <- as.Date(as.character(tick_data$date),format = "%Y%m%d")
+summary(tick_data)
 
-tick_data$visit_year <- lubridate::year(tick_data$date)
-plot_visit_data$visit_year <- lubridate::year(plot_visit_data$visit_date)
+tick_data <- tick_data %>% 
+      mutate(visit_year = lubridate::year(date),
+             pid = paste(installation, plot_id))
 
-tick_data <- left_join(tick_data, plot_visit_data, 
-                       by = c("installation", "plot_id", "visit_year"))
-
-unique(tick_data$species)
-unique(tolower(tick_data$species))
-
-tick_data$species <- tolower(tick_data$species)
+tick_data <- left_join(tick_data, 
+                       select(plot_visit_data, -notes))
 
 # summary(tick_data)
-# filter(tick_data, is.na(years_since_fire))
+filter(tick_data, is.na(years_since_fire))
+filter(tick_data, is.na(imcy_inv))
 # "extra" ticks at Moody AFB were from an area last burned in 2005
 # tick_data$years_since_fire[tick_data$installation=="moody"] <- 2017-2005
 # tick_data <- tick_data[is.na(tick_data$years_since_fire)==FALSE,]
@@ -1119,31 +1123,33 @@ tick_data$species <- tolower(tick_data$species)
 
 ```
 
-
 ## Total ticks collected across burn units 
 
 The high tick abundance for 8-years post-fire is driven by a single plot at Camp Blanding.
 
-```{r tick-abundance-fire-summary}
+```{r tick vs fire figure}
 
 ggplot(tick_data %>% 
-             filter(!is.na(imcy_inv)), 
-       aes((years_since_fire), count)) +
-      geom_point(aes(color = imcy_inv)) +
+             filter(!is.na(imcy_inv), !is.na(life_stage)), 
+       aes(years_since_fire, log1p(count), color = imcy_inv)) +
+      # geom_bar(fill = "white", stat = "identity", position = "dodge", show.legend = F) +
+      geom_point(alpha = .3, position = "jitter", size = .5) +
+      stat_summary(fun.data = "mean_se", geom = "pointrange") +
       invasion_color +
+      invasion_fill +
       # geom_violin(aes(fill = imcy_inv)) +
       # geom_dotplot(aes(fill = imcy_inv),
       #            binaxis = "y",         # which axis to bin along
-      #            binwidth = .5,       # Minimal difference considered diffeerent
+      #            binwidth = .2,       # Minimal difference considered different
       #            stackdir = "center"    # Centered
       #            ) +
-      # geom_bar(fill = "blue", stat = "identity", position = "dodge") +
-      
-      # facet_grid(installation~., scales = "free_y") +
+      facet_grid(life_stage~., scales = "free_y") +
       xlab("Years since fire") +
-      ylab("Tick abundance") +
-      theme_classic() +
+      ylab("log(tick abundance)") +
+      # theme_classic() +
+      theme_bw() +
       def_theme
+      # theme(legend.position = c(.88,.88))
 
 # ggplot(tick_data, aes(as.factor(years_since_fire), count)) +
 #       stat_summary(fun.data = "mean_se",geom = "pointrange") +
@@ -1159,6 +1165,7 @@ ggplot(tick_data %>%
 **Note the different scales of the y-axes**
 
 ```{r tick-species-fig, fig.height=9}
+
 ggplot(tick_data %>%
              group_by(installation_full_name, years_since_fire, species) %>%
              summarise(tick_number = sum(count)),
@@ -1171,12 +1178,14 @@ ggplot(tick_data %>%
       ylab("Tick abundance") +
       theme_bw() +
       def_theme
+
 ```
 
 ```{r summarize-tick-abundance-data}
-tick_data_sum <- tick_data %>% 
-      group_by(installation, plot_id, installation_full_name, years_since_fire) %>% 
+tick_data_plot_summary <- tick_data %>% 
+      group_by(pid, visit_year, years_since_fire, installation_full_name) %>% 
       summarise(total_ticks = sum(count))
+
 biomass_data_sub <- ungroup(avg_biomass_data) %>% 
       select(installation:avg_litter_gm2)
 
