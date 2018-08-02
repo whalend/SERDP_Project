@@ -46,11 +46,28 @@ invasion_fill <- scale_fill_manual(values = c("blue","darkorange"))
 ```
 
 
-```{r plot data manipulation}
+```{r plot data manipulation, results='hide'}
 # plot_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/plot_info.csv")
 
-# plot_locations <- rgdal::readOGR("data/plot-locations.shp", verbose = F)
-# plot_data <- plot_locations@data
+plot_locations <- rgdal::readOGR("data/plot-locations.shp", verbose = F)
+
+plot_locations@data$xcoord_lon <- plot_locations@coords[,1]
+plot_locations@data$ycoord_lat <- plot_locations@coords[,2]
+
+plot_coords <- select(plot_locations@data, name, installation = instal, xcoord_lon, ycoord_lat)
+str(plot_coords)
+
+plot_coords <- plot_coords %>% 
+      mutate(name = as.character(name),
+             installation= as.character(installation),
+             plot_id = tolower(substr(name, start = nchar(name)-1, stop = nchar(name))),
+             pid = paste(installation, plot_id, sep = " ")
+      ) %>% 
+      select(pid, xcoord_lon, ycoord_lat)
+
+
+
+
 # plot_data$fire_year <- as.integer(as.character(plot_data$fire_year))
 # plot_data$years_since_fire <- 2017 - plot_data$fire_year
 # plot_data <- plot_data %>%
@@ -72,6 +89,10 @@ plot_visit_data <- mutate(
       )
 
 plot_visit_data <- filter(plot_visit_data, !is.na(last_fire_year))
+
+plot_visit_data <- left_join(plot_visit_data, plot_coords)
+
+plot_visit_data$notes
 
 sort(plot_visit_data$pid)
 
@@ -1295,12 +1316,12 @@ tick_data$week <- lubridate::week((tick_data$date))
 ggplot(filter(tick_data, !is.na(life_stage)),
        aes(date, count)) +
       geom_path(aes(linetype = life_stage)) +
-      geom_point(aes(color = installation, shape = life_stage), size = 3) +
+      geom_point(aes(color = installation, shape = life_stage), size = 2) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       # geom_bar(aes(fill = installation_full_name), stat = "identity") +
       # scale_fill_brewer(type = "div") +
       scale_x_date(limits = c(as.Date("2017-06-06"),as.Date("2018-08-01")),
-                   date_breaks = "1 month") +
+                   date_breaks = "3 month") +
       # geom_smooth() +
       theme_classic() +
       ylab("Tick abundance") +
@@ -1320,6 +1341,8 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-week.png", height=7)
 No relationship, which is expected, though our range of latitude is very small. I plan to use an actual climate variable in the model, e.g. PRISM 30-year normals, WorldClim, DayMet, or possibly data from local weather stations.
 
 ```{r tick-abundance-latitude, eval=F}
+
+plot_visit_data
 
 ggplot(tick_data_sum, aes(ycoord_lat, log1p(total_ticks), color = imcy_inv)) +
       geom_point(position = "jitter") +
