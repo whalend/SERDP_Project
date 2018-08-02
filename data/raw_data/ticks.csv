@@ -230,7 +230,8 @@
 "jackson","b1","NE",20180711,"trap",NA,NA,0,NA,NA
 "jackson","b1","SW",20180711,"trap",NA,NA,0,NA,NA
 "jackson","b1","SE",20180711,"trap",NA,NA,0,NA,NA
-"jackson","g1","NW",20180712,"trap",NA,"N",1,NA,NA
+"jackson","b1","extra",20180711,"people","Am. Am","N",1,NA,NA
+"jackson","g1","NW",20180712,"trap","Am. Am","N",1,NA,NA
 "jackson","g1","NE",20180712,"trap",NA,"L",4,NA,NA
 "jackson","g1","SW",20180712,"trap",NA,NA,0,NA,NA
 "jackson","g1","SE",20180712,"trap",NA,NA,0,NA,NA
@@ -249,15 +250,15 @@
 "jackson","d1","NW",20180711,"trap",NA,NA,0,NA,NA
 "jackson","d1","NE",20180711,"trap",NA,NA,0,NA,NA
 "jackson","d1","SW",20180711,"trap",NA,NA,0,NA,NA
-"jackson","d1","SE",20180711,"trap",NA,"N",2,NA,NA
-"jackson","d1","SE",20180711,"trap",NA,"A",1,NA,NA
+"jackson","d1","SE",20180711,"trap","Am. Am","N",2,NA,NA
+"jackson","d1","SE",20180711,"trap","Am. Am","A",1,NA,NA
 "jackson","e1","NW",20180712,"trap",NA,NA,0,NA,NA
 "jackson","e1","NE",20180712,"trap",NA,NA,0,NA,NA
 "jackson","e1","SW",20180712,"trap",NA,NA,0,NA,NA
 "jackson","e1","SE",20180712,"trap",NA,NA,0,NA,NA
 "jackson","h1","NW",20180712,"trap",NA,NA,0,NA,NA
 "jackson","h1","NE",20180712,"trap",NA,NA,0,NA,NA
-"jackson","h1","SW",20180712,"trap",NA,"A",1,NA,NA
+"jackson","h1","SW",20180712,"trap","Am. Mac","A",1,NA,NA
 "jackson","h1","SE",20180712,"trap",NA,NA,0,NA,NA
 "jackson","i1","NW",20180712,"trap",NA,NA,0,NA,NA
 "jackson","i1","NE",20180712,"trap",NA,NA,0,NA,NA
@@ -272,10 +273,99 @@
 "jackson","k1","SW",20180712,"trap",NA,NA,0,NA,NA
 "jackson","k1","SE",20180712,"trap",NA,NA,0,NA,NA
 "jackson","l1","NW",20180713,"trap",NA,NA,0,NA,NA
-"jackson","l1","NE",20180713,"trap",NA,"A",1,NA,NA
+"jackson","l1","NE",20180713,"trap","Am. Am","A",1,NA,NA
 "jackson","l1","SW",20180713,"trap",NA,NA,0,NA,NA
 "jackson","l1","SE",20180713,"trap",NA,NA,0,NA,NA
-"jackson","m1","NW",20180713,"trap",NA,"A",1,NA,NA
+"jackson","m1","NW",20180713,"trap","Am. Am","A",1,NA,NA
 "jackson","m1","NE",20180713,"trap",NA,NA,0,NA,NA
 "jackson","m1","SW",20180713,"trap",NA,NA,0,NA,NA
 "jackson","m1","SE",20180713,"trap",NA,NA,0,NA,NA
+"jackson","extra","extra",20180714,"people","Am. Am","N",1,NA,NA
+"avonpark","a1","NW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","a1","NE",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","a1","SW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","a1","Se",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","a2","NW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","a2","NE",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","a2","SW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","a2","Se",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","c1","NW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","c1","NE",20180721,"trap","Am. Mac","A",1,NA,NA
+"avonpark","c1","SW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","c1","Se",20180721,"trap","Am. Mac","A",1,NA,NA
+"avonpark","c2","NW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","c2","NE",20180721,"trap","Am. Mac","A",1,NA,NA
+"avonpark","c2","SW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","c2","Se",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","e1","NW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","e1","NE",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","e1","SW",20180721,"trap","Am. Mac","A",1,NA,NA
+"avonpark","e1","Se",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","e2","NW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","e2","NE",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","e2","SW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","e2","Se",20180721,"trap",NA,NA,0,NA,NA
+"benning","a1","NW",20180726,"trap","Am. Am","A",1,NA,NA
+"benning","a1","NE",20180726,"trap","Am. Am","A",3,NA,NA
+"benning","a1","SW",20180726,"trap","Am. Am","A",1,NA,NA
+"benning","a1","SW",20180726,"trap","Am. Am","N",1,NA,NA
+"benning","a1","SW",20180726,"trap",NA,"L",134,NA,"10 in vial"
+"benning","a1","SE",20180726,"trap","Am. Am","N",2,NA,NA
+"benning","a1","SE",20180726,"trap","Am. Am","A",1,NA,NA
+"benning","a1","extra",20180725,"people","Am. Am","A",1,NA,NA
+"benning","b1","NW",20180726,"trap",NA,NA,0,NA,NA
+"benning","b1","NE",20180726,"trap",NA,NA,0,NA,NA
+"benning","b1","SW",20180726,"trap",NA,NA,0,NA,NA
+"benning","b1","Se",20180726,"trap",NA,NA,0,NA,NA
+"benning","c1","NW",20180726,"trap","Am. Am","N",1,NA,NA
+"benning","c1","NE",20180726,"trap",NA,NA,0,NA,NA
+"benning","c1","SW",20180726,"trap",NA,NA,0,NA,NA
+"benning","c1","Se",20180726,"trap",NA,NA,0,NA,NA
+"benning","d1","NW",20180726,"trap",NA,NA,0,NA,NA
+"benning","d1","NE",20180726,"trap","Am. Am","N",1,NA,NA
+"benning","d1","SW",20180726,"trap",NA,NA,0,NA,NA
+"benning","d1","Se",20180726,"trap",NA,NA,0,NA,NA
+"benning","f1","NW",20180726,"trap",NA,NA,0,NA,NA
+"benning","f1","NE",20180726,"trap",NA,NA,0,NA,NA
+"benning","f1","SW",20180726,"trap",NA,NA,0,NA,NA
+"benning","f1","Se",20180726,"trap",NA,NA,0,NA,NA
+"benning","e1","NW",20180726,"trap",NA,NA,0,NA,NA
+"benning","e1","NE",20180726,"trap",NA,NA,0,NA,NA
+"benning","e1","SW",20180726,"trap","Am. Am","A",1,NA,NA
+"benning","e1","Se",20180726,"trap","Am. Am","N",1,NA,NA
+"benning","g1","NE",20180728,"trap",NA,NA,0,NA,NA
+"benning","g1","NW",20180728,"trap","Am. Am","A",1,NA,NA
+"benning","g1","NW",20180728,"trap","Am. Am","N",1,NA,NA
+"benning","g1","SW",20180728,"trap",NA,NA,0,NA,NA
+"benning","g1","SE",20180728,"trap",NA,NA,0,NA,NA
+"benning","i1","NE",20180728,"trap","Am. Am","N",2,NA,NA
+"benning","i1","NW",20180728,"trap","Am. Am","N",1,NA,NA
+"benning","i1","SE",20180728,"trap","Am. Am","N",2,NA,NA
+"benning","i1","SW",20180728,"trap",NA,NA,0,NA,NA
+"benning","h1","NE",20180728,"trap",NA,NA,0,NA,NA
+"benning","h1","NW",20180728,"trap",NA,NA,0,NA,NA
+"benning","h1","SE",20180728,"trap",NA,NA,0,NA,NA
+"benning","h1","SW",20180728,"trap",NA,NA,0,NA,NA
+"benning","j1","NE",20180728,"trap",NA,NA,0,NA,NA
+"benning","j1","NW",20180728,"trap",NA,NA,0,NA,NA
+"benning","j1","SE",20180728,"trap",NA,NA,0,NA,NA
+"benning","j1","SW",20180728,"trap",NA,NA,0,NA,NA
+"benning","extra","extra",20180724,"people","Am. Am","N",1,NA,NA
+"benning","extra","extra",20180724,"people","Am. Am","A",1,NA,NA
+"benning","extra","extra",20180726,"people","Am. Am","N",2,NA,NA
+"avonpark","f1","NW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","f1","NE",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","f1","SW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","f1","Se",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","g1","NW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","g1","NE",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","g1","SW",20180721,"trap","de. Var","A",1,NA,NA
+"avonpark","g1","Se",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","h1","NW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","h1","NE",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","h1","SW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","h1","Se",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","i1","NW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","i1","NE",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","i1","SW",20180721,"trap",NA,NA,0,NA,NA
+"avonpark","i1","Se",20180721,"trap","de. Var","A",1,NA,NA
