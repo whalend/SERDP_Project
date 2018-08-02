@@ -33,3 +33,4 @@ write.csv(trees, "data/raw_data/trees.csv", row.names = F)
 
 plot_visits <- read_excel("~/Dropbox (UF)/SERDP-Project/data/plot-visit-data-entry.xlsx", sheet = 1)
 write.csv(plot_visits, "data/raw_data/plot_visit.csv", row.names = F)
+
