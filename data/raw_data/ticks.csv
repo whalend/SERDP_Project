@@ -97,13 +97,13 @@
 "shelby","g1","extra",20170926,"people","Am. am","N",17,0,NA
 "shelby","extra","extra",20170926,"people","Am. am","A",1,0,NA
 "blanding","k1","nw",20180524,"trap","Am. am","A",11,NA,NA
-"blanding","k1","nw",20180524,"trap","Am. am","N",5,NA,NA
+"blanding","k1","nw",20180524,"trap","Am. am","N",6,NA,NA
 "blanding","k1","ne",20180524,"trap","Am. am","A",5,NA,NA
 "blanding","k1","ne",20180524,"trap","Am. am","N",7,NA,NA
-"blanding","k1","sw",20180524,"trap","Am. am","A",4,NA,NA
-"blanding","k1","sw",20180524,"trap","Am. am","N",17,NA,NA
-"blanding","k1","se",20180524,"trap","Am. am","A",13,NA,NA
-"blanding","k1","se",20180524,"trap","Am. am","N",4,NA,NA
+"blanding","k1","sw",20180524,"trap","Am. am","A",5,NA,NA
+"blanding","k1","sw",20180524,"trap","Am. am","N",15,NA,NA
+"blanding","k1","se",20180524,"trap","Am. am","A",11,NA,NA
+"blanding","k1","se",20180524,"trap","Am. am","N",8,NA,NA
 "blanding","k1","se",20180524,"trap","Am. Mac","A",1,NA,NA
 "blanding","m1","nw",20180524,"trap","De. Var","A",1,NA,NA
 "blanding","k1","extra",20180524,"people","Am. Am","A",1,NA,NA
@@ -113,7 +113,7 @@
 "blanding","h1","nw",20180524,"trap","Am. Am","A",1,NA,NA
 "blanding","h1","nw",20180524,"trap","Am. Am","N",1,NA,NA
 "blanding","h1","sw",20180524,"trap","Am. Am","A",1,NA,NA
-"blanding","m1","sw",20180524,"trap","Am. Am","A",1,NA,NA
+"blanding","m1","nw",20180524,"trap","Am. Am","A",1,NA,NA
 "blanding","g1","se",20180524,"trap","Am. Am","A",1,NA,NA
 "blanding","g1","se",20180524,"trap","Am. Am","N",1,NA,NA
 "blanding","g1","nw",20180524,"trap","Am. Am","N",1,NA,NA
