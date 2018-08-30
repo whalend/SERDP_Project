@@ -1120,7 +1120,8 @@ summary(dung_plot_avg_data)
       ylab("log( # of dung clusters )") +
       xlab("Years since fire") +
       # ylab("Dung clusters") +
-      def_theme
+      def_theme +
+      theme(legend.position = c(.85,.85))
 )
 
 ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-species.png", height=7.5, width = 7.5)
@@ -1272,7 +1273,7 @@ tick_data_life_stage_summary <- tick_data %>%
 
 
 tick_data_plot_summary <- tick_data %>% 
-      group_by(pid, visit_year, years_since_fire, imcy_inv, installation_full_name, date) %>% 
+      group_by(pid, visit_year, years_since_fire, imcy_inv, installation_full_name) %>% 
       summarise(total_ticks = sum(count)) %>% 
       ungroup(.)
 
@@ -1709,7 +1710,9 @@ summary(lm(avg_canopy_cover ~ years_since_fire, data = tick_data_sum))
 ```{r ggpairs plot, eval=F}
 # install.packages("GGally")
 library(GGally)
-ggpairs(select(tick_data_sum, years_since_fire, ycoord_lat, total_ticks, avg_litter_gm2:avg_veg_cover, avg_pct_bare:avg_basal_area)) +
+ggpairs(select(tick_data_sum, years_since_fire, ycoord_lat, total_ticks, avg_dry_litter_gm2, avg_canopy_cover, avg_clusters1m, pct_pinus_dbh, total_stems_100m2, imcy_inv), aes(color = imcy_inv)) +
+      # invasion_color +
+      # invasion_fill +
       theme(panel.grid = element_blank())
 
 pairs(select(tick_data_sum, years_since_fire, ycoord_lat, total_ticks:avg_basal_area))
@@ -1724,12 +1727,15 @@ library(lme4)
 ## Should make an explicit random-effect for the plot for clarity, by combining installation with plot_id
 
 model_list <- list(
-      tick_mod <- glmer.nb(total_ticks ~ avg_clusters1m + avg_pct_bare + avg_basal_area + years_since_fire + avg_veg_cover + (1|installation/plot_id), data = tick_data_sum),
-      div_mod <- lm(log1p(richness) ~ years_since_fire, data = tick_data_sum),
-      bare_grnd_mod <- lmer(avg_pct_bare ~ years_since_fire + (1|years_since_fire) + (1|installation), data = tick_data_sum),
-      basal_area_mod <- lmer(avg_basal_area ~ years_since_fire + (1|years_since_fire) + (1|installation), data = tick_data_sum),
+      tick_mod <- glmer.nb(total_ticks ~ avg_clusters1m + avg_dry_litter_gm2 + avg_canopy_cover + (1|pid), data = tick_data_sum),
+      host_mod <- glmer.nb(avg_clusters1m ~ years_since_fire + avg_canopy_cover + (1|pid), data = tick_data_sum),
+      litter_mod <- lmer(avg_dry_litter_gm2 ~ years_since_fire + (1|pid), data = tick_data_sum),
+      # div_mod <- lm(log1p(richness) ~ years_since_fire, data = tick_data_sum),
+      # bare_grnd_mod <- lmer(avg_pct_bare ~ years_since_fire + (1|years_since_fire) + (1|installation), data = tick_data_sum),
+      
+      # basal_area_mod <- lmer(avg_basal_area ~ years_since_fire + (1|years_since_fire) + (1|installation), data = tick_data_sum),
       # canopy_mod <- lmer(avg_canopy_cover ~ years_since_fire + + (1|installation) + (1|plot_id), data = tick_data_sum),
-      lat_mod <- lmer(years_since_fire ~ ycoord_lat + (1|installation), tick_data_sum)
+      fire_mod <- lmer(years_since_fire ~ ycoord_lat + (1|installation), tick_data_sum)
 )
 
 sem.fit(model_list, data = tick_data_sum, conditional = F)
