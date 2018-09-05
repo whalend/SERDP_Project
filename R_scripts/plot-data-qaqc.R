@@ -4,25 +4,72 @@
 library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi)
 
-#+ read in plot location data ####
-# plot_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/plot_info.csv")
+#' Plot location data are sourced from the 'update_plot_locations.R' script.
+#'
 
-plot_locations <- rgdal::readOGR("data/plot-locations.shp")
-plot_locations@data$xcoord_lon <- plot_locations@coords[,1]
-plot_locations@data$ycoord_lat <- plot_locations@coords[,2]
+#+ examine plot location data ####
 
-plot_data <- plot_locations@data
+plot_shp <- rgdal::readOGR("data/plot-locations.shp")# read in spatial data
+plot_shp@data$xcoord_lon <- plot_shp@coords[,1]# add coords to data frame slot
+plot_shp@data$ycoord_lat <- plot_shp@coords[,2]
 
-summary(plot_data)
+plot_locs <- plot_shp@data# make normal data frame
+summary(plot_locs)
+str(plot_locs)
+sort(as.character(plot_locs$name))# sort plot names alphabetically
+
+#' We have a few "plots" that are locations of cogongrass invasions that we marked to send to land managers. I'll remove those in the next section. Currently there are 98 plot locations and we need to remove three "extra" cogon plots. There was a "movie theater cogon" plot at Camp Blanding that we sampled but does not have any recorded burn history. It's in a kind of funny place.
+#'
+
+#+ revise plot location data ####
+plot_locs <- plot_locs %>%
+      rename(installation = instal) %>%
+      filter(name!="Cogon10x10", name!="CogonCoastal", name!="Cogon pop") %>%
+      mutate(name = as.character(name),
+             installation= as.character(installation),
+             pid = tolower(substr(name, start = nchar(name)-1, stop = nchar(name))),
+             plot_id = paste(installation, pid, sep = " ")
+      )
+
+str(plot_locs)
+summary(plot_locs)
+duplicated(plot_locs$plot_id)# check for duplicate plot ids
+write_csv(plot_locs, "data/processed_data/plot_locations.csv")# save checked data
 
 
-plot_data$last_fire_year <- as.integer(as.character(plot_data$fire_year))
-plot_data <- plot_data %>%
-      # filter(is.na(last_fire_year)==FALSE) %>%
-      rename(plot_id = name, description = descriptio, installation = instal) %>%
-      mutate(burn_unit_id = stri_sub(plot_id,1,-2),
-             plot_id = tolower(stri_sub(plot_id, -2,-1))) %>%
-      select(installation, plot_id, description, imcy_inv:burn_unit_id)
+#' We have located 94 unique plots and some have been visited multiple times. Next I assess the plot visit records, which are entered as the plot id, the date of visit, whether or not the plot is invaded, and the year of the last fire. Year since last fire is a coarse measure - we need to do further data processing and analysis to obtain the precise date of the last fire and relate that to the season of burn and perhaps months since last fire.
+
+#+ plot visit data ####
+
+plot_visit_data <- read_csv("data/raw_data/plot_visit.csv")
+summary(plot_visit_data)
+sort(plot_visit_data$plot_id)# do we need to exclude the movie theater cogon?
+
+plot_visit_data <- plot_visit_data %>%
+      # rename(pid = plot_id) %>%
+      mutate(
+      years_since_fire = as.numeric(format(visit_date, "%Y")) - last_fire_year,
+      plot_id = paste(installation, plot_id),
+      visit_year = lubridate::year(visit_date)
+)
+
+#' We have three NA values in "years since fire"
+#'
+#+ investigate NAs in "years since fire"
+filter(plot_visit_data, is.na(last_fire_year))
+# theater cogon at blanding and two at shelby that need data requested
+
+# plot_visit_data <- filter(plot_visit_data, !is.na(last_fire_year))
+
+names(plot_locs)
+names(plot_visit_data)
+plot_locs$plot_id %in% plot_visit_data$plot_id
+
+plot_visit_data <- left_join(plot_visit_data, plot_locs)
+
+plot_visit_data$notes
+
+sort(plot_visit_data$pid)
 
 
 # plot_data[is.na(plot_data$last_fire_year),] <-
