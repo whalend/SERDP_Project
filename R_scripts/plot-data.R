@@ -1,7 +1,10 @@
+#' Script for doing QA/QC on the general plot and plot visit data
+
+#+ load packages ####
 library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi)
 
-#+ plot data ####
+#+ read in plot location data ####
 # plot_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/plot_info.csv")
 
 plot_locations <- rgdal::readOGR("data/plot-locations.shp")
