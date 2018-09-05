@@ -85,3 +85,21 @@
 "benning","j1","uninvaded",2018-07-27,2018,NA
 "benning","g1","uninvaded",2018-07-28,2015,NA
 "benning","h1","uninvaded",2018-07-28,2017,NA
+"shelby","a1","invaded",2018-08-11,2017,NA
+"shelby","a2","uninvaded",2018-08-12,2017,"uninvaded pair to a1"
+"shelby","b2","uninvaded",2018-08-15,2017,NA
+"shelby","b3","invaded",2018-08-15,2017,NA
+"shelby","c1","uninvaded",2018-08-11,2016,NA
+"shelby","e1","uninvaded",2018-08-12,2015,NA
+"shelby","h1","uninvaded",2018-08-13,2014,NA
+"shelby","i1","uninvaded",2018-08-13,2012,NA
+"shelby","j1","uninvaded",2018-08-14,NA,NA
+"shelby","k1","uninvaded",2018-08-14,NA,NA
+"gordon","z1","uninvaded",2018-08-20,2016,NA
+"gordon","y1","uninvaded",2018-08-20,2017,NA
+"gordon","x1","uninvaded",2018-08-20,2014,NA
+"gordon","w1","uninvaded",2018-08-21,2013,"plot hardwood dominated ""reference plot"", at edge of pine dominated stand"
+"gordon","v1","uninvaded",2018-08-21,2009,NA
+"gordon","t1","uninvaded",2018-08-21,2015,NA
+"gordon","s1","uninvaded",2018-08-22,2016,NA
+"gordon","r1","uninvaded",2018-08-22,2018,"evidence of chemical treatment to reduce understory/midstory of oaks/hardwoods"

@@ -1,329 +1,418 @@
-"installation","plot_id","veg_id","under_50cm","50-99cm","over_100cm","date","notes"
-"blanding","c1","qula",4,28,16,20170425,NA
-"blanding","c1","smilax",8,5,0,20170425,NA
-"blanding","c1","cactus",1,0,0,20170425,NA
-"blanding","c1","shrub1",5,9,3,20170425,NA
-"blanding","c1","shrub2",7,5,0,20170425,NA
-"blanding","c1","shrub3",0,2,0,20170425,NA
-"blanding","bland03","qula",33,17,0,20170427,NA
-"blanding","bland03","shrub2",12,3,0,20170427,NA
-"blanding","bland03","smilax",5,0,0,20170427,NA
-"blanding","bland03","shrub1",2,6,0,20170427,NA
-"blanding","bland02","qula",11,22,25,20170428,NA
-"blanding","bland02","shrub1",5,2,1,20170428,NA
-"blanding","bland02","shrub2",32,6,0,20170428,NA
-"blanding","bland02","smilax",1,0,0,20170428,NA
-"avonpark","a1","sere",NA,NA,2,20170627,NA
-"blanding","d1","quni",NA,NA,1,20170621,NA
-"blanding","d1","qula",NA,NA,5,20170621,NA
-"blanding","d1","quge",NA,NA,6,20170621,NA
-"blanding","d1","divi",NA,NA,3,20170621,NA
-"blanding","f1","qula",NA,NA,8,20170621,NA
-"blanding","f1","qumy",NA,NA,11,20170621,NA
-"blanding","f1","quin",NA,NA,4,20170621,NA
-"blanding","f1","pawpaw",NA,NA,8,20170621,NA
-"blanding","f1","winged sumac",NA,NA,7,20170621,NA
-"blanding","f1","divi",NA,NA,4,20170621,NA
-"blanding","f1","pipa",NA,NA,1,20170621,NA
-"blanding","f1","picl",NA,NA,1,20170621,NA
-"blanding","f1","quni",NA,NA,1,20170621,NA
-"blanding","h1","divi",NA,NA,17,20170620,NA
-"blanding","h1","quni",NA,NA,7,20170620,NA
-"blanding","e1","qula",NA,NA,3,20170614,NA
-"blanding","e1","pipa",NA,NA,3,20170614,NA
-"blanding","e1","quhe",NA,NA,1,20170614,NA
-"blanding","e1","sere",NA,NA,1,20170614,NA
-"blanding","e1","pawpaw",NA,NA,3,20170614,NA
-"blanding","e1","qumy",NA,NA,1,20170614,NA
-"blanding","g1","sere",NA,NA,48,20170615,NA
-"blanding","b1","pawpaw",NA,NA,9,20170608,NA
-"blanding","b1","qula",NA,NA,8,20170608,NA
-"blanding","b1","divi",NA,NA,3,20170608,NA
-"blanding","b1","smilax",NA,NA,1,20170608,NA
-"blanding","a1","qula",NA,NA,8,20170609,NA
-"blanding","a1","divi",NA,NA,1,20170609,NA
-"avonpark","d1","picl",NA,NA,4,20170630,NA
-"avonpark","d1","quge",NA,NA,13,20170630,NA
-"avonpark","d1","qumy",NA,NA,18,20170630,NA
-"avonpark","d1","sere",NA,NA,14,20170630,NA
-"avonpark","d1","shrub 11:29",NA,NA,3,20170630,NA
-"avonpark","d1","quni",NA,NA,4,20170630,NA
-"avonpark","b1","sere",NA,NA,42,20170629,NA
-"avonpark","b1","ilex",NA,NA,5,20170629,NA
-"avonpark","c1","0.48333333333333334",NA,NA,3,20170628,NA
-"avonpark","c1","0.48888888888888887",NA,NA,3,20170628,NA
-"avonpark","c1","shrub-forb 11:48",NA,NA,1,20170628,NA
-"avonpark","c1","sere",NA,NA,6,20170628,NA
-"tyndall","b1",NA,NA,NA,0,20170718,NA
-"tyndall","b2","sere",NA,NA,2,20170719,NA
-"eglin","h1","SF",NA,NA,6,20170816,NA
-"eglin","h1","quercus",NA,NA,9,20170816,"chapman?"
-"eglin","h1","crataegus",NA,NA,19,20170816,NA
-"eglin","h1","qula",NA,NA,9,20170816,NA
-"eglin","h1","pipa",NA,NA,6,20170816,NA
-"eglin","h1","sere",NA,NA,1,20170816,NA
-"eglin","h1","quni",NA,NA,1,20170816,NA
-"eglin","h1","quge",NA,NA,1,20170816,NA
-"eglin","d1","divi",NA,NA,4,20170817,NA
-"eglin","d1","sere",NA,NA,8,20170817,NA
-"eglin","d1","qula",NA,NA,2,20170817,NA
-"eglin","p1","divi",NA,NA,6,20170818,NA
-"eglin","p1","qula",NA,NA,2,20170818,NA
-"eglin","p1","qula2",NA,NA,1,20170818,NA
-"eglin","p1","pipa",NA,NA,4,20170818,NA
-"eglin","p1","SF",NA,NA,5,20170818,NA
-"eglin","p1","alt shrub 2",NA,NA,1,20170818,NA
-"eglin","p1","bluejack",NA,NA,1,20170818,NA
-"eglin","b1","pipa",NA,NA,1,20170819,NA
-"eglin","b1","crataegus",NA,NA,3,20170819,NA
-"eglin","b1","divi",NA,NA,1,20170819,NA
-"eglin","b1","SF",NA,NA,1,20170819,NA
-"eglin","b1","winged sumac",NA,NA,1,20170819,NA
-"moody","A1","wax myrtle",NA,NA,2,20170829,NA
-"moody","A1","beauty berry",NA,NA,10,20170829,NA
-"moody","A1","magnolia?",NA,NA,1,20170829,NA
-"moody","A1","green sumac",NA,NA,1,20170829,NA
-"moody","A1","post oak",NA,NA,1,20170829,NA
-"moody","A1","showy rattlebox",NA,NA,2,20170829,NA
-"moody","A1","post oak?",NA,NA,1,20170829,NA
-"moody","A1","sweetgum",NA,NA,2,20170829,NA
-"moody","A1","unknown",NA,NA,1,20170829,NA
-"moody","K1","QUNI",NA,NA,1,20170831,NA
-"moody","K1","mint shrub",NA,NA,1,20170831,NA
-"moody","B1","QUNI",NA,NA,23,20170829,NA
-"moody","B1","ILGL",NA,NA,18,20170829,NA
-"moody","B1","wax myrtle",NA,NA,1,20170829,NA
-"shelby","d1","ILGL",NA,NA,122,20170923,NA
-"shelby","d1","QUNI",NA,NA,15,20170923,NA
-"shelby","d1","ILVO",NA,NA,9,20170923,NA
-"shelby","d1","Acer rubrum",NA,NA,5,20170923,NA
-"shelby","d1","DIVI5",NA,NA,2,20170923,NA
-"shelby","d1","sassafrass",NA,NA,1,20170923,NA
-"shelby","d1","wax myrtle",NA,NA,3,20170923,NA
-"shelby","d1","red speckle",NA,NA,6,20170923,NA
-"shelby","g1","quni",NA,NA,31,20070924,NA
-"shelby","g1","quin",NA,NA,10,20070924,NA
-"shelby","g1","ILGL",NA,NA,131,20070924,NA
-"shelby","g1","sweetgum",NA,NA,8,20070924,NA
-"shelby","g1","ilvo",NA,NA,51,20070924,NA
-"shelby","g1","pipa",NA,NA,2,20070924,NA
-"shelby","g1","winged sumac",NA,NA,10,20070924,NA
-"shelby","g1","vaccinium",NA,NA,8,20070924,NA
-"shelby","g1","wax myrtle",NA,NA,5,20070924,NA
-"shelby","g1","magnolia",NA,NA,14,20070924,NA
-"shelby","g1","persimmon",NA,NA,5,20070924,NA
-"shelby","b1","tupelo",NA,NA,2,20170921,NA
-"shelby","b1","chinkapin",NA,NA,4,20170921,NA
-"shelby","b1","vaccinium",NA,NA,2,20170921,NA
-"shelby","b1","rubus",NA,NA,1,20170921,NA
-"shelby","b1","wax myrtle",NA,NA,7,20170921,NA
-"shelby","b1","beauty berry",NA,NA,43,20170921,NA
-"shelby","b1","winged sumac",NA,NA,8,20170921,NA
-"shelby","b1","QUNI",NA,NA,9,20170921,NA
-"shelby","b1","baccharis",NA,NA,7,20170921,NA
-"shelby","b1","sweetgum",NA,NA,21,20170921,NA
-"shelby","b1","ILGL",NA,NA,6,20170921,NA
-"shelby","b1","ILVO",NA,NA,3,20170921,NA
-"shelby","b1","Acer rubrum",NA,NA,5,20170921,NA
-"shelby","b1","post oak",NA,NA,3,20170921,NA
-"shelby","b1","magnolia virginiana",NA,NA,3,20170921,NA
-"shelby","f1","winged sumac",NA,NA,15,20170921,NA
-"shelby","f1","ILGL",NA,NA,20,20170921,NA
-"shelby","f1","ILVO",NA,NA,41,20170921,NA
-"shelby","f1","QUNI",NA,NA,19,20170921,NA
-"shelby","f1","vaccinium",NA,NA,19,20170921,NA
-"shelby","f1","beauty berry",NA,NA,10,20170921,NA
-"shelby","f1","magnolia virginiana",NA,NA,24,20170921,NA
-"shelby","f1","PITA",NA,NA,37,20170921,NA
-"shelby","f1","holly",NA,NA,1,20170921,NA
-"shelby","f1","wax myrtle",NA,NA,5,20170921,NA
-"shelby","b2","quni",NA,NA,24,20170924,NA
-"shelby","b2","magnolia virginiana",NA,NA,31,20170924,NA
-"shelby","b2","ILGL",NA,NA,134,20170924,NA
-"shelby","b2","bluejack oak",NA,NA,4,20170924,NA
-"shelby","b2","beauty berry",NA,NA,19,20170924,NA
-"shelby","b2","winged sumac",NA,NA,5,20170924,NA
-"shelby","b2","Lespedeza",NA,NA,1,20170924,NA
-"shelby","b3","Lespedeza",NA,NA,7,20170924,NA
-"shelby","b3","ILGL",NA,NA,8,20170924,NA
-"shelby","b3","wax myrtle",NA,NA,7,20170924,NA
-"shelby","b3","quni",NA,NA,4,20170924,NA
-"shelby","b3","beauty berry",NA,NA,64,20170924,NA
-"shelby","b3","dog fennel",NA,NA,27,20170924,NA
-"shelby","b3","ILVO",NA,NA,2,20170924,NA
-"shelby","b3","PIPA",NA,NA,2,20170924,NA
-"shelby","b3","post oak",NA,NA,7,20170924,NA
-"shelby","b3","bluejack oak",NA,NA,2,20170924,NA
-"tyndall","d1","sere",NA,NA,16,20170720,NA
-"tyndall","d1","ilgl",NA,NA,7,20170720,NA
-"tyndall","d1","wax myrtle",NA,NA,1,20170720,NA
-"tyndall","d1","oaky shrub",NA,NA,4,20170720,NA
-"tyndall","d1","quhe",NA,NA,1,20170720,NA
-"tyndall","h1","ilgl",NA,NA,1300,20170720,NA
-"tyndall","h1","sere",NA,NA,5,20170720,NA
-"tyndall","h1","skinny leaf",NA,NA,38,20170720,NA
-"tyndall","h1","hypericum",NA,NA,27,20170720,NA
-"avon","h1","sere",NA,NA,3,20180601,NA
-"avon","f1","sere",NA,NA,1,20180531,NA
-"avon","c2","sere",NA,NA,41,20180531,NA
-"avon","c2","wax myrtle",NA,NA,9,20180531,NA
-"avon","c2","pipa",NA,NA,1,20180531,NA
-"blanding","n1","quni",NA,NA,5,20180524,NA
-"blanding","n1","pawpaw",NA,NA,6,20180524,NA
-"blanding","n1","sumae",NA,NA,1,20180524,NA
-"blanding","n1","divi",NA,NA,1,20180524,NA
-"blanding","n1","qula2",NA,NA,1,20180524,NA
-"avonpark","i1","ilgl",NA,NA,39,20180601,NA
-"avonpark","i1","sere",NA,NA,9,20180601,NA
-"avonpark","g1","iglg",NA,NA,43,20180531,NA
-"blanding","k1","quni",NA,NA,2,20180522,NA
-"blanding","m1","divi",NA,NA,16,20180515,NA
-"blanding","m1","quni",NA,NA,2,20180515,NA
-"blanding","m1","pawpaw",NA,NA,2,20180515,NA
-"blanding","m1","pipa",NA,NA,1,20180515,NA
-"blanding","j1","quge2",NA,NA,3,20180525,NA
-"blanding","j1","qumy",NA,NA,1,20180525,NA
-"blanding","i1","saw",NA,NA,1,20180515,NA
-"blanding","i1","blue jack oak",NA,NA,2,20180515,NA
-"blanding","i1","sand live oak",NA,NA,1,20180525,NA
-"blanding","i1","water oak",NA,NA,3,20180525,NA
-"avonpark","a2","sere",NA,NA,10,20180530,NA
-"avonpark","a2","iglg",NA,NA,1,20180530,NA
-"avonpark","e2","sere",NA,NA,2,20180529,NA
-"avonpark","e2","winged sumac",NA,NA,1,20180529,NA
-"avonpark","a1","sere",NA,NA,6,20180530,NA
-"avonpark","a1","pawpaw",NA,NA,1,20180530,NA
-"avonpark","c1","saw palm",NA,NA,10,20180531,NA
-"blanding","c1","asrt",NA,NA,2,20180516,NA
-"eglin","a1","qula",NA,NA,8,20180611,NA
-"eglin","a1","sere",NA,NA,6,20180611,NA
-"eglin","a1","pipa",NA,NA,1,20180611,NA
-"eglin","g1","qula2",NA,NA,2,20180611,NA
-"eglin","g1","saw palm",NA,NA,9,20180611,NA
-"eglin","g1","beauty berry",NA,NA,4,20180611,NA
-"eglin","g1","white oak",NA,NA,5,20180611,NA
-"eglin","g1","ilex.v",NA,NA,1,20180611,NA
-"eglin","g1","silver leaf craton",NA,NA,22,20180611,NA
-"eglin","g1","quge",NA,NA,2,20180611,NA
-"eglin","e1","picl",NA,NA,2,20180611,NA
-"eglin","i1","quni",NA,NA,19,20180612,NA
-"eglin","i1","vaccinium",NA,NA,7,20180612,NA
-"eglin","i1","ilvo",NA,NA,4,20180612,NA
-"eglin","i1","sticky ilex",NA,NA,32,20180612,NA
-"eglin","i1","bamboo",NA,NA,6,20180612,NA
-"eglin","i1","rubus oak",NA,NA,23,20180612,NA
-"eglin","i1","ilgl",NA,NA,7,20180612,NA
-"eglin","i1","bay sp",NA,NA,1,20180612,NA
-"eglin","c1","quni",NA,NA,2,20180613,NA
-"eglin","c1","laurel",NA,NA,1,20180613,NA
-"eglin","c1","saw palm",NA,NA,1,20180613,NA
-"eglin","j1","quhe2",NA,NA,8,20180613,NA
-"eglin","j1","qula2",NA,NA,1,20180613,NA
-"eglin","j1","vaccinium",NA,NA,3,20180613,NA
-"eglin","j1","sere2",NA,NA,3,20180613,NA
-"eglin","f1","qula2",NA,NA,4,20180615,NA
-"eglin","f1","quni",NA,NA,7,20180615,NA
-"eglin","f1","silver leaf craton",NA,NA,15,20180615,NA
-"eglin","f1","hawthorn",NA,NA,4,20180615,NA
-"eglin","f1","quhe2",NA,NA,2,20180615,NA
-"eglin","f1","pipa",NA,NA,2,20180615,NA
-"eglin","f1","quge2",NA,NA,10,20180615,NA
-"eglin","b2","saw palm",NA,NA,11,20180615,NA
-"eglin","b2","pipa",NA,NA,5,20180615,NA
-"tyndall","d2","tlt",NA,NA,27,20180625,NA
-"tyndall","d2","pepper leaf",NA,NA,61,20180625,NA
-"tyndall","d2","ilex glabra",NA,NA,5,20180625,NA
-"tyndall","d2","piel",NA,NA,1,20180625,NA
-"tyndall","d2","magnolia",NA,NA,17,20180625,NA
-"tyndall","b4","sere2",NA,NA,1,20180627,NA
-"tyndall","b4","ilex",NA,NA,71,20180627,NA
-"tyndall","b4","vaccinium",NA,NA,1,20180627,NA
-"tyndall","b3","ilgl",NA,NA,23,20180627,NA
-"tyndall","c2","sere2",NA,NA,4,20180626,NA
-"tyndall","c2","ilex.g",NA,NA,238,20180626,NA
-"tyndall","c2","qumy",NA,NA,2,20180626,NA
-"tyndall","c2","other",NA,NA,1,20180626,"random shrub drews phone time stamp 1:15, 6/26"
-"tyndall","c1","ilgl",NA,NA,333,20180626,NA
-"tyndall","c1","stagger bush",NA,NA,1,20180626,NA
-"tyndall","c1","sere",NA,NA,3,20180626,NA
-"tyndall","b2","saw palm",NA,NA,1,20180625,NA
-"jackson","d1","quercus rubra",NA,NA,8,20180709,NA
-"jackson","d1","carya",NA,NA,1,20180709,NA
-"jackson","d1","quni",NA,NA,1,20180709,NA
-"jackson","c1","divi5",NA,NA,3,20180709,NA
-"jackson","g1","vaccinium",NA,NA,4,20180710,NA
-"jackson","g1","spice bush",NA,NA,1,20180710,NA
-"jackson","g1","sparkleberry",NA,NA,4,20180710,NA
-"jackson","f1","vaccinium",NA,NA,26,20180710,NA
-"jackson","f1","qula2",NA,NA,3,20180710,NA
-"jackson","e1","sparkleberry",NA,NA,11,20180710,NA
-"jackson","e1","sassafrass",NA,NA,8,20180710,NA
-"jackson","e1","pipa2",NA,NA,1,20180710,NA
-"jackson","e1","qula2",NA,NA,1,20180710,NA
-"jackson","i1","divi",NA,NA,8,20180711,NA
-"jackson","j1","vaccinium",NA,NA,3,20180711,NA
-"jackson","j1","qula2",NA,NA,1,20180711,NA
-"jackson","j1","sassafrass",NA,NA,1,20180711,NA
-"jackson","m1","pipa2",NA,NA,1,20180713,NA
-"jackson","m1","divi",NA,NA,2,20180713,NA
-"jackson","m1","qula2",NA,NA,7,20180713,NA
-"jackson","h1","quhe2",NA,NA,2,20180712,NA
-"jackson","h1","sassafrass",NA,NA,31,20180712,NA
-"jackson","h1","vaccinium",NA,NA,37,20180712,NA
-"jackson","h1","hickory",NA,NA,2,20180712,NA
-"jackson","h1","persimmon",NA,NA,5,20180712,NA
-"jackson","h1","quni",NA,NA,7,20180712,NA
-"jackson","h1","blackjack oak",NA,NA,3,20180712,NA
-"jackson","k1","qu",NA,NA,7,20180711,NA
-"jackson","l1","divi",NA,NA,1,20180713,NA
-"jackson","l1","prunus",NA,NA,5,20180713,"Unsure of the ID stated as a shrub either Prunos or sambucus"
-"jackson","l1","carya",NA,NA,3,20180713,NA
-"jackson","l1","blackjack oak",NA,NA,4,20180713,NA
-"benning","a1","winged sumac",NA,NA,38,20180724,NA
-"benning","a1","hickory",NA,NA,20,20180724,NA
-"benning","a1","sweetgum",NA,NA,28,20180724,NA
-"benning","a1","blackjack oak",NA,NA,16,20180724,NA
-"benning","a1","laurel",NA,NA,8,20180724,NA
-"benning","a1","sassafrass",NA,NA,2,20180724,NA
-"benning","a1","wax myrtle",NA,NA,25,20180724,NA
-"benning","a1","vaccinium",NA,NA,15,20180724,NA
-"benning","a1","prunus",NA,NA,4,20180724,NA
-"benning","a1","vacc. Elliot",NA,NA,22,20180724,NA
-"benning","a1","beauty berry",NA,NA,1,20180724,NA
-"benning","a1","hawthorn",NA,NA,3,20180724,NA
-"benning","a1","sparkleberry",NA,NA,1,20180724,NA
-"benning","a1","white oak",NA,NA,4,20180724,NA
-"benning","b1","sweetgum",NA,NA,1,20180724,NA
-"benning","c1","sweetgum",NA,NA,31,20180725,NA
-"benning","c1","beauty berry",NA,NA,24,20180725,NA
-"benning","c1","rhco",NA,NA,2,20180725,NA
-"benning","c1","rubus",NA,NA,4,20180725,NA
-"benning","d1","sweetgum",NA,NA,24,20180725,NA
-"benning","d1","divi",NA,NA,1,20180725,NA
-"benning","d1","qula2",NA,NA,13,20180725,NA
-"benning","d1","quma",NA,NA,17,20180725,NA
-"benning","d1","pita",NA,NA,3,20180725,NA
-"benning","d1","sparkleberry",NA,NA,10,20180725,NA
-"benning","d1","vaccinium",NA,NA,7,20180725,NA
-"benning","d1","carya",NA,NA,4,20180725,NA
-"benning","e1","sweetgum",NA,NA,11,20180726,NA
-"benning","f1","divi5",NA,NA,2,20180726,NA
-"benning","f1","sweetgum",NA,NA,14,20180726,NA
-"benning","f1","wax myrtle",NA,NA,3,20180726,NA
-"benning","g1","southern red oak",NA,NA,2,20180728,NA
-"benning","g1","Lespedeza",NA,NA,1,20180728,NA
-"benning","h1","vaccinium",NA,NA,12,20180728,NA
-"benning","h1","divi",NA,NA,9,20180728,NA
-"benning","h1","dog fennel",NA,NA,12,20180728,NA
-"benning","h1","shrub",NA,NA,2,20180728,NA
-"benning","i1","black jack",NA,NA,3,20180727,NA
-"benning","i1","sweetgum",NA,NA,1,20180727,NA
-"benning","i1","beauty berry",NA,NA,3,20180727,NA
-"benning","i1","hickory",NA,NA,1,20180727,NA
-"benning","j1","black jack",NA,NA,11,20180727,NA
-"benning","j1","winged sumac",NA,NA,49,20180727,NA
-"benning","j1","shrubby lespodesia",NA,NA,8,20180727,NA
-"benning","j1","thiny",NA,NA,3,20180727,NA
-"benning","j1","divi",NA,NA,3,20180727,NA
-"benning","j1","rubus",NA,NA,2,20180727,NA
-"benning","j1","sparkleberry",NA,NA,1,20180727,NA
+"installation","plot_id","veg_id","under_50cm","50-99cm","over_100cm","date","notes","X__1","X__2"
+"blanding","c1","cactus",1,0,0,20170425,NA,NA,NA
+"blanding","c1","QULA",4,28,16,20170425,NA,NA,NA
+"blanding","c1","shrub1",5,9,3,20170425,NA,NA,NA
+"blanding","c1","shrub2",7,5,0,20170425,NA,NA,NA
+"blanding","c1","shrub3",0,2,0,20170425,NA,NA,NA
+"blanding","c1","SM",8,5,0,20170425,NA,NA,NA
+"blanding","bland03","QULA",33,17,0,20170427,NA,NA,NA
+"blanding","bland03","shrub1",2,6,0,20170427,NA,NA,NA
+"blanding","bland03","shrub2",12,3,0,20170427,NA,NA,NA
+"blanding","bland03","SM",5,0,0,20170427,NA,NA,NA
+"blanding","bland02","QULA",11,22,25,20170428,NA,NA,NA
+"blanding","bland02","shrub1",5,2,1,20170428,NA,NA,NA
+"blanding","bland02","shrub2",32,6,0,20170428,NA,NA,NA
+"blanding","bland02","SM",1,0,0,20170428,NA,NA,NA
+"blanding","b1","ASIMI",NA,NA,9,20170608,NA,NA,NA
+"blanding","b1","DIVI",NA,NA,3,20170608,NA,NA,NA
+"blanding","b1","QULA",NA,NA,8,20170608,NA,NA,NA
+"blanding","b1","SM",NA,NA,1,20170608,NA,NA,NA
+"blanding","a1","DIVI",NA,NA,1,20170609,NA,NA,NA
+"blanding","a1","QULA",NA,NA,8,20170609,NA,NA,NA
+"blanding","e1","ASIMI",NA,NA,3,20170614,NA,NA,NA
+"blanding","e1","PIPA",NA,NA,3,20170614,NA,NA,NA
+"blanding","e1","QUHE",NA,NA,1,20170614,NA,NA,NA
+"blanding","e1","QULA",NA,NA,3,20170614,NA,NA,NA
+"blanding","e1","QUMY",NA,NA,1,20170614,NA,NA,NA
+"blanding","e1","SERE",NA,NA,1,20170614,NA,NA,NA
+"blanding","g1","SERE",NA,NA,48,20170615,NA,NA,NA
+"blanding","h1","DIVI",NA,NA,17,20170620,NA,NA,NA
+"blanding","h1","QUNI",NA,NA,7,20170620,NA,NA,NA
+"blanding","d1","DIVI",NA,NA,3,20170621,NA,NA,NA
+"blanding","d1","QUGE",NA,NA,6,20170621,NA,NA,NA
+"blanding","d1","QULA",NA,NA,5,20170621,NA,NA,NA
+"blanding","d1","QUNI",NA,NA,1,20170621,NA,NA,NA
+"blanding","f1","ASIMI",NA,NA,8,20170621,NA,NA,NA
+"blanding","f1","DIVI",NA,NA,4,20170621,NA,NA,NA
+"blanding","f1","PICL",NA,NA,1,20170621,NA,NA,NA
+"blanding","f1","PIPA",NA,NA,1,20170621,NA,NA,NA
+"blanding","f1","QUIN",NA,NA,4,20170621,NA,NA,NA
+"blanding","f1","QULA",NA,NA,8,20170621,NA,NA,NA
+"blanding","f1","QUMY",NA,NA,11,20170621,NA,NA,NA
+"blanding","f1","QUNI",NA,NA,1,20170621,NA,NA,NA
+"blanding","f1","RHCO",NA,NA,7,20170621,NA,NA,NA
+"avonpark","a1","SERE",NA,NA,2,20170627,NA,NA,NA
+"avonpark","c1","0.48333333333333334",NA,NA,3,20170628,NA,NA,NA
+"avonpark","c1","0.48888888888888887",NA,NA,3,20170628,NA,NA,NA
+"avonpark","c1","SERE",NA,NA,6,20170628,NA,NA,NA
+"avonpark","c1","shrub-forb 11:48",NA,NA,1,20170628,NA,NA,NA
+"avonpark","b1","ILEX",NA,NA,5,20170629,NA,NA,NA
+"avonpark","b1","SERE",NA,NA,42,20170629,NA,NA,NA
+"avonpark","d1","PICL",NA,NA,4,20170630,NA,NA,NA
+"avonpark","d1","QUGE",NA,NA,13,20170630,NA,NA,NA
+"avonpark","d1","QUMY",NA,NA,18,20170630,NA,NA,NA
+"avonpark","d1","QUNI",NA,NA,4,20170630,NA,NA,NA
+"avonpark","d1","SERE",NA,NA,14,20170630,NA,NA,NA
+"avonpark","d1","shrub 11:29",NA,NA,3,20170630,NA,NA,NA
+"tyndall","b1",NA,NA,NA,0,20170718,"not entered",NA,NA
+"tyndall","b2","SERE",NA,NA,2,20170719,NA,NA,NA
+"tyndall","d1","ILGL",NA,NA,7,20170720,NA,NA,NA
+"tyndall","d1","MOCE",NA,NA,1,20170720,NA,NA,NA
+"tyndall","d1","QUERC",NA,NA,4,20170720,NA,NA,NA
+"tyndall","d1","QUHE",NA,NA,1,20170720,NA,NA,NA
+"tyndall","d1","SERE",NA,NA,16,20170720,NA,NA,NA
+"tyndall","h1","HYPER",NA,NA,27,20170720,NA,NA,NA
+"tyndall","h1","ILGL",NA,NA,1300,20170720,NA,NA,NA
+"tyndall","h1","SERE",NA,NA,5,20170720,NA,NA,NA
+"tyndall","h1","skinny leaf",NA,NA,38,20170720,NA,NA,NA
+"eglin","h1","CRATA",NA,NA,19,20170816,NA,NA,NA
+"eglin","h1","PIPA",NA,NA,6,20170816,NA,NA,NA
+"eglin","h1","QUERC",NA,NA,9,20170816,"chapman?",NA,NA
+"eglin","h1","QUGE",NA,NA,1,20170816,NA,NA,NA
+"eglin","h1","QULA",NA,NA,9,20170816,NA,NA,NA
+"eglin","h1","QUNI",NA,NA,1,20170816,NA,NA,NA
+"eglin","h1","SERE",NA,NA,1,20170816,NA,NA,NA
+"eglin","h1","SF",NA,NA,6,20170816,"idk what SF is - SC 8/30",NA,NA
+"eglin","d1","DIVI",NA,NA,4,20170817,NA,NA,NA
+"eglin","d1","QULA",NA,NA,2,20170817,NA,NA,NA
+"eglin","d1","SERE",NA,NA,8,20170817,NA,NA,NA
+"eglin","p1","alt shrub 2",NA,NA,1,20170818,NA,NA,NA
+"eglin","p1","DIVI",NA,NA,6,20170818,NA,NA,NA
+"eglin","p1","PIPA",NA,NA,4,20170818,NA,NA,NA
+"eglin","p1","QUIN",NA,NA,1,20170818,NA,NA,NA
+"eglin","p1","QULA",NA,NA,2,20170818,NA,NA,NA
+"eglin","p1","QULA",NA,NA,1,20170818,NA,NA,NA
+"eglin","p1","SF",NA,NA,5,20170818,"idk what SF is - SC 8/31",NA,NA
+"eglin","b1","CRATA",NA,NA,3,20170819,NA,NA,NA
+"eglin","b1","DIVI",NA,NA,1,20170819,NA,NA,NA
+"eglin","b1","PIPA",NA,NA,1,20170819,NA,NA,NA
+"eglin","b1","RHCO",NA,NA,1,20170819,NA,NA,NA
+"eglin","b1","SF",NA,NA,1,20170819,"idk what SF is - SC 8/32",NA,NA
+"moody","A1","CAAM",NA,NA,10,20170829,NA,NA,NA
+"moody","A1","RHAR",NA,NA,1,20170829,NA,NA,NA
+"moody","A1","LIST",NA,NA,2,20170829,NA,NA,NA
+"moody","A1","MAGNO",NA,NA,1,20170829,NA,NA,NA
+"moody","A1","MOCE",NA,NA,2,20170829,NA,NA,NA
+"moody","A1","QUST",NA,NA,1,20170829,NA,NA,NA
+"moody","A1","QUST",NA,NA,1,20170829,NA,NA,NA
+"moody","A1","CRSP2",NA,NA,2,20170829,NA,NA,NA
+"moody","A1","unknown",NA,NA,1,20170829,NA,NA,NA
+"moody","B1","ILGL",NA,NA,18,20170829,NA,NA,NA
+"moody","B1","MOCE",NA,NA,1,20170829,NA,NA,NA
+"moody","B1","QUNI",NA,NA,23,20170829,NA,NA,NA
+"moody","K1","MENTH",NA,NA,1,20170831,NA,NA,NA
+"moody","K1","QUNI",NA,NA,1,20170831,NA,NA,NA
+"shelby","b1","ACRU",NA,NA,5,20170921,NA,NA,NA
+"shelby","b1","BACCH",NA,NA,7,20170921,NA,NA,NA
+"shelby","b1","CAAM",NA,NA,43,20170921,NA,NA,NA
+"shelby","b1","CAPU2",NA,NA,4,20170921,"chinquapin",NA,NA
+"shelby","b1","ILGL",NA,NA,6,20170921,NA,NA,NA
+"shelby","b1","ILVO",NA,NA,3,20170921,NA,NA,NA
+"shelby","b1","LIST",NA,NA,21,20170921,NA,NA,NA
+"shelby","b1","MAVI",NA,NA,3,20170921,NA,NA,NA
+"shelby","b1","MOCE",NA,NA,7,20170921,NA,NA,NA
+"shelby","b1","QUNI",NA,NA,9,20170921,NA,NA,NA
+"shelby","b1","QUST",NA,NA,3,20170921,NA,NA,NA
+"shelby","b1","RHCO",NA,NA,8,20170921,NA,NA,NA
+"shelby","b1","RUBUS",NA,NA,1,20170921,NA,NA,NA
+"shelby","b1","tupelo",NA,NA,2,20170921,NA,NA,NA
+"shelby","b1","VACCI",NA,NA,2,20170921,NA,NA,NA
+"shelby","f1","CAAM",NA,NA,10,20170921,NA,NA,NA
+"shelby","f1","ILOP",NA,NA,1,20170921,NA,NA,NA
+"shelby","f1","ILGL",NA,NA,20,20170921,NA,NA,NA
+"shelby","f1","ILVO",NA,NA,41,20170921,NA,NA,NA
+"shelby","f1","MAVI",NA,NA,24,20170921,NA,NA,NA
+"shelby","f1","MOCE",NA,NA,5,20170921,NA,NA,NA
+"shelby","f1","PITA",NA,NA,37,20170921,NA,NA,NA
+"shelby","f1","QUNI",NA,NA,19,20170921,NA,NA,NA
+"shelby","f1","RHCO",NA,NA,15,20170921,NA,NA,NA
+"shelby","f1","VACCI",NA,NA,19,20170921,NA,NA,NA
+"shelby","d1","ACRU",NA,NA,5,20170923,NA,NA,NA
+"shelby","d1","DIVI",NA,NA,2,20170923,NA,NA,NA
+"shelby","d1","ILGL",NA,NA,122,20170923,NA,NA,NA
+"shelby","d1","ILVO",NA,NA,9,20170923,NA,NA,NA
+"shelby","d1","MOCE",NA,NA,3,20170923,NA,NA,NA
+"shelby","d1","QUNI",NA,NA,15,20170923,NA,NA,NA
+"shelby","d1","red speckle",NA,NA,6,20170923,NA,NA,NA
+"shelby","d1","SAAL5",NA,NA,1,20170923,NA,NA,NA
+"shelby","b2","CAAM",NA,NA,19,20170924,NA,NA,NA
+"shelby","b2","ILGL",NA,NA,134,20170924,NA,NA,NA
+"shelby","b2","LEBI",NA,NA,1,20170924,NA,NA,NA
+"shelby","b2","MAVI",NA,NA,31,20170924,NA,NA,NA
+"shelby","b2","QUIN",NA,NA,4,20170924,NA,NA,NA
+"shelby","b2","QUNI",NA,NA,24,20170924,NA,NA,NA
+"shelby","b2","RHCO",NA,NA,5,20170924,NA,NA,NA
+"shelby","b3","CAAM",NA,NA,64,20170924,NA,NA,NA
+"shelby","b3","EUCA5",NA,NA,27,20170924,NA,NA,NA
+"shelby","b3","ILGL",NA,NA,8,20170924,NA,NA,NA
+"shelby","b3","ILVO",NA,NA,2,20170924,NA,NA,NA
+"shelby","b3","LEBI",NA,NA,7,20170924,NA,NA,NA
+"shelby","b3","MOCE",NA,NA,7,20170924,NA,NA,NA
+"shelby","b3","PIPA",NA,NA,2,20170924,NA,NA,NA
+"shelby","b3","QUIN",NA,NA,2,20170924,NA,NA,NA
+"shelby","b3","QUNI",NA,NA,4,20170924,NA,NA,NA
+"shelby","b3","QUST",NA,NA,7,20170924,NA,NA,NA
+"shelby","g1","DIVI",NA,NA,5,20170924,NA,NA,NA
+"shelby","g1","ILGL",NA,NA,131,20170924,NA,NA,NA
+"shelby","g1","ILVO",NA,NA,51,20170924,NA,NA,NA
+"shelby","g1","LIST",NA,NA,8,20170924,NA,NA,NA
+"shelby","g1","MAGNO",NA,NA,14,20170924,NA,NA,NA
+"shelby","g1","MOCE",NA,NA,5,20170924,NA,NA,NA
+"shelby","g1","PIPA",NA,NA,2,20170924,NA,NA,NA
+"shelby","g1","QUIN",NA,NA,10,20170924,NA,NA,NA
+"shelby","g1","QUNI",NA,NA,31,20170924,NA,NA,NA
+"shelby","g1","RHCO",NA,NA,10,20170924,NA,NA,NA
+"shelby","g1","VACCI",NA,NA,8,20170924,NA,NA,NA
+"blanding","i1","QUIN",NA,NA,2,20180515,NA,NA,NA
+"blanding","i1","SERE",NA,NA,1,20180515,NA,NA,NA
+"blanding","m1","ASIMI",NA,NA,2,20180515,NA,NA,NA
+"blanding","m1","DIVI",NA,NA,16,20180515,NA,NA,NA
+"blanding","m1","PIPA",NA,NA,1,20180515,NA,NA,NA
+"blanding","m1","QUNI",NA,NA,2,20180515,NA,NA,NA
+"blanding","c1","asrt",NA,NA,2,20180516,"??? Wiregrass??? SC 8/30",NA,NA
+"blanding","k1","QUNI",NA,NA,2,20180522,NA,NA,NA
+"blanding","n1","ASIMI",NA,NA,6,20180524,NA,NA,NA
+"blanding","n1","DIVI",NA,NA,1,20180524,NA,NA,NA
+"blanding","n1","QULA",NA,NA,1,20180524,NA,NA,NA
+"blanding","n1","QUNI",NA,NA,5,20180524,NA,NA,NA
+"blanding","n1","RHCO",NA,NA,1,20180524,NA,NA,NA
+"blanding","i1","QUGE",NA,NA,1,20180525,NA,NA,NA
+"blanding","i1","QUNI",NA,NA,3,20180525,NA,NA,NA
+"blanding","j1","QUGE",NA,NA,3,20180525,NA,NA,NA
+"blanding","j1","QUMY",NA,NA,1,20180525,NA,NA,NA
+"avonpark","e2","RHCO",NA,NA,1,20180529,NA,NA,NA
+"avonpark","e2","SERE",NA,NA,2,20180529,NA,NA,NA
+"avonpark","a1","ASIMI",NA,NA,1,20180530,NA,NA,NA
+"avonpark","a1","SERE",NA,NA,6,20180530,NA,NA,NA
+"avonpark","a2","ILGL",NA,NA,1,20180530,NA,NA,NA
+"avonpark","a2","SERE",NA,NA,10,20180530,NA,NA,NA
+"avonpark","c2","MOCE",NA,NA,9,20180531,NA,NA,NA
+"avonpark","c2","PIPA",NA,NA,1,20180531,NA,NA,NA
+"avonpark","c2","SERE",NA,NA,41,20180531,NA,NA,NA
+"avonpark","f1","SERE",NA,NA,1,20180531,NA,NA,NA
+"avonpark","c1","SERE",NA,NA,10,20180531,NA,NA,NA
+"avonpark","g1","ILGL",NA,NA,43,20180531,NA,NA,NA
+"avonpark","h1","SERE",NA,NA,3,20180601,NA,NA,NA
+"avonpark","i1","ILGL",NA,NA,39,20180601,NA,NA,NA
+"avonpark","i1","SERE",NA,NA,9,20180601,NA,NA,NA
+"eglin","a1","PIPA",NA,NA,1,20180611,NA,NA,NA
+"eglin","a1","QULA",NA,NA,8,20180611,NA,NA,NA
+"eglin","a1","SERE",NA,NA,6,20180611,NA,NA,NA
+"eglin","e1","PICL",NA,NA,2,20180611,NA,NA,NA
+"eglin","g1","CAAM",NA,NA,4,20180611,NA,NA,NA
+"eglin","g1","CRAR2",NA,NA,22,20180611,NA,NA,NA
+"eglin","g1","ILVO",NA,NA,1,20180611,NA,NA,NA
+"eglin","g1","QUAL",NA,NA,5,20180611,NA,NA,NA
+"eglin","g1","QUGE",NA,NA,2,20180611,NA,NA,NA
+"eglin","g1","QULA",NA,NA,2,20180611,NA,NA,NA
+"eglin","g1","SERE",NA,NA,9,20180611,NA,NA,NA
+"eglin","i1","BAMBU",NA,NA,6,20180612,NA,NA,NA
+"eglin","i1","PEBO",NA,NA,1,20180612,NA,NA,NA
+"eglin","i1","ILEX",NA,NA,32,20180612,NA,NA,NA
+"eglin","i1","ILGL",NA,NA,7,20180612,NA,NA,NA
+"eglin","i1","ILVO",NA,NA,4,20180612,NA,NA,NA
+"eglin","i1","QUNI",NA,NA,19,20180612,NA,NA,NA
+"eglin","i1","rubus oak",NA,NA,23,20180612,"?? Rubus? Or north/southern red SC 8/30",NA,NA
+"eglin","i1","VACCI",NA,NA,7,20180612,NA,NA,NA
+"eglin","c1","QUHE",NA,NA,1,20180613,NA,NA,NA
+"eglin","c1","QUNI",NA,NA,2,20180613,NA,NA,NA
+"eglin","c1","SERE",NA,NA,1,20180613,NA,NA,NA
+"eglin","j1","QUHE",NA,NA,8,20180613,NA,NA,NA
+"eglin","j1","QULA",NA,NA,1,20180613,NA,NA,NA
+"eglin","j1","SERE",NA,NA,3,20180613,NA,NA,NA
+"eglin","j1","VACCI",NA,NA,3,20180613,NA,NA,NA
+"eglin","b2","PIPA",NA,NA,5,20180615,NA,NA,NA
+"eglin","f1","CRAR2",NA,NA,15,20180615,NA,NA,NA
+"eglin","f1","CRATA",NA,NA,4,20180615,NA,NA,NA
+"eglin","f1","PIPA",NA,NA,2,20180615,NA,NA,NA
+"eglin","f1","QUGE",NA,NA,10,20180615,NA,NA,NA
+"eglin","f1","QUHE",NA,NA,2,20180615,NA,NA,NA
+"eglin","f1","QULA",NA,NA,4,20180615,NA,NA,NA
+"eglin","f1","QUNI",NA,NA,7,20180615,NA,NA,NA
+"eglin","b2","SERE",NA,NA,11,20180615,NA,NA,NA
+"tyndall","b2","SERE",NA,NA,1,20180625,NA,NA,NA
+"tyndall","d2","ILGL",NA,NA,5,20180625,NA,NA,NA
+"tyndall","d2","MAGNO",NA,NA,17,20180625,NA,NA,NA
+"tyndall","d2","pepper leaf",NA,NA,61,20180625,NA,NA,NA
+"tyndall","d2","PIEL",NA,NA,1,20180625,NA,NA,NA
+"tyndall","d2","tlt",NA,NA,27,20180625,NA,NA,NA
+"tyndall","c1","ILGL",NA,NA,333,20180626,NA,NA,NA
+"tyndall","c1","SERE",NA,NA,3,20180626,NA,NA,NA
+"tyndall","c1","stagger bush",NA,NA,1,20180626,NA,NA,NA
+"tyndall","c2","ILGL",NA,NA,238,20180626,NA,NA,NA
+"tyndall","c2","QUMY",NA,NA,2,20180626,NA,NA,NA
+"tyndall","c2","SERE",NA,NA,4,20180626,NA,NA,NA
+"tyndall","c2","other",NA,NA,1,20180626,"random shrub drews phone time stamp 1:15, 6/26",NA,NA
+"tyndall","b4","ILEX",NA,NA,71,20180627,NA,NA,NA
+"tyndall","b4","SERE",NA,NA,1,20180627,NA,NA,NA
+"tyndall","b4","VACCI",NA,NA,1,20180627,NA,NA,NA
+"tyndall","b3","ILGL",NA,NA,23,20180627,NA,NA,NA
+"jackson","c1","DIVI",NA,NA,3,20180709,NA,NA,NA
+"jackson","d1","CARYA",NA,NA,1,20180709,NA,NA,NA
+"jackson","d1","QUNI",NA,NA,1,20180709,NA,NA,NA
+"jackson","d1","QURU",NA,NA,8,20180709,NA,NA,NA
+"jackson","e1","PIPA",NA,NA,1,20180710,NA,NA,NA
+"jackson","e1","QULA",NA,NA,1,20180710,NA,NA,NA
+"jackson","e1","SAAL5",NA,NA,8,20180710,NA,NA,NA
+"jackson","e1","VAAR",NA,NA,11,20180710,NA,NA,NA
+"jackson","f1","QULA",NA,NA,3,20180710,NA,NA,NA
+"jackson","f1","VACCI",NA,NA,26,20180710,NA,NA,NA
+"jackson","g1","spice bush",NA,NA,1,20180710,NA,NA,NA
+"jackson","g1","VAAR",NA,NA,4,20180710,NA,NA,NA
+"jackson","g1","VACCI",NA,NA,4,20180710,NA,NA,NA
+"jackson","i1","DIVI",NA,NA,8,20180711,NA,NA,NA
+"jackson","j1","QULA",NA,NA,1,20180711,NA,NA,NA
+"jackson","j1","SAAL5",NA,NA,1,20180711,NA,NA,NA
+"jackson","j1","VACCI",NA,NA,3,20180711,NA,NA,NA
+"jackson","k1","QUERC",NA,NA,7,20180711,NA,NA,NA
+"jackson","h1","DIVI",NA,NA,5,20180712,NA,NA,NA
+"jackson","h1","CARYA",NA,NA,2,20180712,NA,NA,NA
+"jackson","h1","QUHE",NA,NA,2,20180712,NA,NA,NA
+"jackson","h1","QUMA",NA,NA,3,20180712,NA,NA,NA
+"jackson","h1","QUNI",NA,NA,7,20180712,NA,NA,NA
+"jackson","h1","SAAL5",NA,NA,31,20180712,NA,NA,NA
+"jackson","h1","VACCI",NA,NA,37,20180712,NA,NA,NA
+"jackson","l1","CARYA",NA,NA,3,20180713,NA,NA,NA
+"jackson","l1","DIVI",NA,NA,1,20180713,NA,NA,NA
+"jackson","l1","PRUNU",NA,NA,5,20180713,"Unsure of the ID stated as a shrub either Prunos or sambucus",NA,NA
+"jackson","l1","QUMA",NA,NA,4,20180713,NA,NA,NA
+"jackson","m1","DIVI",NA,NA,2,20180713,NA,NA,NA
+"jackson","m1","PIPA",NA,NA,1,20180713,NA,NA,NA
+"jackson","m1","QULA",NA,NA,7,20180713,NA,NA,NA
+"benning","a1","CAAM",NA,NA,1,20180724,NA,NA,NA
+"benning","a1","CRATA",NA,NA,3,20180724,NA,NA,NA
+"benning","a1","CARYA",NA,NA,20,20180724,NA,NA,NA
+"benning","a1","QUHE",NA,NA,8,20180724,NA,NA,NA
+"benning","a1","LIST",NA,NA,28,20180724,NA,NA,NA
+"benning","a1","MOCE",NA,NA,25,20180724,NA,NA,NA
+"benning","a1","PRUNU",NA,NA,4,20180724,NA,NA,NA
+"benning","a1","QUMA",NA,NA,16,20180724,NA,NA,NA
+"benning","a1","RHCO",NA,NA,38,20180724,NA,NA,NA
+"benning","a1","SAAL5",NA,NA,2,20180724,NA,NA,NA
+"benning","a1","VAAR",NA,NA,1,20180724,NA,NA,NA
+"benning","a1","VACCI",NA,NA,22,20180724,NA,NA,NA
+"benning","a1","VACCI",NA,NA,15,20180724,NA,NA,NA
+"benning","a1","QUAL",NA,NA,4,20180724,NA,NA,NA
+"benning","b1","LIST",NA,NA,1,20180724,NA,NA,NA
+"benning","c1","CAAM",NA,NA,24,20180725,NA,NA,NA
+"benning","c1","LIST",NA,NA,31,20180725,NA,NA,NA
+"benning","c1","RHCO",NA,NA,2,20180725,NA,NA,NA
+"benning","c1","RUBUS",NA,NA,4,20180725,NA,NA,NA
+"benning","d1","CARYA",NA,NA,4,20180725,NA,NA,NA
+"benning","d1","DIVI",NA,NA,1,20180725,NA,NA,NA
+"benning","d1","LIST",NA,NA,24,20180725,NA,NA,NA
+"benning","d1","PITA",NA,NA,3,20180725,NA,NA,NA
+"benning","d1","QULA",NA,NA,13,20180725,NA,NA,NA
+"benning","d1","QUMA",NA,NA,17,20180725,NA,NA,NA
+"benning","d1","VAAR",NA,NA,10,20180725,NA,NA,NA
+"benning","d1","VACCI",NA,NA,7,20180725,NA,NA,NA
+"benning","e1","LIST",NA,NA,11,20180726,NA,NA,NA
+"benning","f1","DIVI",NA,NA,2,20180726,NA,NA,NA
+"benning","f1","LIST",NA,NA,14,20180726,NA,NA,NA
+"benning","f1","MOCE",NA,NA,3,20180726,NA,NA,NA
+"benning","i1","CAAM",NA,NA,3,20180727,NA,NA,NA
+"benning","i1","CARYA",NA,NA,1,20180727,NA,NA,NA
+"benning","i1","LIST",NA,NA,1,20180727,NA,NA,NA
+"benning","i1","QUMA",NA,NA,3,20180727,NA,NA,NA
+"benning","j1","DIVI",NA,NA,3,20180727,NA,NA,NA
+"benning","j1","LEBI",NA,NA,8,20180727,NA,NA,NA
+"benning","j1","QUMA",NA,NA,11,20180727,NA,NA,NA
+"benning","j1","RHCO",NA,NA,49,20180727,NA,NA,NA
+"benning","j1","RUBUS",NA,NA,2,20180727,NA,NA,NA
+"benning","j1","thiny",NA,NA,3,20180727,NA,NA,NA
+"benning","j1","VAAR",NA,NA,1,20180727,NA,NA,NA
+"benning","g1","LEBI",NA,NA,1,20180728,NA,NA,NA
+"benning","g1","QUFA",NA,NA,2,20180728,NA,NA,NA
+"benning","h1","DIVI",NA,NA,9,20180728,NA,NA,NA
+"benning","h1","EUCA5",NA,NA,12,20180728,NA,NA,NA
+"benning","h1","shrub",NA,NA,2,20180728,NA,NA,NA
+"benning","h1","VACCI",NA,NA,12,20180728,NA,NA,NA
+"shelby","a1","CAAM",NA,NA,10,20180811,NA,NA,NA
+"shelby","c1","DIVI",NA,NA,13,20180811,NA,NA,NA
+"shelby","c1","ILGL",NA,NA,5,20180811,NA,NA,NA
+"shelby","c1","ILVO",NA,NA,27,20180811,NA,NA,NA
+"shelby","c1","PEBO",NA,NA,5,20180811,NA,NA,NA
+"shelby","c1","RHCO",NA,NA,1,20180811,NA,NA,NA
+"shelby","c1","VAAR",NA,NA,4,20180811,NA,NA,NA
+"shelby","a2","CAAM",NA,NA,23,20180812,NA,NA,NA
+"shelby","a2","LIST",NA,NA,2,20180812,NA,NA,NA
+"shelby","e1","DIVI",NA,NA,7,20180812,NA,NA,NA
+"shelby","e1","ILEX",NA,NA,1,20180812,NA,NA,NA
+"shelby","e1","LIST",NA,NA,1,20180812,NA,NA,NA
+"shelby","e1","PIPA",NA,NA,1,20180812,NA,NA,NA
+"shelby","e1","QUHE",NA,NA,1,20180812,NA,NA,NA
+"shelby","e1","QUMA",NA,NA,9,20180812,NA,NA,NA
+"shelby","e1","RHCO",NA,NA,2,20180812,NA,NA,NA
+"shelby","e1","RUBUS",NA,NA,12,20180812,NA,NA,NA
+"shelby","e1","VACCI",NA,NA,1,20180812,NA,NA,NA
+"shelby","h1","ACRU",NA,NA,24,20180813,NA,NA,NA
+"shelby","h1","BAMBU",NA,NA,29,20180813,NA,NA,NA
+"shelby","h1","berry bush?",NA,NA,16,20180813,"elena 7:58",NA,NA
+"shelby","h1","ILGL",NA,NA,31,20180813,NA,NA,NA
+"shelby","h1","ILVO",NA,NA,4,20180813,NA,NA,NA
+"shelby","h1","MAGNO",NA,NA,21,20180813,NA,NA,NA
+"shelby","h1","MOCE",NA,NA,11,20180813,NA,NA,NA
+"shelby","h1","PEBO",NA,NA,8,20180813,NA,NA,NA
+"shelby","h1","VACCI",NA,NA,1,20180813,NA,NA,NA
+"shelby","i1","ACRU",NA,NA,3,20180813,NA,NA,NA
+"shelby","i1","DIVI",NA,NA,5,20180813,NA,NA,NA
+"shelby","i1","ILVO",NA,NA,20,20180813,NA,NA,NA
+"shelby","i1","MOCE",NA,NA,5,20180813,NA,NA,NA
+"shelby","i1","PIEL",NA,NA,6,20180813,NA,NA,NA
+"shelby","i1","QULA",NA,NA,1,20180813,NA,NA,NA
+"shelby","i1","QUNI",NA,NA,1,20180813,NA,NA,NA
+"shelby","i1","VACCI",NA,NA,51,20180813,NA,NA,NA
+"shelby","j1","CAAM",NA,NA,32,20180814,NA,NA,NA
+"shelby","j1","DIVI",NA,NA,2,20180814,NA,NA,NA
+"shelby","j1","ILVO",NA,NA,153,20180814,NA,NA,NA
+"shelby","j1","MOCE",NA,NA,1,20180814,NA,NA,NA
+"shelby","j1","PEBO",NA,NA,8,20180814,NA,NA,NA
+"shelby","j1","PIEL",NA,NA,7,20180814,NA,NA,NA
+"shelby","j1","QUMA",NA,NA,2,20180814,NA,NA,NA
+"shelby","j1","QUNI",NA,NA,1,20180814,NA,NA,NA
+"shelby","j1","RHCO",NA,NA,3,20180814,NA,NA,NA
+"shelby","j1","RUBUS",NA,NA,1,20180814,NA,NA,NA
+"shelby","k1","CAAM",NA,NA,21,20180814,NA,NA,NA
+"shelby","k1","DIVI",NA,NA,1,20180814,NA,NA,NA
+"shelby","k1","QUST",NA,NA,1,20180814,NA,NA,NA
+"shelby","k1","RHCO",NA,NA,4,20180814,NA,NA,NA
+"shelby","k1","VAAR",NA,NA,14,20180814,NA,NA,NA
+"shelby","b2","ILGL",NA,NA,2,20180815,NA,NA,NA
+"shelby","b2","MAGNO",NA,NA,10,20180815,NA,NA,NA
+"shelby","b3","CAAM",NA,NA,8,20180815,NA,NA,NA
+"shelby","b3","PIPA",NA,NA,2,20180815,NA,NA,NA
+"gordon","x1","DIVI",NA,NA,7,20180820,NA,NA,NA
+"gordon","x1","QUIN",NA,NA,6,20180820,NA,NA,NA
+"gordon","x1","QULA",NA,NA,1,20180820,NA,NA,NA
+"gordon","x1","SAAL5",NA,NA,3,20180820,NA,NA,NA
+"gordon","y1","DIVI",NA,NA,2,20180820,NA,NA,NA
+"gordon","y1","SAAL5",NA,NA,4,20180820,NA,NA,NA
+"gordon","z1","PIPA",NA,NA,1,20180820,NA,NA,NA
+"gordon","z1","PRUNU",NA,NA,1,20180820,NA,NA,NA
+"gordon","z1","QUIN",NA,NA,1,20180820,NA,NA,NA
+"gordon","t1","QUIN",NA,NA,1,20180821,NA,NA,NA
+"gordon","t1","QULA",NA,NA,4,20180821,NA,NA,NA
+"gordon","v1","CARYA",NA,NA,2,20180821,NA,NA,NA
+"gordon","v1","COFL",NA,NA,4,20180821,NA,NA,NA
+"gordon","v1","JUVI",NA,NA,1,20180821,"eastern red cedar",NA,NA
+"gordon","v1","QUHE",NA,NA,3,20180821,NA,NA,NA
+"gordon","v1","QULA",NA,NA,1,20180821,NA,NA,NA
+"gordon","v1","VACCI",NA,NA,6,20180821,NA,NA,NA
+"gordon","v1","VIRO3",NA,NA,3,20180821,NA,NA,NA
+"gordon","w1","ILOP",NA,NA,1,20180821,NA,NA,NA
+"gordon","w1","CARYA",NA,NA,2,20180821,NA,NA,NA
+"gordon","w1","COFL",NA,NA,1,20180821,NA,NA,NA
+"gordon","w1","ILVO",NA,NA,1,20180821,NA,NA,NA
+"gordon","w1","LIST",NA,NA,2,20180821,NA,NA,NA
+"gordon","w1","PEBO",NA,NA,2,20180821,NA,NA,NA
+"gordon","w1","PIPA",NA,NA,1,20180821,NA,NA,NA
+"gordon","w1","PRUNU",NA,NA,1,20180821,NA,NA,NA
+"gordon","w1","QUNI",NA,NA,2,20180821,NA,NA,NA
+"gordon","w1","VACCI",NA,NA,2,20180821,NA,NA,NA
+"gordon","r1","QUMA",NA,NA,2,20180822,NA,NA,NA
+"gordon","r1","SAAL5",NA,NA,3,20180822,NA,NA,NA
+"gordon","s1","QUMA",NA,NA,1,20180822,NA,NA,NA
+"gordon","s1","SAAL5",NA,NA,8,20180822,NA,NA,NA
+"gordon","s1","VIRO3",NA,NA,1,20180822,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,0
