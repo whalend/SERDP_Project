@@ -22,6 +22,7 @@ knitr::opts_chunk$set(message = F)
 library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi)
 library(tidyr)
+library(viridisLite); library(viridis)
 
 source("R_scripts/copy-raw-data-from-Dropbox.R")
 
@@ -40,13 +41,26 @@ def_theme <- theme(legend.title = element_blank(),
             strip.background = element_blank(),
             panel.grid = element_blank()
             )
-invasion_color <- scale_color_manual(values = c("blue","darkorange"))
-invasion_fill <- scale_fill_manual(values = c("blue","darkorange"))
+invasion_color <- scale_color_viridis_d()
+invasion_fill <- scale_fill_viridis_d()
 
 ```
 
+```{r read in plot data}
+# Check source R script if needed 'plot-data-qaqc.R'
 
-```{r plot data manipulation, results='hide'}
+plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
+
+summary(plot_visit_data)
+
+```
+There are 3 `NA` values in the coarse fire history columns. The `NA`s correspond to the odd/extra cogongrass plot that we sampled at Camp Blanding and 2 plots at Camp Shelby that I (WD) have requested data for as of 9/6/2018.
+
+
+```{r plot data manipulation, results='hide', eval=F}
+# This is all done in a separate script now.
+# source("R_scripts/plot-data-qaqc.R")
+
 # plot_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/plot_info.csv")
 
 plot_locations <- rgdal::readOGR("data/plot-locations.shp", verbose = F)
@@ -64,9 +78,6 @@ plot_coords <- plot_coords %>%
              pid = paste(installation, plot_id, sep = " ")
       ) %>% 
       select(pid, xcoord_lon, ycoord_lat)
-
-
-
 
 # plot_data$fire_year <- as.integer(as.character(plot_data$fire_year))
 # plot_data$years_since_fire <- 2017 - plot_data$fire_year
@@ -125,8 +136,9 @@ plot_visit_data$installation_full_name[plot_visit_data$installation=="benning"] 
 # Installations Visited and Plots Sampled
 
 * **`r n_distinct(plot_visit_data$installation)` installations**
-* **`r n_distinct(plot_visit_data$last_fire_year)` different years since fire**
-* **`r n_distinct(plot_visit_data$pid)` different plots, some multiple times**
+* **`r n_distinct(plot_visit_data$years_since_fire)` different years since fire**
+* **`r n_distinct(plot_visit_data$plot_id)` different plots, some multiple times**
+* **`r length(plot_visit_data$plot_id)` plot visits (some revisits)**
 
 ![](figures/Year2bases.png)
 
@@ -144,10 +156,14 @@ plot_visit_data$imcy_inv <- factor(plot_visit_data$imcy_inv, levels=c("uninvaded
 # plot_data$inv_colors[plot_data$imcy_inv=="invaded"] <- "#d8b365"
 # plot_data$inv_colors[plot_data$imcy_inv=="uninvaded"] <- "#5ab4ac"
 
-ggplot(plot_visit_data, aes(installation_full_name,)) +
-      geom_bar(fill = "blue") +
+ggplot(plot_visit_data%>% 
+             group_by(installation_full_name) %>% 
+             summarise(plot_ct = n_distinct(plot_id)), 
+       aes(installation_full_name, plot_ct, label=plot_ct)) +
+      geom_col() +
+      geom_text(nudge_y = .2) +
       # facet_grid(installation_full_name ~ ., scales = "free_y") +
-      ylab("Number of sample points") +
+      ylab("Number of sample plots") +
       xlab("") +
       # ggtitle("Plots in Burn Units Across Installations") +
       theme_classic()
@@ -156,7 +172,7 @@ ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       geom_bar(aes(fill = imcy_inv), position = "dodge") +
       invasion_fill +
       # scale_fill_discrete(h = c(249,200)) +
-      ylab("Number of sample points") +
+      ylab("Number of plots") +
       xlab("Years since fire") +
       # ggtitle("Invaded vs. Uninvaded Plots Across Burn Units") +
       theme_classic() +
