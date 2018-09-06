@@ -152,3 +152,47 @@ hist(log1p(quadrat10m_summaries$avg_pct_bare))
 var((quadrat10m_summaries$avg_pct_bare))
 t.test(log1p(quadrat_summaries$avg_pct_bare),
        log1p(quadrat10m_summaries$avg_pct_bare), var.equal = F)
+
+
+#' There are no statistical differences in the means of these variables, which are aggregated to the plot level, based on these t-tests.
+
+
+#' ## Biomass data sampled at 25cm quadrats
+#'
+#+ 25cm biomass data ####
+biomass_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/quadrat25cm.csv")
+
+biomass_data <- filter(biomass_data, date>"2017-04-25", plot_id!="bland02", plot_id!="bland03")
+summary(biomass_data)
+biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
+biomass_data <- left_join(
+      select(biomass_data, installation,plot_id,fuel_mass_wet,litter_mass_wet),
+      select(plot_data, installation:full_names),
+      by = c("installation","plot_id")
+)
+# biomass_data$last_fire_year <- as.integer(biomass_data$last_fire_year)
+# biomass_data$years_since_fire <- 2017 - biomass_data$last_fire_year
+
+ggplot(biomass_data,
+       aes(years_since_fire, fuel_mass_wet*16)) +
+      geom_point(aes(color = installation), position = "jitter") +
+      # facet_grid(.~installation) +
+      # geom_smooth(method = "loess")
+      theme_bw() +
+      ylab(expression(paste("Standing biomass (g/", m^{2}, ")"))) +
+      xlab("Years since last fire") +
+      ggtitle("Fresh standing biomass across burn units at each installation",
+              subtitle = "(measurements at 25cm quadrats)")
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass-hitter.png", height=7)
+
+ggplot(biomass_data %>% group_by(installation, last_fire_year),
+       aes(years_since_fire, litter_mass_wet*16)) +
+      geom_point(aes(color = installation), position = "jitter") +
+      # facet_grid(.~installation) +
+      theme_bw() +
+      ylab(expression(paste("Litter biomass (g/", m^{2}, ")"))) +
+      xlab("Years since last fire") +
+      ggtitle("Fresh litter biomass across burn units at each installation",
+              subtitle = "(measurements at 25cm quadrats)")
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass-jitter.png", height=7)
+
