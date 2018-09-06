@@ -54,5 +54,7 @@ anti_join(plot_visit_data, canopy_cover)$plot_id
 ## missing canopy cover data for Blanding D1 from 2017-06-20 visit; do we have this data somewhere? Drew's phone/pics?
 ### I found these pics and entered them into the data entry sheet on Dropbox
 
+summary(canopy_cover)
+
 #+ write out processed data
 write_csv(canopy_cover, "data/processed_data/canopy-cover.csv")
