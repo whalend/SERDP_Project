@@ -1,0 +1,101 @@
+#' # Script for doing QA/QC on the plant species data
+
+#' ## Plant species data recorded in 1-meter quadrats
+#'
+#+ species data ####
+species_data <- read_csv("data/raw_data/species1m.csv")
+species_data$date <- as.Date(species_data$date, format = "%m/%d/%y")
+species_data <- filter(species_data, date>"2017-06-01")
+species_data$veg_id <- tolower(species_data$veg_id)
+length(unique(species_data$veg_id))
+species_data <- left_join(
+      species_data,
+      select(plot_visit_data, installation, plot_id, fire_year:imcy_inv),
+      by = c("installation","plot_id")
+)
+summary(species_data)
+
+species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10")))
+length(unique(species_sub$veg_id))
+summary(species_sub)
+
+## Testing for differences in dense vs. less dense data collection
+hist(log(species_data$pct_cover))
+var(log(species_data$pct_cover))
+hist(log(species_sub$pct_cover))
+var(log(species_sub$pct_cover))
+t.test(log(species_data$pct_cover), log(species_sub$pct_cover),
+       var.equal = T, paired = F)
+
+
+species_over_5pct <- filter(species_data, pct_cover>5)
+# species_sub_over_5pct <- filter(species_sub_over_5pct, cogongrass != "NA")
+
+ggplot(species_over_5pct,
+       aes(years_since_fire, pct_cover, color = veg_id)) +
+      geom_point(position="jitter") +
+      theme_bw() +
+      facet_grid(installation~imcy_inv) +
+      ylab("% cover") +
+      xlab("Years since fire") +
+      ggtitle("Range of species cover (>5%) at 1-meter quadrats")
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/species-pct-cover.png",
+       height = 7)
+
+# datac$se <- datac$sd / sqrt(datac$N)
+avg_species_cover <- species_data %>%
+      group_by(installation, imcy_inv, years_since_fire) %>%
+      summarise(avg_pct_cover = mean(pct_cover),
+                # n_obs = length(veg_id),
+                max_pct_cover = max(pct_cover),
+                se = sd(pct_cover)/sqrt(length(pct_cover)))
+ggplot(avg_species_cover,
+       aes(as.factor(years_since_fire), avg_pct_cover, fill = imcy_inv)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      geom_errorbar(aes(ymin = avg_pct_cover + se, ymax = avg_pct_cover - se),
+                    width = .2, position=position_dodge(width = .9)) +
+      facet_grid(installation~.) +
+      theme_bw() +
+      ylab("Average % cover") +
+      xlab("Years since fire") +
+      ggtitle("Averaged % cover of vegetation for each plot",
+              subtitle = "averaged across 1-meter quadrats")
+ggsave("~/Dropbox (UF)/SERDP-Project/figures/avg-pct-cover-bars.png",
+       height = 7)
+
+# species_sub <- (filter(species_data2, !quadrat_id %in% c("w2","w4","n2","n4","s2","s4","e2","e4")))
+# species_sub_plot <- ggplot(species_sub %>%
+#                              filter(pct_cover > 5) %>%
+#                              group_by(plot_id, veg_id) %>%
+#                              summarise(avg_pct_cover = mean(pct_cover),
+#                                        occurrence = length(veg_id)),
+#       aes(veg_id,avg_pct_cover, label = occurrence))
+
+# species_sub_plot +
+#       geom_bar(stat = "identity") +
+#       facet_grid(plot_id ~.) +
+#       theme_bw() +
+#       ggtitle("12 quadrats per plot")
+
+# dbh_census_years %>%
+# group_by(sample_year, speciesid, stem_status) %>%
+# summarise(occurrence = length(unique(plotid))) %>%
+# arrange(desc(occurrence))
+
+head(species_data)
+
+ggplot(species_data %>%
+             group_by(installation, plot_id) %>%
+             summarise(richness = length(unique(veg_id))),
+       aes(plot_id, richness)) +
+      geom_point() +
+      facet_grid(.~installation) +
+      theme_bw()
+
+ggplot(species_data %>%
+             filter(pct_cover > 1) %>%
+             group_by(installation, plot_id),
+       aes(plot_id, pct_cover, color = veg_id)) +
+      geom_point(position = "jitter") +
+      facet_grid(.~installation) +
+      theme_bw()
