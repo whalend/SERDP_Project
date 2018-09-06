@@ -34,6 +34,27 @@ plot_locs <- plot_locs %>%
 str(plot_locs)
 summary(plot_locs)
 duplicated(plot_locs$plot_id)# check for duplicate plot ids
+unique(plot_locs$plot_id)
+
+plot_locs$plot_id[plot_locs$plot_id=="movietheatercog on"] <- "blanding theater_cogon"
+
+#+ Create labels column for installation full names
+unique(plot_locs$installation)
+plot_locs$installation[plot_locs$installation=="movietheatercog"] <- "blanding"
+
+plot_locs$installation_full_name[plot_locs$installation=="blanding"] <- "Camp Blanding"
+plot_locs$installation_full_name[plot_locs$installation=="eglin"] <- "Eglin AFB"
+plot_locs$installation_full_name[plot_locs$installation=="tyndall"] <- "Tyndall AFB"
+plot_locs$installation_full_name[plot_locs$installation=="avonpark"] <- "Avon Park AFR"
+plot_locs$installation_full_name[plot_locs$installation=="shelby"] <- "Camp Shelby"
+plot_locs$installation_full_name[plot_locs$installation=="moody"] <- "Moody AFB"
+plot_locs$installation_full_name[plot_locs$installation=="jackson"] <- "Fort Jackson"
+plot_locs$installation_full_name[plot_locs$installation=="benning"] <- "Fort Benning"
+plot_locs$installation_full_name[plot_locs$installation=="gordon"] <- "Fort Gordon"
+
+unique(plot_locs$installation_full_name)
+summary(plot_locs)
+
 write_csv(plot_locs, "data/processed_data/plot_locations.csv")# save checked data
 
 
@@ -57,50 +78,46 @@ plot_visit_data <- plot_visit_data %>%
 #'
 #+ investigate NAs in "years since fire"
 filter(plot_visit_data, is.na(last_fire_year))
-# theater cogon at blanding and two at shelby that need data requested
+# theater cogon at Blanding that has no history, and two plots at Shelby that need data requested
+## I sent emails to Lisa Yager & Heide Stinson to request fire history data for Shelby. I also emailed the fire person at Tyndall requesting actual fire history data - right now the year is the best we have and in some cases it is a guess.
 
 # plot_visit_data <- filter(plot_visit_data, !is.na(last_fire_year))
 
 names(plot_locs)
 names(plot_visit_data)
-plot_locs$plot_id %in% plot_visit_data$plot_id
+unique(plot_locs$plot_id)
+unique(plot_visit_data$plot_id)
+unique(plot_visit_data$plot_id) %in% unique(plot_locs$plot_id)
 
-plot_visit_data <- left_join(plot_visit_data, plot_locs)
+# join plot locations to plot visit data
+plot_visit_data <- left_join(
+      plot_visit_data,
+      select(plot_locs, -pid, -name, -lon, -lat))
+summary(plot_visit_data)
+
+# filter(plot_visit_data, is.na(xcoord_lon))$plot_id
 
 plot_visit_data$notes
 
-sort(plot_visit_data$pid)
+sort(plot_visit_data$plot_id)
+sort(duplicated(plot_visit_data$plot_id))
+#' We revisited 9 of the 29 plots that were initially sampled in 2017.
 
+#+ write out plot visit data ####
 
-# plot_data[is.na(plot_data$last_fire_year),] <-
-# plot_data$imcy_inv[is.na(plot_data$imcy_inv)] <- "uninvaded"
-# plot_data$plot_id <- tolower(plot_data$plot_id)
+write_csv(plot_visit_data, "data/processed_data/plot_visit_data.csv")
 
-summary(plot_data)
+#+ initial plotting of plot visit data ####
 
-## Add labels column for installation names
-plot_data$installation_full_name[plot_data$installation=="blanding"] <- "Camp Blanding"
-plot_data$installation_full_name[plot_data$installation=="eglin"] <- "Eglin AFB"
-plot_data$installation_full_name[plot_data$installation=="tyndall"] <- "Tyndall AFB"
-plot_data$installation_full_name[plot_data$installation=="avonpark"] <- "Avon Park AFR"
-plot_data$installation_full_name[plot_data$installation=="shelby"] <- "Camp Shelby"
-plot_data$installation_full_name[plot_data$installation=="moody"] <- "Moody AFB"
-
-# plot_visit_data <- plot_data %>%
-#       mutate(years_since_fire = 2017 - last_fire_year) %>%
-#       select(installation, plot_id, imcy_inv, last_fire_year, years_since_fire)
-plot_data <- select(plot_data, installation, plot_id, installation_full_name, xcoord_lon, ycoord_lat)
-
-write_csv(plot_data, "data/plot_data.csv")
-
-##
-
-
-ggplot(plot_data, aes(installation)) +
-      geom_bar() +
+ggplot(plot_data %>%
+             group_by(installation) %>%
+             summarise(plot_ct = n_distinct(plot_id)),
+       aes(installation, plot_ct, label=plot_ct)) +
+      geom_col() +
+      geom_text(nudge_y = .2) +
       ylab("Number of plots") +
       ggtitle("Number of plots established at each installation") +
-      theme_bw()
+      theme_classic()
 
 ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       geom_bar(aes(fill = imcy_inv), position = "dodge") +
@@ -109,7 +126,7 @@ ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       ggtitle("Plots sampled across burn units") +
       theme_bw()
 # Number of burn units sampled
-length(unique(plot_visit_data$fire_year))
+length(unique(plot_visit_data$years_since_fire))
 
 ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       geom_bar() +
@@ -119,11 +136,11 @@ ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       ggtitle("Number of plots across burn units by installation") +
       theme_bw()
 
-ggplot(plot_data, aes(imcy_inv)) +
+ggplot(plot_visit_data, aes(imcy_inv)) +
       geom_bar() +
       ylab("Number of plots") +
       xlab("") +
-      ggtitle("Invaded plots: 8, Uninvaded plots: 21") +
+      # ggtitle("Invaded plots: 8, Uninvaded plots: 21") +
       theme_bw()
 
 
