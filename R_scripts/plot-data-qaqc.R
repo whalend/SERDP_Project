@@ -142,8 +142,3 @@ ggplot(plot_visit_data, aes(imcy_inv)) +
       xlab("") +
       # ggtitle("Invaded plots: 8, Uninvaded plots: 21") +
       theme_bw()
-
-
-#' ## Host Abundance Estimates
-#+ dung data ####
-dung_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/dung.csv")
