@@ -255,14 +255,10 @@ ggplot(cc_inv, aes(years_since_fire, avg_canopy_cover)) +
 # Species Data - 1-meter Quadrats
 
 ```{r load 1m quadrat data}
-quadrat_data <- read_csv("data/raw_data/quadrat1m.csv")
+quadrat_data <- read_csv("data/processed_data/quadrat1m.csv")
 quadrat_data$date <- as.Date(as.character(quadrat_data$date), format = "%Y%m%d")
 quadrat_data <- quadrat_data %>% 
-      filter(date > "2017-06-01",# discard early data collection at Camp Blanding
-      plot_id != "cogan" # discard movie theater cogon plot at Camp Blanding
-      ) %>% 
-      mutate(visit_year = lubridate::year(date),
-             pid = paste(installation, plot_id, sep = " "))
+      mutate(visit_year = lubridate::year(date))
 
 # summary(quadrat_data)
 
