@@ -34,7 +34,7 @@ rm(list=ls())
 
 def_theme <- theme(legend.title = element_blank(),
             legend.text = element_text(size = 18),
-            legend.position = "none",
+            legend.position = "top",
             axis.text = element_text(size = 18),
             axis.title = element_text(size = 18),
             plot.title = element_text(size = 20),
@@ -51,7 +51,8 @@ invasion_fill <- scale_fill_viridis_d()
 
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 
-summary(plot_visit_data)
+# summary(plot_visit_data)
+plot_visit_data$visit_year <- lubridate::year(plot_visit_data$visit_date)
 
 ```
 There are 3 `NA` values in the coarse fire history columns. The `NA`s correspond to the odd/extra cogongrass plot that we sampled at Camp Blanding and 2 plots at Camp Shelby that I (WD) have requested data for as of 9/6/2018.
@@ -177,7 +178,8 @@ ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       # ggtitle("Invaded vs. Uninvaded Plots Across Burn Units") +
       theme_classic() +
       def_theme +
-      theme(legend.position = c(.8,.8))
+      theme(legend.position = c(.8,.8)) +
+      NULL
 
 ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       geom_bar(aes(fill = imcy_inv), position = "dodge") +
@@ -188,7 +190,7 @@ ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       # ggtitle("Invaded vs. Uninvaded Plots Across Burn Units") +
       theme_bw() +
       def_theme +
-      theme(legend.position = "top")
+      NULL
 
 # ggplot(plot_data, aes(imcy_inv)) +
 #       geom_bar() +
@@ -204,18 +206,18 @@ ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
 
 ```
 
+We made 104 plot visits, therefore there should for the most part be 104 observations for all data summarized to the plot level. One exception I can think of is that we didn't do tick sampling at the 'blanding theater_cogon' plot.
 
 # Canopy Cover Data
 ```{r load canopy cover data}
-canopy_cover <- read_csv("data/raw_data/densiometer-data.csv")
+canopy_cover <- read_csv("data/processed_data/canopy-cover.csv")
 canopy_cover <- canopy_cover %>% 
       mutate(date = as.Date(as.character(date), format = "%Y%m%d"),
-             visit_year = lubridate::year(date),
-             pid = paste(installation, plot_id, sep = " "))
+             visit_year = lubridate::year(date))
 
 canopy_cover_summary <- canopy_cover %>%
       filter(distance == 10) %>% 
-      group_by(installation, plot_id, pid, date, visit_year) %>%
+      group_by(installation, plot_id, visit_year) %>%
       summarise(avg_canopy_cover = mean(pct_canopy_cover),
                 sd_canopy_cover = sd(pct_canopy_cover),
                 n_obs = length(pct_canopy_cover),
@@ -224,7 +226,7 @@ summary(canopy_cover_summary)
 
 cc_inv <- left_join(canopy_cover_summary, plot_visit_data)
 # summary(cc_inv)
-cc_inv <- filter(cc_inv, !is.na(years_since_fire))
+# cc_inv <- filter(cc_inv, !is.na(years_since_fire))
 
 ```
 
@@ -245,10 +247,8 @@ ggplot(cc_inv, aes(years_since_fire, avg_canopy_cover)) +
       theme_classic() +
       def_theme +
       theme(legend.title = element_blank())
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/canopy-cover-fire.png", height = 7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/canopy-cover-fire.png", height = 7.5, width = 7.5)
 
-# plot_data1 <- left_join(ungroup(plot_data), ungroup(canopy_cover_summary))
-# plot_data1 <- left_join(ungroup(plot_data), ungroup(quadrat_summaries))
 ```
 
 
