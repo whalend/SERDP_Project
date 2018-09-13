@@ -1,19 +1,30 @@
 #' # Script for doing QA/QC on the plant species data
 
+#+ load processed plot visit data ####
+plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
+
 #' ## Plant species data recorded in 1-meter quadrats
 #'
 #+ species data ####
 species_data <- read_csv("data/raw_data/species1m.csv")
-species_data$date <- as.Date(species_data$date, format = "%m/%d/%y")
-species_data <- filter(species_data, date>"2017-06-01")
+species_data <- select(species_data, Order:functional_group__1)
+
+species_data$date <- as.Date(as.character(species_data$date), format = "%Y%m%d")
+species_data <- species_data %>%
+      filter(date>"2017-06-01") %>%
+      mutate(visit_year = lubridate::year(date),
+             plot_id = paste(installation, plot_id, sep = " "))
 species_data$veg_id <- tolower(species_data$veg_id)
 length(unique(species_data$veg_id))
 species_data <- left_join(
       species_data,
-      select(plot_visit_data, installation, plot_id, fire_year:imcy_inv),
-      by = c("installation","plot_id")
+      select(plot_visit_data, -notes)
 )
 summary(species_data)
+
+
+
+
 
 species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10")))
 length(unique(species_sub$veg_id))
