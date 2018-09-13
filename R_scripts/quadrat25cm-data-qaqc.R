@@ -31,14 +31,56 @@ filter(biomass_data, is.na(standing_fuel_mass_dry))$standing_fuel_mass_wet
 filter(biomass_data, is.na(standing_fuel_mass_dry)) %>%
       select(date, plot_id, transect_id, standing_fuel_mass_wet)
 filter(biomass_data, is.na(pct_litter)| is.na(pct_bare)) %>%
-  select(date, plot_id, transect_id, pct_litter,pct_bare, pct_green, litter_ht, litter_mass_wet)
+  select(plot_id, transect_id, pct_litter,pct_bare, pct_green, litter_mass_dry, standing_fuel_mass_dry)
 
-biomass_data$pct_litter[is.na(biomass_data$pct_litter)]
+## Avon Park A1 Cogon2 & E2 Cogon3 true NA for pct_litter, pct_bare, pct_green ##
+
+biomass_data <- filter(biomass_data, transect_id %in% c("east","west","north","south"))
+
+## Filtered out cogon data from 25cm quadrat biomass data ##
+
+filter(biomass_data, is.na(pct_fuel)| is.na(pct_bare) | is.na(pct_green)) %>%
+  select(plot_id, transect_id, pct_litter,pct_bare, pct_green, litter_mass_dry, standing_fuel_mass_dry)
+
+biomass_data$pct_litter[biomass_data$plot_id=="avonpark c2" &
+                          biomass_data$transect_id=="south"] <- 80
+biomass_data$pct_green[biomass_data$plot_id=="avonpark c2" &
+                          biomass_data$transect_id=="south"] <- 55
+
+biomass_data$pct_bare[biomass_data$plot_id=="avonpark f1" &
+                        biomass_data$transect_id=="west"] <- 75
+
+filter(biomass_data, is.na(pct_fuel)| is.na(pct_bare) | is.na(pct_green) | is.na(pct_litter) |
+         is.na(standing_fuel_mass_dry))%>%
+  select(date, plot_id, transect_id, pct_fuel, pct_litter,pct_bare, pct_green, standing_fuel_mass_dry)
+
+biomass_data$pct_fuel[biomass_data$plot_id=="jackson h1" &
+                        biomass_data$transect_id=="north"] <- 60
+
+biomass_data$pct_bare[biomass_data$plot_id=="jackson h1" &
+                        biomass_data$transect_id=="north"] <- 0
+
+biomass_data$pct_litter[biomass_data$plot_id=="jackson h1" &
+                        biomass_data$transect_id=="north"] <- 100
+
+biomass_data$pct_green[biomass_data$plot_id=="jackson h1" &
+                        biomass_data$transect_id=="north"] <- 80
+
+names(biomass_data)
 ## Shelby B1 in 2017 is probably missing because cogongrass in MS
 ## Not sure why the others are missing
 filter(biomass_data, plot_id=="blanding b1", transect_id=="south")
 biomass_data$standing_fuel_mass_dry[biomass_data$plot_id=="blanding b1" &
 biomass_data$transect_id=="south"] <- 0 
+
+## Reading in cogon data for litter biomass ##
+
+cogond <- read_csv("data/raw_data/cogon-data.csv")
+filter(cogond, site=="avonpark", Quadrant=="cogon 3") %>% 
+  select(site, date, plot_id, Quadrant, CogonSampleID, fresh_biomass, dry_biomass)
+
+filter(cogond, site=="shelby") %>% 
+  select(site, date, plot_id, Quadrant, CogonSampleID, fresh_biomass, dry_biomass)
 
 biomass_data$standing_fuel_mass_dry[is.na(biomass_data$standing_fuel_mass_dry) &
                                       biomass_data$standing_fuel_mass_wet==0] <- 0
