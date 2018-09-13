@@ -51,10 +51,9 @@ filter(plot_visit_data, plot_id=="blanding c1")
 quadrat_data$date[is.na(quadrat_data$date)] <- 20180516
 
 quadrat_data <- quadrat_data %>%
-      filter(date > 20170601) # discard design test data
+      filter(date > 20170601) # discard initial sampling test data
 
 unique(plot_visit_data$plot_id) %in% unique(quadrat_data$plot_id)
-#+ convert herb_veg_ht to numeric ###
 
 summary(quadrat_data)
 
@@ -63,6 +62,7 @@ sort(unique(quadrat_data$herb_veg_ht1))# "82I"
 sort(unique(quadrat_data$herb_veg_ht2))# "74I"
 sort(unique(quadrat_data$herb_veg_ht3))# "70I" & "nA"
 
+
 filter(quadrat_data, herb_veg_ht1=="82I")$plot_id
 quadrat_data$herb_veg_ht1[quadrat_data$herb_veg_ht1=="82I"] <- 82
 filter(quadrat_data, herb_veg_ht2=="74I")$plot_id
@@ -70,7 +70,9 @@ quadrat_data$herb_veg_ht2[quadrat_data$herb_veg_ht2=="74I"] <- 74
 filter(quadrat_data, herb_veg_ht3=="70I")$plot_id
 quadrat_data$herb_veg_ht3[quadrat_data$herb_veg_ht3=="70I"] <- 70
 filter(quadrat_data, herb_veg_ht3=="nA")$plot_id
+## jackson h1 okay to be NA
 
+#+ convert herb_veg_ht to numeric ###
 quadrat_data <- quadrat_data %>%
       mutate(herb_veg_ht1 = as.numeric(herb_veg_ht1),
        herb_veg_ht2 = as.numeric(herb_veg_ht2),
@@ -79,12 +81,13 @@ quadrat_data <- quadrat_data %>%
 summary(quadrat_data)
 
 #+ check NA's in ht1 columns and convert to 0 as appropriate ####
-
 summary(filter(quadrat_data, is.na(woody_veg_ht1)))
+## woody veg ht2 and 3 are all NA's for this subset, so woody veg ht1 = 0
 # View(filter(quadrat_data, is.na(woody_veg_ht1), date < 20180101))
 quadrat_data$woody_veg_ht1[is.na(quadrat_data$woody_veg_ht1)] <- 0
 
 summary(filter(quadrat_data, is.na(herb_veg_ht1)))
+## same as for woody veg hts, so herb veg ht1 = 0
 quadrat_data$herb_veg_ht1[is.na(quadrat_data$herb_veg_ht1)] <- 0
 
 ## check 'pct_green' as character
@@ -92,11 +95,31 @@ unique(quadrat_data$pct_green)
 quadrat_data$pct_green[quadrat_data$pct_green=="<1"] <- 0.5
 quadrat_data$pct_green <- as.numeric(quadrat_data$pct_green)
 
-
-## check pct litter, bare, green NA's ####
+## check pct litter, pct bare, pct green NA's ####
 filter(quadrat_data, is.na(pct_litter)) %>%
-      select(plot_id, date, quadrat_id, litter_ht1, pct_litter, pct_green, pct_bare)
-## All from the same plots/quadrats, probably the ones we whiffed on recording data.
+      select(plot_id, quadrat_id, pct_litter, pct_green, pct_bare, date)
+## All from the same plots/quadrats, probably the ones we whiffed on recording data. I (WD) went back to original datasheets to come up with some estimates based on values for the 25cm quadrat and the other 1m quadrats in the plot.
+
+### replacement values for Shelby I1 quadrat S10
+quadrat_data$pct_litter[quadrat_data$plot_id=="shelby i1" & quadrat_data$quadrat_id=="s10"] <- 100
+quadrat_data$pct_green[quadrat_data$plot_id=="shelby i1" & quadrat_data$quadrat_id=="s10"] <- 55
+quadrat_data$pct_bare[quadrat_data$plot_id=="shelby i1" & quadrat_data$quadrat_id=="s10"] <- 0
+
+### replacement values for Shelby A1 quadrat e10
+quadrat_data$pct_litter[quadrat_data$plot_id=="shelby a1" & quadrat_data$quadrat_id=="e10"] <- 20
+quadrat_data$pct_green[quadrat_data$plot_id=="shelby a1" & quadrat_data$quadrat_id=="e10"] <- 66
+quadrat_data$pct_bare[quadrat_data$plot_id=="shelby a1" & quadrat_data$quadrat_id=="e10"] <- 75
+
+### replacement values for Shelby B3 quadrat s10
+quadrat_data$pct_litter[quadrat_data$plot_id=="shelby b3" & quadrat_data$quadrat_id=="s10"] <- 35
+quadrat_data$pct_green[quadrat_data$plot_id=="shelby b3" & quadrat_data$quadrat_id=="s10"] <- 80
+quadrat_data$pct_bare[quadrat_data$plot_id=="shelby b3" & quadrat_data$quadrat_id=="s10"] <- 65
+
+summary(quadrat_data)
+
+#+ check pct wood litter NAs ####
+filter(quadrat_data, is.na(pct_wood_litter))
+quadrat_data$pct_wood_litter[is.na(quadrat_data$pct_wood_litter)] <- 0
 
 #+ write out processed data ####
 write_csv(quadrat_data, "data/processed_data/quadrat1m.csv")
@@ -204,8 +227,5 @@ t.test(log1p(quadrat_summaries$avg_pct_bare),
        log1p(quadrat10m_summaries$avg_pct_bare), var.equal = F)
 
 
-#' There are no statistical differences in the means of these variables, which are aggregated to the plot level, based on these t-tests.
+#' Based on these t-tests there are no statistical differences in the means of these variables aggregated to the plot level.
 
-
-#' ## Biomass data sampled at 25cm quadrats
-#'
