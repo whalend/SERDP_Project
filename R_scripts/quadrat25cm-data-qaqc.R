@@ -67,6 +67,7 @@ biomass_data$pct_green[biomass_data$plot_id=="jackson h1" &
                         biomass_data$transect_id=="north"] <- 80
 
 names(biomass_data)
+
 ## Shelby B1 in 2017 is probably missing because cogongrass in MS
 ## Not sure why the others are missing
 filter(biomass_data, plot_id=="blanding b1", transect_id=="south")
@@ -85,6 +86,11 @@ filter(cogond, site=="shelby") %>%
 biomass_data$standing_fuel_mass_dry[is.na(biomass_data$standing_fuel_mass_dry) &
                                       biomass_data$standing_fuel_mass_wet==0] <- 0
 
+## End NA processing - Steven ##
+write_csv(biomass_data, "data/processed_data/quadrat25cm.csv")
+
+
+###########
 biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
 biomass_data <- left_join(
       select(biomass_data, installation,plot_id,fuel_mass_wet,litter_mass_wet),
