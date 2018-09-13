@@ -27,14 +27,21 @@ biomass_data$plot_id[biomass_data$plot_id=="blanding cogan"] <- "blanding theate
 
 summary(biomass_data)
 ## 7 NAs for dry standing fuel mass
-filter(biomass_data, is.na(standing_fuel_mass_dry))
+filter(biomass_data, is.na(standing_fuel_mass_dry))$standing_fuel_mass_wet
 filter(biomass_data, is.na(standing_fuel_mass_dry)) %>%
-      select(date, plot_id)
+      select(date, plot_id, transect_id, standing_fuel_mass_wet)
+filter(biomass_data, is.na(pct_litter)| is.na(pct_bare)) %>%
+  select(date, plot_id, transect_id, pct_litter,pct_bare, pct_green, litter_ht, litter_mass_wet)
+
+biomass_data$pct_litter[is.na(biomass_data$pct_litter)]
 ## Shelby B1 in 2017 is probably missing because cogongrass in MS
 ## Not sure why the others are missing
+filter(biomass_data, plot_id=="blanding b1", transect_id=="south")
+biomass_data$standing_fuel_mass_dry[biomass_data$plot_id=="blanding b1" &
+biomass_data$transect_id=="south"] <- 0 
 
-
-
+biomass_data$standing_fuel_mass_dry[is.na(biomass_data$standing_fuel_mass_dry) &
+                                      biomass_data$standing_fuel_mass_wet==0] <- 0
 
 biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
 biomass_data <- left_join(
