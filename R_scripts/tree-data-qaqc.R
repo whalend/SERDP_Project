@@ -15,15 +15,15 @@ tree_data <- read_csv("data/raw_data/trees.csv")
 
 summary(tree_data)
 
-filter(tree_data, is.na(plot_id)) %>% 
+filter(tree_data, is.na(plot_id)) %>%
   select(date, installation, plot_id, record_id, stem_id, dbh, tag, species)
 
 tree_data = filter(tree_data, !is.na(plot_id))
 
-filter(tree_data, is.na(dbh)) %>% 
+filter(tree_data, is.na(dbh)) %>%
   select(date, plot_id, record_id, stem_id, dbh, tag, species, health)
 
-filter(tree_data, dbh==0) %>% 
+filter(tree_data, dbh==0) %>%
   select(date, plot_id, stem_id, tag, species, dbh)
 
 tree_data$dbh[tree_data$tag=="1138"] <- 15.2
@@ -32,7 +32,7 @@ tree_data$dbh[tree_data$tag=="1139"] <- 14.0
 ### Corrected two tree DBH that were entered as 0          ###
 ### Two tree DBH are to be left NA, trees burned up/downed ###
 
-filter(tree_data, dbh<3) %>% 
+filter(tree_data, dbh<3) %>%
   select(date, plot_id, stem_id, tag, species, dbh)
 
 tree_data$dbh[tree_data$tag=="3056"] <- 25.7
@@ -45,13 +45,13 @@ tree_data$plot_id[tree_data$plot_id=="cogon plot"] <- "theater_cogon"
 
 tree_data <- tree_data %>%
   mutate(plot_id = paste(installation, plot_id, sep = " "),
-         plot_id=tolower(plot_id)) %>% 
+         plot_id=tolower(plot_id)) %>%
   filter(date>20170601)
 
-filter(tree_data, is.na(azimuth), plot_id!="blanding theater_cogon") %>% 
+filter(tree_data, is.na(azimuth), plot_id!="blanding theater_cogon") %>%
   select(date, stem_id, plot_id, distance, azimuth, species, tag, dbh)
 
-filter(tree_data, is.na(azimuth), plot_id=="blanding theater_cogon") %>% 
+filter(tree_data, is.na(azimuth), plot_id=="blanding theater_cogon") %>%
   select(date, stem_id, installation, plot_id, distance, azimuth, species, tag, dbh)
 
 tree_data$azimuth[tree_data$tag=="4092"] <- 320
@@ -83,7 +83,7 @@ summary(tree_data)
 
 unique(tree_data$plot_id)
 
-filter(tree_data, is.na(health), plot_id!="blanding theater_cogon") %>% 
+filter(tree_data, is.na(health), plot_id!="blanding theater_cogon") %>%
   select(installation, plot_id, date, tag, species, health, canopy)
 
 tree_data$health[tree_data$plot_id=="jackson m1" & tree_data$tag=="3235"] <- 0
@@ -94,37 +94,37 @@ tree_data$health[tree_data$tag=="3888"] <- 0
 ## No health or canopy entered for tag 4083 ##
 
 
-filter(tree_data, is.na(distance), plot_id!="blanding theater_cogon") %>% 
+filter(tree_data, is.na(distance), plot_id!="blanding theater_cogon") %>%
   select(installation, plot_id, date, tag, species, distance)
 
 tree_data$distance[tree_data$tag=="1755"] <- 11.5
 
 ## Distance -- Changed tag 1755, tag 120 Eglin P1 has no value NA ##
 
-filter(tree_data, is.na(height)) %>% 
+filter(tree_data, is.na(height)) %>%
   select(date, plot_id, stem_id, tag, species, dbh, height)
 
-filter(tree_data, is.na(char)) %>% 
+filter(tree_data, is.na(char)) %>%
   select(date, plot_id, stem_id, tag, species, dbh, char)
 
 summary(tree_data)
 
-filter(tree_data, distance=="124") %>% 
+filter(tree_data, distance=="124") %>%
   select(date, plot_id, stem_id, tag, species, dbh, distance)
 
 tree_data$distance[tree_data$tag=="1995"] <- 12.4
 
-filter(tree_data, distance=="121") %>% 
+filter(tree_data, distance=="121") %>%
   select(date, plot_id, stem_id, tag, species, dbh, distance)
 
 tree_data$distance[tree_data$tag=="3933"] <- 12.1
 
-filter(tree_data, distance=="101") %>% 
+filter(tree_data, distance=="101") %>%
   select(date, plot_id, stem_id, tag, species, dbh, distance)
 
 tree_data$distance[tree_data$tag=="1996"] <- 10.0
 
-filter(tree_data, distance>12.6) %>% 
+filter(tree_data, distance>12.6) %>%
   select(date, plot_id, stem_id, tag, species, dbh, distance, azimuth)
 
 tree_data$distance[tree_data$tag=="1386"] <- 7.3
@@ -137,7 +137,7 @@ tree_data$distance[tree_data$stem_id=="1818"] <- 8.1
 
 ## Corrected distances over 12.6 due to straight error or no decimal ##
 
-filter(tree_data, height>50) %>% 
+filter(tree_data, height>50) %>%
   select(date, plot_id, stem_id, tag, species, dbh, height)
 
 tree_data$height[tree_data$tag=="3650"] <- 7.6
@@ -145,12 +145,12 @@ tree_data$height[tree_data$tag=="4613"] <- 13.2
 
 ## Corrected unrealistic high heights that were missing decimal points ##
 
-filter(tree_data, height<2) %>% 
+filter(tree_data, height<2) %>%
   select(date, plot_id, stem_id, tag, species, dbh, height)
 
 ## Low tree heights of 1.4, 1.4, 0.6 are correct ##
 
-filter(tree_data, char>15) %>% 
+filter(tree_data, char>15) %>%
   select(date, plot_id, stem_id, tag, species, dbh, char)
 
 tree_data$char[tree_data$tag=="3076"] <- 0.42
@@ -161,44 +161,13 @@ summary(tree_data)
 
 write_csv(tree_data, "data/processed_data/trees.csv")
 
-##Steven stopped processing here
+##Steven stopped processing here ####
 
-
+# Quick plot checks ####
+tree_data <- read_csv("data/processed_data/trees.csv")
+qplot(x = dbh, y = height, data = tree_data)
+qplot(x = height, y = char, data = tree_data) +
+      geom_abline(intercept = 0, slope = 1)
+## all looks good - "outlier" values already checked
 str(tree_data)
-n_distinct(tree_data$tag)
-# tail(tree_data)
-# summary(as.numeric(tree_data$tag))
-
-tree_data_sub <- left_join(
-      tree_data_sub,
-      select(plot_data, installation:full_names),
-      by = c("installation","plot_id"))
-
-ggplot(tree_data_sub %>%
-             group_by(installation, species, last_fire_year, cogongrass) %>%
-             summarise(total_dbh = sum(dbh)),
-       aes(last_fire_year, total_dbh)
-) +
-      geom_bar(aes(fill = species), stat = "identity", position = "dodge") +
-      facet_grid(.~installation) +
-      theme_bw()
-
-ggplot(tree_data_sub %>%
-             group_by(installation, species, years_since_fire, cogongrass),
-       aes(years_since_fire, dbh, color = species)) +
-      geom_point(position = "jitter") +
-      facet_grid(installation~cogongrass) +
-      theme_bw() +
-      xlab("Years since fire") +
-      ylab("Diameter at breast height")
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-dbh-jitter.png", height=7)
-
-ggplot(tree_data_sub %>%
-             group_by(installation, species, years_since_fire, cogongrass),
-       aes(years_since_fire, height, color = species)) +
-      geom_point(position = "jitter") +
-      facet_grid(installation~cogongrass) +
-      theme_bw() +
-      xlab("Years since fire") +
-      ylab("Tree height")
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-height-jitter.png", height=7)
+summary(tree_data)
