@@ -3,8 +3,8 @@
 %% upated by @jhollist 09/15/2014
 %% inspired by @cboetting https://github.com/cboettig/template and
 %% @rmflight blog posts:
-%% http://rmflight.github.io/posts/2014/07/analyses_as_packages.html 
-%% http://rmflight.github.io/posts/2014/07/vignetteAnalysis.html).  
+%% http://rmflight.github.io/posts/2014/07/analyses_as_packages.html
+%% http://rmflight.github.io/posts/2014/07/vignetteAnalysis.html).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[11pt,a4paper]{article}
@@ -73,15 +73,15 @@
 \setcounter{secnumdepth}{0}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Changes borrowed from @cboettig, added by @jhollist 
-% A modified page layout 
+%Changes borrowed from @cboettig, added by @jhollist
+% A modified page layout
 \textwidth 6.75in
 \oddsidemargin -0.15in
 \evensidemargin -0.15in
 \textheight 9in
 \topmargin -0.5in
-\usepackage{lineno} % add 
-  \linenumbers % turns line numbering on 
+\usepackage{lineno} % add
+  \linenumbers % turns line numbering on
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -126,6 +126,9 @@ S. Luke Flory
 \newcommand{\bleft}{\begin{flushleft}}
 \newcommand{\eleft}{\end{flushleft}}
 
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
 \begin{document}
 %%Edited by @jhollist 09/15/2014
 %%Adds title from YAML
@@ -143,7 +146,7 @@ S. Luke Flory \textsuperscript{1}
 \end{center}
 %%Adds affiliations from YAML
 \begin{justify}
-\footnotesize \emph{ 
+\footnotesize \emph{
 \\*
 \textsuperscript{1}Agronomy Department, University of Florida, Gainesville, FL, 32611, USA\\*
 }
@@ -151,7 +154,7 @@ S. Luke Flory \textsuperscript{1}
 \newcounter{num}
 \setcounter{num}{1}
 \\[0.1cm]
-\footnotesize \emph{ 
+\footnotesize \emph{
 \ifnum\value{num}=1%
 \textsuperscript{*} corresponding author:
 \fi
@@ -277,124 +280,102 @@ loading fuels vertically into the FABIO.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   Study Species
-\end{enumerate}
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\tightlist
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    Collection of materials
+  \item
+    Drying to a ``constant'' fuel moisture
+  \end{enumerate}
 \item
-  Collection of materials
-\item
-  Drying to a ``constant'' fuel moisture
-\end{enumerate}
+  Burning Location
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Burning Location\\
-\end{enumerate}
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    BARS
+  \item
+    Weather measurements
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\tightlist
-\item
-  BARS
-\item
-  Weather measurements
-\item
-  Kestral data
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
-\tightlist
+    \begin{enumerate}
+    \def\labelenumiii{\roman{enumiii}.}
+    \tightlist
+    \item
+      Kestrel data
+    \end{enumerate}
+  \end{enumerate}
 \item
   Experimental treatments
-\end{enumerate}
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\tightlist
-\item
-  Piled vs Standing
-\item
-  Number of burns
-\item
-  Blocked by day
-\end{enumerate}
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    Piled vs Standing
+  \item
+    Number of burns
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  (Burning all biomass levels, standing and piled, per day)
+    \begin{enumerate}
+    \def\labelenumiii{\roman{enumiii}.}
+    \tightlist
+    \item
+      Blocked by day
+    \end{enumerate}
+  \end{enumerate}
 \item
   Flammability measurements
-\end{enumerate}
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\tightlist
-\item
-  All fires were ignited with a drip torch (Brand XX style XX)
-\item
-  All were lighted as head fires
-\end{enumerate}
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    All fires were ignited with a drip torch (Brand XX style XX)
 
-\begin{enumerate}
-\def\labelenumi{\roman{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  If failed to burn, was attempted 3 times from 3 sides before deemed a
-  failure.
-\end{enumerate}
+    \begin{enumerate}
+    \def\labelenumiii{\roman{enumiii}.}
+    \tightlist
+    \item
+      All were lighted as head fires
+    \item
+      If failed to burn, was attempted 3 times from 3 sides before
+      deemed a failure.
+    \end{enumerate}
+  \item
+    Fire temperature was measured every second with XX type
+    thermocouples
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Fire temperature was measured every second with XX type thermocouples
-\item
-  Locations of sensors
-\end{enumerate}
+    \begin{enumerate}
+    \def\labelenumiii{\roman{enumiii}.}
+    \tightlist
+    \item
+      Locations of sensors
+    \item
+      Determined maximum temperature
+    \item
+      Determined time above 100C
+    \end{enumerate}
+  \item
+    Rate of spread
 
-\begin{enumerate}
-\def\labelenumi{\roman{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Determined maximum temperature
-\item
-  Determined time above 100C
-\item
-  Rate of spread
-\item
-  50cm distance and stop watch
-\item
-  Flame height
-\item
-  String soaked in Foscheck
-\end{enumerate}
+    \begin{enumerate}
+    \def\labelenumiii{\roman{enumiii}.}
+    \tightlist
+    \item
+      50cm distance and stop watch
+    \end{enumerate}
+  \item
+    Flame height
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\setcounter{enumi}{4}
-\tightlist
-\item
-  Remaining biomass was collected to determine percent consumed
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{4}
-\tightlist
+    \begin{enumerate}
+    \def\labelenumiii{\roman{enumiii}.}
+    \tightlist
+    \item
+      String soaked in Foscheck
+    \end{enumerate}
+  \item
+    Remaining biomass was collected to determine percent consumed
+  \end{enumerate}
 \item
   Statistical Analysis
 \end{enumerate}

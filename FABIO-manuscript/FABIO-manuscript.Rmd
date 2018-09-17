@@ -130,33 +130,45 @@ It can be deployed in the field or in a more controlled "laboratory" setting.
 We harvested ~50 kg of standing cogongrass from an invasion at the Biven's Arm Research Station (BARS), Florida, USA. The fuel was stored in a shed for 48-hours to protect it from rainfall, and then spread outside in a cleared area to dry for ~72 hours. We raked through the pile each day to increase drying, while carefully maintaining stem orientation in the same direction. We found that consistent stem orientation was more efficient for weighing and loading fuels vertically into the FABIO. 
 
 1.	Study Species
-a.	Collection of materials
-b.	Drying to a “constant” fuel moisture
+
+      a.	Collection of materials
+
+      b.	Drying to a “constant” fuel moisture
 
 2.	Burning Location	
-a.	BARS
-b.	Weather measurements
-i.	Kestral data
+
+      a.	BARS
+      
+      b.	Weather measurements
+            i. Kestrel data
 
 3.	Experimental treatments
-a.	Piled vs Standing
-b.	Number of burns
-i.	Blocked by day 
-1.	(Burning all biomass levels, standing and piled, per day)
+
+      a.	Piled vs Standing
+      
+      b.	Number of burns
+      
+            i.	Blocked by day 
 
 4.	Flammability measurements
-a.	All fires were ignited with a drip torch (Brand XX style XX)
-i.	All were lighted as head fires
-ii.	If failed to burn, was attempted 3 times from 3 sides before deemed a failure.
-b.	Fire temperature was measured every second with XX type thermocouples
-i.	Locations of sensors
-ii.	Determined maximum temperature
-iii.	Determined time above 100C
-c.	Rate of spread
-i.	50cm distance and stop watch
-d.	Flame height
-i.	String soaked in Foscheck
-e.	Remaining biomass was collected to determine percent consumed
+
+      a.	All fires were ignited with a drip torch (Brand XX style XX)
+            
+            i.	All were lighted as head fires
+            ii.	If failed to burn, was attempted 3 times from 3 sides before deemed a failure.
+      
+      b.	Fire temperature was measured every second with XX type thermocouples
+            i.	Locations of sensors
+            ii.	Determined maximum temperature
+            iii.	Determined time above 100C
+            
+      c.	Rate of spread
+            i.	50cm distance and stop watch
+
+      d.	Flame height
+            i.	String soaked in Foscheck
+
+      e.	Remaining biomass was collected to determine percent consumed
 
 5.	Statistical Analysis
 
