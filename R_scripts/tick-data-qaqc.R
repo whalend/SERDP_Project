@@ -69,9 +69,7 @@ anti_join(plot_visit_data, tick_data, "plot_id") %>%
 
 sort(unique(tick_data$plot_id))
 
-### ADDED zeros Eglin b1, & moody b1, a1, k1 to excel sheet, need to update from dropbox ###
-### Missing data sheet entry for Blanding b1 (2017) and Avon Park b1 (2017),
-### and Eglin a1, c1, e1 (2018) ####
+### Added zeroes for all visited plots that were missing ###
 
 write_csv(tick_data, "data/processed_data/ticks.csv")
 
