@@ -38,7 +38,7 @@ filter(tree_data, dbh<3) %>%
 tree_data$dbh[tree_data$tag=="3056"] <- 25.7
 tree_data$dbh[tree_data$tag=="4395"] <- 11.4
 
-### Changed trees with dbh <3 with estimated values ###
+### Changed trees with dbh that were <3 with estimated values ###
 
 
 tree_data$plot_id[tree_data$plot_id=="cogon plot"] <- "theater_cogon"
@@ -70,6 +70,16 @@ tree_data$azimuth[tree_data$tag=="3447"] <- 23.8
 tree_data$azimuth[tree_data$stem_id=="3072"] <- 299.5
 tree_data$azimuth[tree_data$stem_id=="3078"] <- 307.5
 tree_data$azimuth[tree_data$stem_id=="3079"] <- 307.7
+
+filter(tree_data, azimuth=="-3") %>% 
+  select(record_id, date, plot_id, tag, species, dbh, azimuth)
+
+tree_data$azimuth[tree_data$tag=="3766"] <- 0
+
+filter(tree_data, azimuth=="-1") %>% 
+  select(record_id, date, plot_id, tag, species, dbh, azimuth)
+
+tree_data$azimuth[tree_data$tag=="3765"] <- 0
 
 ## Added azimuth values for trees in Benning A1/J1 and Gordon V1 ##
 ## Stem IDs 1199 and 1807 have no azimuth recorded ##
