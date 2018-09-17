@@ -38,6 +38,24 @@ tick_data$years_since_fire[tick_data$installation=="moody"] <- 2017-2005
 
 ## Steven processing, added concatenation for plot_id & installation line 17 ##
 
+unique(tick_data$location)
+
+tick_data$location[tick_data$location=="nw"] <- "NW"
+tick_data$location[tick_data$location=="ne"] <- "NE"
+tick_data$location[tick_data$location=="Se"] <- "SE"
+tick_data$location[tick_data$location=="se"] <- "SE"
+tick_data$location[tick_data$location=="sw"] <- "SW"
+
+tick_data$location[tick_data$location=="North"] <- "N"
+tick_data$location[tick_data$location=="South"] <- "S"
+tick_data$location[tick_data$location=="East"] <- "E"
+tick_data$location[tick_data$location=="West"] <- "W"
+tick_data$location[tick_data$location=="west"] <- "W"
+tick_data$location[tick_data$location=="C"] <- "Center"
+tick_data$location[tick_data$location=="center"] <- "Center"
+tick_data$location[tick_data$location=="extra"] <- "Extra"
+
+### Made locations consistent ###
 
 unique(plot_visit_data$plot_id) %in% unique(dung_data$plot_id)
 
@@ -47,10 +65,15 @@ n_distinct(plot_visit_data$plot_id)
 anti_join(plot_visit_data, tick_data, "plot_id") %>% 
   select(visit_date, installation, plot_id)
 
-names(tick_data)
-names(plot_visit_data)
-
 sort(unique(tick_data$plot_id))
+
+### ADDED zeros Eglin b1, & moody b1, a1, k1 to excel sheet, need to update from dropbox ###
+### Missing data sheet entry for Blanding b1 (2017) and Avon Park b1 (2017), 
+### and Eglin a1, c1, e1 (2018) ####
+
+write_csv(tick_data, "data/processed_data/ticks.csv")
+
+summary(tick_data)
 ### Steven stopped processing ###
 
 
