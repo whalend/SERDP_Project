@@ -1,23 +1,54 @@
 #' # Script for doing QA/QC on tick data
 
+library(plyr); library(dplyr);
+library(readr)
+library(stringi)
+library(ggplot2)
+library(tidyverse)
 
 #' Tick Abundance Estimates
 
 #+ tick data ####
 tick_data <- read_csv("data/raw_data/ticks.csv")
 
+#+ plot visit data ####
+plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
+
 tick_data$plot_id <- tolower(tick_data$plot_id)
 tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
+
+tick_data <- tick_data %>%
+  mutate(plot_id = paste(installation, plot_id, sep = " "),
+         plot_id=tolower(plot_id)) %>%
+  filter(date>20170601)
+
+unique(tick_data$plot_id)
 
 tick_data <- left_join(
 tick_data,
 select(plot_data, installation,plot_id,fire_year:full_names),
 by = c("installation", "plot_id")
 )
+
 summary(tick_data)
+
 filter(tick_data, is.na(years_since_fire))
 # "extra" ticks at Moody AFB were from an area last burned in 2005
 tick_data$years_since_fire[tick_data$installation=="moody"] <- 2017-2005
+
+## Steven processing, added concatenation for plot_id & installation line 17 ##
+
+
+unique(plot_visit_data$plot_id) %in% unique(dung_data$plot_id)
+
+n_distinct(tick_data$plot_id)
+n_distinct(plot_visit_data$plot_id)
+
+anti_join(plot_visit_data, tick_data, "plot_id") %>% 
+  select(visit_date, installation, plot_id)
+
+
+### Steven stopped processing ###
 
 
 ggplot(tick_data %>%
