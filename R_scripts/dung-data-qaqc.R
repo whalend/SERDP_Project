@@ -10,6 +10,8 @@ library(tidyverse)
 #+ dung data ####
 dung_data <- read_csv("data/raw_data/dung.csv")
 
+#+ plot visit data ####
+
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 
 names(dung_data)
@@ -82,5 +84,6 @@ filter(plot_visit_data, plot_id=="eglin")
 write_csv(dung_data, "data/processed_data/dung.csv")
 
 summary(dung_data)
-###Steven stopped processing here
+### Steven stopped processing here
+
 
