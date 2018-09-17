@@ -64,6 +64,8 @@ opts_chunk$set(fig.path = "figures/")
 opts_chunk$set(dpi = 1200)
 opts_chunk$set(dev = c("png"))
 
+struc_colors <- scale_color_manual(values=c("red","blue"))
+
 ```
 
 
@@ -543,7 +545,7 @@ summary(max_temp_0cm)
 max_temp_0cm <- lm(max_temp ~ biomass + structure, data = fabio_fires_0cm)
 summary(max_temp_0cm)
 
-my_row_names <- c("(Intercept)", "Biomass", "Structure-standing")
+my_row_names <- c("(Intercept)", "Biomass", "Structure: standing")
 coef0cm <- as.data.frame(summary(max_temp_0cm)$coefficients)
 rownames(coef0cm) <- my_row_names
 coef0cm <- cbind(coef0cm, confint(max_temp_0cm))
@@ -558,7 +560,7 @@ summary(max_temp_25cm)
 max_temp_25cm <- lm(max_temp ~ biomass + structure, data = fabio_fires_25cm)
 summary(max_temp_25cm)
 
-my_row_names <- c("(Intercept)", "Biomass")
+my_row_names <- c("(Intercept)", "Biomass", "Structure: standing")
 coef25cm <- as.data.frame(summary(max_temp_25cm)$coefficients)
 rownames(coef25cm) <- my_row_names
 coef25cm <- cbind(coef25cm, confint(max_temp_25cm))
@@ -571,7 +573,7 @@ summary(max_temp_50cm)
 # dredge(max_temp_50cm, extra = c("R^2"))
 ## Interaction significant, but not structure main effect 
 
-my_row_names <- c("(Intercept)", "Biomass", "Structure-standing", "Biomass:Standing")
+my_row_names <- c("(Intercept)", "Biomass", "Structure: standing", "Biomass*Standing")
 coef50cm <-  as.data.frame(summary(max_temp_50cm)$coefficients)
 rownames(coef50cm) <- my_row_names
 coef50cm <- cbind(coef50cm, confint(max_temp_50cm))
@@ -653,12 +655,12 @@ kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
 ```
 
 ```{r s_abv100_linear_models}
-
+my_row_names <- c("(Intercept)", "Biomass", "Strcture: standing")
 s_abv100_lm <- lm(log1p(s_abv100) ~ biomass + biomass*structure + biomass*location + structure*location + avg_air_temp + avg_rh + pct_fuel_moisture + avg_wind_speed, 
                   data = fabio_fires, na.action = na.fail)
 # summary(s_abv100_lm)
 
-dd <- dredge(update(s_abv100_lm, .~. -avg_air_temp -avg_rh -pct_fuel_moisture), extra = c("adjR^2"))
+# dd <- dredge(update(s_abv100_lm, .~. -avg_air_temp -avg_rh -pct_fuel_moisture), extra = c("adjR^2"))
 # filter(dd, delta < 10)
 
 
@@ -772,7 +774,8 @@ ggsave("figures/temperature-fig.png", width = 7.75, height = 6)
 #             )
 
 (flame_height_fig <- ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
-      scale_color_grey(start = .3, end = .8) +
+      # scale_color_grey(start = .3, end = .8) +
+      struc_colors +
       # stat_smooth(se = F, show.legend = F, method = "lm") +
       stat_summary(fun.data = "mean_se", geom = "pointrange") +
       # geom_point(aes(color = structure), size = 3) +
@@ -828,8 +831,9 @@ ggsave("figures/temperature-fig.png", width = 7.75, height = 6)
 
 ```{r fuel height, eval=F}
 ggplot(fires_biomass, aes(biomass, avg_fuel_ht, color = structure)) +
-      scale_color_grey(start = .3, end = .8) +
-      stat_smooth(se = F, show.legend = F, method = "lm") +
+      # scale_color_grey(start = .3, end = .8) +
+      struc_colors +
+      stat_smooth(se = T, show.legend = F, method = "lm", alpha = .3) +
       stat_summary(fun.data = "mean_se", geom = "pointrange") +
       # geom_point(aes(color = structure), size = 3) +
       # geom_smooth(aes(color = structure), method = "lm") +
@@ -864,7 +868,8 @@ ggplot(fires_biomass, aes(avg_fuel_ht, avg_flame_ht, color = structure)) +
 
 (pct_consumed_fig <- ggplot(fires_biomass, aes(biomass, pct_consumed, color = structure)) +
       # geom_line(aes(color = structure)) +
-      scale_color_grey(start = .3, end = .8) +
+      # scale_color_grey(start = .3, end = .8) +
+      struc_colors +
       # stat_smooth(se = F, show.legend = F, method = "loess") +
       stat_summary(fun.data = "mean_se", geom = "pointrange") +
       # geom_point(aes(color = structure), size = 3) +
@@ -904,7 +909,8 @@ Rate of spread was measured by recording the number of seconds it took the fire-
 # View(filter(fires_biomass, rate_of_spread_50cm>62, structure=="standing"))
 (ros_fig <- ggplot(filter(fires_biomass, rate_of_spread_ms<1), 
        aes(biomass, rate_of_spread_ms, color = structure)) +
-      scale_color_grey(start = .3, end = .8) +
+      # scale_color_grey(start = .3, end = .8) +
+      struc_colors +
       # stat_smooth(se = F, show.legend = F, method = "loess") +
       stat_summary(fun.data = "mean_se", geom = "pointrange") +
       # geom_point() +
