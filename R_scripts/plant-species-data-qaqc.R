@@ -22,7 +22,30 @@ species_data <- left_join(
 )
 summary(species_data)
 
+## Steven begin processing here ##
 
+filter(species_data, is.na(pct_cover)) %>% 
+  select(Order, date, plot_id, transect_id, veg_id, pct_cover, ht_under50cm)
+
+species_data$pct_cover[species_data$Order=="2289"] <- 25
+species_data$ht_over100cm[species_data$Order=="2289"] <- 1
+
+species_data$pct_cover[species_data$Order=="2458"] <- 3
+
+species_data$pct_cover[species_data$Order=="2583"] <- 6
+
+species_data$pct_cover[species_data$Order=="2808"] <- 1
+species_data$pct_cover[species_data$Order=="2809"] <- 1
+
+species_data$pct_cover[species_data$Order=="3031"] <- 5
+
+## Added missing pct cover & hts, "pea" shelby e1 north is true NA ##
+
+write_csv(species_data, "data/processed_data/species1m.csv")
+
+summary(species_data)
+
+### Steven stopped processing here ###
 
 
 
