@@ -71,12 +71,12 @@ tree_data$azimuth[tree_data$stem_id=="3072"] <- 299.5
 tree_data$azimuth[tree_data$stem_id=="3078"] <- 307.5
 tree_data$azimuth[tree_data$stem_id=="3079"] <- 307.7
 
-filter(tree_data, azimuth=="-3") %>% 
+filter(tree_data, azimuth=="-3") %>%
   select(record_id, date, plot_id, tag, species, dbh, azimuth)
 
 tree_data$azimuth[tree_data$tag=="3766"] <- 0
 
-filter(tree_data, azimuth=="-1") %>% 
+filter(tree_data, azimuth=="-1") %>%
   select(record_id, date, plot_id, tag, species, dbh, azimuth)
 
 tree_data$azimuth[tree_data$tag=="3765"] <- 0
@@ -181,3 +181,7 @@ qplot(x = height, y = char, data = tree_data) +
 ## all looks good - "outlier" values already checked
 str(tree_data)
 summary(tree_data)
+
+sort(unique(tree_data$species))
+filter(tree_data, species=="tlt") %>%
+      select(plot_id, dbh, date)
