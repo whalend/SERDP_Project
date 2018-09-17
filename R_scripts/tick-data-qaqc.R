@@ -47,7 +47,10 @@ n_distinct(plot_visit_data$plot_id)
 anti_join(plot_visit_data, tick_data, "plot_id") %>% 
   select(visit_date, installation, plot_id)
 
+names(tick_data)
+names(plot_visit_data)
 
+sort(unique(tick_data$plot_id))
 ### Steven stopped processing ###
 
 
