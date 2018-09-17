@@ -9,6 +9,10 @@ plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 species_data <- read_csv("data/raw_data/species1m.csv")
 species_data <- select(species_data, Order:functional_group__1)
 
+species_data$plot_id[species_data$plot_id=="cogon"] <- "theater_cogon"
+
+## Steven changed blanding cogon to "theater_cogon" ###
+
 species_data$date <- as.Date(as.character(species_data$date), format = "%Y%m%d")
 species_data <- species_data %>%
       filter(date>"2017-06-01") %>%
@@ -23,6 +27,8 @@ species_data <- left_join(
 summary(species_data)
 
 ## Steven begin processing here ##
+
+unique(species_data$plot_id)
 
 filter(species_data, is.na(pct_cover)) %>% 
   select(Order, date, plot_id, transect_id, veg_id, pct_cover, ht_under50cm)
@@ -41,12 +47,31 @@ species_data$pct_cover[species_data$Order=="3031"] <- 5
 
 ## Added missing pct cover & hts, "pea" shelby e1 north is true NA ##
 
-write_csv(species_data, "data/processed_data/species1m.csv")
-
 summary(species_data)
+
+species_data <- species_data %>% 
+  mutate(visit_year=lubridate::year(visit_date))
+
+left_join(species_data, plot_visit_data, 
+          by = c("plot_id", "visit_year"))
+
+filter(species_data, is.na(visit_year)) %>% 
+  select(visit_year, date, veg_id, plot_id)
+
+### Added plot visit year to species_data ###
+
+sort(unique(species_data$scientific_name))
+species_data$sciname <- paste(species_data$Genus,species_data$Species, sep=" ")
+sort(unique(species_data$sciname))
+
+## Fixed Genus/Species naming errors ##
+
+
+write_csv(species_data, "data/processed_data/species1m.csv")
 
 ### Steven stopped processing here ###
 
+summary(species_data)
 
 
 species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10")))
