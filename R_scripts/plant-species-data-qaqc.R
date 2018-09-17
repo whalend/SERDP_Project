@@ -30,7 +30,7 @@ summary(species_data)
 
 unique(species_data$plot_id)
 
-filter(species_data, is.na(pct_cover)) %>% 
+filter(species_data, is.na(pct_cover)) %>%
   select(Order, date, plot_id, transect_id, veg_id, pct_cover, ht_under50cm)
 
 species_data$pct_cover[species_data$Order=="2289"] <- 25
@@ -49,31 +49,52 @@ species_data$pct_cover[species_data$Order=="3031"] <- 5
 
 summary(species_data)
 
-species_data <- species_data %>% 
+species_data <- species_data %>%
   mutate(visit_year=lubridate::year(visit_date))
 
-left_join(species_data, plot_visit_data, 
+left_join(species_data, plot_visit_data,
           by = c("plot_id", "visit_year"))
 
-filter(species_data, is.na(visit_year)) %>% 
+filter(species_data, is.na(visit_year)) %>%
   select(visit_year, date, veg_id, plot_id)
 
 ### Added plot visit year to species_data ###
 
 sort(unique(species_data$scientific_name))
-species_data$sciname <- paste(species_data$Genus,species_data$Species, sep=" ")
-sort(unique(species_data$sciname))
-
+species_data$scientific_name <- paste(species_data$Genus,species_data$Species, sep=" ")
+sort(unique(species_data$scientific_name))
 ## Fixed Genus/Species naming errors ##
-
 
 write_csv(species_data, "data/processed_data/species1m.csv")
 
-### Steven stopped processing here ###
+### Steven stopped processing here ####
 
+species_data <- read_csv("data/processed_data/species1m.csv")
 summary(species_data)
 
+sort(unique(species_data$functional_group))
+d <- filter(species_data, is.na(functional_group)) %>%
+      select(plot_id, veg_id, Notes, visit_year)
+unique(d$veg_id)
 
+d2 <- filter(species_data, pct_cover>=5)
+filter(d2, is.na(functional_group))$veg_id
+
+
+sort(unique(species_data$functional_group__1))
+sort(unique(species_data$veg_id))
+species_data$Notes
+
+
+
+
+
+
+
+
+#################
+#### NOT RUN ####
+#############################################################################
 species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10")))
 length(unique(species_sub$veg_id))
 summary(species_sub)
