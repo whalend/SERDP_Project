@@ -19,6 +19,9 @@ subplot_data <- subplot_data %>%
          plot_id=tolower(plot_id)) %>%
   filter(date>20170601)
 
+subplot_data <- subplot_data[ -c(4:5)]
+
+#### Removed 0-50cm and 51-99cm columns ####
 sort(unique(subplot_data$plot_id))
 n_distinct(subplot_data$plot_id)
 n_distinct(plot_visit_data$plot_id)
@@ -30,6 +33,7 @@ anti_join(plot_visit_data, subplot_data, "plot_id") %>%
 
 sort(unique(subplot_data$veg_id))
 
-#### Steven stopped processing here ####
+summary(subplot_data)
 
+#### Steven stopped processing here ####
 
