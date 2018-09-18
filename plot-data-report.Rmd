@@ -1,10 +1,12 @@
 ---
 title: "Fire-Plant Invasions-TBD"
+output:
+  html_document:
+    self_contained: no
+    toc: yes
+  pdf_document:
+    toc: yes
 date: "`r Sys.time()`"
-output: 
-   html_document:
-     self_contained: no
-     toc: yes
 ---
 
 ```{r set options, echo=F}
@@ -23,8 +25,6 @@ library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi)
 library(tidyr)
 library(viridisLite); library(viridis)
-
-source("R_scripts/copy-raw-data-from-Dropbox.R")
 
 rm(list=ls())
 
@@ -50,9 +50,14 @@ invasion_fill <- scale_fill_viridis_d()
 # Check source R script if needed 'plot-data-qaqc.R'
 
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
-
 # summary(plot_visit_data)
-plot_visit_data$visit_year <- lubridate::year(plot_visit_data$visit_date)
+sort(unique(plot_visit_data$plot_id))
+
+# There should be 104 records, 29 in visit year 2017 and 75 in 2018.
+# filter(plot_visit_data, visit_year==2017)
+# filter(plot_visit_data, visit_year==2018)
+
+plot_visit_data$imcy_inv <- factor(plot_visit_data$imcy_inv, levels=c("uninvaded","invaded"), labels = c("Uninvaded","Invaded"))
 
 ```
 There are 3 `NA` values in the coarse fire history columns. The `NA`s correspond to the odd/extra cogongrass plot that we sampled at Camp Blanding and 2 plots at Camp Shelby that I (WD) have requested data for as of 9/6/2018.
@@ -143,9 +148,7 @@ plot_visit_data$installation_full_name[plot_visit_data$installation=="benning"] 
 
 ![](figures/Year2bases.png)
 
-```{r summary of plots visited, fig.width=10}
-
-plot_visit_data$imcy_inv <- factor(plot_visit_data$imcy_inv, levels=c("uninvaded","invaded"), labels = c("Uninvaded","Invaded"))
+```{r summary of plots visited, fig.width=8, fig.height=5}
 
 # xtabs(~ imcy_inv + last_fire_year + installation_full_name, data = plot_visit_data)
 
@@ -167,7 +170,9 @@ ggplot(plot_visit_data%>%
       ylab("Number of sample plots") +
       xlab("") +
       # ggtitle("Plots in Burn Units Across Installations") +
-      theme_classic()
+      theme_classic() +
+      # def_theme +
+      NULL
       
 ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       geom_bar(aes(fill = imcy_inv), position = "dodge") +
@@ -210,6 +215,7 @@ We made 104 plot visits, therefore there should for the most part be 104 observa
 
 # Canopy Cover Data
 ```{r load canopy cover data}
+
 canopy_cover <- read_csv("data/processed_data/canopy-cover.csv")
 canopy_cover <- canopy_cover %>% 
       mutate(date = as.Date(as.character(date), format = "%Y%m%d"),
@@ -255,42 +261,43 @@ ggplot(cc_inv, aes(years_since_fire, avg_canopy_cover)) +
 # Species Data - 1-meter Quadrats
 
 ```{r load 1m quadrat data}
+
 quadrat_data <- read_csv("data/processed_data/quadrat1m.csv")
+# summary(quadrat_data)
 quadrat_data$date <- as.Date(as.character(quadrat_data$date), format = "%Y%m%d")
 quadrat_data <- quadrat_data %>% 
       mutate(visit_year = lubridate::year(date))
+# filter(quadrat_data, is.na(years_since_fire))
 
-# summary(quadrat_data)
-
-quadrat_data$herb_veg_ht1 <- as.numeric(quadrat_data$herb_veg_ht1)
-quadrat_data$herb_veg_ht2 <- as.numeric(quadrat_data$herb_veg_ht2)
-quadrat_data$herb_veg_ht3 <- as.numeric(quadrat_data$herb_veg_ht3)
-
-quadrat_data$woody_veg_ht1[is.na(quadrat_data$woody_veg_ht1)] <- 0
-# quadrat_data$woody_veg_ht1 <- as.numeric(quadrat_data$woody_veg_ht1)
-quadrat_data$herb_veg_ht1[is.na(quadrat_data$herb_veg_ht1)] <- 0
+## This is all done in the 'quadrat-data-qaqc.R' script
 # quadrat_data$herb_veg_ht1 <- as.numeric(quadrat_data$herb_veg_ht1)
-quadrat_data$pct_green[quadrat_data$pct_green=="<1"] <- 0.5
-quadrat_data$pct_green <- as.numeric(quadrat_data$pct_green)
+# quadrat_data$herb_veg_ht2 <- as.numeric(quadrat_data$herb_veg_ht2)
+# quadrat_data$herb_veg_ht3 <- as.numeric(quadrat_data$herb_veg_ht3)
+# quadrat_data$woody_veg_ht1[is.na(quadrat_data$woody_veg_ht1)] <- 0
+# quadrat_data$woody_veg_ht1 <- as.numeric(quadrat_data$woody_veg_ht1)
+# quadrat_data$herb_veg_ht1[is.na(quadrat_data$herb_veg_ht1)] <- 0
+# quadrat_data$herb_veg_ht1 <- as.numeric(quadrat_data$herb_veg_ht1)
+# quadrat_data$pct_green[quadrat_data$pct_green=="<1"] <- 0.5
+# quadrat_data$pct_green <- as.numeric(quadrat_data$pct_green)
 
 quadrat_data <- left_join(
-      quadrat_data,
-      plot_visit_data
+      select(quadrat_data, -notes),
+      select(plot_visit_data, -notes)
 )
 
+# Filter to only data collected at 10m quadrats - exclude "extra" data from 2017
 quadrat10_data <- filter(
       quadrat_data, quadrat_id %in% c("e10","w10","n10","s10")
 )
 
-# summary(quadrat_data)
-# filter(quadrat_data, is.na(years_since_fire))
+# summary(quadrat10_data)
 
 ```
 
 ```{r summarize 1m quadrat data across each plot}
 
 quadrat10_summaries <- quadrat10_data %>%
-      group_by(installation, plot_id, date, visit_year, pid) %>%
+      group_by(installation, plot_id, visit_year) %>%
       summarise(
             avg_woody_ht1 = mean(woody_veg_ht1),
             avg_woody_ht_all = mean(
@@ -311,7 +318,8 @@ quadrat10_summaries <- left_join(
 )
 summary(quadrat10_summaries)
 
-herb_ht_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_herb_ht_all)) +
+herb_ht_fig <- ggplot(quadrat10_summaries, 
+                      aes(years_since_fire, avg_herb_ht_all)) +
       geom_point(aes(color = imcy_inv), alpha = .5, size = 2) +
       # geom_jitter(aes(color = imcy_inv), alpha = .3) +
       invasion_color +
@@ -358,8 +366,20 @@ pct_bare_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_pct_bare))
 ```
 
 ```{r load species data}
-species_data <- read_csv("data/raw_data/species1m.csv")
-species_data <- select(species_data, Order:functional_group__1)
+species_data <- read_csv("data/processed_data/species1m.csv")
+summary(species_data)
+
+species_data$sciname <- paste(species_data$Genus,species_data$Species, sep=" ")
+d <- sort(unique(species_data$sciname))
+d
+names(species_data)
+unique(species_data$functional_group)
+unique(species_data$functional_group__1)
+filter(species_data, is.na(functional_group__1)) %>% 
+      select(plot_id, date, veg_id)
+unique(species_data$veg_id)
+
+
 species_data$date <- as.Date(as.character(species_data$date), format = "%Y%m%d")
 species_data <- species_data %>% 
       filter(date>"2017-06-01") %>% 
@@ -1170,6 +1190,7 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-vs-fire.png", height=7.5, widt
 # Tick Abundance
 
 ```{r tick data QC, results='hide'}
+
 
 tick_data <- read_csv("data/raw_data/ticks.csv")
 tick_data$plot_id <- tolower(tick_data$plot_id)
