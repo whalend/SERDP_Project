@@ -26,6 +26,13 @@ summary(cogon_data)
 filter(cogon_data, is.na(dry_biomass)) %>% 
   select(date, plot_id, Quadrant, CogonSampleID, dry_biomass)
 
+#### Missing dry biomass from Shelby due to transportation regulations ####
+#### Other missing biomass measurements (blanding theater and shelby 2018) due to mixed cogon biomass ####
+
+write_csv(cogon_data, "data/processed_data/cogongrass.csv")
+
+#### Steven stopped processing ####
+
 ###################### Whalen's processing #####
 # cogon_biomass <- cogon_data %>%
 #       # select(site,plot_id,Quad,fresh_biomass) %>%

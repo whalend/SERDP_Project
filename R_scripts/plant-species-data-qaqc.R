@@ -88,18 +88,11 @@ unique(d$veg_id)
 
 d2 <- filter(species_data, pct_cover>=5)
 filter(d2, is.na(functional_group))$veg_id
-
+n_distinct(d2$functional_group)
 
 sort(unique(species_data$functional_group__1))
 sort(unique(species_data$veg_id))
 species_data$Notes
-
-
-
-
-
-
-
 
 #################
 #### NOT RUN ####
