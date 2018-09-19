@@ -31,16 +31,20 @@ n_distinct(plot_visit_data$plot_id)
 anti_join(plot_visit_data, subplot_data, "plot_id") %>%
   select(visit_date, installation, plot_id)
 
-#### Missing 4 subplot entries ####
-#### Added placeholder zeros as plot visit entries ####
+### Missing 4 subplot entries ###
+#### Added placeholder zeros as plot visit entries for missing plots ####
 
 sort(unique(subplot_data$veg_id))
 
-write_csv(subplot_data, "data/processed_data/woodysubplot.csv")
-
+# Will fix random subplot veg_id when entered 
 summary(subplot_data)
 
 filter(subplot_data, over_100cm>100)
+filter(subplot_data, plot_id=="tyndall h1")
+
+## 1300 Ilex for Tyndall h1 is correct ##
+
+write_csv(subplot_data, "data/processed_data/woodysubplot.csv")
 
 #### Steven stopped processing here ####
 
