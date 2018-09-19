@@ -54,7 +54,7 @@
 "avonpark","d1","QUNI",NA,NA,4,20170630,NA
 "avonpark","d1","SERE",NA,NA,14,20170630,NA
 "avonpark","d1","shrub 11:29",NA,NA,3,20170630,NA
-"tyndall","b1",NA,NA,NA,0,20170718,"not entered"
+"tyndall","b1",NA,NA,NA,0,20170718,"placeholder zero for plot visit"
 "tyndall","b2","SERE",NA,NA,2,20170719,NA
 "tyndall","d1","ILGL",NA,NA,7,20170720,NA
 "tyndall","d1","MOCE",NA,NA,1,20170720,NA
@@ -72,7 +72,7 @@
 "eglin","h1","QULA",NA,NA,9,20170816,NA
 "eglin","h1","QUNI",NA,NA,1,20170816,NA
 "eglin","h1","SERE",NA,NA,1,20170816,NA
-"eglin","h1","SF",NA,NA,6,20170816,"idk what SF is - SC 8/30"
+"eglin","h1","CHFA",NA,NA,6,20170816,"idk what SF is - SC 8/30, changed to woody goldenrod"
 "eglin","d1","DIVI",NA,NA,4,20170817,NA
 "eglin","d1","QULA",NA,NA,2,20170817,NA
 "eglin","d1","SERE",NA,NA,8,20170817,NA
@@ -82,12 +82,12 @@
 "eglin","p1","QUIN",NA,NA,1,20170818,NA
 "eglin","p1","QULA",NA,NA,2,20170818,NA
 "eglin","p1","QULA",NA,NA,1,20170818,NA
-"eglin","p1","SF",NA,NA,5,20170818,"idk what SF is - SC 8/30"
+"eglin","p1","CHFA",NA,NA,5,20170818,"idk what SF is - SC 8/30, changed to woody goldenrod"
 "eglin","b1","CRATA",NA,NA,3,20170819,NA
 "eglin","b1","DIVI",NA,NA,1,20170819,NA
 "eglin","b1","PIPA",NA,NA,1,20170819,NA
 "eglin","b1","RHCO",NA,NA,1,20170819,NA
-"eglin","b1","SF",NA,NA,1,20170819,"idk what SF is - SC 8/30"
+"eglin","b1","CHFA",NA,NA,1,20170819,"idk what SF is - SC 8/30, changed to woody goldenrod"
 "moody","A1","CAAM",NA,NA,10,20170829,NA
 "moody","A1","RHAR",NA,NA,1,20170829,NA
 "moody","A1","LIST",NA,NA,2,20170829,NA
@@ -169,7 +169,7 @@
 "blanding","m1","DIVI",NA,NA,16,20180515,NA
 "blanding","m1","PIPA",NA,NA,1,20180515,NA
 "blanding","m1","QUNI",NA,NA,2,20180515,NA
-"blanding","c1","asrt",NA,NA,2,20180516,"??? Wiregrass??? SC 8/30"
+"blanding","c1","ASTR",NA,NA,2,20180516,"corrected arst wiregrass to ASTR pawpaw"
 "blanding","k1","QUNI",NA,NA,2,20180522,NA
 "blanding","n1","ASIMI",NA,NA,6,20180524,NA
 "blanding","n1","DIVI",NA,NA,1,20180524,NA
@@ -180,6 +180,7 @@
 "blanding","i1","QUNI",NA,NA,3,20180525,NA
 "blanding","j1","QUGE",NA,NA,3,20180525,NA
 "blanding","j1","QUMY",NA,NA,1,20180525,NA
+"blanding","theater_cogon",NA,NA,NA,0,20180516,"placeholder zero for plot visit"
 "avonpark","e2","RHCO",NA,NA,1,20180529,NA
 "avonpark","e2","SERE",NA,NA,2,20180529,NA
 "avonpark","a1","ASIMI",NA,NA,1,20180530,NA
@@ -189,6 +190,7 @@
 "avonpark","c2","MOCE",NA,NA,9,20180531,NA
 "avonpark","c2","PIPA",NA,NA,1,20180531,NA
 "avonpark","c2","SERE",NA,NA,41,20180531,NA
+"avonpark","e1",NA,NA,NA,0,20180529,"placeholder zero for plot visit"
 "avonpark","f1","SERE",NA,NA,1,20180531,NA
 "avonpark","c1","SERE",NA,NA,10,20180531,NA
 "avonpark","g1","ILGL",NA,NA,43,20180531,NA
@@ -247,6 +249,8 @@
 "tyndall","b4","SERE",NA,NA,1,20180627,NA
 "tyndall","b4","VACCI",NA,NA,1,20180627,NA
 "tyndall","b3","ILGL",NA,NA,23,20180627,NA
+"jackson","a1",NA,NA,NA,0,20180709,"placeholder zero for plot visit"
+"jackson","b1",NA,NA,NA,0,20180709,"placeholder zero for plot visit"
 "jackson","c1","DIVI",NA,NA,3,20180709,NA
 "jackson","d1","CARYA",NA,NA,1,20180709,NA
 "jackson","d1","QUNI",NA,NA,1,20180709,NA
@@ -264,7 +268,7 @@
 "jackson","j1","QULA",NA,NA,1,20180711,NA
 "jackson","j1","SAAL5",NA,NA,1,20180711,NA
 "jackson","j1","VACCI",NA,NA,3,20180711,NA
-"jackson","k1","QUERC",NA,NA,7,20180711,NA
+"jackson","k1",NA,NA,NA,0,20180711,"placeholder zero for plot visit"
 "jackson","h1","DIVI",NA,NA,5,20180712,NA
 "jackson","h1","CARYA",NA,NA,2,20180712,NA
 "jackson","h1","QUHE",NA,NA,2,20180712,NA
