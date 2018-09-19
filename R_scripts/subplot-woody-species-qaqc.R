@@ -37,7 +37,6 @@ anti_join(plot_visit_data, subplot_data, "plot_id") %>%
 sort(unique(subplot_data$veg_id))
 
 # Will fix random subplot veg_id when entered 
-summary(subplot_data)
 
 filter(subplot_data, over_100cm>100)
 filter(subplot_data, plot_id=="tyndall h1")
@@ -48,3 +47,7 @@ write_csv(subplot_data, "data/processed_data/woodysubplot.csv")
 
 #### Steven stopped processing here ####
 
+subplot_data <- read_csv("data/processed_data/woodysubplot.csv")
+summary(subplot_data)
+
+#### Steven checking processed data, complete when dropbox is updated for new species entries ####

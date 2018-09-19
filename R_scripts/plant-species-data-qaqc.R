@@ -92,7 +92,8 @@ n_distinct(d2$functional_group)
 
 sort(unique(species_data$functional_group__1))
 sort(unique(species_data$veg_id))
-species_data$Notes
+
+#### Steven checking processing, looks good ####
 
 #################
 #### NOT RUN ####

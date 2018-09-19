@@ -86,9 +86,14 @@ filter(cogond, site=="shelby") %>%
 biomass_data$standing_fuel_mass_dry[is.na(biomass_data$standing_fuel_mass_dry) &
                                       biomass_data$standing_fuel_mass_wet==0] <- 0
 
-## End NA processing - Steven ##
 write_csv(biomass_data, "data/processed_data/quadrat25cm.csv")
 
+#### Steven done processing ####
+
+biomass_data <- read_csv("data/processed_data/quadrat25cm.csv")
+summary(biomass_data)
+
+#### Steven checking processing, looks good ####
 
 ###########
 biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)

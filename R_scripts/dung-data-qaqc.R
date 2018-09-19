@@ -83,7 +83,11 @@ filter(plot_visit_data, plot_id=="eglin")
 
 write_csv(dung_data, "data/processed_data/dung.csv")
 
-summary(dung_data)
 ### Steven stopped processing here
+
+dung_data <- read_csv("data/processed_data/dung.csv")
+summary(dung_data)
+
+#### Steven checked processing, 3 missing Eglin i1 entries, waiting on response from elena 9/17 ####
 
 

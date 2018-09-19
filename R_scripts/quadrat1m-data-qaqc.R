@@ -124,6 +124,10 @@ quadrat_data$pct_wood_litter[is.na(quadrat_data$pct_wood_litter)] <- 0
 #+ write out processed data ####
 write_csv(quadrat_data, "data/processed_data/quadrat1m.csv")
 
+quadrat_data <- read_csv("data/processed_data/quadrat1m.csv")
+summary(quadrat_data)
+
+#### Steven checking processed data, looks good ####
 
 #+ initial data summaries and comparing sampling effort ####
 quadrat_summaries <- quadrat_data %>%

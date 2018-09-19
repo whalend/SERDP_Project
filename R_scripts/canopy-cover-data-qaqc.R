@@ -58,3 +58,37 @@ summary(canopy_cover)
 
 #+ write out processed data
 write_csv(canopy_cover, "data/processed_data/canopy-cover.csv")
+
+canopy_cover <- read_csv("data/processed_data/canopy-cover.csv")
+summary(canopy_cover)
+
+filter(canopy_cover, is.na(fill_dots)) %>% 
+  select(date, plot_id, direction, fill_dots, pct_canopy_cover)
+
+filter(canopy_cover, plot_id=="blanding c1") %>% 
+  select(date, plot_id, direction, fill_dots, pct_canopy_cover)
+
+canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1" 
+                       & canopy_cover$direction=="N"] <- 23.3
+canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1" 
+                       & canopy_cover$direction=="S"] <- 24.7
+canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1" 
+                       & canopy_cover$direction=="E"] <- 44.5
+canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1" 
+                       & canopy_cover$direction=="W"] <- 37
+
+## Added missing fill_dots in blanding c1 ##
+
+canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" & 
+                       canopy_cover$direction=="N"] <- 27
+canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" & 
+                         canopy_cover$direction=="S"] <- 23
+canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" & 
+                         canopy_cover$direction=="E"] <- 15
+canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" & 
+                         canopy_cover$direction=="W"] <- 77
+## Messed up and forgot dates, fixing the 2018 blanding c1's ##
+
+write_csv(canopy_cover, "data/processed_data/canopy-cover.csv")
+
+#### Steven checked processing, looks good ####

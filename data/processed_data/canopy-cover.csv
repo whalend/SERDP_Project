@@ -83,10 +83,10 @@ date,installation,plot_id,direction,distance,fill_dots,pct_canopy_cover
 20170627,avonpark,avonpark a1,W,10,11,11.44
 20170627,avonpark,avonpark a1,W,30,21,21.84
 20170627,avonpark,avonpark a1,W,50,25,26
-20170607,blanding,blanding c1,N,10,NA,24.18
-20170607,blanding,blanding c1,S,10,NA,25.74
-20170607,blanding,blanding c1,E,10,NA,46.28
-20170607,blanding,blanding c1,W,10,NA,38.48
+20170607,blanding,blanding c1,N,10,23.3,24.18
+20170607,blanding,blanding c1,S,10,24.7,25.74
+20170607,blanding,blanding c1,E,10,44.5,46.28
+20170607,blanding,blanding c1,W,10,37,38.48
 20170628,avonpark,avonpark c1,N,10,48,49.92
 20170628,avonpark,avonpark c1,N,30,35,36.4
 20170628,avonpark,avonpark c1,N,50,14,14.56

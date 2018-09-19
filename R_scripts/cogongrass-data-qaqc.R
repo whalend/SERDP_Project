@@ -33,6 +33,11 @@ write_csv(cogon_data, "data/processed_data/cogongrass.csv")
 
 #### Steven stopped processing ####
 
+cogon_data <- read_csv("data/processed_data/cogongrass.csv")
+summary(cogon_data)
+
+#### Steven checked processing, lots of NAs but all tiller density accounted for, looks good ####
+
 ###################### Whalen's processing #####
 # cogon_biomass <- cogon_data %>%
 #       # select(site,plot_id,Quad,fresh_biomass) %>%
