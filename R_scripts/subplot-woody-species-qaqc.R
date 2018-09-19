@@ -13,6 +13,7 @@ plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 subplot_data <- read_csv("data/raw_data/subplot-woody-species.csv")
 
 summary(subplot_data)
+names(subplot_data)
 
 subplot_data <- subplot_data %>%
   mutate(plot_id = paste(installation, plot_id, sep = " "),
@@ -22,6 +23,7 @@ subplot_data <- subplot_data %>%
 subplot_data <- subplot_data[ -c(4:5)]
 
 #### Removed 0-50cm and 51-99cm columns ####
+
 sort(unique(subplot_data$plot_id))
 n_distinct(subplot_data$plot_id)
 n_distinct(plot_visit_data$plot_id)
@@ -30,10 +32,15 @@ anti_join(plot_visit_data, subplot_data, "plot_id") %>%
   select(visit_date, installation, plot_id)
 
 #### Missing 4 subplot entries ####
+#### Added placeholder zeros as plot visit entries ####
 
 sort(unique(subplot_data$veg_id))
 
+write_csv(subplot_data, "data/processed_data/woodysubplot.csv")
+
 summary(subplot_data)
+
+filter(subplot_data, over_100cm>100)
 
 #### Steven stopped processing here ####
 
