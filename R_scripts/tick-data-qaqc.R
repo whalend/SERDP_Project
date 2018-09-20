@@ -71,11 +71,25 @@ sort(unique(tick_data$plot_id))
 
 ### Added zeroes for all visited plots that were missing ###
 
+sort(unique(tick_data$species))
+
+tick_data$species[tick_data$species=="am. Am"] <- "Am. am"
+tick_data$species[tick_data$species=="Am. Am"] <- "Am. am"
+tick_data$species[tick_data$species=="Am. Mac"] <- "Am. mac"
+tick_data$species[tick_data$species=="de. Var"] <- "De. var"
+tick_data$species[tick_data$species=="De. Var"] <- "De. var"
+tick_data$species[tick_data$species=="rh. san"] <- "Rh. san"
+
 write_csv(tick_data, "data/processed_data/ticks.csv")
 
-summary(tick_data)
 ### Steven stopped processing ###
 
+tick_data <- read_csv("data/processed_data/ticks.csv")
+summary(tick_data)
+
+sort(unique(tick_data$species))
+
+#### Steven checking processed data, looks good #### 
 
 ggplot(tick_data %>%
 group_by(installation,years_since_fire,Species) %>%

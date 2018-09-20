@@ -1,5 +1,14 @@
 #' # Script for doing QA/QC on the plant species data
 
+#' # Script for doing QA/QC on the canopy cover data
+
+#+ load packages ####
+library(plyr); library(dplyr);
+library(readr)
+library(stringi)
+library(ggplot2)
+library(tidyverse)
+
 #+ load processed plot visit data ####
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 
@@ -79,18 +88,12 @@ unique(d$veg_id)
 
 d2 <- filter(species_data, pct_cover>=5)
 filter(d2, is.na(functional_group))$veg_id
-
+n_distinct(d2$functional_group)
 
 sort(unique(species_data$functional_group__1))
 sort(unique(species_data$veg_id))
-species_data$Notes
 
-
-
-
-
-
-
+#### Steven checking processing, looks good ####
 
 #################
 #### NOT RUN ####
