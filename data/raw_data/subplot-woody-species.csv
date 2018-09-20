@@ -1,18 +1,8 @@
 "installation","plot_id","veg_id","under_50cm","50-99cm","over_100cm","date","notes"
-"blanding","c1","cactus",1,0,0,20170425,NA
 "blanding","c1","QULA",4,28,16,20170425,NA
 "blanding","c1","shrub1",5,9,3,20170425,NA
-"blanding","c1","shrub2",7,5,0,20170425,NA
-"blanding","c1","shrub3",0,2,0,20170425,NA
-"blanding","c1","SM",8,5,0,20170425,NA
-"blanding","bland03","QULA",33,17,0,20170427,NA
-"blanding","bland03","shrub1",2,6,0,20170427,NA
-"blanding","bland03","shrub2",12,3,0,20170427,NA
-"blanding","bland03","SM",5,0,0,20170427,NA
 "blanding","bland02","QULA",11,22,25,20170428,NA
 "blanding","bland02","shrub1",5,2,1,20170428,NA
-"blanding","bland02","shrub2",32,6,0,20170428,NA
-"blanding","bland02","SM",1,0,0,20170428,NA
 "blanding","b1","ASIMI",NA,NA,9,20170608,NA
 "blanding","b1","DIVI",NA,NA,3,20170608,NA
 "blanding","b1","QULA",NA,NA,8,20170608,NA
@@ -42,8 +32,8 @@
 "blanding","f1","QUNI",NA,NA,1,20170621,NA
 "blanding","f1","RHCO",NA,NA,7,20170621,NA
 "avonpark","a1","SERE",NA,NA,2,20170627,NA
-"avonpark","c1","0.48333333333333334",NA,NA,3,20170628,NA
-"avonpark","c1","0.48888888888888887",NA,NA,3,20170628,NA
+"avonpark","c1","MOCE",NA,NA,3,20170628,NA
+"avonpark","c1","LYFE",NA,NA,3,20170628,NA
 "avonpark","c1","SERE",NA,NA,6,20170628,NA
 "avonpark","c1","shrub-forb 11:48",NA,NA,1,20170628,NA
 "avonpark","b1","ILEX",NA,NA,5,20170629,NA
@@ -53,7 +43,7 @@
 "avonpark","d1","QUMY",NA,NA,18,20170630,NA
 "avonpark","d1","QUNI",NA,NA,4,20170630,NA
 "avonpark","d1","SERE",NA,NA,14,20170630,NA
-"avonpark","d1","shrub 11:29",NA,NA,3,20170630,NA
+"avonpark","d1","QUMY",NA,NA,3,20170630,NA
 "tyndall","b1",NA,NA,NA,0,20170718,"placeholder zero for plot visit"
 "tyndall","b2","SERE",NA,NA,2,20170719,NA
 "tyndall","d1","ILGL",NA,NA,7,20170720,NA
@@ -115,7 +105,7 @@
 "shelby","b1","QUST",NA,NA,3,20170921,NA
 "shelby","b1","RHCO",NA,NA,8,20170921,NA
 "shelby","b1","RUBUS",NA,NA,1,20170921,NA
-"shelby","b1","tupelo",NA,NA,2,20170921,NA
+"shelby","b1","NYSSA",NA,NA,2,20170921,NA
 "shelby","b1","VACCI",NA,NA,2,20170921,NA
 "shelby","f1","CAAM",NA,NA,10,20170921,NA
 "shelby","f1","ILOP",NA,NA,1,20170921,NA
@@ -235,12 +225,12 @@
 "tyndall","b2","SERE",NA,NA,1,20180625,NA
 "tyndall","d2","ILGL",NA,NA,5,20180625,NA
 "tyndall","d2","MAGNO",NA,NA,17,20180625,NA
-"tyndall","d2","pepper leaf",NA,NA,61,20180625,NA
+"tyndall","d2","LITR",NA,NA,61,20180625,NA
 "tyndall","d2","PIEL",NA,NA,1,20180625,NA
 "tyndall","d2","tlt",NA,NA,27,20180625,NA
 "tyndall","c1","ILGL",NA,NA,333,20180626,NA
 "tyndall","c1","SERE",NA,NA,3,20180626,NA
-"tyndall","c1","stagger bush",NA,NA,1,20180626,NA
+"tyndall","c1","LYFE",NA,NA,1,20180626,"changed to rusty staggerbush"
 "tyndall","c2","ILGL",NA,NA,238,20180626,NA
 "tyndall","c2","QUMY",NA,NA,2,20180626,NA
 "tyndall","c2","SERE",NA,NA,4,20180626,NA
@@ -261,7 +251,7 @@
 "jackson","e1","VAAR",NA,NA,11,20180710,NA
 "jackson","f1","QULA",NA,NA,3,20180710,NA
 "jackson","f1","VACCI",NA,NA,26,20180710,NA
-"jackson","g1","spice bush",NA,NA,1,20180710,NA
+"jackson","g1","LINDE2",NA,NA,1,20180710,NA
 "jackson","g1","VAAR",NA,NA,4,20180710,NA
 "jackson","g1","VACCI",NA,NA,4,20180710,NA
 "jackson","i1","DIVI",NA,NA,8,20180711,NA
