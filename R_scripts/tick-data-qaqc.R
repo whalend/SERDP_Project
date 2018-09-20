@@ -14,6 +14,7 @@ tick_data <- read_csv("data/raw_data/ticks.csv")
 #+ plot visit data ####
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 
+sort(unique(tick_data$plot_id))
 tick_data$plot_id <- tolower(tick_data$plot_id)
 tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
 
@@ -23,6 +24,10 @@ tick_data <- tick_data %>%
   filter(date>20170601)
 
 sort(unique(tick_data$plot_id))
+filter(tick_data, plot_id=="tyndall na")
+filter(tick_data, plot_id=="tyndall extra")
+
+tick_data$plot_id[tick_data$plot_id=="tyndall na"] = "tyndall extra"
 
 # tick_data <- left_join(
 # tick_data,
@@ -38,6 +43,7 @@ summary(tick_data)
 
 ## Steven processing, added concatenation for plot_id & installation line 17 ##
 
+### Made locations consistent ####
 unique(tick_data$location)
 
 # tolower()
@@ -57,7 +63,7 @@ tick_data$location[tick_data$location=="C"] <- "Center"
 tick_data$location[tick_data$location=="center"] <- "Center"
 tick_data$location[tick_data$location=="extra"] <- "Extra"
 
-### Made locations consistent ###
+
 
 unique(plot_visit_data$plot_id) %in% unique(tick_data$plot_id)
 
@@ -89,7 +95,7 @@ summary(tick_data)
 
 sort(unique(tick_data$species))
 
-#### Steven checking processed data, looks good #### 
+#### Steven checking processed data, looks good ####
 
 ggplot(tick_data %>%
 group_by(installation,years_since_fire,Species) %>%
