@@ -1,0 +1,83 @@
+```{r set installation name, echo=F}
+
+inst_name = "Fort Jackson"
+
+```
+---
+title: "SERDP Project Installation Report `r inst_name`"
+author: "Whalen W. Dillon, Drew T. Hiatt, Steven Cabrera"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    toc: yes
+    self_contained: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = F)
+knitr::opts_chunk$set(warning = F)
+knitr::opts_chunk$set(message = F)
+
+library(plyr); library(dplyr); library(ggplot2); library(readr)
+library(stringi)
+library(tidyr)
+library(viridisLite); library(viridis)
+
+def_theme <- theme(legend.title = element_blank(),
+            legend.text = element_text(size = 10),
+            legend.position = "top",
+            axis.text = element_text(size = 10, ),
+            axis.title = element_text(size = 16),
+            plot.title = element_text(size = 28),
+            strip.background = element_blank(),
+            panel.grid = element_blank()
+            )
+invasion_color <- scale_color_viridis_d()
+invasion_fill <- scale_fill_viridis_d()
+
+```
+
+**Project #: RC-2636**
+
+
+
+```{r load plot visit data}
+
+plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
+plot_visit_data$imcy_inv <- factor(plot_visit_data$imcy_inv, levels=c("uninvaded","invaded"), labels = c("Uninvaded","Invaded"))
+
+```
+
+
+```{r installation plots visited, fig.width=9}
+
+plot_nums <- plot_visit_data %>%
+      group_by(installation_full_name, imcy_inv) %>% 
+      summarise(plot_ct = n_distinct(plot_id)) %>% 
+      mutate(inst_flag = ifelse(installation_full_name==inst_name,T,F))
+tot_plots <- plot_visit_data %>%
+      group_by(installation_full_name) %>% 
+      summarise(total_plots = n_distinct(plot_id))
+
+plot_nums %>% 
+      ggplot(aes(installation_full_name, plot_ct, label=plot_ct)) +
+      geom_col(aes(color = inst_flag), size = 4, show.legend = F) +
+      geom_col(aes(fill = imcy_inv)) +
+      scale_color_manual(values = c("TRUE" = "blue", "FALSE" = NA)) +
+      invasion_fill +
+      # geom_text(nudge_y = -.5, color = "light blue", size = 5) +
+      # facet_grid(installation_full_name ~ ., scales = "free_y") +
+      ylab("Number of sample plots") +
+      xlab("") +
+      # ggtitle("Plots in Burn Units Across Installations") +
+      theme_classic() +
+      # def_theme +
+      # theme(lege) +
+      NULL
+
+```
+
+
