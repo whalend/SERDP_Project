@@ -6,12 +6,12 @@ output:
     toc: yes
   pdf_document:
     toc: yes
-date: "`r Sys.time()`"
+date: "`r Sys.Date()`"
 ---
 
 ```{r set options, echo=F}
 # knitr::opts_chunk$set(fig.height = 10)
-knitr::opts_chunk$set(fig.width = 7.5, fig.height = 7.5)
+knitr::opts_chunk$set(fig.width = 7.5)
 knitr::opts_chunk$set(dpi = 300)
 knitr::opts_chunk$set(echo = F)
 knitr::opts_chunk$set(warning = F)
@@ -22,7 +22,7 @@ knitr::opts_chunk$set(message = F)
 # source(plot-data.R)
 
 library(plyr); library(dplyr); library(ggplot2); library(readr)
-library(stringi)
+library(stringi); library(stringr)
 library(tidyr)
 library(viridisLite); library(viridis)
 
@@ -33,11 +33,11 @@ rm(list=ls())
 ```{r assign global variables}
 
 def_theme <- theme(legend.title = element_blank(),
-            legend.text = element_text(size = 18),
+            legend.text = element_text(size = 12),
             legend.position = "top",
-            axis.text = element_text(size = 18),
-            axis.title = element_text(size = 18),
-            plot.title = element_text(size = 20),
+            axis.text = element_text(size = 14),
+            axis.title = element_text(size = 16),
+            plot.title = element_text(size = 18),
             strip.background = element_blank(),
             panel.grid = element_blank()
             )
@@ -46,12 +46,13 @@ invasion_fill <- scale_fill_viridis_d()
 
 ```
 
-```{r read in plot data}
-# Check source R script if needed 'plot-data-qaqc.R'
+```{r read in plot data, echo=F, results='hide'}
+# Check source R script if needed: 'plot-data-qaqc.R'
 
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 # summary(plot_visit_data)
 sort(unique(plot_visit_data$plot_id))
+filter(plot_visit_data, is.na(years_since_fire))
 
 # There should be 104 records, 29 in visit year 2017 and 75 in 2018.
 # filter(plot_visit_data, visit_year==2017)
@@ -146,9 +147,25 @@ plot_visit_data$installation_full_name[plot_visit_data$installation=="benning"] 
 * **`r n_distinct(plot_visit_data$plot_id)` different plots, some multiple times**
 * **`r length(plot_visit_data$plot_id)` plot visits (some revisits)**
 
+```{r make installation map, echo=F, results='hide'}
+
+library(rgdal); library(sp); library(maptools)
+installations <- rgdal::readOGR("data/DoD-installations.shp", verbose = F)
+summary(installations)
+installations$FULLNAME
+bases <- c("Tyndall AFB","Ft. Benning","Camp Blanding","Ft. Jackson","Eglin AFB","Ft. Gordon","Camp Shelby","Avon Park AFR","Moody AFB")
+length(bases)
+installations <- installations[installations$FULLNAME%in%bases,]
+summary(installations)
+# plot(installations)
+
+
+```
+
+
 ![](figures/Year2bases.png)
 
-```{r summary of plots visited, fig.width=8, fig.height=5}
+```{r summary of plots visited, fig.height=5}
 
 # xtabs(~ imcy_inv + last_fire_year + installation_full_name, data = plot_visit_data)
 
@@ -160,21 +177,27 @@ plot_visit_data$installation_full_name[plot_visit_data$installation=="benning"] 
 # plot_data$inv_colors[plot_data$imcy_inv=="invaded"] <- "#d8b365"
 # plot_data$inv_colors[plot_data$imcy_inv=="uninvaded"] <- "#5ab4ac"
 
-ggplot(plot_visit_data%>% 
-             group_by(installation_full_name) %>% 
-             summarise(plot_ct = n_distinct(plot_id)), 
-       aes(installation_full_name, plot_ct, label=plot_ct)) +
-      geom_col() +
-      geom_text(nudge_y = .2) +
+plot_nums <- plot_visit_data %>%
+      group_by(installation_full_name, imcy_inv) %>% 
+      summarise(plot_ct = n_distinct(plot_id))
+plot_nums %>%       
+      ggplot(aes(installation_full_name, plot_ct, label=plot_ct)) +
+      geom_col(aes(fill = imcy_inv)) +
+      invasion_fill +
+      # geom_text(nudge_y = 0) +
+      # scale_fill_manual(values = c(installation_name = "blue")) +
       # facet_grid(installation_full_name ~ ., scales = "free_y") +
       ylab("Number of sample plots") +
       xlab("") +
       # ggtitle("Plots in Burn Units Across Installations") +
       theme_classic() +
-      # def_theme +
+      def_theme +
+      # theme(lege) +
       NULL
-      
-ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
+
+plot_visit_data %>% 
+      filter(!is.na(years_since_fire)) %>%
+      ggplot(aes(as.factor(years_since_fire))) +
       geom_bar(aes(fill = imcy_inv), position = "dodge") +
       invasion_fill +
       # scale_fill_discrete(h = c(249,200)) +
@@ -186,7 +209,9 @@ ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
       theme(legend.position = c(.8,.8)) +
       NULL
 
-ggplot(plot_visit_data, aes(as.factor(years_since_fire))) +
+plot_visit_data %>% 
+      filter(!is.na(years_since_fire)) %>%
+      ggplot(aes(as.factor(years_since_fire))) +
       geom_bar(aes(fill = imcy_inv), position = "dodge") +
       invasion_fill +
       facet_grid(installation_full_name~.) +
@@ -1189,30 +1214,52 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-vs-fire.png", height=7.5, widt
 
 # Tick Abundance
 
+## Tick species
+
+- Lone star ticks, *Amblyomma americanum* abbreviation: Am. am
+
+![](pictures/lone-star-ticks.png)
+
+- Gulf coast ticks *Amblyomma maculatum* abbreviation: Am. mac.
+
+![](pictures/gulf-coast-ticks.png)
+
+- American dog ticks *Dermecentor variablis* abbreviation: De. var
+
+![](pictures/american-dog-ticks.png)
+
+- Brown dog ticks *Rhipicephalus sanguineus* abbreviation: Rh. san
+
+![](pictures/brown-dog-ticks.png)
+
+- Black-legged or deer ticks *Ixodes scapularis* abbreviation: Ix. sc
+
+![](pictures/deer-ticks.png)
+
 ```{r tick data QC, results='hide'}
 
+tick_data <- read_csv("data/processed_data/ticks.csv")
+tick_data
+summary(tick_data)
+skimr::skim(tick_data)
 
-tick_data <- read_csv("data/raw_data/ticks.csv")
-tick_data$plot_id <- tolower(tick_data$plot_id)
-tick_data$location <- tolower(tick_data$location)
-tick_data$species <- tolower(tick_data$species)
 sort(unique(tick_data$plot_id))
 sort(unique(tick_data$installation))
 sort(unique(tick_data$species))
 
-tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
-# tick_data$Date <- as.Date(tick_data$Date, format = "%Y-%m-%d-")
-# tick_data$excel_date <- gsub("-","",tick_data$date)
-# write_csv(tick_data, "data/tick-data.csv")
-tick_data$date <- as.Date(as.character(tick_data$date),format = "%Y%m%d")
-summary(tick_data)
-
+# plot_visit_data
+names(plot_visit_data)
+names(tick_data)
 tick_data <- tick_data %>% 
-      mutate(visit_year = lubridate::year(date),
-             pid = paste(installation, plot_id))
+      mutate(date = as.Date(as.character(tick_data$date), format = "%Y%m%d"),
+             visit_year = lubridate::year(date),
+             life_stage = factor(life_stage, levels = c("A","N","L"),))
 
-tick_data <- left_join(tick_data, 
-                       select(plot_visit_data, -notes))
+tick_data <- left_join(
+      select(tick_data, -notes),
+      select(plot_visit_data, -notes)
+)
+summary(tick_data)
 
 tick_data$life_stage <- factor(
       tick_data$life_stage, 
@@ -1228,17 +1275,23 @@ filter(tick_data, is.na(imcy_inv))
 
 # tick_data$date <- as.Date(as.character(tick_data$date), format = "%Y%m%d")
 
+## Count larvae bombs as "1"
+tick_data <- tick_data %>% 
+      mutate(tick_count = ifelse(life_stage=="Larval",1,count),
+             tick_count = ifelse(is.na(tick_count),0,tick_count))
+summary(tick_data)
+# filter(tick_data, is.na(tick_count))$count
+
 ```
 
 ## Total ticks collected across burn units 
 
 The high tick abundance for 8-years post-fire is driven by a single plot at Camp Blanding.
 
-```{r tick life stage vs fire figure}
-
-ggplot(tick_data %>% 
-             filter(!is.na(imcy_inv), !is.na(life_stage)), 
-       aes(years_since_fire, log1p(count), color = imcy_inv, fill = imcy_inv)) +
+```{r tick life stage abundance fire}
+tick_data %>% 
+      filter(!is.na(imcy_inv), !is.na(life_stage)) %>% 
+ggplot(aes(years_since_fire, log1p(tick_count), color = imcy_inv, fill = imcy_inv)) +
       # geom_bar(stat = "identity", position = "dodge", show.legend = F) +
       geom_violin(aes(fill = imcy_inv), alpha = .3) +
       geom_point(alpha = .3, position = "jitter", size = .5) +
@@ -1306,7 +1359,7 @@ tick_data_life_stage_summary <- tick_data %>%
 
 
 tick_data_plot_summary <- tick_data %>% 
-      group_by(pid, visit_year, years_since_fire, imcy_inv, installation_full_name) %>% 
+      group_by(installation, plot_id, visit_year, years_since_fire, imcy_inv, installation_full_name) %>% 
       summarise(total_ticks = sum(count)) %>% 
       ungroup(.)
 
@@ -1365,16 +1418,19 @@ summary(tick_data_sum)
 
 ## Tick~fire log-linear relationship 
 ```{r tick-fire}
+unique(tick_data_plot_summary$installation_full_name)
+filter(tick_data_plot_summary, is.na(installation_full_name))$plot_id
 
-ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
+ggplot(filter(tick_data_plot_summary, !is.na(imcy_inv)), 
        aes(years_since_fire, log1p(total_ticks), color = imcy_inv)) +
-      geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", linetype = "dashed") +
+      # geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", linetype = "dashed") +
       geom_smooth(aes(fill = imcy_inv), se = T, method = "lm", alpha = .2) +
-      geom_point(position = "jitter", alpha = .5) +
+      geom_point(aes(shape = installation_full_name), position = "jitter", alpha = .5) +
       invasion_color +
       invasion_fill +
       # geom_smooth(aes(color = imcy_inv), method = "loess",
                   # linetype = "dashed", se = F) +
+      scale_shape_manual(values = c(inst_name=2, 19, 19, 19, 19, 19, 19, 19, 19)) +
       theme_classic() +
       xlab("Years since fire") +
       ylab("log( tick abundance + 1 )") +
