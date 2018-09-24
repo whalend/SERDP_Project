@@ -48,11 +48,12 @@ invasion_fill <- scale_fill_viridis_d()
 
 ```{r read in plot data, echo=F, results='hide'}
 # Check source R script if needed: 'plot-data-qaqc.R'
+# source("R_scripts/plot-data-qaqc.R")
 
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 # summary(plot_visit_data)
-sort(unique(plot_visit_data$plot_id))
-filter(plot_visit_data, is.na(years_since_fire))
+# sort(unique(plot_visit_data$plot_id))
+# filter(plot_visit_data, is.na(years_since_fire))
 
 # There should be 104 records, 29 in visit year 2017 and 75 in 2018.
 # filter(plot_visit_data, visit_year==2017)
@@ -63,82 +64,6 @@ plot_visit_data$imcy_inv <- factor(plot_visit_data$imcy_inv, levels=c("uninvaded
 ```
 There are 3 `NA` values in the coarse fire history columns. The `NA`s correspond to the odd/extra cogongrass plot that we sampled at Camp Blanding and 2 plots at Camp Shelby that I (WD) have requested data for as of 9/6/2018.
 
-
-```{r plot data manipulation, results='hide', eval=F}
-# This is all done in a separate script now.
-# source("R_scripts/plot-data-qaqc.R")
-
-# plot_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/plot_info.csv")
-
-plot_locations <- rgdal::readOGR("data/plot-locations.shp", verbose = F)
-
-plot_locations@data$xcoord_lon <- plot_locations@coords[,1]
-plot_locations@data$ycoord_lat <- plot_locations@coords[,2]
-
-plot_coords <- select(plot_locations@data, name, installation = instal, xcoord_lon, ycoord_lat)
-str(plot_coords)
-
-plot_coords <- plot_coords %>% 
-      mutate(name = as.character(name),
-             installation= as.character(installation),
-             plot_id = tolower(substr(name, start = nchar(name)-1, stop = nchar(name))),
-             pid = paste(installation, plot_id, sep = " ")
-      ) %>% 
-      select(pid, xcoord_lon, ycoord_lat)
-
-# plot_data$fire_year <- as.integer(as.character(plot_data$fire_year))
-# plot_data$years_since_fire <- 2017 - plot_data$fire_year
-# plot_data <- plot_data %>%
-#       filter(is.na(fire_year)==FALSE) %>%
-#       mutate(plot_id = tolower(stri_sub(name, -2,-1)),
-#              installation = tolower(stri_sub(name,1,-3))) %>%
-#       rename(last_fire_year = fire_year) %>% 
-#       select(installation, plot_id, last_fire_year, years_since_fire, imcy_inv)
-
-
-# plot_data <- read_csv("data/plot_data.csv")
-plot_visit_data <- read_csv("data/raw_data/plot_visit.csv")
-summary(plot_visit_data)
-plot_visit_data <- mutate(
-      plot_visit_data,
-      years_since_fire = as.numeric(format(visit_date, "%Y")) - last_fire_year,
-      pid = paste(installation,plot_id),
-      visit_year = lubridate::year(visit_date)
-      )
-
-plot_visit_data <- filter(plot_visit_data, !is.na(last_fire_year))
-
-plot_visit_data <- left_join(plot_visit_data, plot_coords)
-
-plot_visit_data$notes
-
-sort(plot_visit_data$pid)
-
-# plot_visit_data <- left_join(plot_visit_data, 
-#                              plot_data)
-# plot_visit_data <- plot_visit_data[is.na(plot_visit_data$visit_date)==FALSE,]
-# plot_visit_data <- mutate(plot_visit_data, 
-#                           pid = paste(installation,plot_id))
-# length(unique(plot_visit_data$pid))
-# plot_visit_data <- arrange(plot_visit_data, desc(ycoord_lat))
-# 
-# plot_visit_data %>% 
-#       if_else(round(ycoord_lat, digits = 1)>31, 31, 0)
-
-plot_visit_data <- filter(plot_visit_data, is.na(last_fire_year)==FALSE)
-
-unique(plot_visit_data$installation)
-## Add labels column for installation names
-plot_visit_data$installation_full_name[plot_visit_data$installation=="blanding"] <- "Camp Blanding"
-plot_visit_data$installation_full_name[plot_visit_data$installation=="eglin"] <- "Eglin AFB"
-plot_visit_data$installation_full_name[plot_visit_data$installation=="tyndall"] <- "Tyndall AFB"
-plot_visit_data$installation_full_name[plot_visit_data$installation=="avonpark"] <- "Avon Park AFR"
-plot_visit_data$installation_full_name[plot_visit_data$installation=="shelby"] <- "Camp Shelby"
-plot_visit_data$installation_full_name[plot_visit_data$installation=="moody"] <- "Moody AFB"
-plot_visit_data$installation_full_name[plot_visit_data$installation=="jackson"] <- "Fort Jackson"
-plot_visit_data$installation_full_name[plot_visit_data$installation=="benning"] <- "Fort Benning"
-
-```
 
 # Installations Visited and Plots Sampled
 
