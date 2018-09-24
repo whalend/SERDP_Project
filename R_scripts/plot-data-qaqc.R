@@ -103,13 +103,21 @@ sort(plot_visit_data$plot_id)
 sort(duplicated(plot_visit_data$plot_id))
 #' We revisited 9 of the 29 plots that were initially sampled in 2017.
 
+
+#+
+summary(plot_visit_data)
+filter(plot_visit_data, is.na(years_since_fire))$plot_id
+plot_visit_data <- plot_visit_data %>%
+      mutate(last_fire_year = ifelse(plot_id=="shelby j1",2012,last_fire_year),
+             years_since_fire = visit_year - last_fire_year)
+
 #+ write out plot visit data ####
 
 write_csv(plot_visit_data, "data/processed_data/plot_visit_data.csv")
 
 #+ initial plotting of plot visit data ####
 
-ggplot(plot_data %>%
+ggplot(plot_visit_data %>%
              group_by(installation) %>%
              summarise(plot_ct = n_distinct(plot_id)),
        aes(installation, plot_ct, label=plot_ct)) +
