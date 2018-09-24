@@ -29,10 +29,12 @@ species_data <- species_data %>%
              plot_id = paste(installation, plot_id, sep = " "))
 species_data$veg_id <- tolower(species_data$veg_id)
 length(unique(species_data$veg_id))
-species_data <- left_join(
-      species_data,
-      select(plot_visit_data, -notes)
-)
+
+# species_data <- left_join(
+#       species_data,
+#       select(plot_visit_data, -notes)
+# )
+
 summary(species_data)
 
 ## Steven begin processing here ##
@@ -58,21 +60,12 @@ species_data$pct_cover[species_data$Order=="3031"] <- 5
 
 summary(species_data)
 
-species_data <- species_data %>%
-  mutate(visit_year=lubridate::year(visit_date))
-
-left_join(species_data, plot_visit_data,
-          by = c("plot_id", "visit_year"))
-
-filter(species_data, is.na(visit_year)) %>%
-  select(visit_year, date, veg_id, plot_id)
-
-### Added plot visit year to species_data ###
 
 sort(unique(species_data$scientific_name))
 species_data$scientific_name <- paste(species_data$Genus,species_data$Species, sep=" ")
 sort(unique(species_data$scientific_name))
 ## Fixed Genus/Species naming errors ##
+
 
 write_csv(species_data, "data/processed_data/species1m.csv")
 
