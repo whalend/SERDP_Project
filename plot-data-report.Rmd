@@ -921,20 +921,15 @@ ggplot(tree_data_plot_summary,
 
 ```{r 100m subplot, results='hide'}
 
-subplot_data <- read_csv("data/processed_data/woodysubplot.csv")
-subplot_data$date <- as.Date(as.character(subplot_data$date), format="%Y%m%d")
-subplot_data$plot_id <- tolower(subplot_data$plot_id)
-subplot_data$installation[subplot_data$installation=="avon"] <- "avonpark"
+subplot_data_import <- read_csv("data/processed_data/woodysubplot.csv")
+subplot_data_import$date <- as.Date(as.character(subplot_data_import$date), format="%Y%m%d")
 
-subplot_data <- subplot_data %>% 
-      select(-under_50cm,-`50-99cm`) %>% 
-      filter(date >"2017-06-01") %>% 
+subplot_data <- subplot_data_import %>% 
       mutate(stems_100m2 = round(if_else(date<"2018-01-01", over_100cm*.599,over_100cm*1)),
-             visit_year = lubridate::year(date),
-             plot_id = paste(installation, plot_id, sep = " "))
+             visit_year = lubridate::year(date))
 
 subplot_data <- left_join(
-      subplot_data,
+      select(subplot_data, -notes),
       select(plot_visit_data, -notes)
 )
 
@@ -952,23 +947,23 @@ summary(subplot_plot_summary)
 ```{r subplot figure}
 
 (shrub_saplings_fig <- ggplot(
-      subplot_plot_summary,
+      filter(subplot_plot_summary, total_stems_100m2>=0),
       aes(years_since_fire, log1p(total_stems_100m2), color = imcy_inv)) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      geom_point(aes(color = imcy_inv), alpha = .5) +
+      geom_point(aes(color = imcy_inv), alpha = .7, size = 2) +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm") +
       invasion_color +
       invasion_fill +
       # facet_grid(.~veg_id) +
       theme_classic() +
       def_theme +
-      # theme(legend.position = c(.85,.85)) +
+      theme(legend.position = c(.85,.95)) +
       xlab("Years since fire") +
-      ylab(expression(paste("Stem density (100 ", {m}^-2,")"))) +
+      ylab(expression(paste("ln( Shrb/sapling stem density (100 ", {m}^-2,") )"))) +
       ggtitle("")
 )
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/subplot_density.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/subplot_density.png", height=7.5, width = 7.5)
 
 ```
 
@@ -979,14 +974,14 @@ Biomass is averaged across the four 25 cm quadrats for each plot, and then these
 
 ```{r 25cm biomass data, results='hide'}
 
-biomass_data <- read_csv("data/raw_data/quadrat25cm.csv")
-biomass_data$date <- as.Date(as.character(biomass_data$date), format="%Y%m%d")
-biomass_data <- filter(biomass_data, date>"2017-04-25", plot_id!="bland02", plot_id!="bland03")
-# summary(biomass_data)
+biomass_data_import <- read_csv("data/processed_data/quadrat25cm.csv")
+biomass_data_import$date <- as.Date(as.character(biomass_data_import$date), format="%Y%m%d")
+# summary(biomass_data_import)
+# filter(biomass_data_import, is.na(standing_fuel_mass_dry))$plot_id
 
-biomass_data <- biomass_data %>% 
+biomass_data <- biomass_data_import %>% 
       mutate(pct_litter_moisture = 100*(litter_mass_wet-litter_mass_dry)/litter_mass_wet,
-             plot_id = paste(installation, plot_id, sep = " "),
+             
              visit_year = lubridate::year(date))
 
 biomass_data <- left_join(
