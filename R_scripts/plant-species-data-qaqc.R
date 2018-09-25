@@ -88,6 +88,32 @@ sort(unique(species_data$veg_id))
 
 #### Steven checking processing, looks good ####
 
+#### Steven begin processing for individual installations ####
+
+summary(species_data)
+names(species_data)
+
+species_grouped <- species_data %>% 
+  group_by(installation, plot_id, date, veg_id, functional_group) %>% 
+  summarise(avg_pct_cover = mean(pct_cover, na.rm = T),
+            num_stems_m2 = sum(ht_under50cm, ht50_100cm, ht_over100cm))
+
+summary(species_grouped)
+
+species_benning <- species_grouped %>% 
+  filter(installation=="benning")
+             
+summary(species_benning)
+
+filter(species_data, plot_id=="benning b1") %>% 
+  select(plot_id, veg_id, pct_cover, ht_under50cm, ht50_100cm, ht_over100cm)
+
+filter(species_benning, plot_id=="benning b1") %>% 
+  select(plot_id, veg_id, avg_pct_cover, num_stems_m2)
+
+unique(species_data$plot_id)
+
+
 #################
 #### NOT RUN ####
 #############################################################################
