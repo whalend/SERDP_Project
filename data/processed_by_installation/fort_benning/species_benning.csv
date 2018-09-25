@@ -1,173 +1,173 @@
-plot_id,date,veg_id,avg_pct_cover,num_stems_m2,species_name,functional_group
-benning a1,2018-07-24,an,0.75,1.5,Andropogon spp.,graminoid
-benning a1,2018-07-24,cnur,0.5,0.25,Cnidoscolus urens,forb
-benning a1,2018-07-24,crata,2.75,0.75,Crataegus spp.,shrub
-benning a1,2018-07-24,elel,0.75,1,Elephantopus elatus,forb
-benning a1,2018-07-24,list,4,1,Liquidambar styraciflua,tree
-benning a1,2018-07-24,loja,2.75,4.5,Lonicera japonica,vine
-benning a1,2018-07-24,moce,25,1,Morella cerifera,shrub
-benning a1,2018-07-24,pigr,1,1.5,Pityopsis graminifolia,forb
-benning a1,2018-07-24,quhe,2,0,Quercus hemisphaerica,tree
-benning a1,2018-07-24,quma,25,4,Quercus marilandica,tree
-benning a1,2018-07-24,rhco,1.3333333333333333,0.25,Rhus copallinum,shrub
-benning a1,2018-07-24,rhcy,0.5,0.25,Rhynchosia cytisoides,forb
-benning a1,2018-07-24,rubus,0.6666666666666666,2,Rubus spp.,forb/shrub
-benning a1,2018-07-24,shrub thing,65,0,NA NA,shrub
-benning a1,2018-07-24,tragi,0.75,1.5,Tragia spp.,forb
-benning a1,2018-07-24,vacci,40,3.25,Vaccinium spp.,shrub
-benning a1,2018-07-24,wavy,1,1,NA NA,NA
-benning b1,2018-07-24,an,2.5,4.75,Andropogon spp.,graminoid
-benning b1,2018-07-24,capa,0.5,0.25,Carphephorus paniculatus,forb
-benning b1,2018-07-24,chfa,0.5,0.25,Chamaecrista fasciculata,forb
-benning b1,2018-07-24,cnur,0.5,0.25,Cnidoscolus urens,forb
-benning b1,2018-07-24,list,55,1.75,Liquidambar styraciflua,tree
-benning b1,2018-07-24,pipa,5,0.5,Pinus palustris,tree
-benning b1,2018-07-24,quma,1,0.5,Quercus marilandica,tree
-benning b1,2018-07-24,rhco,10,0.75,Rhus copallinum,shrub
-benning b1,2018-07-24,rhcy,5.25,2,Rhynchosia cytisoides,forb
-benning b1,2018-07-24,rubus,6,2.5,Rubus spp.,forb/shrub
-benning b1,2018-07-24,unk forb,2,0.5,NA NA,forb
-benning b1,2018-07-24,unk vine,2,0.75,NA NA,vine
-benning b1,2018-07-24,vacci,13.333333333333334,2,Vaccinium spp.,shrub
-benning c1,2018-07-25,3 leaf thing,15,4.5,NA NA,forb
-benning c1,2018-07-25,an,21.25,44.75,Andropogon spp.,graminoid
-benning c1,2018-07-25,chfa,0.75,1,Chamaecrista fasciculata,forb
-benning c1,2018-07-25,diac,1.625,5,Dichanthelium aciculare,graminoid
-benning c1,2018-07-25,elel,2.5,3,Elephantopus elatus,forb
-benning c1,2018-07-25,forb 2:32,2,0.25,NA NA,forb
-benning c1,2018-07-25,forb 2:35,1,0.25,NA NA,forb
-benning c1,2018-07-25,forb 2:42,3,1.5,NA NA,forb
-benning c1,2018-07-25,forb 3:03,1,0.25,NA NA,forb
-benning c1,2018-07-25,forb 3:14,1,0.25,NA NA,forb
-benning c1,2018-07-25,list,30,2.5,Liquidambar styraciflua,tree
-benning c1,2018-07-25,loja,1,1,Lonicera japonica,vine
-benning c1,2018-07-25,purple top,1,0.5,NA NA,forb
-benning c1,2018-07-25,rhco,4,0.75,Rhus copallinum,shrub
-benning c1,2018-07-25,rubus,12,8,Rubus spp.,forb/shrub
-benning c1,2018-07-25,sm,1.5,17,Smilax spp.,vine
-benning c1,2018-07-25,three leaf,1.6666666666666667,2.25,NA NA,forb
-benning c1,2018-07-25,velcro leaf,5,1,NA NA,forb
-benning d1,2018-07-25,an,16.75,43.25,Andropogon spp.,graminoid
-benning d1,2018-07-25,butterfly pea,0.5,0.25,NA NA,forb
-benning d1,2018-07-25,chfa,0.625,1.75,Chamaecrista fasciculata,forb
-benning d1,2018-07-25,diac,2.5,3.75,Dichanthelium aciculare,graminoid
-benning d1,2018-07-25,dicl,5,2.5,Dichanthelium clandestinum,graminoid
-benning d1,2018-07-25,elel,1,0.25,Elephantopus elatus,forb
-benning d1,2018-07-25,pigr,15.25,28.25,Pityopsis graminifolia,forb
-benning d1,2018-07-25,pipa,3,0.25,Pinus palustris,tree
-benning d1,2018-07-25,pita,0.5,0.25,Pinus taeda,tree
-benning d1,2018-07-25,ptca3,3.5,1.75,Pteridium caudatum,forb
-benning d1,2018-07-25,purple top,1,1.25,NA NA,forb
-benning d1,2018-07-25,rhco,2,0.5,Rhus copallinum,shrub
-benning d1,2018-07-25,rhcy,8,3,Rhynchosia cytisoides,forb
-benning d1,2018-07-25,rubus,11,11.25,Rubus spp.,forb/shrub
-benning d1,2018-07-25,three leaf,7.333333333333333,6.25,NA NA,forb
-benning d1,2018-07-25,three leaf 11:23 drew,2,1,NA NA,forb
-benning d1,2018-07-25,vaar,12.333333333333334,4.75,Vaccinium arboreum,shrub/tree
-benning d1,2018-07-25,white flower,0.6666666666666666,1.25,NA NA,forb
-benning e1,2018-07-26,an,7.5,20.25,Andropogon spp.,graminoid
-benning e1,2018-07-26,chse,10,5,Chasmanthium sessiliflorum,graminoid
-benning e1,2018-07-26,dicl,2,2.5,Dichanthelium clandestinum,graminoid
-benning e1,2018-07-26,divi,20,0.25,Diospyros virginiana,tree
-benning e1,2018-07-26,elel,1.75,0.5,Elephantopus elatus,forb
-benning e1,2018-07-26,eupat,2,0.75,Eupatorium spp.,forb
-benning e1,2018-07-26,ilvo,3,0.5,Ilex vomitoria,shrub
-benning e1,2018-07-26,list,4,0,Liquidambar styraciflua,tree
-benning e1,2018-07-26,loja,2.6666666666666665,3.25,Lonicera japonica,vine
-benning e1,2018-07-26,pita,1.1666666666666667,3.75,Pinus taeda,tree
-benning e1,2018-07-26,quma,4,0.25,Quercus marilandica,tree
-benning e1,2018-07-26,rhcy,3,2.25,Rhynchosia cytisoides,forb
-benning e1,2018-07-26,rubus,4,2.25,Rubus spp.,forb/shrub
-benning e1,2018-07-26,sm,1.6666666666666667,3,Smilax spp.,vine
-benning e1,2018-07-26,three leaf,2,0.75,NA NA,forb
-benning e1,2018-07-26,vaar,3.5,1.75,Vaccinium arboreum,shrub/tree
-benning e1,2018-07-26,viro3,4,1.25,Vitis rotundifolia,vine
-benning f1,2018-07-26,an,1.8333333333333333,3.75,Andropogon spp.,graminoid
-benning f1,2018-07-26,caam,1,0.5,Callicarpa americana,shrub
-benning f1,2018-07-26,chse,10,7.5,Chasmanthium sessiliflorum,graminoid
-benning f1,2018-07-26,diac,1.3333333333333333,3,Dichanthelium aciculare,graminoid
-benning f1,2018-07-26,dicl,0.5,0.25,Dichanthelium clandestinum,graminoid
-benning f1,2018-07-26,divi,4,1.25,Diospyros virginiana,tree
-benning f1,2018-07-26,elel,1.1666666666666667,0.75,Elephantopus elatus,forb
-benning f1,2018-07-26,forb 2:32,1,0.25,NA NA,forb
-benning f1,2018-07-26,forb 2:52,0.5,0.25,NA NA,forb
-benning f1,2018-07-26,ilvo,1,0.75,Ilex vomitoria,shrub
-benning f1,2018-07-26,list,2,0.5,Liquidambar styraciflua,tree
-benning f1,2018-07-26,loja,0.5,0.25,Lonicera japonica,vine
-benning f1,2018-07-26,pea 1:47,1,0.5,NA NA,forb
-benning f1,2018-07-26,pita,0.5,0.5,Pinus taeda,tree
-benning f1,2018-07-26,quma,2,0.25,Quercus marilandica,tree
-benning f1,2018-07-26,rhco,0.5,0,Rhus copallinum,shrub
-benning f1,2018-07-26,rhcy,1.5,3,Rhynchosia cytisoides,forb
-benning f1,2018-07-26,sm,0.5,0.5,Smilax spp.,vine
-benning f1,2018-07-26,three leaf,1,0.25,NA NA,forb
-benning f1,2018-07-26,vaar,10,0.5,Vaccinium arboreum,shrub/tree
-benning f1,2018-07-26,viro3,9.5,1.25,Vitis rotundifolia,vine
-benning g1,2018-07-27,euca5,10,0.75,Eupatorium capillofolium,forb
-benning g1,2018-07-28,an,5,14,Andropogon spp.,graminoid
-benning g1,2018-07-28,chfa,0.75,0.75,Chamaecrista fasciculata,forb
-benning g1,2018-07-28,chpa18,3,1.25,Chrysoma pauciflosculosa,shrub
-benning g1,2018-07-28,diac,2.5,4,Dichanthelium aciculare,graminoid
-benning g1,2018-07-28,elel,2,1.25,Elephantopus elatus,forb
-benning g1,2018-07-28,euca5,3.25,1,Eupatorium capillofolium,forb
-benning g1,2018-07-28,fabaceae 1,2,1.25,NA NA,forb
-benning g1,2018-07-28,fabaceae 2,2,0.75,NA NA,forb
-benning g1,2018-07-28,pigr,3.3333333333333335,8,Pityopsis graminifolia,forb
-benning g1,2018-07-28,rhcy,2.5,2.25,Rhynchosia cytisoides,forb
-benning g1,2018-07-28,rubus,2.375,4.25,Rubus spp.,forb/shrub
-benning g1,2018-07-28,sm,0.5,0.25,Smilax spp.,vine
-benning g1,2018-07-28,sood,1.8333333333333333,2.5,Solidago odora,forb
-benning g1,2018-07-28,tora2,0.5,0,Toxicodendron radicans L.,vine
-benning g1,2018-07-28,viro3,30,1.75,Vitis rotundifolia,vine
-benning h1,2018-07-28,an,19,36.5,Andropogon spp.,graminoid
-benning h1,2018-07-28,capa,7.5,6.25,Carphephorus paniculatus,forb
-benning h1,2018-07-28,chfa,0.5,0.75,Chamaecrista fasciculata,forb
-benning h1,2018-07-28,divi,2,0.25,Diospyros virginiana,tree
-benning h1,2018-07-28,elel,1.5,1.25,Elephantopus elatus,forb
-benning h1,2018-07-28,eupat,0.5,0.25,Eupatorium spp.,forb
-benning h1,2018-07-28,list,3,0.75,Liquidambar styraciflua,tree
-benning h1,2018-07-28,pigr,8,13.75,Pityopsis graminifolia,forb
-benning h1,2018-07-28,pipa,11,0.5,Pinus palustris,tree
-benning h1,2018-07-28,pita,2,13.75,Pinus taeda,tree
-benning h1,2018-07-28,poin,0.5,0.25,Polygala incarnata,forb
-benning h1,2018-07-28,quma,1,0.75,Quercus marilandica,tree
-benning h1,2018-07-28,rhco,1,0.25,Rhus copallinum,shrub
-benning h1,2018-07-28,rhcy,5.5,5,Rhynchosia cytisoides,forb
-benning h1,2018-07-28,sm,2,2.75,Smilax spp.,vine
-benning h1,2018-07-28,sood,0.5,0.25,Solidago odora,forb
-benning h1,2018-07-28,vaar,10,2.5,Vaccinium arboreum,shrub/tree
-benning h1,2018-07-28,white aster,0.5,0.5,NA NA,forb
-benning i1,2018-07-27,an,1.5,1.75,Andropogon spp.,graminoid
-benning i1,2018-07-27,caam,3.8333333333333335,2.75,Callicarpa americana,shrub
-benning i1,2018-07-27,chse,4,3.5,Chasmanthium sessiliflorum,graminoid
-benning i1,2018-07-27,dicl,1,0.5,Dichanthelium clandestinum,graminoid
-benning i1,2018-07-27,ilop,2,0.5,Ilex opaca,shrub
-benning i1,2018-07-27,loja,2,3,Lonicera japonica,vine
-benning i1,2018-07-27,paqu2,10,2.75,Parthenocissus quinquefolia,vine
-benning i1,2018-07-27,pita,0.75,1.5,Pinus taeda,tree
-benning i1,2018-07-27,quma,12.166666666666666,4.25,Quercus marilandica,tree
-benning i1,2018-07-27,qust,3,1.25,Quercus stellata,tree
-benning i1,2018-07-27,rubus,1,1.5,Rubus spp.,forb/shrub
-benning i1,2018-07-27,sm,0.8333333333333334,2,Smilax spp.,vine
-benning i1,2018-07-27,vaar,6,0.5,Vaccinium arboreum,shrub/tree
-benning i1,2018-07-27,viro3,12.5,2,Vitis rotundifolia,vine
-benning j1,2018-07-27,an,4.375,16.25,Andropogon spp.,graminoid
-benning j1,2018-07-27,coco13,0.5,0.25,Conoclinium coelestinum,forb
-benning j1,2018-07-27,crata,2,2.25,Crataegus spp.,shrub
-benning j1,2018-07-27,devi,2,0.5,Desmodium viridiflorum,forb
-benning j1,2018-07-27,diac,0.75,1,Dichanthelium aciculare,graminoid
-benning j1,2018-07-27,elel,0.5,0.25,Elephantopus elatus,forb
-benning j1,2018-07-27,eupat,0.5,0,Eupatorium spp.,forb
-benning j1,2018-07-27,ippa,2.5,1.75,Ipomoea pandurata,forb
-benning j1,2018-07-27,lebi,2,2.25,Lespedeza bicolor Turcz.,forb/shrub
-benning j1,2018-07-27,list,10,0.75,Liquidambar styraciflua,tree
-benning j1,2018-07-27,pigr,7.666666666666667,19.75,Pityopsis graminifolia,forb
-benning j1,2018-07-27,pita,0.5,0.25,Pinus taeda,tree
-benning j1,2018-07-27,quma,14,3.5,Quercus marilandica,tree
-benning j1,2018-07-27,rhco,13,2.5,Rhus copallinum,shrub
-benning j1,2018-07-27,rhcy,2.3333333333333335,5.25,Rhynchosia cytisoides,forb
-benning j1,2018-07-27,rubus,4.5,3,Rubus spp.,forb/shrub
-benning j1,2018-07-27,soha,2.5,0.75,Sorghanum halepense,graminoid
-benning j1,2018-07-27,sood,2.375,3.5,Solidago odora,forb
-benning j1,2018-07-27,tora2,15,4.75,Toxicodendron radicans L.,vine
-benning j1,2018-07-27,white aster,3.3333333333333335,7.25,NA NA,forb
+plot_id,date,avg_pct_cover,num_stems_m2,species_name,functional_group
+benning a1,2018-07-24,0.75,1.5,Andropogon spp.,graminoid
+benning a1,2018-07-24,0.5,0.25,Cnidoscolus urens,forb
+benning a1,2018-07-24,2.75,0.75,Crataegus spp.,shrub
+benning a1,2018-07-24,0.75,1,Elephantopus elatus,forb
+benning a1,2018-07-24,4,1,Liquidambar styraciflua,tree
+benning a1,2018-07-24,2.75,4.5,Lonicera japonica,vine
+benning a1,2018-07-24,25,1,Morella cerifera,shrub
+benning a1,2018-07-24,1,1.5,Pityopsis graminifolia,forb
+benning a1,2018-07-24,2,0,Quercus hemisphaerica,tree
+benning a1,2018-07-24,25,4,Quercus marilandica,tree
+benning a1,2018-07-24,1.3333333333333333,0.25,Rhus copallinum,shrub
+benning a1,2018-07-24,0.5,0.25,Rhynchosia cytisoides,forb
+benning a1,2018-07-24,0.6666666666666666,2,Rubus spp.,forb/shrub
+benning a1,2018-07-24,65,0,NA NA,shrub
+benning a1,2018-07-24,0.75,1.5,Tragia spp.,forb
+benning a1,2018-07-24,40,3.25,Vaccinium spp.,shrub
+benning a1,2018-07-24,1,1,NA NA,NA
+benning b1,2018-07-24,2.5,4.75,Andropogon spp.,graminoid
+benning b1,2018-07-24,0.5,0.25,Carphephorus paniculatus,forb
+benning b1,2018-07-24,0.5,0.25,Chamaecrista fasciculata,forb
+benning b1,2018-07-24,0.5,0.25,Cnidoscolus urens,forb
+benning b1,2018-07-24,55,1.75,Liquidambar styraciflua,tree
+benning b1,2018-07-24,5,0.5,Pinus palustris,tree
+benning b1,2018-07-24,1,0.5,Quercus marilandica,tree
+benning b1,2018-07-24,10,0.75,Rhus copallinum,shrub
+benning b1,2018-07-24,5.25,2,Rhynchosia cytisoides,forb
+benning b1,2018-07-24,6,2.5,Rubus spp.,forb/shrub
+benning b1,2018-07-24,2,0.5,NA NA,forb
+benning b1,2018-07-24,2,0.75,NA NA,vine
+benning b1,2018-07-24,13.333333333333334,2,Vaccinium spp.,shrub
+benning c1,2018-07-25,15,4.5,NA NA,forb
+benning c1,2018-07-25,21.25,44.75,Andropogon spp.,graminoid
+benning c1,2018-07-25,0.75,1,Chamaecrista fasciculata,forb
+benning c1,2018-07-25,1.625,5,Dichanthelium aciculare,graminoid
+benning c1,2018-07-25,2.5,3,Elephantopus elatus,forb
+benning c1,2018-07-25,2,0.25,NA NA,forb
+benning c1,2018-07-25,1,0.25,NA NA,forb
+benning c1,2018-07-25,3,1.5,NA NA,forb
+benning c1,2018-07-25,1,0.25,NA NA,forb
+benning c1,2018-07-25,1,0.25,NA NA,forb
+benning c1,2018-07-25,30,2.5,Liquidambar styraciflua,tree
+benning c1,2018-07-25,1,1,Lonicera japonica,vine
+benning c1,2018-07-25,1,0.5,NA NA,forb
+benning c1,2018-07-25,4,0.75,Rhus copallinum,shrub
+benning c1,2018-07-25,12,8,Rubus spp.,forb/shrub
+benning c1,2018-07-25,1.5,17,Smilax spp.,vine
+benning c1,2018-07-25,1.6666666666666667,2.25,NA NA,forb
+benning c1,2018-07-25,5,1,NA NA,forb
+benning d1,2018-07-25,16.75,43.25,Andropogon spp.,graminoid
+benning d1,2018-07-25,0.5,0.25,NA NA,forb
+benning d1,2018-07-25,0.625,1.75,Chamaecrista fasciculata,forb
+benning d1,2018-07-25,2.5,3.75,Dichanthelium aciculare,graminoid
+benning d1,2018-07-25,5,2.5,Dichanthelium clandestinum,graminoid
+benning d1,2018-07-25,1,0.25,Elephantopus elatus,forb
+benning d1,2018-07-25,15.25,28.25,Pityopsis graminifolia,forb
+benning d1,2018-07-25,3,0.25,Pinus palustris,tree
+benning d1,2018-07-25,0.5,0.25,Pinus taeda,tree
+benning d1,2018-07-25,3.5,1.75,Pteridium caudatum,forb
+benning d1,2018-07-25,1,1.25,NA NA,forb
+benning d1,2018-07-25,2,0.5,Rhus copallinum,shrub
+benning d1,2018-07-25,8,3,Rhynchosia cytisoides,forb
+benning d1,2018-07-25,11,11.25,Rubus spp.,forb/shrub
+benning d1,2018-07-25,7.333333333333333,6.25,NA NA,forb
+benning d1,2018-07-25,2,1,NA NA,forb
+benning d1,2018-07-25,12.333333333333334,4.75,Vaccinium arboreum,shrub/tree
+benning d1,2018-07-25,0.6666666666666666,1.25,NA NA,forb
+benning e1,2018-07-26,7.5,20.25,Andropogon spp.,graminoid
+benning e1,2018-07-26,10,5,Chasmanthium sessiliflorum,graminoid
+benning e1,2018-07-26,2,2.5,Dichanthelium clandestinum,graminoid
+benning e1,2018-07-26,20,0.25,Diospyros virginiana,tree
+benning e1,2018-07-26,1.75,0.5,Elephantopus elatus,forb
+benning e1,2018-07-26,2,0.75,Eupatorium spp.,forb
+benning e1,2018-07-26,3,0.5,Ilex vomitoria,shrub
+benning e1,2018-07-26,4,0,Liquidambar styraciflua,tree
+benning e1,2018-07-26,2.6666666666666665,3.25,Lonicera japonica,vine
+benning e1,2018-07-26,1.1666666666666667,3.75,Pinus taeda,tree
+benning e1,2018-07-26,4,0.25,Quercus marilandica,tree
+benning e1,2018-07-26,3,2.25,Rhynchosia cytisoides,forb
+benning e1,2018-07-26,4,2.25,Rubus spp.,forb/shrub
+benning e1,2018-07-26,1.6666666666666667,3,Smilax spp.,vine
+benning e1,2018-07-26,2,0.75,NA NA,forb
+benning e1,2018-07-26,3.5,1.75,Vaccinium arboreum,shrub/tree
+benning e1,2018-07-26,4,1.25,Vitis rotundifolia,vine
+benning f1,2018-07-26,1.8333333333333333,3.75,Andropogon spp.,graminoid
+benning f1,2018-07-26,1,0.5,Callicarpa americana,shrub
+benning f1,2018-07-26,10,7.5,Chasmanthium sessiliflorum,graminoid
+benning f1,2018-07-26,1.3333333333333333,3,Dichanthelium aciculare,graminoid
+benning f1,2018-07-26,0.5,0.25,Dichanthelium clandestinum,graminoid
+benning f1,2018-07-26,4,1.25,Diospyros virginiana,tree
+benning f1,2018-07-26,1.1666666666666667,0.75,Elephantopus elatus,forb
+benning f1,2018-07-26,1,0.25,NA NA,forb
+benning f1,2018-07-26,0.5,0.25,NA NA,forb
+benning f1,2018-07-26,1,0.75,Ilex vomitoria,shrub
+benning f1,2018-07-26,2,0.5,Liquidambar styraciflua,tree
+benning f1,2018-07-26,0.5,0.25,Lonicera japonica,vine
+benning f1,2018-07-26,1,0.5,NA NA,forb
+benning f1,2018-07-26,0.5,0.5,Pinus taeda,tree
+benning f1,2018-07-26,2,0.25,Quercus marilandica,tree
+benning f1,2018-07-26,0.5,0,Rhus copallinum,shrub
+benning f1,2018-07-26,1.5,3,Rhynchosia cytisoides,forb
+benning f1,2018-07-26,0.5,0.5,Smilax spp.,vine
+benning f1,2018-07-26,1,0.25,NA NA,forb
+benning f1,2018-07-26,10,0.5,Vaccinium arboreum,shrub/tree
+benning f1,2018-07-26,9.5,1.25,Vitis rotundifolia,vine
+benning g1,2018-07-27,10,0.75,Eupatorium capillofolium,forb
+benning g1,2018-07-28,5,14,Andropogon spp.,graminoid
+benning g1,2018-07-28,0.75,0.75,Chamaecrista fasciculata,forb
+benning g1,2018-07-28,3,1.25,Chrysoma pauciflosculosa,shrub
+benning g1,2018-07-28,2.5,4,Dichanthelium aciculare,graminoid
+benning g1,2018-07-28,2,1.25,Elephantopus elatus,forb
+benning g1,2018-07-28,3.25,1,Eupatorium capillofolium,forb
+benning g1,2018-07-28,2,1.25,NA NA,forb
+benning g1,2018-07-28,2,0.75,NA NA,forb
+benning g1,2018-07-28,3.3333333333333335,8,Pityopsis graminifolia,forb
+benning g1,2018-07-28,2.5,2.25,Rhynchosia cytisoides,forb
+benning g1,2018-07-28,2.375,4.25,Rubus spp.,forb/shrub
+benning g1,2018-07-28,0.5,0.25,Smilax spp.,vine
+benning g1,2018-07-28,1.8333333333333333,2.5,Solidago odora,forb
+benning g1,2018-07-28,0.5,0,Toxicodendron radicans L.,vine
+benning g1,2018-07-28,30,1.75,Vitis rotundifolia,vine
+benning h1,2018-07-28,19,36.5,Andropogon spp.,graminoid
+benning h1,2018-07-28,7.5,6.25,Carphephorus paniculatus,forb
+benning h1,2018-07-28,0.5,0.75,Chamaecrista fasciculata,forb
+benning h1,2018-07-28,2,0.25,Diospyros virginiana,tree
+benning h1,2018-07-28,1.5,1.25,Elephantopus elatus,forb
+benning h1,2018-07-28,0.5,0.25,Eupatorium spp.,forb
+benning h1,2018-07-28,3,0.75,Liquidambar styraciflua,tree
+benning h1,2018-07-28,8,13.75,Pityopsis graminifolia,forb
+benning h1,2018-07-28,11,0.5,Pinus palustris,tree
+benning h1,2018-07-28,2,13.75,Pinus taeda,tree
+benning h1,2018-07-28,0.5,0.25,Polygala incarnata,forb
+benning h1,2018-07-28,1,0.75,Quercus marilandica,tree
+benning h1,2018-07-28,1,0.25,Rhus copallinum,shrub
+benning h1,2018-07-28,5.5,5,Rhynchosia cytisoides,forb
+benning h1,2018-07-28,2,2.75,Smilax spp.,vine
+benning h1,2018-07-28,0.5,0.25,Solidago odora,forb
+benning h1,2018-07-28,10,2.5,Vaccinium arboreum,shrub/tree
+benning h1,2018-07-28,0.5,0.5,NA NA,forb
+benning i1,2018-07-27,1.5,1.75,Andropogon spp.,graminoid
+benning i1,2018-07-27,3.8333333333333335,2.75,Callicarpa americana,shrub
+benning i1,2018-07-27,4,3.5,Chasmanthium sessiliflorum,graminoid
+benning i1,2018-07-27,1,0.5,Dichanthelium clandestinum,graminoid
+benning i1,2018-07-27,2,0.5,Ilex opaca,shrub
+benning i1,2018-07-27,2,3,Lonicera japonica,vine
+benning i1,2018-07-27,10,2.75,Parthenocissus quinquefolia,vine
+benning i1,2018-07-27,0.75,1.5,Pinus taeda,tree
+benning i1,2018-07-27,12.166666666666666,4.25,Quercus marilandica,tree
+benning i1,2018-07-27,3,1.25,Quercus stellata,tree
+benning i1,2018-07-27,1,1.5,Rubus spp.,forb/shrub
+benning i1,2018-07-27,0.8333333333333334,2,Smilax spp.,vine
+benning i1,2018-07-27,6,0.5,Vaccinium arboreum,shrub/tree
+benning i1,2018-07-27,12.5,2,Vitis rotundifolia,vine
+benning j1,2018-07-27,4.375,16.25,Andropogon spp.,graminoid
+benning j1,2018-07-27,0.5,0.25,Conoclinium coelestinum,forb
+benning j1,2018-07-27,2,2.25,Crataegus spp.,shrub
+benning j1,2018-07-27,2,0.5,Desmodium viridiflorum,forb
+benning j1,2018-07-27,0.75,1,Dichanthelium aciculare,graminoid
+benning j1,2018-07-27,0.5,0.25,Elephantopus elatus,forb
+benning j1,2018-07-27,0.5,0,Eupatorium spp.,forb
+benning j1,2018-07-27,2.5,1.75,Ipomoea pandurata,forb
+benning j1,2018-07-27,2,2.25,Lespedeza bicolor Turcz.,forb/shrub
+benning j1,2018-07-27,10,0.75,Liquidambar styraciflua,tree
+benning j1,2018-07-27,7.666666666666667,19.75,Pityopsis graminifolia,forb
+benning j1,2018-07-27,0.5,0.25,Pinus taeda,tree
+benning j1,2018-07-27,14,3.5,Quercus marilandica,tree
+benning j1,2018-07-27,13,2.5,Rhus copallinum,shrub
+benning j1,2018-07-27,2.3333333333333335,5.25,Rhynchosia cytisoides,forb
+benning j1,2018-07-27,4.5,3,Rubus spp.,forb/shrub
+benning j1,2018-07-27,2.5,0.75,Sorghanum halepense,graminoid
+benning j1,2018-07-27,2.375,3.5,Solidago odora,forb
+benning j1,2018-07-27,15,4.75,Toxicodendron radicans L.,vine
+benning j1,2018-07-27,3.3333333333333335,7.25,NA NA,forb
