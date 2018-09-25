@@ -657,7 +657,7 @@ ggplot(species_over_5pct,
 
 tree_data_import <- read_csv("data/processed_data/trees.csv")
 # tree_data
-summary(tree_data_import)
+# summary(tree_data_import)
 
 tree_data <- tree_data_import %>% 
       select(installation:date, species:canopy, height, char) %>% 
@@ -669,83 +669,77 @@ tree_data <- tree_data_import %>%
 tree_data <- left_join(
       tree_data,
       select(plot_visit_data, -notes)) %>% 
-      mutate(genus = "", species = "", labels = "")
+      rename(tree_id = species) %>% 
+      mutate(labels = "")
 
-sort(unique(tree_data$tree_id))
+# sort(unique(tree_data$tree_id))
 tree_data$tree_id <- tolower(tree_data$tree_id)
 
-tree_data$tree_id[tree_data$tree_id=="blackjack"|tree_data$tree_id=="blackjack oak"] <- "quma"
-tree_data$tree_id[tree_data$tree_id=="divi"] <- "divi5"
-tree_data$tree_id[tree_data$tree_id=="cr"] <- "hawthorn"
-tree_data$tree_id[tree_data$tree_id %in% c("hicking","hickoru","hickory")] <- "carya"
-tree_data$tree_id[tree_data$tree_id=="laurel oak"] <- "quhe2"
-tree_data$tree_id[tree_data$tree_id %in% c("oak?","qu?","quercus")] <- "quspp"
-tree_data$tree_id[tree_data$tree_id %in% c("n.red oak","quercus ruba")] <- "quru"
-tree_data$tree_id[tree_data$tree_id %in% c("piap2","pipa")] <- "pipa2"
-tree_data$tree_id[tree_data$tree_id=="quhe"] <- "quhe2"
-tree_data$tree_id[tree_data$tree_id=="quge"] <- "quge2"
-tree_data$tree_id[tree_data$tree_id %in% c("sweetgum","sweet gum","")] <- "list2"
-tree_data$tree_id[tree_data$tree_id=="qvni"] <- "quni"
-tree_data$tree_id[tree_data$tree_id=="tree shrub?"] <- "unknown"
-tree_data$tree_id[tree_data$tree_id=="tuip poplar"] <- "litu"
-tree_data$tree_id[tree_data$tree_id=="white"] <- "white oak"
-tree_data$tree_id[tree_data$tree_id %in% c("pinus","pi","pisp")] <- "pispp"
-tree_data$tree_id[tree_data$tree_id=="post oak"] <- "qust"
+# tree_data$genus[tree_data$tree_id=="acru"] <- "Acer"
+# tree_data$genus[tree_data$tree_id=="bay"] <- "Persea"
+# tree_data$genus[tree_data$tree_id=="carya"] <- "Carya"
+# tree_data$genus[tree_data$tree_id=="divi5"] <- "Diospyros"
+# tree_data$genus[tree_data$tree_id=="hawthorn"] <- "Crataegus"
+# tree_data$genus[tree_data$tree_id=="ilvo"] <- "Ilex"
+# tree_data$genus[tree_data$tree_id=="list2"] <- "Liquidambar"
+# tree_data$genus[tree_data$tree_id=="litu"] <- "Liriodendron"
+# tree_data$genus[tree_data$tree_id=="magnolia"] <- "Magnolia"
+# tree_data$genus[tree_data$tree_id=="sassafras"] <- "Sassafras"
+# tree_data$genus[tree_data$tree_id=="tupelo"] <- "Nyssa"
+# tree_data$genus[tree_data$tree_id=="vaccinium"] <- "Vaccinium"
 
-
-tree_data$genus[tree_data$tree_id=="acru"] <- "Acer"
-tree_data$genus[tree_data$tree_id=="bay"] <- "Persea"
-tree_data$genus[tree_data$tree_id=="carya"] <- "Carya"
-tree_data$genus[tree_data$tree_id=="divi5"] <- "Diospyros"
-tree_data$genus[tree_data$tree_id=="hawthorn"] <- "Crataegus"
-tree_data$genus[tree_data$tree_id=="ilvo"] <- "Ilex"
-tree_data$genus[tree_data$tree_id=="list2"] <- "Liquidambar"
-tree_data$genus[tree_data$tree_id=="litu"] <- "Liriodendron"
-tree_data$genus[tree_data$tree_id=="magnolia"] <- "Magnolia"
-tree_data$genus[tree_data$tree_id=="sassafras"] <- "Sassafras"
-tree_data$genus[tree_data$tree_id=="tupelo"] <- "Nyssa"
-tree_data$genus[tree_data$tree_id=="vaccinium"] <- "Vaccinium"
-
-tree_data$genus[agrep("qu", tree_data$tree_id, max.distance = 0)] <- "Quercus"
-tree_data$genus[agrep("pi", tree_data$tree_id, max.distance = 0)] <- "Pinus"
+tree_data$labels[agrep("qu", tree_data$tree_id, max.distance = 0)] <- "Quercus"
+tree_data$labels[agrep("pi", tree_data$tree_id, max.distance = 0)] <- "Pinus"
 # tree_data$genus[is.na(tree_data$tree_id)] <- "Unknown (dead)"
-tree_data$labels <- tree_data$genus
 tree_data$labels[!(tree_data$labels %in% c("Quercus","Pinus"))] <- "Other"
 
-tree_data$imcy_inv <- factor(tree_data$imcy_inv, levels = c("Uninvaded","Invaded"))
+# tree_data$imcy_inv <- factor(tree_data$imcy_inv, levels = c("Uninvaded","Invaded"))
 
-summary(tree_data)
-filter(tree_data, is.na(years_since_fire))
+# summary(tree_data)
+# filter(tree_data, is.na(years_since_fire))$plot_id
 # skimr::skim(tree_data)
 
-
 tree_grp_summary <- tree_data %>% 
+      filter(health!=0) %>% 
       group_by(plot_id, labels, years_since_fire, imcy_inv, visit_year) %>% 
       summarise(
-            total_dbh_cm = sum(dbh),
-            avg_dbh_cm = mean(dbh),
-            n_stems = length(stem_id))
+            total_dbh_cm = sum(dbh, na.rm = T),
+            avg_dbh_cm = mean(dbh, na.rm = T),
+            n_stems = length(tree_id))
+# summary(tree_grp_summary)
+# filter(tree_grp_summary, is.na(avg_dbh_cm))$plot_id
+
+dbh_by_tree_grp <- tree_grp_summary %>% 
+      select(-avg_dbh_cm, -n_stems) %>% 
+      spread(labels, total_dbh_cm) %>% 
+      mutate(Quercus = if_else(is.na(Quercus)==TRUE,0,Quercus),
+                   Pinus = if_else(is.na(Pinus)==TRUE,0,Pinus),
+                   Other = if_else(is.na(Other)==TRUE,0,Other),
+                   total_dbh = rowSums(cbind(Other,Pinus,Quercus), na.rm = T),
+                   pct_pinus_dbh = 100*(Pinus/total_dbh))
+summary(d)
 
 tree_data_plot_summary <- tree_data %>% 
+      filter(health!=0) %>% 
       group_by(plot_id, years_since_fire, imcy_inv, visit_year, installation_full_name) %>% 
       summarise(
-            total_dbh = sum(dbh),
+            total_dbh = sum(dbh, na.rm = T),
             richness = n_distinct(tree_id),
             avg_tree_ht = mean(height, na.rm = T),
             avg_char_ht = mean(char, na.rm = T))
+# summary(tree_data_plot_summary)
 
 tree_data_plot_summary <- left_join(
-      tree_data_plot_summary,
-      tree_grp_summary %>% 
-            select(-avg_dbh_cm, -n_stems) %>% 
-            spread(labels, total_dbh_cm) %>% 
-            mutate(Quercus = if_else(is.na(Quercus)==TRUE,0,Quercus),
-                   Pinus = if_else(is.na(Pinus)==TRUE,0,Pinus),
-                   Other = if_else(is.na(Other)==TRUE,0,Other))
-      ) %>%
-      mutate(pct_pinus_dbh = 100*(Pinus/total_dbh))
+      tree_data_plot_summary, 
+      select(dbh_by_tree_grp, plot_id:visit_year, pct_pinus_dbh)
+      )
+summary(tree_data_plot_summary)
+
 
 skimr::skim(ungroup(tree_data_plot_summary))
+
+# filter(tree_data_plot_summary, is.na(avg_char_ht), visit_year==2018)$plot_id
+# filter(tree_data, plot_id=="benning j1")$char
 
 ```
 
@@ -759,8 +753,9 @@ skimr::skim(ungroup(tree_data_plot_summary))
 
 (tree_richness_fig <- ggplot(tree_data_plot_summary, 
        aes(years_since_fire, richness, color = imcy_inv)) +
-      stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      # geom_point(position = position_jitter(height = .1, width = .3)) +
+      # stat_summary(fun.data = "mean_se", geom = "pointrange", size = 1) +
+      geom_point(position = position_jitter(height = .05), alpha = .8) +
+      geom_smooth(aes(fill = imcy_inv), method = "lm") +
       invasion_color +
       invasion_fill +
       # facet_grid(installation_full_name~.) +
@@ -768,10 +763,11 @@ skimr::skim(ungroup(tree_data_plot_summary))
       def_theme +
       ylab("Richness") +
       xlab("Years since fire") +
-      ggtitle("Tree diversity vs. time since fire")
+      ggtitle("Tree diversity vs. time since fire") +
+      NULL
 )
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-richness-by-fire.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-richness-by-fire.png", height=7.5, width = 7.5)
 
 ```
 
@@ -793,10 +789,9 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-richness-by-fire.png", height=
 (tree_dbh_fig <- ggplot(tree_data_plot_summary, 
        aes(years_since_fire, total_dbh, color = imcy_inv)
        ) +
-      stat_summary(fun.data = "mean_se", geom = "pointrange", position = "jitter") +
-      invasion_color +
-      # geom_point(aes(color = labels)) +
-      # geom_smooth(aes(color = labels), linetype = "dashed", se = F) +
+      # stat_summary(fun.data = "mean_se", geom = "pointrange", position = "jitter") +
+      geom_point() +
+      geom_smooth(aes(fill = imcy_inv), method = "lm", se = T) +
       # geom_violin(aes(labels, dbh, fill = labels)) +
       # geom_dotplot(aes(labels, dbh, fill = labels),
       #            binaxis = "y",         # which axis to bin along
@@ -806,7 +801,8 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-richness-by-fire.png", height=
       # geom_bar(aes(fill = labels), stat = "identity", position = "dodge") +
       # geom_errorbar(aes(ymin = avg_basal_area_ha + se_basal_area_ha, ymax = avg_basal_area_ha - se_basal_area_ha), width = .2, position = position_dodge(width = .5)) +
       # scale_color_brewer(palette = "Dark2") +
-
+      invasion_color +
+      invasion_fill +
       # facet_grid(installation_full_name~.) +
       theme_classic() +
       # theme_bw() +
@@ -814,20 +810,30 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-richness-by-fire.png", height=
       # ylab(expression(paste("Basal Area (", m^{2}, " ", ha^{-1}, ")"))) +
       ylab("DBH (cm)") +
       ggtitle("Total tree DBH across plots") +
-      def_theme
+      def_theme +
+      NULL
 )
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/total-dbh-by-fire.png", height=7)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/total-dbh-by-fire.png", height=7)
 
 ```
 
 ```{r proportion pine dbh figure}
 
-(pct_pine_fig <- ggplot(tree_data_plot_summary, 
-       aes(years_since_fire, pct_pinus_dbh, color = imcy_inv)
+(pct_pine_fig <- ggplot(filter(tree_data_plot_summary, pct_pinus_dbh>=0), 
+       aes(years_since_fire, pct_pinus_dbh)
        ) +
-      stat_summary(fun.data = "mean_se", geom = "pointrange", position = "jitter") +
+      # stat_summary(fun.data = "mean_se", geom = "pointrange", position = "jitter") +
+      geom_smooth(method = "lm", se = F) +
+      geom_point(aes(color = imcy_inv)) +
+      geom_smooth(data=filter(tree_data_plot_summary, pct_pinus_dbh<60),
+                  aes(years_since_fire, pct_pinus_dbh),
+                  method = "lm", se = F, linetype="dashed") +
+       geom_smooth(data=filter(tree_data_plot_summary, pct_pinus_dbh>60),
+                  aes(years_since_fire, pct_pinus_dbh),
+                  method = "lm", se = F, linetype="dotted") +
       invasion_color +
+      invasion_fill +
       # facet_grid(installation_full_name~.) +
       theme_classic() +
       # theme_bw() +
@@ -835,12 +841,15 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/total-dbh-by-fire.png", height=7)
       # ylab(expression(paste("Basal Area (", m^{2}, " ", ha^{-1}, ")"))) +
       ylab("Percent pine DBH ") +
       # ggtitle("Total tree DBH across plots") +
-      def_theme
+      def_theme +
+      NULL
 )
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/pct-pine-dbh.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/pct-pine-dbh.png", height=7.5, width = 7.5)
 
 ```
+
+The dashed line is just for the data where pine makes up *less than* 60% of the total DBH; the dotted line is for the data where pine makes up *more than* 60% of the total DBH.
 
 ## Tree dbh
 ```{r tree dbh, eval = F}
