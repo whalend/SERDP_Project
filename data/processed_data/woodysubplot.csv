@@ -28,8 +28,8 @@ blanding,blanding f1,QUMY,11,20170621,NA
 blanding,blanding f1,QUNI,1,20170621,NA
 blanding,blanding f1,RHCO,7,20170621,NA
 avonpark,avonpark a1,SERE,2,20170627,NA
-avonpark,avonpark c1,0.48333333333333334,3,20170628,NA
-avonpark,avonpark c1,0.48888888888888887,3,20170628,NA
+avonpark,avonpark c1,MOCE,3,20170628,NA
+avonpark,avonpark c1,LYFE,3,20170628,NA
 avonpark,avonpark c1,SERE,6,20170628,NA
 avonpark,avonpark c1,shrub-forb 11:48,1,20170628,NA
 avonpark,avonpark b1,ILEX,5,20170629,NA
@@ -39,7 +39,7 @@ avonpark,avonpark d1,QUGE,13,20170630,NA
 avonpark,avonpark d1,QUMY,18,20170630,NA
 avonpark,avonpark d1,QUNI,4,20170630,NA
 avonpark,avonpark d1,SERE,14,20170630,NA
-avonpark,avonpark d1,shrub 11:29,3,20170630,NA
+avonpark,avonpark d1,QUMY,3,20170630,NA
 tyndall,tyndall b1,NA,0,20170718,placeholder zero for plot visit
 tyndall,tyndall b2,SERE,2,20170719,NA
 tyndall,tyndall d1,ILGL,7,20170720,NA
@@ -101,7 +101,7 @@ shelby,shelby b1,QUNI,9,20170921,NA
 shelby,shelby b1,QUST,3,20170921,NA
 shelby,shelby b1,RHCO,8,20170921,NA
 shelby,shelby b1,RUBUS,1,20170921,NA
-shelby,shelby b1,tupelo,2,20170921,NA
+shelby,shelby b1,NYSSA,2,20170921,NA
 shelby,shelby b1,VACCI,2,20170921,NA
 shelby,shelby f1,CAAM,10,20170921,NA
 shelby,shelby f1,ILOP,1,20170921,NA
@@ -221,12 +221,12 @@ eglin,eglin b2,SERE,11,20180615,NA
 tyndall,tyndall b2,SERE,1,20180625,NA
 tyndall,tyndall d2,ILGL,5,20180625,NA
 tyndall,tyndall d2,MAGNO,17,20180625,NA
-tyndall,tyndall d2,pepper leaf,61,20180625,NA
+tyndall,tyndall d2,LITR,61,20180625,NA
 tyndall,tyndall d2,PIEL,1,20180625,NA
 tyndall,tyndall d2,tlt,27,20180625,NA
 tyndall,tyndall c1,ILGL,333,20180626,NA
 tyndall,tyndall c1,SERE,3,20180626,NA
-tyndall,tyndall c1,stagger bush,1,20180626,NA
+tyndall,tyndall c1,LYFE,1,20180626,changed to rusty staggerbush
 tyndall,tyndall c2,ILGL,238,20180626,NA
 tyndall,tyndall c2,QUMY,2,20180626,NA
 tyndall,tyndall c2,SERE,4,20180626,NA
@@ -247,7 +247,7 @@ jackson,jackson e1,SAAL5,8,20180710,NA
 jackson,jackson e1,VAAR,11,20180710,NA
 jackson,jackson f1,QULA,3,20180710,NA
 jackson,jackson f1,VACCI,26,20180710,NA
-jackson,jackson g1,spice bush,1,20180710,NA
+jackson,jackson g1,LINDE2,1,20180710,NA
 jackson,jackson g1,VAAR,4,20180710,NA
 jackson,jackson g1,VACCI,4,20180710,NA
 jackson,jackson i1,DIVI,8,20180711,NA

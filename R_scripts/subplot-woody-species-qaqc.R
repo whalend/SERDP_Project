@@ -51,3 +51,4 @@ subplot_data <- read_csv("data/processed_data/woodysubplot.csv")
 summary(subplot_data)
 
 #### Steven checking processed data, complete when dropbox is updated for new species entries ####
+# Dropbox updated, shrub species identified as best possible #
