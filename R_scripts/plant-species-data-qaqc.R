@@ -124,7 +124,10 @@ filter(species_data, plot_id=="benning b1") %>%
   select(plot_id, veg_id, pct_cover, ht_under50cm, ht50_100cm, ht_over100cm)
 
 filter(species_benning, plot_id=="benning b1") %>%
+<<<<<<< HEAD
       ungroup(.) %>%
+=======
+>>>>>>> e5e9ef4889069a018dd7e22fe4dd290be52bdb74
   select(plot_id, veg_id, avg_pct_cover, num_stems_m2)
 
 unique(species_data$plot_id)
