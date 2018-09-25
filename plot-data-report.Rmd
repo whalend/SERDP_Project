@@ -852,10 +852,11 @@ skimr::skim(ungroup(tree_data_plot_summary))
 The dashed line is just for the data where pine makes up *less than* 60% of the total DBH; the dotted line is for the data where pine makes up *more than* 60% of the total DBH.
 
 ## Tree dbh
+
 ```{r tree dbh, eval = F}
 
 ggplot(tree_data %>%
-             filter(!is.na(imcy_inv)) %>% 
+             filter(!is.na(years_since_fire)) %>% 
              group_by(installation_full_name, labels, years_since_fire, imcy_inv),
        aes(as.factor(years_since_fire), dbh, color = labels)) +
       geom_point(position = "jitter") +
@@ -867,17 +868,20 @@ ggplot(tree_data %>%
       ylab("Diameter at breast height") +
       def_theme +
       theme(strip.background = element_blank(),
-            panel.grid = element_blank())
+            panel.grid = element_blank()) +
+      NULL
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-dbh-jitter.png", height=7)
+
 ```
 
 ## Tree height
+
 ```{r tree height, eval = F}
 # tree_height <- tree_data %>%
 #       group_by(installation_full_name, labels, years_since_fire, imcy_inv) 
 
 ggplot(tree_data %>% 
-             filter(!is.na(imcy_inv)),
+             filter(!is.na(years_since_fire)),
        aes(years_since_fire, height, color = labels)) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       geom_point(position = "jitter") +
@@ -894,9 +898,9 @@ ggplot(tree_data %>%
 ```{r char height figure}
 # tree_data_plot_summary
 ggplot(tree_data_plot_summary,
-       aes(imcy_inv, avg_char_ht, fill = imcy_inv, color = imcy_inv)) +
-      stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      # geom_point(position = "jitter") +
+       aes(imcy_inv, avg_char_ht, fill = imcy_inv)) +
+      stat_summary(aes(color = imcy_inv), fun.data = "mean_se", geom = "pointrange", size = 1) +
+      geom_point(alpha = .5, size = 2, show.legend = F) +
       # geom_bar(stat = "identity", position = "dodge") +
       invasion_color +
       invasion_fill +
@@ -908,7 +912,7 @@ ggplot(tree_data_plot_summary,
       def_theme +
       theme(legend.position = "top")
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/char-height.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/char-height.png", height=7.5, width = 7.5)
 
 ```
 
@@ -917,7 +921,7 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/char-height.png", height=7.5, width
 
 ```{r 100m subplot, results='hide'}
 
-subplot_data <- read_csv("data/raw_data/subplot-woody-species.csv")
+subplot_data <- read_csv("data/processed_data/woodysubplot.csv")
 subplot_data$date <- as.Date(as.character(subplot_data$date), format="%Y%m%d")
 subplot_data$plot_id <- tolower(subplot_data$plot_id)
 subplot_data$installation[subplot_data$installation=="avon"] <- "avonpark"
