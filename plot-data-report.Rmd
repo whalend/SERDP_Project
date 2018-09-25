@@ -1073,44 +1073,47 @@ summary(litter_mass_model)
 ```
 
 
-
 # Host Abundance Estimates
 
 ```{r dung data, results='hide'}
 
-dung_data <- read_csv("data/raw_data/dung.csv")
-dung_data$plot_id <- tolower(dung_data$plot_id)
-dung_data$species <- tolower(dung_data$species)
-dung_data$location <- tolower(dung_data$location)
-dung_data$date <- as.Date(as.character(dung_data$date), format="%Y%m%d")
-summary(dung_data)
-filter(dung_data, is.na(species), dung1m>0 | dung2m>0)
+dung_data_import <- read_csv("data/processed_data/dung.csv")
+dung_data_import$date <- as.Date(as.character(dung_data_import$date), format="%Y%m%d")
+# summary(dung_data_import)
+# filter(dung_data_import, is.na(species), dung1m>0 | dung2m>0)
+dung_data_import$species[is.na(dung_data_import$species) & dung_data_import$dung1m>0] <- "other"
+dung_data_import$species[is.na(dung_data_import$species) & dung_data_import$dung2m>0] <- "other"
+# filter(dung_data_import, is.na(dung1m))
 
-dung_data <- dung_data %>% 
-      mutate(visit_year = lubridate::year(date),
-             plot_id = paste(installation, plot_id, sep = " "))
+dung_data <- dung_data_import %>% 
+      mutate(visit_year = lubridate::year(date))
 # sort(unique(dung_data$plot_id))
-filter(dung_data, is.na(dung1m))
+# filter(dung_data, is.na(dung1m))
 
-dung_data <- left_join(select(plot_visit_data, -notes),
-                       dung_data)
+dung_data <- left_join(
+      dung_data,
+      select(plot_visit_data, -notes))
 summary(dung_data)
-filter(dung_data, is.na(dung1m))
+filter(dung_data, is.na(years_since_fire))$plot_id
 
 # dung_data <- rename(dung_data, clusters1m = `1m`, clusters2m = `2m`)
-dung_plot_avg_data <- dung_data %>% 
-      group_by(installation, plot_id, visit_year, years_since_fire, imcy_inv) %>% 
-      summarise(avg_clusters1m = mean(dung1m, na.rm = T),
-                avg_clusters1m_2m = mean(rowSums(cbind(dung1m,dung2m)))
+dung_plot_data <- dung_data %>% 
+      # filter(species == "deer") %>% 
+      group_by(installation, plot_id, visit_year, years_since_fire, imcy_inv, species) %>% 
+      summarise(
+            total_clusters1m = sum(dung1m, na.rm = T),
+            avg_clusters1m = mean(dung1m, na.rm = T),
+            total_clusters2m = sum(rowSums(cbind(dung1m,dung2m), na.rm=T)),
+            avg_clusters2m = mean(rowSums(cbind(dung1m,dung2m), na.rm=T))
                 )
-summary(dung_plot_avg_data)
+summary(dung_plot_data)
 # skimr::skim(dung_data_avg)
 
 ```
 
 ```{r dung species figure}
 
-(dung_species_fig <- ggplot(filter(dung_data, dung1m>0), aes(years_since_fire, log1p(dung1m))) +
+(dung_species_fig <- ggplot(filter(dung_data, !is.na(dung1m)), aes(years_since_fire, log1p(dung1m))) +
       # geom_bar(aes(fill = imcy_inv), stat = "identity", position = "dodge") +
       geom_point(aes(color = species), size = 2, position = "jitter") +
       # geom_smooth(aes(color = species)) +
@@ -1123,39 +1126,43 @@ summary(dung_plot_avg_data)
       xlab("Years since fire") +
       # ylab("Dung clusters") +
       def_theme +
-      theme(legend.position = c(.85,.85))
+      theme(legend.position = "right") +
+      NULL
 )
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-species.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-species.png", height=7.5, width = 7.5)
 
 ```
 
-```{r dung plot avg figure}
+```{r deer dung figure}
 
-dung_plot_avg_data_noNA <- filter(dung_plot_avg_data, !is.na(avg_clusters1m))
-
-(dung_plot_avg_fig <- ggplot(
-      dung_plot_avg_data_noNA, 
-      aes(years_since_fire, log1p(avg_clusters1m), color = imcy_inv)) +
-      geom_point(size = 1, position = "jitter", alpha = .3) +
-      stat_summary(fun.data = "mean_se", geom = "pointrange") +
+(deer_dung_fig <- dung_plot_data %>% filter(species=="deer") %>% 
+      ggplot(
+      aes(years_since_fire, log1p(total_clusters1m), color = imcy_inv)) +
+      geom_point(size = 2) +
+      # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       # geom_bar(aes(fill = imcy_inv), stat = "identity", position = "dodge") +
-      # geom_smooth(aes(color = species)) +
+      # geom_smooth(se = F) +
       invasion_fill +
       invasion_color +
       # geom_smooth(aes(linetype = imcy_inv), se = F, alpha = .1) +
-      # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .1, method = "lm") +
+      geom_smooth(aes(fill = imcy_inv), se = T, method = "lm") +
       theme_classic() +
-      ylab("log( # of dung clusters )") +
+      ylab("log( # of deer dung clusters )") +
       xlab("Years since fire") +
       # ylab("Dung clusters") +
       def_theme +
       theme(legend.position = c(.8,.9))      
 )
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-vs-fire.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-vs-fire.png", height=7.5, width = 7.5)
       
 ```
+
+```{r }
+
+```
+
 
 # Tick Abundance
 
