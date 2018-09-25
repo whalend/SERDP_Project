@@ -1152,14 +1152,19 @@ summary(dung_plot_data)
       xlab("Years since fire") +
       # ylab("Dung clusters") +
       def_theme +
-      theme(legend.position = c(.8,.9))      
+      # theme(legend.position = c(.8,.9)) +
+      NULL
 )
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-vs-fire.png", height=7.5, width = 7.5)
       
 ```
 
-```{r }
+```{r model deer dung vs fire}
+
+deer_dung_model <- lm(log1p(total_clusters1m) ~ years_since_fire*imcy_inv,
+                      data = filter(dung_plot_data, species=="deer"))
+summary(deer_dung_model)
 
 ```
 
@@ -1190,22 +1195,24 @@ summary(dung_plot_data)
 
 ```{r tick data QC, results='hide'}
 
-tick_data <- read_csv("data/processed_data/ticks.csv")
-tick_data
-summary(tick_data)
-skimr::skim(tick_data)
+tick_data_import <- read_csv("data/processed_data/ticks.csv")
+tick_data_import
+summary(tick_data_import)
+skimr::skim(tick_data_import)
 
-sort(unique(tick_data$plot_id))
-sort(unique(tick_data$installation))
-sort(unique(tick_data$species))
+sort(unique(tick_data_import$plot_id))
+sort(unique(tick_data_import$installation))
+sort(unique(tick_data_import$species))
+unique(tick_data_import$life_stage)
 
 # plot_visit_data
 names(plot_visit_data)
-names(tick_data)
-tick_data <- tick_data %>% 
-      mutate(date = as.Date(as.character(tick_data$date), format = "%Y%m%d"),
+names(tick_data_import)
+tick_data <- tick_data_import %>% 
+      mutate(date = as.Date(as.character(tick_data_import$date), format = "%Y%m%d"),
              visit_year = lubridate::year(date),
              life_stage = factor(life_stage, levels = c("A","N","L"),))
+summary(tick_data)
 
 tick_data <- left_join(
       select(tick_data, -notes),
@@ -1218,8 +1225,9 @@ tick_data$life_stage <- factor(
       levels = c("A","N","L"),
       labels = c("Adult","Nymph","Larval"))
 # summary(tick_data)
-filter(tick_data, is.na(years_since_fire))
-filter(tick_data, is.na(imcy_inv))
+# filter(tick_data, is.na(years_since_fire))$plot_id
+# filter(tick_data, is.na(imcy_inv))$plot_id
+
 # "extra" ticks at Moody AFB were from an area last burned in 2005
 # tick_data$years_since_fire[tick_data$installation=="moody"] <- 2017-2005
 # tick_data <- tick_data[is.na(tick_data$years_since_fire)==FALSE,]
@@ -1241,8 +1249,9 @@ summary(tick_data)
 The high tick abundance for 8-years post-fire is driven by a single plot at Camp Blanding.
 
 ```{r tick life stage abundance fire}
+
 tick_data %>% 
-      filter(!is.na(imcy_inv), !is.na(life_stage)) %>% 
+      filter(!is.na(imcy_inv), !is.na(life_stage), life_stage!="Larval") %>% 
 ggplot(aes(years_since_fire, log1p(tick_count), color = imcy_inv, fill = imcy_inv)) +
       # geom_bar(stat = "identity", position = "dodge", show.legend = F) +
       geom_violin(aes(fill = imcy_inv), alpha = .3) +
@@ -1261,8 +1270,9 @@ ggplot(aes(years_since_fire, log1p(tick_count), color = imcy_inv, fill = imcy_in
       ylab("log( tick abundance )") +
       # theme_classic() +
       theme_bw() +
-      def_theme
-      # theme(legend.position = c(.88,.88))
+      def_theme +
+      # theme(legend.position = c(.88,.88)) +
+      NULL
 
 # ggplot(tick_data, aes(as.factor(years_since_fire), count)) +
 #       stat_summary(fun.data = "mean_se",geom = "pointrange") +
@@ -1271,7 +1281,7 @@ ggplot(aes(years_since_fire, log1p(tick_count), color = imcy_inv, fill = imcy_in
 #       theme_classic() +
 #       def_theme
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/tick-life-stage-vs-fire.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/tick-life-stage-vs-fire.png", height=7.5, width = 7.5)
 
 ```
 
@@ -1281,43 +1291,47 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/tick-life-stage-vs-fire.png", heigh
 
 ```{r tick species vs fire fig, fig.height=9}
 
-ggplot(tick_data %>% 
+tick_data %>% 
              filter(!is.na(years_since_fire)) %>% 
-             group_by(installation_full_name, years_since_fire, species,) %>%
-             summarise(tick_number = sum(count)),
-       aes(installation_full_name, tick_number, fill = installation_full_name)) +
+             group_by(installation_full_name, years_since_fire, visit_year) %>%
+             summarise(tick_count = sum(tick_count)) %>% 
+      ggplot(aes(installation_full_name, tick_count, fill = installation_full_name)) +
       # geom_point(position = "jitter") +
-      geom_bar(stat = "identity", position = "dodge") +
+      geom_col() +
       scale_fill_brewer(palette = "Set1") +
-      # facet_grid(.~installation_full_name, scales = "free_y") +
+      facet_grid(visit_year~., scales = "free_y") +
       xlab("") +
       ylab("Tick abundance") +
-      # theme_bw() +
-      theme_classic() +
-      def_theme +
-      theme(legend.position = c(.85,.85))
+      theme_bw() +
+      # theme_classic() +
+      # def_theme +
+      theme(legend.position = "right",
+            panel.grid = element_blank(),
+            strip.background = element_blank()) +
+      NULL
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/tick-species-installation.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/tick-species-installation.png", height=7.5, width = 7.5)
 
 ```
 
 
 ## Summarize tick abundance data
 ```{r summarize-tick-abundance-data}
+
 tick_data_life_stage_summary <- tick_data %>% 
       group_by(plot_id, visit_year, life_stage, years_since_fire, imcy_inv, installation_full_name, date) %>% 
-      summarise(total_ticks = sum(count)) %>% 
+      summarise(total_ticks = sum(tick_count)) %>% 
       ungroup(.)
 
 
 tick_data_plot_summary <- tick_data %>% 
       group_by(installation, plot_id, visit_year, years_since_fire, imcy_inv, installation_full_name) %>% 
-      summarise(total_ticks = sum(count)) %>% 
+      summarise(total_ticks = sum(tick_count)) %>% 
       ungroup(.)
 
 summary(tick_data_plot_summary)
-filter(tick_data_plot_summary, is.na(years_since_fire))
-
+filter(tick_data_plot_summary, is.na(years_since_fire))$plot_id
+filter(tick_data_plot_summary, is.na(imcy_inv))$plot_id
 
 # plot_data
 # tick_data_sum <- left_join(plot_visit_data, tick_data_sum)
@@ -1329,7 +1343,7 @@ tick_biomass_data <- left_join(
 
 tick_quad10_data <- left_join(
       tick_data_plot_summary,
-      select(ungroup(quadrat10_summaries), -date))
+      select(ungroup(quadrat10_summaries), -notes, -visit_date))
 
 tick_vegcover_data <- left_join(
       tick_data_plot_summary,
@@ -1338,11 +1352,15 @@ tick_vegcover_data <- left_join(
 
 tick_canopycover_data <- left_join(
       tick_data_plot_summary, 
-      select(ungroup(canopy_cover_summary), -date))
+      ungroup(canopy_cover_summary))
 
 tick_host_data <- left_join(
       tick_data_plot_summary, 
-      ungroup(dung_plot_avg_data))
+      dung_plot_data %>% 
+            ungroup(.) %>% 
+            group_by(plot_id, visit_year, years_since_fire, imcy_inv) %>% 
+            summarise(total_clusters1m = sum(total_clusters1m),
+                      total_clusters2m = sum(total_clusters2m)))
 
 tick_tree_data <- left_join(
       tick_data_plot_summary, 
@@ -1353,10 +1371,11 @@ tick_subplot_data <- left_join(
       ungroup(subplot_plot_summary)
 )
 
-tick_data_sum <- join_all(list(tick_biomass_data, tick_canopycover_data, tick_quad10_data, tick_host_data, tick_host_data, tick_tree_data, tick_subplot_data, tick_vegcover_data)) %>% 
-      select(-notes)
+tick_data_sum <- join_all(list(tick_biomass_data, tick_canopycover_data, tick_quad10_data, tick_host_data, tick_host_data, tick_tree_data, tick_subplot_data, tick_vegcover_data))
 
 summary(tick_data_sum)
+
+# filter(tick_data_sum, is.na(avg_pct_litter))$plot_id
 
 # unique(tick_data_sum$installation_full_name)
 # unique(tree_data_summary$installation_full_name)
@@ -1376,21 +1395,30 @@ unique(tick_data_plot_summary$installation_full_name)
 filter(tick_data_plot_summary, is.na(installation_full_name))$plot_id
 
 ggplot(filter(tick_data_plot_summary, !is.na(imcy_inv)), 
-       aes(years_since_fire, log1p(total_ticks), color = imcy_inv)) +
+       aes(years_since_fire, log1p(total_ticks))) +
       # geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", linetype = "dashed") +
-      geom_smooth(aes(fill = imcy_inv), se = T, method = "lm", alpha = .2) +
-      geom_point(aes(shape = installation_full_name), position = "jitter", alpha = .5) +
+      geom_smooth(aes(fill = imcy_inv, color = imcy_inv), se = T, method = "lm", alpha = .2) +
+      # geom_smooth(se = F, method = "lm", linetype = 2) +
+      geom_point(aes(color = imcy_inv), position = "jitter") +
       invasion_color +
       invasion_fill +
       # geom_smooth(aes(color = imcy_inv), method = "loess",
                   # linetype = "dashed", se = F) +
-      scale_shape_manual(values = c(inst_name=2, 19, 19, 19, 19, 19, 19, 19, 19)) +
+      # scale_shape_manual(values = c(inst_name=2, 19, 19, 19, 19, 19, 19, 19, 19)) +
       theme_classic() +
       xlab("Years since fire") +
       ylab("log( tick abundance + 1 )") +
-      def_theme
+      def_theme +
+      NULL
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-vs-fire.png", height = 7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-vs-fire.png", height = 7.5, width = 7.5)
+
+```
+
+```{r model tick abundance vs fire}
+
+tick_fire_model <- lm(log1p(total_ticks) ~ years_since_fire, data = tick_data_plot_summary)
+summary(tick_fire_model)
 
 ```
 
@@ -1405,9 +1433,9 @@ tick_data$week <- lubridate::week((tick_data$date))
              # summarise(abundance = sum(count))
        
 ggplot(filter(tick_data, !is.na(life_stage)),
-       aes(date, count)) +
+       aes(date, tick_count)) +
       geom_path(aes(linetype = life_stage)) +
-      geom_point(aes(color = installation, shape = life_stage), size = 2) +
+      geom_point(aes(shape = life_stage), size = 2) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       # geom_bar(aes(fill = installation_full_name), stat = "identity") +
       # scale_fill_brewer(type = "div") +
@@ -1421,7 +1449,7 @@ ggplot(filter(tick_data, !is.na(life_stage)),
       theme(legend.position = ,
             legend.background = element_rect(color="black"))
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-week.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-week.png", height=7.5, width = 7.5)
       
 ```
 
@@ -1441,14 +1469,15 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
       # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .2, method = "lm") +
       geom_smooth(aes(), method = "loess", linetype = "dashed", se = F) +
       facet_grid(imcy_inv~.) +
-      scale_color_brewer(palette = "Set2") +
+      scale_color_viridis_d() +
       # theme_classic() +
       theme_bw() +
       xlab("Latitude") +
       ylab("log( tick abundance + 1 )") +
-      def_theme
+      def_theme +
+      NULL
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-latitude.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-latitude.png", height=7.5, width = 7.5)
 
 ```
 
@@ -1459,23 +1488,22 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-latitude.png", height=7.5,
 ```{r tick-veg-cover}
 
 ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
-       aes(avg_veg_cover, log1p(total_ticks), color = imcy_inv)) +
-      geom_point(alpha = .5) +
+       aes(plot_avg_veg_cover, log1p(total_ticks), color = imcy_inv)) +
+      geom_point() +
       invasion_color +
       invasion_fill +
-      geom_smooth(aes(fill = imcy_inv), 
-                  se = T, alpha = .2, method = "lm", show.legend = F) +
-      geom_smooth(aes(fill = imcy_inv), method = "loess", linetype = "dashed",
-                  se = F, alpha = .3, show.legend = F) +
+      geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = F) +
+      # geom_smooth(aes(fill = imcy_inv), method = "loess", linetype = "dashed", se = F, alpha = .3, show.legend = F) +
       # facet_grid(imcy_inv~.) +
       theme_classic() +
       # theme_bw() +
-      xlab("Average vegetation cover (%)") +
+      xlab("Vegetation cover (%)") +
       ylab("log( tick abundance + 1 )") +
       def_theme +
-      theme(legend.position = c(.85,.85))
+      # theme(legend.position = c(.85,.85)) +
+      NULL
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-veg-cover.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-veg-cover.png", height=7.5, width = 7.5)
 
 ```
 
@@ -1487,23 +1515,32 @@ Log-linear relationship, very noisy trends with many zeroes. Plots associated wi
 
 (tick_veg_mass_fig <- ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
        aes(avg_dry_standing_gm2, log1p(total_ticks), color = imcy_inv)) +
-      geom_point(alpha = .3) +
+      geom_point() +
       invasion_color +
       invasion_fill +
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = F) +
-      geom_smooth(aes(fill = imcy_inv), se = F, alpha = .2, method = "loess", show.legend = F, linetype = "dashed") +
+      # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .2, method = "loess", show.legend = F, linetype = "dashed") +
       theme_classic() +
       xlab(expression(paste("Average standing biomass (g ", m^{-2}, ")"))) +
       ylab("log( tick abundance + 1 )") +
       ggtitle("Understory standing biomass") +
       def_theme +
-      theme(legend.position = c(.85,.85))
+      # theme(legend.position = c(.85,.85)) +
+      NULL
 )
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-standing-biomass.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-standing-biomass.png", height=7.5, width = 7.5)
 # summary(glm(total_ticks ~ avg_standing_gm2, data = tick_data_sum, family = "quasipoisson"))
 
 ```
+
+```{r ticks standing biomass model}
+
+tick_veg_mass_model <- lm(log1p(total_ticks) ~ avg_dry_standing_gm2 + imcy_inv, data = tick_data_sum)
+summary(tick_veg_mass_model)
+
+```
+
 
 
 ## Litter percent cover
@@ -1511,18 +1548,19 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-standing-biomass.png", hei
 
 (tick_pctlitter_fig <- ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
        aes(avg_pct_litter, log1p(total_ticks), color = imcy_inv)) +
-      geom_point(alpha = .5) +
+      geom_point() +
       invasion_color +
       invasion_fill +
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = T) +
-       geom_smooth(aes(fill = imcy_inv), se = F, alpha = .2, method = "loess", show.legend = T, linetype = "dashed") +
+       # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .2, method = "loess", show.legend = T, linetype = "dashed") +
       theme_classic() +
       xlab(expression(paste("Litter cover (%)"))) +
       ylab("log( tick abundance + 1 )") +
       def_theme +
-      theme(legend.position = c(.2,.85))
+      # theme(legend.position = c(.2,.85)) +
+      NULL
 )
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-litter-cover1.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-litter-cover1.png", height=7.5, width = 7.5)
 
 (tick_pctlitter_fig2 <- ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
        aes(avg_pct_litter, log1p(total_ticks))) +
@@ -1533,9 +1571,10 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-litter-cover1.png", height
       theme_classic() +
       xlab(expression(paste("Litter cover (%)"))) +
       ylab("log( tick abundance + 1 )") +
-      def_theme
+      def_theme +
+      NULL
 )
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-litter-cover2.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-litter-cover2.png", height=7.5, width = 7.5)
 
 ```
 
@@ -1549,11 +1588,11 @@ Tick abundance plotted against dried litter biomass in invaded and uninvaded plo
 (tick_litter_mass_fig <- ggplot(
       filter(tick_data_sum, !is.na(imcy_inv)), 
        aes(avg_dry_litter_gm2, log1p(total_ticks), color = imcy_inv)) +
-      geom_point(aes(), alpha = .5) +
+      geom_point() +
       invasion_color +
       invasion_fill +
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = F) +
-      geom_smooth(aes(), se = F, alpha = .2, method = "loess", show.legend = F, linetype = "dashed") +
+      # geom_smooth(aes(), se = F, alpha = .2, method = "loess", show.legend = F, linetype = "dashed") +
       # facet_grid(imcy_inv~.) +
       theme_classic() +
       # theme_bw() +
@@ -1563,58 +1602,99 @@ Tick abundance plotted against dried litter biomass in invaded and uninvaded plo
       def_theme
       # theme(legend.position = c(.15,.9))
 )
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-litter-mass.png", height=7.5, width=7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-litter-mass.png", height=7.5, width=7.5)
 
 ```
 
+## Litter moisture
 ```{r tick-litter-moisture}
 
 (tick_litter_mass_fig <- ggplot(
       filter(tick_data_sum, !is.na(imcy_inv)), 
        aes(avg_pct_litter_moisture, log1p(total_ticks), color = imcy_inv)) +
-      geom_point(aes(), alpha = .5) +
+      geom_point(aes()) +
       invasion_color +
       invasion_fill +
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = F) +
-      geom_smooth(aes(), se = F, alpha = .2, method = "loess", show.legend = F, linetype = "dashed") +
+      # geom_smooth(aes(), se = F, alpha = .2, method = "loess", show.legend = F, linetype = "dashed") +
       # facet_grid(imcy_inv~.) +
       theme_classic() +
       # theme_bw() +
       xlab(expression(paste("Litter moisture (%)"))) +
       ylab("log( tick abundance + 1 )") +
       def_theme +
-      theme(legend.position = c(.15,.9)) +
-      ggtitle("Litter moisture")
+      # theme(legend.position = c(.15,.9)) +
+      # ggtitle("Litter moisture") +
+      NULL
 )
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-litter-mass.png", height = 7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-litter-mass.png", height = 7.5, width = 7.5)
+
+```
+
+```{r ticks litter model}
+GGally::ggpairs(
+      tick_data_sum %>% 
+            filter(!is.na(imcy_inv)) %>% 
+            mutate(ln_ticks = log1p(total_ticks)) %>% 
+            select(ln_ticks, avg_dry_litter_gm2, avg_pct_litter, avg_pct_litter_moisture, avg_litter_depth_all))
+
+ticks_litter_mass_mod <- lm(log1p(total_ticks) ~ avg_dry_litter_gm2 + avg_pct_litter_moisture, data = tick_data_sum)
+summary(ticks_litter_mass_mod)
+
+ticks_litter_cover_mod <- lm(log1p(total_ticks) ~ avg_pct_litter + avg_pct_litter_moisture, data = tick_data_sum)
+summary(ticks_litter_cover_mod)
+
+sjPlot::plot_model(ticks_litter_cover_mod, show.values = T, type = "diag")
+sjPlot::plot_model(ticks_litter_cover_mod, show.values = T, type = "std")
+sjPlot::plot_model(ticks_litter_cover_mod, show.values = T, type = "pred", terms = c("avg_pct_litter", "avg_pct_litter_moisture"))
 
 ```
 
 
-
 ## Canopy cover
 Log-linear relationship, where there are more ticks in plots with more canopy cover.
+
 ```{r tick-canopy-cover}
 
 (tick_canopy_cover_fig <- ggplot(
       filter(tick_data_sum, !is.na(imcy_inv)), 
        aes(avg_canopy_cover, log1p(total_ticks), color = imcy_inv)) +
-      geom_point(aes(), alpha = .5) +
+      geom_point() +
       invasion_color +
       invasion_fill +
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm") +
-      geom_smooth(aes(), se = F, alpha = .2, method = "loess", linetype = "dashed", show.legend = F) +
+      # geom_smooth(aes(), se = F, alpha = .2, method = "loess", linetype = "dashed", show.legend = F) +
       # facet_grid(imcy_inv~.) +
       theme_classic() +
       # theme_bw() +
       xlab(expression(paste("Canopy cover (%)"))) +
       ylab("log( tick abundance + 1 )") +
       def_theme +
-      theme(legend.position = c(.15,.9))
+      # theme(legend.position = c(.15,.9)) +
+      NULL
 )
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-canopy-cover.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-canopy-cover.png", height=7.5, width = 7.5)
 
 ```
+
+```{r ticks canopy cover model}
+
+GGally::ggpairs(
+      tick_data_sum %>% 
+            filter(!is.na(imcy_inv)) %>% 
+            mutate(ln_ticks = log1p(total_ticks)) %>% 
+            select(ln_ticks, avg_dry_litter_gm2, avg_pct_litter, avg_pct_litter_moisture, avg_canopy_cover))
+
+tick_canopy_mod <- lm(log1p(total_ticks) ~ avg_canopy_cover + avg_pct_litter + avg_pct_litter_moisture, data = tick_data_sum)
+summary(tick_canopy_mod)
+
+sjPlot::plot_model(tick_canopy_mod, show.values = T, type = "diag")
+sjPlot::plot_model(tick_canopy_mod, show.values = T, type = "std")
+sjPlot::plot_model(tick_canopy_mod, show.values = T, type = "slope")
+sjPlot::plot_model(tick_canopy_mod, show.values = T, type = "pred", terms = c("avg_pct_litter", "avg_pct_litter_moisture", "avg_canopy_cover"))
+
+```
+
 
 ## Ticks ~ char height
 
@@ -1626,16 +1706,17 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-canopy-cover.png", height=
       invasion_color +
       invasion_fill +
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm") +
-      geom_smooth(se = F, alpha = .2, method = "loess", linetype = "dashed", show.legend = F) +
+      # geom_smooth(se = F, alpha = .2, method = "loess", linetype = "dashed", show.legend = F) +
        # facet_grid(imcy_inv~.) +
       # geom_smooth(method = "lm", color = "gray50", se = F) +
       theme_classic() +
       # xlab(expression(paste("log( # of dung clusters + 1)"))) +
       # ylab("log( tick abundance + 1 )") +
       def_theme +
-      theme(legend.position = c(.85,.9))
+      # theme(legend.position = c(.85,.9)) +
+      NULL
 )
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/tick-char.png", height = 7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/tick-char.png", height = 7.5, width = 7.5)
 
 ```
 
@@ -1647,20 +1728,21 @@ Log-log relationship between tick density and host density
 
 (tick_host_fig1 <- ggplot(
       filter(tick_data_sum, !is.na(imcy_inv)), 
-       aes(log1p(avg_clusters1m), log1p(total_ticks), color = imcy_inv)) +
-      geom_point(alpha = .3) +
+       aes(log1p(total_clusters1m), log1p(total_ticks), color = imcy_inv)) +
+      geom_point() +
       invasion_color +
       invasion_fill +
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm") +
-      geom_smooth(aes(fill = imcy_inv), se = F, alpha = .2, method = "loess", linetype = "dashed", show.legend = F) +
+      # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .2, method = "loess", linetype = "dashed", show.legend = F) +
       # geom_smooth(method = "lm", color = "black", se = F) +
       theme_classic() +
       xlab(expression(paste("log( # of dung clusters + 1)"))) +
       ylab("log( tick abundance + 1 )") +
-      def_theme
-      # theme(legend.position = c(.85,.9))
+      def_theme +
+      # theme(legend.position = c(.85,.9)) +
+      NULL
 )
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-host1.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-host1.png", height=7.5, width = 7.5)
 
 # (tick_host_fig2 <- ggplot(
 #       filter(tick_data_sum, !is.na(imcy_inv), !is.na(life_stage)), 
@@ -1684,47 +1766,77 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-host1.png", height=7.5, wi
 
 Loess lines are dashed, lines from the linear model are solid, and the black solid line is the overall trend when pooling the data across invaded and uninvaded plots.
 
+```{r tick host model}
+
+GGally::ggpairs(
+      tick_data_sum %>% 
+            filter(!is.na(imcy_inv)) %>% 
+            mutate(ln_ticks = log1p(total_ticks)) %>% 
+            select(ln_ticks, total_clusters1m, avg_dry_litter_gm2, avg_pct_litter, avg_pct_litter_moisture, avg_canopy_cover, years_since_fire, total_ticks))
+
+tick_host_model <- lm(log1p(total_ticks) ~ total_clusters1m, data = tick_data_sum)
+summary(tick_host_model)
+
+```
+
+
 # Host abundance
 Host abundance tended to be slightly lower with increasing canopy cover and time since fire. The trend isn't significant
 ```{r hosts-canopy-cover}
 
  ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
-        aes(avg_canopy_cover, log1p(avg_clusters1m))) +
+        aes(avg_canopy_cover, log1p(total_clusters1m))) +
       geom_point(aes(color = imcy_inv), alpha = .5) +
       invasion_color +
       invasion_fill +
-      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "loess", se = F, alpha = .2, linetype = "dashed") +
+      # geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "loess", se = F, alpha = .2, linetype = "dashed") +
       geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", se = T, alpha = .2) +
       theme_classic() +
       xlab(expression(paste("Canopy cover (%)"))) +
       ylab("log( dung clusters + 1 )") +
       def_theme
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/hosts-canopy-cover.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/hosts-canopy-cover.png", height=7.5, width = 7.5)
 
 ```
+
+```{r host canopy cover model}
+
+host_canopy_model <- lm(log1p(total_clusters1m) ~ avg_canopy_cover, data = tick_data_sum)
+summary(host_canopy_model)
+
+```
+
 
 ```{r host-fire}
 
 ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
-        aes(years_since_fire, log1p(avg_clusters1m))) +
+        aes(years_since_fire, log1p(total_clusters1m))) +
       geom_point(aes(color = imcy_inv), alpha = .5) +
       invasion_color +
       invasion_fill +
-      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "loess", se = F, alpha = .2, linetype = "dashed") +
+      # geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "loess", se = F, alpha = .2, linetype = "dashed") +
       geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", se = T, alpha = .2) +
       theme_classic() +
       xlab(expression(paste("Years since fire"))) +
       ylab("log( dung clusters + 1 )") +
       def_theme
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/hosts-fire.png", height = 7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/hosts-fire.png", height = 7.5, width = 7.5)
 
 ```
+
+```{r host fire model}
+
+host_fire_mod <- lm(log1p(total_clusters1m) ~ years_since_fire, data = tick_data_sum)
+summary(host_fire_mod)
+
+```
+
 
 
 ```{r host-trees, eval=F}
 
 ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
-       aes(total_dbh, log1p(avg_clusters1m))) +
+       aes(total_dbh, log1p(total_clusters1m))) +
       geom_point(aes(color = imcy_inv)) +
       invasion_color +
       geom_smooth(aes(color = imcy_inv), method = "lm", se = F, alpha = .2) +
@@ -1732,7 +1844,14 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
       xlab(expression(paste("Total DBH (cm)"))) +
       ylab("log( # of dung clusters + 1 ) ") +
       def_theme
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/hosts-tree-dbh.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/hosts-tree-dbh.png", height=7.5, width = 7.5)
+
+```
+
+```{r host trees model}
+
+host_trees_mod <- lm(log1p(total_clusters1m) ~ total_dbh*imcy_inv, data = tick_data_sum)
+summary(host_trees_mod)
 
 ```
 
