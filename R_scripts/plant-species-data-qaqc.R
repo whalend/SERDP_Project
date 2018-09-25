@@ -94,11 +94,16 @@ summary(species_data)
 names(species_data)
 
 species_grouped <- species_data %>%
-  group_by(installation, plot_id, date, veg_id, functional_group) %>%
+  group_by(installation, plot_id, date, veg_id, functional_group, Genus, Species) %>%
   summarise(avg_pct_cover = mean(pct_cover, na.rm = T),
             num_stems_m2 = sum(ht_under50cm, ht50_100cm, ht_over100cm, na.rm=T)/4)
 
 summary(species_grouped)
+
+species_grouped <- species_grouped %>% 
+  mutate(species_name = paste(Genus, Species, sep = " "))
+
+# Added species_name concatenation of Genus & Species
 
 filter(species_grouped, num_stems_m2>400)$plot_id
 filter(species_data, plot_id=="avonpark e2", veg_id=="imcy") %>%
@@ -106,32 +111,30 @@ filter(species_data, plot_id=="avonpark e2", veg_id=="imcy") %>%
 
 species_data <- species_data %>%
       filter(!is.na(transect_id))
+
 write_csv(species_data, "data/processed_data/species1m.csv")
 
-species_grouped <- species_data %>%
-      group_by(installation, plot_id, date, veg_id, functional_group) %>%
-      summarise(avg_pct_cover = mean(pct_cover, na.rm = T),
-                num_stems_m2 = sum(ht_under50cm, ht50_100cm, ht_over100cm, na.rm=T)/4)
-summary(species_grouped)
+## Removed avon park cogon plots from species_data
 
+species_data <- read_csv("data/processed_data/species1m.csv")
+
+summary(species_grouped)
 
 species_benning <- species_grouped %>%
   filter(installation=="benning")
 
 summary(species_benning)
 
-filter(species_data, plot_id=="benning b1") %>%
+filter(species_data) %>%
   select(plot_id, veg_id, pct_cover, ht_under50cm, ht50_100cm, ht_over100cm)
 
-filter(species_benning, plot_id=="benning b1") %>%
-<<<<<<< HEAD
-      ungroup(.) %>%
-=======
->>>>>>> e5e9ef4889069a018dd7e22fe4dd290be52bdb74
-  select(plot_id, veg_id, avg_pct_cover, num_stems_m2)
+species_benning <- filter(species_benning) %>%
+  ungroup(.) %>%
+  select(plot_id, date, veg_id, avg_pct_cover, num_stems_m2, species_name, functional_group)
 
-unique(species_data$plot_id)
+unique(species_benning$veg_id)
 
+write_csv(species_benning, "data/processed_by_installation/fort_benning/species_benning.csv")
 
 #################
 #### NOT RUN ####
