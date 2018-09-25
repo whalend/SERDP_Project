@@ -1065,6 +1065,14 @@ biomass_plot_summary <- filter(biomass_plot_summary, !is.na(years_since_fire))
 
 ```
 
+```{r litter biomass vs fire model}
+
+litter_mass_model <- lm(avg_dry_litter_gm2 ~ years_since_fire + imcy_inv, data = biomass_plot_summary)
+summary(litter_mass_model)
+
+```
+
+
 
 # Host Abundance Estimates
 
