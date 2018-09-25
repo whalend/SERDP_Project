@@ -981,15 +981,19 @@ biomass_data_import$date <- as.Date(as.character(biomass_data_import$date), form
 
 biomass_data <- biomass_data_import %>% 
       mutate(pct_litter_moisture = 100*(litter_mass_wet-litter_mass_dry)/litter_mass_wet,
-             
              visit_year = lubridate::year(date))
+summary(biomass_data)
+# (biomass_data %>% filter(pct_litter_moisture<0) %>% 
+#             select(litter_mass_wet, litter_mass_dry, plot_id, date))
+biomass_data <- biomass_data %>% 
+      mutate(pct_litter_moisture = ifelse(pct_litter_moisture<0,0,pct_litter_moisture))
 
 biomass_data <- left_join(
-      biomass_data,
+      select(biomass_data, -Notes),
       select(plot_visit_data, -notes))
 summary(biomass_data)
 
-filter(biomass_data, is.na(imcy_inv))
+# filter(biomass_data, is.na(years_since_fire))
 
 # biomass_data$last_fire_year <- as.integer(biomass_data$last_fire_year)
 # biomass_data$years_since_fire <- 2017 - biomass_data$last_fire_year
@@ -1009,14 +1013,16 @@ summary(biomass_plot_summary)
 
 biomass_plot_summary <- filter(biomass_plot_summary, !is.na(years_since_fire))
 # filter(biomass_plot_summary, is.na(se_litter))
+
 ```
 
 ```{r standing biomass fig}
 
 (stand_biomass_fig <- ggplot(biomass_plot_summary,
        aes(years_since_fire, avg_dry_standing_gm2, color = imcy_inv)) +
-      # geom_point() +
+      geom_point() +
       stat_summary(fun.data = "mean_se", geom = "pointrange") +
+      geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm") +
       invasion_color +
       invasion_fill +
       # facet_grid(.~installation) +
@@ -1030,7 +1036,7 @@ biomass_plot_summary <- filter(biomass_plot_summary, !is.na(years_since_fire))
       def_theme
 )
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass.png", height=7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass.png", height=7.5, width = 7.5)
 
 ```
 
@@ -1039,8 +1045,8 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass.png", height=7.5, 
 (litter_mass_fig <- ggplot(biomass_plot_summary,
         aes(years_since_fire, avg_dry_litter_gm2, color = imcy_inv)) +
       geom_point(alpha = .5) +
-      geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "loess", linetype = "dashed", se = F) +
-       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm") +
+      # geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "loess", linetype = "dashed", se = F) +
+      geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm") +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       invasion_color +
       invasion_fill +
@@ -1055,7 +1061,7 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass.png", height=7.5, 
        # theme(legend.position = c(.85,.85))
 )
 
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass.png", height = 7.5, width = 7.5)
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass.png", height = 7.5, width = 7.5)
 
 ```
 
