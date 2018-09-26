@@ -201,7 +201,7 @@ canopy_cover_summary <- cc_plot_data %>%
 ggplot(canopy_cover_summary, aes(years_since_fire, avg_canopy_cover)) +
       geom_point(aes(color = imcy_inv)) +
       # geom_smooth(aes(color = imcy_inv), method = "loess", alpha = .2, linetype = "dashed", se = F) +
-      geom_smooth(aes(fill = imcy_inv, color = imcy_inv), method = "lm", alpha = .3) +
+      geom_smooth(aes(fill = imcy_inv, color = imcy_inv), method = "lm", alpha = .2) +
       # geom_smooth(method = "lm", linetype = "dashed", color = "gray50") +
       invasion_color +
       invasion_fill +
@@ -288,7 +288,7 @@ quadrat10_summaries <- left_join(
 (herb_ht_fig <- ggplot(quadrat10_summaries, 
                       aes(years_since_fire, avg_herb_ht_all)) +
       geom_point(aes(color = imcy_inv), size = 2) +
-      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm") +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", alpha = .2) +
       invasion_color +
       invasion_fill +
       theme_classic() +
@@ -303,7 +303,7 @@ quadrat10_summaries <- left_join(
       
 (woody_ht_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_woody_ht_all)) +
       geom_point(aes(color = imcy_inv), size = 2) +
-      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm") +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", alpha = .2) +
       invasion_color +
       invasion_fill +
       theme_classic() +
@@ -316,8 +316,8 @@ quadrat10_summaries <- left_join(
 )
 
 (litter_depth_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_litter_depth_all)) +
-      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm") +
       geom_point(aes(color = imcy_inv), size = 2) +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", alpha = .2) +
       # stat_summary(aes(color = imcy_inv), fun.data = "mean_se", geom = "pointrange") +
       invasion_color +
       invasion_fill +
@@ -335,7 +335,7 @@ quadrat10_summaries <- left_join(
 (pct_litter_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_pct_litter)) +
       geom_point(aes(color = imcy_inv), size = 2) +
       # stat_summary(aes(color = imcy_inv), fun.data = "mean_se", geom = "pointrange") +
-      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm") +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", alpha = .2) +
       invasion_color +
       invasion_fill +
       theme_classic() +
@@ -360,7 +360,7 @@ summary(pct_lit_fire_mod)
 
 (pct_bare_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_pct_bare)) +
       geom_point(aes(color = imcy_inv), size = 2) +
-      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", se = T) +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", se = T, alpha = .2) +
       invasion_color +
       invasion_fill +
       theme_classic() +
@@ -382,7 +382,7 @@ species_data_import <- read_csv("data/processed_data/species1m.csv")
 # nrow(filter(species_data, is.na(functional_group__1)))
 
 species_data <- left_join(
-      species_data_import,
+      select(species_data_import, installation:visit_year),
       select(plot_visit_data, -notes)
 )
 
@@ -462,7 +462,7 @@ veg_cover_quadrats <- species10_data %>%
 
 ggplot(veg_cover_quadrats, aes(years_since_fire, quadrat_veg_cover)) +
       geom_point(aes(color = imcy_inv), size = 2) +
-      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm") +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", alpha = .2) +
       invasion_color +
       invasion_fill +
       theme_classic() +
@@ -489,8 +489,8 @@ veg_cover_plot_data <- species10_data %>%
       aes(years_since_fire, plot_avg_veg_cover)) +
       # geom_bar(aes(fill = imcy_inv), stat = "identity", position = "dodge") +
       # geom_errorbar(aes(ymin = plot_avg_veg_cover + se_veg_cover, ymax = plot_avg_veg_cover - se_veg_cover), width = 0, position=position_dodge(width = .9)) +
-      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm") +
-      geom_point(aes(color = imcy_inv)) +
+      geom_point(aes(color = imcy_inv), size = 2) +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", alpha = .2) +
       invasion_fill +
       invasion_color +
       # facet_grid(installation_full_name~.) +
@@ -626,7 +626,7 @@ ggplot(plot_fxgroups,
        aes(years_since_fire, fxgroup_abundance, color = functional_group)) +
       geom_point(position = "jitter", alpha = .5) +
       stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      geom_smooth(alpha = .1, se=F, method = "lm") +
+      geom_smooth(alpha = .2, se=F, method = "lm") +
       # invasion_color +
       theme_classic() +
       xlab("Years since fire") +
@@ -764,7 +764,7 @@ tree_data_plot_summary <- left_join(
        aes(years_since_fire, richness, color = imcy_inv)) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange", size = 1) +
       geom_point(position = position_jitter(height = .05), alpha = .8) +
-      geom_smooth(aes(fill = imcy_inv), method = "lm") +
+      geom_smooth(aes(fill = imcy_inv), method = "lm", alpha = .2) +
       invasion_color +
       invasion_fill +
       # facet_grid(installation_full_name~.) +
@@ -800,7 +800,7 @@ tree_data_plot_summary <- left_join(
        ) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange", position = "jitter") +
       geom_point() +
-      geom_smooth(aes(fill = imcy_inv), method = "lm", se = T) +
+      geom_smooth(aes(fill = imcy_inv), method = "lm", se = T, alpha = .2) +
       # geom_violin(aes(labels, dbh, fill = labels)) +
       # geom_dotplot(aes(labels, dbh, fill = labels),
       #            binaxis = "y",         # which axis to bin along
@@ -833,14 +833,14 @@ tree_data_plot_summary <- left_join(
        aes(years_since_fire, pct_pinus_dbh)
        ) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange", position = "jitter") +
-      geom_smooth(method = "lm", se = F) +
+      geom_smooth(method = "lm", se = F, alpha = .2) +
       geom_point(aes(color = imcy_inv)) +
       geom_smooth(data=filter(tree_data_plot_summary, pct_pinus_dbh<60),
                   aes(years_since_fire, pct_pinus_dbh),
-                  method = "lm", se = F, linetype="dashed") +
+                  method = "lm", se = F, linetype="dashed", alpha = .2) +
        geom_smooth(data=filter(tree_data_plot_summary, pct_pinus_dbh>60),
                   aes(years_since_fire, pct_pinus_dbh),
-                  method = "lm", se = F, linetype="dotted") +
+                  method = "lm", se = F, linetype="dotted", alpha = .2) +
       invasion_color +
       invasion_fill +
       # facet_grid(installation_full_name~.) +
@@ -959,17 +959,18 @@ summary(subplot_plot_summary)
       filter(subplot_plot_summary, total_stems_100m2>=0),
       aes(years_since_fire, log1p(total_stems_100m2), color = imcy_inv)) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      geom_point(aes(color = imcy_inv), alpha = .7, size = 2) +
+      geom_point(aes(color = imcy_inv), size = 2) +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm") +
       invasion_color +
       invasion_fill +
       # facet_grid(.~veg_id) +
       theme_classic() +
       def_theme +
-      theme(legend.position = c(.85,.95)) +
+      # theme(legend.position = c(.85,.95)) +
       xlab("Years since fire") +
       ylab(expression(paste("ln( Shrb/sapling stem density (100 ", {m}^-2,") )"))) +
-      ggtitle("")
+      ggtitle("") +
+      NULL
 )
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/subplot_density.png", height=7.5, width = 7.5)
@@ -1042,7 +1043,8 @@ biomass_plot_summary <- filter(biomass_plot_summary, !is.na(years_since_fire))
       ggtitle("Dry standing biomass",
               subtitle = "(measurements at 25cm quadrats)") +
       theme(legend.title = element_blank()) +
-      def_theme
+      def_theme +
+      NULL
 )
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass.png", height=7.5, width = 7.5)
@@ -1053,13 +1055,13 @@ biomass_plot_summary <- filter(biomass_plot_summary, !is.na(years_since_fire))
 
 (litter_mass_fig <- ggplot(biomass_plot_summary,
         aes(years_since_fire, avg_dry_litter_gm2, color = imcy_inv)) +
-      geom_point(alpha = .5) +
+      geom_point() +
       # geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "loess", linetype = "dashed", se = F) +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm") +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       invasion_color +
       invasion_fill +
-      # geom_smooth(aes(fill = imcy_inv), se = T, alpha = .1) +
+      # geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2) +
       # facet_grid(.~installation) +
       theme_classic() +
       ylab(expression(paste("Litter biomass (g ", m^{-2}, ")"))) +
@@ -1125,11 +1127,11 @@ summary(dung_plot_data)
 (dung_species_fig <- ggplot(filter(dung_data, !is.na(dung1m)), aes(years_since_fire, log1p(dung1m))) +
       # geom_bar(aes(fill = imcy_inv), stat = "identity", position = "dodge") +
       geom_point(aes(color = species), size = 2, position = "jitter") +
-      # geom_smooth(aes(color = species)) +
+      # geom_smooth(aes(color = species), alpha = .2) +
       invasion_fill +
       # invasion_color +
-      # geom_smooth(aes(linetype = imcy_inv), se = F, alpha = .1) +
-      # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .1, method = "lm") +
+      # geom_smooth(aes(linetype = imcy_inv), se = F, alpha = .2) +
+      # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .2, method = "lm") +
       theme_classic() +
       ylab("log( # of dung clusters )") +
       xlab("Years since fire") +
@@ -1155,7 +1157,7 @@ summary(dung_plot_data)
       invasion_fill +
       invasion_color +
       # geom_smooth(aes(linetype = imcy_inv), se = F, alpha = .1) +
-      geom_smooth(aes(fill = imcy_inv), se = T, method = "lm") +
+      geom_smooth(aes(fill = imcy_inv), se = T, method = "lm", alpha = .2) +
       theme_classic() +
       ylab("log( # of deer dung clusters )") +
       xlab("Years since fire") +
@@ -1405,14 +1407,14 @@ filter(tick_data_plot_summary, is.na(installation_full_name))$plot_id
 
 ggplot(filter(tick_data_plot_summary, !is.na(imcy_inv)), 
        aes(years_since_fire, log1p(total_ticks))) +
-      # geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", linetype = "dashed") +
+      # geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", linetype = "dashed", alpha = .2) +
       geom_smooth(aes(fill = imcy_inv, color = imcy_inv), se = T, method = "lm", alpha = .2) +
-      # geom_smooth(se = F, method = "lm", linetype = 2) +
+      # geom_smooth(se = F, method = "lm", linetype = 2, alpha = .2) +
       geom_point(aes(color = imcy_inv), position = "jitter") +
       invasion_color +
       invasion_fill +
       # geom_smooth(aes(color = imcy_inv), method = "loess",
-                  # linetype = "dashed", se = F) +
+                  # linetype = "dashed", se = F, alpha = .2) +
       # scale_shape_manual(values = c(inst_name=2, 19, 19, 19, 19, 19, 19, 19, 19)) +
       theme_classic() +
       xlab("Years since fire") +
@@ -1450,7 +1452,7 @@ ggplot(filter(tick_data, !is.na(life_stage)),
       # scale_fill_brewer(type = "div") +
       scale_x_date(limits = c(as.Date("2017-06-06"),as.Date("2018-08-01")),
                    date_breaks = "3 month") +
-      # geom_smooth() +
+      # geom_smooth(alpha = .2) +
       theme_classic() +
       ylab("Tick abundance") +
       xlab("") +
@@ -1476,7 +1478,7 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
       # invasion_color +
       invasion_fill + 
       # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .2, method = "lm") +
-      geom_smooth(aes(), method = "loess", linetype = "dashed", se = F) +
+      geom_smooth(aes(), method = "loess", linetype = "dashed", se = F, alpha = .2) +
       facet_grid(imcy_inv~.) +
       scale_color_viridis_d() +
       # theme_classic() +
@@ -1502,7 +1504,7 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
       invasion_color +
       invasion_fill +
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = F) +
-      # geom_smooth(aes(fill = imcy_inv), method = "loess", linetype = "dashed", se = F, alpha = .3, show.legend = F) +
+      # geom_smooth(aes(fill = imcy_inv), method = "loess", linetype = "dashed", se = F, alpha = .2, show.legend = F) +
       # facet_grid(imcy_inv~.) +
       theme_classic() +
       # theme_bw() +
