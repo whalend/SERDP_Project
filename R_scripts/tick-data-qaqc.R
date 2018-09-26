@@ -32,6 +32,7 @@ tick_data$plot_id[tick_data$plot_id=="tyndall na"] = "tyndall extra"
 # tick_data <- left_join(
 # tick_data,
 # select(plot_data, installation,plot_id,fire_year:full_names),
+unique(tick_data$location)
 # by = c("installation", "plot_id")
 # )
 
@@ -44,7 +45,6 @@ summary(tick_data)
 ## Steven processing, added concatenation for plot_id & installation line 17 ##
 
 ### Made locations consistent ####
-unique(tick_data$location)
 
 # tolower()
 # toupper()
@@ -88,15 +88,31 @@ tick_data$species[tick_data$species=="rh. san"] <- "Rh. san"
 
 write_csv(tick_data, "data/processed_data/ticks.csv")
 
-### Steven stopped processing ###
+### Steven stopped processing, begin processing by installation ###
 
 tick_data <- read_csv("data/processed_data/ticks.csv")
 summary(tick_data)
+names(tick_data)
 
-sort(unique(tick_data$species))
+ticks_grouped <- tick_data %>% 
+  group_by(installation, plot_id, date, species, life_stage, count) %>% 
+  summarise(tick_count = sum(count, na.rm = T))
+  
+ticks_blanding <- ticks_grouped %>% 
+  filter(installation=="blanding")
 
-#### Steven checking processed data, looks good ####
+ticks_blanding <- filter(ticks_blanding) %>%
+  ungroup(.) %>%
+  select(plot_id, date, species, life_stage, tick_count)
 
+summary(ticks_blanding)
+
+filter(ticks_blanding, plot_id=="blanding h1") %>% 
+  select(plot_id, date, species, life_stage, tick_count)
+
+#### Steven stopped question about adding individual species of each plot ####
+
+######################## 
 ggplot(tick_data %>%
 group_by(installation,years_since_fire,Species) %>%
 summarise(tick_number = sum(count)),
