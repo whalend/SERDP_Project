@@ -11,7 +11,7 @@ date: "`r Sys.Date()`"
 
 ```{r set options, echo=F}
 # knitr::opts_chunk$set(fig.height = 10)
-knitr::opts_chunk$set(fig.width = 7.5)
+knitr::opts_chunk$set(fig.width = 7.5, fig.height = 7.5)
 knitr::opts_chunk$set(dpi = 300)
 knitr::opts_chunk$set(echo = F)
 knitr::opts_chunk$set(warning = F)
@@ -42,8 +42,8 @@ def_theme <- theme(legend.title = element_blank(),
             strip.background = element_blank(),
             panel.grid = element_blank()
             )
-invasion_color <- scale_color_viridis_d(end = .98)
-invasion_fill <- scale_fill_viridis_d(end = .98)
+invasion_color <- scale_color_manual(values = c("blue", "red"))
+invasion_fill <- scale_fill_manual(values = c("blue", "red"))
 
 ```
 
@@ -328,6 +328,9 @@ quadrat10_summaries <- left_join(
       theme(legend.position = c(.85,.9)) +
       NULL
 )
+```
+
+```{r pct-litter-fire}
 
 (pct_litter_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_pct_litter)) +
       geom_point(aes(color = imcy_inv), size = 2) +
@@ -339,25 +342,32 @@ quadrat10_summaries <- left_join(
       def_theme +
       xlab("Years since fire") +
       ylab("Litter cover (%)") +
-      theme(legend.position = c(.85,.1)) +
+      # theme(legend.position = c(.85,.1)) +
       NULL
 )
 
+```
+
+```{r pct-litter-fire-model}
+
+pct_lit_fire_mod <- lm(avg_pct_litter ~ years_since_fire + imcy_inv, data = quadrat10_summaries)
+summary(pct_lit_fire_mod)
 
 ```
+
 
 ```{r pct-bare-fire-fig}
 
 (pct_bare_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_pct_bare)) +
       geom_point(aes(color = imcy_inv), size = 2) +
-      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "loess", se = F) +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", se = T) +
       invasion_color +
       invasion_fill +
       theme_classic() +
       def_theme +
       xlab("Years since fire") +
       ylab("Bare ground (%)") +
-      theme(legend.position = c(.85,.9)) +
+      # theme(legend.position = c(.85,.9)) +
       NULL
 )
 
@@ -366,14 +376,13 @@ quadrat10_summaries <- left_join(
 
 ```{r load species data}
 
-species_data <- read_csv("data/processed_data/species1m.csv")
+species_data_import <- read_csv("data/processed_data/species1m.csv")
 # summary(species_data)
 # nrow(filter(species_data, is.na(functional_group)))
 # nrow(filter(species_data, is.na(functional_group__1)))
-species_data <- species_data %>% 
-      select(-functional_group__1, -Order)
+
 species_data <- left_join(
-      species_data,
+      species_data_import,
       select(plot_visit_data, -notes)
 )
 
@@ -717,7 +726,7 @@ dbh_by_tree_grp <- tree_grp_summary %>%
                    Other = if_else(is.na(Other)==TRUE,0,Other),
                    total_dbh = rowSums(cbind(Other,Pinus,Quercus), na.rm = T),
                    pct_pinus_dbh = 100*(Pinus/total_dbh))
-summary(d)
+
 
 tree_data_plot_summary <- tree_data %>% 
       filter(health!=0) %>% 
@@ -733,10 +742,10 @@ tree_data_plot_summary <- left_join(
       tree_data_plot_summary, 
       select(dbh_by_tree_grp, plot_id:visit_year, pct_pinus_dbh)
       )
-summary(tree_data_plot_summary)
+# summary(tree_data_plot_summary)
 
 
-skimr::skim(ungroup(tree_data_plot_summary))
+# skimr::skim(ungroup(tree_data_plot_summary))
 
 # filter(tree_data_plot_summary, is.na(avg_char_ht), visit_year==2018)$plot_id
 # filter(tree_data, plot_id=="benning j1")$char
@@ -1632,18 +1641,21 @@ Tick abundance plotted against dried litter biomass in invaded and uninvaded plo
 ```
 
 ```{r ticks litter model}
-GGally::ggpairs(
-      tick_data_sum %>% 
-            filter(!is.na(imcy_inv)) %>% 
-            mutate(ln_ticks = log1p(total_ticks)) %>% 
-            select(ln_ticks, avg_dry_litter_gm2, avg_pct_litter, avg_pct_litter_moisture, avg_litter_depth_all))
+# pairs plot ####
+# GGally::ggpairs(
+#       tick_data_sum %>% 
+#             filter(!is.na(imcy_inv)) %>% 
+#             mutate(ln_ticks = log1p(total_ticks)) %>% 
+#             select(ln_ticks, avg_dry_litter_gm2, avg_pct_litter, avg_pct_litter_moisture, avg_litter_depth_all))
 
+# linear models ####
 ticks_litter_mass_mod <- lm(log1p(total_ticks) ~ avg_dry_litter_gm2 + avg_pct_litter_moisture, data = tick_data_sum)
 summary(ticks_litter_mass_mod)
 
 ticks_litter_cover_mod <- lm(log1p(total_ticks) ~ avg_pct_litter + avg_pct_litter_moisture, data = tick_data_sum)
 summary(ticks_litter_cover_mod)
 
+# model plots ####
 sjPlot::plot_model(ticks_litter_cover_mod, show.values = T, type = "diag")
 sjPlot::plot_model(ticks_litter_cover_mod, show.values = T, type = "std")
 sjPlot::plot_model(ticks_litter_cover_mod, show.values = T, type = "pred", terms = c("avg_pct_litter", "avg_pct_litter_moisture"))
@@ -1678,20 +1690,26 @@ Log-linear relationship, where there are more ticks in plots with more canopy co
 ```
 
 ```{r ticks canopy cover model}
+# pairs plot ####
+# GGally::ggpairs(
+#       tick_data_sum %>% 
+#             filter(!is.na(imcy_inv)) %>% 
+#             mutate(ln_ticks = log1p(total_ticks)) %>% 
+#             select(ln_ticks, avg_dry_litter_gm2, avg_pct_litter, avg_pct_litter_moisture, avg_canopy_cover))
 
-GGally::ggpairs(
-      tick_data_sum %>% 
-            filter(!is.na(imcy_inv)) %>% 
-            mutate(ln_ticks = log1p(total_ticks)) %>% 
-            select(ln_ticks, avg_dry_litter_gm2, avg_pct_litter, avg_pct_litter_moisture, avg_canopy_cover))
-
-tick_canopy_mod <- lm(log1p(total_ticks) ~ avg_canopy_cover + avg_pct_litter + avg_pct_litter_moisture, data = tick_data_sum)
+# linear model ####
+tick_canopy_mod <- lm(log1p(total_ticks) ~ avg_canopy_cover, data = tick_data_sum)
 summary(tick_canopy_mod)
 
-sjPlot::plot_model(tick_canopy_mod, show.values = T, type = "diag")
-sjPlot::plot_model(tick_canopy_mod, show.values = T, type = "std")
-sjPlot::plot_model(tick_canopy_mod, show.values = T, type = "slope")
-sjPlot::plot_model(tick_canopy_mod, show.values = T, type = "pred", terms = c("avg_pct_litter", "avg_pct_litter_moisture", "avg_canopy_cover"))
+tick_canopy_mod2 <- lm(log1p(total_ticks) ~ avg_canopy_cover + avg_pct_litter + avg_pct_litter_moisture, data = tick_data_sum)
+summary(tick_canopy_mod2)
+
+# model plots ####
+sjPlot::plot_model(tick_canopy_mod2, show.values = T, type = "diag")
+sjPlot::plot_model(tick_canopy_mod2, type = "resid")
+sjPlot::plot_model(tick_canopy_mod2, show.values = T, type = "std")
+sjPlot::plot_model(tick_canopy_mod2, show.values = T, type = "slope")
+sjPlot::plot_model(tick_canopy_mod2, show.values = T, type = "pred", terms = c("avg_pct_litter", "avg_pct_litter_moisture", "avg_canopy_cover"))
 
 ```
 
@@ -1767,13 +1785,14 @@ Log-log relationship between tick density and host density
 Loess lines are dashed, lines from the linear model are solid, and the black solid line is the overall trend when pooling the data across invaded and uninvaded plots.
 
 ```{r tick host model}
+# pairs plot ####
+# GGally::ggpairs(
+#       tick_data_sum %>% 
+#             filter(!is.na(imcy_inv)) %>% 
+#             mutate(ln_ticks = log1p(total_ticks)) %>% 
+#             select(ln_ticks, total_clusters1m, avg_dry_litter_gm2, avg_pct_litter, avg_pct_litter_moisture, avg_canopy_cover, years_since_fire, total_ticks))
 
-GGally::ggpairs(
-      tick_data_sum %>% 
-            filter(!is.na(imcy_inv)) %>% 
-            mutate(ln_ticks = log1p(total_ticks)) %>% 
-            select(ln_ticks, total_clusters1m, avg_dry_litter_gm2, avg_pct_litter, avg_pct_litter_moisture, avg_canopy_cover, years_since_fire, total_ticks))
-
+# linear model ####
 tick_host_model <- lm(log1p(total_ticks) ~ total_clusters1m, data = tick_data_sum)
 summary(tick_host_model)
 
@@ -1786,7 +1805,7 @@ Host abundance tended to be slightly lower with increasing canopy cover and time
 
  ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
         aes(avg_canopy_cover, log1p(total_clusters1m))) +
-      geom_point(aes(color = imcy_inv), alpha = .5) +
+      geom_point(aes(color = imcy_inv)) +
       invasion_color +
       invasion_fill +
       # geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "loess", se = F, alpha = .2, linetype = "dashed") +
@@ -1850,7 +1869,7 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
 
 ```{r host trees model}
 
-host_trees_mod <- lm(log1p(total_clusters1m) ~ total_dbh*imcy_inv, data = tick_data_sum)
+host_trees_mod <- lm(log1p(total_clusters1m) ~ total_dbh, data = tick_data_sum)
 summary(host_trees_mod)
 
 ```
@@ -1870,14 +1889,16 @@ summary(lm(avg_canopy_cover ~ years_since_fire, data = tick_data_sum))
 ```
 
 ```{r ggpairs plot, eval=F}
+
 # install.packages("GGally")
 library(GGally)
-ggpairs(select(tick_data_sum, years_since_fire, ycoord_lat, total_ticks, avg_dry_litter_gm2, avg_canopy_cover, avg_clusters1m, pct_pinus_dbh, total_stems_100m2, imcy_inv), aes(color = imcy_inv)) +
+ggpairs(select(tick_data_sum, years_since_fire, ycoord_lat, total_ticks, avg_dry_litter_gm2, avg_canopy_cover, total_clusters1m, pct_pinus_dbh, total_stems_100m2, imcy_inv), aes(color = imcy_inv)) +
       # invasion_color +
       # invasion_fill +
       theme(panel.grid = element_blank())
 
 pairs(select(tick_data_sum, years_since_fire, ycoord_lat, total_ticks:avg_basal_area))
+
 ```
 
 
