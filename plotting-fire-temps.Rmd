@@ -77,6 +77,9 @@ write_csv(d2, "data/experimental-fire-data-summary.csv")
 
 ## Figures of wiregrass vs. cogongrass fire temperatures
 ```{r pct fuel moisture comparison}
+d2 <- read_csv("data/experimental-fire-data-summary.csv")
+d2$biomass_type
+summary(filter(d2, biomass_type=="wiregrass"))
 
 fm_plot <- ggplot(filter(d2, location == "0cm", pct_green!="NA"), 
        aes(factor(biomass_type), pct_fuel_moisture)) +
@@ -184,7 +187,7 @@ ggplot(filter(fires_biomass, pct_green!="NA", litter_biomass < 3000),
 
 ```{r standing biomass no litter cogon vs wire}
 ggplot(filter(d2, pct_green>0, litter_biomass==0), 
-       aes(standing_biomass, s_abv100)) +
+       aes(biomass, s_abv100)) +
       geom_point(aes(color = factor(pct_green),
                      shape = biomass_type),
                  size = 2) +
@@ -272,7 +275,7 @@ ggplot(fire_profile1, aes(time, tempC)) +
 
 ```{r wiregrass vs cogongrass max temp, fig.width=10, fig.height=7}
 ggplot(filter(d2, pct_green>0, litter_biomass<501), 
-       aes(standing_biomass, max_temp)) +
+       aes(biomass, max_temp)) +
       geom_smooth(method = "lm", aes(color = factor(pct_green), linetype = biomass_type), se = F) +
       geom_point(aes(shape = biomass_type, color = factor(pct_green)), size = 2) +
       # scale_shape_manual(values = c(21, 24)) +
@@ -291,7 +294,9 @@ ggplot(filter(d2, pct_green>0, litter_biomass<501),
             axis.title = element_text(size = 18),
             axis.text = element_text(size = 14),
             title = element_text(size = 20),
-            legend.text = element_text(size = 14)) +
+            legend.text = element_text(size = 14),
+            panel.grid = element_blank(),
+            strip.background = element_blank()) +
       labs(color = "% Green", 
            linetype = "Fuel\nType",
            shape = "Fuel\nType") +
@@ -302,7 +307,7 @@ ggplot(filter(d2, pct_green>0, litter_biomass<501),
 
 ```{r wiregrass vs cogongrass time above 100, fig.width=10, fig.height=7}
 ggplot(filter(d2, pct_green>0, litter_biomass<501), 
-       aes(standing_biomass, s_abv100)) +
+       aes(biomass, s_abv100)) +
       geom_point(aes(color = factor(pct_green),
                      shape = biomass_type),
                  size = 2) +
@@ -324,7 +329,9 @@ ggplot(filter(d2, pct_green>0, litter_biomass<501),
             axis.title = element_text(size = 18),
             axis.text = element_text(size = 14),
             title = element_text(size = 20),
-            legend.text = element_text(size = 14)) +
+            legend.text = element_text(size = 14),
+            panel.grid = element_blank(),
+            strip.background = element_blank()) +
       ggtitle("Wiregrass & Cogongrass Fire Time Above 100 ºC")
 ```
 
@@ -333,7 +340,7 @@ ggplot(filter(d2, pct_green>0, litter_biomass<501),
 ggplot(d2 %>% filter(litter_biomass==0),
        aes(s_abv100, max_temp)) +
       geom_point(aes(color = factor(pct_green), 
-                     size = standing_biomass, 
+                     size = biomass, 
                      shape = biomass_type
                      )
                  ) +
@@ -344,7 +351,10 @@ ggplot(d2 %>% filter(litter_biomass==0),
       xlab("Seconds >100 ºC") +
       theme_bw() +
       scale_size_continuous(breaks = c(200, 1000, 2000, 3000)) +
-      theme(legend.position = "bottom", panel.grid.minor = element_blank()) +
+      theme(legend.position = "bottom", 
+            panel.grid.minor = element_blank(),
+            panel.grid = element_blank(),
+            strip.background = element_blank()) +
       labs(color = "% Green", 
            size = "Standing\nBiomass", 
            shape = "Fuel\nType") +
@@ -354,7 +364,7 @@ ggplot(d2 %>% filter(litter_biomass==0),
 ggplot(d2 %>% filter(pct_green>0),
        aes(s_abv100, max_temp)) +
       geom_point(aes(color = factor(pct_green), 
-                     size = standing_biomass, 
+                     size = biomass, 
                      shape = biomass_type,
                      alpha = litter_biomass
                      )
@@ -397,7 +407,7 @@ eqns <- ddply(filter(d2, biomass_type=="cogongrass", litter_biomass < 501, pct_g
 
 
 ggplot(filter(d2, pct_green>0, biomass_type=="cogongrass", litter_biomass < 501), 
-       aes(standing_biomass, s_abv100)) +
+       aes(biomass, s_abv100)) +
       geom_point(aes(shape = factor(litter_biomass),
                      # size = factor(litter_biomass),
                      color = factor(pct_green)
