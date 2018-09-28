@@ -106,9 +106,10 @@ ticks_grouped <- tick_data %>%
 
 summary(ticks_grouped)
 
-ticks_grouped <- ticks_grouped %>% 
-  filter(ticks_grouped, !is.na(species)) %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+###is.na(ticks_grouped$species)
+###ticks_grouped <- ticks_grouped %>% 
+###  filter(!is.na(species)) %>% 
+###  select(installation, plot_id, date, visit_year, species, life_stage, tick_count)
 
 #### Filter for Camp Blanding ####
 
