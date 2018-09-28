@@ -1,492 +1,492 @@
-installation,plot_id,location,date,collection_method,species,life_stage,count,drag_time,notes
-blanding,blanding c1,Extra,20170607,Whalen,Am. am,N,1,0,NA
-blanding,blanding c1,Extra,20170607,Whalen,De. var,A,1,0,NA
-blanding,blanding a1,Extra,20170609,Drag,Am. am,A,2,40,NA
-blanding,blanding a1,E,20170610,trap,Am. am,A,1,0,NA
-blanding,blanding a1,Extra,20170610,Whalen,Am. am,A,1,0,NA
-blanding,blanding a1,Extra,20170610,Whalen,Am. am,N,4,0,NA
-blanding,blanding d1,Center,20170610,trap,Am. am,A,1,0,NA
-blanding,blanding d1,E,20170610,trap,Am. am,A,1,0,NA
-blanding,blanding d1,W,20170610,trap,Am. am,A,1,0,NA
-blanding,blanding e1,Extra,20170614,Whalen,Am. am,A,3,0,NA
-blanding,blanding e1,Extra,20170614,Whalen,De. var,A,1,0,NA
-blanding,blanding h1,Extra,20170614,Whalen,Am. am,N,6,0,NA
-blanding,blanding h1,Extra,20170614,Whalen,Am. am,A,3,0,NA
-blanding,blanding h1,Extra,20170614,Whalen,De. var,A,1,0,NA
-blanding,blanding e1,Center,20170615,trap,Am. am,A,1,0,NA
-blanding,blanding e1,E,20170615,trap,Am. am,A,1,0,NA
-blanding,blanding g1,Center,20170616,trap,Am. am,A,1,0,NA
-blanding,blanding g1,S,20170616,trap,Am. mac,A,1,0,NA
-blanding,blanding g1,Extra,20170616,Whalen,Am. am,A,5,0,NA
-blanding,blanding g1,Extra,20170616,Whalen,Am. am,N,1,0,NA
-blanding,blanding h1,N,20170616,trap,Am. am,A,2,0,NA
-blanding,blanding h1,W,20170616,trap,Am. am,A,1,0,NA
-blanding,blanding h1,W,20170616,trap,Am. am,N,1,0,NA
-blanding,blanding h1,E,20170616,trap,Am. am,A,2,0,NA
-blanding,blanding h1,S,20170616,trap,Am. am,A,8,0,NA
-blanding,blanding h1,S,20170616,trap,Am. am,N,4,0,NA
-blanding,blanding h1,Center,20170616,trap,Am. am,A,12,0,NA
-blanding,blanding h1,Center,20170616,trap,Am. am,N,16,0,NA
-blanding,blanding h1,Extra,20170620,Whalen,Am. am,A,3,0,NA
-blanding,blanding h1,Extra,20170620,Whalen,Am. am,N,27,0,NA
-blanding,blanding f1,Center,20170623,trap,Am. am,N,2,0,NA
-blanding,blanding f1,Center,20170623,trap,Am. am,A,6,0,NA
-blanding,blanding f1,N,20170623,trap,Am. am,A,5,0,NA
-blanding,blanding f1,S,20170623,trap,Am. am,A,1,0,NA
-blanding,blanding f1,W,20170623,trap,Am. am,A,2,0,NA
-blanding,blanding f1,E,20170623,trap,Am. am,A,2,0,NA
-blanding,blanding f1,E,20170623,trap,Am. am,N,6,0,NA
-blanding,blanding f1,Extra,20170623,Whalen,Am. am,A,6,0,NA
-blanding,blanding f1,Extra,20170623,Whalen,Am. am,N,9,0,NA
-blanding,blanding h1,Extra,20170623,Whalen,Am. am,N,7,0,NA
-blanding,blanding g1,N,20170624,trap,Am. am,N,1,0,retrap
-blanding,blanding g1,E,20170624,trap,Am. am,A,4,0,retrap
-blanding,blanding h1,W,20170624,trap,Am. am,A,3,0,retrap
-blanding,blanding h1,W,20170624,trap,Am. am,N,2,0,retrap
-blanding,blanding h1,S,20170624,trap,Am. am,A,3,0,retrap
-blanding,blanding h1,S,20170624,trap,Am. am,N,23,0,retrap
-blanding,blanding h1,Center,20170624,trap,Am. am,A,9,0,retrap
-blanding,blanding h1,Center,20170624,trap,Am. am,N,73,0,retrap
-blanding,blanding h1,Center,20170624,trap,Am. am,L,13,0,retrap
-avonpark,avonpark d1,W,20170630,trap,De. var,A,2,0,NA
-tyndall,tyndall extra,Extra,20170717,Whalen,De. var,A,2,0,NA
-tyndall,tyndall extra,Extra,20170717,Whalen,Am. mac,A,1,0,NA
-tyndall,tyndall extra,Extra,20170718,Whalen,Am. mac,A,2,0,NA
-tyndall,tyndall b2,Extra,20170719,Whalen,Am. am,A,1,0,NA
-tyndall,tyndall b2,S,20170719,trap,Am. am,A,1,0,NA
-tyndall,tyndall b2,N,20170719,trap,Am. am,A,3,0,NA
-tyndall,tyndall h1,Extra,20170720,Whalen,De. var,A,1,0,NA
-tyndall,tyndall h1,Extra,20170720,Whalen,Am. am,A,1,0,NA
-tyndall,tyndall h1,Extra,20170720,Whalen,Am. am,N,1,0,NA
-tyndall,tyndall extra,Extra,20170720,Whalen,Am. am,A,2,0,NA
-tyndall,tyndall d1,E,20170721,trap,Am. am,N,2,0,NA
-tyndall,tyndall d1,W,20170721,trap,Am. am,N,6,0,NA
-tyndall,tyndall d1,W,20170721,trap,Am. am,A,1,0,NA
-tyndall,tyndall d1,N,20170721,trap,Am. am,A,1,0,NA
-tyndall,tyndall d1,N,20170721,trap,Am. mac,A,1,0,NA
-tyndall,tyndall d1,N,20170721,trap,Am. am,N,1,0,NA
-tyndall,tyndall d1,Extra,20170721,Whalen,Am. am,N,1,0,NA
-tyndall,tyndall d1,Extra,20170721,Whalen,Am. mac,A,1,0,NA
-eglin,eglin d1,E,20170817,trap,Am. am,N,1,0,NA
-eglin,eglin d1,E,20170817,trap,Am. am,A,1,0,NA
-eglin,eglin d1,W,20170817,trap,Am. am,A,1,0,NA
-eglin,eglin d1,Center,20170817,trap,Am. am,N,2,0,NA
-eglin,eglin d1,Center,20170817,trap,Am. am,A,1,0,NA
-eglin,eglin d1,Extra,20170817,Whalen,Am. am,N,5,0,NA
-eglin,eglin h1,N,20170817,trap,Am. am,N,53,0,NA
-eglin,eglin h1,E,20170817,trap,Am. am,N,9,0,NA
-eglin,eglin h1,S,20170817,trap,Am. am,N,1,0,NA
-eglin,eglin h1,W,20170817,trap,Am. am,N,1,0,NA
-eglin,eglin h1,W,20170817,trap,Am. am,A,1,0,NA
-eglin,eglin h1,W,20170817,trap,Rh. san,A,1,0,NA
-eglin,eglin h1,Extra,20170817,Whalen,Am. am,N,5,0,NA
-eglin,eglin p1,S,20170819,trap,Rh. san,A,1,0,NA
-moody,moody extra,Extra,20170901,trap,Am. am,N,7,0,NA
-shelby,shelby b1,N,20170923,trap,Am. am,N,1,0,NA
-shelby,shelby b1,E,20170923,trap,Am. am,A,1,0,NA
-shelby,shelby b1,Extra,20170923,Whalen,Am. am,A,3,0,NA
-shelby,shelby b1,Extra,20170923,Whalen,Am. am,N,1,0,NA
-shelby,shelby d1,N,20170923,trap,Am. am,A,1,0,NA
-shelby,shelby f1,Extra,20170923,Whalen,Am. am,A,1,0,NA
-shelby,shelby b3,Center,20170924,trap,Am. am,A,1,0,NA
-shelby,shelby b3,Center,20170924,trap,Am. am,N,1,0,NA
-shelby,shelby extra,Extra,20170926,people,Am. am,A,1,0,NA
-shelby,shelby g1,N,20170926,trap,Am. am,N,6,0,NA
-shelby,shelby g1,N,20170926,trap,unknown,N,1,0,NA
-shelby,shelby g1,Center,20170926,trap,Am. am,N,3,0,NA
-shelby,shelby g1,Center,20170926,trap,Am. am,A,1,0,NA
-shelby,shelby g1,Extra,20170926,people,Am. am,N,17,0,NA
-blanding,blanding c1,SW,20180524,trap,Am. am,N,1,NA,NA
-blanding,blanding extra,Extra,20180524,people,Am. am,N,3,NA,NA
-blanding,blanding g1,SE,20180524,trap,Am. am,A,1,NA,NA
-blanding,blanding g1,SE,20180524,trap,Am. am,N,1,NA,NA
-blanding,blanding g1,NW,20180524,trap,Am. am,N,1,NA,NA
-blanding,blanding h1,SE,20180524,trap,Am. am,A,3,NA,NA
-blanding,blanding h1,SE,20180524,trap,Am. am,N,2,NA,NA
-blanding,blanding h1,NW,20180524,trap,Am. am,A,1,NA,NA
-blanding,blanding h1,NW,20180524,trap,Am. am,N,1,NA,NA
-blanding,blanding h1,SW,20180524,trap,Am. am,A,1,NA,NA
-blanding,blanding k1,NW,20180524,trap,Am. am,A,11,NA,NA
-blanding,blanding k1,NW,20180524,trap,Am. am,N,6,NA,NA
-blanding,blanding k1,NE,20180524,trap,Am. am,A,5,NA,NA
-blanding,blanding k1,NE,20180524,trap,Am. am,N,7,NA,NA
-blanding,blanding k1,SW,20180524,trap,Am. am,A,5,NA,NA
-blanding,blanding k1,SW,20180524,trap,Am. am,N,15,NA,NA
-blanding,blanding k1,SE,20180524,trap,Am. am,A,11,NA,NA
-blanding,blanding k1,SE,20180524,trap,Am. am,N,8,NA,NA
-blanding,blanding k1,SE,20180524,trap,Am. mac,A,1,NA,NA
-blanding,blanding k1,Extra,20180524,people,Am. am,A,1,NA,NA
-blanding,blanding k1,Extra,20180524,people,Am. am,N,1,NA,NA
-blanding,blanding m1,NW,20180524,trap,De. var,A,1,NA,NA
-blanding,blanding m1,NW,20180524,trap,Am. am,A,1,NA,NA
-blanding,blanding m1,SE,20180524,trap,Am. am,A,1,NA,NA
-blanding,blanding m1,SW,20180524,trap,Am. am,A,2,NA,NA
-blanding,blanding m1,SW,20180524,trap,Am. am,N,1,NA,NA
-blanding,blanding n1,Extra,20180524,people,Am. am,A,1,NA,NA
-avonpark,avonpark e2,W,20180529,people,De. var,A,1,NA,NA
-eglin,eglin i1,NW,20180612,trap,NA,NA,0,NA,NA
-eglin,eglin i1,NE,20180612,trap,Am. am,N,4,NA,NA
-eglin,eglin i1,NE,20180612,trap,Am. am,A,1,NA,NA
-eglin,eglin i1,SW,20180612,trap,Am. am,N,2,NA,NA
-eglin,eglin i1,SW,20180612,trap,Am. am,A,3,NA,NA
-eglin,eglin i1,SE,20180612,trap,Am. am,A,1,NA,NA
-eglin,eglin i1,SE,20180612,trap,Rh. san,A,1,NA,NA
-eglin,eglin i1,Extra,20180612,people,Am. am,A,3,NA,NA
-eglin,eglin i1,Extra,20180612,people,Am. am,N,7,NA,NA
-eglin,eglin i1,Extra,20180612,people,Rh. san,A,3,NA,NA
-eglin,eglin extra,Extra,20180613,people,Am. am,A,2,NA,NA
-eglin,eglin extra,Extra,20180613,people,Am. am,N,1,NA,NA
-eglin,eglin extra,Extra,20180613,people,Rh. san,A,1,NA,NA
-eglin,eglin extra,Extra,20180615,people,Am. am,A,1,NA,NA
-eglin,eglin extra,Extra,20180615,people,Rh. san,A,1,NA,NA
-eglin,eglin f1,Extra,20180615,people,Am. am,A,1,NA,NA
-eglin,eglin g1,Extra,20180615,people,Am. am,A,2,NA,NA
-eglin,eglin i1,Extra,20180615,people,Am. am,A,1,NA,NA
-eglin,eglin j1,NW,20180615,trap,Am. am,N,1,NA,NA
-eglin,eglin j1,NE,20180615,trap,Am. am,A,1,NA,NA
-eglin,eglin j1,SW,20180615,trap,Am. am,N,1,NA,NA
-eglin,eglin j1,SW,20180615,trap,Am. am,A,1,NA,NA
-eglin,eglin j1,SE,20180615,trap,Am. am,A,2,NA,NA
-blanding,blanding i1,NW,20180620,trap,Am. am,A,2,NA,NA
-blanding,blanding i1,NE,20180620,trap,NA,NA,0,NA,NA
-blanding,blanding i1,SW,20180620,trap,Am. am,A,1,NA,NA
-blanding,blanding i1,SE,20180620,trap,Am. am,A,1,NA,NA
-blanding,blanding j1,NW,20180620,trap,Am. am,A,1,NA,NA
-blanding,blanding j1,NW,20180620,trap,Rh. san,A,1,NA,NA
-blanding,blanding j1,NE,20180620,trap,Am. am,N,9,NA,NA
-blanding,blanding j1,NE,20180620,trap,Am. am,A,7,NA,NA
-blanding,blanding j1,SW,20180620,trap,Am. am,A,1,NA,NA
-blanding,blanding j1,SE,20180620,trap,Am. am,N,7,NA,NA
-blanding,blanding j1,SE,20180620,trap,Am. am,A,4,NA,NA
-blanding,blanding j1,SE,20180620,trap,Rh. san,A,1,NA,NA
-blanding,blanding j1,Extra,20180620,people,Am. am,N,1,NA,NA
-blanding,blanding j1,Extra,20180620,people,Am. am,L,1,NA,NA
-blanding,blanding n1,NW,20180620,trap,NA,NA,0,NA,NA
-blanding,blanding n1,NE,20180620,trap,NA,NA,0,NA,NA
-blanding,blanding n1,SW,20180620,trap,Am. am,A,1,NA,NA
-blanding,blanding n1,SE,20180620,trap,Am. am,A,1,NA,NA
-blanding,blanding n1,SE,20180620,trap,Am. am,N,1,NA,NA
-tyndall,tyndall c1,Extra,20180626,people,Am. am,A,3,NA,NA
-tyndall,tyndall c1,Extra,20180626,people,Am. am,N,7,NA,NA
-tyndall,tyndall c2,Extra,20180626,people,Am. am,A,2,NA,NA
-tyndall,tyndall b1,NW,20180627,trap,NA,NA,0,NA,NA
-tyndall,tyndall b1,NE,20180627,trap,Am. am,N,1,NA,NA
-tyndall,tyndall b1,SW,20180627,trap,NA,NA,0,NA,NA
-tyndall,tyndall b1,SE,20180627,trap,NA,NA,0,NA,NA
-tyndall,tyndall b2,NW,20180627,trap,Am. am,N,1,NA,NA
-tyndall,tyndall b2,NW,20180627,trap,Am. am,A,1,NA,NA
-tyndall,tyndall b2,NW,20180627,trap,Am. am,L,1,NA,NA
-tyndall,tyndall b2,NE,20180627,trap,Am. am,N,1,NA,NA
-tyndall,tyndall b2,SW,20180627,trap,NA,NA,0,NA,NA
-tyndall,tyndall b2,SE,20180627,trap,NA,NA,0,NA,NA
-tyndall,tyndall b3,Extra,20180627,people,Am. am,N,1,NA,NA
-tyndall,tyndall d2,NW,20180627,trap,Am. am,N,2,NA,NA
-tyndall,tyndall d2,NW,20180627,trap,Am. am,A,4,NA,NA
-tyndall,tyndall d2,NE,20180627,trap,Am. am,N,2,NA,NA
-tyndall,tyndall d2,NE,20180627,trap,Am. am,A,3,NA,NA
-tyndall,tyndall d2,NE,20180627,trap,De. var,A,8,NA,NA
-tyndall,tyndall d2,SW,20180627,trap,Am. am,N,5,NA,NA
-tyndall,tyndall d2,SW,20180627,trap,Am. am,L,1,NA,NA
-tyndall,tyndall d2,SW,20180627,trap,Am. am,A,2,NA,NA
-tyndall,tyndall d2,SW,20180627,trap,De. var,A,1,NA,NA
-tyndall,tyndall d2,SE,20180627,trap,Am. am,N,1,NA,NA
-tyndall,tyndall d2,SE,20180627,trap,De. var,A,1,NA,NA
-tyndall,tyndall d2,SE,20180627,trap,Am. am,A,4,NA,NA
-tyndall,tyndall d2,Extra,20180627,people,Am. am,A,4,NA,NA
-tyndall,tyndall d2,Extra,20180627,people,Am. am,N,3,NA,NA
-tyndall,tyndall d2,Extra,20180627,people,De. var,A,2,NA,NA
-tyndall,tyndall extra,Extra,20180627,people,Am. am,A,1,NA,NA
-tyndall,tyndall c1,Extra,20180628,people,Am. am,N,1,NA,NA
-tyndall,tyndall c1,NW,20180628,trap,Am. am,N,42,NA,NA
-tyndall,tyndall c1,NE,20180628,trap,Am. am,N,1,NA,NA
-tyndall,tyndall c1,NE,20180628,trap,Am. am,A,1,NA,NA
-tyndall,tyndall c1,SW,20180628,trap,Am. am,N,11,NA,NA
-tyndall,tyndall c1,SW,20180628,trap,Am. am,A,4,NA,NA
-tyndall,tyndall c1,SE,20180628,trap,Am. am,N,2,NA,NA
-tyndall,tyndall c1,SE,20180628,trap,De. var,A,1,NA,NA
-tyndall,tyndall c1,SE,20180628,trap,Am. am,A,3,NA,NA
-tyndall,tyndall c2,NW,20180628,trap,Am. am,N,21,NA,NA
-tyndall,tyndall c2,NW,20180628,trap,Am. am,L,1,NA,NA
-tyndall,tyndall c2,NW,20180628,trap,Am. am,A,3,NA,NA
-tyndall,tyndall c2,NE,20180628,trap,Am. am,N,5,NA,NA
-tyndall,tyndall c2,NE,20180628,trap,Am. am,A,1,NA,NA
-tyndall,tyndall c2,NE,20180628,trap,Am. mac,A,2,NA,NA
-tyndall,tyndall c2,SW,20180628,trap,Am. am,N,5,NA,NA
-tyndall,tyndall c2,SW,20180628,trap,De. var,A,2,NA,NA
-tyndall,tyndall c2,SW,20180628,trap,Rh. san,A,1,NA,NA
-tyndall,tyndall c2,SE,20180628,trap,Am. am,N,1,NA,NA
-tyndall,tyndall b3,NW,20180629,trap,Am. mac,A,2,NA,NA
-tyndall,tyndall b3,NE,20180629,trap,NA,NA,0,NA,NA
-tyndall,tyndall b3,SW,20180629,trap,NA,NA,0,NA,NA
-tyndall,tyndall b3,SE,20180629,trap,Am. mac,A,2,NA,NA
-tyndall,tyndall b4,NW,20180629,trap,NA,NA,0,NA,NA
-tyndall,tyndall b4,NE,20180629,trap,NA,NA,0,NA,NA
-tyndall,tyndall b4,SW,20180629,trap,NA,NA,0,NA,NA
-tyndall,tyndall b4,SE,20180629,trap,NA,NA,0,NA,NA
-tyndall,tyndall extra,Extra,20180629,people,Am. am,N,9,NA,NA
-tyndall,tyndall extra,Extra,20180629,people,Am. am,A,2,NA,NA
-tyndall,tyndall extra,Extra,20180629,people,Am. mac,A,1,NA,NA
-jackson,jackson a1,NW,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson a1,NE,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson a1,SW,20180711,trap,Am. mac,A,1,NA,changed from 0 to 1 based on species id sheet
-jackson,jackson a1,SE,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson b1,NW,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson b1,NE,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson b1,SW,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson b1,SE,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson b1,Extra,20180711,people,Am. am,N,1,NA,NA
-jackson,jackson c1,NW,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson c1,NE,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson c1,SW,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson c1,SE,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson d1,NW,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson d1,NE,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson d1,SW,20180711,trap,NA,NA,0,NA,NA
-jackson,jackson d1,SE,20180711,trap,Am. am,N,2,NA,NA
-jackson,jackson d1,SE,20180711,trap,Am. am,A,1,NA,NA
-jackson,jackson e1,NW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson e1,NE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson e1,SW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson e1,SE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson f1,NW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson f1,NE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson f1,SW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson f1,SE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson g1,NW,20180712,trap,Am. am,N,1,NA,NA
-jackson,jackson g1,NE,20180712,trap,NA,L,4,NA,4 in vial
-jackson,jackson g1,SW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson g1,SE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson h1,NW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson h1,NE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson h1,SW,20180712,trap,Am. mac,A,1,NA,NA
-jackson,jackson h1,SE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson i1,NW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson i1,NE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson i1,SW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson i1,SE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson j1,NW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson j1,NE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson j1,SW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson j1,SE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson k1,NW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson k1,NE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson k1,SW,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson k1,SE,20180712,trap,NA,NA,0,NA,NA
-jackson,jackson l1,NW,20180713,trap,NA,NA,0,NA,NA
-jackson,jackson l1,NE,20180713,trap,Am. am,A,1,NA,NA
-jackson,jackson l1,SW,20180713,trap,NA,NA,0,NA,NA
-jackson,jackson l1,SE,20180713,trap,NA,NA,0,NA,NA
-jackson,jackson m1,NW,20180713,trap,Am. am,A,1,NA,NA
-jackson,jackson m1,NE,20180713,trap,NA,NA,0,NA,NA
-jackson,jackson m1,SW,20180713,trap,NA,NA,0,NA,NA
-jackson,jackson m1,SE,20180713,trap,NA,NA,0,NA,NA
-jackson,jackson extra,Extra,20180714,people,Am. am,N,1,NA,NA
-avonpark,avonpark a1,NW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark a1,NE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark a1,SW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark a1,SE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark a2,NW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark a2,NE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark a2,SW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark a2,SE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark c1,NW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark c1,NE,20180721,trap,Am. mac,A,1,NA,NA
-avonpark,avonpark c1,SW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark c1,SE,20180721,trap,Am. mac,A,1,NA,NA
-avonpark,avonpark c2,NW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark c2,NE,20180721,trap,Am. mac,A,1,NA,NA
-avonpark,avonpark c2,SW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark c2,SE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark e1,NW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark e1,NE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark e1,SW,20180721,trap,Am. mac,A,1,NA,NA
-avonpark,avonpark e1,SE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark e2,NW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark e2,NE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark e2,SW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark e2,SE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark f1,NW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark f1,NE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark f1,SW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark f1,SE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark g1,NW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark g1,NE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark g1,SW,20180721,trap,De. var,A,1,NA,NA
-avonpark,avonpark g1,SE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark h1,NW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark h1,NE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark h1,SW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark h1,SE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark i1,NW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark i1,NE,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark i1,SW,20180721,trap,NA,NA,0,NA,NA
-avonpark,avonpark i1,SE,20180721,trap,De. var,A,1,NA,NA
-benning,benning extra,Extra,20180724,people,Am. am,N,1,NA,NA
-benning,benning extra,Extra,20180724,people,Am. am,A,1,NA,NA
-benning,benning a1,Extra,20180725,people,Am. am,A,1,NA,NA
-benning,benning a1,NW,20180726,trap,Am. am,A,1,NA,NA
-benning,benning a1,NE,20180726,trap,Am. am,A,3,NA,NA
-benning,benning a1,SW,20180726,trap,Am. am,A,1,NA,NA
-benning,benning a1,SW,20180726,trap,Am. am,N,1,NA,NA
-benning,benning a1,SW,20180726,trap,NA,L,134,NA,10 in vial
-benning,benning a1,SE,20180726,trap,Am. am,N,2,NA,NA
-benning,benning a1,SE,20180726,trap,Am. am,A,1,NA,NA
-benning,benning b1,NW,20180726,trap,NA,NA,0,NA,NA
-benning,benning b1,NE,20180726,trap,NA,NA,0,NA,NA
-benning,benning b1,SW,20180726,trap,NA,NA,0,NA,NA
-benning,benning b1,SE,20180726,trap,NA,NA,0,NA,NA
-benning,benning c1,NW,20180726,trap,Am. am,N,1,NA,NA
-benning,benning c1,NE,20180726,trap,NA,NA,0,NA,NA
-benning,benning c1,SW,20180726,trap,NA,NA,0,NA,NA
-benning,benning c1,SE,20180726,trap,NA,NA,0,NA,NA
-benning,benning d1,NW,20180726,trap,NA,NA,0,NA,NA
-benning,benning d1,NE,20180726,trap,Am. am,N,1,NA,NA
-benning,benning d1,SW,20180726,trap,NA,NA,0,NA,NA
-benning,benning d1,SE,20180726,trap,NA,NA,0,NA,NA
-benning,benning e1,NW,20180726,trap,NA,NA,0,NA,NA
-benning,benning e1,NE,20180726,trap,NA,NA,0,NA,NA
-benning,benning e1,SW,20180726,trap,Am. am,A,1,NA,NA
-benning,benning e1,SE,20180726,trap,Am. am,N,1,NA,NA
-benning,benning extra,Extra,20180726,people,Am. am,N,2,NA,NA
-benning,benning f1,NW,20180726,trap,NA,NA,0,NA,NA
-benning,benning f1,NE,20180726,trap,NA,NA,0,NA,NA
-benning,benning f1,SW,20180726,trap,NA,NA,0,NA,NA
-benning,benning f1,SE,20180726,trap,NA,NA,0,NA,NA
-benning,benning g1,NE,20180728,trap,NA,NA,0,NA,NA
-benning,benning g1,NW,20180728,trap,Am. am,A,1,NA,NA
-benning,benning g1,NW,20180728,trap,Am. am,N,1,NA,NA
-benning,benning g1,SW,20180728,trap,NA,NA,0,NA,NA
-benning,benning g1,SE,20180728,trap,NA,NA,0,NA,NA
-benning,benning h1,NE,20180728,trap,NA,NA,0,NA,NA
-benning,benning h1,NW,20180728,trap,NA,NA,0,NA,NA
-benning,benning h1,SE,20180728,trap,NA,NA,0,NA,NA
-benning,benning h1,SW,20180728,trap,NA,NA,0,NA,NA
-benning,benning i1,NE,20180728,trap,Am. am,N,2,NA,NA
-benning,benning i1,NW,20180728,trap,Am. am,N,1,NA,NA
-benning,benning i1,SE,20180728,trap,Am. am,N,2,NA,NA
-benning,benning i1,SW,20180728,trap,NA,NA,0,NA,NA
-benning,benning j1,NE,20180728,trap,NA,NA,0,NA,NA
-benning,benning j1,NW,20180728,trap,NA,NA,0,NA,NA
-benning,benning j1,SE,20180728,trap,NA,NA,0,NA,NA
-benning,benning j1,SW,20180728,trap,NA,NA,0,NA,NA
-eglin,eglin a1,NW,20180805,trap,Am. am,N,1,NA,remaining trapped on the way to esa
-eglin,eglin a1,NE,20180805,trap,NA,NA,0,NA,NA
-eglin,eglin a1,SW,20180805,trap,NA,NA,0,NA,NA
-eglin,eglin a1,SE,20180805,trap,NA,NA,0,NA,NA
-eglin,eglin b2,NW,20180805,trap,NA,NA,0,NA,NA
-eglin,eglin b2,NE,20180805,trap,NA,NA,0,NA,NA
-eglin,eglin b2,SW,20180805,trap,NA,NA,0,NA,NA
-eglin,eglin b2,SE,20180805,trap,NA,NA,0,NA,NA
-eglin,eglin f1,NW,20180805,trap,NA,NA,0,NA,NA
-eglin,eglin f1,NE,20180805,trap,NA,NA,0,NA,NA
-eglin,eglin f1,SW,20180805,trap,Am. am,A,1,NA,changed from 0 to 1 adult based on species id sheet
-eglin,eglin f1,SE,20180805,trap,NA,NA,0,NA,NA
-shelby,shelby a1,NW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby a1,NE,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby a1,SW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby a1,SE,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby a2,NW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby a2,NE,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby a2,SW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby a2,SE,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby c1,NW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby c1,NE,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby c1,SW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby c1,SE,20180813,trap,Am. mac,A,1,NA,NA
-shelby,shelby e1,NW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby e1,NE,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby e1,SW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby e1,SE,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby h1,NW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby h1,NE,20180813,trap,Am. am,N,1,NA,NA
-shelby,shelby h1,SW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby h1,SE,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby h1,Extra,20180813,people,Am. mac,A,2,NA,extra
-shelby,shelby i1,NW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby i1,NE,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby i1,SW,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby i1,SE,20180813,trap,NA,NA,0,NA,NA
-shelby,shelby b2,NW,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby b2,NE,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby b2,SW,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby b2,SE,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby b3,NW,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby b3,NE,20180816,trap,De. var,A,1,NA,invaded plot
-shelby,shelby b3,SW,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby b3,SE,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby j1,NW,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby j1,NE,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby j1,SW,20180816,trap,Am. am,N,3,NA,NA
-shelby,shelby j1,SE,20180816,trap,De. var,A,2,NA,NA
-shelby,shelby k1,NW,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby k1,NE,20180816,trap,NA,NA,0,NA,NA
-shelby,shelby k1,SW,20180816,trap,De. var,A,1,NA,NA
-shelby,shelby k1,SE,20180816,trap,NA,NA,0,NA,NA
-gordon,gordon r1,NW,20180823,trap,Am. am,N,8,NA,NA
-gordon,gordon r1,NE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon r1,SW,20180823,trap,Am. am,N,1,NA,NA
-gordon,gordon r1,SE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon s1,NW,20180823,trap,Am. am,N,9,NA,changed to 9 from 8 based on species id in vial
-gordon,gordon s1,NE,20180823,trap,Am. am,N,1,NA,NA
-gordon,gordon s1,SW,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon s1,SE,20180823,trap,Am. am,N,1,NA,NA
-gordon,gordon t1,NW,20180823,trap,Am. am,N,1,NA,NA
-gordon,gordon t1,NE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon t1,SW,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon t1,SE,20180823,trap,Am. am,N,1,NA,NA
-gordon,gordon t1,SE,20180823,trap,Am. mac,A,1,NA,NA
-gordon,gordon v1,NW,20180823,trap,Am. am,N,7,NA,NA
-gordon,gordon v1,NW,20180823,trap,Am. am,A,3,NA,NA
-gordon,gordon v1,NE,20180823,trap,Am. am,N,9,NA,NA
-gordon,gordon v1,NE,20180823,trap,Am. am,A,1,NA,male
-gordon,gordon v1,NE,20180823,trap,NA,L,923,NA,4 in vial
-gordon,gordon v1,SW,20180823,trap,Am. am,N,4,NA,NA
-gordon,gordon v1,SE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon w1,NW,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon w1,NE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon w1,SW,20180823,trap,Am. am,N,24,NA,changed to 24 from 25 based on species id in vial
-gordon,gordon w1,SE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon x1,NW,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon x1,NE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon x1,SW,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon x1,SE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon y1,NW,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon y1,NE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon y1,SW,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon y1,SE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon z1,NW,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon z1,NE,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon z1,SW,20180823,trap,NA,NA,0,NA,NA
-gordon,gordon z1,SE,20180823,trap,NA,NA,0,NA,NA
-moody,moody a1,NW,20170830,trap,NA,NA,0,NA,NA
-moody,moody a1,NE,20170830,trap,NA,NA,0,NA,NA
-moody,moody a1,SW,20170830,trap,NA,NA,0,NA,NA
-moody,moody a1,SE,20170830,trap,NA,NA,0,NA,NA
-moody,moody b1,NW,20170829,trap,NA,NA,0,NA,NA
-moody,moody b1,NE,20170829,trap,NA,NA,0,NA,NA
-moody,moody b1,SW,20170829,trap,NA,NA,0,NA,NA
-moody,moody b1,SE,20170829,trap,NA,NA,0,NA,NA
-moody,moody k1,NW,20170830,trap,NA,NA,0,NA,NA
-moody,moody k1,NE,20170830,trap,NA,NA,0,NA,NA
-moody,moody k1,SW,20170830,trap,NA,NA,0,NA,NA
-moody,moody k1,SE,20170830,trap,NA,NA,0,NA,NA
-eglin,eglin b1,NW,20170819,trap,NA,NA,0,NA,NA
-eglin,eglin b1,NE,20170819,trap,NA,NA,0,NA,NA
-eglin,eglin b1,SW,20170819,trap,NA,NA,0,NA,NA
-eglin,eglin b1,SE,20170819,trap,NA,NA,0,NA,NA
-blanding,blanding b1,NW,20170608,trap,NA,NA,0,NA,NA
-blanding,blanding b1,NE,20170608,trap,NA,NA,0,NA,NA
-blanding,blanding b1,SW,20170608,trap,NA,NA,0,NA,NA
-blanding,blanding b1,SE,20170608,trap,NA,NA,0,NA,NA
-avonpark,avonpark b1,NW,20170629,trap,NA,NA,0,NA,NA
-avonpark,avonpark b1,NE,20170629,trap,NA,NA,0,NA,NA
-avonpark,avonpark b1,SW,20170629,trap,NA,NA,0,NA,NA
-avonpark,avonpark b1,SE,20170629,trap,NA,NA,0,NA,NA
-eglin,eglin c1,NW,20180615,trap,NA,NA,0,NA,NA
-eglin,eglin c1,NE,20180615,trap,NA,NA,0,NA,NA
-eglin,eglin c1,SW,20180615,trap,NA,NA,0,NA,NA
-eglin,eglin c1,SE,20180615,trap,NA,NA,0,NA,NA
-eglin,eglin e1,NW,20180615,trap,NA,NA,0,NA,NA
-eglin,eglin e1,NE,20180615,trap,NA,NA,0,NA,NA
-eglin,eglin e1,SW,20180615,trap,NA,NA,0,NA,NA
-eglin,eglin e1,SE,20180615,trap,NA,NA,0,NA,NA
+installation,plot_id,location,date,collection_method,species,life_stage,count,drag_time,notes,visit_year
+blanding,blanding c1,Extra,2017-06-07,Whalen,Am. am,N,1,0,NA,2017
+blanding,blanding c1,Extra,2017-06-07,Whalen,De. var,A,1,0,NA,2017
+blanding,blanding a1,Extra,2017-06-09,Drag,Am. am,A,2,40,NA,2017
+blanding,blanding a1,E,2017-06-10,trap,Am. am,A,1,0,NA,2017
+blanding,blanding a1,Extra,2017-06-10,Whalen,Am. am,A,1,0,NA,2017
+blanding,blanding a1,Extra,2017-06-10,Whalen,Am. am,N,4,0,NA,2017
+blanding,blanding d1,Center,2017-06-10,trap,Am. am,A,1,0,NA,2017
+blanding,blanding d1,E,2017-06-10,trap,Am. am,A,1,0,NA,2017
+blanding,blanding d1,W,2017-06-10,trap,Am. am,A,1,0,NA,2017
+blanding,blanding e1,Extra,2017-06-14,Whalen,Am. am,A,3,0,NA,2017
+blanding,blanding e1,Extra,2017-06-14,Whalen,De. var,A,1,0,NA,2017
+blanding,blanding h1,Extra,2017-06-14,Whalen,Am. am,N,6,0,NA,2017
+blanding,blanding h1,Extra,2017-06-14,Whalen,Am. am,A,3,0,NA,2017
+blanding,blanding h1,Extra,2017-06-14,Whalen,De. var,A,1,0,NA,2017
+blanding,blanding e1,Center,2017-06-15,trap,Am. am,A,1,0,NA,2017
+blanding,blanding e1,E,2017-06-15,trap,Am. am,A,1,0,NA,2017
+blanding,blanding g1,Center,2017-06-16,trap,Am. am,A,1,0,NA,2017
+blanding,blanding g1,S,2017-06-16,trap,Am. mac,A,1,0,NA,2017
+blanding,blanding g1,Extra,2017-06-16,Whalen,Am. am,A,5,0,NA,2017
+blanding,blanding g1,Extra,2017-06-16,Whalen,Am. am,N,1,0,NA,2017
+blanding,blanding h1,N,2017-06-16,trap,Am. am,A,2,0,NA,2017
+blanding,blanding h1,W,2017-06-16,trap,Am. am,A,1,0,NA,2017
+blanding,blanding h1,W,2017-06-16,trap,Am. am,N,1,0,NA,2017
+blanding,blanding h1,E,2017-06-16,trap,Am. am,A,2,0,NA,2017
+blanding,blanding h1,S,2017-06-16,trap,Am. am,A,8,0,NA,2017
+blanding,blanding h1,S,2017-06-16,trap,Am. am,N,4,0,NA,2017
+blanding,blanding h1,Center,2017-06-16,trap,Am. am,A,12,0,NA,2017
+blanding,blanding h1,Center,2017-06-16,trap,Am. am,N,16,0,NA,2017
+blanding,blanding h1,Extra,2017-06-20,Whalen,Am. am,A,3,0,NA,2017
+blanding,blanding h1,Extra,2017-06-20,Whalen,Am. am,N,27,0,NA,2017
+blanding,blanding f1,Center,2017-06-23,trap,Am. am,N,2,0,NA,2017
+blanding,blanding f1,Center,2017-06-23,trap,Am. am,A,6,0,NA,2017
+blanding,blanding f1,N,2017-06-23,trap,Am. am,A,5,0,NA,2017
+blanding,blanding f1,S,2017-06-23,trap,Am. am,A,1,0,NA,2017
+blanding,blanding f1,W,2017-06-23,trap,Am. am,A,2,0,NA,2017
+blanding,blanding f1,E,2017-06-23,trap,Am. am,A,2,0,NA,2017
+blanding,blanding f1,E,2017-06-23,trap,Am. am,N,6,0,NA,2017
+blanding,blanding f1,Extra,2017-06-23,Whalen,Am. am,A,6,0,NA,2017
+blanding,blanding f1,Extra,2017-06-23,Whalen,Am. am,N,9,0,NA,2017
+blanding,blanding h1,Extra,2017-06-23,Whalen,Am. am,N,7,0,NA,2017
+blanding,blanding g1,N,2017-06-24,trap,Am. am,N,1,0,retrap,2017
+blanding,blanding g1,E,2017-06-24,trap,Am. am,A,4,0,retrap,2017
+blanding,blanding h1,W,2017-06-24,trap,Am. am,A,3,0,retrap,2017
+blanding,blanding h1,W,2017-06-24,trap,Am. am,N,2,0,retrap,2017
+blanding,blanding h1,S,2017-06-24,trap,Am. am,A,3,0,retrap,2017
+blanding,blanding h1,S,2017-06-24,trap,Am. am,N,23,0,retrap,2017
+blanding,blanding h1,Center,2017-06-24,trap,Am. am,A,9,0,retrap,2017
+blanding,blanding h1,Center,2017-06-24,trap,Am. am,N,73,0,retrap,2017
+blanding,blanding h1,Center,2017-06-24,trap,Am. am,L,13,0,retrap,2017
+avonpark,avonpark d1,W,2017-06-30,trap,De. var,A,2,0,NA,2017
+tyndall,tyndall extra,Extra,2017-07-17,Whalen,De. var,A,2,0,NA,2017
+tyndall,tyndall extra,Extra,2017-07-17,Whalen,Am. mac,A,1,0,NA,2017
+tyndall,tyndall extra,Extra,2017-07-18,Whalen,Am. mac,A,2,0,NA,2017
+tyndall,tyndall b2,Extra,2017-07-19,Whalen,Am. am,A,1,0,NA,2017
+tyndall,tyndall b2,S,2017-07-19,trap,Am. am,A,1,0,NA,2017
+tyndall,tyndall b2,N,2017-07-19,trap,Am. am,A,3,0,NA,2017
+tyndall,tyndall h1,Extra,2017-07-20,Whalen,De. var,A,1,0,NA,2017
+tyndall,tyndall h1,Extra,2017-07-20,Whalen,Am. am,A,1,0,NA,2017
+tyndall,tyndall h1,Extra,2017-07-20,Whalen,Am. am,N,1,0,NA,2017
+tyndall,tyndall extra,Extra,2017-07-20,Whalen,Am. am,A,2,0,NA,2017
+tyndall,tyndall d1,E,2017-07-21,trap,Am. am,N,2,0,NA,2017
+tyndall,tyndall d1,W,2017-07-21,trap,Am. am,N,6,0,NA,2017
+tyndall,tyndall d1,W,2017-07-21,trap,Am. am,A,1,0,NA,2017
+tyndall,tyndall d1,N,2017-07-21,trap,Am. am,A,1,0,NA,2017
+tyndall,tyndall d1,N,2017-07-21,trap,Am. mac,A,1,0,NA,2017
+tyndall,tyndall d1,N,2017-07-21,trap,Am. am,N,1,0,NA,2017
+tyndall,tyndall d1,Extra,2017-07-21,Whalen,Am. am,N,1,0,NA,2017
+tyndall,tyndall d1,Extra,2017-07-21,Whalen,Am. mac,A,1,0,NA,2017
+eglin,eglin d1,E,2017-08-17,trap,Am. am,N,1,0,NA,2017
+eglin,eglin d1,E,2017-08-17,trap,Am. am,A,1,0,NA,2017
+eglin,eglin d1,W,2017-08-17,trap,Am. am,A,1,0,NA,2017
+eglin,eglin d1,Center,2017-08-17,trap,Am. am,N,2,0,NA,2017
+eglin,eglin d1,Center,2017-08-17,trap,Am. am,A,1,0,NA,2017
+eglin,eglin d1,Extra,2017-08-17,Whalen,Am. am,N,5,0,NA,2017
+eglin,eglin h1,N,2017-08-17,trap,Am. am,N,53,0,NA,2017
+eglin,eglin h1,E,2017-08-17,trap,Am. am,N,9,0,NA,2017
+eglin,eglin h1,S,2017-08-17,trap,Am. am,N,1,0,NA,2017
+eglin,eglin h1,W,2017-08-17,trap,Am. am,N,1,0,NA,2017
+eglin,eglin h1,W,2017-08-17,trap,Am. am,A,1,0,NA,2017
+eglin,eglin h1,W,2017-08-17,trap,Rh. san,A,1,0,NA,2017
+eglin,eglin h1,Extra,2017-08-17,Whalen,Am. am,N,5,0,NA,2017
+eglin,eglin p1,S,2017-08-19,trap,Rh. san,A,1,0,NA,2017
+moody,moody extra,Extra,2017-09-01,trap,Am. am,N,7,0,NA,2017
+shelby,shelby b1,N,2017-09-23,trap,Am. am,N,1,0,NA,2017
+shelby,shelby b1,E,2017-09-23,trap,Am. am,A,1,0,NA,2017
+shelby,shelby b1,Extra,2017-09-23,Whalen,Am. am,A,3,0,NA,2017
+shelby,shelby b1,Extra,2017-09-23,Whalen,Am. am,N,1,0,NA,2017
+shelby,shelby d1,N,2017-09-23,trap,Am. am,A,1,0,NA,2017
+shelby,shelby f1,Extra,2017-09-23,Whalen,Am. am,A,1,0,NA,2017
+shelby,shelby b3,Center,2017-09-24,trap,Am. am,A,1,0,NA,2017
+shelby,shelby b3,Center,2017-09-24,trap,Am. am,N,1,0,NA,2017
+shelby,shelby extra,Extra,2017-09-26,people,Am. am,A,1,0,NA,2017
+shelby,shelby g1,N,2017-09-26,trap,Am. am,N,6,0,NA,2017
+shelby,shelby g1,N,2017-09-26,trap,unknown,N,1,0,NA,2017
+shelby,shelby g1,Center,2017-09-26,trap,Am. am,N,3,0,NA,2017
+shelby,shelby g1,Center,2017-09-26,trap,Am. am,A,1,0,NA,2017
+shelby,shelby g1,Extra,2017-09-26,people,Am. am,N,17,0,NA,2017
+blanding,blanding c1,SW,2018-05-24,trap,Am. am,N,1,NA,NA,2018
+blanding,blanding extra,Extra,2018-05-24,people,Am. am,N,3,NA,NA,2018
+blanding,blanding g1,SE,2018-05-24,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding g1,SE,2018-05-24,trap,Am. am,N,1,NA,NA,2018
+blanding,blanding g1,NW,2018-05-24,trap,Am. am,N,1,NA,NA,2018
+blanding,blanding h1,SE,2018-05-24,trap,Am. am,A,3,NA,NA,2018
+blanding,blanding h1,SE,2018-05-24,trap,Am. am,N,2,NA,NA,2018
+blanding,blanding h1,NW,2018-05-24,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding h1,NW,2018-05-24,trap,Am. am,N,1,NA,NA,2018
+blanding,blanding h1,SW,2018-05-24,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding k1,NW,2018-05-24,trap,Am. am,A,11,NA,NA,2018
+blanding,blanding k1,NW,2018-05-24,trap,Am. am,N,6,NA,NA,2018
+blanding,blanding k1,NE,2018-05-24,trap,Am. am,A,5,NA,NA,2018
+blanding,blanding k1,NE,2018-05-24,trap,Am. am,N,7,NA,NA,2018
+blanding,blanding k1,SW,2018-05-24,trap,Am. am,A,5,NA,NA,2018
+blanding,blanding k1,SW,2018-05-24,trap,Am. am,N,15,NA,NA,2018
+blanding,blanding k1,SE,2018-05-24,trap,Am. am,A,11,NA,NA,2018
+blanding,blanding k1,SE,2018-05-24,trap,Am. am,N,8,NA,NA,2018
+blanding,blanding k1,SE,2018-05-24,trap,Am. mac,A,1,NA,NA,2018
+blanding,blanding k1,Extra,2018-05-24,people,Am. am,A,1,NA,NA,2018
+blanding,blanding k1,Extra,2018-05-24,people,Am. am,N,1,NA,NA,2018
+blanding,blanding m1,NW,2018-05-24,trap,De. var,A,1,NA,NA,2018
+blanding,blanding m1,NW,2018-05-24,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding m1,SE,2018-05-24,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding m1,SW,2018-05-24,trap,Am. am,A,2,NA,NA,2018
+blanding,blanding m1,SW,2018-05-24,trap,Am. am,N,1,NA,NA,2018
+blanding,blanding n1,Extra,2018-05-24,people,Am. am,A,1,NA,NA,2018
+avonpark,avonpark e2,W,2018-05-29,people,De. var,A,1,NA,NA,2018
+eglin,eglin i1,NW,2018-06-12,trap,NA,NA,0,NA,NA,2018
+eglin,eglin i1,NE,2018-06-12,trap,Am. am,N,4,NA,NA,2018
+eglin,eglin i1,NE,2018-06-12,trap,Am. am,A,1,NA,NA,2018
+eglin,eglin i1,SW,2018-06-12,trap,Am. am,N,2,NA,NA,2018
+eglin,eglin i1,SW,2018-06-12,trap,Am. am,A,3,NA,NA,2018
+eglin,eglin i1,SE,2018-06-12,trap,Am. am,A,1,NA,NA,2018
+eglin,eglin i1,SE,2018-06-12,trap,Rh. san,A,1,NA,NA,2018
+eglin,eglin i1,Extra,2018-06-12,people,Am. am,A,3,NA,NA,2018
+eglin,eglin i1,Extra,2018-06-12,people,Am. am,N,7,NA,NA,2018
+eglin,eglin i1,Extra,2018-06-12,people,Rh. san,A,3,NA,NA,2018
+eglin,eglin extra,Extra,2018-06-13,people,Am. am,A,2,NA,NA,2018
+eglin,eglin extra,Extra,2018-06-13,people,Am. am,N,1,NA,NA,2018
+eglin,eglin extra,Extra,2018-06-13,people,Rh. san,A,1,NA,NA,2018
+eglin,eglin extra,Extra,2018-06-15,people,Am. am,A,1,NA,NA,2018
+eglin,eglin extra,Extra,2018-06-15,people,Rh. san,A,1,NA,NA,2018
+eglin,eglin f1,Extra,2018-06-15,people,Am. am,A,1,NA,NA,2018
+eglin,eglin g1,Extra,2018-06-15,people,Am. am,A,2,NA,NA,2018
+eglin,eglin i1,Extra,2018-06-15,people,Am. am,A,1,NA,NA,2018
+eglin,eglin j1,NW,2018-06-15,trap,Am. am,N,1,NA,NA,2018
+eglin,eglin j1,NE,2018-06-15,trap,Am. am,A,1,NA,NA,2018
+eglin,eglin j1,SW,2018-06-15,trap,Am. am,N,1,NA,NA,2018
+eglin,eglin j1,SW,2018-06-15,trap,Am. am,A,1,NA,NA,2018
+eglin,eglin j1,SE,2018-06-15,trap,Am. am,A,2,NA,NA,2018
+blanding,blanding i1,NW,2018-06-20,trap,Am. am,A,2,NA,NA,2018
+blanding,blanding i1,NE,2018-06-20,trap,NA,NA,0,NA,NA,2018
+blanding,blanding i1,SW,2018-06-20,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding i1,SE,2018-06-20,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding j1,NW,2018-06-20,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding j1,NW,2018-06-20,trap,Rh. san,A,1,NA,NA,2018
+blanding,blanding j1,NE,2018-06-20,trap,Am. am,N,9,NA,NA,2018
+blanding,blanding j1,NE,2018-06-20,trap,Am. am,A,7,NA,NA,2018
+blanding,blanding j1,SW,2018-06-20,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding j1,SE,2018-06-20,trap,Am. am,N,7,NA,NA,2018
+blanding,blanding j1,SE,2018-06-20,trap,Am. am,A,4,NA,NA,2018
+blanding,blanding j1,SE,2018-06-20,trap,Rh. san,A,1,NA,NA,2018
+blanding,blanding j1,Extra,2018-06-20,people,Am. am,N,1,NA,NA,2018
+blanding,blanding j1,Extra,2018-06-20,people,Am. am,L,1,NA,NA,2018
+blanding,blanding n1,NW,2018-06-20,trap,NA,NA,0,NA,NA,2018
+blanding,blanding n1,NE,2018-06-20,trap,NA,NA,0,NA,NA,2018
+blanding,blanding n1,SW,2018-06-20,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding n1,SE,2018-06-20,trap,Am. am,A,1,NA,NA,2018
+blanding,blanding n1,SE,2018-06-20,trap,Am. am,N,1,NA,NA,2018
+tyndall,tyndall c1,Extra,2018-06-26,people,Am. am,A,3,NA,NA,2018
+tyndall,tyndall c1,Extra,2018-06-26,people,Am. am,N,7,NA,NA,2018
+tyndall,tyndall c2,Extra,2018-06-26,people,Am. am,A,2,NA,NA,2018
+tyndall,tyndall b1,NW,2018-06-27,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall b1,NE,2018-06-27,trap,Am. am,N,1,NA,NA,2018
+tyndall,tyndall b1,SW,2018-06-27,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall b1,SE,2018-06-27,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall b2,NW,2018-06-27,trap,Am. am,N,1,NA,NA,2018
+tyndall,tyndall b2,NW,2018-06-27,trap,Am. am,A,1,NA,NA,2018
+tyndall,tyndall b2,NW,2018-06-27,trap,Am. am,L,1,NA,NA,2018
+tyndall,tyndall b2,NE,2018-06-27,trap,Am. am,N,1,NA,NA,2018
+tyndall,tyndall b2,SW,2018-06-27,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall b2,SE,2018-06-27,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall b3,Extra,2018-06-27,people,Am. am,N,1,NA,NA,2018
+tyndall,tyndall d2,NW,2018-06-27,trap,Am. am,N,2,NA,NA,2018
+tyndall,tyndall d2,NW,2018-06-27,trap,Am. am,A,4,NA,NA,2018
+tyndall,tyndall d2,NE,2018-06-27,trap,Am. am,N,2,NA,NA,2018
+tyndall,tyndall d2,NE,2018-06-27,trap,Am. am,A,3,NA,NA,2018
+tyndall,tyndall d2,NE,2018-06-27,trap,De. var,A,8,NA,NA,2018
+tyndall,tyndall d2,SW,2018-06-27,trap,Am. am,N,5,NA,NA,2018
+tyndall,tyndall d2,SW,2018-06-27,trap,Am. am,L,1,NA,NA,2018
+tyndall,tyndall d2,SW,2018-06-27,trap,Am. am,A,2,NA,NA,2018
+tyndall,tyndall d2,SW,2018-06-27,trap,De. var,A,1,NA,NA,2018
+tyndall,tyndall d2,SE,2018-06-27,trap,Am. am,N,1,NA,NA,2018
+tyndall,tyndall d2,SE,2018-06-27,trap,De. var,A,1,NA,NA,2018
+tyndall,tyndall d2,SE,2018-06-27,trap,Am. am,A,4,NA,NA,2018
+tyndall,tyndall d2,Extra,2018-06-27,people,Am. am,A,4,NA,NA,2018
+tyndall,tyndall d2,Extra,2018-06-27,people,Am. am,N,3,NA,NA,2018
+tyndall,tyndall d2,Extra,2018-06-27,people,De. var,A,2,NA,NA,2018
+tyndall,tyndall extra,Extra,2018-06-27,people,Am. am,A,1,NA,NA,2018
+tyndall,tyndall c1,Extra,2018-06-28,people,Am. am,N,1,NA,NA,2018
+tyndall,tyndall c1,NW,2018-06-28,trap,Am. am,N,42,NA,NA,2018
+tyndall,tyndall c1,NE,2018-06-28,trap,Am. am,N,1,NA,NA,2018
+tyndall,tyndall c1,NE,2018-06-28,trap,Am. am,A,1,NA,NA,2018
+tyndall,tyndall c1,SW,2018-06-28,trap,Am. am,N,11,NA,NA,2018
+tyndall,tyndall c1,SW,2018-06-28,trap,Am. am,A,4,NA,NA,2018
+tyndall,tyndall c1,SE,2018-06-28,trap,Am. am,N,2,NA,NA,2018
+tyndall,tyndall c1,SE,2018-06-28,trap,De. var,A,1,NA,NA,2018
+tyndall,tyndall c1,SE,2018-06-28,trap,Am. am,A,3,NA,NA,2018
+tyndall,tyndall c2,NW,2018-06-28,trap,Am. am,N,21,NA,NA,2018
+tyndall,tyndall c2,NW,2018-06-28,trap,Am. am,L,1,NA,NA,2018
+tyndall,tyndall c2,NW,2018-06-28,trap,Am. am,A,3,NA,NA,2018
+tyndall,tyndall c2,NE,2018-06-28,trap,Am. am,N,5,NA,NA,2018
+tyndall,tyndall c2,NE,2018-06-28,trap,Am. am,A,1,NA,NA,2018
+tyndall,tyndall c2,NE,2018-06-28,trap,Am. mac,A,2,NA,NA,2018
+tyndall,tyndall c2,SW,2018-06-28,trap,Am. am,N,5,NA,NA,2018
+tyndall,tyndall c2,SW,2018-06-28,trap,De. var,A,2,NA,NA,2018
+tyndall,tyndall c2,SW,2018-06-28,trap,Rh. san,A,1,NA,NA,2018
+tyndall,tyndall c2,SE,2018-06-28,trap,Am. am,N,1,NA,NA,2018
+tyndall,tyndall b3,NW,2018-06-29,trap,Am. mac,A,2,NA,NA,2018
+tyndall,tyndall b3,NE,2018-06-29,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall b3,SW,2018-06-29,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall b3,SE,2018-06-29,trap,Am. mac,A,2,NA,NA,2018
+tyndall,tyndall b4,NW,2018-06-29,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall b4,NE,2018-06-29,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall b4,SW,2018-06-29,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall b4,SE,2018-06-29,trap,NA,NA,0,NA,NA,2018
+tyndall,tyndall extra,Extra,2018-06-29,people,Am. am,N,9,NA,NA,2018
+tyndall,tyndall extra,Extra,2018-06-29,people,Am. am,A,2,NA,NA,2018
+tyndall,tyndall extra,Extra,2018-06-29,people,Am. mac,A,1,NA,NA,2018
+jackson,jackson a1,NW,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson a1,NE,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson a1,SW,2018-07-11,trap,Am. mac,A,1,NA,changed from 0 to 1 based on species id sheet,2018
+jackson,jackson a1,SE,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson b1,NW,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson b1,NE,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson b1,SW,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson b1,SE,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson b1,Extra,2018-07-11,people,Am. am,N,1,NA,NA,2018
+jackson,jackson c1,NW,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson c1,NE,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson c1,SW,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson c1,SE,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson d1,NW,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson d1,NE,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson d1,SW,2018-07-11,trap,NA,NA,0,NA,NA,2018
+jackson,jackson d1,SE,2018-07-11,trap,Am. am,N,2,NA,NA,2018
+jackson,jackson d1,SE,2018-07-11,trap,Am. am,A,1,NA,NA,2018
+jackson,jackson e1,NW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson e1,NE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson e1,SW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson e1,SE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson f1,NW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson f1,NE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson f1,SW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson f1,SE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson g1,NW,2018-07-12,trap,Am. am,N,1,NA,NA,2018
+jackson,jackson g1,NE,2018-07-12,trap,NA,L,4,NA,4 in vial,2018
+jackson,jackson g1,SW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson g1,SE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson h1,NW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson h1,NE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson h1,SW,2018-07-12,trap,Am. mac,A,1,NA,NA,2018
+jackson,jackson h1,SE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson i1,NW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson i1,NE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson i1,SW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson i1,SE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson j1,NW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson j1,NE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson j1,SW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson j1,SE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson k1,NW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson k1,NE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson k1,SW,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson k1,SE,2018-07-12,trap,NA,NA,0,NA,NA,2018
+jackson,jackson l1,NW,2018-07-13,trap,NA,NA,0,NA,NA,2018
+jackson,jackson l1,NE,2018-07-13,trap,Am. am,A,1,NA,NA,2018
+jackson,jackson l1,SW,2018-07-13,trap,NA,NA,0,NA,NA,2018
+jackson,jackson l1,SE,2018-07-13,trap,NA,NA,0,NA,NA,2018
+jackson,jackson m1,NW,2018-07-13,trap,Am. am,A,1,NA,NA,2018
+jackson,jackson m1,NE,2018-07-13,trap,NA,NA,0,NA,NA,2018
+jackson,jackson m1,SW,2018-07-13,trap,NA,NA,0,NA,NA,2018
+jackson,jackson m1,SE,2018-07-13,trap,NA,NA,0,NA,NA,2018
+jackson,jackson extra,Extra,2018-07-14,people,Am. am,N,1,NA,NA,2018
+avonpark,avonpark a1,NW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark a1,NE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark a1,SW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark a1,SE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark a2,NW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark a2,NE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark a2,SW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark a2,SE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark c1,NW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark c1,NE,2018-07-21,trap,Am. mac,A,1,NA,NA,2018
+avonpark,avonpark c1,SW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark c1,SE,2018-07-21,trap,Am. mac,A,1,NA,NA,2018
+avonpark,avonpark c2,NW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark c2,NE,2018-07-21,trap,Am. mac,A,1,NA,NA,2018
+avonpark,avonpark c2,SW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark c2,SE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark e1,NW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark e1,NE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark e1,SW,2018-07-21,trap,Am. mac,A,1,NA,NA,2018
+avonpark,avonpark e1,SE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark e2,NW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark e2,NE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark e2,SW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark e2,SE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark f1,NW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark f1,NE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark f1,SW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark f1,SE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark g1,NW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark g1,NE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark g1,SW,2018-07-21,trap,De. var,A,1,NA,NA,2018
+avonpark,avonpark g1,SE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark h1,NW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark h1,NE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark h1,SW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark h1,SE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark i1,NW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark i1,NE,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark i1,SW,2018-07-21,trap,NA,NA,0,NA,NA,2018
+avonpark,avonpark i1,SE,2018-07-21,trap,De. var,A,1,NA,NA,2018
+benning,benning extra,Extra,2018-07-24,people,Am. am,N,1,NA,NA,2018
+benning,benning extra,Extra,2018-07-24,people,Am. am,A,1,NA,NA,2018
+benning,benning a1,Extra,2018-07-25,people,Am. am,A,1,NA,NA,2018
+benning,benning a1,NW,2018-07-26,trap,Am. am,A,1,NA,NA,2018
+benning,benning a1,NE,2018-07-26,trap,Am. am,A,3,NA,NA,2018
+benning,benning a1,SW,2018-07-26,trap,Am. am,A,1,NA,NA,2018
+benning,benning a1,SW,2018-07-26,trap,Am. am,N,1,NA,NA,2018
+benning,benning a1,SW,2018-07-26,trap,NA,L,134,NA,10 in vial,2018
+benning,benning a1,SE,2018-07-26,trap,Am. am,N,2,NA,NA,2018
+benning,benning a1,SE,2018-07-26,trap,Am. am,A,1,NA,NA,2018
+benning,benning b1,NW,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning b1,NE,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning b1,SW,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning b1,SE,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning c1,NW,2018-07-26,trap,Am. am,N,1,NA,NA,2018
+benning,benning c1,NE,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning c1,SW,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning c1,SE,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning d1,NW,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning d1,NE,2018-07-26,trap,Am. am,N,1,NA,NA,2018
+benning,benning d1,SW,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning d1,SE,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning e1,NW,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning e1,NE,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning e1,SW,2018-07-26,trap,Am. am,A,1,NA,NA,2018
+benning,benning e1,SE,2018-07-26,trap,Am. am,N,1,NA,NA,2018
+benning,benning extra,Extra,2018-07-26,people,Am. am,N,2,NA,NA,2018
+benning,benning f1,NW,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning f1,NE,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning f1,SW,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning f1,SE,2018-07-26,trap,NA,NA,0,NA,NA,2018
+benning,benning g1,NE,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning g1,NW,2018-07-28,trap,Am. am,A,1,NA,NA,2018
+benning,benning g1,NW,2018-07-28,trap,Am. am,N,1,NA,NA,2018
+benning,benning g1,SW,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning g1,SE,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning h1,NE,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning h1,NW,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning h1,SE,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning h1,SW,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning i1,NE,2018-07-28,trap,Am. am,N,2,NA,NA,2018
+benning,benning i1,NW,2018-07-28,trap,Am. am,N,1,NA,NA,2018
+benning,benning i1,SE,2018-07-28,trap,Am. am,N,2,NA,NA,2018
+benning,benning i1,SW,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning j1,NE,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning j1,NW,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning j1,SE,2018-07-28,trap,NA,NA,0,NA,NA,2018
+benning,benning j1,SW,2018-07-28,trap,NA,NA,0,NA,NA,2018
+eglin,eglin a1,NW,2018-08-05,trap,Am. am,N,1,NA,remaining trapped on the way to esa,2018
+eglin,eglin a1,NE,2018-08-05,trap,NA,NA,0,NA,NA,2018
+eglin,eglin a1,SW,2018-08-05,trap,NA,NA,0,NA,NA,2018
+eglin,eglin a1,SE,2018-08-05,trap,NA,NA,0,NA,NA,2018
+eglin,eglin b2,NW,2018-08-05,trap,NA,NA,0,NA,NA,2018
+eglin,eglin b2,NE,2018-08-05,trap,NA,NA,0,NA,NA,2018
+eglin,eglin b2,SW,2018-08-05,trap,NA,NA,0,NA,NA,2018
+eglin,eglin b2,SE,2018-08-05,trap,NA,NA,0,NA,NA,2018
+eglin,eglin f1,NW,2018-08-05,trap,NA,NA,0,NA,NA,2018
+eglin,eglin f1,NE,2018-08-05,trap,NA,NA,0,NA,NA,2018
+eglin,eglin f1,SW,2018-08-05,trap,Am. am,A,1,NA,changed from 0 to 1 adult based on species id sheet,2018
+eglin,eglin f1,SE,2018-08-05,trap,NA,NA,0,NA,NA,2018
+shelby,shelby a1,NW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby a1,NE,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby a1,SW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby a1,SE,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby a2,NW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby a2,NE,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby a2,SW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby a2,SE,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby c1,NW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby c1,NE,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby c1,SW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby c1,SE,2018-08-13,trap,Am. mac,A,1,NA,NA,2018
+shelby,shelby e1,NW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby e1,NE,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby e1,SW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby e1,SE,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby h1,NW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby h1,NE,2018-08-13,trap,Am. am,N,1,NA,NA,2018
+shelby,shelby h1,SW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby h1,SE,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby h1,Extra,2018-08-13,people,Am. mac,A,2,NA,extra,2018
+shelby,shelby i1,NW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby i1,NE,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby i1,SW,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby i1,SE,2018-08-13,trap,NA,NA,0,NA,NA,2018
+shelby,shelby b2,NW,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby b2,NE,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby b2,SW,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby b2,SE,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby b3,NW,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby b3,NE,2018-08-16,trap,De. var,A,1,NA,invaded plot,2018
+shelby,shelby b3,SW,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby b3,SE,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby j1,NW,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby j1,NE,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby j1,SW,2018-08-16,trap,Am. am,N,3,NA,NA,2018
+shelby,shelby j1,SE,2018-08-16,trap,De. var,A,2,NA,NA,2018
+shelby,shelby k1,NW,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby k1,NE,2018-08-16,trap,NA,NA,0,NA,NA,2018
+shelby,shelby k1,SW,2018-08-16,trap,De. var,A,1,NA,NA,2018
+shelby,shelby k1,SE,2018-08-16,trap,NA,NA,0,NA,NA,2018
+gordon,gordon r1,NW,2018-08-23,trap,Am. am,N,8,NA,NA,2018
+gordon,gordon r1,NE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon r1,SW,2018-08-23,trap,Am. am,N,1,NA,NA,2018
+gordon,gordon r1,SE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon s1,NW,2018-08-23,trap,Am. am,N,9,NA,changed to 9 from 8 based on species id in vial,2018
+gordon,gordon s1,NE,2018-08-23,trap,Am. am,N,1,NA,NA,2018
+gordon,gordon s1,SW,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon s1,SE,2018-08-23,trap,Am. am,N,1,NA,NA,2018
+gordon,gordon t1,NW,2018-08-23,trap,Am. am,N,1,NA,NA,2018
+gordon,gordon t1,NE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon t1,SW,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon t1,SE,2018-08-23,trap,Am. am,N,1,NA,NA,2018
+gordon,gordon t1,SE,2018-08-23,trap,Am. mac,A,1,NA,NA,2018
+gordon,gordon v1,NW,2018-08-23,trap,Am. am,N,7,NA,NA,2018
+gordon,gordon v1,NW,2018-08-23,trap,Am. am,A,3,NA,NA,2018
+gordon,gordon v1,NE,2018-08-23,trap,Am. am,N,9,NA,NA,2018
+gordon,gordon v1,NE,2018-08-23,trap,Am. am,A,1,NA,male,2018
+gordon,gordon v1,NE,2018-08-23,trap,NA,L,923,NA,4 in vial,2018
+gordon,gordon v1,SW,2018-08-23,trap,Am. am,N,4,NA,NA,2018
+gordon,gordon v1,SE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon w1,NW,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon w1,NE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon w1,SW,2018-08-23,trap,Am. am,N,24,NA,changed to 24 from 25 based on species id in vial,2018
+gordon,gordon w1,SE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon x1,NW,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon x1,NE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon x1,SW,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon x1,SE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon y1,NW,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon y1,NE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon y1,SW,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon y1,SE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon z1,NW,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon z1,NE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon z1,SW,2018-08-23,trap,NA,NA,0,NA,NA,2018
+gordon,gordon z1,SE,2018-08-23,trap,NA,NA,0,NA,NA,2018
+moody,moody a1,NW,2017-08-30,trap,NA,NA,0,NA,NA,2017
+moody,moody a1,NE,2017-08-30,trap,NA,NA,0,NA,NA,2017
+moody,moody a1,SW,2017-08-30,trap,NA,NA,0,NA,NA,2017
+moody,moody a1,SE,2017-08-30,trap,NA,NA,0,NA,NA,2017
+moody,moody b1,NW,2017-08-29,trap,NA,NA,0,NA,NA,2017
+moody,moody b1,NE,2017-08-29,trap,NA,NA,0,NA,NA,2017
+moody,moody b1,SW,2017-08-29,trap,NA,NA,0,NA,NA,2017
+moody,moody b1,SE,2017-08-29,trap,NA,NA,0,NA,NA,2017
+moody,moody k1,NW,2017-08-30,trap,NA,NA,0,NA,NA,2017
+moody,moody k1,NE,2017-08-30,trap,NA,NA,0,NA,NA,2017
+moody,moody k1,SW,2017-08-30,trap,NA,NA,0,NA,NA,2017
+moody,moody k1,SE,2017-08-30,trap,NA,NA,0,NA,NA,2017
+eglin,eglin b1,NW,2017-08-19,trap,NA,NA,0,NA,NA,2017
+eglin,eglin b1,NE,2017-08-19,trap,NA,NA,0,NA,NA,2017
+eglin,eglin b1,SW,2017-08-19,trap,NA,NA,0,NA,NA,2017
+eglin,eglin b1,SE,2017-08-19,trap,NA,NA,0,NA,NA,2017
+blanding,blanding b1,NW,2017-06-08,trap,NA,NA,0,NA,NA,2017
+blanding,blanding b1,NE,2017-06-08,trap,NA,NA,0,NA,NA,2017
+blanding,blanding b1,SW,2017-06-08,trap,NA,NA,0,NA,NA,2017
+blanding,blanding b1,SE,2017-06-08,trap,NA,NA,0,NA,NA,2017
+avonpark,avonpark b1,NW,2017-06-29,trap,NA,NA,0,NA,NA,2017
+avonpark,avonpark b1,NE,2017-06-29,trap,NA,NA,0,NA,NA,2017
+avonpark,avonpark b1,SW,2017-06-29,trap,NA,NA,0,NA,NA,2017
+avonpark,avonpark b1,SE,2017-06-29,trap,NA,NA,0,NA,NA,2017
+eglin,eglin c1,NW,2018-06-15,trap,NA,NA,0,NA,NA,2018
+eglin,eglin c1,NE,2018-06-15,trap,NA,NA,0,NA,NA,2018
+eglin,eglin c1,SW,2018-06-15,trap,NA,NA,0,NA,NA,2018
+eglin,eglin c1,SE,2018-06-15,trap,NA,NA,0,NA,NA,2018
+eglin,eglin e1,NW,2018-06-15,trap,NA,NA,0,NA,NA,2018
+eglin,eglin e1,NE,2018-06-15,trap,NA,NA,0,NA,NA,2018
+eglin,eglin e1,SW,2018-06-15,trap,NA,NA,0,NA,NA,2018
+eglin,eglin e1,SE,2018-06-15,trap,NA,NA,0,NA,NA,2018
