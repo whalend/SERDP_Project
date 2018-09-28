@@ -1,6 +1,6 @@
 installation,date,plot_id,transect_id,standing_fuel_ht,litter_ht,duff_ht,pct_fuel,pct_litter,pct_bare,pct_green,standing_fuel_mass_wet,litter_mass_wet,standing_fuel_mass_dry,litter_mass_dry,standing_biomass_type,Notes
 blanding,20170609,blanding c1,east,31,5,0,85,10,5,35,16,14,13.62,9.74,NA,NA
-blanding,20170608,blanding c1,west,15,3,0,5,85,10,5,2,45,0.47,30.65,NA,NA
+blanding,20170609,blanding c1,west,15,3,0,5,85,10,5,2,45,0.47,30.65,NA,NA
 blanding,20170609,blanding c1,north,15,4,0,15,85,15,10,14,32,5.65,23.89,NA,NA
 blanding,20170609,blanding c1,south,45,3,0,60,30,10,50,34,37,20.67,23.84,NA,NA
 blanding,20170609,blanding a1,north,22,7,0,2,30,68,2,1,10.6,0.48,9.29,NA,NA

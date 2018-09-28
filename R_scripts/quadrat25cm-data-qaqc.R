@@ -86,14 +86,33 @@ filter(cogond, site=="shelby") %>%
 biomass_data$standing_fuel_mass_dry[is.na(biomass_data$standing_fuel_mass_dry) &
                                       biomass_data$standing_fuel_mass_wet==0] <- 0
 
+biomass_data$date[biomass_data$plot_id=="blanding c1" & biomass_data$date==20170608] <- 20170609
+
 write_csv(biomass_data, "data/processed_data/quadrat25cm.csv")
 
-#### Steven done processing ####
+#### Steven done processing, begin filter to installation level ####
 
 biomass_data <- read_csv("data/processed_data/quadrat25cm.csv")
 summary(biomass_data)
+names(biomass_data)
 
-#### Steven checking processing, looks good ####
+biomass_grouped <- biomass_data %>% 
+  group_by(installation, plot_id, date) %>% 
+  summarise(avg_standing_fuel_mass_wet = sum(standing_fuel_mass_wet, na.rm = T)*16/4,
+            avg_litter_mass_wet = sum(litter_mass_wet, na.rm = T)*16/4,
+            avg_standing_fuel_mass_dry = sum(standing_fuel_mass_dry, na.rm = T)*16/4,
+            avg_litter_mass_dry = sum(litter_mass_dry, na.rm = T)*16/4)
+            
+summary(biomass_grouped)
+
+filter(biomass_data, plot_id=="blanding c1") %>% 
+  select(plot_id, date, transect_id, standing_fuel_mass_wet, standing_fuel_mass_dry)
+
+filter(biomass_grouped, plot_id=="blanding c1") %>% 
+  select(plot_id, date, avg_standing_fuel_mass_wet, avg_standing_fuel_mass_dry)
+
+#### Steven stopped, make sure correct before filtering to installation ####
+
 
 ###########
 biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
