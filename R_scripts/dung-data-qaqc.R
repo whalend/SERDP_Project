@@ -83,11 +83,162 @@ filter(plot_visit_data, plot_id=="eglin")
 
 write_csv(dung_data, "data/processed_data/dung.csv")
 
-### Steven stopped processing here
+#### Steven checked processing, 3 missing Eglin i1 entries, waiting on response from elena 9/17 ####
+
+#### Steven begin processing by installation ####
 
 dung_data <- read_csv("data/processed_data/dung.csv")
 summary(dung_data)
+names(dung_data)
 
-#### Steven checked processing, 3 missing Eglin i1 entries, waiting on response from elena 9/17 ####
+dung_grouped <- dung_data %>% 
+  group_by(installation, plot_id, date, species) %>% 
+  summarise(dung1m = sum(dung1m, na.rm = T), dung2m = sum(dung2m, na.rm = T))
 
+summary(dung_grouped)
 
+#### Filter for Camp Blanding ####
+
+dung_blanding <- dung_grouped %>% 
+  filter(installation=="blanding")
+
+dung_blanding <- filter(dung_blanding) %>%
+  ungroup(.) %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+summary(dung_blanding)
+
+filter(dung_blanding, plot_id=="blanding h1") %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+write_csv(dung_blanding, "data/processed_by_installation/camp_blanding/dung_blanding.csv")
+
+#### Filter for Avon Park ####
+
+dung_avonpark <- dung_grouped %>% 
+  filter(installation=="avonpark")
+
+dung_avonpark <- filter(dung_avonpark) %>%
+  ungroup(.) %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+summary(dung_avonpark)
+
+filter(dung_avonpark, plot_id=="avonpark c1") %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+write_csv(dung_avonpark, "data/processed_by_installation/avon_park_afr/dung_avonpark.csv")
+
+#### Filter for Eglin AFB ####
+
+dung_eglin <- dung_grouped %>% 
+  filter(installation=="eglin")
+
+dung_eglin <- filter(dung_eglin) %>%
+  ungroup(.) %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+summary(dung_eglin)
+
+filter(dung_eglin, plot_id=="eglin c1") %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+write_csv(dung_eglin, "data/processed_by_installation/eglin_afb/dung_eglin.csv")
+
+#### Filter for Tyndall AFB ####
+
+dung_tyndall <- dung_grouped %>% 
+  filter(installation=="tyndall")
+
+dung_tyndall <- filter(dung_tyndall) %>%
+  ungroup(.) %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+summary(dung_tyndall)
+
+filter(dung_tyndall, plot_id=="tyndall h1") %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+write_csv(dung_tyndall, "data/processed_by_installation/tyndall_afb/dung_tyndall.csv")
+
+#### Filter for Fort Jackson ####
+
+dung_jackson <- dung_grouped %>% 
+  filter(installation=="jackson")
+
+dung_jackson <- filter(dung_jackson) %>%
+  ungroup(.) %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+summary(dung_jackson)
+
+filter(dung_jackson, plot_id=="jackson h1") %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+write_csv(dung_jackson, "data/processed_by_installation/fort_jackson/dung_jackson.csv")
+
+#### Filter for Fort Benning ####
+
+dung_benning <- dung_grouped %>% 
+  filter(installation=="benning")
+
+dung_benning <- filter(dung_benning) %>%
+  ungroup(.) %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+summary(dung_benning)
+
+filter(dung_benning, plot_id=="benning h1") %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+write_csv(dung_benning, "data/processed_by_installation/fort_benning/dung_benning.csv")
+
+#### Filter for Camp Shelby ####
+
+dung_shelby <- dung_grouped %>% 
+  filter(installation=="shelby")
+
+dung_shelby <- filter(dung_shelby) %>%
+  ungroup(.) %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+summary(dung_shelby)
+
+filter(dung_shelby, plot_id=="shelby h1") %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+write_csv(dung_shelby, "data/processed_by_installation/camp_shelby/dung_shelby.csv")
+
+#### Filter for Fort Gordon ####
+
+dung_gordon <- dung_grouped %>% 
+  filter(installation=="gordon")
+
+dung_gordon <- filter(dung_gordon) %>%
+  ungroup(.) %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+summary(dung_gordon)
+
+filter(dung_gordon, plot_id=="gordon x1") %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+write_csv(dung_gordon, "data/processed_by_installation/fort_gordon/dung_gordon.csv")
+
+#### Filter for Moody AFB ####
+
+dung_moody <- dung_grouped %>% 
+  filter(installation=="moody")
+
+dung_moody <- filter(dung_moody) %>%
+  ungroup(.) %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+summary(dung_moody)
+
+filter(dung_moody, plot_id=="moody k1") %>% 
+  select(plot_id, date, species, dung1m, dung2m)
+
+write_csv(dung_moody, "data/processed_by_installation/moody_afb/dung_moody.csv")
+
+#### Steven stopped processing to installation, ask about random NAs as in ticks ####

@@ -1,0 +1,19 @@
+plot_id,date,species,dung1m,dung2m
+benning a1,20180724,deer,1,0
+benning a1,20180724,NA,1,0
+benning b1,20180724,deer,11,0
+benning b1,20180724,NA,0,0
+benning c1,20180725,NA,0,0
+benning d1,20180725,deer,3,0
+benning d1,20180725,NA,0,1
+benning e1,20180726,NA,0,0
+benning f1,20180726,cottontail,9,0
+benning f1,20180726,deer,1,0
+benning f1,20180726,NA,0,0
+benning g1,20180728,NA,0,0
+benning h1,20180728,deer,4,0
+benning h1,20180728,NA,0,0
+benning i1,20180727,NA,0,0
+benning j1,20180727,cottontail,6,0
+benning j1,20180727,deer,3,0
+benning j1,20180727,NA,0,0
