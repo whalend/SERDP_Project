@@ -91,6 +91,11 @@ canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="bl
 
 canopy_cover$date[canopy_cover$plot_id=="blanding c1" & canopy_cover$date==20170607] <- 20170609
 
+canopy_cover$date[canopy_cover$plot_id=="avonpark a2" & canopy_cover$date==20180601] <- 20180531
+canopy_cover$date[canopy_cover$plot_id=="blanding c1" & canopy_cover$date==20180515] <- 20180516
+canopy_cover$date[canopy_cover$plot_id=="shelby f1" & canopy_cover$date==20170923] <- 20170921
+
+
 
 canopy_cover$date <- as.Date(as.character(canopy_cover$date), format = "%Y%m%d")
 canopy_cover <- canopy_cover %>% 
