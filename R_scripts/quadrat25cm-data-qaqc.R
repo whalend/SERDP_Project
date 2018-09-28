@@ -88,6 +88,11 @@ biomass_data$standing_fuel_mass_dry[is.na(biomass_data$standing_fuel_mass_dry) &
 
 biomass_data$date[biomass_data$plot_id=="blanding c1" & biomass_data$date==20170608] <- 20170609
 
+biomass_data$date <- as.Date(as.character(biomass_data$date), format = "%Y%m%d")
+biomass_data <- biomass_data %>% 
+  mutate(visit_year = lubridate::year(biomass_data$date))
+summary(biomass_data)
+
 write_csv(biomass_data, "data/processed_data/quadrat25cm.csv")
 
 #### Steven done processing, begin filter to installation level ####
@@ -97,7 +102,7 @@ summary(biomass_data)
 names(biomass_data)
 
 biomass_grouped <- biomass_data %>%
-  group_by(installation, plot_id, date) %>%
+  group_by(installation, plot_id, date, visit_year) %>%
   summarise(avg_standing_fuel_mass_wet_m2 = mean(standing_fuel_mass_wet, na.rm = T)*16,
             avg_litter_mass_wet_m2 = mean(litter_mass_wet, na.rm = T)*16,
             avg_standing_fuel_mass_dry_m2 = mean(standing_fuel_mass_dry, na.rm = T)*16,
@@ -105,14 +110,7 @@ biomass_grouped <- biomass_data %>%
 
 summary(biomass_grouped)
 
-filter(biomass_data, plot_id=="blanding c1") %>%
-  select(plot_id, date, transect_id, standing_fuel_mass_wet, standing_fuel_mass_dry)
-
-filter(biomass_grouped, plot_id=="blanding c1") %>%
-  select(plot_id, date, avg_standing_fuel_mass_wet, avg_standing_fuel_mass_dry)
-
-#### Steven stopped, make sure correct before filtering to installation ####
-
+#### Done grouping, combination of canopy, quad1m and quad25cm on new script ####
 
 ###########
 biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
