@@ -89,6 +89,9 @@ canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="bl
                          canopy_cover$direction=="W"] <- 77
 ## Messed up and forgot dates, fixing the 2018 blanding c1's ##
 
+canopy_cover$date[canopy_cover$plot_id=="blanding c1" & canopy_cover$date==20170607] <- 20170609
+
+
 canopy_cover$date <- as.Date(as.character(canopy_cover$date), format = "%Y%m%d")
 canopy_cover <- canopy_cover %>% 
   filter(distance %in% c(10)) 
@@ -97,6 +100,9 @@ canopy_cover <- canopy_cover %>%
   mutate(visit_year = lubridate::year(canopy_cover$date))
 
 summary(canopy_cover)
+
+filter(canopy_cover, plot_id=="blanding c1") %>% 
+  select(installation, plot_id, date)
 
 write_csv(canopy_cover, "data/processed_data/canopy-cover.csv")
 

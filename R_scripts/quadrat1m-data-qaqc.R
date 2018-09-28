@@ -121,6 +121,11 @@ summary(quadrat_data)
 filter(quadrat_data, is.na(pct_wood_litter))
 quadrat_data$pct_wood_litter[is.na(quadrat_data$pct_wood_litter)] <- 0
 
+filter(quadrat_data, plot_id=="blanding c1") %>% 
+  select(installation, plot_id, date)
+
+quadrat_data$date[quadrat_data$plot_id=="blanding c1" & quadrat_data$date==20170607] <- 20170609
+
 quadrat_data$date <- as.Date(as.character(quadrat_data$date), format = "%Y%m%d")
 quadrat_data <- quadrat_data %>% 
   mutate(visit_year = lubridate::year(quadrat_data$date))
