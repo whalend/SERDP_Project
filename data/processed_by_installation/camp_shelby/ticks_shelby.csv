@@ -1,0 +1,28 @@
+plot_id,date,species,life_stage,tick_count
+shelby a1,20180813,NA,NA,0
+shelby a2,20180813,NA,NA,0
+shelby b1,20170923,Am. am,A,4
+shelby b1,20170923,Am. am,N,2
+shelby b2,20180816,NA,NA,0
+shelby b3,20170924,Am. am,A,1
+shelby b3,20170924,Am. am,N,1
+shelby b3,20180816,De. var,A,1
+shelby b3,20180816,NA,NA,0
+shelby c1,20180813,Am. mac,A,1
+shelby c1,20180813,NA,NA,0
+shelby d1,20170923,Am. am,A,1
+shelby e1,20180813,NA,NA,0
+shelby extra,20170926,Am. am,A,1
+shelby f1,20170923,Am. am,A,1
+shelby g1,20170926,Am. am,A,1
+shelby g1,20170926,Am. am,N,26
+shelby g1,20170926,unknown,N,1
+shelby h1,20180813,Am. am,N,1
+shelby h1,20180813,Am. mac,A,2
+shelby h1,20180813,NA,NA,0
+shelby i1,20180813,NA,NA,0
+shelby j1,20180816,Am. am,N,3
+shelby j1,20180816,De. var,A,2
+shelby j1,20180816,NA,NA,0
+shelby k1,20180816,De. var,A,1
+shelby k1,20180816,NA,NA,0

@@ -1,0 +1,42 @@
+plot_id,date,species,life_stage,tick_count
+tyndall b1,20180627,Am. am,N,1
+tyndall b1,20180627,NA,NA,0
+tyndall b2,20170719,Am. am,A,5
+tyndall b2,20180627,Am. am,A,1
+tyndall b2,20180627,Am. am,L,1
+tyndall b2,20180627,Am. am,N,2
+tyndall b2,20180627,NA,NA,0
+tyndall b3,20180627,Am. am,N,1
+tyndall b3,20180629,Am. mac,A,4
+tyndall b3,20180629,NA,NA,0
+tyndall b4,20180629,NA,NA,0
+tyndall c1,20180626,Am. am,A,3
+tyndall c1,20180626,Am. am,N,7
+tyndall c1,20180628,Am. am,A,8
+tyndall c1,20180628,Am. am,N,57
+tyndall c1,20180628,De. var,A,1
+tyndall c2,20180626,Am. am,A,2
+tyndall c2,20180628,Am. am,A,4
+tyndall c2,20180628,Am. am,L,1
+tyndall c2,20180628,Am. am,N,32
+tyndall c2,20180628,Am. mac,A,2
+tyndall c2,20180628,De. var,A,2
+tyndall c2,20180628,Rh. san,A,1
+tyndall d1,20170721,Am. am,A,2
+tyndall d1,20170721,Am. am,N,10
+tyndall d1,20170721,Am. mac,A,2
+tyndall d2,20180627,Am. am,A,17
+tyndall d2,20180627,Am. am,L,1
+tyndall d2,20180627,Am. am,N,13
+tyndall d2,20180627,De. var,A,12
+tyndall extra,20170717,Am. mac,A,1
+tyndall extra,20170717,De. var,A,2
+tyndall extra,20170718,Am. mac,A,2
+tyndall extra,20170720,Am. am,A,2
+tyndall extra,20180627,Am. am,A,1
+tyndall extra,20180629,Am. am,A,2
+tyndall extra,20180629,Am. am,N,9
+tyndall extra,20180629,Am. mac,A,1
+tyndall h1,20170720,Am. am,A,1
+tyndall h1,20170720,Am. am,N,1
+tyndall h1,20170720,De. var,A,1
