@@ -1,0 +1,13 @@
+plot_id,visit_year,imcy_inv,avg_tiller_density_m2,years_since_fire
+eglin b1,2017,uninvaded,NA,1
+eglin p1,2017,uninvaded,NA,7
+eglin d1,2017,uninvaded,NA,3
+eglin h1,2017,uninvaded,NA,9
+eglin a1,2018,uninvaded,NA,1
+eglin b2,2018,uninvaded,NA,2
+eglin c1,2018,uninvaded,NA,3
+eglin e1,2018,uninvaded,NA,0
+eglin f1,2018,uninvaded,NA,7
+eglin g1,2018,uninvaded,NA,7
+eglin i1,2018,uninvaded,NA,9
+eglin j1,2018,uninvaded,NA,11

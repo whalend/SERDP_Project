@@ -1,0 +1,17 @@
+plot_id,visit_year,imcy_inv,avg_tiller_density_m2,years_since_fire
+shelby f1,2017,invaded,51,5
+shelby b1,2017,invaded,151,7
+shelby d1,2017,invaded,151.33333333333334,3
+shelby b2,2017,uninvaded,NA,1
+shelby b3,2017,invaded,70,1
+shelby g1,2017,uninvaded,NA,6
+shelby a1,2018,invaded,35,1
+shelby a2,2018,uninvaded,NA,1
+shelby b2,2018,uninvaded,NA,1
+shelby b3,2018,invaded,115.25,1
+shelby c1,2018,uninvaded,NA,2
+shelby e1,2018,uninvaded,NA,3
+shelby h1,2018,uninvaded,NA,4
+shelby i1,2018,uninvaded,NA,6
+shelby j1,2018,uninvaded,NA,6
+shelby k1,2018,uninvaded,NA,NA

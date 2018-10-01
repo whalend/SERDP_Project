@@ -1,0 +1,15 @@
+plot_id,visit_year,imcy_inv,avg_tiller_density_m2,years_since_fire
+avonpark a1,2017,invaded,181.33333333333334,0
+avonpark c1,2017,invaded,203,2
+avonpark b1,2017,invaded,143.33333333333334,1
+avonpark d1,2017,uninvaded,NA,3
+avonpark i1,2018,uninvaded,NA,6
+avonpark g1,2018,uninvaded,NA,5
+avonpark h1,2018,uninvaded,NA,1
+avonpark f1,2018,uninvaded,NA,0
+avonpark c2,2018,uninvaded,NA,3
+avonpark a1,2018,invaded,241,1
+avonpark a2,2018,uninvaded,NA,1
+avonpark c1,2018,invaded,50.25,3
+avonpark e1,2018,uninvaded,NA,1
+avonpark e2,2018,invaded,627,1

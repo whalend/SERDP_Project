@@ -1,0 +1,18 @@
+plot_id,visit_year,imcy_inv,avg_tiller_density_m2,years_since_fire
+blanding c1,2017,uninvaded,NA,2
+blanding g1,2017,uninvaded,NA,6
+blanding d1,2017,uninvaded,NA,3
+blanding a1,2017,uninvaded,NA,0
+blanding b1,2017,uninvaded,NA,1
+blanding f1,2017,uninvaded,NA,10
+blanding e1,2017,uninvaded,NA,4
+blanding h1,2017,uninvaded,NA,8
+blanding k1,2018,uninvaded,NA,3
+blanding m1,2018,uninvaded,NA,11
+blanding n1,2018,uninvaded,NA,5
+blanding theater_cogon,2018,invaded,15.25,NA
+blanding h1,2018,uninvaded,NA,0
+blanding g1,2018,uninvaded,NA,0
+blanding c1,2018,uninvaded,NA,1
+blanding i1,2018,uninvaded,NA,4
+blanding j1,2018,uninvaded,NA,2
