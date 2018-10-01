@@ -182,12 +182,85 @@ read_csv(tree_data, "data/processed_data/trees.csv")
 summary(tree_data)
 names(tree_data)
 
+tree_data <- tree_data %>% 
+  mutate(species_name = paste(Genus, Species, sep = " "))
 
-#### grouping summary table ####
+write_csv(tree_data, "data/processed_data/trees.csv")
+
+#### Sorting raw data to each installation ####
+
+trees_raw_blanding <- tree_data %>% 
+  filter(installation=="blanding") %>% 
+  select(plot_id, date, visit_year, tag, species_name, dbh, canopy, health,
+         distance, azimuth, height, char)
+
+write_csv(trees_raw_blanding, "data/processed_by_installation/camp_blanding/trees_raw_blanding.csv")
+
+trees_raw_avonpark <- tree_data %>% 
+  filter(installation=="avonpark") %>% 
+  select(plot_id, date, visit_year, tag, species_name, dbh, canopy, health,
+         distance, azimuth, height, char)
+
+write_csv(trees_raw_avonpark, "data/processed_by_installation/avon_park_afr/trees_raw_avonpark.csv")
+
+trees_raw_eglin <- tree_data %>% 
+  filter(installation=="eglin") %>% 
+  select(plot_id, date, visit_year, tag, species_name, dbh, canopy, health,
+         distance, azimuth, height, char)
+
+write_csv(trees_raw_eglin, "data/processed_by_installation/eglin_afb/trees_raw_eglin.csv")
+
+trees_raw_tyndall <- tree_data %>% 
+  filter(installation=="tyndall") %>% 
+  select(plot_id, date, visit_year, tag, species_name, dbh, canopy, health,
+         distance, azimuth, height, char)
+
+write_csv(trees_raw_tyndall, "data/processed_by_installation/tyndall_afb/trees_raw_tyndall.csv")
+
+trees_raw_jackson <- tree_data %>% 
+  filter(installation=="jackson") %>% 
+  select(plot_id, date, visit_year, tag, species_name, dbh, canopy, health,
+         distance, azimuth, height, char)
+
+write_csv(trees_raw_jackson, "data/processed_by_installation/fort_jackson/trees_raw_jackson.csv")
+
+trees_raw_benning <- tree_data %>% 
+  filter(installation=="benning") %>% 
+  select(plot_id, date, visit_year, tag, species_name, dbh, canopy, health,
+         distance, azimuth, height, char)
+
+write_csv(trees_raw_benning, "data/processed_by_installation/fort_benning/trees_raw_benning.csv")
+
+trees_raw_shelby <- tree_data %>% 
+  filter(installation=="shelby") %>% 
+  select(plot_id, date, visit_year, tag, species_name, dbh, canopy, health,
+         distance, azimuth, height, char)
+
+write_csv(trees_raw_shelby, "data/processed_by_installation/camp_shelby/trees_raw_shelby.csv")
+
+trees_raw_gordon <- tree_data %>% 
+  filter(installation=="gordon") %>% 
+  select(plot_id, date, visit_year, tag, species_name, dbh, canopy, health,
+         distance, azimuth, height, char)
+
+write_csv(trees_raw_gordon, "data/processed_by_installation/fort_gordon/trees_raw_gordon.csv")
+
+trees_raw_moody <- tree_data %>% 
+  filter(installation=="moody") %>% 
+  select(plot_id, date, visit_year, tag, species_name, dbh, canopy, health,
+         distance, azimuth, height, char)
+
+write_csv(trees_raw_moody, "data/processed_by_installation/moody_afb/trees_raw_moody.csv")
+
+#### Summary of tree data to each installation ####
+
+read_csv(tree_data, "data/processed_data/trees.csv")
+summary(tree_data)
+names(tree_data)
 
 tree_data <- tree_data %>% 
   mutate(health = if_else(health==0, "dead", "alive"))
-  
+
 trees_grouped <- tree_data %>% 
   group_by(installation, plot_id, date, visit_year, species, canopy, health, Genus, Species) %>% 
   summarise(total_dbh = sum(dbh, na.rm = T),
@@ -208,8 +281,6 @@ tree_summary_blanding <- tree_summary_blanding %>%
   ungroup(.) %>% 
   select(plot_id, date, visit_year, species_name, canopy, health, 
          total_dbh, avg_height, avg_char)
-
-summary(tree_summary_blanding)
 
 write_csv(tree_summary_blanding, "data/processed_by_installation/camp_blanding/tree_summary.csv")
 
@@ -325,7 +396,10 @@ summary(tree_summary_moody)
 
 write_csv(tree_summary_moody, "data/processed_by_installation/moody_afb/tree_summary.csv")
 
+write_csv(tree_data, "data/processed_data/trees.csv")
+
 #### Steven done filtering out tree summary data to installations ####
+
 
 # Quick plot checks ####
 tree_data <- read_csv("data/processed_data/trees.csv")
