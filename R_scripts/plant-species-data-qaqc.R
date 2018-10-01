@@ -127,7 +127,7 @@ summary(species_benning)
 
 species_benning <- filter(species_benning) %>%
   ungroup(.) %>%
-  select(plot_id, date, visit_year, avg_pct_cover, num_stems_m2, species_name, functional_group)
+  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
 
 write_csv(species_benning, "data/processed_by_installation/fort_benning/species_benning.csv")
 
