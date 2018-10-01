@@ -4,6 +4,7 @@ library(plyr); library(dplyr);
 library(readr)
 library(stringi)
 library(ggplot2)
+library(tidyverse)
 
 #+ load processed plot visit data ####
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
@@ -168,10 +169,163 @@ tree_data$char[tree_data$tag=="3076"] <- 0.42
 ## Changed char from 42 to 0.42 ##
 
 summary(tree_data)
+tree_data$date <- as.Date(as.character(tree_data$date), format = "%Y%m%d")
+tree_data <- tree_data %>% 
+  mutate(visit_year = lubridate::year(tree_data$date))
+
 
 write_csv(tree_data, "data/processed_data/trees.csv")
 
-##Steven stopped processing here ####
+##Steven stopped processing here, begin filter by installation ####
+
+read_csv(tree_data, "data/processed_data/trees.csv")
+summary(tree_data)
+names(tree_data)
+
+
+#### grouping summary table ####
+
+tree_data <- tree_data %>% 
+  mutate(health = if_else(health==0, "dead", "alive"))
+  
+trees_grouped <- tree_data %>% 
+  group_by(installation, plot_id, date, visit_year, species, canopy, health, Genus, Species) %>% 
+  summarise(total_dbh = sum(dbh, na.rm = T),
+            avg_height = mean(height, na.rm = T),
+            avg_char = mean(char, na.rm = T))
+
+trees_grouped <- trees_grouped %>% 
+  mutate(species_name = paste(Genus, Species, sep = " "))
+
+summary(trees_grouped)
+
+#### Filter for Camp Blanding ####
+
+tree_summary_blanding <- trees_grouped %>% 
+  filter(installation=="blanding")
+
+tree_summary_blanding <- tree_summary_blanding %>% 
+  ungroup(.) %>% 
+  select(plot_id, date, visit_year, species_name, canopy, health, 
+         total_dbh, avg_height, avg_char)
+
+summary(tree_summary_blanding)
+
+write_csv(tree_summary_blanding, "data/processed_by_installation/camp_blanding/tree_summary.csv")
+
+#### Filter for Avon Park AFR ####
+
+tree_summary_avonpark <- trees_grouped %>% 
+  filter(installation=="avonpark")
+
+tree_summary_avonpark <- tree_summary_avonpark %>% 
+  ungroup(.) %>% 
+  select(plot_id, date, visit_year, species_name, canopy, health, 
+         total_dbh, avg_height, avg_char)
+
+summary(tree_summary_avonpark)
+
+write_csv(tree_summary_avonpark, "data/processed_by_installation/avon_park_afr/tree_summary.csv")
+
+#### Filter for Eglin AFB ####
+
+tree_summary_eglin <- trees_grouped %>% 
+  filter(installation=="eglin")
+
+tree_summary_eglin <- tree_summary_eglin %>% 
+  ungroup(.) %>% 
+  select(plot_id, date, visit_year, species_name, canopy, health, 
+         total_dbh, avg_height, avg_char)
+
+summary(tree_summary_eglin)
+
+write_csv(tree_summary_eglin, "data/processed_by_installation/eglin_afb/tree_summary.csv")
+
+#### Filter for Tyndall AFB ####
+
+tree_summary_tyndall <- trees_grouped %>% 
+  filter(installation=="tyndall")
+
+tree_summary_tyndall <- tree_summary_tyndall %>% 
+  ungroup(.) %>% 
+  select(plot_id, date, visit_year, species_name, canopy, health, 
+         total_dbh, avg_height, avg_char)
+
+summary(tree_summary_tyndall)
+
+write_csv(tree_summary_tyndall, "data/processed_by_installation/tyndall_afb/tree_summary.csv")
+
+#### Filter for Fort Jackson ####
+
+tree_summary_jackson <- trees_grouped %>% 
+  filter(installation=="jackson")
+
+tree_summary_jackson <- tree_summary_jackson %>% 
+  ungroup(.) %>% 
+  select(plot_id, date, visit_year, species_name, canopy, health, 
+         total_dbh, avg_height, avg_char)
+
+summary(tree_summary_jackson)
+
+write_csv(tree_summary_jackson, "data/processed_by_installation/fort_jackson/tree_summary.csv")
+
+#### Filter for Fort Benning ####
+
+tree_summary_benning <- trees_grouped %>% 
+  filter(installation=="benning")
+
+tree_summary_benning <- tree_summary_benning %>% 
+  ungroup(.) %>% 
+  select(plot_id, date, visit_year, species_name, canopy, health, 
+         total_dbh, avg_height, avg_char)
+
+summary(tree_summary_benning)
+
+write_csv(tree_summary_benning, "data/processed_by_installation/fort_benning/tree_summary.csv")
+
+#### Filter for Camp Shelby ####
+
+tree_summary_shelby <- trees_grouped %>% 
+  filter(installation=="shelby")
+
+tree_summary_shelby <- tree_summary_shelby %>% 
+  ungroup(.) %>% 
+  select(plot_id, date, visit_year, species_name, canopy, health, 
+         total_dbh, avg_height, avg_char)
+
+summary(tree_summary_shelby)
+
+write_csv(tree_summary_shelby, "data/processed_by_installation/camp_shelby/tree_summary.csv")
+
+#### Filter for Fort Gordon ####
+
+tree_summary_gordon <- trees_grouped %>% 
+  filter(installation=="gordon")
+
+tree_summary_gordon <- tree_summary_gordon %>% 
+  ungroup(.) %>% 
+  select(plot_id, date, visit_year, species_name, canopy, health, 
+         total_dbh, avg_height, avg_char)
+
+summary(tree_summary_gordon)
+
+write_csv(tree_summary_gordon, "data/processed_by_installation/fort_gordon/tree_summary.csv")
+
+#### Filter for Moody AFB ####
+
+tree_summary_moody <- trees_grouped %>% 
+  filter(installation=="moody")
+
+tree_summary_moody <- tree_summary_moody %>% 
+  ungroup(.) %>% 
+  select(plot_id, date, visit_year, species_name, canopy, health, 
+         total_dbh, avg_height, avg_char)
+
+summary(tree_summary_moody)
+
+write_csv(tree_summary_moody, "data/processed_by_installation/moody_afb/tree_summary.csv")
+
+#### Steven done filtering out tree summary data to installations ####
 
 # Quick plot checks ####
 tree_data <- read_csv("data/processed_data/trees.csv")
