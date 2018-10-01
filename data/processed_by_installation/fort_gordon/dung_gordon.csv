@@ -1,13 +1,13 @@
-plot_id,date,species,dung1m,dung2m
-gordon r1,20180822,NA,0,0
-gordon s1,20180822,NA,0,0
-gordon t1,20180821,NA,0,0
-gordon v1,20180821,bear?,1,0
-gordon v1,20180821,deer,2,0
-gordon v1,20180821,NA,0,0
-gordon w1,20180821,NA,0,0
-gordon x1,20180820,NA,0,0
-gordon y1,20180820,deer,2,0
-gordon y1,20180820,NA,0,0
-gordon z1,20180820,deer,1,0
-gordon z1,20180820,NA,0,0
+plot_id,date,visit_year,species,dung1m,dung2m
+gordon r1,2018-08-22,2018,NA,0,0
+gordon s1,2018-08-22,2018,NA,0,0
+gordon t1,2018-08-21,2018,NA,0,0
+gordon v1,2018-08-21,2018,bear?,1,0
+gordon v1,2018-08-21,2018,deer,2,0
+gordon v1,2018-08-21,2018,NA,0,0
+gordon w1,2018-08-21,2018,NA,0,0
+gordon x1,2018-08-20,2018,NA,0,0
+gordon y1,2018-08-20,2018,deer,2,0
+gordon y1,2018-08-20,2018,NA,0,0
+gordon z1,2018-08-20,2018,deer,1,0
+gordon z1,2018-08-20,2018,NA,0,0

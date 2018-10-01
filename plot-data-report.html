@@ -10,6 +10,7 @@
 
 
 
+<meta name="date" content="2018-09-28" />
 
 <title>Fire-Plant Invasions-TBD</title>
 
@@ -19,6 +20,9 @@
 <script src="plot-data-report_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="plot-data-report_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="plot-data-report_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="plot-data-report_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="plot-data-report_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="plot-data-report_files/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="plot-data-report_files/navigation-1.1/tabsets.js"></script>
 <link href="plot-data-report_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="plot-data-report_files/highlightjs-9.12.0/highlight.js"></script>
@@ -114,6 +118,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="fluid-row" id="header">
@@ -121,374 +220,143 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Fire-Plant Invasions-TBD</h1>
-<h4 class="date"><em>2018-08-07 11:43:14</em></h4>
+<h4 class="date"><em>2018-09-28</em></h4>
 
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#installations-visited-and-plots-sampled">Installations Visited and Plots Sampled</a></li>
-<li><a href="#canopy-cover-data">Canopy Cover Data</a></li>
-<li><a href="#species-data---1-meter-quadrats">Species Data - 1-meter Quadrats</a><ul>
-<li><a href="#understory-vegetation-cover">Understory vegetation cover</a></li>
-<li><a href="#understory-species-richness">Understory species richness</a></li>
-</ul></li>
-<li><a href="#tree-data">Tree Data</a><ul>
-<li><a href="#tree-richness">Tree richness</a></li>
-<li><a href="#tree-basal-area">Tree basal area</a></li>
-<li><a href="#tree-dbh">Tree dbh</a></li>
-<li><a href="#tree-height">Tree height</a></li>
-</ul></li>
-<li><a href="#sub-plot-saplingshrub-data">Sub-plot sapling/shrub data</a></li>
-<li><a href="#biomass-data-sampled-at-25cm-quadrats">Biomass data sampled at 25cm quadrats</a></li>
-<li><a href="#host-abundance-estimates">Host Abundance Estimates</a></li>
-<li><a href="#tick-abundance">Tick Abundance</a><ul>
-<li><a href="#total-ticks-collected-across-burn-units">Total ticks collected across burn units</a></li>
-<li><a href="#tick-species">Tick species</a></li>
-<li><a href="#summarize-tick-abundance-data">Summarize tick abundance data</a></li>
-<li><a href="#tickfire-log-linear-relationship">Tick~fire log-linear relationship</a></li>
-<li><a href="#seasonal-sampling">Seasonal sampling</a></li>
-<li><a href="#tick-abundance-vs.latitude">Tick abundance vs. latitude</a></li>
-</ul></li>
-<li><a href="#tick-abundance-vs.plot-level-averages">Tick abundance vs. plot-level averages</a><ul>
-<li><a href="#understory-vegetation-cover-1">Understory vegetation cover</a></li>
-<li><a href="#understory-biomass">Understory biomass</a></li>
-<li><a href="#litter-percent-cover">Litter percent cover</a></li>
-<li><a href="#litter-biomass">Litter biomass</a></li>
-<li><a href="#canopy-cover">Canopy cover</a></li>
-<li><a href="#ticks-char-height">Ticks ~ char height</a></li>
-<li><a href="#ticks-hosts">Ticks ~ hosts</a></li>
-</ul></li>
-<li><a href="#host-abundance">Host abundance</a></li>
-<li><a href="#initialexploratory-linear-ols-models">Initial/exploratory linear (OLS) models</a></li>
-<li><a href="#cogongrass-data-sampled-from-invasions">Cogongrass Data Sampled from Invasions</a></li>
-<li><a href="#compare-all-quadrat-data-to-subset-of-data">Compare All Quadrat Data to Subset of Data</a></li>
-</ul>
-</div>
 
+<p>There are 3 <code>NA</code> values in the coarse fire history columns. The <code>NA</code>s correspond to the odd/extra cogongrass plot that we sampled at Camp Blanding and 2 plots at Camp Shelby that I (WD) have requested data for as of 9/6/2018.</p>
 <div id="installations-visited-and-plots-sampled" class="section level1">
 <h1>Installations Visited and Plots Sampled</h1>
 <ul>
-<li><strong>8 installations</strong></li>
+<li><strong>9 installations</strong></li>
 <li><strong>13 different years since fire</strong></li>
-<li><strong>78 different plots, some multiple times</strong></li>
+<li><strong>95 different plots, some multiple times</strong></li>
+<li><strong>104 plot visits (some revisits)</strong></li>
 </ul>
 <p><img src="figures/Year2bases.png" /></p>
-<p><img src="plot-data-report_files/figure-html/summary%20of%20plots%20visited-1.png" width="3000" /><img src="plot-data-report_files/figure-html/summary%20of%20plots%20visited-2.png" width="3000" /><img src="plot-data-report_files/figure-html/summary%20of%20plots%20visited-3.png" width="3000" /></p>
+<p><img src="plot-data-report_files/figure-html/summary%20of%20plots%20visited-1.png" width="2250" /><img src="plot-data-report_files/figure-html/summary%20of%20plots%20visited-2.png" width="2250" /></p>
+<p><img src="plot-data-report_files/figure-html/fire%20invasion%20by%20installation-1.png" width="2250" /></p>
+<p>We made 104 plot visits, therefore there should for the most part be 104 observations for all data summarized to the plot level. One exception I can think of is that we didn’t do tick sampling at the ‘blanding theater_cogon’ plot.</p>
 </div>
 <div id="canopy-cover-data" class="section level1">
 <h1>Canopy Cover Data</h1>
-<pre><code>##  installation         plot_id              pid           
-##  Length:82          Length:82          Length:82         
-##  Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character  
-##                                                          
-##                                                          
-##                                                          
-##                                                          
-##       date              visit_year   avg_canopy_cover sd_canopy_cover 
-##  Min.   :2017-06-08   Min.   :2017   Min.   : 8.06    Min.   : 0.520  
-##  1st Qu.:2017-08-30   1st Qu.:2017   1st Qu.:32.76    1st Qu.: 6.481  
-##  Median :2018-05-31   Median :2018   Median :47.84    Median :10.238  
-##  Mean   :2018-02-28   Mean   :2018   Mean   :51.60    Mean   :13.016  
-##  3rd Qu.:2018-06-27   3rd Qu.:2018   3rd Qu.:70.33    3rd Qu.:18.522  
-##  Max.   :2018-07-26   Max.   :2018   Max.   :97.76    Max.   :39.496  
-##  NA&#39;s   :1            NA&#39;s   :1      NA&#39;s   :7        NA&#39;s   :8       
-##      n_obs        se_canopy_cover 
-##  Min.   : 1.000   Min.   : 0.260  
-##  1st Qu.: 4.000   1st Qu.: 3.240  
-##  Median : 4.000   Median : 5.119  
-##  Mean   : 4.146   Mean   : 6.542  
-##  3rd Qu.: 4.000   3rd Qu.: 9.261  
-##  Max.   :20.000   Max.   :19.748  
-##                   NA&#39;s   :8</code></pre>
 <p><img src="plot-data-report_files/figure-html/canopy-cover-fire-figure-1.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = avg_canopy_cover ~ years_since_fire + imcy_inv, 
+##     data = canopy_cover_summary)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -49.05 -16.91  -1.28  18.86  45.06 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       50.2475     3.6553  13.747   &lt;2e-16 ***
+## years_since_fire   1.9715     0.7739   2.547   0.0124 *  
+## imcy_invInvaded  -13.3040     6.8308  -1.948   0.0543 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 23.38 on 99 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.1111, Adjusted R-squared:  0.09309 
+## F-statistic: 6.184 on 2 and 99 DF,  p-value: 0.002947</code></pre>
 </div>
 <div id="species-data---1-meter-quadrats" class="section level1">
 <h1>Species Data - 1-meter Quadrats</h1>
-<pre><code>##  installation         plot_id               date              visit_year  
-##  Length:80          Length:80          Min.   :2017-06-07   Min.   :2017  
-##  Class :character   Class :character   1st Qu.:2017-08-26   1st Qu.:2017  
-##  Mode  :character   Mode  :character   Median :2018-05-31   Median :2018  
-##                                        Mean   :2018-02-22   Mean   :2018  
-##                                        3rd Qu.:2018-06-27   3rd Qu.:2018  
-##                                        Max.   :2018-07-26   Max.   :2018  
-##      pid            avg_woody_ht1    avg_woody_ht_all  avg_herb_ht1   
-##  Length:80          Min.   : 10.00   Min.   : 13.78   Min.   :  0.00  
-##  Class :character   1st Qu.: 32.44   1st Qu.: 30.74   1st Qu.: 22.19  
-##  Mode  :character   Median : 49.00   Median : 45.43   Median : 31.25  
-##                     Mean   : 59.17   Mean   : 55.84   Mean   : 36.20  
-##                     3rd Qu.: 75.88   3rd Qu.: 73.51   3rd Qu.: 44.06  
-##                     Max.   :188.50   Max.   :173.92   Max.   :128.50  
-##  avg_herb_ht_all  avg_litter_depth1 avg_litter_depth_all avg_pct_green  
-##  Min.   :  0.00   Min.   : 0.750    Min.   : 0.7917      Min.   : 1.25  
-##  1st Qu.: 21.12   1st Qu.: 2.250    1st Qu.: 2.4167      1st Qu.:17.50  
-##  Median : 27.96   Median : 3.250    Median : 3.4375      Median :29.38  
-##  Mean   : 32.82   Mean   : 3.962    Mean   : 3.9458      Mean   :32.76  
-##  3rd Qu.: 38.81   3rd Qu.: 4.750    3rd Qu.: 4.7292      3rd Qu.:49.06  
-##  Max.   :106.50   Max.   :11.000    Max.   :11.5833      Max.   :76.25  
-##  avg_pct_litter    avg_pct_wood     avg_pct_bare         imcy_inv 
-##  Min.   :  3.75   Min.   : 0.125   Min.   : 0.000   Uninvaded:68  
-##  1st Qu.: 44.69   1st Qu.: 2.375   1st Qu.: 1.938   Invaded  :12  
-##  Median : 73.75   Median : 4.000   Median : 6.500                 
-##  Mean   : 66.80   Mean   : 5.188   Mean   :14.812                 
-##  3rd Qu.: 88.38   3rd Qu.: 6.312   3rd Qu.:20.625                 
-##  Max.   :100.00   Max.   :20.000   Max.   :76.250                 
-##    visit_date         last_fire_year    notes           years_since_fire
-##  Min.   :2017-06-07   Min.   :2006   Length:80          Min.   : 0.000  
-##  1st Qu.:2017-08-26   1st Qu.:2012   Class :character   1st Qu.: 1.000  
-##  Median :2018-05-30   Median :2015   Mode  :character   Median : 2.500  
-##  Mean   :2018-02-22   Mean   :2014                      Mean   : 3.425  
-##  3rd Qu.:2018-06-27   3rd Qu.:2017                      3rd Qu.: 5.250  
-##  Max.   :2018-07-26   Max.   :2018                      Max.   :11.000  
-##    xcoord_lon       ycoord_lat    installation_full_name
-##  Min.   :-89.11   Min.   :27.54   Length:80             
-##  1st Qu.:-85.52   1st Qu.:29.85   Class :character      
-##  Median :-82.02   Median :30.30   Mode  :character      
-##  Mean   :-83.61   Mean   :30.62                         
-##  3rd Qu.:-81.31   3rd Qu.:31.15                         
-##  Max.   :-80.75   Max.   :34.09</code></pre>
-<p><img src="plot-data-report_files/figure-html/summarize%201m%20quadrat%20data%20across%20each%20plot-1.png" width="2250" /><img src="plot-data-report_files/figure-html/summarize%201m%20quadrat%20data%20across%20each%20plot-2.png" width="2250" /></p>
-<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    3018 obs. of  21 variables:
-##  $ Order              : int  231 232 233 234 235 236 237 238 239 240 ...
-##  $ installation       : chr  &quot;blanding&quot; &quot;blanding&quot; &quot;blanding&quot; &quot;blanding&quot; ...
-##  $ date               : Date, format: &quot;2017-06-07&quot; &quot;2017-06-07&quot; ...
-##  $ plot_id            : chr  &quot;c1&quot; &quot;c1&quot; &quot;c1&quot; &quot;c1&quot; ...
-##  $ transect_id        : chr  &quot;east&quot; &quot;east&quot; &quot;east&quot; &quot;east&quot; ...
-##  $ quadrat_id         : chr  &quot;e10&quot; &quot;e10&quot; &quot;e10&quot; &quot;e30&quot; ...
-##  $ veg_id             : chr  &quot;qula&quot; &quot;arst5&quot; &quot;pigr&quot; &quot;limi&quot; ...
-##  $ pct_cover          : num  20 30 1 20 15 2 1 0.5 0.5 2 ...
-##  $ ht_under50cm       : int  NA NA NA NA NA NA NA NA NA NA ...
-##  $ ht50_100cm         : int  1 NA NA NA 1 NA NA NA NA 1 ...
-##  $ ht_over100cm       : int  NA NA NA NA NA NA NA NA NA NA ...
-##  $ 1cm_wg_stems       : chr  NA NA NA NA ...
-##  $ Notes              : chr  NA NA NA NA ...
-##  $ scientific_name    : chr  &quot;Quercus laevis&quot; &quot;Aristida stricta&quot; &quot;Pityopsis graminifolia&quot; &quot;Licania michauxii&quot; ...
-##  $ functional_group   : chr  &quot;tree&quot; &quot;graminoid&quot; &quot;forb&quot; &quot;shrub&quot; ...
-##  $ Genus              : chr  &quot;Quercus&quot; &quot;Aristida&quot; &quot;Pityopsis&quot; &quot;Licania&quot; ...
-##  $ Species            : chr  &quot;laevis&quot; &quot;stricta&quot; &quot;graminifolia&quot; &quot;michauxii&quot; ...
-##  $ Status             : chr  &quot;native&quot; &quot;native&quot; &quot;native&quot; &quot;native&quot; ...
-##  $ functional_group__1: chr  &quot;tree&quot; &quot;graminoid&quot; &quot;forb&quot; &quot;shrub&quot; ...
-##  $ pid                : chr  &quot;blanding c1&quot; &quot;blanding c1&quot; &quot;blanding c1&quot; &quot;blanding c1&quot; ...
-##  $ visit_year         : num  2017 2017 2017 2017 2017 ...</code></pre>
-<pre><code>##      Order      installation            date              plot_id         
-##  Min.   : 231   Length:3018        Min.   :2017-06-07   Length:3018       
-##  1st Qu.: 985   Class :character   1st Qu.:2017-07-19   Class :character  
-##  Median :1739   Mode  :character   Median :2017-09-23   Mode  :character  
-##  Mean   :1739                      Mean   :2017-12-08                     
-##  3rd Qu.:2493                      3rd Qu.:2018-05-31                     
-##  Max.   :3247                      Max.   :2018-07-26                     
-##  NA&#39;s   :1                                                                
+<p><img src="plot-data-report_files/figure-html/summarize%201m%20quadrat%20data%20across%20each%20plot-1.png" width="2250" /><img src="plot-data-report_files/figure-html/summarize%201m%20quadrat%20data%20across%20each%20plot-2.png" width="2250" /><img src="plot-data-report_files/figure-html/summarize%201m%20quadrat%20data%20across%20each%20plot-3.png" width="2250" /></p>
+<p><img src="plot-data-report_files/figure-html/pct-litter-fire-1.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = avg_pct_litter ~ years_since_fire + imcy_inv, data = quadrat10_summaries)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -55.49 -12.88   1.93  15.34  38.21 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       59.2398     3.2229  18.381  &lt; 2e-16 ***
+## years_since_fire   3.8911     0.6824   5.702 1.23e-07 ***
+## imcy_invInvaded  -27.8691     6.0229  -4.627 1.12e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 20.62 on 99 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.3963, Adjusted R-squared:  0.3841 
+## F-statistic:  32.5 on 2 and 99 DF,  p-value: 1.414e-11</code></pre>
+<p><img src="plot-data-report_files/figure-html/pct-bare-fire-fig-1.png" width="2250" /></p>
+<pre><code>##  installation            date              plot_id         
+##  Length:3515        Min.   :2017-06-07   Length:3515       
+##  Class :character   1st Qu.:2017-07-20   Class :character  
+##  Mode  :character   Median :2017-09-25   Mode  :character  
+##                     Mean   :2018-01-13                     
+##                     3rd Qu.:2018-07-09                     
+##                     Max.   :2018-08-22                     
+##                                                            
 ##  transect_id         quadrat_id           veg_id            pct_cover     
-##  Length:3018        Length:3018        Length:3018        Min.   : 0.500  
-##  Class :character   Class :character   Class :character   1st Qu.: 0.500  
+##  Length:3515        Length:3515        Length:3515        Min.   : 0.500  
+##  Class :character   Class :character   Class :character   1st Qu.: 1.000  
 ##  Mode  :character   Mode  :character   Mode  :character   Median : 2.000  
-##                                                           Mean   : 7.079  
-##                                                           3rd Qu.: 6.000  
-##                                                           Max.   :99.000  
-##                                                           NA&#39;s   :6       
-##   ht_under50cm       ht50_100cm     ht_over100cm   1cm_wg_stems      
-##  Min.   :  0.000   Min.   :  1.0   Min.   : 1.00   Length:3018       
-##  1st Qu.:  1.000   1st Qu.:  1.0   1st Qu.: 1.00   Class :character  
-##  Median :  3.000   Median :  2.0   Median : 1.00   Mode  :character  
-##  Mean   :  8.437   Mean   : 11.9   Mean   : 3.21                     
-##  3rd Qu.:  8.000   3rd Qu.:  3.0   3rd Qu.: 3.00                     
-##  Max.   :201.000   Max.   :866.0   Max.   :43.00                     
-##  NA&#39;s   :1591      NA&#39;s   :2708    NA&#39;s   :2851                      
+##                                                           Mean   : 7.035  
+##                                                           3rd Qu.: 7.000  
+##                                                           Max.   :95.000  
+##                                                                           
+##   ht_under50cm       ht50_100cm      ht_over100cm    1cm_wg_stems      
+##  Min.   :  0.000   Min.   : 1.000   Min.   : 1.000   Length:3515       
+##  1st Qu.:  1.000   1st Qu.: 1.000   1st Qu.: 1.000   Class :character  
+##  Median :  3.000   Median : 2.000   Median : 1.000   Mode  :character  
+##  Mean   :  8.686   Mean   : 3.532   Mean   : 2.981                     
+##  3rd Qu.:  8.000   3rd Qu.: 3.000   3rd Qu.: 3.000                     
+##  Max.   :229.000   Max.   :73.000   Max.   :43.000                     
+##  NA&#39;s   :1663      NA&#39;s   :3141     NA&#39;s   :3306                       
 ##     Notes           scientific_name    functional_group  
-##  Length:3018        Length:3018        Length:3018       
+##  Length:3515        Length:3515        Length:3515       
 ##  Class :character   Class :character   Class :character  
 ##  Mode  :character   Mode  :character   Mode  :character  
 ##                                                          
 ##                                                          
 ##                                                          
 ##                                                          
-##     Genus             Species             Status         
-##  Length:3018        Length:3018        Length:3018       
-##  Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character  
-##                                                          
-##                                                          
-##                                                          
-##                                                          
-##  functional_group__1     pid              visit_year  
-##  Length:3018         Length:3018        Min.   :2017  
-##  Class :character    Class :character   1st Qu.:2017  
-##  Mode  :character    Mode  :character   Median :2017  
-##                                         Mean   :2017  
-##                                         3rd Qu.:2018  
-##                                         Max.   :2018  
+##     Genus             Species             Status            visit_year  
+##  Length:3515        Length:3515        Length:3515        Min.   :2017  
+##  Class :character   Class :character   Class :character   1st Qu.:2017  
+##  Mode  :character   Mode  :character   Mode  :character   Median :2017  
+##                                                           Mean   :2017  
+##                                                           3rd Qu.:2018  
+##                                                           Max.   :2018  
+##                                                                         
+##       imcy_inv      visit_date         last_fire_year years_since_fire
+##  Uninvaded:2730   Min.   :2017-06-07   Min.   :2006   Min.   : 0.000  
+##  Invaded  : 785   1st Qu.:2017-07-20   1st Qu.:2012   1st Qu.: 1.000  
+##                   Median :2017-09-25   Median :2016   Median : 2.000  
+##                   Mean   :2018-01-12   Mean   :2014   Mean   : 3.038  
+##                   3rd Qu.:2018-07-09   3rd Qu.:2017   3rd Qu.: 5.000  
+##                   Max.   :2018-08-22   Max.   :2018   Max.   :11.000  
+##                                        NA&#39;s   :49     NA&#39;s   :49      
+##    xcoord_lon       ycoord_lat    installation_full_name
+##  Min.   :-89.23   Min.   :27.54   Length:3515           
+##  1st Qu.:-86.50   1st Qu.:29.86   Class :character      
+##  Median :-84.68   Median :30.61   Mode  :character      
+##  Mean   :-84.52   Mean   :30.48                         
+##  3rd Qu.:-81.95   3rd Qu.:31.12                         
+##  Max.   :-80.75   Max.   :34.09                         
 ## </code></pre>
-<pre><code>## # A tibble: 6 x 21
-##   Order installation date       plot_id transect_id quadrat_id veg_id
-##   &lt;int&gt; &lt;chr&gt;        &lt;date&gt;     &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt; 
-## 1  2267 avonpark     2018-05-29 e2      east        e10        dicl  
-## 2  2467 avonpark     2018-05-31 f1      north       n10        xyca  
-## 3  2570 eglin        2018-06-11 a1      east        e10        an    
-## 4  2810 tyndall      2018-06-25 d2      north       n10        dicl  
-## 5  2811 tyndall      2018-06-25 d2      north       n10        piel  
-## 6  3031 jackson      2018-07-12 h1      west        w10        saal5 
-## # ... with 14 more variables: pct_cover &lt;dbl&gt;, ht_under50cm &lt;int&gt;,
-## #   ht50_100cm &lt;int&gt;, ht_over100cm &lt;int&gt;, `1cm_wg_stems` &lt;chr&gt;,
-## #   Notes &lt;chr&gt;, scientific_name &lt;chr&gt;, functional_group &lt;chr&gt;,
-## #   Genus &lt;chr&gt;, Species &lt;chr&gt;, Status &lt;chr&gt;, functional_group__1 &lt;chr&gt;,
-## #   pid &lt;chr&gt;, visit_year &lt;dbl&gt;</code></pre>
-<pre><code>##   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [12] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [23] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [34] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [45] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [56] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [67] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [78] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [89] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [111] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [122] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [133] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [144] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [155] FALSE FALSE FALSE FALSE</code></pre>
-<pre><code>## # A tibble: 273 x 21
-##    Order installation date       plot_id transect_id quadrat_id veg_id    
-##    &lt;int&gt; &lt;chr&gt;        &lt;date&gt;     &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;     
-##  1  2037 blanding     2018-05-19 g1      north       w10        ghost gra…
-##  2  2046 blanding     2018-05-19 g1      south       s10        ghost gra…
-##  3  2053 blanding     2018-05-19 g1      east        e10        ghost gra…
-##  4  2062 blanding     2018-05-19 g1      west        w10        forb 11:4…
-##  5  2064 blanding     2018-05-19 g1      west        w10        ghost gra…
-##  6  2110 blanding     2018-05-24 n1      east        e10        raco, (ma…
-##  7  2183 blanding     2018-05-17 h1      west        w10        forb 1:05…
-##  8  2190 blanding     2018-05-15 c1      north       n10        forb 11:4…
-##  9  2202 blanding     2018-05-15 c1      west        w10        forb 11:4…
-## 10  2208 blanding     2018-05-15 c1      east        e10        em 10:32  
-## # ... with 263 more rows, and 14 more variables: pct_cover &lt;dbl&gt;,
-## #   ht_under50cm &lt;int&gt;, ht50_100cm &lt;int&gt;, ht_over100cm &lt;int&gt;,
-## #   `1cm_wg_stems` &lt;chr&gt;, Notes &lt;chr&gt;, scientific_name &lt;chr&gt;,
-## #   functional_group &lt;chr&gt;, Genus &lt;chr&gt;, Species &lt;chr&gt;, Status &lt;chr&gt;,
-## #   functional_group__1 &lt;chr&gt;, pid &lt;chr&gt;, visit_year &lt;dbl&gt;</code></pre>
-<pre><code>##   [1] &quot;-&quot;                           &quot;Ambrosia artemisiifolia&quot;    
-##   [3] &quot;Andropogon spp&quot;              &quot;Aristida stricta&quot;           
-##   [5] &quot;Asclepias humistrata&quot;        &quot;Asimina angustifolia&quot;       
-##   [7] &quot;Asimina obovata&quot;             &quot;Asimina spp.&quot;               
-##   [9] &quot;Asteraceae&quot;                  &quot;Aureolaria pectinata&quot;       
-##  [11] &quot;Baccharis spp.&quot;              &quot;Balduina angustifolia&quot;      
-##  [13] &quot;Baptisia tinctoria&quot;          &quot;Callicarpa americana&quot;       
-##  [15] &quot;Campsis radicans&quot;            &quot;Carphephorus paniculatus&quot;   
-##  [17] &quot;Carya spp.&quot;                  &quot;Castanea pumila&quot;            
-##  [19] &quot;Cerastium ssp.&quot;              &quot;Chamaecrista fasciculata&quot;   
-##  [21] &quot;Chapmannia floridana&quot;        &quot;Chaptalia tomentosa&quot;        
-##  [23] &quot;Chara spp.&quot;                  &quot;Chrysoma pauciflosculosa&quot;   
-##  [25] &quot;Cladonia rangiferina&quot;        &quot;Cnidoscolus urens&quot;          
-##  [27] &quot;Commelina communis&quot;          &quot;Conoclinium coelestinum&quot;    
-##  [29] &quot;Coreopsis major&quot;             &quot;Crataegus L.&quot;               
-##  [31] &quot;Crotalaria spectabilis&quot;      &quot;Croton argyranthemus&quot;       
-##  [33] &quot;Desmodium paniculatum&quot;       &quot;Dichanthelium aciculare&quot;    
-##  [35] &quot;Dichanthelium clandestinum&quot;  &quot;Dichanthelium spp&quot;          
-##  [37] &quot;Dichanthelium ssp.&quot;          &quot;Diodia spp.&quot;                
-##  [39] &quot;Diodia ssp.&quot;                 &quot;Diospyros virginiana&quot;       
-##  [41] &quot;Elephantopus elatus&quot;         &quot;Eragrostis ellioti&quot;         
-##  [43] &quot;Eragrostis spp&quot;              &quot;Eriocaulon spp&quot;             
-##  [45] &quot;Eriocaulon ssp.&quot;             &quot;Eryngium yuccifolium&quot;       
-##  [47] &quot;Eupatorium capillifolium&quot;    &quot;Galactia erecta&quot;            
-##  [49] &quot;Galactia regularis&quot;          &quot;Galium aparine&quot;             
-##  [51] &quot;Gmelina ssp.&quot;                &quot;Helenium amarum&quot;            
-##  [53] &quot;Hydrocotyle umbellata&quot;       &quot;Hypericum gentianoides&quot;     
-##  [55] &quot;Hypericum hypericoides&quot;      &quot;Hypericum ssp.&quot;             
-##  [57] &quot;Ilex glabra&quot;                 &quot;Ilex opaca&quot;                 
-##  [59] &quot;Ilex ssp.&quot;                   &quot;Ilex vomitoria&quot;             
-##  [61] &quot;Imperata cylindrica&quot;         &quot;Iris pseudacorus&quot;           
-##  [63] &quot;Juncus ssp.&quot;                 &quot;Krameria lanceolata&quot;        
-##  [65] &quot;Lamium amplexicaule&quot;         &quot;Liatris Gaertn. ex Schreb. &quot;
-##  [67] &quot;Liatris ssp.&quot;                &quot;Licania michauxii&quot;          
-##  [69] &quot;Liquidambar styraciflua&quot;     &quot;Lonicera japonica&quot;          
-##  [71] &quot;Lonicera mackii&quot;             &quot;Lygodium japonicum&quot;         
-##  [73] &quot;Lyonia ferruginea&quot;           &quot;Lyonia fruiticosa&quot;          
-##  [75] &quot;Magnolia virginiana&quot;         &quot;Mentha ssp.&quot;                
-##  [77] &quot;Mimosa pudica&quot;               &quot;Mimosa quadrivalvis&quot;        
-##  [79] &quot;Mimosa ssp.&quot;                 &quot;Mimosa strigillosa&quot;         
-##  [81] &quot;Morella cerifera&quot;            &quot;Myriophyllum aquaticum&quot;     
-##  [83] &quot;Opuntia humifusa&quot;            &quot;Oxalis articulata&quot;          
-##  [85] &quot;Panicum capillare&quot;           &quot;Parnassia spp.&quot;             
-##  [87] &quot;Paronychia erecta&quot;           &quot;Parthenocissus quinquefolia&quot;
-##  [89] &quot;Paspalum notatum&quot;            &quot;Passiflora caerulea&quot;        
-##  [91] &quot;Persea borbonia&quot;             &quot;Phyllanthus urinaria&quot;       
-##  [93] &quot;Physalis arenicola&quot;          &quot;Pinus clausa&quot;               
-##  [95] &quot;Pinus elliottii&quot;             &quot;Pinus palustris&quot;            
-##  [97] &quot;Pinus taeda&quot;                 &quot;Pityopsis graminifolia&quot;     
-##  [99] &quot;Pluchea rosea&quot;               &quot;Polygala lutea&quot;             
-## [101] &quot;Polygala nana&quot;               &quot;Polygala ssp.&quot;              
-## [103] &quot;Pseudognaphalium spp.&quot;       &quot;Pteridium caudatum&quot;         
-## [105] &quot;Pterocaulon pycnostachyum&quot;   &quot;Querces spp.&quot;               
-## [107] &quot;Quercus alba&quot;                &quot;Quercus chapmanii&quot;          
-## [109] &quot;Quercus geminata&quot;            &quot;Quercus hemisphaerica&quot;      
-## [111] &quot;Quercus incana&quot;              &quot;Quercus laevis&quot;             
-## [113] &quot;Quercus laurifolia&quot;          &quot;Quercus minima&quot;             
-## [115] &quot;Quercus myrtifolia&quot;          &quot;Quercus nigra&quot;              
-## [117] &quot;Quercus pumila&quot;              &quot;Quercus spp.&quot;               
-## [119] &quot;Quercus ssp.&quot;                &quot;Quercus virginiana&quot;         
-## [121] &quot;Rhexia virginica&quot;            &quot;Rhus copallinum&quot;            
-## [123] &quot;Rhynchosia cytisoides&quot;       &quot;Rubus flagellaris&quot;          
-## [125] &quot;Rubus ssp.&quot;                  &quot;Sassafras albidum&quot;          
-## [127] &quot;Scutellaria spp.&quot;            &quot;Sedge spp.&quot;                 
-## [129] &quot;Selaginella spp.&quot;            &quot;Serenoa repens&quot;             
-## [131] &quot;Setaria spp.&quot;                &quot;Smilax auriculata&quot;          
-## [133] &quot;Smilax glabra&quot;               &quot;Smilax spp&quot;                 
-## [135] &quot;Smilax ssp.&quot;                 &quot;Solanaceae&quot;                 
-## [137] &quot;Solidago odora&quot;              &quot;Sorghastrum secundum&quot;       
-## [139] &quot;Sphagnum ssp.&quot;               &quot;Stachys byzantina&quot;          
-## [141] &quot;Stillingia sylvatica&quot;        &quot;Stipidulicia setaceae&quot;      
-## [143] &quot;Stlosanthes biflora&quot;         &quot;Stylisma spp&quot;               
-## [145] &quot;Stylisma ssp.&quot;               &quot;Tephrosia ssp.&quot;             
-## [147] &quot;Tephrosia virginiana&quot;        &quot;Toxicodendron radicans&quot;     
-## [149] &quot;Toxicodendron radicans L.&quot;   &quot;Tragia ssp.&quot;                
-## [151] &quot;Trifolium spp.&quot;              &quot;Vaccinium arboreum&quot;         
-## [153] &quot;Vaccinium ssp.&quot;              &quot;Viola ssp.&quot;                 
-## [155] &quot;Vitis rotundifolia&quot;          &quot;Xyris caroliniana&quot;          
-## [157] &quot;Yuccca filamentosa&quot;</code></pre>
-<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE</code></pre>
-<pre><code>## # A tibble: 286 x 21
-##    Order installation date       plot_id transect_id quadrat_id veg_id    
-##    &lt;int&gt; &lt;chr&gt;        &lt;date&gt;     &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;     
-##  1  2037 blanding     2018-05-19 g1      north       w10        ghost gra…
-##  2  2046 blanding     2018-05-19 g1      south       s10        ghost gra…
-##  3  2053 blanding     2018-05-19 g1      east        e10        ghost gra…
-##  4  2062 blanding     2018-05-19 g1      west        w10        forb 11:4…
-##  5  2064 blanding     2018-05-19 g1      west        w10        ghost gra…
-##  6  2110 blanding     2018-05-24 n1      east        e10        raco, (ma…
-##  7  2183 blanding     2018-05-17 h1      west        w10        forb 1:05…
-##  8  2190 blanding     2018-05-15 c1      north       n10        forb 11:4…
-##  9  2202 blanding     2018-05-15 c1      west        w10        forb 11:4…
-## 10  2208 blanding     2018-05-15 c1      east        e10        em 10:32  
-## # ... with 276 more rows, and 14 more variables: pct_cover &lt;dbl&gt;,
-## #   ht_under50cm &lt;int&gt;, ht50_100cm &lt;int&gt;, ht_over100cm &lt;int&gt;,
-## #   `1cm_wg_stems` &lt;chr&gt;, Notes &lt;chr&gt;, scientific_name &lt;chr&gt;,
-## #   functional_group &lt;chr&gt;, Genus &lt;chr&gt;, Species &lt;chr&gt;, Status &lt;chr&gt;,
-## #   functional_group__1 &lt;chr&gt;, pid &lt;chr&gt;, visit_year &lt;dbl&gt;</code></pre>
+<p><img src="plot-data-report_files/figure-html/summarize%20veg%20cover-1.png" width="2250" /></p>
 <div id="understory-vegetation-cover" class="section level2">
 <h2>Understory vegetation cover</h2>
-<pre><code>##  installation_full_name      imcy_inv  years_since_fire avg_veg_cover   
-##  Length:57              Uninvaded:46   Min.   : 0.000   Min.   : 5.083  
-##  Class :character       Invaded  :10   1st Qu.: 1.000   1st Qu.:22.250  
-##  Mode  :character       NA&#39;s     : 1   Median : 3.000   Median :36.000  
-##                                        Mean   : 3.643   Mean   :37.907  
-##                                        3rd Qu.: 6.000   3rd Qu.:54.375  
-##                                        Max.   :11.000   Max.   :81.625  
-##                                        NA&#39;s   :1                        
-##  max_veg_cover     se_veg_cover   
-##  Min.   : 14.50   Min.   : 1.908  
-##  1st Qu.: 50.00   1st Qu.: 4.792  
-##  Median : 70.50   Median : 5.303  
-##  Mean   : 68.02   Mean   : 6.234  
-##  3rd Qu.: 84.50   3rd Qu.: 7.136  
-##  Max.   :141.00   Max.   :18.446  
-## </code></pre>
-<p><img src="plot-data-report_files/figure-html/average%20species%20cover-1.png" width="2250" /></p>
+<p><img src="plot-data-report_files/figure-html/average%20species%20cover-1.png" width="2250" /><img src="plot-data-report_files/figure-html/average%20species%20cover-2.png" width="2250" /></p>
 </div>
 <div id="understory-species-richness" class="section level2">
 <h2>Understory species richness</h2>
-<p>There were 36 (8.3 %) 1-m quadrats located in invaded areas representing 7 different years since fire at 4 different installations (Tyndall AFB, Avon Park AFR, Camp Shelby, NA).</p>
-<p><img src="plot-data-report_files/figure-html/quadrat%20richness-1.png" width="2250" /></p>
-<p><img src="plot-data-report_files/figure-html/plot%20richness-1.png" width="2250" /><img src="plot-data-report_files/figure-html/plot%20richness-2.png" width="2250" /><img src="plot-data-report_files/figure-html/plot%20richness-3.png" width="2250" /></p>
+<p>There were 26 (6.5 %) 1-m quadrats located in invaded areas representing 6 different years since fire at 3 different installations (Avon Park AFR, Camp Shelby, Camp Blanding).</p>
+<p><img src="plot-data-report_files/figure-html/quadrat%20richness%20figure-1.png" width="2250" /></p>
+<p>Species richness at the quadrat level was highly variable, though tended to be highest during the first year following fire.</p>
+<p><img src="plot-data-report_files/figure-html/plot%20richness%20fig-1.png" width="2250" /></p>
+<p><img src="plot-data-report_files/figure-html/fx%20groups%20fig-1.png" width="2250" /></p>
 <p>There is no clear effect of cogongrass invasion on diversity in these data, however, the representation of invasion is very small within each time since fire grouping. In two cases we have only a single sampling point, so no estimate of variation. We do see a non-linear relationship with the time since last fire, where richness is initially highest a few months following a fire, then decreases for 1-2 years before increasing small amount and then declining again after about 6 years after the last fire.</p>
 </div>
 </div>
@@ -502,6 +370,7 @@ $(document).ready(function () {
 <h2>Tree basal area</h2>
 <p><img src="plot-data-report_files/figure-html/tree%20basal%20area%20figure-1.png" width="2250" /></p>
 <p><img src="plot-data-report_files/figure-html/proportion%20pine%20dbh%20figure-1.png" width="2250" /></p>
+<p>The dashed line is just for the data where pine makes up <em>less than</em> 60% of the total DBH; the dotted line is for the data where pine makes up <em>more than</em> 60% of the total DBH.</p>
 </div>
 <div id="tree-dbh" class="section level2">
 <h2>Tree dbh</h2>
@@ -520,161 +389,236 @@ $(document).ready(function () {
 <p>Biomass is averaged across the four 25 cm quadrats for each plot, and then these values are summarized in the figures across the roughly estimated years since fire.</p>
 <p><img src="plot-data-report_files/figure-html/standing%20biomass%20fig-1.png" width="2250" /></p>
 <p><img src="plot-data-report_files/figure-html/litter%20biomass%20fig-1.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = avg_dry_litter_gm2 ~ years_since_fire + imcy_inv, 
+##     data = biomass_plot_summary)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -481.20 -201.10  -31.71  135.39  990.09 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       384.054     44.591   8.613 1.15e-13 ***
+## years_since_fire   46.818      9.441   4.959 2.94e-06 ***
+## imcy_invInvaded  -172.678     83.329  -2.072   0.0408 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 285.2 on 99 degrees of freedom
+## Multiple R-squared:  0.2525, Adjusted R-squared:  0.2374 
+## F-statistic: 16.72 on 2 and 99 DF,  p-value: 5.552e-07</code></pre>
 </div>
 <div id="host-abundance-estimates" class="section level1">
 <h1>Host Abundance Estimates</h1>
 <p><img src="plot-data-report_files/figure-html/dung%20species%20figure-1.png" width="2250" /></p>
-<p><img src="plot-data-report_files/figure-html/dung%20plot%20avg%20figure-1.png" width="2250" /></p>
+<p><img src="plot-data-report_files/figure-html/deer%20dung%20figure-1.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_clusters1m) ~ years_since_fire * imcy_inv, 
+##     data = filter(dung_plot_data, species == &quot;deer&quot;))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.5348 -0.5507 -0.2334  0.4724  2.4408 
+## 
+## Coefficients:
+##                                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                       1.63675    0.19396   8.439  2.6e-11 ***
+## years_since_fire                 -0.01700    0.04325  -0.393    0.696    
+## imcy_invInvaded                   0.38911    0.65919   0.590    0.558    
+## years_since_fire:imcy_invInvaded -0.21756    0.24632  -0.883    0.381    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9313 on 52 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.02063,    Adjusted R-squared:  -0.03587 
+## F-statistic: 0.3652 on 3 and 52 DF,  p-value: 0.7784</code></pre>
 </div>
 <div id="tick-abundance" class="section level1">
 <h1>Tick Abundance</h1>
+<div id="tick-species" class="section level2">
+<h2>Tick species</h2>
+<ul>
+<li>Lone star ticks, <em>Amblyomma americanum</em> abbreviation: Am. am</li>
+</ul>
+<p><img src="pictures/lone-star-ticks.png" /></p>
+<ul>
+<li>Gulf coast ticks <em>Amblyomma maculatum</em> abbreviation: Am. mac.</li>
+</ul>
+<p><img src="pictures/gulf-coast-ticks.png" /></p>
+<ul>
+<li>American dog ticks <em>Dermecentor variablis</em> abbreviation: De. var</li>
+</ul>
+<p><img src="pictures/american-dog-ticks.png" /></p>
+<ul>
+<li>Brown dog ticks <em>Rhipicephalus sanguineus</em> abbreviation: Rh. san</li>
+</ul>
+<p><img src="pictures/brown-dog-ticks.png" /></p>
+<ul>
+<li>Black-legged or deer ticks <em>Ixodes scapularis</em> abbreviation: Ix. sc</li>
+</ul>
+<p><img src="pictures/deer-ticks.png" /></p>
+</div>
 <div id="total-ticks-collected-across-burn-units" class="section level2">
 <h2>Total ticks collected across burn units</h2>
 <p>The high tick abundance for 8-years post-fire is driven by a single plot at Camp Blanding.</p>
-<p><img src="plot-data-report_files/figure-html/tick%20life%20stage%20vs%20fire%20figure-1.png" width="2250" /></p>
+<p><img src="plot-data-report_files/figure-html/tick%20life%20stage%20abundance%20fire-1.png" width="2250" /></p>
 </div>
-<div id="tick-species" class="section level2">
+<div id="tick-species-1" class="section level2">
 <h2>Tick species</h2>
 <p><strong>Note the different scales of the y-axes</strong></p>
 <p><img src="plot-data-report_files/figure-html/tick%20species%20vs%20fire%20fig-1.png" width="2250" /></p>
 </div>
 <div id="summarize-tick-abundance-data" class="section level2">
 <h2>Summarize tick abundance data</h2>
-<pre><code>##      pid              visit_year   years_since_fire      imcy_inv 
-##  Length:79          Min.   :2017   Min.   : 0.000   Uninvaded:63  
-##  Class :character   1st Qu.:2017   1st Qu.: 1.000   Invaded  : 8  
-##  Mode  :character   Median :2018   Median : 3.000   NA&#39;s     : 8  
-##                     Mean   :2018   Mean   : 3.606                 
-##                     3rd Qu.:2018   3rd Qu.: 6.000                 
-##                     Max.   :2018   Max.   :11.000                 
-##                                    NA&#39;s   :8                      
-##  installation_full_name  total_ticks    
-##  Length:79              Min.   :  0.00  
-##  Class :character       1st Qu.:  1.00  
-##  Mode  :character       Median :  2.00  
-##                         Mean   : 12.52  
-##                         3rd Qu.:  6.00  
-##                         Max.   :219.00  
+<pre><code>##  installation         plot_id            visit_year   years_since_fire
+##  Length:107         Length:107         Min.   :2017   Min.   : 0.000  
+##  Class :character   Class :character   1st Qu.:2017   1st Qu.: 1.000  
+##  Mode  :character   Mode  :character   Median :2018   Median : 2.500  
+##                                        Mean   :2018   Mean   : 3.347  
+##                                        3rd Qu.:2018   3rd Qu.: 5.000  
+##                                        Max.   :2018   Max.   :11.000  
+##                                                       NA&#39;s   :9       
+##       imcy_inv  installation_full_name  total_ticks     
+##  Uninvaded:88   Length:107             Min.   :  0.000  
+##  Invaded  :11   Class :character       1st Qu.:  0.000  
+##  NA&#39;s     : 8   Mode  :character       Median :  1.000  
+##                                        Mean   :  8.664  
+##                                        3rd Qu.:  6.000  
+##                                        Max.   :207.000  
 ## </code></pre>
-<pre><code>## # A tibble: 8 x 6
-##   pid    visit_year years_since_fire imcy_inv installation_fu… total_ticks
-##   &lt;chr&gt;       &lt;dbl&gt;            &lt;dbl&gt; &lt;fct&gt;    &lt;chr&gt;                  &lt;int&gt;
-## 1 benni…       2018               NA &lt;NA&gt;     &lt;NA&gt;                       4
-## 2 bland…       2018               NA &lt;NA&gt;     &lt;NA&gt;                       3
-## 3 eglin…       2018               NA &lt;NA&gt;     &lt;NA&gt;                       6
-## 4 jacks…       2018               NA &lt;NA&gt;     &lt;NA&gt;                       1
-## 5 moody…       2017               NA &lt;NA&gt;     &lt;NA&gt;                       7
-## 6 shelb…       2017               NA &lt;NA&gt;     &lt;NA&gt;                       1
-## 7 tynda…       2018               NA &lt;NA&gt;     &lt;NA&gt;                      13
-## 8 tynda…       2017               NA &lt;NA&gt;     &lt;NA&gt;                       7</code></pre>
-<pre><code>##      pid              visit_year   years_since_fire      imcy_inv 
-##  Length:80          Min.   :2017   Min.   : 0.000   Uninvaded:63  
-##  Class :character   1st Qu.:2017   1st Qu.: 1.000   Invaded  : 9  
-##  Mode  :character   Median :2018   Median : 3.000   NA&#39;s     : 8  
-##                     Mean   :2018   Mean   : 3.625                 
-##                     3rd Qu.:2018   3rd Qu.: 6.000                 
-##                     Max.   :2018   Max.   :11.000                 
-##                                    NA&#39;s   :8                      
-##  installation_full_name  total_ticks     avg_dry_standing_gm2
-##  Length:80              Min.   :  0.00   Min.   :   8.92     
-##  Class :character       1st Qu.:  1.00   1st Qu.:  76.32     
-##  Mode  :character       Median :  2.00   Median : 236.76     
-##                         Mean   : 12.38   Mean   : 343.98     
-##                         3rd Qu.:  6.00   3rd Qu.: 398.04     
-##                         Max.   :219.00   Max.   :1776.23     
-##                                          NA&#39;s   :35          
-##  se_dry_standing_gm2 avg_dry_litter_gm2   se_litter     
-##  Min.   :  6.135     Min.   :  34.64    Min.   : 16.51  
-##  1st Qu.: 26.438     1st Qu.: 326.17    1st Qu.: 51.60  
-##  Median : 57.257     Median : 509.74    Median : 99.94  
-##  Mean   :112.877     Mean   : 528.94    Mean   :123.91  
-##  3rd Qu.:122.806     3rd Qu.: 666.14    3rd Qu.:171.64  
-##  Max.   :854.745     Max.   :1608.24    Max.   :371.81  
-##  NA&#39;s   :35          NA&#39;s   :34         NA&#39;s   :34      
-##  avg_pct_litter_moisture installation         plot_id         
-##  Min.   : 7.017          Length:80          Length:80         
-##  1st Qu.:16.869          Class :character   Class :character  
-##  Median :27.977          Mode  :character   Mode  :character  
-##  Mean   :29.936                                               
-##  3rd Qu.:40.240                                               
-##  Max.   :68.247                                               
-##  NA&#39;s   :34                                                   
-##  avg_canopy_cover sd_canopy_cover      n_obs       se_canopy_cover 
-##  Min.   : 8.06    Min.   : 0.520   Min.   :1.000   Min.   : 0.260  
-##  1st Qu.:33.41    1st Qu.: 6.778   1st Qu.:4.000   1st Qu.: 3.389  
-##  Median :47.97    Median :10.309   Median :4.000   Median : 5.154  
-##  Mean   :52.79    Mean   :12.843   Mean   :3.939   Mean   : 6.465  
-##  3rd Qu.:72.02    3rd Qu.:18.906   3rd Qu.:4.000   3rd Qu.: 9.453  
-##  Max.   :97.76    Max.   :33.630   Max.   :4.000   Max.   :19.000  
-##  NA&#39;s   :20       NA&#39;s   :21       NA&#39;s   :14      NA&#39;s   :21      
-##  avg_woody_ht1    avg_woody_ht_all  avg_herb_ht1    avg_herb_ht_all 
-##  Min.   : 13.25   Min.   : 13.78   Min.   :  0.00   Min.   :  0.00  
-##  1st Qu.: 34.25   1st Qu.: 31.83   1st Qu.: 22.25   1st Qu.: 20.50  
-##  Median : 53.00   Median : 49.75   Median : 30.25   Median : 27.58  
-##  Mean   : 63.38   Mean   : 59.25   Mean   : 36.55   Mean   : 32.85  
-##  3rd Qu.: 80.75   3rd Qu.: 84.33   3rd Qu.: 47.50   3rd Qu.: 41.17  
-##  Max.   :188.50   Max.   :173.92   Max.   :128.50   Max.   :106.50  
-##  NA&#39;s   :15       NA&#39;s   :15       NA&#39;s   :15       NA&#39;s   :15      
-##  avg_litter_depth1 avg_litter_depth_all avg_pct_green   avg_pct_litter  
-##  Min.   : 0.750    Min.   : 0.7917      Min.   : 1.25   Min.   :  3.75  
-##  1st Qu.: 2.250    1st Qu.: 2.5000      1st Qu.:16.50   1st Qu.: 46.25  
-##  Median : 3.500    Median : 3.5000      Median :29.25   Median : 81.25  
-##  Mean   : 3.929    Mean   : 4.0295      Mean   :32.48   Mean   : 69.33  
-##  3rd Qu.: 4.750    3rd Qu.: 5.2500      3rd Qu.:48.75   3rd Qu.: 92.50  
-##  Max.   :10.500    Max.   :11.5833      Max.   :76.25   Max.   :100.00  
-##  NA&#39;s   :15        NA&#39;s   :15           NA&#39;s   :15      NA&#39;s   :15      
-##   avg_pct_wood     avg_pct_bare     visit_date         last_fire_year
-##  Min.   : 0.250   Min.   : 0.00   Min.   :2017-06-09   Min.   :2007  
-##  1st Qu.: 3.000   1st Qu.: 1.25   1st Qu.:2017-09-24   1st Qu.:2011  
-##  Median : 4.000   Median : 6.25   Median :2018-05-31   Median :2015  
-##  Mean   : 5.356   Mean   :13.27   Mean   :2018-03-24   Mean   :2014  
-##  3rd Qu.: 6.250   3rd Qu.:18.75   3rd Qu.:2018-07-09   3rd Qu.:2017  
-##  Max.   :20.000   Max.   :76.25   Max.   :2018-07-26   Max.   :2018  
-##  NA&#39;s   :15       NA&#39;s   :15      NA&#39;s   :15           NA&#39;s   :15    
-##    xcoord_lon       ycoord_lat    avg_clusters1m   avg_clusters1m_2m
-##  Min.   :-89.11   Min.   :27.54   Min.   : 0.000   Min.   :  0.000  
-##  1st Qu.:-85.52   1st Qu.:29.85   1st Qu.: 0.250   1st Qu.:  0.375  
-##  Median :-82.00   Median :30.05   Median : 1.000   Median :  1.000  
-##  Mean   :-83.56   Mean   :30.78   Mean   : 6.176   Mean   :  8.196  
-##  3rd Qu.:-81.29   3rd Qu.:32.35   3rd Qu.: 4.096   3rd Qu.:  4.625  
-##  Max.   :-80.75   Max.   :34.09   Max.   :82.833   Max.   :128.000  
-##  NA&#39;s   :15       NA&#39;s   :15      NA&#39;s   :22       NA&#39;s   :25       
-##    total_dbh         richness       avg_tree_ht     avg_char_ht    
-##  Min.   :  52.5   Min.   : 1.000   Min.   : 2.21   Min.   :0.2600  
-##  1st Qu.: 260.0   1st Qu.: 1.000   1st Qu.:10.93   1st Qu.:0.9624  
-##  Median : 404.7   Median : 3.000   Median :15.03   Median :1.9359  
-##  Mean   : 457.1   Mean   : 3.366   Mean   :14.55   Mean   :2.3446  
-##  3rd Qu.: 604.9   3rd Qu.: 4.500   3rd Qu.:17.52   3rd Qu.:3.2692  
-##  Max.   :1450.0   Max.   :11.000   Max.   :26.62   Max.   :8.8400  
-##  NA&#39;s   :9        NA&#39;s   :9        NA&#39;s   :10      NA&#39;s   :38      
-##      Other            Pinus           Quercus      pct_pinus_dbh   
-##  Min.   :  0.00   Min.   :   0.0   Min.   :  0.0   Min.   :  0.00  
-##  1st Qu.:  0.00   1st Qu.: 161.1   1st Qu.:  0.0   1st Qu.: 50.32  
-##  Median :  0.00   Median : 273.1   Median :  4.2   Median : 91.30  
-##  Mean   : 45.34   Mean   : 304.6   Mean   :107.1   Mean   : 73.42  
-##  3rd Qu.: 19.70   3rd Qu.: 394.4   3rd Qu.:155.9   3rd Qu.:100.00  
-##  Max.   :603.10   Max.   :1323.8   Max.   :721.3   Max.   :100.00  
-##  NA&#39;s   :9        NA&#39;s   :9        NA&#39;s   :9       NA&#39;s   :9       
-##  shrub_sap_rich   total_stems_100m2 avg_veg_cover    sd_veg_cover   
-##  Min.   : 1.000   Min.   :  1.00    Min.   : 5.75   Min.   : 2.121  
-##  1st Qu.: 2.000   1st Qu.:  7.75    1st Qu.:18.88   1st Qu.:10.738  
-##  Median : 3.000   Median : 16.50    Median :35.81   Median :13.726  
-##  Mean   : 4.156   Mean   : 53.16    Mean   :38.39   Mean   :15.729  
-##  3rd Qu.: 6.000   3rd Qu.: 53.50    3rd Qu.:58.59   3rd Qu.:20.552  
-##  Max.   :15.000   Max.   :821.00    Max.   :91.50   Max.   :36.893  
-##  NA&#39;s   :16       NA&#39;s   :16        NA&#39;s   :20      NA&#39;s   :20      
+<pre><code>## [1] &quot;benning extra&quot;  &quot;blanding extra&quot; &quot;eglin extra&quot;    &quot;jackson extra&quot; 
+## [5] &quot;moody extra&quot;    &quot;shelby extra&quot;   &quot;shelby k1&quot;      &quot;tyndall extra&quot; 
+## [9] &quot;tyndall extra&quot;</code></pre>
+<pre><code>## [1] &quot;benning extra&quot;  &quot;blanding extra&quot; &quot;eglin extra&quot;    &quot;jackson extra&quot; 
+## [5] &quot;moody extra&quot;    &quot;shelby extra&quot;   &quot;tyndall extra&quot;  &quot;tyndall extra&quot;</code></pre>
+<pre><code>##  installation         plot_id            visit_year   years_since_fire
+##  Length:107         Length:107         Min.   :2017   Min.   : 0.000  
+##  Class :character   Class :character   1st Qu.:2017   1st Qu.: 1.000  
+##  Mode  :character   Mode  :character   Median :2018   Median : 2.500  
+##                                        Mean   :2018   Mean   : 3.347  
+##                                        3rd Qu.:2018   3rd Qu.: 5.000  
+##                                        Max.   :2018   Max.   :11.000  
+##                                                       NA&#39;s   :9       
+##       imcy_inv  installation_full_name  total_ticks     
+##  Uninvaded:88   Length:107             Min.   :  0.000  
+##  Invaded  :11   Class :character       1st Qu.:  0.000  
+##  NA&#39;s     : 8   Mode  :character       Median :  1.000  
+##                                        Mean   :  8.664  
+##                                        3rd Qu.:  6.000  
+##                                        Max.   :207.000  
+##                                                         
+##  avg_dry_standing_gm2 se_dry_standing_gm2 avg_dry_litter_gm2
+##  Min.   :   5.92      Min.   :  3.453     Min.   :  34.64   
+##  1st Qu.:  72.60      1st Qu.: 20.718     1st Qu.: 283.74   
+##  Median : 139.96      Median : 46.420     Median : 474.12   
+##  Mean   : 238.27      Mean   : 77.048     Mean   : 523.45   
+##  3rd Qu.: 321.24      3rd Qu.: 85.817     3rd Qu.: 680.58   
+##  Max.   :1666.36      Max.   :656.269     Max.   :1608.24   
+##  NA&#39;s   :10           NA&#39;s   :10          NA&#39;s   :9         
+##    se_litter      avg_pct_litter_moisture avg_canopy_cover
+##  Min.   : 11.94   Min.   : 5.317          Min.   : 8.06   
+##  1st Qu.: 48.98   1st Qu.:14.029          1st Qu.:34.58   
+##  Median : 85.00   Median :21.170          Median :51.22   
+##  Mean   :119.98   Mean   :25.231          Mean   :55.09   
+##  3rd Qu.:152.51   3rd Qu.:35.481          3rd Qu.:75.66   
+##  Max.   :585.82   Max.   :68.247          Max.   :97.76   
+##  NA&#39;s   :9        NA&#39;s   :9               NA&#39;s   :8       
+##  sd_canopy_cover      n_obs   se_canopy_cover  avg_woody_ht1   
+##  Min.   : 0.520   Min.   :4   Min.   : 0.260   Min.   :  4.50  
+##  1st Qu.: 5.429   1st Qu.:4   1st Qu.: 2.714   1st Qu.: 32.38  
+##  Median : 8.011   Median :4   Median : 4.005   Median : 50.25  
+##  Mean   :11.507   Mean   :4   Mean   : 5.754   Mean   : 59.90  
+##  3rd Qu.:15.056   3rd Qu.:4   3rd Qu.: 7.528   3rd Qu.: 77.38  
+##  Max.   :39.496   Max.   :4   Max.   :19.748   Max.   :188.50  
+##  NA&#39;s   :8        NA&#39;s   :8   NA&#39;s   :8        NA&#39;s   :8       
+##  avg_woody_ht_all   avg_herb_ht1    avg_herb_ht_all  avg_litter_depth1
+##  Min.   :  5.833   Min.   :  0.00   Min.   :  0.00   Min.   : 0.750   
+##  1st Qu.: 30.014   1st Qu.: 23.38   1st Qu.: 22.86   1st Qu.: 2.250   
+##  Median : 47.900   Median : 33.75   Median : 31.08   Median : 3.500   
+##  Mean   : 56.728   Mean   : 38.70   Mean   : 34.95   Mean   : 4.048   
+##  3rd Qu.: 74.025   3rd Qu.: 51.12   3rd Qu.: 44.20   3rd Qu.: 5.125   
+##  Max.   :173.917   Max.   :128.50   Max.   :106.50   Max.   :11.250   
+##  NA&#39;s   :8         NA&#39;s   :8        NA&#39;s   :8        NA&#39;s   :8        
+##  avg_litter_depth_all avg_pct_green   avg_pct_litter    avg_pct_wood   
+##  Min.   : 0.7917      Min.   : 1.25   Min.   :  3.75   Min.   : 0.125  
+##  1st Qu.: 2.5000      1st Qu.:18.75   1st Qu.: 46.25   1st Qu.: 2.812  
+##  Median : 3.3333      Median :30.00   Median : 78.25   Median : 4.000  
+##  Mean   : 3.8725      Mean   :33.86   Mean   : 68.80   Mean   : 5.307  
+##  3rd Qu.: 4.6250      3rd Qu.:49.75   3rd Qu.: 90.62   3rd Qu.: 6.375  
+##  Max.   :11.5833      Max.   :77.50   Max.   :100.00   Max.   :20.000  
+##  NA&#39;s   :8            NA&#39;s   :8       NA&#39;s   :8        NA&#39;s   :8       
+##   avg_pct_bare   last_fire_year   xcoord_lon       ycoord_lat   
+##  Min.   : 0.00   Min.   :2006   Min.   :-89.23   Min.   :27.54  
+##  1st Qu.: 1.25   1st Qu.:2013   1st Qu.:-86.26   1st Qu.:29.87  
+##  Median : 7.50   Median :2015   Median :-83.18   Median :30.73  
+##  Mean   :16.61   Mean   :2014   Mean   :-84.04   Mean   :31.01  
+##  3rd Qu.:24.38   3rd Qu.:2017   3rd Qu.:-81.67   3rd Qu.:32.38  
+##  Max.   :77.50   Max.   :2018   Max.   :-80.75   Max.   :34.09  
+##  NA&#39;s   :8       NA&#39;s   :9      NA&#39;s   :8        NA&#39;s   :8      
+##  total_clusters1m total_clusters2m   total_dbh         richness    
+##  Min.   :  0.00   Min.   :  0.00   Min.   :  26.3   Min.   :1.000  
+##  1st Qu.:  0.00   1st Qu.:  0.00   1st Qu.: 255.3   1st Qu.:1.000  
+##  Median :  3.00   Median :  4.00   Median : 404.4   Median :3.000  
+##  Mean   : 25.85   Mean   : 33.89   Mean   : 441.5   Mean   :3.214  
+##  3rd Qu.: 11.50   3rd Qu.: 13.00   3rd Qu.: 591.0   3rd Qu.:4.000  
+##  Max.   :529.00   Max.   :768.00   Max.   :1369.8   Max.   :9.000  
+##  NA&#39;s   :8        NA&#39;s   :8        NA&#39;s   :9        NA&#39;s   :9      
+##   avg_tree_ht     avg_char_ht    pct_pinus_dbh    shrub_sap_rich  
+##  Min.   : 2.21   Min.   :0.260   Min.   :  0.00   Min.   : 1.000  
+##  1st Qu.:11.09   1st Qu.:1.082   1st Qu.: 60.48   1st Qu.: 2.000  
+##  Median :15.53   Median :2.129   Median : 91.66   Median : 3.000  
+##  Mean   :15.69   Mean   :2.386   Mean   : 75.98   Mean   : 4.063  
+##  3rd Qu.:19.50   3rd Qu.:3.555   3rd Qu.:100.00   3rd Qu.: 5.500  
+##  Max.   :30.17   Max.   :6.000   Max.   :100.00   Max.   :15.000  
+##  NA&#39;s   :11      NA&#39;s   :45      NA&#39;s   :9        NA&#39;s   :12      
+##  total_stems_100m2 plot_avg_veg_cover max_veg_cover     sd_veg_cover   
+##  Min.   :  0.00    Min.   : 3.125     Min.   :  6.50   Min.   : 2.121  
+##  1st Qu.:  6.00    1st Qu.:22.375     1st Qu.: 38.00   1st Qu.:10.643  
+##  Median : 14.00    Median :37.500     Median : 61.00   Median :14.863  
+##  Mean   : 46.05    Mean   :39.568     Mean   : 58.65   Mean   :16.151  
+##  3rd Qu.: 43.50    3rd Qu.:58.188     3rd Qu.: 78.00   3rd Qu.:21.773  
+##  Max.   :821.00    Max.   :91.500     Max.   :125.00   Max.   :36.893  
+##  NA&#39;s   :12        NA&#39;s   :12         NA&#39;s   :12       NA&#39;s   :12      
 ##   se_veg_cover   
 ##  Min.   : 1.061  
-##  1st Qu.: 5.369  
-##  Median : 6.863  
-##  Mean   : 7.864  
-##  3rd Qu.:10.276  
+##  1st Qu.: 5.322  
+##  Median : 7.432  
+##  Mean   : 8.075  
+##  3rd Qu.:10.887  
 ##  Max.   :18.446  
-##  NA&#39;s   :20</code></pre>
+##  NA&#39;s   :12</code></pre>
 </div>
 <div id="tickfire-log-linear-relationship" class="section level2">
 <h2>Tick~fire log-linear relationship</h2>
+<pre><code>##  [1] &quot;Avon Park AFR&quot; &quot;Fort Benning&quot;  NA              &quot;Camp Blanding&quot;
+##  [5] &quot;Eglin AFB&quot;     &quot;Fort Gordon&quot;   &quot;Fort Jackson&quot;  &quot;Moody AFB&quot;    
+##  [9] &quot;Camp Shelby&quot;   &quot;Tyndall AFB&quot;</code></pre>
+<pre><code>## [1] &quot;benning extra&quot;  &quot;blanding extra&quot; &quot;eglin extra&quot;    &quot;jackson extra&quot; 
+## [5] &quot;moody extra&quot;    &quot;shelby extra&quot;   &quot;tyndall extra&quot;  &quot;tyndall extra&quot;</code></pre>
 <p><img src="plot-data-report_files/figure-html/tick-fire-1.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ years_since_fire, data = tick_data_plot_summary)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.2753 -0.8693 -0.1892  0.6569  3.4840 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       0.72866    0.18013   4.045 0.000106 ***
+## years_since_fire  0.14060    0.03977   3.535 0.000629 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.201 on 96 degrees of freedom
+##   (9 observations deleted due to missingness)
+## Multiple R-squared:  0.1152, Adjusted R-squared:  0.106 
+## F-statistic:  12.5 on 1 and 96 DF,  p-value: 0.0006292</code></pre>
 </div>
 <div id="seasonal-sampling" class="section level2">
 <h2>Seasonal sampling</h2>
@@ -695,6 +639,27 @@ $(document).ready(function () {
 <h2>Understory biomass</h2>
 <p>Log-linear relationship, very noisy trends with many zeroes. Plots associated with invasions had either zero or one ticks.</p>
 <p><img src="plot-data-report_files/figure-html/tick-veg-biomass-1.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ avg_dry_standing_gm2 + imcy_inv, 
+##     data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.4015 -1.1621 -0.2820  0.4912  4.1207 
+## 
+## Coefficients:
+##                        Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)           1.1434161  0.1730045   6.609 2.31e-09 ***
+## avg_dry_standing_gm2  0.0005243  0.0004711   1.113   0.2686    
+## imcy_invInvaded      -0.7447031  0.4235020  -1.758   0.0819 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.262 on 94 degrees of freedom
+##   (10 observations deleted due to missingness)
+## Multiple R-squared:  0.04058,    Adjusted R-squared:  0.02017 
+## F-statistic: 1.988 on 2 and 94 DF,  p-value: 0.1427</code></pre>
 </div>
 <div id="litter-percent-cover" class="section level2">
 <h2>Litter percent cover</h2>
@@ -704,11 +669,127 @@ $(document).ready(function () {
 <h2>Litter biomass</h2>
 <p>Tick abundance plotted against dried litter biomass in invaded and uninvaded plots.</p>
 <p><img src="plot-data-report_files/figure-html/tick-litter-mass-1.png" width="2250" /></p>
+</div>
+<div id="litter-moisture" class="section level2">
+<h2>Litter moisture</h2>
 <p><img src="plot-data-report_files/figure-html/tick-litter-moisture-1.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ avg_dry_litter_gm2 + avg_pct_litter_moisture, 
+##     data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.2428 -0.8674 -0.2739  0.7854  3.9049 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)             0.182704   0.302448   0.604   0.5472   
+## avg_dry_litter_gm2      0.001036   0.000373   2.778   0.0066 **
+## avg_pct_litter_moisture 0.018796   0.008116   2.316   0.0227 * 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.201 on 95 degrees of freedom
+##   (9 observations deleted due to missingness)
+## Multiple R-squared:  0.1255, Adjusted R-squared:  0.1071 
+## F-statistic: 6.815 on 2 and 95 DF,  p-value: 0.001715</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ avg_pct_litter + avg_pct_litter_moisture, 
+##     data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.6646 -0.8644 -0.1620  0.5540  3.7722 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)             -0.595848   0.402695  -1.480 0.142276    
+## avg_pct_litter           0.017966   0.004582   3.921 0.000167 ***
+## avg_pct_litter_moisture  0.021768   0.007840   2.776 0.006620 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.158 on 95 degrees of freedom
+##   (9 observations deleted due to missingness)
+## Multiple R-squared:  0.1861, Adjusted R-squared:  0.169 
+## F-statistic: 10.86 on 2 and 95 DF,  p-value: 5.638e-05</code></pre>
+<pre><code>##                        df      AIC
+## ticks_litter_mass_mod   4 318.8866
+## ticks_litter_cover_mod  4 311.8410</code></pre>
+<pre><code>## [[1]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/ticks%20litter%20model-1.png" width="2250" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/ticks%20litter%20model-2.png" width="2250" /></p>
+<pre><code>## 
+## [[3]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/ticks%20litter%20model-3.png" width="2250" /></p>
+<pre><code>## 
+## [[4]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/ticks%20litter%20model-4.png" width="2250" /> <img src="plot-data-report_files/figure-html/ticks%20litter%20model-5.png" width="2250" /><img src="plot-data-report_files/figure-html/ticks%20litter%20model-6.png" width="2250" /></p>
 </div>
 <div id="canopy-cover" class="section level2">
 <h2>Canopy cover</h2>
-<p>Log-linear relationship, where there are more ticks in plots with more canopy cover. <img src="plot-data-report_files/figure-html/tick-canopy-cover-1.png" width="2250" /></p>
+<p>Log-linear relationship, where there are more ticks in plots with more canopy cover.</p>
+<p><img src="plot-data-report_files/figure-html/tick-canopy-cover-1.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ avg_canopy_cover, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.8802 -0.7977 -0.2188  0.5364  4.0813 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      0.192578   0.293496   0.656 0.513280    
+## avg_canopy_cover 0.018182   0.004867   3.736 0.000316 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.189 on 97 degrees of freedom
+##   (8 observations deleted due to missingness)
+## Multiple R-squared:  0.1258, Adjusted R-squared:  0.1168 
+## F-statistic: 13.96 on 1 and 97 DF,  p-value: 0.0003157</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ avg_canopy_cover + avg_pct_litter + 
+##     avg_pct_litter_moisture, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.8810 -0.7271 -0.2399  0.5749  3.8276 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)             -0.798350   0.408317  -1.955  0.05353 . 
+## avg_canopy_cover         0.011405   0.005579   2.044  0.04371 * 
+## avg_pct_litter           0.012018   0.005365   2.240  0.02743 * 
+## avg_pct_litter_moisture  0.021128   0.007719   2.737  0.00741 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.139 on 94 degrees of freedom
+##   (9 observations deleted due to missingness)
+## Multiple R-squared:  0.2208, Adjusted R-squared:  0.1959 
+## F-statistic: 8.878 on 3 and 94 DF,  p-value: 3.069e-05</code></pre>
+<pre><code>## [[1]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/ticks%20canopy%20cover%20model-1.png" width="2250" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/ticks%20canopy%20cover%20model-2.png" width="2250" /></p>
+<pre><code>## 
+## [[3]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/ticks%20canopy%20cover%20model-3.png" width="2250" /></p>
+<pre><code>## 
+## [[4]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/ticks%20canopy%20cover%20model-4.png" width="2250" /> <img src="plot-data-report_files/figure-html/ticks%20canopy%20cover%20model-5.png" width="2250" /><img src="plot-data-report_files/figure-html/ticks%20canopy%20cover%20model-6.png" width="2250" /><img src="plot-data-report_files/figure-html/ticks%20canopy%20cover%20model-7.png" width="2250" /><img src="plot-data-report_files/figure-html/ticks%20canopy%20cover%20model-8.png" width="2250" /></p>
+</div>
+<div id="ticks-pine-dominance" class="section level2">
+<h2>Ticks ~ pine dominance</h2>
+<p><img src="plot-data-report_files/figure-html/ticks-pine-1.png" width="2250" /></p>
 </div>
 <div id="ticks-char-height" class="section level2">
 <h2>Ticks ~ char height</h2>
@@ -719,110 +800,248 @@ $(document).ready(function () {
 <p>Log-log relationship between tick density and host density</p>
 <p><img src="plot-data-report_files/figure-html/tick-hosts-1.png" width="2250" /></p>
 <p>Loess lines are dashed, lines from the linear model are solid, and the black solid line is the overall trend when pooling the data across invaded and uninvaded plots.</p>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ total_clusters1m, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.2109 -1.2018 -0.5132  0.6532  4.1292 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       1.2108794  0.1340748   9.031 1.65e-14 ***
+## total_clusters1m -0.0006475  0.0015828  -0.409    0.683    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.27 on 97 degrees of freedom
+##   (8 observations deleted due to missingness)
+## Multiple R-squared:  0.001722,   Adjusted R-squared:  -0.008569 
+## F-statistic: 0.1673 on 1 and 97 DF,  p-value: 0.6834</code></pre>
 </div>
 </div>
 <div id="host-abundance" class="section level1">
 <h1>Host abundance</h1>
-<p>Host abundance tended to be slightly lower with increasing canopy cover and time since fire. The trend isn’t significant <img src="plot-data-report_files/figure-html/hosts-canopy-cover-1.png" width="2250" /></p>
+<p>Host abundance tended to be slightly lower with increasing canopy cover and time since fire. The trend isn’t significant</p>
+<p><img src="plot-data-report_files/figure-html/hosts-canopy-cover-1.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_clusters1m) ~ avg_canopy_cover, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.0162 -1.4117 -0.2943  0.9704  4.4225 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       2.149518   0.387096   5.553 2.45e-07 ***
+## avg_canopy_cover -0.008273   0.006418  -1.289      0.2    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.568 on 97 degrees of freedom
+##   (8 observations deleted due to missingness)
+## Multiple R-squared:  0.01684,    Adjusted R-squared:  0.006704 
+## F-statistic: 1.661 on 1 and 97 DF,  p-value: 0.2005</code></pre>
 <p><img src="plot-data-report_files/figure-html/host-fire-1.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_clusters1m) ~ years_since_fire, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.8676 -1.3896 -0.2954  0.7170  4.6085 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       1.86759    0.23701   7.880  5.1e-12 ***
+## years_since_fire -0.05311    0.05233  -1.015    0.313    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.581 on 96 degrees of freedom
+##   (9 observations deleted due to missingness)
+## Multiple R-squared:  0.01061,    Adjusted R-squared:  0.000307 
+## F-statistic:  1.03 on 1 and 96 DF,  p-value: 0.3128</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_clusters1m) ~ total_dbh, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.0736 -1.3732 -0.1846  1.0408  4.5705 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.1098680  0.3159929   6.677 1.58e-09 ***
+## total_dbh   -0.0009032  0.0006199  -1.457    0.148    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.563 on 96 degrees of freedom
+##   (9 observations deleted due to missingness)
+## Multiple R-squared:  0.02163,    Adjusted R-squared:  0.01144 
+## F-statistic: 2.123 on 1 and 96 DF,  p-value: 0.1484</code></pre>
 </div>
 <div id="initialexploratory-linear-ols-models" class="section level1">
 <h1>Initial/exploratory linear (OLS) models</h1>
+<p><img src="plot-data-report_files/figure-html/linear%20models%20ticks-1.png" width="2250" /></p>
 <pre><code>## 
 ## Call:
-## lm(formula = log1p(total_ticks) ~ years_since_fire, data = tick_data_sum)
+## lm(formula = log1p(total_ticks) ~ avg_pct_litter + avg_pct_litter_moisture + 
+##     pct_pinus_dbh, data = tick_data_sum)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -2.3110 -0.9938 -0.3439  0.6849  3.5086 
+## -2.0598 -0.7053 -0.2259  0.5005  3.9436 
 ## 
 ## Coefficients:
-##                  Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)       0.98648    0.23716   4.160 8.91e-05 ***
-## years_since_fire  0.12041    0.04953   2.431   0.0176 *  
+##                          Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)              1.078763   0.561005   1.923 0.057551 .  
+## avg_pct_litter           0.011242   0.004619   2.434 0.016839 *  
+## avg_pct_litter_moisture  0.018796   0.007356   2.555 0.012230 *  
+## pct_pinus_dbh           -0.014943   0.003693  -4.046 0.000108 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.315 on 70 degrees of freedom
+## Residual standard error: 1.079 on 93 degrees of freedom
+##   (10 observations deleted due to missingness)
+## Multiple R-squared:  0.3082, Adjusted R-squared:  0.2858 
+## F-statistic: 13.81 on 3 and 93 DF,  p-value: 1.6e-07</code></pre>
+<pre><code>## [[1]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/linear%20models%20ticks-2.png" width="2250" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/linear%20models%20ticks-3.png" width="2250" /></p>
+<pre><code>## 
+## [[3]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/linear%20models%20ticks-4.png" width="2250" /></p>
+<pre><code>## 
+## [[4]]</code></pre>
+<p><img src="plot-data-report_files/figure-html/linear%20models%20ticks-5.png" width="2250" /> <img src="plot-data-report_files/figure-html/linear%20models%20ticks-6.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## glm(formula = total_ticks ~ avg_pct_litter + avg_pct_litter_moisture + 
+##     pct_pinus_dbh, family = &quot;quasipoisson&quot;, data = tick_data_sum)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -6.4921  -3.4075  -2.1982  -0.7721  28.7773  
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)             -0.530119   1.778740  -0.298   0.7663  
+## avg_pct_litter           0.031138   0.016148   1.928   0.0569 .
+## avg_pct_litter_moisture  0.019391   0.016708   1.161   0.2488  
+## pct_pinus_dbh           -0.003579   0.008374  -0.427   0.6701  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for quasipoisson family taken to be 56.49935)
+## 
+##     Null deviance: 2675.5  on 96  degrees of freedom
+## Residual deviance: 2122.9  on 93  degrees of freedom
+##   (10 observations deleted due to missingness)
+## AIC: NA
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+<p><img src="plot-data-report_files/figure-html/linear%20models%20ticks-7.png" width="2250" /><img src="plot-data-report_files/figure-html/linear%20models%20ticks-8.png" width="2250" /><img src="plot-data-report_files/figure-html/linear%20models%20ticks-9.png" width="2250" /><img src="plot-data-report_files/figure-html/linear%20models%20ticks-10.png" width="2250" /><img src="plot-data-report_files/figure-html/linear%20models%20ticks-11.png" width="2250" /><img src="plot-data-report_files/figure-html/linear%20models%20ticks-12.png" width="2250" /><img src="plot-data-report_files/figure-html/linear%20models%20ticks-13.png" width="2250" /></p>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ avg_pct_litter, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.6967 -0.8368 -0.1367  0.4848  3.8841 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    0.039788   0.338660   0.117 0.906719    
+## avg_pct_litter 0.016779   0.004604   3.644 0.000433 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.192 on 97 degrees of freedom
 ##   (8 observations deleted due to missingness)
-## Multiple R-squared:  0.07787,    Adjusted R-squared:  0.0647 
-## F-statistic: 5.911 on 1 and 70 DF,  p-value: 0.01761</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = log1p(total_ticks) ~ avg_dry_litter_gm2, data = tick_data_sum)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.0508 -0.8249 -0.2991  0.8475  3.3081 
-## 
-## Coefficients:
-##                     Estimate Std. Error t value Pr(&gt;|t|)   
-## (Intercept)        0.9109861  0.3343826   2.724  0.00921 **
-## avg_dry_litter_gm2 0.0017615  0.0005333   3.303  0.00190 **
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 1.218 on 44 degrees of freedom
-##   (34 observations deleted due to missingness)
-## Multiple R-squared:  0.1987, Adjusted R-squared:  0.1805 
-## F-statistic: 10.91 on 1 and 44 DF,  p-value: 0.001904</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = avg_dry_litter_gm2 ~ years_since_fire, data = tick_data_sum)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -517.69 -234.17  -23.30   72.18 1037.80 
-## 
-## Coefficients:
-##                  Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)        371.61      77.30   4.807 1.82e-05 ***
-## years_since_fire    39.77      15.45   2.574   0.0135 *  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 321 on 44 degrees of freedom
-##   (34 observations deleted due to missingness)
-## Multiple R-squared:  0.1309, Adjusted R-squared:  0.1112 
-## F-statistic: 6.628 on 1 and 44 DF,  p-value: 0.01348</code></pre>
+## Multiple R-squared:  0.1204, Adjusted R-squared:  0.1114 
+## F-statistic: 13.28 on 1 and 97 DF,  p-value: 0.0004329</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = log1p(total_ticks) ~ avg_canopy_cover, data = tick_data_sum)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -2.4975 -0.8197 -0.2361  0.6973  3.7569 
+## -1.8802 -0.7977 -0.2188  0.5364  4.0813 
 ## 
 ## Coefficients:
 ##                  Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)      0.169522   0.374747   0.452 0.652694    
-## avg_canopy_cover 0.025081   0.006442   3.893 0.000258 ***
+## (Intercept)      0.192578   0.293496   0.656 0.513280    
+## avg_canopy_cover 0.018182   0.004867   3.736 0.000316 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.219 on 58 degrees of freedom
-##   (20 observations deleted due to missingness)
-## Multiple R-squared:  0.2072, Adjusted R-squared:  0.1935 
-## F-statistic: 15.16 on 1 and 58 DF,  p-value: 0.0002581</code></pre>
+## Residual standard error: 1.189 on 97 degrees of freedom
+##   (8 observations deleted due to missingness)
+## Multiple R-squared:  0.1258, Adjusted R-squared:  0.1168 
+## F-statistic: 13.96 on 1 and 97 DF,  p-value: 0.0003157</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log1p(total_ticks) ~ avg_pct_litter_moisture, data = tick_data_sum)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.0476 -0.9683 -0.2659  0.5723  4.0492 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)             0.701623   0.246023   2.852  0.00532 **
+## avg_pct_litter_moisture 0.019723   0.008388   2.351  0.02075 * 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.242 on 96 degrees of freedom
+##   (9 observations deleted due to missingness)
+## Multiple R-squared:  0.05445,    Adjusted R-squared:  0.0446 
+## F-statistic: 5.529 on 1 and 96 DF,  p-value: 0.02075</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = avg_dry_litter_gm2 ~ years_since_fire, data = tick_data_sum)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -567.5 -213.1  -32.4  117.2 1005.0 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       361.889     43.960   8.232 9.14e-13 ***
+## years_since_fire   48.270      9.707   4.973 2.89e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 293.2 on 96 degrees of freedom
+##   (9 observations deleted due to missingness)
+## Multiple R-squared:  0.2048, Adjusted R-squared:  0.1965 
+## F-statistic: 24.73 on 1 and 96 DF,  p-value: 2.886e-06</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = avg_canopy_cover ~ years_since_fire, data = tick_data_sum)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -46.004 -17.778  -3.302  17.159  49.161 
+## -48.637 -19.497  -2.081  23.021  44.562 
 ## 
 ## Coefficients:
 ##                  Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)        43.659      4.812   9.072 1.01e-12 ***
-## years_since_fire    2.293      0.934   2.455   0.0171 *  
+## (Intercept)       48.2580     3.5890  13.446  &lt; 2e-16 ***
+## years_since_fire   2.1144     0.7925   2.668  0.00895 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 23.65 on 58 degrees of freedom
-##   (20 observations deleted due to missingness)
-## Multiple R-squared:  0.09415,    Adjusted R-squared:  0.07853 
-## F-statistic: 6.028 on 1 and 58 DF,  p-value: 0.0171</code></pre>
+## Residual standard error: 23.93 on 96 degrees of freedom
+##   (9 observations deleted due to missingness)
+## Multiple R-squared:  0.06904,    Adjusted R-squared:  0.05934 
+## F-statistic: 7.119 on 1 and 96 DF,  p-value: 0.008954</code></pre>
 </div>
 <div id="cogongrass-data-sampled-from-invasions" class="section level1">
 <h1>Cogongrass Data Sampled from Invasions</h1>
@@ -855,6 +1074,8 @@ $(document).ready(function () {
 
 
 
+</div>
+</div>
 
 </div>
 

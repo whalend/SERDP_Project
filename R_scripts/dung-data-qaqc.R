@@ -81,6 +81,11 @@ filter(dung_data, plot_id=="eglin i1")
 filter(plot_visit_data, plot_id=="eglin")
 #### Eglin i1 north, south, west missing? east is 0 and 0 ####
 
+dung_data$date <- as.Date(as.character(dung_data$date), format = "%Y%m%d")
+dung_data <- dung_data %>%
+  mutate(visit_year = lubridate::year(date))
+summary(dung_data)         
+
 write_csv(dung_data, "data/processed_data/dung.csv")
 
 #### Steven checked processing, 3 missing Eglin i1 entries, waiting on response from elena 9/17 ####
@@ -92,7 +97,7 @@ summary(dung_data)
 names(dung_data)
 
 dung_grouped <- dung_data %>% 
-  group_by(installation, plot_id, date, species) %>% 
+  group_by(installation, plot_id, date, visit_year, species) %>% 
   summarise(dung1m = sum(dung1m, na.rm = T), dung2m = sum(dung2m, na.rm = T))
 
 summary(dung_grouped)
@@ -104,12 +109,12 @@ dung_blanding <- dung_grouped %>%
 
 dung_blanding <- filter(dung_blanding) %>%
   ungroup(.) %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 summary(dung_blanding)
 
 filter(dung_blanding, plot_id=="blanding h1") %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_blanding, "data/processed_by_installation/camp_blanding/dung_blanding.csv")
 
@@ -120,12 +125,12 @@ dung_avonpark <- dung_grouped %>%
 
 dung_avonpark <- filter(dung_avonpark) %>%
   ungroup(.) %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 summary(dung_avonpark)
 
 filter(dung_avonpark, plot_id=="avonpark c1") %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_avonpark, "data/processed_by_installation/avon_park_afr/dung_avonpark.csv")
 
@@ -136,12 +141,12 @@ dung_eglin <- dung_grouped %>%
 
 dung_eglin <- filter(dung_eglin) %>%
   ungroup(.) %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 summary(dung_eglin)
 
 filter(dung_eglin, plot_id=="eglin c1") %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_eglin, "data/processed_by_installation/eglin_afb/dung_eglin.csv")
 
@@ -152,12 +157,12 @@ dung_tyndall <- dung_grouped %>%
 
 dung_tyndall <- filter(dung_tyndall) %>%
   ungroup(.) %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 summary(dung_tyndall)
 
 filter(dung_tyndall, plot_id=="tyndall h1") %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_tyndall, "data/processed_by_installation/tyndall_afb/dung_tyndall.csv")
 
@@ -168,12 +173,12 @@ dung_jackson <- dung_grouped %>%
 
 dung_jackson <- filter(dung_jackson) %>%
   ungroup(.) %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 summary(dung_jackson)
 
 filter(dung_jackson, plot_id=="jackson h1") %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_jackson, "data/processed_by_installation/fort_jackson/dung_jackson.csv")
 
@@ -184,12 +189,12 @@ dung_benning <- dung_grouped %>%
 
 dung_benning <- filter(dung_benning) %>%
   ungroup(.) %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 summary(dung_benning)
 
 filter(dung_benning, plot_id=="benning h1") %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_benning, "data/processed_by_installation/fort_benning/dung_benning.csv")
 
@@ -200,12 +205,12 @@ dung_shelby <- dung_grouped %>%
 
 dung_shelby <- filter(dung_shelby) %>%
   ungroup(.) %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 summary(dung_shelby)
 
 filter(dung_shelby, plot_id=="shelby h1") %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_shelby, "data/processed_by_installation/camp_shelby/dung_shelby.csv")
 
@@ -216,12 +221,12 @@ dung_gordon <- dung_grouped %>%
 
 dung_gordon <- filter(dung_gordon) %>%
   ungroup(.) %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 summary(dung_gordon)
 
 filter(dung_gordon, plot_id=="gordon x1") %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_gordon, "data/processed_by_installation/fort_gordon/dung_gordon.csv")
 
@@ -232,12 +237,12 @@ dung_moody <- dung_grouped %>%
 
 dung_moody <- filter(dung_moody) %>%
   ungroup(.) %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 summary(dung_moody)
 
 filter(dung_moody, plot_id=="moody k1") %>% 
-  select(plot_id, date, species, dung1m, dung2m)
+  select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_moody, "data/processed_by_installation/moody_afb/dung_moody.csv")
 

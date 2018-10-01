@@ -121,6 +121,16 @@ summary(quadrat_data)
 filter(quadrat_data, is.na(pct_wood_litter))
 quadrat_data$pct_wood_litter[is.na(quadrat_data$pct_wood_litter)] <- 0
 
+filter(quadrat_data, plot_id=="blanding c1") %>% 
+  select(installation, plot_id, date)
+
+quadrat_data$date[quadrat_data$plot_id=="blanding c1" & quadrat_data$date==20170607] <- 20170609
+
+quadrat_data$date <- as.Date(as.character(quadrat_data$date), format = "%Y%m%d")
+quadrat_data <- quadrat_data %>% 
+  mutate(visit_year = lubridate::year(quadrat_data$date))
+summary(quadrat_data)
+
 #+ write out processed data ####
 write_csv(quadrat_data, "data/processed_data/quadrat1m.csv")
 
@@ -131,25 +141,26 @@ quadrat_data <- read_csv("data/processed_data/quadrat1m.csv")
 summary(quadrat_data)
 names(quadrat_data)
 
-quadrat_grouped <- quadrat_data %>% 
-  group_by(installation, plot_id, date) %>% 
-  summarise(avg_woody_veg_ht = sum(woody_veg_ht1, woody_veg_ht2, woody_veg_ht3, na.rm = T)/4,
-            avg_herb_veg_ht = sum(herb_veg_ht1, herb_veg_ht2, herb_veg_ht3, na.rm = T)/4,
-            avg_litter_ht = sum(litter_ht1, litter_ht2, litter_ht3, na.rm = T)/4, 
-            avg_pct_green = mean(pct_green, na.rm = T), 
-            avg_pct_litter = mean(pct_litter, na.rm = T), 
-            avg_pct_wood_litter = mean(pct_wood_litter, na.rm = T), 
+quadrat_grouped <- quadrat_data %>%
+      filter(quadrat_id %in% c("n10","e10","s10","w10")) %>%
+  group_by(installation, plot_id, date, visit_year) %>%
+  summarise(avg_woody_veg_ht = mean(c(woody_veg_ht1, woody_veg_ht2, woody_veg_ht3), na.rm = T),
+            avg_herb_veg_ht = mean(c(herb_veg_ht1, herb_veg_ht2, herb_veg_ht3), na.rm = T),
+            avg_litter_ht = mean(c(litter_ht1, litter_ht2, litter_ht3), na.rm = T),
+            avg_pct_green = mean(pct_green, na.rm = T),
+            avg_pct_litter = mean(pct_litter, na.rm = T),
+            avg_pct_wood_litter = mean(pct_wood_litter, na.rm = T),
             avg_pct_bare = mean(pct_bare, na.rm = T))
-            
+
 summary(quadrat_grouped)
 
-filter(quadrat_data, plot_id=="blanding c1") %>% 
-  select(plot_id, date, quadrat_id, woody_veg_ht1, woody_veg_ht2, woody_veg_ht3)
+filter(quadrat_data, plot_id=="blanding c1") %>%
+  select(plot_id, date, visit_year, quadrat_id, woody_veg_ht1, woody_veg_ht2, woody_veg_ht3)
 
-filter(quadrat_grouped, plot_id=="blanding c1") %>% 
-  select(plot_id, date, avg_woody_veg_ht)
+filter(quadrat_grouped, plot_id=="blanding c1") %>%
+  select(plot_id, date, visit_year, avg_woody_veg_ht)
 
-#### Questions about 2017 data ####
+#### Done grouping, combination of canopy, quad1m and quad25cm on new script ####
 
 #+ initial data summaries and comparing sampling effort ####
 quadrat_summaries <- quadrat_data %>%

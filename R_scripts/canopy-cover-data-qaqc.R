@@ -89,6 +89,34 @@ canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="bl
                          canopy_cover$direction=="W"] <- 77
 ## Messed up and forgot dates, fixing the 2018 blanding c1's ##
 
+canopy_cover$date[canopy_cover$plot_id=="blanding c1" & canopy_cover$date==20170607] <- 20170609
+
+canopy_cover$date[canopy_cover$plot_id=="avonpark a2" & canopy_cover$date==20180601] <- 20180531
+canopy_cover$date[canopy_cover$plot_id=="blanding c1" & canopy_cover$date==20180515] <- 20180516
+canopy_cover$date[canopy_cover$plot_id=="shelby f1" & canopy_cover$date==20170923] <- 20170921
+
+
+
+canopy_cover$date <- as.Date(as.character(canopy_cover$date), format = "%Y%m%d")
+canopy_cover <- canopy_cover %>% 
+  filter(distance %in% c(10)) 
+
+canopy_cover <- canopy_cover %>% 
+  mutate(visit_year = lubridate::year(canopy_cover$date))
+
+summary(canopy_cover)
+
+filter(canopy_cover, plot_id=="blanding c1") %>% 
+  select(installation, plot_id, date)
+
 write_csv(canopy_cover, "data/processed_data/canopy-cover.csv")
 
 #### Steven checked processing, looks good ####
+
+canopy_grouped <- canopy_cover %>% 
+  group_by(installation, plot_id, date, visit_year) %>% 
+  summarise(avg_pct_canopy_cover = mean(pct_canopy_cover, na.rm = T))
+
+summary(canopy_grouped)
+
+#### Done grouping, combination of canopy, quad1m and quad25cm on new script ####

@@ -3,7 +3,8 @@ title: "Fire-Plant Invasions-TBD"
 output:
   html_document:
     self_contained: no
-    toc: yes
+    toc: true
+    toc_float: true
   pdf_document:
     toc: yes
 date: "`r Sys.Date()`"
@@ -32,6 +33,7 @@ rm(list=ls())
 
 ```{r assign global variables}
 
+# define ggplot theme ####
 def_theme <- theme(legend.title = element_blank(),
             legend.text = element_text(size = 12),
             legend.position = "top",
@@ -42,6 +44,8 @@ def_theme <- theme(legend.title = element_blank(),
             strip.background = element_blank(),
             panel.grid = element_blank()
             )
+
+# assign colors ####
 invasion_color <- scale_color_manual(values = c("blue", "red"))
 invasion_fill <- scale_fill_manual(values = c("blue", "red"))
 
@@ -1405,7 +1409,7 @@ summary(tick_data_sum)
 unique(tick_data_plot_summary$installation_full_name)
 filter(tick_data_plot_summary, is.na(installation_full_name))$plot_id
 
-ggplot(filter(tick_data_plot_summary, !is.na(imcy_inv)), 
+(tick_fire_fig <- ggplot(filter(tick_data_plot_summary, !is.na(imcy_inv)), 
        aes(years_since_fire, log1p(total_ticks))) +
       # geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", linetype = "dashed", alpha = .2) +
       geom_smooth(aes(fill = imcy_inv, color = imcy_inv), se = T, method = "lm", alpha = .2) +
@@ -1420,7 +1424,7 @@ ggplot(filter(tick_data_plot_summary, !is.na(imcy_inv)),
       xlab("Years since fire") +
       ylab("log( tick abundance + 1 )") +
       def_theme +
-      NULL
+      NULL)
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-vs-fire.png", height = 7.5, width = 7.5)
 
@@ -1657,6 +1661,8 @@ summary(ticks_litter_mass_mod)
 ticks_litter_cover_mod <- lm(log1p(total_ticks) ~ avg_pct_litter + avg_pct_litter_moisture, data = tick_data_sum)
 summary(ticks_litter_cover_mod)
 
+AIC(ticks_litter_mass_mod, ticks_litter_cover_mod)
+
 # model plots ####
 sjPlot::plot_model(ticks_litter_cover_mod, show.values = T, type = "diag")
 sjPlot::plot_model(ticks_litter_cover_mod, show.values = T, type = "std")
@@ -1712,6 +1718,17 @@ sjPlot::plot_model(tick_canopy_mod2, type = "resid")
 sjPlot::plot_model(tick_canopy_mod2, show.values = T, type = "std")
 sjPlot::plot_model(tick_canopy_mod2, show.values = T, type = "slope")
 sjPlot::plot_model(tick_canopy_mod2, show.values = T, type = "pred", terms = c("avg_pct_litter", "avg_pct_litter_moisture", "avg_canopy_cover"))
+
+```
+
+## Ticks ~ pine dominance
+
+```{r ticks-pine}
+
+ggplot(tick_data_sum, aes(years_since_fire, log1p(total_ticks))) +
+      geom_point(aes(color = pct_pinus_dbh), size = 2) +
+      scale_color_viridis_c() +
+      theme_classic()
 
 ```
 
@@ -1803,6 +1820,7 @@ summary(tick_host_model)
 
 # Host abundance
 Host abundance tended to be slightly lower with increasing canopy cover and time since fire. The trend isn't significant
+
 ```{r hosts-canopy-cover}
 
  ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
@@ -1852,8 +1870,6 @@ summary(host_fire_mod)
 
 ```
 
-
-
 ```{r host-trees, eval=F}
 
 ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
@@ -1876,15 +1892,31 @@ summary(host_trees_mod)
 
 ```
 
-
-
 # Initial/exploratory linear (OLS) models
 ```{r linear models ticks}
 
-summary(lm(log1p(total_ticks) ~ years_since_fire, data = tick_data_sum))
-summary(lm(log1p(total_ticks) ~ avg_dry_litter_gm2, data = tick_data_sum))
-summary(lm(avg_dry_litter_gm2 ~ years_since_fire, data = tick_data_sum))
+GGally::ggpairs(select(tick_data_sum, years_since_fire, avg_pct_litter, avg_pct_litter_moisture, avg_canopy_cover, pct_pinus_dbh))
+
+m1 <- lm(log1p(total_ticks) ~ avg_pct_litter + avg_pct_litter_moisture + pct_pinus_dbh, data = tick_data_sum)
+summary(m1)
+sjPlot::plot_model(m1, type = "diag")
+sjPlot::plot_model(m1, type = "std", show.values = T)
+
+m2 <- glm(total_ticks ~ avg_pct_litter + avg_pct_litter_moisture + pct_pinus_dbh, data = tick_data_sum, family = "quasipoisson")
+summary(m2)
+plot(m2)
+sjPlot::plot_model(m2, type = "resid")
+sjPlot::plot_model(m2, type = "std", show.values = T)
+sjPlot::plot_model(m2, type = "resid")
+
+
+
+# summary(lm(log1p(total_ticks) ~ avg_dry_litter_gm2, data = tick_data_sum))
+summary(lm(log1p(total_ticks) ~ avg_pct_litter, data = tick_data_sum))
 summary(lm(log1p(total_ticks) ~ avg_canopy_cover, data = tick_data_sum))
+summary(lm(log1p(total_ticks) ~ avg_pct_litter_moisture, data = tick_data_sum))
+
+summary(lm(avg_dry_litter_gm2 ~ years_since_fire, data = tick_data_sum))
 summary(lm(avg_canopy_cover ~ years_since_fire, data = tick_data_sum))
 # summary(lm(log1p(total_ticks) ~ log1p(avg_clusters1m), data = tick_data_sum))
 
