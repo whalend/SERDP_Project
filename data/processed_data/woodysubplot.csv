@@ -1,413 +1,413 @@
-installation,plot_id,veg_id,over_100cm,date,notes
-blanding,blanding b1,ASIMI,9,20170608,NA
-blanding,blanding b1,DIVI,3,20170608,NA
-blanding,blanding b1,QULA,8,20170608,NA
-blanding,blanding b1,SM,1,20170608,NA
-blanding,blanding a1,DIVI,1,20170609,NA
-blanding,blanding a1,QULA,8,20170609,NA
-blanding,blanding e1,ASIMI,3,20170614,NA
-blanding,blanding e1,PIPA,3,20170614,NA
-blanding,blanding e1,QUHE,1,20170614,NA
-blanding,blanding e1,QULA,3,20170614,NA
-blanding,blanding e1,QUMY,1,20170614,NA
-blanding,blanding e1,SERE,1,20170614,NA
-blanding,blanding g1,SERE,48,20170615,NA
-blanding,blanding h1,DIVI,17,20170620,NA
-blanding,blanding h1,QUNI,7,20170620,NA
-blanding,blanding d1,DIVI,3,20170621,NA
-blanding,blanding d1,QUGE,6,20170621,NA
-blanding,blanding d1,QULA,5,20170621,NA
-blanding,blanding d1,QUNI,1,20170621,NA
-blanding,blanding f1,ASIMI,8,20170621,NA
-blanding,blanding f1,DIVI,4,20170621,NA
-blanding,blanding f1,PICL,1,20170621,NA
-blanding,blanding f1,PIPA,1,20170621,NA
-blanding,blanding f1,QUIN,4,20170621,NA
-blanding,blanding f1,QULA,8,20170621,NA
-blanding,blanding f1,QUMY,11,20170621,NA
-blanding,blanding f1,QUNI,1,20170621,NA
-blanding,blanding f1,RHCO,7,20170621,NA
-avonpark,avonpark a1,SERE,2,20170627,NA
-avonpark,avonpark c1,MOCE,3,20170628,NA
-avonpark,avonpark c1,LYFE,3,20170628,NA
-avonpark,avonpark c1,SERE,6,20170628,NA
-avonpark,avonpark c1,shrub-forb 11:48,1,20170628,NA
-avonpark,avonpark b1,ILEX,5,20170629,NA
-avonpark,avonpark b1,SERE,42,20170629,NA
-avonpark,avonpark d1,PICL,4,20170630,NA
-avonpark,avonpark d1,QUGE,13,20170630,NA
-avonpark,avonpark d1,QUMY,18,20170630,NA
-avonpark,avonpark d1,QUNI,4,20170630,NA
-avonpark,avonpark d1,SERE,14,20170630,NA
-avonpark,avonpark d1,QUMY,3,20170630,NA
-tyndall,tyndall b1,NA,0,20170718,placeholder zero for plot visit
-tyndall,tyndall b2,SERE,2,20170719,NA
-tyndall,tyndall d1,ILGL,7,20170720,NA
-tyndall,tyndall d1,MOCE,1,20170720,NA
-tyndall,tyndall d1,QUERC,4,20170720,NA
-tyndall,tyndall d1,QUHE,1,20170720,NA
-tyndall,tyndall d1,SERE,16,20170720,NA
-tyndall,tyndall h1,HYPER,27,20170720,NA
-tyndall,tyndall h1,ILGL,1300,20170720,NA
-tyndall,tyndall h1,SERE,5,20170720,NA
-tyndall,tyndall h1,skinny leaf,38,20170720,NA
-eglin,eglin h1,CRATA,19,20170816,NA
-eglin,eglin h1,PIPA,6,20170816,NA
-eglin,eglin h1,QUERC,9,20170816,chapman?
-eglin,eglin h1,QUGE,1,20170816,NA
-eglin,eglin h1,QULA,9,20170816,NA
-eglin,eglin h1,QUNI,1,20170816,NA
-eglin,eglin h1,SERE,1,20170816,NA
-eglin,eglin h1,CHFA,6,20170816,"idk what SF is - SC 8/30, changed to woody goldenrod"
-eglin,eglin d1,DIVI,4,20170817,NA
-eglin,eglin d1,QULA,2,20170817,NA
-eglin,eglin d1,SERE,8,20170817,NA
-eglin,eglin p1,alt shrub 2,1,20170818,NA
-eglin,eglin p1,DIVI,6,20170818,NA
-eglin,eglin p1,PIPA,4,20170818,NA
-eglin,eglin p1,QUIN,1,20170818,NA
-eglin,eglin p1,QULA,2,20170818,NA
-eglin,eglin p1,QULA,1,20170818,NA
-eglin,eglin p1,CHFA,5,20170818,"idk what SF is - SC 8/30, changed to woody goldenrod"
-eglin,eglin b1,CRATA,3,20170819,NA
-eglin,eglin b1,DIVI,1,20170819,NA
-eglin,eglin b1,PIPA,1,20170819,NA
-eglin,eglin b1,RHCO,1,20170819,NA
-eglin,eglin b1,CHFA,1,20170819,"idk what SF is - SC 8/30, changed to woody goldenrod"
-moody,moody a1,CAAM,10,20170829,NA
-moody,moody a1,RHAR,1,20170829,NA
-moody,moody a1,LIST,2,20170829,NA
-moody,moody a1,MAGNO,1,20170829,NA
-moody,moody a1,MOCE,2,20170829,NA
-moody,moody a1,QUST,1,20170829,NA
-moody,moody a1,QUST,1,20170829,NA
-moody,moody a1,CRSP2,2,20170829,NA
-moody,moody a1,unknown,1,20170829,NA
-moody,moody b1,ILGL,18,20170829,NA
-moody,moody b1,MOCE,1,20170829,NA
-moody,moody b1,QUNI,23,20170829,NA
-moody,moody k1,MENTH,1,20170831,NA
-moody,moody k1,QUNI,1,20170831,NA
-shelby,shelby b1,ACRU,5,20170921,NA
-shelby,shelby b1,BACCH,7,20170921,NA
-shelby,shelby b1,CAAM,43,20170921,NA
-shelby,shelby b1,CAPU2,4,20170921,chinquapin
-shelby,shelby b1,ILGL,6,20170921,NA
-shelby,shelby b1,ILVO,3,20170921,NA
-shelby,shelby b1,LIST,21,20170921,NA
-shelby,shelby b1,MAVI,3,20170921,NA
-shelby,shelby b1,MOCE,7,20170921,NA
-shelby,shelby b1,QUNI,9,20170921,NA
-shelby,shelby b1,QUST,3,20170921,NA
-shelby,shelby b1,RHCO,8,20170921,NA
-shelby,shelby b1,RUBUS,1,20170921,NA
-shelby,shelby b1,NYSY,2,20170921,NA
-shelby,shelby b1,VACCI,2,20170921,NA
-shelby,shelby f1,CAAM,10,20170921,NA
-shelby,shelby f1,ILOP,1,20170921,NA
-shelby,shelby f1,ILGL,20,20170921,NA
-shelby,shelby f1,ILVO,41,20170921,NA
-shelby,shelby f1,MAVI,24,20170921,NA
-shelby,shelby f1,MOCE,5,20170921,NA
-shelby,shelby f1,PITA,37,20170921,NA
-shelby,shelby f1,QUNI,19,20170921,NA
-shelby,shelby f1,RHCO,15,20170921,NA
-shelby,shelby f1,VACCI,19,20170921,NA
-shelby,shelby d1,ACRU,5,20170923,NA
-shelby,shelby d1,DIVI,2,20170923,NA
-shelby,shelby d1,ILGL,122,20170923,NA
-shelby,shelby d1,ILVO,9,20170923,NA
-shelby,shelby d1,MOCE,3,20170923,NA
-shelby,shelby d1,QUNI,15,20170923,NA
-shelby,shelby d1,VACCI,6,20170923,changed to vaccinium from red speckle
-shelby,shelby d1,SAAL5,1,20170923,NA
-shelby,shelby b2,CAAM,19,20170924,NA
-shelby,shelby b2,ILGL,134,20170924,NA
-shelby,shelby b2,LEBI,1,20170924,NA
-shelby,shelby b2,MAVI,31,20170924,NA
-shelby,shelby b2,QUIN,4,20170924,NA
-shelby,shelby b2,QUNI,24,20170924,NA
-shelby,shelby b2,RHCO,5,20170924,NA
-shelby,shelby b3,CAAM,64,20170924,NA
-shelby,shelby b3,EUCA5,27,20170924,NA
-shelby,shelby b3,ILGL,8,20170924,NA
-shelby,shelby b3,ILVO,2,20170924,NA
-shelby,shelby b3,LEBI,7,20170924,NA
-shelby,shelby b3,MOCE,7,20170924,NA
-shelby,shelby b3,PIPA,2,20170924,NA
-shelby,shelby b3,QUIN,2,20170924,NA
-shelby,shelby b3,QUNI,4,20170924,NA
-shelby,shelby b3,QUST,7,20170924,NA
-shelby,shelby g1,DIVI,5,20170924,NA
-shelby,shelby g1,ILGL,131,20170924,NA
-shelby,shelby g1,ILVO,51,20170924,NA
-shelby,shelby g1,LIST,8,20170924,NA
-shelby,shelby g1,MAGNO,14,20170924,NA
-shelby,shelby g1,MOCE,5,20170924,NA
-shelby,shelby g1,PIPA,2,20170924,NA
-shelby,shelby g1,QUIN,10,20170924,NA
-shelby,shelby g1,QUNI,31,20170924,NA
-shelby,shelby g1,RHCO,10,20170924,NA
-shelby,shelby g1,VACCI,8,20170924,NA
-blanding,blanding i1,QUIN,2,20180515,NA
-blanding,blanding i1,SERE,1,20180515,NA
-blanding,blanding m1,ASIMI,2,20180515,NA
-blanding,blanding m1,DIVI,16,20180515,NA
-blanding,blanding m1,PIPA,1,20180515,NA
-blanding,blanding m1,QUNI,2,20180515,NA
-blanding,blanding c1,ASTR,2,20180516,corrected arst wiregrass to ASTR pawpaw
-blanding,blanding k1,QUNI,2,20180522,NA
-blanding,blanding n1,ASIMI,6,20180524,NA
-blanding,blanding n1,DIVI,1,20180524,NA
-blanding,blanding n1,QULA,1,20180524,NA
-blanding,blanding n1,QUNI,5,20180524,NA
-blanding,blanding n1,RHCO,1,20180524,NA
-blanding,blanding i1,QUGE,1,20180525,NA
-blanding,blanding i1,QUNI,3,20180525,NA
-blanding,blanding j1,QUGE,3,20180525,NA
-blanding,blanding j1,QUMY,1,20180525,NA
-blanding,blanding theater_cogon,NA,0,20180516,placeholder zero for plot visit
-avonpark,avonpark e2,RHCO,1,20180529,NA
-avonpark,avonpark e2,SERE,2,20180529,NA
-avonpark,avonpark a1,ASIMI,1,20180530,NA
-avonpark,avonpark a1,SERE,6,20180530,NA
-avonpark,avonpark a2,ILGL,1,20180530,NA
-avonpark,avonpark a2,SERE,10,20180530,NA
-avonpark,avonpark c2,MOCE,9,20180531,NA
-avonpark,avonpark c2,PIPA,1,20180531,NA
-avonpark,avonpark c2,SERE,41,20180531,NA
-avonpark,avonpark e1,NA,0,20180529,placeholder zero for plot visit
-avonpark,avonpark f1,SERE,1,20180531,NA
-avonpark,avonpark c1,SERE,10,20180531,NA
-avonpark,avonpark g1,ILGL,43,20180531,NA
-avonpark,avonpark h1,SERE,3,20180601,NA
-avonpark,avonpark i1,ILGL,39,20180601,NA
-avonpark,avonpark i1,SERE,9,20180601,NA
-eglin,eglin a1,PIPA,1,20180611,NA
-eglin,eglin a1,QULA,8,20180611,NA
-eglin,eglin a1,SERE,6,20180611,NA
-eglin,eglin e1,PICL,2,20180611,NA
-eglin,eglin g1,CAAM,4,20180611,NA
-eglin,eglin g1,CRAR2,22,20180611,NA
-eglin,eglin g1,ILVO,1,20180611,NA
-eglin,eglin g1,QUAL,5,20180611,NA
-eglin,eglin g1,QUGE,2,20180611,NA
-eglin,eglin g1,QULA,2,20180611,NA
-eglin,eglin g1,SERE,9,20180611,NA
-eglin,eglin i1,BAMBU,6,20180612,NA
-eglin,eglin i1,PEBO,1,20180612,NA
-eglin,eglin i1,ILEX,32,20180612,NA
-eglin,eglin i1,ILGL,7,20180612,NA
-eglin,eglin i1,ILVO,4,20180612,NA
-eglin,eglin i1,QUNI,19,20180612,NA
-eglin,eglin i1,QUFA,23,20180612,?? Rubus? Or north/southern red SC 8/30. changed to southern red oak from rubus oak
-eglin,eglin i1,VACCI,7,20180612,NA
-eglin,eglin c1,QUHE,1,20180613,NA
-eglin,eglin c1,QUNI,2,20180613,NA
-eglin,eglin c1,SERE,1,20180613,NA
-eglin,eglin j1,QUHE,8,20180613,NA
-eglin,eglin j1,QULA,1,20180613,NA
-eglin,eglin j1,SERE,3,20180613,NA
-eglin,eglin j1,VACCI,3,20180613,NA
-eglin,eglin b2,PIPA,5,20180615,NA
-eglin,eglin f1,CRAR2,15,20180615,NA
-eglin,eglin f1,CRATA,4,20180615,NA
-eglin,eglin f1,PIPA,2,20180615,NA
-eglin,eglin f1,QUGE,10,20180615,NA
-eglin,eglin f1,QUHE,2,20180615,NA
-eglin,eglin f1,QULA,4,20180615,NA
-eglin,eglin f1,QUNI,7,20180615,NA
-eglin,eglin b2,SERE,11,20180615,NA
-tyndall,tyndall b2,SERE,1,20180625,NA
-tyndall,tyndall d2,ILGL,5,20180625,NA
-tyndall,tyndall d2,MAGNO,17,20180625,NA
-tyndall,tyndall d2,LITR,61,20180625,NA
-tyndall,tyndall d2,PIEL,1,20180625,NA
-tyndall,tyndall d2,tlt,27,20180625,NA
-tyndall,tyndall c1,ILGL,333,20180626,NA
-tyndall,tyndall c1,SERE,3,20180626,NA
-tyndall,tyndall c1,LYFE,1,20180626,changed to rusty staggerbush
-tyndall,tyndall c2,ILGL,238,20180626,NA
-tyndall,tyndall c2,QUMY,2,20180626,NA
-tyndall,tyndall c2,SERE,4,20180626,NA
-tyndall,tyndall c2,other,1,20180626,"random shrub drews phone time stamp 1:15, 6/26"
-tyndall,tyndall b4,ILEX,71,20180627,NA
-tyndall,tyndall b4,SERE,1,20180627,NA
-tyndall,tyndall b4,VACCI,1,20180627,NA
-tyndall,tyndall b3,ILGL,23,20180627,NA
-jackson,jackson a1,NA,0,20180709,placeholder zero for plot visit
-jackson,jackson b1,NA,0,20180709,placeholder zero for plot visit
-jackson,jackson c1,DIVI,3,20180709,NA
-jackson,jackson d1,CARYA,1,20180709,NA
-jackson,jackson d1,QUNI,1,20180709,NA
-jackson,jackson d1,QURU,8,20180709,NA
-jackson,jackson e1,PIPA,1,20180710,NA
-jackson,jackson e1,QULA,1,20180710,NA
-jackson,jackson e1,SAAL5,8,20180710,NA
-jackson,jackson e1,VAAR,11,20180710,NA
-jackson,jackson f1,QULA,3,20180710,NA
-jackson,jackson f1,VACCI,26,20180710,NA
-jackson,jackson g1,LINDE2,1,20180710,NA
-jackson,jackson g1,VAAR,4,20180710,NA
-jackson,jackson g1,VACCI,4,20180710,NA
-jackson,jackson i1,DIVI,8,20180711,NA
-jackson,jackson j1,QULA,1,20180711,NA
-jackson,jackson j1,SAAL5,1,20180711,NA
-jackson,jackson j1,VACCI,3,20180711,NA
-jackson,jackson k1,NA,0,20180711,placeholder zero for plot visit
-jackson,jackson h1,DIVI,5,20180712,NA
-jackson,jackson h1,CARYA,2,20180712,NA
-jackson,jackson h1,QUHE,2,20180712,NA
-jackson,jackson h1,QUMA,3,20180712,NA
-jackson,jackson h1,QUNI,7,20180712,NA
-jackson,jackson h1,SAAL5,31,20180712,NA
-jackson,jackson h1,VACCI,37,20180712,NA
-jackson,jackson l1,CARYA,3,20180713,NA
-jackson,jackson l1,DIVI,1,20180713,NA
-jackson,jackson l1,PRUNU,5,20180713,Unsure of the ID stated as a shrub either Prunos or sambucus
-jackson,jackson l1,QUMA,4,20180713,NA
-jackson,jackson m1,DIVI,2,20180713,NA
-jackson,jackson m1,PIPA,1,20180713,NA
-jackson,jackson m1,QULA,7,20180713,NA
-benning,benning a1,CAAM,1,20180724,NA
-benning,benning a1,CRATA,3,20180724,NA
-benning,benning a1,CARYA,20,20180724,NA
-benning,benning a1,QUHE,8,20180724,NA
-benning,benning a1,LIST,28,20180724,NA
-benning,benning a1,MOCE,25,20180724,NA
-benning,benning a1,PRUNU,4,20180724,NA
-benning,benning a1,QUMA,16,20180724,NA
-benning,benning a1,RHCO,38,20180724,NA
-benning,benning a1,SAAL5,2,20180724,NA
-benning,benning a1,VAAR,1,20180724,NA
-benning,benning a1,VACCI,22,20180724,NA
-benning,benning a1,VACCI,15,20180724,NA
-benning,benning a1,QUAL,4,20180724,NA
-benning,benning b1,LIST,1,20180724,NA
-benning,benning c1,CAAM,24,20180725,NA
-benning,benning c1,LIST,31,20180725,NA
-benning,benning c1,RHCO,2,20180725,NA
-benning,benning c1,RUBUS,4,20180725,NA
-benning,benning d1,CARYA,4,20180725,NA
-benning,benning d1,DIVI,1,20180725,NA
-benning,benning d1,LIST,24,20180725,NA
-benning,benning d1,PITA,3,20180725,NA
-benning,benning d1,QULA,13,20180725,NA
-benning,benning d1,QUMA,17,20180725,NA
-benning,benning d1,VAAR,10,20180725,NA
-benning,benning d1,VACCI,7,20180725,NA
-benning,benning e1,LIST,11,20180726,NA
-benning,benning f1,DIVI,2,20180726,NA
-benning,benning f1,LIST,14,20180726,NA
-benning,benning f1,MOCE,3,20180726,NA
-benning,benning i1,CAAM,3,20180727,NA
-benning,benning i1,CARYA,1,20180727,NA
-benning,benning i1,LIST,1,20180727,NA
-benning,benning i1,QUMA,3,20180727,NA
-benning,benning j1,DIVI,3,20180727,NA
-benning,benning j1,LEBI,8,20180727,NA
-benning,benning j1,QUMA,11,20180727,NA
-benning,benning j1,RHCO,49,20180727,NA
-benning,benning j1,RUBUS,2,20180727,NA
-benning,benning j1,thiny,3,20180727,NA
-benning,benning j1,VAAR,1,20180727,NA
-benning,benning g1,LEBI,1,20180728,NA
-benning,benning g1,QUFA,2,20180728,NA
-benning,benning h1,DIVI,9,20180728,NA
-benning,benning h1,EUCA5,12,20180728,NA
-benning,benning h1,shrub,2,20180728,NA
-benning,benning h1,VACCI,12,20180728,NA
-shelby,shelby a1,CAAM,10,20180811,NA
-shelby,shelby c1,DIVI,13,20180811,NA
-shelby,shelby c1,ILGL,5,20180811,NA
-shelby,shelby c1,ILVO,27,20180811,NA
-shelby,shelby c1,PEBO,5,20180811,NA
-shelby,shelby c1,RHCO,1,20180811,NA
-shelby,shelby c1,VAAR,4,20180811,NA
-shelby,shelby a2,CAAM,23,20180812,NA
-shelby,shelby a2,LIST,2,20180812,NA
-shelby,shelby e1,DIVI,7,20180812,NA
-shelby,shelby e1,ILEX,1,20180812,NA
-shelby,shelby e1,LIST,1,20180812,NA
-shelby,shelby e1,PIPA,1,20180812,NA
-shelby,shelby e1,QUHE,1,20180812,NA
-shelby,shelby e1,QUMA,9,20180812,NA
-shelby,shelby e1,RHCO,2,20180812,NA
-shelby,shelby e1,RUBUS,12,20180812,NA
-shelby,shelby e1,VACCI,1,20180812,NA
-shelby,shelby h1,ACRU,24,20180813,NA
-shelby,shelby h1,BAMBU,29,20180813,NA
-shelby,shelby h1,VACCI,16,20180813,"elena 7:58, changed to vaccinium from berry bush"
-shelby,shelby h1,ILGL,31,20180813,NA
-shelby,shelby h1,ILVO,4,20180813,NA
-shelby,shelby h1,MAGNO,21,20180813,NA
-shelby,shelby h1,MOCE,11,20180813,NA
-shelby,shelby h1,PEBO,8,20180813,NA
-shelby,shelby h1,VACCI,1,20180813,NA
-shelby,shelby i1,ACRU,3,20180813,NA
-shelby,shelby i1,DIVI,5,20180813,NA
-shelby,shelby i1,ILVO,20,20180813,NA
-shelby,shelby i1,MOCE,5,20180813,NA
-shelby,shelby i1,PIEL,6,20180813,NA
-shelby,shelby i1,QULA,1,20180813,NA
-shelby,shelby i1,QUNI,1,20180813,NA
-shelby,shelby i1,VACCI,51,20180813,NA
-shelby,shelby j1,CAAM,32,20180814,NA
-shelby,shelby j1,DIVI,2,20180814,NA
-shelby,shelby j1,ILVO,153,20180814,NA
-shelby,shelby j1,MOCE,1,20180814,NA
-shelby,shelby j1,PEBO,8,20180814,NA
-shelby,shelby j1,PIEL,7,20180814,NA
-shelby,shelby j1,QUMA,2,20180814,NA
-shelby,shelby j1,QUNI,1,20180814,NA
-shelby,shelby j1,RHCO,3,20180814,NA
-shelby,shelby j1,RUBUS,1,20180814,NA
-shelby,shelby k1,CAAM,21,20180814,NA
-shelby,shelby k1,DIVI,1,20180814,NA
-shelby,shelby k1,QUST,1,20180814,NA
-shelby,shelby k1,RHCO,4,20180814,NA
-shelby,shelby k1,VAAR,14,20180814,NA
-shelby,shelby b2,ILGL,2,20180815,NA
-shelby,shelby b2,MAGNO,10,20180815,NA
-shelby,shelby b3,CAAM,8,20180815,NA
-shelby,shelby b3,PIPA,2,20180815,NA
-gordon,gordon x1,DIVI,7,20180820,NA
-gordon,gordon x1,QUIN,6,20180820,NA
-gordon,gordon x1,QULA,1,20180820,NA
-gordon,gordon x1,SAAL5,3,20180820,NA
-gordon,gordon y1,DIVI,2,20180820,NA
-gordon,gordon y1,SAAL5,4,20180820,NA
-gordon,gordon z1,PIPA,1,20180820,NA
-gordon,gordon z1,PRUNU,1,20180820,NA
-gordon,gordon z1,QUIN,1,20180820,NA
-gordon,gordon t1,QUIN,1,20180821,NA
-gordon,gordon t1,QULA,4,20180821,NA
-gordon,gordon v1,CARYA,2,20180821,NA
-gordon,gordon v1,COFL,4,20180821,NA
-gordon,gordon v1,JUVI,1,20180821,eastern red cedar
-gordon,gordon v1,QUHE,3,20180821,NA
-gordon,gordon v1,QULA,1,20180821,NA
-gordon,gordon v1,VACCI,6,20180821,NA
-gordon,gordon v1,VIRO3,3,20180821,NA
-gordon,gordon w1,ILOP,1,20180821,NA
-gordon,gordon w1,CARYA,2,20180821,NA
-gordon,gordon w1,COFL,1,20180821,NA
-gordon,gordon w1,ILVO,1,20180821,NA
-gordon,gordon w1,LIST,2,20180821,NA
-gordon,gordon w1,PEBO,2,20180821,NA
-gordon,gordon w1,PIPA,1,20180821,NA
-gordon,gordon w1,PRUNU,1,20180821,NA
-gordon,gordon w1,QUNI,2,20180821,NA
-gordon,gordon w1,VACCI,2,20180821,NA
-gordon,gordon r1,QUMA,2,20180822,NA
-gordon,gordon r1,SAAL5,3,20180822,NA
-gordon,gordon s1,QUMA,1,20180822,NA
-gordon,gordon s1,SAAL5,8,20180822,NA
-gordon,gordon s1,VIRO3,1,20180822,NA
-jackson,jackson h1,QUHE,2,20180712,NA
-jackson,jackson h1,SAAL5,31,20180712,NA
-jackson,jackson h1,VACCI,37,20180712,NA
-jackson,jackson h1,CARYA,2,20180712,NA
-jackson,jackson h1,DIVI,5,20180712,NA
-jackson,jackson h1,QUNI,7,20180712,NA
-jackson,jackson h1,QUMA,3,20180712,NA
+installation,plot_id,veg_id,over_100cm,date,notes,scientific_name,functional_group,Genus,Species,Status,functional_group__1
+blanding,blanding b1,ASIMI,9,20170608,NA,Asimina spp.,shrub,Asimina,spp.,native/introduced,shrub
+blanding,blanding b1,DIVI,3,20170608,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+blanding,blanding b1,QULA,8,20170608,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+blanding,blanding b1,SM,1,20170608,NA,Smilax spp.,vine,Smilax,spp.,native,vine
+blanding,blanding a1,DIVI,1,20170609,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+blanding,blanding a1,QULA,8,20170609,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+blanding,blanding e1,ASIMI,3,20170614,NA,Asimina spp.,shrub,Asimina,spp.,native/introduced,shrub
+blanding,blanding e1,PIPA,3,20170614,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+blanding,blanding e1,QUHE,1,20170614,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree
+blanding,blanding e1,QULA,3,20170614,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+blanding,blanding e1,QUMY,1,20170614,NA,Quercus myrtifolia,tree,Quercus,myrtifolia,native,tree
+blanding,blanding e1,SERE,1,20170614,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+blanding,blanding g1,SERE,48,20170615,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+blanding,blanding h1,DIVI,17,20170620,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+blanding,blanding h1,QUNI,7,20170620,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+blanding,blanding f1,ASIMI,8,20170621,NA,Asimina spp.,shrub,Asimina,spp.,native/introduced,shrub
+blanding,blanding d1,DIVI,3,20170621,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+blanding,blanding f1,DIVI,4,20170621,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+blanding,blanding f1,PICL,1,20170621,NA,Pinus clausa,tree,Pinus,clausa,native,tree
+blanding,blanding f1,PIPA,1,20170621,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+blanding,blanding d1,QUGE,6,20170621,NA,Quercus geminata,tree,Quercus,geminata,native,tree
+blanding,blanding f1,QUIN,4,20170621,NA,Quercus incana,tree,Quercus,incana,native,tree
+blanding,blanding d1,QULA,5,20170621,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+blanding,blanding f1,QULA,8,20170621,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+blanding,blanding f1,QUMY,11,20170621,NA,Quercus myrtifolia,tree,Quercus,myrtifolia,native,tree
+blanding,blanding d1,QUNI,1,20170621,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+blanding,blanding f1,QUNI,1,20170621,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+blanding,blanding f1,RHCO,7,20170621,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+avonpark,avonpark a1,SERE,2,20170627,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+avonpark,avonpark c1,LYFE,3,20170628,NA,Lyonia ferruginea,shrub,Lyonia,ferruginea,native,shrub
+avonpark,avonpark c1,MOCE,3,20170628,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+avonpark,avonpark c1,SERE,6,20170628,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+avonpark,avonpark c1,shrub-forb 11:48,1,20170628,NA,NA,NA,NA,NA,NA,NA
+avonpark,avonpark b1,ILEX,5,20170629,NA,Ilex spp.,shrub,Ilex,spp.,native/introduced,shrub
+avonpark,avonpark b1,SERE,42,20170629,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+avonpark,avonpark d1,PICL,4,20170630,NA,Pinus clausa,tree,Pinus,clausa,native,tree
+avonpark,avonpark d1,QUGE,13,20170630,NA,Quercus geminata,tree,Quercus,geminata,native,tree
+avonpark,avonpark d1,QUMY,18,20170630,NA,Quercus myrtifolia,tree,Quercus,myrtifolia,native,tree
+avonpark,avonpark d1,QUMY,3,20170630,NA,Quercus myrtifolia,tree,Quercus,myrtifolia,native,tree
+avonpark,avonpark d1,QUNI,4,20170630,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+avonpark,avonpark d1,SERE,14,20170630,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+tyndall,tyndall b1,NA,0,20170718,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA
+tyndall,tyndall b2,SERE,2,20170719,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+tyndall,tyndall h1,HYPER,27,20170720,NA,Hypericum spp.,forb,Hypericum,spp.,native,forb
+tyndall,tyndall d1,ILGL,7,20170720,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+tyndall,tyndall h1,ILGL,1300,20170720,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+tyndall,tyndall d1,MOCE,1,20170720,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+tyndall,tyndall d1,QUHE,1,20170720,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree
+tyndall,tyndall d1,QUERC,4,20170720,NA,Quercus spp.,tree/shrub,Quercus,spp.,native/introduced,tree/shrub
+tyndall,tyndall d1,SERE,16,20170720,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+tyndall,tyndall h1,SERE,5,20170720,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+tyndall,tyndall h1,skinny leaf,38,20170720,NA,NA,NA,NA,NA,NA,NA
+eglin,eglin h1,CHFA,6,20170816,"idk what SF is - SC 8/30, changed to woody goldenrod",Chamaecrista fasciculata,forb,Chamaecrista,fasciculata,native,forb
+eglin,eglin h1,CRATA,19,20170816,NA,Crataegus spp.,shrub,Crataegus,spp.,native/introduced,shrub
+eglin,eglin h1,PIPA,6,20170816,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+eglin,eglin h1,QUGE,1,20170816,NA,Quercus geminata,tree,Quercus,geminata,native,tree
+eglin,eglin h1,QULA,9,20170816,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+eglin,eglin h1,QUNI,1,20170816,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+eglin,eglin h1,QUERC,9,20170816,chapman?,Quercus spp.,tree/shrub,Quercus,spp.,native/introduced,tree/shrub
+eglin,eglin h1,SERE,1,20170816,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+eglin,eglin d1,DIVI,4,20170817,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+eglin,eglin d1,QULA,2,20170817,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+eglin,eglin d1,SERE,8,20170817,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+eglin,eglin p1,CHFA,5,20170818,"idk what SF is - SC 8/30, changed to woody goldenrod",Chamaecrista fasciculata,forb,Chamaecrista,fasciculata,native,forb
+eglin,eglin p1,DIVI,6,20170818,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+eglin,eglin p1,PIPA,4,20170818,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+eglin,eglin p1,QUIN,1,20170818,NA,Quercus incana,tree,Quercus,incana,native,tree
+eglin,eglin p1,QULA,2,20170818,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+eglin,eglin p1,QULA,1,20170818,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+eglin,eglin p1,alt shrub 2,1,20170818,NA,NA,NA,NA,NA,NA,NA
+eglin,eglin b1,CHFA,1,20170819,"idk what SF is - SC 8/30, changed to woody goldenrod",Chamaecrista fasciculata,forb,Chamaecrista,fasciculata,native,forb
+eglin,eglin b1,CRATA,3,20170819,NA,Crataegus spp.,shrub,Crataegus,spp.,native/introduced,shrub
+eglin,eglin b1,DIVI,1,20170819,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+eglin,eglin b1,PIPA,1,20170819,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+eglin,eglin b1,RHCO,1,20170819,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+moody,moody a1,CAAM,10,20170829,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+moody,moody a1,CRSP2,2,20170829,NA,Crotalaria spectabilis,forb,Crotalaria,spectabilis,invasive,forb
+moody,moody b1,ILGL,18,20170829,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+moody,moody a1,LIST,2,20170829,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+moody,moody a1,MAGNO,1,20170829,NA,Magnolia spp.,shrub/tree,Magnolia,spp.,native/introduced,shrub/tree
+moody,moody a1,MOCE,2,20170829,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+moody,moody b1,MOCE,1,20170829,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+moody,moody b1,QUNI,23,20170829,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+moody,moody a1,QUST,1,20170829,NA,Quercus stellata,tree,Quercus,stellata,native,tree
+moody,moody a1,QUST,1,20170829,NA,Quercus stellata,tree,Quercus,stellata,native,tree
+moody,moody a1,RHAR,1,20170829,NA,Rhus  aromatica,shrub,Rhus,aromatica,native,shrub
+moody,moody a1,unknown,1,20170829,NA,NA,NA,NA,NA,NA,NA
+moody,moody k1,MENTH,1,20170831,NA,Mentha  spp.,forb,Mentha,spp.,native/introduced,forb
+moody,moody k1,QUNI,1,20170831,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+shelby,shelby b1,ACRU,5,20170921,NA,Acer  rubrum,tree,Acer,rubrum,native,tree
+shelby,shelby b1,BACCH,7,20170921,NA,Baccharis spp.,forb,Baccharis,spp.,native,forb
+shelby,shelby b1,CAAM,43,20170921,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+shelby,shelby f1,CAAM,10,20170921,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+shelby,shelby b1,CAPU2,4,20170921,chinquapin,Castanea pumila,shrub,Castanea,pumila,native,shrub
+shelby,shelby b1,ILGL,6,20170921,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+shelby,shelby f1,ILGL,20,20170921,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+shelby,shelby b1,ILVO,3,20170921,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+shelby,shelby f1,ILVO,41,20170921,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+shelby,shelby f1,ILOP,1,20170921,NA,Ilex  opaca,shrub,Ilex,opaca,native,shrub
+shelby,shelby b1,LIST,21,20170921,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+shelby,shelby b1,MAVI,3,20170921,NA,Magnolia virginiana,tree,Magnolia,virginiana,native,tree
+shelby,shelby f1,MAVI,24,20170921,NA,Magnolia virginiana,tree,Magnolia,virginiana,native,tree
+shelby,shelby b1,MOCE,7,20170921,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+shelby,shelby f1,MOCE,5,20170921,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+shelby,shelby b1,NYSY,2,20170921,NA,Nyssa sylvatica,tree,Nyssa,sylvatica,native,tree
+shelby,shelby f1,PITA,37,20170921,NA,Pinus taeda,tree,Pinus,taeda,native,tree
+shelby,shelby b1,QUNI,9,20170921,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+shelby,shelby f1,QUNI,19,20170921,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+shelby,shelby b1,QUST,3,20170921,NA,Quercus stellata,tree,Quercus,stellata,native,tree
+shelby,shelby b1,RHCO,8,20170921,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+shelby,shelby f1,RHCO,15,20170921,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+shelby,shelby b1,RUBUS,1,20170921,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub
+shelby,shelby b1,VACCI,2,20170921,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+shelby,shelby f1,VACCI,19,20170921,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+shelby,shelby d1,ACRU,5,20170923,NA,Acer  rubrum,tree,Acer,rubrum,native,tree
+shelby,shelby d1,DIVI,2,20170923,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+shelby,shelby d1,ILGL,122,20170923,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+shelby,shelby d1,ILVO,9,20170923,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+shelby,shelby d1,MOCE,3,20170923,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+shelby,shelby d1,QUNI,15,20170923,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+shelby,shelby d1,SAAL5,1,20170923,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub
+shelby,shelby d1,VACCI,6,20170923,changed to vaccinium from red speckle,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+shelby,shelby b2,CAAM,19,20170924,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+shelby,shelby b3,CAAM,64,20170924,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+shelby,shelby g1,DIVI,5,20170924,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+shelby,shelby b3,EUCA5,27,20170924,NA,Eupatorium capillofolium,forb,Eupatorium,capillofolium,native,forb
+shelby,shelby b2,ILGL,134,20170924,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+shelby,shelby b3,ILGL,8,20170924,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+shelby,shelby g1,ILGL,131,20170924,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+shelby,shelby b3,ILVO,2,20170924,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+shelby,shelby g1,ILVO,51,20170924,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+shelby,shelby b2,LEBI,1,20170924,NA,Lespedeza bicolor Turcz.,forb/shrub,Lespedeza,bicolor Turcz.,invasive,forb/shrub
+shelby,shelby b3,LEBI,7,20170924,NA,Lespedeza bicolor Turcz.,forb/shrub,Lespedeza,bicolor Turcz.,invasive,forb/shrub
+shelby,shelby g1,LIST,8,20170924,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+shelby,shelby g1,MAGNO,14,20170924,NA,Magnolia spp.,shrub/tree,Magnolia,spp.,native/introduced,shrub/tree
+shelby,shelby b2,MAVI,31,20170924,NA,Magnolia virginiana,tree,Magnolia,virginiana,native,tree
+shelby,shelby b3,MOCE,7,20170924,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+shelby,shelby g1,MOCE,5,20170924,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+shelby,shelby b3,PIPA,2,20170924,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+shelby,shelby g1,PIPA,2,20170924,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+shelby,shelby b2,QUIN,4,20170924,NA,Quercus incana,tree,Quercus,incana,native,tree
+shelby,shelby b3,QUIN,2,20170924,NA,Quercus incana,tree,Quercus,incana,native,tree
+shelby,shelby g1,QUIN,10,20170924,NA,Quercus incana,tree,Quercus,incana,native,tree
+shelby,shelby b2,QUNI,24,20170924,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+shelby,shelby b3,QUNI,4,20170924,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+shelby,shelby g1,QUNI,31,20170924,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+shelby,shelby b3,QUST,7,20170924,NA,Quercus stellata,tree,Quercus,stellata,native,tree
+shelby,shelby b2,RHCO,5,20170924,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+shelby,shelby g1,RHCO,10,20170924,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+shelby,shelby g1,VACCI,8,20170924,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+blanding,blanding m1,ASIMI,2,20180515,NA,Asimina spp.,shrub,Asimina,spp.,native/introduced,shrub
+blanding,blanding m1,DIVI,16,20180515,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+blanding,blanding m1,PIPA,1,20180515,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+blanding,blanding i1,QUIN,2,20180515,NA,Quercus incana,tree,Quercus,incana,native,tree
+blanding,blanding m1,QUNI,2,20180515,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+blanding,blanding i1,SERE,1,20180515,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+blanding,blanding c1,ASTR,2,20180516,corrected arst wiregrass to ASTR pawpaw,Asimina triloba,tree,Asimina,triloba,native,tree
+blanding,blanding theater_cogon,NA,0,20180516,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA
+blanding,blanding k1,QUNI,2,20180522,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+blanding,blanding n1,ASIMI,6,20180524,NA,Asimina spp.,shrub,Asimina,spp.,native/introduced,shrub
+blanding,blanding n1,DIVI,1,20180524,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+blanding,blanding n1,QULA,1,20180524,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+blanding,blanding n1,QUNI,5,20180524,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+blanding,blanding n1,RHCO,1,20180524,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+blanding,blanding i1,QUGE,1,20180525,NA,Quercus geminata,tree,Quercus,geminata,native,tree
+blanding,blanding j1,QUGE,3,20180525,NA,Quercus geminata,tree,Quercus,geminata,native,tree
+blanding,blanding j1,QUMY,1,20180525,NA,Quercus myrtifolia,tree,Quercus,myrtifolia,native,tree
+blanding,blanding i1,QUNI,3,20180525,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+avonpark,avonpark e2,RHCO,1,20180529,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+avonpark,avonpark e2,SERE,2,20180529,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+avonpark,avonpark e1,NA,0,20180529,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA
+avonpark,avonpark a1,ASIMI,1,20180530,NA,Asimina spp.,shrub,Asimina,spp.,native/introduced,shrub
+avonpark,avonpark a2,ILGL,1,20180530,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+avonpark,avonpark a1,SERE,6,20180530,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+avonpark,avonpark a2,SERE,10,20180530,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+avonpark,avonpark g1,ILGL,43,20180531,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+avonpark,avonpark c2,MOCE,9,20180531,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+avonpark,avonpark c2,PIPA,1,20180531,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+avonpark,avonpark c2,SERE,41,20180531,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+avonpark,avonpark f1,SERE,1,20180531,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+avonpark,avonpark c1,SERE,10,20180531,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+avonpark,avonpark i1,ILGL,39,20180601,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+avonpark,avonpark h1,SERE,3,20180601,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+avonpark,avonpark i1,SERE,9,20180601,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+eglin,eglin g1,CAAM,4,20180611,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+eglin,eglin g1,CRAR2,22,20180611,NA,Croton argyranthemus,forb,Croton,argyranthemus,native,forb
+eglin,eglin g1,ILVO,1,20180611,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+eglin,eglin e1,PICL,2,20180611,NA,Pinus clausa,tree,Pinus,clausa,native,tree
+eglin,eglin a1,PIPA,1,20180611,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+eglin,eglin g1,QUAL,5,20180611,NA,Quercus alba,tree,Quercus,alba,native,tree
+eglin,eglin g1,QUGE,2,20180611,NA,Quercus geminata,tree,Quercus,geminata,native,tree
+eglin,eglin a1,QULA,8,20180611,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+eglin,eglin g1,QULA,2,20180611,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+eglin,eglin a1,SERE,6,20180611,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+eglin,eglin g1,SERE,9,20180611,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+eglin,eglin i1,BAMBU,6,20180612,NA,Bambusa spp.,graminoid,Bambusa,spp.,introduced,graminoid
+eglin,eglin i1,ILGL,7,20180612,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+eglin,eglin i1,ILEX,32,20180612,NA,Ilex spp.,shrub,Ilex,spp.,native/introduced,shrub
+eglin,eglin i1,ILVO,4,20180612,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+eglin,eglin i1,PEBO,1,20180612,NA,Persea borbonia,tree,Persea,borbonia,native,tree
+eglin,eglin i1,QUFA,23,20180612,?? Rubus? Or north/southern red SC 8/30. changed to southern red oak from rubus oak,Quercus falcata,tree,Quercus,falcata,native,tree
+eglin,eglin i1,QUNI,19,20180612,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+eglin,eglin i1,VACCI,7,20180612,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+eglin,eglin c1,QUHE,1,20180613,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree
+eglin,eglin j1,QUHE,8,20180613,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree
+eglin,eglin j1,QULA,1,20180613,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+eglin,eglin c1,QUNI,2,20180613,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+eglin,eglin c1,SERE,1,20180613,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+eglin,eglin j1,SERE,3,20180613,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+eglin,eglin j1,VACCI,3,20180613,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+eglin,eglin f1,CRATA,4,20180615,NA,Crataegus spp.,shrub,Crataegus,spp.,native/introduced,shrub
+eglin,eglin f1,CRAR2,15,20180615,NA,Croton argyranthemus,forb,Croton,argyranthemus,native,forb
+eglin,eglin b2,PIPA,5,20180615,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+eglin,eglin f1,PIPA,2,20180615,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+eglin,eglin f1,QUGE,10,20180615,NA,Quercus geminata,tree,Quercus,geminata,native,tree
+eglin,eglin f1,QUHE,2,20180615,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree
+eglin,eglin f1,QULA,4,20180615,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+eglin,eglin f1,QUNI,7,20180615,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+eglin,eglin b2,SERE,11,20180615,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+tyndall,tyndall d2,ILGL,5,20180625,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+tyndall,tyndall d2,MAGNO,17,20180625,NA,Magnolia spp.,shrub/tree,Magnolia,spp.,native/introduced,shrub/tree
+tyndall,tyndall d2,PIEL,1,20180625,NA,Pinus elliottii,tree,Pinus,elliottii,native,tree
+tyndall,tyndall b2,SERE,1,20180625,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+tyndall,tyndall d2,LITR,61,20180625,NA,NA,NA,NA,NA,NA,NA
+tyndall,tyndall d2,VACCI,27,20180625,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+tyndall,tyndall c1,ILGL,333,20180626,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+tyndall,tyndall c2,ILGL,238,20180626,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+tyndall,tyndall c1,LYFE,1,20180626,changed to rusty staggerbush,Lyonia ferruginea,shrub,Lyonia,ferruginea,native,shrub
+tyndall,tyndall c2,QUMY,2,20180626,NA,Quercus myrtifolia,tree,Quercus,myrtifolia,native,tree
+tyndall,tyndall c1,SERE,3,20180626,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+tyndall,tyndall c2,SERE,4,20180626,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+tyndall,tyndall c2,other,1,20180626,"random shrub drews phone time stamp 1:15, 6/26",NA,NA,NA,NA,NA,NA
+tyndall,tyndall b3,ILGL,23,20180627,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+tyndall,tyndall b4,ILEX,71,20180627,NA,Ilex spp.,shrub,Ilex,spp.,native/introduced,shrub
+tyndall,tyndall b4,SERE,1,20180627,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree
+tyndall,tyndall b4,VACCI,1,20180627,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+jackson,jackson d1,CARYA,1,20180709,NA,Carya spp.,tree,Carya,spp.,native,tree
+jackson,jackson c1,DIVI,3,20180709,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+jackson,jackson d1,QUNI,1,20180709,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+jackson,jackson d1,QURU,8,20180709,NA,Quercus rubra,tree,Quercus,rubra,native,tree
+jackson,jackson a1,NA,0,20180709,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA
+jackson,jackson b1,NA,0,20180709,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA
+jackson,jackson e1,PIPA,1,20180710,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+jackson,jackson e1,QULA,1,20180710,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+jackson,jackson f1,QULA,3,20180710,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+jackson,jackson e1,SAAL5,8,20180710,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub
+jackson,jackson e1,VAAR,11,20180710,NA,Vaccinium arboreum,shrub/tree,Vaccinium,arboreum,native,shrub/tree
+jackson,jackson g1,VAAR,4,20180710,NA,Vaccinium arboreum,shrub/tree,Vaccinium,arboreum,native,shrub/tree
+jackson,jackson f1,VACCI,26,20180710,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+jackson,jackson g1,VACCI,4,20180710,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+jackson,jackson g1,LINDE2,1,20180710,NA,NA,NA,NA,NA,NA,NA
+jackson,jackson i1,DIVI,8,20180711,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+jackson,jackson j1,QULA,1,20180711,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+jackson,jackson j1,SAAL5,1,20180711,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub
+jackson,jackson j1,VACCI,3,20180711,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+jackson,jackson k1,NA,0,20180711,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA
+jackson,jackson h1,CARYA,2,20180712,NA,Carya spp.,tree,Carya,spp.,native,tree
+jackson,jackson h1,CARYA,2,20180712,NA,Carya spp.,tree,Carya,spp.,native,tree
+jackson,jackson h1,DIVI,5,20180712,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+jackson,jackson h1,DIVI,5,20180712,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+jackson,jackson h1,QUHE,2,20180712,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree
+jackson,jackson h1,QUHE,2,20180712,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree
+jackson,jackson h1,QUMA,3,20180712,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+jackson,jackson h1,QUNI,7,20180712,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+jackson,jackson h1,QUNI,7,20180712,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+jackson,jackson h1,SAAL5,31,20180712,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub
+jackson,jackson h1,SAAL5,31,20180712,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub
+jackson,jackson h1,VACCI,37,20180712,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+jackson,jackson h1,VACCI,37,20180712,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+jackson,jackson h1,QUMA,3,20180712,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+jackson,jackson l1,CARYA,3,20180713,NA,Carya spp.,tree,Carya,spp.,native,tree
+jackson,jackson l1,DIVI,1,20180713,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+jackson,jackson m1,DIVI,2,20180713,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+jackson,jackson m1,PIPA,1,20180713,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+jackson,jackson l1,PRUNU,5,20180713,Unsure of the ID stated as a shrub either Prunos or sambucus,Prunus  spp.,shrub/tree,Prunus,spp.,native/introduced,shrub/tree
+jackson,jackson m1,QULA,7,20180713,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+jackson,jackson l1,QUMA,4,20180713,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+benning,benning a1,CAAM,1,20180724,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+benning,benning a1,CARYA,20,20180724,NA,Carya spp.,tree,Carya,spp.,native,tree
+benning,benning a1,CRATA,3,20180724,NA,Crataegus spp.,shrub,Crataegus,spp.,native/introduced,shrub
+benning,benning a1,LIST,28,20180724,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+benning,benning b1,LIST,1,20180724,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+benning,benning a1,MOCE,25,20180724,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+benning,benning a1,PRUNU,4,20180724,NA,Prunus  spp.,shrub/tree,Prunus,spp.,native/introduced,shrub/tree
+benning,benning a1,QUAL,4,20180724,NA,Quercus alba,tree,Quercus,alba,native,tree
+benning,benning a1,QUHE,8,20180724,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree
+benning,benning a1,QUMA,16,20180724,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+benning,benning a1,RHCO,38,20180724,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+benning,benning a1,SAAL5,2,20180724,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub
+benning,benning a1,VAAR,1,20180724,NA,Vaccinium arboreum,shrub/tree,Vaccinium,arboreum,native,shrub/tree
+benning,benning a1,VACCI,22,20180724,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+benning,benning a1,VACCI,15,20180724,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+benning,benning c1,CAAM,24,20180725,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+benning,benning d1,CARYA,4,20180725,NA,Carya spp.,tree,Carya,spp.,native,tree
+benning,benning d1,DIVI,1,20180725,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+benning,benning c1,LIST,31,20180725,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+benning,benning d1,LIST,24,20180725,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+benning,benning d1,PITA,3,20180725,NA,Pinus taeda,tree,Pinus,taeda,native,tree
+benning,benning d1,QULA,13,20180725,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+benning,benning d1,QUMA,17,20180725,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+benning,benning c1,RHCO,2,20180725,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+benning,benning c1,RUBUS,4,20180725,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub
+benning,benning d1,VAAR,10,20180725,NA,Vaccinium arboreum,shrub/tree,Vaccinium,arboreum,native,shrub/tree
+benning,benning d1,VACCI,7,20180725,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+benning,benning f1,DIVI,2,20180726,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+benning,benning e1,LIST,11,20180726,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+benning,benning f1,LIST,14,20180726,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+benning,benning f1,MOCE,3,20180726,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+benning,benning i1,CAAM,3,20180727,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+benning,benning i1,CARYA,1,20180727,NA,Carya spp.,tree,Carya,spp.,native,tree
+benning,benning j1,DIVI,3,20180727,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+benning,benning j1,LEBI,8,20180727,NA,Lespedeza bicolor Turcz.,forb/shrub,Lespedeza,bicolor Turcz.,invasive,forb/shrub
+benning,benning i1,LIST,1,20180727,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+benning,benning i1,QUMA,3,20180727,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+benning,benning j1,QUMA,11,20180727,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+benning,benning j1,RHCO,49,20180727,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+benning,benning j1,RUBUS,2,20180727,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub
+benning,benning j1,VAAR,1,20180727,NA,Vaccinium arboreum,shrub/tree,Vaccinium,arboreum,native,shrub/tree
+benning,benning j1,thiny,3,20180727,NA,NA,NA,NA,NA,NA,NA
+benning,benning h1,DIVI,9,20180728,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+benning,benning h1,EUCA5,12,20180728,NA,Eupatorium capillofolium,forb,Eupatorium,capillofolium,native,forb
+benning,benning g1,LEBI,1,20180728,NA,Lespedeza bicolor Turcz.,forb/shrub,Lespedeza,bicolor Turcz.,invasive,forb/shrub
+benning,benning g1,QUFA,2,20180728,NA,Quercus falcata,tree,Quercus,falcata,native,tree
+benning,benning h1,VACCI,12,20180728,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+benning,benning h1,shrub,2,20180728,NA,NA,NA,NA,NA,NA,NA
+shelby,shelby a1,CAAM,10,20180811,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+shelby,shelby c1,DIVI,13,20180811,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+shelby,shelby c1,ILGL,5,20180811,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+shelby,shelby c1,ILVO,27,20180811,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+shelby,shelby c1,PEBO,5,20180811,NA,Persea borbonia,tree,Persea,borbonia,native,tree
+shelby,shelby c1,RHCO,1,20180811,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+shelby,shelby c1,VAAR,4,20180811,NA,Vaccinium arboreum,shrub/tree,Vaccinium,arboreum,native,shrub/tree
+shelby,shelby a2,CAAM,23,20180812,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+shelby,shelby e1,DIVI,7,20180812,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+shelby,shelby e1,ILEX,1,20180812,NA,Ilex spp.,shrub,Ilex,spp.,native/introduced,shrub
+shelby,shelby a2,LIST,2,20180812,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+shelby,shelby e1,LIST,1,20180812,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+shelby,shelby e1,PIPA,1,20180812,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+shelby,shelby e1,QUHE,1,20180812,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree
+shelby,shelby e1,QUMA,9,20180812,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+shelby,shelby e1,RHCO,2,20180812,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+shelby,shelby e1,RUBUS,12,20180812,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub
+shelby,shelby e1,VACCI,1,20180812,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+shelby,shelby h1,ACRU,24,20180813,NA,Acer  rubrum,tree,Acer,rubrum,native,tree
+shelby,shelby i1,ACRU,3,20180813,NA,Acer  rubrum,tree,Acer,rubrum,native,tree
+shelby,shelby h1,BAMBU,29,20180813,NA,Bambusa spp.,graminoid,Bambusa,spp.,introduced,graminoid
+shelby,shelby i1,DIVI,5,20180813,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+shelby,shelby h1,ILGL,31,20180813,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+shelby,shelby h1,ILVO,4,20180813,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+shelby,shelby i1,ILVO,20,20180813,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+shelby,shelby h1,MAGNO,21,20180813,NA,Magnolia spp.,shrub/tree,Magnolia,spp.,native/introduced,shrub/tree
+shelby,shelby h1,MOCE,11,20180813,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+shelby,shelby i1,MOCE,5,20180813,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+shelby,shelby h1,PEBO,8,20180813,NA,Persea borbonia,tree,Persea,borbonia,native,tree
+shelby,shelby i1,PIEL,6,20180813,NA,Pinus elliottii,tree,Pinus,elliottii,native,tree
+shelby,shelby i1,QULA,1,20180813,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+shelby,shelby i1,QUNI,1,20180813,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+shelby,shelby h1,VACCI,16,20180813,"elena 7:58, changed to vaccinium from berry bush",Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+shelby,shelby h1,VACCI,1,20180813,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+shelby,shelby i1,VACCI,51,20180813,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+shelby,shelby j1,CAAM,32,20180814,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+shelby,shelby k1,CAAM,21,20180814,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+shelby,shelby j1,DIVI,2,20180814,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+shelby,shelby k1,DIVI,1,20180814,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+shelby,shelby j1,ILVO,153,20180814,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+shelby,shelby j1,MOCE,1,20180814,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub
+shelby,shelby j1,PEBO,8,20180814,NA,Persea borbonia,tree,Persea,borbonia,native,tree
+shelby,shelby j1,PIEL,7,20180814,NA,Pinus elliottii,tree,Pinus,elliottii,native,tree
+shelby,shelby j1,QUMA,2,20180814,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+shelby,shelby j1,QUNI,1,20180814,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+shelby,shelby k1,QUST,1,20180814,NA,Quercus stellata,tree,Quercus,stellata,native,tree
+shelby,shelby j1,RHCO,3,20180814,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+shelby,shelby k1,RHCO,4,20180814,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub
+shelby,shelby j1,RUBUS,1,20180814,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub
+shelby,shelby k1,VAAR,14,20180814,NA,Vaccinium arboreum,shrub/tree,Vaccinium,arboreum,native,shrub/tree
+shelby,shelby b3,CAAM,8,20180815,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub
+shelby,shelby b2,ILGL,2,20180815,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub
+shelby,shelby b2,MAGNO,10,20180815,NA,Magnolia spp.,shrub/tree,Magnolia,spp.,native/introduced,shrub/tree
+shelby,shelby b3,PIPA,2,20180815,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+gordon,gordon x1,DIVI,7,20180820,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+gordon,gordon y1,DIVI,2,20180820,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree
+gordon,gordon z1,PIPA,1,20180820,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+gordon,gordon z1,PRUNU,1,20180820,NA,Prunus  spp.,shrub/tree,Prunus,spp.,native/introduced,shrub/tree
+gordon,gordon x1,QUIN,6,20180820,NA,Quercus incana,tree,Quercus,incana,native,tree
+gordon,gordon z1,QUIN,1,20180820,NA,Quercus incana,tree,Quercus,incana,native,tree
+gordon,gordon x1,QULA,1,20180820,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+gordon,gordon x1,SAAL5,3,20180820,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub
+gordon,gordon y1,SAAL5,4,20180820,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub
+gordon,gordon v1,CARYA,2,20180821,NA,Carya spp.,tree,Carya,spp.,native,tree
+gordon,gordon w1,CARYA,2,20180821,NA,Carya spp.,tree,Carya,spp.,native,tree
+gordon,gordon v1,COFL,4,20180821,NA,Cornus floridana,tree,Cornus,floridana,native,tree
+gordon,gordon w1,COFL,1,20180821,NA,Cornus floridana,tree,Cornus,floridana,native,tree
+gordon,gordon w1,ILVO,1,20180821,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub
+gordon,gordon w1,ILOP,1,20180821,NA,Ilex  opaca,shrub,Ilex,opaca,native,shrub
+gordon,gordon v1,JUVI,1,20180821,eastern red cedar,Juniperus virginiana,tree,Juniperus,virginiana,native,tree
+gordon,gordon w1,LIST,2,20180821,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree
+gordon,gordon w1,PEBO,2,20180821,NA,Persea borbonia,tree,Persea,borbonia,native,tree
+gordon,gordon w1,PIPA,1,20180821,NA,Pinus palustris,tree,Pinus,palustris,native,tree
+gordon,gordon w1,PRUNU,1,20180821,NA,Prunus  spp.,shrub/tree,Prunus,spp.,native/introduced,shrub/tree
+gordon,gordon v1,QUHE,3,20180821,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree
+gordon,gordon t1,QUIN,1,20180821,NA,Quercus incana,tree,Quercus,incana,native,tree
+gordon,gordon t1,QULA,4,20180821,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+gordon,gordon v1,QULA,1,20180821,NA,Quercus laevis,tree,Quercus,laevis,native,tree
+gordon,gordon w1,QUNI,2,20180821,NA,Quercus nigra,tree,Quercus,nigra,native,tree
+gordon,gordon v1,VACCI,6,20180821,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+gordon,gordon w1,VACCI,2,20180821,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub
+gordon,gordon v1,VIRO3,3,20180821,NA,Vitis rotundifolia,vine,Vitis,rotundifolia,native,vine
+gordon,gordon r1,QUMA,2,20180822,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+gordon,gordon s1,QUMA,1,20180822,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree
+gordon,gordon r1,SAAL5,3,20180822,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub
+gordon,gordon s1,SAAL5,8,20180822,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub
+gordon,gordon s1,VIRO3,1,20180822,NA,Vitis rotundifolia,vine,Vitis,rotundifolia,native,vine
