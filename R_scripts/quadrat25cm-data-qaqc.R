@@ -88,6 +88,9 @@ biomass_data$standing_fuel_mass_dry[is.na(biomass_data$standing_fuel_mass_dry) &
 
 biomass_data$date[biomass_data$plot_id=="blanding c1" & biomass_data$date==20170608] <- 20170609
 
+filter(biomass_data, plot_id=="blanding c1") %>% 
+  select(plot_id, date)
+
 biomass_data$date <- as.Date(as.character(biomass_data$date), format = "%Y%m%d")
 biomass_data <- biomass_data %>% 
   mutate(visit_year = lubridate::year(biomass_data$date))
