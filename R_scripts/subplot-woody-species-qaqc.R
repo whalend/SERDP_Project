@@ -45,10 +45,9 @@ filter(subplot_data, plot_id=="tyndall h1")
 
 write_csv(subplot_data, "data/processed_data/woodysubplot.csv")
 
-#### Steven stopped processing here ####
+#### Steven stopped processing here, begin filtering by installation ####
 
 subplot_data <- read_csv("data/processed_data/woodysubplot.csv")
 summary(subplot_data)
+names(subplot_data)
 
-#### Steven checking processed data, complete when dropbox is updated for new species entries ####
-# Dropbox updated, shrub species identified as best possible #
