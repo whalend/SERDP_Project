@@ -25,6 +25,7 @@ tyndall b1,2018-06-25,2018,2,0,Aristida stricta,graminoid
 tyndall b1,2018-06-25,2018,2,0.25,Carphephorus paniculatus,forb
 tyndall b1,2018-06-25,2018,0.5,0.25,Carex spp.,graminoid
 tyndall b1,2018-06-25,2018,0.5,0.25,Commelina communis,forb
+tyndall b1,2018-06-25,2018,1,1,Desmodium viridiflorum,forb
 tyndall b1,2018-06-25,2018,1.75,5.25,Dichanthelium aciculare,graminoid
 tyndall b1,2018-06-25,2018,3.5,5,Dichanthelium clandestinum,graminoid
 tyndall b1,2018-06-25,2018,1.75,0.75,Eryngium yuccifolium,forb
@@ -39,16 +40,15 @@ tyndall b1,2018-06-25,2018,3,0.75,Rhynchosia cytisoides,forb
 tyndall b1,2018-06-25,2018,7,0.25,Serenoa repens,shrub
 tyndall b1,2018-06-25,2018,3,0.25,Smilax spp.,vine
 tyndall b1,2018-06-25,2018,0.5,0.25,Solidago odora,forb
-tyndall b1,2018-06-25,2018,0.5,0.5,NA NA,NA
+tyndall b1,2018-06-25,2018,0.5,0.5,Tragia spp.,forb
 tyndall b1,2018-06-25,2018,1,0.5,Vaccinium spp.,shrub
-tyndall b1,2018-06-25,2018,1,1,NA NA,forb
 tyndall b2,2017-07-19,2017,2,0,Andropogon spp.,graminoid
 tyndall b2,2017-07-19,2017,1.9166666666666667,0,Aristida stricta,graminoid
 tyndall b2,2017-07-19,2017,0.5,0,Asimina angustifolia,shrub
 tyndall b2,2017-07-19,2017,1,0,NA NA,forb
 tyndall b2,2017-07-19,2017,1.6666666666666667,0,Carphephorus paniculatus,forb
 tyndall b2,2017-07-19,2017,0.75,0,Carex spp.,graminoid
-tyndall b2,2017-07-19,2017,1,0,Dichanthelium spp.,graminoid
+tyndall b2,2017-07-19,2017,3,0,Dichanthelium spp.,graminoid
 tyndall b2,2017-07-19,2017,0.5,0,NA NA,forb
 tyndall b2,2017-07-19,2017,0.5,0,NA NA,forb
 tyndall b2,2017-07-19,2017,0.5,0,NA NA,forb
@@ -58,7 +58,6 @@ tyndall b2,2017-07-19,2017,0.5,0,NA NA,forb
 tyndall b2,2017-07-19,2017,0.5,0,Galactica erecta,forb
 tyndall b2,2017-07-19,2017,1,0,Galactica regularis,forb
 tyndall b2,2017-07-19,2017,0.5,0,NA NA,graminoid
-tyndall b2,2017-07-19,2017,5,0,NA NA,graminoid
 tyndall b2,2017-07-19,2017,2.8333333333333335,5.5,Ilex glabra,shrub
 tyndall b2,2017-07-19,2017,1.4285714285714286,0,Liatris spp.,forb
 tyndall b2,2017-07-19,2017,1,0,Licania michauxii,shrub
@@ -66,6 +65,7 @@ tyndall b2,2017-07-19,2017,6,0,Mimosa quadrivalvis,forb
 tyndall b2,2017-07-19,2017,4,0.25,Pinus elliottii,tree
 tyndall b2,2017-07-19,2017,1,0,Pityopsis graminifolia,forb
 tyndall b2,2017-07-19,2017,4.666666666666667,0,Pteridium caudatum,fern
+tyndall b2,2017-07-19,2017,2,0,Pterocaulon pycnostachyum,forb
 tyndall b2,2017-07-19,2017,25.954545454545453,15.75,Quercus minima,tree
 tyndall b2,2017-07-19,2017,3,0.25,Serenoa repens,shrub
 tyndall b2,2017-07-19,2017,0.75,0,Smilax spp.,vine
@@ -73,7 +73,6 @@ tyndall b2,2017-07-19,2017,1,0,Solidago odora,forb
 tyndall b2,2017-07-19,2017,2,0,Stylisma spp.,forb
 tyndall b2,2017-07-19,2017,15,0,Vaccinium spp.,shrub
 tyndall b2,2017-07-19,2017,2,0,Vitis rotundifolia,vine
-tyndall b2,2017-07-19,2017,2,0,NA NA,forb
 tyndall b2,2017-07-19,2017,1,0,NA NA,forb
 tyndall b2,2017-07-19,2017,1,0,Xyris caroliniana,forb
 tyndall b2,2018-06-25,2018,0.5,2,Andropogon spp.,graminoid
@@ -153,11 +152,11 @@ tyndall d1,2017-07-20,2017,40,4,Serenoa repens,shrub
 tyndall d1,2017-07-20,2017,3.875,0,Smilax spp.,vine
 tyndall d1,2017-07-20,2017,5,0,Smilax auriculata,vine
 tyndall d1,2017-07-20,2017,2,0,Vaccinium spp.,shrub
+tyndall d2,2018-06-25,2018,21,4.5,Clethra alnifolia,shrub
 tyndall d2,2018-06-25,2018,1,0,Dichanthelium clandestinum,graminoid
 tyndall d2,2018-06-25,2018,12.75,1,Persea borbonia,tree
 tyndall d2,2018-06-25,2018,1,0,Pinus elliottii,tree
 tyndall d2,2018-06-25,2018,0.5,0.25,Smilax spp.,vine
-tyndall d2,2018-06-25,2018,21,4.5,NA NA,NA
 tyndall d2,2018-06-25,2018,0.5,0.25,NA NA,forb
 tyndall d2,2018-06-25,2018,0.5,0.25,NA NA,forb
 tyndall d2,2018-06-25,2018,2,0.25,Vitis rotundifolia,vine
@@ -174,4 +173,4 @@ tyndall h1,2017-07-20,2017,35,0,Serenoa repens,shrub
 tyndall h1,2017-07-20,2017,2,1,NA NA,shrub
 tyndall h1,2017-07-20,2017,5,0,Smilax auriculata,vine
 tyndall h1,2017-07-20,2017,0.5,0,Solidago odora,forb
-tyndall h1,2017-07-20,2017,19.166666666666668,3.75,NA NA,shrub
+tyndall h1,2017-07-20,2017,19.166666666666668,3.75,Vaccinium spp.,shrub

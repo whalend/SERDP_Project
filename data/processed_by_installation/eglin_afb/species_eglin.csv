@@ -66,14 +66,13 @@ eglin d1,2017-08-17,2017,3,1.25,Pinus palustris,tree
 eglin d1,2017-08-17,2017,3.2,0,Pteridium caudatum,fern
 eglin d1,2017-08-17,2017,10,2.25,Quercus geminata,tree
 eglin d1,2017-08-17,2017,10,0.5,Quercus myrtifolia,tree
-eglin d1,2017-08-17,2017,5,3.5,NA NA,shrub
 eglin d1,2017-08-17,2017,1.875,0,Rhynchosia cytisoides,forb
 eglin d1,2017-08-17,2017,1,0,Serenoa repens,shrub
 eglin d1,2017-08-17,2017,5.363636363636363,0,Smilax auriculata,vine
-eglin d1,2017-08-17,2017,2,0,Vaccinium spp.,shrub
+eglin d1,2017-08-17,2017,3.5,3.5,Vaccinium spp.,shrub
 eglin e1,2018-06-12,2018,15.5,87.75,Andropogon spp.,graminoid
 eglin e1,2018-06-12,2018,0.75,2.25,Carex spp.,graminoid
-eglin e1,2018-06-12,2018,0.5,0.25,Cladonia rangiferina,lichen
+eglin e1,2018-06-12,2018,0.5,0.25,Cladonia rangiferina,Lichen
 eglin e1,2018-06-12,2018,1,3.5,Dichanthelium aciculare,graminoid
 eglin e1,2018-06-12,2018,2,6.75,Dichanthelium clandestinum,graminoid
 eglin e1,2018-06-12,2018,1.25,9,Liatris Gaertn. ex Schreb.,forb
@@ -87,7 +86,7 @@ eglin e1,2018-06-12,2018,1,0,NA NA,forb
 eglin e1,2018-06-12,2018,0.75,1,Stylisma spp.,forb
 eglin f1,2018-06-15,2018,0.5,0.25,Andropogon spp.,graminoid
 eglin f1,2018-06-15,2018,11.25,4,Chrysoma pauciflosculosa,shrub
-eglin f1,2018-06-15,2018,4.666666666666667,16.75,Cladonia rangiferina,lichen
+eglin f1,2018-06-15,2018,4.666666666666667,16.75,Cladonia rangiferina,Lichen
 eglin f1,2018-06-15,2018,4,1.5,Crataegus spp.,shrub
 eglin f1,2018-06-15,2018,0.5,0.25,Mimosa quadrivalvis,forb
 eglin f1,2018-06-15,2018,14.75,5.25,Pinus palustris,tree
@@ -139,7 +138,7 @@ eglin i1,2018-06-11,2018,25,0,Quercus geminata,tree
 eglin i1,2018-06-11,2018,15,6.25,Rubus spp.,forb/shrub
 eglin i1,2018-06-11,2018,0.5,0.5,Smilax spp.,vine
 eglin i1,2018-06-11,2018,10,0.5,Vaccinium spp.,shrub
-eglin j1,2018-06-13,2018,0.75,0,Cladonia rangiferina,lichen
+eglin j1,2018-06-13,2018,0.75,0,Cladonia rangiferina,Lichen
 eglin j1,2018-06-13,2018,0.5,0.25,Dichanthelium aciculare,graminoid
 eglin j1,2018-06-13,2018,0.5,0.25,Quercus spp.,tree
 eglin j1,2018-06-13,2018,7,5,Quercus laevis,tree
@@ -149,7 +148,7 @@ eglin j1,2018-06-13,2018,1,0,Vitis rotundifolia,vine
 eglin p1,2017-08-19,2017,3.4444444444444446,0,Andropogon spp.,graminoid
 eglin p1,2017-08-19,2017,5,0,Aristida stricta,graminoid
 eglin p1,2017-08-19,2017,23,20.75,Chrysoma pauciflosculosa,shrub
-eglin p1,2017-08-19,2017,6.954545454545454,0,Cladonia rangiferina,lichen
+eglin p1,2017-08-19,2017,6.954545454545454,0,Cladonia rangiferina,Lichen
 eglin p1,2017-08-19,2017,0.5,0,Cnidoscolus urens,forb
 eglin p1,2017-08-19,2017,0.875,0,Dichanthelium aciculare,graminoid
 eglin p1,2017-08-19,2017,1,0.25,Diospyros virginiana,tree

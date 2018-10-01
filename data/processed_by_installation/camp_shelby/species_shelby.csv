@@ -2,18 +2,19 @@ plot_id,date,visit_year,avg_pct_cover,num_stems_m2,species_name,functional_group
 shelby a1,2018-08-11,2018,8,4.75,Andropogon spp.,graminoid
 shelby a1,2018-08-11,2018,1,0.5,Chamaecrista fasciculata,forb
 shelby a1,2018-08-11,2018,3,1.5,Chasmanthium sessiliflorum,graminoid
+shelby a1,2018-08-11,2018,5,4.25,Conoclinium coelestinum,forb
 shelby a1,2018-08-11,2018,0.5,0.25,Daucus carota,forb
-shelby a1,2018-08-11,2018,6.5,8.75,NA NA,forb
-shelby a1,2018-08-11,2018,10,3.25,NA NA,NA
 shelby a1,2018-08-11,2018,1,0.25,Dichanthelium aciculare,graminoid
 shelby a1,2018-08-11,2018,30,35,Imperata cylindrica,graminoid
 shelby a1,2018-08-11,2018,0.8333333333333334,1,Lespedeza bicolor Turcz.,forb/shrub
+shelby a1,2018-08-11,2018,8,4.5,Lespedeza spp.,forb
+shelby a1,2018-08-11,2018,10,3.25,Lespedeza spp.,forb/shrub
 shelby a1,2018-08-11,2018,3,0.75,Lygodium microphyllum,vine
 shelby a1,2018-08-11,2018,2,0.75,Parthenocissus quinquefolia,vine
 shelby a1,2018-08-11,2018,20,0.25,Pinus elliottii,tree
 shelby a1,2018-08-11,2018,1.75,2.5,Rubus spp.,forb/shrub
 shelby a1,2018-08-11,2018,0.5,0.25,Smilax spp.,vine
-shelby a1,2018-08-11,2018,0.5,0.25,NA NA,NA
+shelby a1,2018-08-11,2018,0.5,0.25,NA NA,forb
 shelby a2,2018-08-12,2018,0.5,0.25,Andropogon spp.,graminoid
 shelby a2,2018-08-12,2018,7.25,3,Callicarpa americana,shrub
 shelby a2,2018-08-12,2018,1,0.25,Carex spp.,graminoid
@@ -54,6 +55,7 @@ shelby b1,2017-09-22,2017,3,0,NA NA,forb
 shelby b2,2017-09-24,2017,22.5,0,Andropogon spp.,graminoid
 shelby b2,2017-09-24,2017,2,0.25,Baccharis spp.,forb
 shelby b2,2017-09-24,2017,40,0.25,Callicarpa americana,forb
+shelby b2,2017-09-24,2017,0.75,0,Centrosema virginianum,forb
 shelby b2,2017-09-24,2017,0.75,0.25,Chamaecrista fasciculata,forb
 shelby b2,2017-09-24,2017,3.1,0,Dichanthelium aciculare,graminoid
 shelby b2,2017-09-24,2017,0.5,0,Dichanthelium clandestinum,graminoid
@@ -70,10 +72,7 @@ shelby b2,2017-09-24,2017,2.5,0,Pityopsis graminifolia,forb
 shelby b2,2017-09-24,2017,5.666666666666667,1.25,Pinus palustris,tree
 shelby b2,2017-09-24,2017,1,0.5,NA NA,shrub
 shelby b2,2017-09-24,2017,0.5,0,Polygala nana,forb
-shelby b2,2017-09-24,2017,0.5,0,NA NA,forb
-shelby b2,2017-09-24,2017,1,0,NA NA,forb
 shelby b2,2017-09-24,2017,19,1.75,Quercus nigra,tree
-shelby b2,2017-09-24,2017,10,0.75,NA NA,shrub
 shelby b2,2017-09-24,2017,2.75,0.25,Rhus copallinum,shrub
 shelby b2,2017-09-24,2017,5,0,Rhynchosia cytisoides,forb
 shelby b2,2017-09-24,2017,0.5,0,Rhexia virginica,forb
@@ -81,7 +80,7 @@ shelby b2,2017-09-24,2017,1.0833333333333333,1.25,Rubus spp.,forb/shrub
 shelby b2,2017-09-24,2017,5.833333333333333,0,Smilax spp.,vine
 shelby b2,2017-09-24,2017,0.75,0,Solidago odora,forb
 shelby b2,2017-09-24,2017,0.5,0,Tephrosia spp.,forb
-shelby b2,2017-09-24,2017,3,3.5,Vaccinium spp.,shrub
+shelby b2,2017-09-24,2017,4.166666666666667,4.25,Vaccinium spp.,shrub
 shelby b2,2017-09-24,2017,12.125,0,Vitis rotundifolia,vine
 shelby b2,2018-08-15,2018,3,0.75,Althaea spp.,forb
 shelby b2,2018-08-15,2018,1,0.5,Andropogon spp.,graminoid
@@ -136,7 +135,7 @@ shelby b3,2018-08-15,2018,3,2.5,Dichanthelium aciculare,graminoid
 shelby b3,2018-08-15,2018,3,1.25,Eupatorium capillofolium,forb
 shelby b3,2018-08-15,2018,1,0.5,Ilex spp.,shrub
 shelby b3,2018-08-15,2018,48.75,115.25,Imperata cylindrica,graminoid
-shelby b3,2018-08-15,2018,5,3.5,NA NA,forb
+shelby b3,2018-08-15,2018,5,3.5,Mentha spp.,forb
 shelby b3,2018-08-15,2018,3,0.5,Pinus palustris,tree
 shelby b3,2018-08-15,2018,3,1.5,Rhus aromatica,shrub
 shelby b3,2018-08-15,2018,1,2.5,Rhynchosia cytisoides,forb
@@ -222,7 +221,7 @@ shelby f1,2017-09-21,2017,1.25,0,Dichanthelium clandestinum,graminoid
 shelby f1,2017-09-21,2017,35,1.5,Diospyros virginiana,tree
 shelby f1,2017-09-21,2017,1,0,Elephantopus elatus,forb
 shelby f1,2017-09-21,2017,0.5,0,NA NA,forb
-shelby f1,2017-09-21,2017,5,8.5,Ilex glabra,shrub
+shelby f1,2017-09-21,2017,4.875,8.75,Ilex glabra,shrub
 shelby f1,2017-09-21,2017,18.666666666666668,2,Ilex vomitoria,shrub
 shelby f1,2017-09-21,2017,70,0,Imperata cylindrica,graminoid
 shelby f1,2017-09-21,2017,8.333333333333334,1.75,Magnolia virginiana,tree
@@ -233,7 +232,6 @@ shelby f1,2017-09-21,2017,0.5,0,NA NA,forb
 shelby f1,2017-09-21,2017,8.5,1.25,Quercus nigra,tree
 shelby f1,2017-09-21,2017,1,0,Rhynchosia cytisoides,forb
 shelby f1,2017-09-21,2017,1.1666666666666667,3.25,Rubus spp.,forb/shrub
-shelby f1,2017-09-21,2017,4,0.25,NA NA,shrub
 shelby f1,2017-09-21,2017,0.8333333333333334,0,Smilax spp.,vine
 shelby f1,2017-09-21,2017,0.8333333333333334,0,Solidago odora,forb
 shelby f1,2017-09-21,2017,0.75,0,Stylisma spp.,forb
@@ -242,6 +240,7 @@ shelby f1,2017-09-21,2017,3.3333333333333335,0,Vitis rotundifolia,vine
 shelby g1,2017-09-25,2017,5,0.25,Acacia Mill.,shrub
 shelby g1,2017-09-25,2017,1,0,Andropogon spp.,graminoid
 shelby g1,2017-09-25,2017,17.5,1.75,Callicarpa americana,forb
+shelby g1,2017-09-25,2017,3,0,Cirsium horridulum,shrub
 shelby g1,2017-09-25,2017,5,3.25,Ilex glabra,shrub
 shelby g1,2017-09-25,2017,9.2,0.75,Ilex vomitoria,shrub
 shelby g1,2017-09-25,2017,0.5,0,Lamium amplexicaule,forb
@@ -249,15 +248,13 @@ shelby g1,2017-09-25,2017,15,0.25,Morella cerifera,shrub
 shelby g1,2017-09-25,2017,17.75,0.75,Pinus palustris,tree
 shelby g1,2017-09-25,2017,3.25,1.75,Quercus incana,tree
 shelby g1,2017-09-25,2017,9.125,1,Quercus nigra,tree
-shelby g1,2017-09-25,2017,3,0,NA NA,shrub
 shelby g1,2017-09-25,2017,4,0.75,Rhus copallinum,shrub
 shelby g1,2017-09-25,2017,0.8333333333333334,0.5,Rubus spp.,forb/shrub
 shelby g1,2017-09-25,2017,5.083333333333333,0,Smilax spp.,vine
 shelby g1,2017-09-25,2017,0.75,0,Solidago odora,forb
-shelby g1,2017-09-25,2017,3,0,NA NA,shrub
 shelby g1,2017-09-25,2017,4.7272727272727275,0,Stylisma spp.,forb
 shelby g1,2017-09-25,2017,1,0.5,Toxicodendron radicans L.,vine
-shelby g1,2017-09-25,2017,23.666666666666668,1.5,Vaccinium spp.,shrub
+shelby g1,2017-09-25,2017,18.5,1.5,Vaccinium spp.,shrub
 shelby g1,2017-09-25,2017,2.875,0,Vitis rotundifolia,vine
 shelby h1,2018-08-13,2018,6.666666666666667,1.25,Acer rubrum,tree
 shelby h1,2018-08-13,2018,6,7.25,Andropogon spp.,graminoid
@@ -305,17 +302,17 @@ shelby j1,2018-08-14,2018,1.5,0.5,Vitis rotundifolia,vine
 shelby k1,2018-08-14,2018,0.5,0.25,Acer rubrum,tree
 shelby k1,2018-08-14,2018,30.5,66.5,Andropogon spp.,graminoid
 shelby k1,2018-08-14,2018,2,0.75,Chamaecrista fasciculata,forb
+shelby k1,2018-08-14,2018,1.1666666666666667,1.75,Coreopsis major,forb
 shelby k1,2018-08-14,2018,1,0.25,Croton lindheimerianus,forb
-shelby k1,2018-08-14,2018,1.1666666666666667,1.75,NA NA,NA
-shelby k1,2018-08-14,2018,2.5,2,NA NA,NA
 shelby k1,2018-08-14,2018,3.6666666666666665,7.75,Dichanthelium aciculare,graminoid
+shelby k1,2018-08-14,2018,2.5,2,Elephantopus elatus,forb
 shelby k1,2018-08-14,2018,3.5,8.25,Eupatorium spp.,forb
 shelby k1,2018-08-14,2018,6,4.25,NA NA,graminoid
 shelby k1,2018-08-14,2018,11.666666666666666,3.25,Ilex vomitoria,shrub
 shelby k1,2018-08-14,2018,1.5,1.25,Lespedeza bicolor Turcz.,forb/shrub
 shelby k1,2018-08-14,2018,30,1.75,Liquidambar styraciflua,tree
 shelby k1,2018-08-14,2018,20,15.5,Panicum capillare,graminoid
-shelby k1,2018-08-14,2018,2,0.5,Quercus spp.,tree/shrub
+shelby k1,2018-08-14,2018,2,0.5,Quercus spp.,tree
 shelby k1,2018-08-14,2018,1,0.25,Rhus copallinum,shrub
 shelby k1,2018-08-14,2018,2.1666666666666665,4.75,Rubus spp.,forb/shrub
 shelby k1,2018-08-14,2018,1.75,3,Solidago odora,forb

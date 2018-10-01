@@ -1,8 +1,9 @@
 plot_id,date,visit_year,avg_pct_cover,num_stems_m2,species_name,functional_group
 gordon r1,2018-08-22,2018,8.5,4.75,Lonicera japonica,vine
 gordon r1,2018-08-22,2018,7,1,Quercus nigra,tree
+gordon r1,2018-08-22,2018,3,0.25,Rhododendron spp.,shrub
 gordon r1,2018-08-22,2018,24,15.25,Sassafras albidum,shrub
-gordon r1,2018-08-22,2018,8.333333333333334,4,NA NA,shrub
+gordon r1,2018-08-22,2018,11,3.75,NA NA,shrub
 gordon r1,2018-08-22,2018,1.5,1,Smilax spp.,vine
 gordon r1,2018-08-22,2018,5,0.5,Vitis rotundifolia,vine
 gordon s1,2018-08-22,2018,3,0.5,Asclepias tuberlosa,forb
@@ -14,11 +15,11 @@ gordon s1,2018-08-22,2018,2,0.25,Sassafras albidum,shrub
 gordon s1,2018-08-22,2018,2,2,Smilax spp.,vine
 gordon s1,2018-08-22,2018,4,1.25,Sorghanum halepense,graminoid
 gordon s1,2018-08-22,2018,16.5,5.5,Vitis rotundifolia,vine
-gordon t1,2018-08-21,2018,8,15.25,Andropogon spp.,graminoid
+gordon t1,2018-08-21,2018,12.4,31.5,Andropogon spp.,graminoid
 gordon t1,2018-08-21,2018,0.5,0.25,Carex spp.,graminoid
-gordon t1,2018-08-21,2018,1.5,0.5,NA NA,NA
-gordon t1,2018-08-21,2018,6,1.75,NA NA,NA
-gordon t1,2018-08-21,2018,22.666666666666668,38,NA NA,graminoid
+gordon t1,2018-08-21,2018,6,1.75,NA NA,shrub
+gordon t1,2018-08-21,2018,19,21.75,NA NA,graminoid
+gordon t1,2018-08-21,2018,1.5,0.5,Hypericum gentianoides,forb
 gordon t1,2018-08-21,2018,1,0.25,Liatris Gaertn. ex Schreb.,forb
 gordon t1,2018-08-21,2018,9,4,Lonicera japonica,vine
 gordon t1,2018-08-21,2018,1,0.5,Solidago odora,forb
@@ -26,7 +27,7 @@ gordon t1,2018-08-21,2018,0.5,0.25,Strophostyles umbellata,forb
 gordon v1,2018-08-21,2018,3,2.75,Andropogon spp.,graminoid
 gordon v1,2018-08-21,2018,2,0.25,Cnidoscolus urens,forb
 gordon v1,2018-08-21,2018,2.25,0.75,Cornus floridana,tree
-gordon v1,2018-08-21,2018,2,0.25,NA NA,NA
+gordon v1,2018-08-21,2018,2,0.25,NA NA,forb
 gordon v1,2018-08-21,2018,2,1.25,Lonicera japonica,vine
 gordon v1,2018-08-21,2018,1,0.25,Pteridium caudatum,forb
 gordon v1,2018-08-21,2018,1,0.25,Quercus incana,tree
@@ -55,16 +56,16 @@ gordon x1,2018-08-20,2018,7.333333333333333,4.25,Vaccinium spp.,shrub
 gordon y1,2018-08-20,2018,10.333333333333334,20,Andropogon spp.,graminoid
 gordon y1,2018-08-20,2018,6.25,0,Aristida stricta,graminoid
 gordon y1,2018-08-20,2018,1,0.5,Cnidoscolus urens,forb
-gordon y1,2018-08-20,2018,5,11.75,NA NA,NA
 gordon y1,2018-08-20,2018,1,0.25,Diospyros virginiana,tree
+gordon y1,2018-08-20,2018,5,11.75,Hypericum gentianoides,forb
 gordon y1,2018-08-20,2018,17,6,Lonicera japonica,vine
 gordon y1,2018-08-20,2018,0.5,0.25,Pinus palustris,tree
 gordon y1,2018-08-20,2018,7,2.75,Sassafras albidum,shrub
 gordon z1,2018-08-20,2018,6,5.5,Andropogon spp.,graminoid
 gordon z1,2018-08-20,2018,33,0,Aristida stricta,graminoid
-gordon z1,2018-08-20,2018,4,0.75,NA NA,NA
 gordon z1,2018-08-20,2018,3,0.25,Diospyros virginiana,tree
 gordon z1,2018-08-20,2018,20,0.25,Pinus taeda,tree
 gordon z1,2018-08-20,2018,5,3.5,Pteridium caudatum,forb
 gordon z1,2018-08-20,2018,12.666666666666666,0.75,Quercus laevis,tree
+gordon z1,2018-08-20,2018,4,0.75,Tephrosia virginiana,forb
 gordon z1,2018-08-20,2018,2,0.75,Vaccinium arboreum,shrub/tree

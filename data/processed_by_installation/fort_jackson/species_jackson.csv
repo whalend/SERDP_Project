@@ -23,7 +23,7 @@ jackson d1,2018-07-09,2018,5,3.25,Vaccinium spp.,shrub
 jackson d1,2018-07-09,2018,4.666666666666667,2.25,Vitis rotundifolia,vine
 jackson e1,2018-07-10,2018,0.6666666666666666,1.75,Andropogon spp.,graminoid
 jackson e1,2018-07-10,2018,1,0,Aureolaria pectinata,shrub
-jackson e1,2018-07-10,2018,2.3333333333333335,13.75,Cladonia rangiferina,lichen
+jackson e1,2018-07-10,2018,2.3333333333333335,13.75,Cladonia rangiferina,Lichen
 jackson e1,2018-07-10,2018,0.5,0.25,Eupatorium capillofolium,forb
 jackson e1,2018-07-10,2018,10,6.25,NA NA,graminoid
 jackson e1,2018-07-10,2018,3,0.5,Pinus palustris,tree
@@ -49,17 +49,16 @@ jackson g1,2018-07-10,2018,3,3,Vaccinium spp.,shrub
 jackson g1,2018-07-10,2018,22,1.5,Vitis rotundifolia,vine
 jackson h1,2018-07-12,2018,2,3.75,Andropogon spp.,graminoid
 jackson h1,2018-07-12,2018,1,0.75,Dichanthelium aciculare,graminoid
-jackson h1,2018-07-12,2018,1,0.5,NA NA,forb
 jackson h1,2018-07-12,2018,2,0.25,Quercus spp.,tree
 jackson h1,2018-07-12,2018,8,1,Quercus hemisphaerica,tree
 jackson h1,2018-07-12,2018,10.333333333333334,6.25,Sassafras albidum,shrub
 jackson h1,2018-07-12,2018,9,0.5,Smilax spp.,vine
+jackson h1,2018-07-12,2018,1,0.5,Tephrosia virginiana,forb
 jackson h1,2018-07-12,2018,1,0.25,NA NA,shrub
 jackson h1,2018-07-12,2018,36,16.5,Vaccinium spp.,shrub
 jackson h1,2018-07-12,2018,6,0.5,Vitis rotundifolia,vine
 jackson i1,2018-07-11,2018,9.75,29.25,Andropogon spp.,graminoid
 jackson i1,2018-07-11,2018,1,1.25,Carphephorus paniculatus,forb
-jackson i1,2018-07-11,2018,0.5,0.25,NA NA,forb
 jackson i1,2018-07-11,2018,1,0.25,Liatris Gaertn. ex Schreb.,forb
 jackson i1,2018-07-11,2018,10,5.75,Pityopsis graminifolia,forb
 jackson i1,2018-07-11,2018,0.5,0.25,Pinus palustris,tree
@@ -68,10 +67,11 @@ jackson i1,2018-07-11,2018,10,0.75,Quercus spp.,tree
 jackson i1,2018-07-11,2018,1,0.25,Rhus copallinum,shrub
 jackson i1,2018-07-11,2018,3,5.75,Rhynchosia cytisoides,forb
 jackson i1,2018-07-11,2018,1,0.25,Sassafras albidum,shrub
-jackson i1,2018-07-11,2018,0.5,0.25,NA NA,NA
+jackson i1,2018-07-11,2018,0.5,0.25,Senna spp.,forb
 jackson i1,2018-07-11,2018,2.5,1,Smilax spp.,vine
 jackson i1,2018-07-11,2018,2.5,0.5,Solidago odora,forb
 jackson i1,2018-07-11,2018,1,0.75,Stylosanthes biflora,forb
+jackson i1,2018-07-11,2018,0.5,0.25,Tephrosia virginiana,forb
 jackson i1,2018-07-11,2018,1.1666666666666667,2,Toxicodendron radicans L.,vine
 jackson i1,2018-07-11,2018,1,0,Vitis rotundifolia,vine
 jackson j1,2018-07-11,2018,2,1.5,Andropogon spp.,graminoid
@@ -81,15 +81,15 @@ jackson j1,2018-07-11,2018,14,8.75,Lonicera maackii,forb
 jackson j1,2018-07-11,2018,20,0.5,Pinus palustris,tree
 jackson j1,2018-07-11,2018,0.5,0.25,Quercus laevis,tree
 jackson j1,2018-07-11,2018,0.5,0,Smilax spp.,vine
+jackson j1,2018-07-11,2018,5,2.75,Tephrosia virginiana,forb
 jackson j1,2018-07-11,2018,15,7,Vaccinium spp.,shrub
-jackson j1,2018-07-11,2018,5,2.75,NA NA,NA
 jackson k1,2018-07-11,2018,1.1666666666666667,4.25,Andropogon spp.,graminoid
 jackson k1,2018-07-11,2018,2,0,Aristida stricta,graminoid
 jackson k1,2018-07-11,2018,1.75,2.25,Dichanthelium clandestinum,graminoid
 jackson k1,2018-07-11,2018,0.75,1.25,Liatris Gaertn. ex Schreb.,forb
 jackson k1,2018-07-11,2018,0.5,0.5,Rhynchosia cytisoides,forb
+jackson k1,2018-07-11,2018,4.5,6.75,Tephrosia virginiana,forb
 jackson k1,2018-07-11,2018,0.5,0.25,Vaccinium arboreum,shrub
-jackson k1,2018-07-11,2018,4.5,6.75,NA NA,NA
 jackson l1,2018-07-13,2018,2,1.75,Dichanthelium aciculare,graminoid
 jackson l1,2018-07-13,2018,0.5,0,Liquidambar styraciflua,tree
 jackson l1,2018-07-13,2018,1.6666666666666667,1,Pinus palustris,tree
