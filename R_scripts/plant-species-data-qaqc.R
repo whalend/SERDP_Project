@@ -140,7 +140,7 @@ summary(species_blanding)
 
 species_blanding <- filter(species_blanding) %>%
   ungroup(.) %>%
-  select(plot_id, date, visit_year, avg_pct_cover, num_stems_m2, species_name, functional_group)
+  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
 
 write_csv(species_blanding, "data/processed_by_installation/camp_blanding/species_blanding.csv")
 
@@ -153,7 +153,7 @@ summary(species_avonpark)
 
 species_avonpark <- filter(species_avonpark) %>%
   ungroup(.) %>%
-  select(plot_id, date, visit_year, avg_pct_cover, num_stems_m2, species_name, functional_group)
+  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
 
 write_csv(species_avonpark, "data/processed_by_installation/avon_park_afr/species_avonpark.csv")
 
@@ -166,7 +166,7 @@ summary(species_eglin)
 
 species_eglin <- filter(species_eglin) %>%
   ungroup(.) %>%
-  select(plot_id, date, visit_year, avg_pct_cover, num_stems_m2, species_name, functional_group)
+  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
 
 write_csv(species_eglin, "data/processed_by_installation/eglin_afb/species_eglin.csv")
 
@@ -179,7 +179,7 @@ summary(species_tyndall)
 
 species_tyndall <- filter(species_tyndall) %>%
   ungroup(.) %>%
-  select(plot_id, date, visit_year, avg_pct_cover, num_stems_m2, species_name, functional_group)
+  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
 
 write_csv(species_tyndall, "data/processed_by_installation/tyndall_afb/species_tyndall.csv")
 
@@ -192,7 +192,7 @@ summary(species_jackson)
 
 species_jackson <- filter(species_jackson) %>%
   ungroup(.) %>%
-  select(plot_id, date, visit_year, avg_pct_cover, num_stems_m2, species_name, functional_group)
+  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
 
 write_csv(species_jackson, "data/processed_by_installation/fort_jackson/species_jackson.csv")
 
@@ -205,7 +205,7 @@ summary(species_shelby)
 
 species_shelby <- filter(species_shelby) %>%
   ungroup(.) %>%
-  select(plot_id, date, visit_year, avg_pct_cover, num_stems_m2, species_name, functional_group)
+  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
 
 write_csv(species_shelby, "data/processed_by_installation/camp_shelby/species_shelby.csv")
 
@@ -218,7 +218,7 @@ summary(species_gordon)
 
 species_gordon <- filter(species_gordon) %>%
   ungroup(.) %>%
-  select(plot_id, date, visit_year, avg_pct_cover, num_stems_m2, species_name, functional_group)
+  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
 
 write_csv(species_gordon, "data/processed_by_installation/fort_gordon/species_gordon.csv")
 
@@ -231,7 +231,7 @@ summary(species_moody)
 
 species_moody <- filter(species_moody) %>%
   ungroup(.) %>%
-  select(plot_id, date, visit_year, avg_pct_cover, num_stems_m2, species_name, functional_group)
+  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
 
 write_csv(species_moody, "data/processed_by_installation/moody_afb/species_moody.csv")
 
