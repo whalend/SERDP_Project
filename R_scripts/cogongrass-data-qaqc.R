@@ -53,13 +53,14 @@ plot_visit_cogon <-
 
 plot_visit_cogon <- plot_visit_cogon %>% 
   ungroup(.) %>% 
-  select(installation, plot_id, visit_year, imcy_inv, avg_tiller_density_m2, years_since_fire)
+  select(installation, plot_id, visit_year, imcy_inv, avg_tiller_density_m2, 
+         xcoord_lon, ycoord_lat, years_since_fire)
 
 #### Cogon for Blanding ####
 
 plot_visit_cogongrass_blanding <- plot_visit_cogon %>% 
   filter(installation=="blanding") %>% 
-  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, years_since_fire)
+  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_blanding, "data/processed_by_installation/camp_blanding/plot_visit_invasion_status_blanding.csv")
 
@@ -67,7 +68,7 @@ write_csv(plot_visit_cogongrass_blanding, "data/processed_by_installation/camp_b
 
 plot_visit_cogongrass_avonpark <- plot_visit_cogon %>% 
   filter(installation=="avonpark") %>% 
-  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, years_since_fire)
+  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_avonpark, "data/processed_by_installation/avon_park_afr/plot_visit_invasion_status_avonpark.csv")
 
@@ -75,7 +76,7 @@ write_csv(plot_visit_cogongrass_avonpark, "data/processed_by_installation/avon_p
 
 plot_visit_cogongrass_eglin <- plot_visit_cogon %>% 
   filter(installation=="eglin") %>% 
-  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, years_since_fire)
+  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_eglin, "data/processed_by_installation/eglin_afb/plot_visit_invasion_status_eglin.csv")
 
@@ -83,7 +84,7 @@ write_csv(plot_visit_cogongrass_eglin, "data/processed_by_installation/eglin_afb
 
 plot_visit_cogongrass_tyndall <- plot_visit_cogon %>% 
   filter(installation=="tyndall") %>% 
-  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, years_since_fire)
+  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_tyndall, "data/processed_by_installation/tyndall_afb/plot_visit_invasion_status_tyndall.csv")
 
@@ -91,7 +92,7 @@ write_csv(plot_visit_cogongrass_tyndall, "data/processed_by_installation/tyndall
 
 plot_visit_cogongrass_jackson <- plot_visit_cogon %>% 
   filter(installation=="jackson") %>% 
-  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, years_since_fire)
+  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_jackson, "data/processed_by_installation/fort_jackson/plot_visit_invasion_status_jackson.csv")
 
@@ -99,7 +100,7 @@ write_csv(plot_visit_cogongrass_jackson, "data/processed_by_installation/fort_ja
 
 plot_visit_cogongrass_benning <- plot_visit_cogon %>% 
   filter(installation=="benning") %>% 
-  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, years_since_fire)
+  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_benning, "data/processed_by_installation/fort_benning/plot_visit_invasion_status_benning.csv")
 
@@ -107,7 +108,7 @@ write_csv(plot_visit_cogongrass_benning, "data/processed_by_installation/fort_be
 
 plot_visit_cogongrass_shelby <- plot_visit_cogon %>% 
   filter(installation=="shelby") %>% 
-  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, years_since_fire)
+  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_shelby, "data/processed_by_installation/camp_shelby/plot_visit_invasion_status_shelby.csv")
 
@@ -115,7 +116,7 @@ write_csv(plot_visit_cogongrass_shelby, "data/processed_by_installation/camp_she
 
 plot_visit_cogongrass_gordon <- plot_visit_cogon %>% 
   filter(installation=="gordon") %>% 
-  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, years_since_fire)
+  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_gordon, "data/processed_by_installation/fort_gordon/plot_visit_invasion_status_gordon.csv")
 
@@ -123,7 +124,7 @@ write_csv(plot_visit_cogongrass_gordon, "data/processed_by_installation/fort_gor
 
 plot_visit_cogongrass_moody <- plot_visit_cogon %>% 
   filter(installation=="moody") %>% 
-  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, years_since_fire)
+  select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_moody, "data/processed_by_installation/moody_afb/plot_visit_invasion_status_moody.csv")
 
