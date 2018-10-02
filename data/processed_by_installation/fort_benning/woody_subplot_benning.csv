@@ -1,4 +1,4 @@
-plot_id,date,visit_year,species_name,over_100cm
+plot_id,date,visit_year,species_name,stems_100m2
 benning a1,2018-07-24,2018,Callicarpa americana,1
 benning a1,2018-07-24,2018,Carya spp.,20
 benning a1,2018-07-24,2018,Crataegus spp.,3

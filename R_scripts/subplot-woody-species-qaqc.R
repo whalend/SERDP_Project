@@ -51,18 +51,23 @@ subplot_data <- read_csv("data/processed_data/woodysubplot.csv")
 summary(subplot_data)
 names(subplot_data)
 
-subplot_data$date <- as.Date(as.character(subplot_data$date), format = "%Y%m%d")
 subplot_data <- subplot_data %>% 
-  mutate(visit_year = lubridate::year(subplot_data$date))
+  mutate(stems_100m2 = round(if_else(date<"2018-01-01", over_100cm*.599,over_100cm*1)))
 
 subplot_data <- subplot_data %>% 
   mutate(species_name = paste(Genus, Species, sep = " "))
+
+filter(subplot_data, plot_id=="tyndall h1") %>% 
+  select(plot_id, date, species_name, over_100cm, stems_100m2)
+
+subplot_data$stems_100m2[subplot_data$plot_id=="tyndall h1" & 
+                           subplot_data$species_name=="Ilex glabra"] <- 1300
 
 #### Filter for Camp Blanding ####
 
 woody_subplot_blanding <- subplot_data %>% 
   filter(installation=="blanding") %>% 
-  select(plot_id, date, visit_year, species_name, over_100cm)
+  select(plot_id, date, visit_year, species_name, stems_100m2)
 
 write_csv(woody_subplot_blanding, "data/processed_by_installation/camp_blanding/woody_subplot_blanding.csv")
 
@@ -70,7 +75,7 @@ write_csv(woody_subplot_blanding, "data/processed_by_installation/camp_blanding/
 
 woody_subplot_avonpark <- subplot_data %>% 
   filter(installation=="avonpark") %>% 
-  select(plot_id, date, visit_year, species_name, over_100cm)
+  select(plot_id, date, visit_year, species_name, stems_100m2)
 
 write_csv(woody_subplot_avonpark, "data/processed_by_installation/avon_park_afr/woody_subplot_avonpark.csv")
 
@@ -78,7 +83,7 @@ write_csv(woody_subplot_avonpark, "data/processed_by_installation/avon_park_afr/
 
 woody_subplot_eglin <- subplot_data %>% 
   filter(installation=="eglin") %>% 
-  select(plot_id, date, visit_year, species_name, over_100cm)
+  select(plot_id, date, visit_year, species_name, stems_100m2)
 
 write_csv(woody_subplot_eglin, "data/processed_by_installation/eglin_afb/woody_subplot_eglin.csv")
 
@@ -86,7 +91,7 @@ write_csv(woody_subplot_eglin, "data/processed_by_installation/eglin_afb/woody_s
 
 woody_subplot_tyndall <- subplot_data %>% 
   filter(installation=="tyndall") %>% 
-  select(plot_id, date, visit_year, species_name, over_100cm)
+  select(plot_id, date, visit_year, species_name, stems_100m2)
 
 write_csv(woody_subplot_tyndall, "data/processed_by_installation/tyndall_afb/woody_subplot_tyndall.csv")
 
@@ -94,7 +99,7 @@ write_csv(woody_subplot_tyndall, "data/processed_by_installation/tyndall_afb/woo
 
 woody_subplot_jackson <- subplot_data %>% 
   filter(installation=="jackson") %>% 
-  select(plot_id, date, visit_year, species_name, over_100cm)
+  select(plot_id, date, visit_year, species_name, stems_100m2)
 
 write_csv(woody_subplot_jackson, "data/processed_by_installation/fort_jackson/woody_subplot_jackson.csv")
 
@@ -102,7 +107,7 @@ write_csv(woody_subplot_jackson, "data/processed_by_installation/fort_jackson/wo
 
 woody_subplot_benning <- subplot_data %>% 
   filter(installation=="benning") %>% 
-  select(plot_id, date, visit_year, species_name, over_100cm)
+  select(plot_id, date, visit_year, species_name, stems_100m2)
 
 write_csv(woody_subplot_benning, "data/processed_by_installation/fort_benning/woody_subplot_benning.csv")
 
@@ -110,7 +115,7 @@ write_csv(woody_subplot_benning, "data/processed_by_installation/fort_benning/wo
 
 woody_subplot_shelby <- subplot_data %>% 
   filter(installation=="shelby") %>% 
-  select(plot_id, date, visit_year, species_name, over_100cm)
+  select(plot_id, date, visit_year, species_name, stems_100m2)
 
 write_csv(woody_subplot_shelby, "data/processed_by_installation/camp_shelby/woody_subplot_shelby.csv")
 
@@ -118,7 +123,7 @@ write_csv(woody_subplot_shelby, "data/processed_by_installation/camp_shelby/wood
 
 woody_subplot_gordon <- subplot_data %>% 
   filter(installation=="gordon") %>% 
-  select(plot_id, date, visit_year, species_name, over_100cm)
+  select(plot_id, date, visit_year, species_name, stems_100m2)
 
 write_csv(woody_subplot_gordon, "data/processed_by_installation/fort_gordon/woody_subplot_gordon.csv")
 
@@ -126,7 +131,7 @@ write_csv(woody_subplot_gordon, "data/processed_by_installation/fort_gordon/wood
 
 woody_subplot_moody <- subplot_data %>% 
   filter(installation=="moody") %>% 
-  select(plot_id, date, visit_year, species_name, over_100cm)
+  select(plot_id, date, visit_year, species_name, stems_100m2)
 
 write_csv(woody_subplot_moody, "data/processed_by_installation/moody_afb/woody_subplot_moody.csv")
 

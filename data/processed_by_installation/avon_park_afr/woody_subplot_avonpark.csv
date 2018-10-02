@@ -1,17 +1,17 @@
-plot_id,date,visit_year,species_name,over_100cm
-avonpark a1,2017-06-27,2017,Serenoa repens,2
-avonpark c1,2017-06-28,2017,Lyonia ferruginea,3
-avonpark c1,2017-06-28,2017,Morella cerifera,3
-avonpark c1,2017-06-28,2017,Serenoa repens,6
+plot_id,date,visit_year,species_name,stems_100m2
+avonpark a1,2017-06-27,2017,Serenoa repens,1
+avonpark c1,2017-06-28,2017,Lyonia ferruginea,2
+avonpark c1,2017-06-28,2017,Morella cerifera,2
+avonpark c1,2017-06-28,2017,Serenoa repens,4
 avonpark c1,2017-06-28,2017,NA NA,1
-avonpark b1,2017-06-29,2017,Ilex spp.,5
-avonpark b1,2017-06-29,2017,Serenoa repens,42
-avonpark d1,2017-06-30,2017,Pinus clausa,4
-avonpark d1,2017-06-30,2017,Quercus geminata,13
-avonpark d1,2017-06-30,2017,Quercus myrtifolia,18
-avonpark d1,2017-06-30,2017,Quercus myrtifolia,3
-avonpark d1,2017-06-30,2017,Quercus nigra,4
-avonpark d1,2017-06-30,2017,Serenoa repens,14
+avonpark b1,2017-06-29,2017,Ilex spp.,3
+avonpark b1,2017-06-29,2017,Serenoa repens,25
+avonpark d1,2017-06-30,2017,Pinus clausa,2
+avonpark d1,2017-06-30,2017,Quercus geminata,8
+avonpark d1,2017-06-30,2017,Quercus myrtifolia,11
+avonpark d1,2017-06-30,2017,Quercus myrtifolia,2
+avonpark d1,2017-06-30,2017,Quercus nigra,2
+avonpark d1,2017-06-30,2017,Serenoa repens,8
 avonpark e2,2018-05-29,2018,Rhus copallinum,1
 avonpark e2,2018-05-29,2018,Serenoa repens,2
 avonpark e1,2018-05-29,2018,NA NA,0

@@ -1,4 +1,4 @@
-plot_id,date,visit_year,species_name,over_100cm
+plot_id,date,visit_year,species_name,stems_100m2
 jackson d1,2018-07-09,2018,Carya spp.,1
 jackson c1,2018-07-09,2018,Diospyros virginiana,3
 jackson d1,2018-07-09,2018,Quercus nigra,1
