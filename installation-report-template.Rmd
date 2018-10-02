@@ -205,30 +205,23 @@ inst_data <- tick_data %>%
 # unique(inst_data$plot_id)
 # filter(tick_data, is.na(imcy_inv))
 tick_data %>% 
-      # filter(!is.na(imcy_inv), !is.na(life_stage)) %>% 
       group_by(installation, plot_id, years_since_fire, imcy_inv) %>%
       summarise(tick_count_sum = sum(tick_count, na.rm = T)) %>%
       ungroup(.) %>% 
       filter(!is.na(imcy_inv)) %>% 
-ggplot(aes(years_since_fire, log1p(tick_count_sum))) +
-      # geom_bar(stat = "identity", position = "dodge", show.legend = F) +
-      # geom_violin(aes(fill = imcy_inv), alpha = .3) +
+
+      ggplot(aes(years_since_fire, log1p(tick_count_sum))) +
       geom_point(aes(color = imcy_inv), position = "jitter", size = 1) +
       geom_smooth(aes(fill = imcy_inv, color = imcy_inv), method = "lm", alpha = .3, se=F) +
-      geom_point(data = inst_data,
-                 aes(years_since_fire, log1p(tick_count_sum)), color = "red", position = "jitter") +
-      # stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      # scale_shape_manual(values = c("jackson"=2)) +
+      ## Add points for the specific installation
+      geom_point(
+            data = inst_data,
+            aes(years_since_fire, log1p(tick_count_sum)), 
+            color = "red", position = "jitter"
+            ) +
       invasion_color +
       invasion_fill +
       scale_x_continuous(breaks = c(seq(0,11,1))) +
-      # scale_y_log10(limits = c(1, 150)) +
-      # geom_dotplot(aes(fill = imcy_inv),
-      #            binaxis = "y",         # which axis to bin along
-      #            binwidth = .2,       # Minimal difference considered different
-      #            stackdir = "center"    # Centered
-      #            ) +
-      # facet_grid(life_stage~., scales = "free_y") +
       xlab("Years since fire") +
       ylab("log(Tick abundance)") +
       theme_classic() +
@@ -253,6 +246,9 @@ inst_data %>%
 
 ```
 
+```{r tick abundance vs litter cover}
+
+```
 
 
 # Canopy cover
