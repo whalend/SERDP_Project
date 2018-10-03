@@ -67,7 +67,7 @@ anti_join(canopy_grouped, quadrat_biomass, by = NULL) %>%
   select(plot_id, date)  # Fixed date issues
 
 quadrat_biomass_canopy_cover <- 
-  left_join(quadrat1m_biomass, canopy_grouped, by = NULL, copy = FALSE)
+  left_join(quadrat_biomass, canopy_grouped, by = NULL, copy = FALSE)
 
 summary(quadrat_biomass_canopy_cover)
 names(quadrat_biomass_canopy_cover)
