@@ -24,7 +24,7 @@ common_fields <- data.frame(
     "year the plot was visited"))
 
 kable(common_fields) %>%
-  kable_styling(full_width = T) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T)
   
@@ -47,7 +47,7 @@ plot_visit_cogon_fields <- data.frame(
     "number of years since the sample area was last burned"))
 
 kable(plot_visit_cogon_fields) %>%
-  kable_styling(full_width = T) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T)
 
@@ -67,7 +67,7 @@ quadrat_species_fields <- data.frame(
     "estimate of the species' stem count in the plot based on an average of four square meter quadrats"))
 
 kable(quadrat_species_fields) %>%
-  kable_styling(full_width = T) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T)
 
@@ -95,13 +95,13 @@ quadrat_biomass_canopy_fields <- data.frame(
     "estimate of canopy cover in the plot based on the average of four manual densiometer measurements at four square meter quadrats"))
 
 kable(quadrat_biomass_canopy_fields) %>%
-  kable_styling(full_width = T) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T)
 
 ```
 
-# Trees raw
+# Trees - raw
 
 ```{r raw tree data, echo=FALSE}
 
@@ -112,21 +112,21 @@ trees_raw_fields <- data.frame(
   description = c("assigned tag number given to each measured tree. if NA, no tag was assigned",
     "species of the individals to at least Genus level. if NA, unable to identify",
     "diameter at breast height of the tree (cm)", 
-    "relative canopy position of the tree. ex: e = emergent, d = dominant, c = codominant,  i = intermediate, u = understory", 
+    "tree relative canopy position. ex: e = emergent, d = dominant, c = codominant,  i = intermediate, u = understory", 
     "health class assigned (alive or dead) of each tree", 
-    "distance from the center of the plot to the midpoint of the tree", 
-    "azimuth of the tree relative to plot center using a sighting compass", 
+    "distance from the center of the plot to the midpoint of the tree (m)", 
+    "azimuth of the tree relative to plot center using a sighting compass (°)", 
     "height of the tree (m). if NA, tree height was not measured", 
     "height of visible char on the tree due to fire (m). if NA, char height was not measured"))
 
 kable(trees_raw_fields) %>%
-  kable_styling(full_width = T) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T)
 
 ```
 
-# Tree summary
+# Trees - summary
 
 ```{r summarized tree data to plot level, echo=FALSE}
 
@@ -137,12 +137,12 @@ trees_summary_fields <- data.frame(
   description = c("species of the individals to at least Genus level. if NA, unable to identify", 
     "record of all individuals of the same species in the plot that share common canopy position", 
     "record of all individuals of the same species in the plot that share common health class", 
-    "total dbh of all individuals of the same species in the plot that share common canopy position and health class",
-    "estimate of a species tree height in the plot based on average of recorded tree height measurements", 
-    "estimate of a species char height in the plot based on average of recorded char height measurements"))
+    "total dbh of all individuals of the same species in the plot that share common canopy position and health class (cm)",
+    "estimate of a species tree height in the plot based on average of recorded tree height measurements (m)", 
+    "estimate of a species char height in the plot based on average of recorded char height measurements (m)"))
 
 kable(trees_summary_fields) %>%
-  kable_styling(full_width = T) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T)
 
@@ -157,10 +157,10 @@ woody_subplot_fields <- data.frame(
   data_type = c(
     "character", "numeric"),
   description = c("species of the individals to at least Genus level. if NA, unable to identify",
-    "number of woody stems with height greater than 1m within a 5.64m radius from plot center (100m2)"))
+    "number of woody stems with height greater than 1m within a 5.64m radius from plot center"))
 
 kable(woody_subplot_fields) %>%
-  kable_styling(full_width = T) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T)
 
@@ -168,22 +168,10 @@ kable(woody_subplot_fields) %>%
 
 # Ticks
 
-Note: Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was visited and no ticks were collected.
-
-Tick Species Key:
-
-  Am. am. = Amblyomma americanum = lone star tick
-  
-  Am. mac. = Amblyomma maculatum = Gulf Coast tick
-  
-  De. var. = Dermacentor variabilis = American dog tick
-  
-  Rh. san. = Rhipicephalus sanguineus = brown dog tick
-
 ```{r ticks, echo=FALSE}
 
 ticks_fields <- data.frame(
-  field_name = c("species", "life_stage", "tick_count"),
+  field_name = c("species_name", "life_stage", "tick_count"),
   data_type = c(
     "character", "character", "numeric"),
   description = c("species of the individals to at least Genus level. if NA, unable to identify",
@@ -191,15 +179,14 @@ ticks_fields <- data.frame(
     "number of ticks found in the plot based on four dry ice traps per plot and cloth dragging"))
 
 kable(ticks_fields) %>%
-  kable_styling(full_width = T) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
-  column_spec(2, border_right = T)
+  column_spec(2, border_right = T) %>% 
+  footnote(general = ("Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no ticks were collected."))
 
 ```
 
 # Dung
-
-Note: Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was visited and no dung was found.
 
 ```{r dung, echo=FALSE}
 
@@ -212,8 +199,9 @@ dung_fields <- data.frame(
     "number of dung deposit *events* found from 2m on either side of a 50m transect. note: each individual rabbit pellet was counted as a single event"))
 
 kable(dung_fields) %>%
-  kable_styling(full_width = T) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
-  column_spec(2, border_right = T)
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no dung was found.")
 
 ```

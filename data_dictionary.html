@@ -131,7 +131,7 @@ $(document).ready(function () {
 
 <div id="common-among-all-dataframes" class="section level1">
 <h1>Common among all dataframes</h1>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: auto !important; ">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -184,7 +184,7 @@ year the plot was visited
 </div>
 <div id="plot-visit-and-invasion-status" class="section level1">
 <h1>Plot visit and invasion status</h1>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: auto !important; ">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -259,7 +259,7 @@ number of years since the sample area was last burned
 </div>
 <div id="vegetation---quadrat-plant-species" class="section level1">
 <h1>Vegetation - quadrat plant species</h1>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: auto !important; ">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -323,7 +323,7 @@ estimate of the species’ stem count in the plot based on an average of four sq
 </div>
 <div id="vegetation---quadrat-biomass-and-canopy-cover" class="section level1">
 <h1>Vegetation - quadrat, biomass, and canopy cover</h1>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: auto !important; ">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -473,9 +473,9 @@ estimate of canopy cover in the plot based on the average of four manual densiom
 </tbody>
 </table>
 </div>
-<div id="trees-raw" class="section level1">
-<h1>Trees raw</h1>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<div id="trees---raw" class="section level1">
+<h1>Trees - raw</h1>
+<table class="table table-striped" style="width: auto !important; ">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -531,7 +531,7 @@ canopy
 character
 </td>
 <td style="text-align:left;">
-relative canopy position of the tree. ex: e = emergent, d = dominant, c = codominant, i = intermediate, u = understory
+tree relative canopy position. ex: e = emergent, d = dominant, c = codominant, i = intermediate, u = understory
 </td>
 </tr>
 <tr>
@@ -553,7 +553,7 @@ distance
 numeric
 </td>
 <td style="text-align:left;">
-distance from the center of the plot to the midpoint of the tree
+distance from the center of the plot to the midpoint of the tree (m)
 </td>
 </tr>
 <tr>
@@ -564,7 +564,7 @@ azimuth
 numeric
 </td>
 <td style="text-align:left;">
-azimuth of the tree relative to plot center using a sighting compass
+azimuth of the tree relative to plot center using a sighting compass (°)
 </td>
 </tr>
 <tr>
@@ -592,9 +592,9 @@ height of visible char on the tree due to fire (m). if NA, char height was not m
 </tbody>
 </table>
 </div>
-<div id="tree-summary" class="section level1">
-<h1>Tree summary</h1>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<div id="trees---summary" class="section level1">
+<h1>Trees - summary</h1>
+<table class="table table-striped" style="width: auto !important; ">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -650,7 +650,7 @@ total_dbh
 numeric
 </td>
 <td style="text-align:left;">
-total dbh of all individuals of the same species in the plot that share common canopy position and health class
+total dbh of all individuals of the same species in the plot that share common canopy position and health class (cm)
 </td>
 </tr>
 <tr>
@@ -661,7 +661,7 @@ avg_height
 numeric
 </td>
 <td style="text-align:left;">
-estimate of a species tree height in the plot based on average of recorded tree height measurements
+estimate of a species tree height in the plot based on average of recorded tree height measurements (m)
 </td>
 </tr>
 <tr>
@@ -672,7 +672,7 @@ avg_char
 numeric
 </td>
 <td style="text-align:left;">
-estimate of a species char height in the plot based on average of recorded char height measurements
+estimate of a species char height in the plot based on average of recorded char height measurements (m)
 </td>
 </tr>
 </tbody>
@@ -680,7 +680,7 @@ estimate of a species char height in the plot based on average of recorded char 
 </div>
 <div id="woody-subplot" class="section level1">
 <h1>Woody subplot</h1>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: auto !important; ">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -714,7 +714,7 @@ stems_100m2
 numeric
 </td>
 <td style="text-align:left;">
-number of woody stems with height greater than 1m within a 5.64m radius from plot center (100m2)
+number of woody stems with height greater than 1m within a 5.64m radius from plot center
 </td>
 </tr>
 </tbody>
@@ -722,8 +722,7 @@ number of woody stems with height greater than 1m within a 5.64m radius from plo
 </div>
 <div id="ticks" class="section level1">
 <h1>Ticks</h1>
-<p>Note: Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was visited and no ticks were collected.</p>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: auto !important; ">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -740,7 +739,7 @@ description
 <tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;border-right:1px solid;">
-species
+species_name
 </td>
 <td style="text-align:left;border-right:1px solid;">
 character
@@ -772,17 +771,23 @@ number of ticks found in the plot based on four dry ice traps per plot and cloth
 </td>
 </tr>
 </tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no ticks were collected.
+</td>
+</tr>
+</tfoot>
 </table>
 </div>
 <div id="dung" class="section level1">
 <h1>Dung</h1>
-<p>Note: Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was visited and no dung was found.</p>
-<p>Tick Species Key:</p>
-<p>Am. am. = Amblyomma americanum = lone star tick</p>
-<p>Am. mac. = Amblyomma maculatum = Gulf Coast tick</p>
-<p>De. var. = Dermacentor variabilis = American dog tick</p>
-<p>Rh. san. = Rhipicephalus sanguineus = brown dog tick</p>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: auto !important; ">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -831,6 +836,18 @@ number of dung deposit <em>events</em> found from 2m on either side of a 50m tra
 </td>
 </tr>
 </tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no dung was found.
+</td>
+</tr>
+</tfoot>
 </table>
 </div>
 
