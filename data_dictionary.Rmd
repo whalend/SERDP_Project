@@ -1,0 +1,207 @@
+---
+title: "SERDP Data Dictionary"
+author: "Steven Cabrera"
+date: "October 2, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+```
+
+# Common among all dataframes
+
+```{r common parameters across all data, echo=FALSE}
+
+common_fields <- data.frame(
+  field_name = c("plot_id", "date", "visit_year"),
+  data_type = c(
+    "character", "date", "numeric"),
+  description = c("installation name and an assigned letter for the plot",
+    "date that set of data was collected. format: YYYY-MM-DD", 
+    "year the plot was visited"))
+
+kable(common_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+  
+
+```
+
+# Plot visit and invasion status
+
+```{r plot visit & invasion status, echo=FALSE}
+
+plot_visit_cogon_fields <- data.frame(
+  field_name = c("imcy_inv", "avg_tiller_density_m2", "xcoord_lon", "ycoord_lat",
+                 "years_since_fire"),
+  data_type = c(
+    "character", "numeric", "numeric", "numeric", "numeric"),
+  description = c("invasion status of *Imperata cylindrica*",
+    "average number of *Imperata cylindrica* tillers per square meter", 
+    "longitudinal x-coordinate of plot_id", 
+    "latitudinal y-coordinate of plot_id", 
+    "number of years since the sample area was last burned"))
+
+kable(plot_visit_cogon_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Vegetation - quadrat plant species
+
+```{r vegatation plant species of 1m quadrats, echo=FALSE}
+
+quadrat_species_fields <- data.frame(
+  field_name = c("species_name", "functional_group" , "avg_pct_cover", "num_stems_m2"),
+  data_type = c(
+    "character", "character", "numeric", "numeric"),
+  description = c("species of the individals to at least Genus level. if NA, unable to      identify",
+    "functional group of the species. ex: graminoid, forb, shrub, tree", 
+    "estimate of the species' percent cover in the plot based on an average of four square meter quadrats", 
+    "estimate of the species' stem count in the plot based on an average of four square meter quadrats"))
+
+kable(quadrat_species_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Vegetation - quadrat, biomass, and canopy cover 
+
+```{r vegetation data in 1m quadrats, biomass, and canopy cover, echo=FALSE}
+
+quadrat_biomass_canopy_fields <- data.frame(
+  field_name = c("avg_woody_veg_ht", "avg_herb_veg_ht", "avg_litter_ht", "avg_pct_green", "avg_pct_litter", "avg_pct_wood_litter", "avg_pct_bare", "avg_standing_fuel_mass_wet_m2", "avg_litter_mass_wet_m2", "avg_standing_fuel_mass_dry_m2", "avg_litter_mass_dry_m2", "avg_pct_canopy_cover"),
+  data_type = c(
+    "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric"),
+  description = c("estimate of woody plant species height in the plot based on an average of three measurements per four square meter quadrats (cm). maximum height cut off at 2m",
+    "estimate of herbaceous plant species height in the plot based on an average of three measurements per four square meter quadrats (cm). maximum height cut off at 2m", 
+    "estimate of litter depth in the plot based on an average of three measurements per four square meter quadrats (cm)", 
+    "estimate of percent green of plant material in the plot based on the average of estimates at four square meter quadrats", 
+    "estimate of percent litter cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats", 
+    "estimate of percent woody litter cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats. includes: fallen branches/logs, twigs, pine cones", 
+    "estimate of pure bare ground cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats", 
+    "estimate of *fresh* standing vegetation mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
+    "estimate of *fresh* litter mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
+    "estimate of *dried* standing vegetation mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
+    "estimate of *dried* litter mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
+    "estimate of canopy cover in the plot based on the average of four manual densiometer measurements at four square meter quadrats"))
+
+kable(quadrat_biomass_canopy_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Trees - raw
+
+```{r raw tree data, echo=FALSE}
+
+trees_raw_fields <- data.frame(
+  field_name = c("tag", "species_name", "dbh", "canopy", "health", "distance", "azimuth", "height", "char"),
+  data_type = c(
+    "numeric", "character", "numeric", "character", "character", "numeric", "numeric", "numeric", "numeric"),
+  description = c("assigned tag number given to each measured tree. if NA, no tag was assigned",
+    "species of the individals to at least Genus level. if NA, unable to identify",
+    "diameter at breast height of the tree (cm)", 
+    "tree relative canopy position. ex: e = emergent, d = dominant, c = codominant,  i = intermediate, u = understory", 
+    "health class assigned (alive or dead) of each tree", 
+    "distance from the center of the plot to the midpoint of the tree (m)", 
+    "azimuth of the tree relative to plot center using a sighting compass (°)", 
+    "height of the tree (m). if NA, tree height was not measured", 
+    "height of visible char on the tree due to fire (m). if NA, char height was not measured"))
+
+kable(trees_raw_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Trees - summary
+
+```{r summarized tree data to plot level, echo=FALSE}
+
+trees_summary_fields <- data.frame(
+  field_name = c( "species_name", "canopy", "health", "total_dbh", "avg_height", "avg_char"),
+  data_type = c(
+    "character", "character", "character", "numeric", "numeric", "numeric"),
+  description = c("species of the individals to at least Genus level. if NA, unable to identify", 
+    "record of all individuals of the same species in the plot that share common canopy position", 
+    "record of all individuals of the same species in the plot that share common health class", 
+    "total dbh of all individuals of the same species in the plot that share common canopy position and health class (cm)",
+    "estimate of a species tree height in the plot based on average of recorded tree height measurements (m)", 
+    "estimate of a species char height in the plot based on average of recorded char height measurements (m)"))
+
+kable(trees_summary_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Woody subplot
+
+```{r woody subplot, echo=FALSE}
+
+woody_subplot_fields <- data.frame(
+  field_name = c("species_name", "stems_100m2"),
+  data_type = c(
+    "character", "numeric"),
+  description = c("species of the individals to at least Genus level. if NA, unable to identify",
+    "number of woody stems with height greater than 1m within a 5.64m radius from plot center"))
+
+kable(woody_subplot_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Ticks
+
+```{r ticks, echo=FALSE}
+
+ticks_fields <- data.frame(
+  field_name = c("species_name", "life_stage", "tick_count"),
+  data_type = c(
+    "character", "character", "numeric"),
+  description = c("species of the individals to at least Genus level. if NA, unable to identify",
+    "life stage of tick. ex: adult, nymph, larvae", 
+    "number of ticks found in the plot based on four dry ice traps per plot and cloth dragging"))
+
+kable(ticks_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = ("Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no ticks were collected."))
+
+```
+
+# Dung
+
+```{r dung, echo=FALSE}
+
+dung_fields <- data.frame(
+  field_name = c("species", "dung1m", "dung2m"),
+  data_type = c(
+    "character", "numeric", "numeric"),
+  description = c("Common name of species that deposited the dung. if NA, unable to identify",
+    "number of dung deposit *events* found from 1m on either side of a 50m transect. note: each individual rabbit pellet was counted as a single event", 
+    "number of dung deposit *events* found from 2m on either side of a 50m transect. note: each individual rabbit pellet was counted as a single event"))
+
+kable(dung_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no dung was found.")
+
+```

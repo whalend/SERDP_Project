@@ -99,9 +99,24 @@ write_csv(tick_data, "data/processed_data/ticks.csv")
 tick_data <- read_csv("data/processed_data/ticks.csv")
 summary(tick_data)
 names(tick_data)
+unique(tick_data$species)
+tick_data <- tick_data %>% 
+  mutate(species_name = case_when(species=="Am. am" ~ "Amblyomma americanum",
+         species=="Am. mac" ~ "Amblyomma maculatum",
+         species=="De. var" ~ "Dermacentor variabilis",
+         species=="Rh. san" ~ "Rhipicephalus sanguineus",
+         species=="unknown" ~ "unknown"))
+
+tick_data$species_name
+unique(tick_data$species_name)
+filter(tick_data, species=="unknown")$species_name
+
+write_csv(tick_data, "data/processed_data/ticks.csv")
+
+tick_data <- read_csv("data/processed_data/ticks.csv")
 
 ticks_grouped <- tick_data %>% 
-  group_by(installation, plot_id, date, visit_year, species, life_stage) %>% 
+  group_by(installation, plot_id, date, visit_year, species_name, life_stage) %>% 
   summarise(tick_count = sum(count, na.rm = T))
 
 summary(ticks_grouped)
@@ -118,12 +133,12 @@ ticks_blanding <- ticks_grouped %>%
 
 ticks_blanding <- filter(ticks_blanding) %>%
   ungroup(.) %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_blanding)
 
 filter(ticks_blanding, plot_id=="blanding h1") %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_blanding, "data/processed_by_installation/camp_blanding/ticks_blanding.csv")
 
@@ -134,12 +149,12 @@ ticks_avonpark <- ticks_grouped %>%
 
 ticks_avonpark <- filter(ticks_avonpark) %>%
   ungroup(.) %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_avonpark)
 
 filter(ticks_avonpark, plot_id=="avonpark c2") %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_avonpark, "data/processed_by_installation/avon_park_afr/ticks_avonpark.csv")
 
@@ -150,12 +165,12 @@ ticks_eglin <- ticks_grouped %>%
 
 ticks_eglin <- filter(ticks_eglin) %>%
   ungroup(.) %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_eglin)
 
 filter(ticks_eglin, plot_id=="eglin i1") %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_eglin, "data/processed_by_installation/eglin_afb/ticks_eglin.csv")
 
@@ -166,12 +181,12 @@ ticks_tyndall <- ticks_grouped %>%
 
 ticks_tyndall <- filter(ticks_tyndall) %>%
   ungroup(.) %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_tyndall)
 
 filter(ticks_tyndall, plot_id=="tyndall c1") %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_tyndall, "data/processed_by_installation/tyndall_afb/ticks_tyndall.csv")
 
@@ -182,12 +197,12 @@ ticks_jackson <- ticks_grouped %>%
 
 ticks_jackson <- filter(ticks_jackson) %>%
   ungroup(.) %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_jackson)
 
 filter(ticks_jackson, plot_id=="jackson c1") %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_jackson, "data/processed_by_installation/fort_jackson/ticks_jackson.csv")
 
@@ -198,12 +213,12 @@ ticks_benning <- ticks_grouped %>%
 
 ticks_benning <- filter(ticks_benning) %>%
   ungroup(.) %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_benning)
 
 filter(ticks_benning, plot_id=="benning c1") %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_benning, "data/processed_by_installation/fort_benning/ticks_benning.csv")
 
@@ -214,12 +229,12 @@ ticks_shelby <- ticks_grouped %>%
 
 ticks_shelby <- filter(ticks_shelby) %>%
   ungroup(.) %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_shelby)
 
 filter(ticks_shelby, plot_id=="shelby c1") %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_shelby, "data/processed_by_installation/camp_shelby/ticks_shelby.csv")
 
@@ -230,12 +245,12 @@ ticks_gordon <- ticks_grouped %>%
 
 ticks_gordon <- filter(ticks_gordon) %>%
   ungroup(.) %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_gordon)
 
 filter(ticks_gordon, plot_id=="gordon v1") %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_gordon, "data/processed_by_installation/fort_gordon/ticks_gordon.csv")
 
@@ -246,12 +261,12 @@ ticks_moody <- ticks_grouped %>%
 
 ticks_moody <- filter(ticks_moody) %>%
   ungroup(.) %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_moody)
 
 filter(ticks_moody, plot_id=="moody k1") %>% 
-  select(plot_id, date, visit_year, species, life_stage, tick_count)
+  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_moody, "data/processed_by_installation/moody_afb/ticks_moody.csv")
 
