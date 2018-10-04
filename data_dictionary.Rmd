@@ -168,6 +168,18 @@ kable(woody_subplot_fields) %>%
 
 # Ticks
 
+Note: Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was visited and no ticks were collected.
+
+Tick Species Key:
+
+  Am. am. = Amblyomma americanum = lone star tick
+  
+  Am. mac. = Amblyomma maculatum = Gulf Coast tick
+  
+  De. var. = Dermacentor variabilis = American dog tick
+  
+  Rh. san. = Rhipicephalus sanguineus = brown dog tick
+
 ```{r ticks, echo=FALSE}
 
 ticks_fields <- data.frame(
@@ -186,6 +198,8 @@ kable(ticks_fields) %>%
 ```
 
 # Dung
+
+Note: Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was visited and no dung was found.
 
 ```{r dung, echo=FALSE}
 
