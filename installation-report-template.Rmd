@@ -45,7 +45,14 @@ invasion_fill <- scale_fill_viridis_d()
 
 # Project Summary
 
+Tick-borne diseases (TBDs) represent a major public health threat in North America, particularly for military personnel training on Department of Defense (DoD) installations. We received funding from the Strategic Environmental Research and Development Programto explore several of the predicted consequences of climate change on fire regimes and plant communities, and their interactions with wildlife, for human risk of exposure to TBDs in the southeastern U.S.
 
+Our specific objectives are to:
+
+1) Evaluate the interactions between fire and plant invasions spanning a gradient in fire management, invasive plant distribution and abundance, and climatic conditions across the southeastern U.S.
+
+2) Quantify the effects of fire and plant invasions and their interactions on wildlife abundance, tick abundance, tick infection rates, and TBD risk to humans.
+  b. Calibrate a spatially explicit model of TBD risk in response to fire-invasion interactions   and examine the responses of fire, plant invasions, wildlife, TBD risk, using simulations of    climate change scenarios.
 
 
 # Number of plots sampled
