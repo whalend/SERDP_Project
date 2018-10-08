@@ -1,7 +1,7 @@
 plot_id,date,visit_year,species_name,life_stage,tick_count
 gordon r1,2018-08-23,2018,Amblyomma americanum,N,9
 gordon r1,2018-08-23,2018,NA,NA,0
-gordon s1,2018-08-23,2018,Amblyomma americanum,N,11
+gordon s1,2018-08-23,2018,Amblyomma americanum,N,12
 gordon s1,2018-08-23,2018,NA,NA,0
 gordon t1,2018-08-23,2018,Amblyomma americanum,N,2
 gordon t1,2018-08-23,2018,Amblyomma maculatum,A,1

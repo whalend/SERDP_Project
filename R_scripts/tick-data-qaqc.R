@@ -87,7 +87,7 @@ tick_data$species[tick_data$species=="De. Var"] <- "De. var"
 tick_data$species[tick_data$species=="rh. san"] <- "Rh. san"
 
 tick_data$date <- as.Date(as.character(tick_data$date), format = "%Y%m%d")
-tick_data <- tick_data %>% 
+tick_data <- tick_data %>%
   mutate(visit_year = lubridate::year(tick_data$date))
 
 summary(tick_data)
@@ -100,7 +100,7 @@ tick_data <- read_csv("data/processed_data/ticks.csv")
 summary(tick_data)
 names(tick_data)
 unique(tick_data$species)
-tick_data <- tick_data %>% 
+tick_data <- tick_data %>%
   mutate(species_name = case_when(species=="Am. am" ~ "Amblyomma americanum",
          species=="Am. mac" ~ "Amblyomma maculatum",
          species=="De. var" ~ "Dermacentor variabilis",
@@ -115,157 +115,157 @@ write_csv(tick_data, "data/processed_data/ticks.csv")
 
 tick_data <- read_csv("data/processed_data/ticks.csv")
 
-ticks_grouped <- tick_data %>% 
-  group_by(installation, plot_id, date, visit_year, species_name, life_stage) %>% 
+ticks_grouped <- tick_data %>%
+  group_by(installation, plot_id, date, visit_year, species_name, life_stage) %>%
   summarise(tick_count = sum(count, na.rm = T))
 
 summary(ticks_grouped)
 
 ###is.na(ticks_grouped$species)
-###ticks_grouped <- ticks_grouped %>% 
-###  filter(!is.na(species)) %>% 
+###ticks_grouped <- ticks_grouped %>%
+###  filter(!is.na(species)) %>%
 ###  select(installation, plot_id, date, visit_year, species, life_stage, tick_count)
 
 #### Filter for Camp Blanding ####
 
-ticks_blanding <- ticks_grouped %>% 
+ticks_blanding <- ticks_grouped %>%
   filter(installation=="blanding")
 
 ticks_blanding <- filter(ticks_blanding) %>%
-  ungroup(.) %>% 
+  ungroup(.) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_blanding)
 
-filter(ticks_blanding, plot_id=="blanding h1") %>% 
+filter(ticks_blanding, plot_id=="blanding h1") %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_blanding, "data/processed_by_installation/camp_blanding/ticks_blanding.csv")
 
 #### Filter for Avon Park ####
 
-ticks_avonpark <- ticks_grouped %>% 
+ticks_avonpark <- ticks_grouped %>%
   filter(installation=="avonpark")
 
 ticks_avonpark <- filter(ticks_avonpark) %>%
-  ungroup(.) %>% 
+  ungroup(.) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_avonpark)
 
-filter(ticks_avonpark, plot_id=="avonpark c2") %>% 
+filter(ticks_avonpark, plot_id=="avonpark c2") %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_avonpark, "data/processed_by_installation/avon_park_afr/ticks_avonpark.csv")
 
 #### Filter for Eglin AFB ####
 
-ticks_eglin <- ticks_grouped %>% 
+ticks_eglin <- ticks_grouped %>%
   filter(installation=="eglin")
 
 ticks_eglin <- filter(ticks_eglin) %>%
-  ungroup(.) %>% 
+  ungroup(.) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_eglin)
 
-filter(ticks_eglin, plot_id=="eglin i1") %>% 
+filter(ticks_eglin, plot_id=="eglin i1") %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_eglin, "data/processed_by_installation/eglin_afb/ticks_eglin.csv")
 
 #### Filter for Tyndall AFB ####
 
-ticks_tyndall <- ticks_grouped %>% 
+ticks_tyndall <- ticks_grouped %>%
   filter(installation=="tyndall")
 
 ticks_tyndall <- filter(ticks_tyndall) %>%
-  ungroup(.) %>% 
+  ungroup(.) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_tyndall)
 
-filter(ticks_tyndall, plot_id=="tyndall c1") %>% 
+filter(ticks_tyndall, plot_id=="tyndall c1") %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_tyndall, "data/processed_by_installation/tyndall_afb/ticks_tyndall.csv")
 
 #### Filter for Fort Jackson ####
 
-ticks_jackson <- ticks_grouped %>% 
+ticks_jackson <- ticks_grouped %>%
   filter(installation=="jackson")
 
 ticks_jackson <- filter(ticks_jackson) %>%
-  ungroup(.) %>% 
+  ungroup(.) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_jackson)
 
-filter(ticks_jackson, plot_id=="jackson c1") %>% 
+filter(ticks_jackson, plot_id=="jackson c1") %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_jackson, "data/processed_by_installation/fort_jackson/ticks_jackson.csv")
 
 #### Filter for Fort Benning ####
 
-ticks_benning <- ticks_grouped %>% 
+ticks_benning <- ticks_grouped %>%
   filter(installation=="benning")
 
 ticks_benning <- filter(ticks_benning) %>%
-  ungroup(.) %>% 
+  ungroup(.) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_benning)
 
-filter(ticks_benning, plot_id=="benning c1") %>% 
+filter(ticks_benning, plot_id=="benning c1") %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_benning, "data/processed_by_installation/fort_benning/ticks_benning.csv")
 
 #### Filter for Camp Shelby ####
 
-ticks_shelby <- ticks_grouped %>% 
+ticks_shelby <- ticks_grouped %>%
   filter(installation=="shelby")
 
 ticks_shelby <- filter(ticks_shelby) %>%
-  ungroup(.) %>% 
+  ungroup(.) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_shelby)
 
-filter(ticks_shelby, plot_id=="shelby c1") %>% 
+filter(ticks_shelby, plot_id=="shelby c1") %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_shelby, "data/processed_by_installation/camp_shelby/ticks_shelby.csv")
 
 #### Filter for Fort Gordon####
 
-ticks_gordon <- ticks_grouped %>% 
+ticks_gordon <- ticks_grouped %>%
   filter(installation=="gordon")
 
 ticks_gordon <- filter(ticks_gordon) %>%
-  ungroup(.) %>% 
+  ungroup(.) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_gordon)
 
-filter(ticks_gordon, plot_id=="gordon v1") %>% 
+filter(ticks_gordon, plot_id=="gordon v1") %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_gordon, "data/processed_by_installation/fort_gordon/ticks_gordon.csv")
 
 #### Filter for Moody AFB ####
 
-ticks_moody <- ticks_grouped %>% 
+ticks_moody <- ticks_grouped %>%
   filter(installation=="moody")
 
 ticks_moody <- filter(ticks_moody) %>%
-  ungroup(.) %>% 
+  ungroup(.) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 summary(ticks_moody)
 
-filter(ticks_moody, plot_id=="moody k1") %>% 
+filter(ticks_moody, plot_id=="moody k1") %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_moody, "data/processed_by_installation/moody_afb/ticks_moody.csv")
@@ -273,29 +273,29 @@ write_csv(ticks_moody, "data/processed_by_installation/moody_afb/ticks_moody.csv
 #### Steven stopped, question about multiple dates for all data and random NAs ####
 
 
-######################## 
-ggplot(tick_data %>%
-group_by(installation,years_since_fire,Species) %>%
-summarise(tick_number = sum(count)),
-aes(as.factor(years_since_fire), tick_number)) +
-# geom_point(position = "jitter") +
-geom_bar(fill = "#124873", stat = "identity", position = "dodge") +
-# facet_grid(installation~., scales = "free_y") +
-xlab("Years since fire") +
-ylab("Tick abundance") +
-theme_bw() +
-theme(axis.text = element_text(size = 18),
-axis.title = element_text(size = 22))
-
-ggplot(tick_data %>%
-group_by(full_names, years_since_fire, Species) %>%
-summarise(tick_number = sum(count)),
-aes(as.factor(years_since_fire), tick_number, fill = Species)) +
-# geom_point(position = "jitter") +
-geom_bar(stat = "identity", position = "dodge") +
-facet_grid(full_names~., scales = "free_y") +
-xlab("Years since fire") +
-ylab("Tick abundance") +
-theme_bw() +
-theme(axis.text = element_text(size = 18),
-axis.title = element_text(size = 22))
+########################
+# ggplot(tick_data %>%
+# group_by(installation,years_since_fire,Species) %>%
+# summarise(tick_number = sum(count)),
+# aes(as.factor(years_since_fire), tick_number)) +
+# # geom_point(position = "jitter") +
+# geom_bar(fill = "#124873", stat = "identity", position = "dodge") +
+# # facet_grid(installation~., scales = "free_y") +
+# xlab("Years since fire") +
+# ylab("Tick abundance") +
+# theme_bw() +
+# theme(axis.text = element_text(size = 18),
+# axis.title = element_text(size = 22))
+#
+# ggplot(tick_data %>%
+# group_by(full_names, years_since_fire, Species) %>%
+# summarise(tick_number = sum(count)),
+# aes(as.factor(years_since_fire), tick_number, fill = Species)) +
+# # geom_point(position = "jitter") +
+# geom_bar(stat = "identity", position = "dodge") +
+# facet_grid(full_names~., scales = "free_y") +
+# xlab("Years since fire") +
+# ylab("Tick abundance") +
+# theme_bw() +
+# theme(axis.text = element_text(size = 18),
+# axis.title = element_text(size = 22))

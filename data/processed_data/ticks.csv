@@ -123,7 +123,7 @@ blanding,blanding m1,SE,2018-05-24,trap,Am. am,A,1,NA,NA,2018,Amblyomma american
 blanding,blanding m1,SW,2018-05-24,trap,Am. am,A,2,NA,NA,2018,Amblyomma americanum
 blanding,blanding m1,SW,2018-05-24,trap,Am. am,N,1,NA,NA,2018,Amblyomma americanum
 blanding,blanding n1,Extra,2018-05-24,people,Am. am,A,1,NA,NA,2018,Amblyomma americanum
-avonpark,avonpark e2,W,2018-05-29,people,De. var,A,1,NA,NA,2018,Dermacentor variabilis
+avonpark,avonpark e2,Extra,2018-05-29,people,De. var,A,1,NA,NA,2018,Dermacentor variabilis
 eglin,eglin i1,NW,2018-06-12,trap,NA,NA,0,NA,NA,2018,NA
 eglin,eglin i1,NE,2018-06-12,trap,Am. am,N,4,NA,NA,2018,Amblyomma americanum
 eglin,eglin i1,NE,2018-06-12,trap,Am. am,A,1,NA,NA,2018,Amblyomma americanum
@@ -422,12 +422,13 @@ shelby,shelby k1,NW,2018-08-16,trap,NA,NA,0,NA,NA,2018,NA
 shelby,shelby k1,NE,2018-08-16,trap,NA,NA,0,NA,NA,2018,NA
 shelby,shelby k1,SW,2018-08-16,trap,De. var,A,1,NA,NA,2018,Dermacentor variabilis
 shelby,shelby k1,SE,2018-08-16,trap,NA,NA,0,NA,NA,2018,NA
+shelby,shelby extra,Extra,2018-08-15,people,Am. mac,A,1,NA,NA,2018,Amblyomma maculatum
 gordon,gordon r1,NW,2018-08-23,trap,Am. am,N,8,NA,NA,2018,Amblyomma americanum
 gordon,gordon r1,NE,2018-08-23,trap,NA,NA,0,NA,NA,2018,NA
 gordon,gordon r1,SW,2018-08-23,trap,Am. am,N,1,NA,NA,2018,Amblyomma americanum
 gordon,gordon r1,SE,2018-08-23,trap,NA,NA,0,NA,NA,2018,NA
 gordon,gordon s1,NW,2018-08-23,trap,Am. am,N,9,NA,changed to 9 from 8 based on species id in vial,2018,Amblyomma americanum
-gordon,gordon s1,NE,2018-08-23,trap,Am. am,N,1,NA,NA,2018,Amblyomma americanum
+gordon,gordon s1,NE,2018-08-23,trap,Am. am,N,2,NA,NA,2018,Amblyomma americanum
 gordon,gordon s1,SW,2018-08-23,trap,NA,NA,0,NA,NA,2018,NA
 gordon,gordon s1,SE,2018-08-23,trap,Am. am,N,1,NA,NA,2018,Amblyomma americanum
 gordon,gordon t1,NW,2018-08-23,trap,Am. am,N,1,NA,NA,2018,Amblyomma americanum
