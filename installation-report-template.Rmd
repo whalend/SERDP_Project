@@ -1,4 +1,14 @@
 ```{r set installation name, echo=F}
+# inst_name values 
+# 1 "Avon Park AFR"
+# 2 "Camp Blanding"
+# 3 "Camp Shelby"
+# 4 "Eglin AFB"
+# 5 "Fort Benning"
+# 6 "Fort Gordon"
+# 7 "Fort Jackson"
+# 8 "Moody AFB"
+# 9 "Tyndall AFB"
 
 inst_name = "Fort Jackson"
 
@@ -106,7 +116,7 @@ plot_nums %>%
 
 ## Range of fire history sampled `r paste("at ", inst_name)`
 
-The 
+We established plots in areas at `r paste(inst_name)` ranging in time since last fire from `r min(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire)` to `r max(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire)` years
 
 ```{r sampling fire history}
 
