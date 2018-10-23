@@ -61,8 +61,8 @@ opts_chunk$set(cache = 2, cache.path = "cache/")
 
 ## Plots
 opts_chunk$set(fig.path = "figures/")
-opts_chunk$set(dpi = 1200)
-opts_chunk$set(dev = c("png"))
+opts_chunk$set(dpi = 300)
+# opts_chunk$set(dev = c("png"))
 
 struc_colors <- scale_color_manual(values=c("red","blue"))
 
