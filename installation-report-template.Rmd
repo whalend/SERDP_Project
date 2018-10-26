@@ -33,6 +33,7 @@ output:
 knitr::opts_chunk$set(echo = F)
 knitr::opts_chunk$set(warning = F)
 knitr::opts_chunk$set(message = F)
+knitr::opts_chunk$set(dpi = 150)
 
 library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi); library(stringr)
@@ -253,16 +254,27 @@ tick_data %>%
 
 ```
 
-```{r tick abundance fire installation}
+```{r tick abundance fire installation, eval =F}
 
-inst_data %>% 
-      ggplot(aes(as.factor(years_since_fire), tick_count_sum)) +
-      geom_col() +
+unique(tick_data_plot_summary$installation_full_name)
+filter(tick_data_plot_summary, is.na(installation_full_name))$plot_id
+
+(tick_fire_fig <- ggplot(filter(tick_data_plot_summary, !is.na(imcy_inv)), 
+       aes(years_since_fire, log1p(total_ticks))) +
+      # geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", linetype = "dashed", alpha = .2) +
+      geom_smooth(aes(fill = imcy_inv, color = imcy_inv), se = T, method = "lm", alpha = .2) +
+      # geom_smooth(se = F, method = "lm", linetype = 2, alpha = .2) +
+      geom_point(aes(color = imcy_inv), position = "jitter") +
+      invasion_color +
+      invasion_fill +
+      # geom_smooth(aes(color = imcy_inv), method = "loess",
+                  # linetype = "dashed", se = F, alpha = .2) +
+      # scale_shape_manual(values = c(inst_name=2, 19, 19, 19, 19, 19, 19, 19, 19)) +
       theme_classic() +
       xlab("Years since fire") +
-      ylab("Number of ticks") +
+      ylab("log( tick abundance + 1 )") +
       def_theme +
-      NULL
+      NULL)
 
 ```
 
@@ -272,13 +284,10 @@ inst_data %>%
 
 
 ## Canopy cover
-```{r load canopy cover data}
+```{r load canopy cover data, eval = T}
 
 canopy_cover <- read_csv("data/processed_data/canopy-cover.csv")
-canopy_cover <- canopy_cover %>% 
-      mutate(date = as.Date(as.character(date), format = "%Y%m%d"),
-             visit_year = lubridate::year(date))
-
+  
 canopy_cover_summary <- canopy_cover %>%
       filter(distance == 10) %>% 
       group_by(installation, plot_id, visit_year) %>%
@@ -288,27 +297,31 @@ canopy_cover_summary <- canopy_cover %>%
                 se_canopy_cover = sd_canopy_cover/sqrt(n_obs))
 # summary(canopy_cover_summary)
 
-cc_inv <- left_join(canopy_cover_summary, plot_visit_data)
-# summary(cc_inv)
-# cc_inv <- filter(cc_inv, !is.na(years_since_fire))
+canopy_cover_summary <- left_join(canopy_cover_summary, plot_visit_data)
 
-(tick_canopy_cover_fig <- ggplot(
-      filter(tick_data_sum, !is.na(imcy_inv)), 
-       aes(avg_canopy_cover, log1p(total_ticks), color = imcy_inv)) +
-      geom_point() +
+inst_data <- canopy_cover_summary %>% 
+  filter(installation_full_name==inst_name)
+```
+
+```{r create canopy cover years since fire figure}
+
+ggplot(canopy_cover_summary, aes(years_since_fire, avg_canopy_cover)) +
+      geom_point(aes(color = imcy_inv)) +
+      # geom_smooth(aes(color = imcy_inv), method = "loess", alpha = .2, linetype = "dashed", se = F) +
+      geom_smooth(aes(fill = imcy_inv, color = imcy_inv), method = "lm", alpha = .2) +
+      # geom_smooth(method = "lm", linetype = "dashed", color = "gray50") +
       invasion_color +
       invasion_fill +
-      geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm") +
-      # geom_smooth(aes(), se = F, alpha = .2, method = "loess", linetype = "dashed", show.legend = F) +
-      # facet_grid(imcy_inv~.) +
+      geom_point(data = inst_data, aes(years_since_fire, avg_canopy_cover), color = "blue", position = "jitter")  +
+      # scale_fill_discrete(h = c(249,200)) +
+      ylab("Overstory canopy cover (%)") +
+      xlab("Years since last fire") +
+      # ggtitle("Invaded vs. Uninvaded Plots Across Burn Units") +
       theme_classic() +
-      # theme_bw() +
-      xlab(expression(paste("Canopy cover (%)"))) +
-      ylab("log( tick abundance + 1 )") +
       def_theme +
-      # theme(legend.position = c(.15,.9)) +
-      NULL
-)
+      theme(legend.title = element_blank())
+
+
 ```
 
 ## Host and Dung Relationships
