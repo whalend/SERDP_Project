@@ -25,8 +25,8 @@ output:
     keep_tex: yes
     number_sections: no
     template: manuscript.latex
-  html_document: null
   word_document: null
+  html_document: null
 capsize: normalsize
 classoption: a4paper
 csl: ecology.csl
@@ -65,6 +65,7 @@ opts_chunk$set(dpi = 300)
 # opts_chunk$set(dev = c("png"))
 
 struc_colors <- scale_color_manual(values=c("red","blue"))
+struc_fill <- scale_fill_manual(values=c("red","blue"))
 
 ```
 
@@ -231,22 +232,56 @@ time_abv100 <- fire_temps_avg %>%
                 heat_flux_abv100 = sum(tempC)) %>%
       ungroup(.)
 
+# time above 100 ºC by location & position (left, right, middle)
+t_abv100 <- fire_temps %>% 
+      group_by(fire_id, location, position, structure) %>% 
+      filter(tempC>100) %>% 
+      summarise(s_abv100 = length(tempC),
+                heat_abv100 = sum(tempC)) %>% 
+      ungroup(.) %>% 
+      group_by(fire_id, location, structure) %>% 
+      summarise(s_abv100 = mean(s_abv100),
+                heat_flux_abv100 = mean(heat_abv100)) %>% 
+      ungroup(.)
+
 # d1$flame_ht2 <- as.integer(d1$flame_ht2)
-max_temp <- fire_temps_avg %>%
+max_temp <- fire_temps %>%
       group_by(location, structure, fire_id) %>%
       summarise(max_temp = max(tempC)) %>% 
       ungroup(.)
 
-# average the top five highest temperatures at each height
+# average max temp from each position (left, right, middle) 
+m_temp <- fire_temps %>% 
+      group_by(fire_id, location, position, structure) %>% 
+      summarise(max_temp = max(tempC)) %>% 
+      ungroup(.) %>% 
+      group_by(fire_id, location, structure) %>% 
+      summarise(max_temp = mean(max_temp)) %>% 
+      ungroup(.)
+
+# average the 5 highest temperatures at each height
 avg_max_temp <- fire_temps_avg %>% 
       group_by(location, structure, fire_id) %>% 
       arrange(desc(tempC)) %>% 
       summarise(avg2_max_temp = mean(tempC[1:5])) %>% 
       ungroup(.)
 
+# average the 5 highest temperatures at each height & position
+a2_m_temp <- fire_temps %>% 
+      group_by(fire_id, location, position, structure) %>% 
+      arrange(desc(tempC)) %>% 
+      summarise(a2_max_temp = mean(tempC[1:5])) %>% 
+      ungroup(.) %>% 
+      group_by(fire_id, location, structure) %>% 
+      summarise(avg2_max_temp = mean(a2_max_temp)) %>% 
+      ungroup(.)
 
-fabio_fires <- join_all(list(max_temp, avg_max_temp, time_abv100), 
+# fabio_fires <- join_all(list(max_temp, avg_max_temp, time_abv100), 
+#                type = "full", match = "all")
+
+fabio_fires <- join_all(list(m_temp, a2_m_temp, t_abv100), 
                type = "full", match = "all")
+
 
 summary(fabio_fires)
 fabio_fires$s_abv100[is.na(fabio_fires$s_abv100)] <- 0
@@ -261,7 +296,7 @@ fabio_fires <- left_join(fabio_fires, fires_biomass) %>%
 fire_weather_summary <- read_csv(
       "~/SERDP_Project/data/piled-vs-standing-fire-wx-summary.csv"
       )
-fabio_fires <- left_join(fabio_fires,fire_weather_summary)
+fabio_fires <- left_join(fabio_fires, fire_weather_summary)
 
 # write_csv(fabio_fires, "~/SERDP_Project/data/piled-vs-stand-aggregate.csv")
 
@@ -330,7 +365,11 @@ fire_wx_table <- left_join(
              wind_speed_avg_se = paste(avg_wind_speed, " ± ", se_wind_speed)) %>% 
       select(fire_id, date, structure, biomass, air_temp_avg_se:wind_speed_avg_se)
 
+fire_wx_table <- fire_wx_table %>% mutate(fire_id = seq_len(length(fire_id)))
+
 wxtable_col_names <- c("Fire ID", "Date", "Structure", "Biomass", "Air temperature (ºC)", "RH (%)", "Wind Speed (m s^-1^)")
+
+fire_wx_table
 
 wxtable <- knitr::kable(
       fire_wx_table, col.names = wxtable_col_names, align = 'c',
@@ -387,9 +426,10 @@ panel.hist <- function(x, ...)
 # names(fires_biomass)
 
 ggplot(fires_biomass, aes(structure, pct_fuel_moisture, color = structure)) +
-      
+      # geom_boxplot() +
+      geom_point(size = 1, alpha = .5) +
       stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = .5)) +
-      scale_color_manual(values = c("blue","orange")) +
+      struc_colors +
       theme_classic() +
       ylab("Fuel moisture (%)") +
       xlab("Date")
@@ -404,6 +444,7 @@ Across all fires fuel moisture content ranged from 4.6 to 19.6% (mean = 11.49±0
 
 ggplot(fire_temps_avg, aes(time, tempC)) +
       geom_line(aes(color = structure)) +
+      struc_colors +
       facet_grid(biomass~location) +
       theme_bw() +
       theme(panel.grid = element_blank())
@@ -414,6 +455,9 @@ ggplot(fire_temps_avg, aes(time, tempC)) +
 ```{r explore model data, eval=F}
 
 model_data <- select(fabio_fires, max_temp, s_abv100, heat_flux_abv100, avg_flame_ht, max_flame_ht, rate_of_spread_50cm, biomass, structure, location, pct_fuel_moisture, avg_air_temp, avg_rh, avg_wind_speed)
+
+# GGally::ggpairs(model_data %>% filter(location == "0cm"),
+                # ggplot(model_data, aes(color = structure)))
 
 pairs(model_data, lower.panel = panel.cor, diag.panel = panel.hist,
       main = "All Levels of Temperature")
@@ -469,7 +513,8 @@ The "maximum temperature" at each height is the average of the maximum temperatu
 #             plot.margin = unit(c(.5,.5,.5,.5), "cm")
 #             )
 fabio_fires_summary$structure <- stringr::str_to_title(fabio_fires_summary$structure)
-(max_temp_fig <- ggplot(fabio_fires, aes(biomass, max_temp)) +
+
+(max_temp_fig <- ggplot(fabio_fires, aes(biomass, avg2_max_temp)) +
       # scale_color_discrete(h.start = 20) +
       scale_color_manual(values=c("red","blue")) +
       facet_grid(.~location) +
@@ -479,7 +524,7 @@ fabio_fires_summary$structure <- stringr::str_to_title(fabio_fires_summary$struc
       #                   ymax = avg_max_temp - se_max_temp),
       #               width = .1) +
       # geom_line(aes(color = structure, linetype = structure)) +
-      geom_smooth(aes(color = structure, linetype = structure, fill = structure), method = "lm", se = T, size = .8, alpha = .2) +
+      geom_smooth(aes(color = structure, linetype = structure, fill = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
       geom_point(aes(color = structure, shape = structure), size = 1.5) +
       # facet_grid(location~.) +
       ylab("Maximum temperature (ºC)") +
@@ -539,7 +584,7 @@ fabio_fires_summary$structure <- stringr::str_to_title(fabio_fires_summary$struc
 
 ```{r maxtemp_linear_models}
 
-max_temp_lm_full <- glm(max_temp ~ biomass + biomass:structure + biomass:location + structure:location + avg_air_temp + pct_fuel_moisture, 
+max_temp_lm_full <- glm(max_temp ~ biomass + biomass*structure + biomass*location + structure:location + avg_air_temp + avg_rh, 
                   data = fabio_fires, na.action = "na.fail")
 # summary(max_temp_lm_full)
 
@@ -697,7 +742,7 @@ kable(coef50cm, digits = 3, caption = "Time above 100 ºC (seconds) at 50cm")
 flux_abv100 <- ggplot(fabio_fires, aes(biomass, heat_flux_abv100)) +
       # geom_line(aes(color = source, linetype = location)) +
       geom_point(aes(color = structure)) +
-      scale_color_discrete(h.start = 20) +
+      struc_colors +
       facet_grid(location~.) +
       # scale_shape_manual(values = 21) +
       theme_bw()
@@ -729,19 +774,21 @@ ggplot(fabio_fires_summary, aes(biomass, avg_heat_flux_abv100)) +
       theme_bw()
 
 ```
+ 
 
+```{r temperature-figure}
 
-```{r}
 cowplot::plot_grid(
       max_temp_fig +
             xlab("") +
-            theme(legend.position = c (.08, .88)),
+            theme(legend.position = c (.07, .88)),
       s_abv100_fig +
             theme(strip.text = element_blank(),
                   legend.position = "none"), 
-                   ncol = 1)
+                   ncol = 1, labels = "auto")
 
 ggsave("figures/temperature-fig.png", width = 7.75, height = 6)
+
 ```
 
 
@@ -786,14 +833,12 @@ ggsave("figures/temperature-fig.png", width = 7.75, height = 6)
 #             )
 
 (flame_height_fig <- ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
-      # scale_color_grey(start = .3, end = .8) +
       struc_colors +
-      # stat_smooth(se = F, show.legend = F, method = "lm") +
-      stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      # geom_point(aes(color = structure), size = 3) +
-      # geom_smooth(aes(color = structure), method = "lm") +
-      # scale_color_discrete(h.start = 20) +
-      theme_classic() +
+      geom_point(alpha = .2) +
+      stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 100), aes(shape = structure)) +
+       # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2) +
+      theme_bw() +
+      scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
       xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
       ylab("Average flame height (cm)") +
       theme(legend.title = element_blank(), 
@@ -801,53 +846,29 @@ ggsave("figures/temperature-fig.png", width = 7.75, height = 6)
             legend.position = c(.02,.98),
             legend.justification = c("left","top"),
             legend.spacing = unit(x = -.3, units = "cm"),
-            axis.title = element_text(size = 16),
+            axis.title = element_text(size = 12),
             axis.text = element_text(size = 12),
-            plot.margin = unit(c(.5,.5,.5,.5), "cm")
+            plot.margin = unit(c(.5,.5,.5,.5), "cm"),
+            panel.grid = element_blank()
             )
 )
 
-# d1 <- pile_vs_stand
-# d1$biomass[d1$fire_id==59|d1$fire_id==60] <- 1200
-# 
-# a <- ggplot(pile_vs_stand, aes(biomass, avg_fuel_ht, color = structure)) +
-#       geom_point(aes(color = structure), size = 3) +
-#       scale_color_discrete(h.start = 20) +
-#       theme_bw() +
-#       ggtitle("Kept at 1500g")
-# b <- ggplot(d1, aes(biomass, avg_fuel_ht, color = structure)) +
-#       geom_point(aes(color = structure), size = 3) +
-#       scale_color_discrete(h.start = 20) +
-#       theme_bw() +
-#       ggtitle("Changed to 1000g")
-# 
-# c <- xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
-#       # ylab("Average fuel height (cm)") +
-#       theme(legend.title = element_blank(), 
-#             # legend.direction = "vertical",
-#             # legend.position = c(.02,.98),
-#             legend.justification = c("left","top"),
-#             legend.spacing = unit(x = -.3, units = "cm"),
-#             axis.title = element_text(size = 16),
-#             axis.text = element_text(size = 12),
-#             plot.margin = unit(c(.5,.5,.5,.5), "cm")
-#             )
-# 
-# a1 <- a + c 
-# a2 <- b + c
-# 
-# library(cowplot)
-# plot_grid(a1, a2)
+```
+
+```{r flame height model}
+
+
 
 ```
+
 
 ```{r fuel height, eval=F}
 ggplot(fires_biomass, aes(biomass, avg_fuel_ht, color = structure)) +
       # scale_color_grey(start = .3, end = .8) +
       struc_colors +
-      stat_smooth(se = T, show.legend = F, method = "lm", alpha = .3) +
-      stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      # geom_point(aes(color = structure), size = 3) +
+      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2) +
+      # stat_summary(fun.data = "mean_se", geom = "pointrange") +
+      geom_point() +
       # geom_smooth(aes(color = structure), method = "lm") +
       # scale_color_discrete(h.start = 20) +
       theme_classic() +
@@ -858,7 +879,7 @@ ggplot(fires_biomass, aes(biomass, avg_fuel_ht, color = structure)) +
             legend.position = c(.5,.5),
             legend.justification = c("left","top"),
             legend.spacing = unit(x = -.3, units = "cm"),
-            axis.title = element_text(size = 16),
+            axis.title = element_text(size = 12),
             axis.text = element_text(size = 12),
             plot.margin = unit(c(.5,.5,.5,.5), "cm")
             )
@@ -878,35 +899,48 @@ ggplot(fires_biomass, aes(avg_fuel_ht, avg_flame_ht, color = structure)) +
 #       scale_color_discrete(h.start = 20) +
 #       theme_bw()
 
+# m1 <- lm(pct_consumed ~ 0 + biomass, data = filter(fires_biomass, structure=="standing", biomass<1500))
+# summary(m1)
+# sjPlot::plot_model(m1, type = "pred", terms = "biomass", show.data = T)
+
 (pct_consumed_fig <- ggplot(fires_biomass, aes(biomass, pct_consumed, color = structure)) +
-      # geom_line(aes(color = structure)) +
-      # scale_color_grey(start = .3, end = .8) +
       struc_colors +
-      # stat_smooth(se = F, show.legend = F, method = "loess") +
-      stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      # geom_point(aes(color = structure), size = 3) +
-      # scale_color_discrete(h.start = 20) +
-      theme_classic() +
+      geom_point(alpha = .2) +
+      # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", formula = y~log(x), se = T, size = .8, alpha = .2) +
+      stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 100), aes(shape = structure)) +
+      # geom_point() +
+      theme_bw() +
       xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
       ylab("Mass consumed (%)") +
+      scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
+      scale_y_continuous(breaks = c(0, 20, 40, 60, 80,100), labels = c("0","20","40","60","80", "100"), limits = c(0, 100)) +
       theme(legend.title = element_blank(), 
             # legend.direction = "vertical",
             legend.position = c(.8,.4),
             legend.justification = c("left","top"),
             legend.spacing = unit(x = -.3, units = "cm"),
-            axis.title = element_text(size = 16),
+            axis.title = element_text(size = 12),
             axis.text = element_text(size = 12),
-            plot.margin = unit(c(.5,.5,.5,.5), "cm")
+            plot.margin = unit(c(.5,.5,.5,.5), "cm"),
+            panel.grid = element_blank()
             )
 )
 
+```
 
-# ggplot(pile_vs_stand, aes(biomass, pct_consumed, color = structure)) +
-#       geom_point(size = 2) +
-#       scale_color_discrete(h.start = 20) +
-#       theme_bw()
+```{r pct consumed skim table }
+
+t <- skimr::skim(
+      fires_biomass %>% 
+            filter(structure=="standing") %>% 
+            select(biomass, pct_consumed, structure) %>% 
+            group_by(biomass)
+            )
+str(t)
+select(t, )
 
 ```
+
 
 
 ### Rate of spread figure
@@ -923,10 +957,17 @@ Rate of spread was measured by recording the number of seconds it took the fire-
        aes(biomass, rate_of_spread_ms, color = structure)) +
       # scale_color_grey(start = .3, end = .8) +
       struc_colors +
-      # stat_smooth(se = F, show.legend = F, method = "loess") +
-      stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      # geom_point() +
-      theme_classic() +
+      geom_point(alpha = .2) +
+      # struc_fill +
+      # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2) +
+      stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 100), aes(shape = structure)) +
+      scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
+      scale_y_continuous(
+            breaks = c(0, 0.3, 0.6),
+            labels = c("0","0.3","0.6"),
+            limits = c(0, 0.72)
+            ) +
+      theme_bw() +
       xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
       ylab(expression(paste("Rate of spread (m ", s^{-1}, ")"))) +
       theme(legend.title = element_blank(), 
@@ -934,14 +975,29 @@ Rate of spread was measured by recording the number of seconds it took the fire-
             legend.position = c(.02,.98),
             legend.justification = c("left","top"),
             legend.spacing = unit(x = -.3, units = "cm"),
-            axis.title = element_text(size = 16),
+            axis.title = element_text(size = 12),
             axis.text = element_text(size = 12),
-            plot.margin = unit(c(.5,.5,.5,.5), "cm")
+            plot.margin = unit(c(.5,.5,.5,.5), "cm"),
+            panel.grid = element_blank()
             )
 )
 
 ```
 
+```{r ros-flame-consumed-fig}
+
+cowplot::plot_grid(
+      flame_height_fig +
+            xlab(""),
+      ros_fig + 
+            xlab("") +
+            theme(legend.position = "none"),
+      pct_consumed_fig +
+            theme(legend.position = "none"),
+      ncol = 1, labels = "auto")
+ggsave("figures/ros-flame-consumed.png", height = 8, width = 4)
+
+```
 
 We used the statistical language `R` `r citep(citation())` for all our analyses. These were implemented in dynamic rmarkdown documents using `knitr` `r citep(citation("knitr"))` and `rmarkdown` `r citep(citation("rmarkdown"))` packages. All the multilevel models were fitted with `lme4` `r citep(citation("lme4"))`. 
 
@@ -1035,7 +1091,7 @@ sessionInfo()
 
 ## Key experimental fire ecology studies for reference
 
-[@Bowman2017] *Differential demographic filtering by surface fires: How fuel type and fuel load affect sapling mortality of an obligate seeder savanna tree.*
+@Bowman2017 *Differential demographic filtering by surface fires: How fuel type and fuel load affect sapling mortality of an obligate seeder savanna tree.*
 
 In this study, "Grass fuels had to be laid horizontally rather than standing vertically." The context provided is that the native sorghum grass flattens easily after it dries and does not remain vertical throughout the dry season. 
 
@@ -1046,7 +1102,7 @@ In this study, "Grass fuels had to be laid horizontally rather than standing ver
 
 Additional references given where fuels have been laid flat when testing flammability:
 
- - **`r citep("Jaureguiberry 2011 Austral Ecology")`**
+ - **@Jaureguiberry2011**
 
       - Built the "Bar-B-Q"" apparatus to fill a need to quantify flammability of whole plants of many species
     
@@ -1057,7 +1113,7 @@ Additional references given where fuels have been laid flat when testing flammab
       - Length of fuel limited by size of burning surface
 
 
- - **[@Simpson2016]**
+ - **@Simpson2016**
  
       - Assessed flammability of 25 savanna grass species
       
@@ -1068,6 +1124,6 @@ Additional references given where fuels have been laid flat when testing flammab
       - Results: total above-ground biomass drove combustibility and sustainability - high biomass was more intense for longer; moisture content was main driver of ignitability and also reduced combustion rate; estimates of whole-plant combustion rates showed >20-fold variation; Showed that there was significant variation between species in flammability at the plant-level and leaf-level
  
 
- - **[@Wyse2016]**
+ - **@Wyse2016**
 
 *All of these studies assessed flammability of multiple species, or multiple fuel complexes.*
