@@ -857,7 +857,16 @@ ggsave("figures/temperature-fig.png", width = 7.75, height = 6)
 
 ```{r flame height model}
 
+f_ht_mod <- lm(avg_flame_ht ~ biomass*structure + avg_fuel_ht*structure, data = fires_biomass)
+summary(f_ht_mod)
+sjPlot::plot_model(f_ht_mod, type = "int")
 
+f_ht_mod2 <- lm(avg_flame_ht ~ biomass + structure, data = fires_biomass)
+summary(f_ht_mod2)
+sjPlot::plot_model(f_ht_mod2, type = "pred", terms = c("biomass", "structure"))
+
+AIC(f_ht_mod, f_ht_mod2)
+anova(f_ht_mod, f_ht_mod2)
 
 ```
 
