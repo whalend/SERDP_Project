@@ -495,9 +495,9 @@ ggplot(d2 %>% filter(biomass_type=="cogongrass", pct_green>0),
 ```{r prescribed fire temps}
 pfire_temps <- read_csv("data/prescribed-fire-temps.csv")
 # unique(pfire_temps$probe_type)
-pfire_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/prescribed-fire-data.csv")
+pfire_data <- read_csv("~/Dropbox (UF)/SERDP-Project/data/Fire data/prescribed-fire-data.csv")
 pfire_data <- pfire_data %>%
-      filter(date == "7/6/17") %>% 
+      filter(date == 20170706) %>% 
       rename(standing_biomass=standing_mass_wet,
              litter_biomass=litter_mass_wet
              ) %>% 
@@ -523,13 +523,15 @@ pfire_temps_abv100 <- pfire_temps %>%
       summarise(s_abv100 = length(tempC),
                 heat_flux_abv100 = sum(tempC, na.rm = T))
       
-pfire_data_summ <- left_join(pfire_data, pfire_temps_abv100)
 
+## average the top five hottest temperatures for each probe
 pfire_max_temp <- pfire_temps %>%
+      arrange(desc(tempC)) %>% 
       group_by(location, id) %>%
-      summarise(max_temp = max(tempC, na.rm=T))
+      summarise(max_temp = mean(tempC[1:5], na.rm=T))
 
-pfire_data_summ <- left_join(pfire_data_summ, pfire_max_temp)
+pfire_data_summ <- left_join(pfire_data, pfire_max_temp)
+pfire_data_summ <- left_join(pfire_data_summ, pfire_temps_abv100)
 pfire_data_summ <- mutate(pfire_data_summ, total_biomass = standing_biomass+litter_biomass)
 
 summary(pfire_data_summ)
@@ -540,6 +542,9 @@ filter(pfire_data_summ, is.na(avg_flame_ht))
 # pfire_data_summary <- left_join(pfire_max_temp,pfire_time_abv100)
 # pfire_data_summary$s_abv100[is.na(pfire_data_summary$s_abv100)] <- 0
 # pfire_data_summ$location <- factor(pfire_data_summ$location, levels = c("50cm", "25cm", "0cm"))
+
+write_csv(pfire_data_summ, "data/prescribed_fire_data_summarized.csv")
+
 ```
 
 ```{r pairs plot, eval=F}
@@ -549,6 +554,7 @@ pairs(select(filter(pfire_data_summ, location == "50cm"), avg_fuel_ht, avg_flame
 
 
 ```{r flame height vs fuel}
+
 ggplot(filter(pfire_data_summ, id != "fabio naturale"),
        aes(avg_fuel_ht, avg_flame_ht)) +
       geom_point(aes(color = id)) +
@@ -563,6 +569,7 @@ ggplot(filter(pfire_data_summ, id != "fabio naturale"),
        aes(total_biomass, avg_fuel_ht)) +
       geom_point(aes(color = id)) +
       theme_bw()
+
 ```
 
 ```{r flame height sensors time above 100 ºC}
@@ -591,7 +598,7 @@ ggplot(pfire_data_summ,
       # scale_fill_continuous(low = "yellow", high = "red") +
       # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
       # geom_text(aes(x = 450, y = 3, label = lab), data = eqns, parse = T,  hjust = 0, vjust = 0) +
-      facet_grid(location~.) +
+      facet_grid(.~location) +
       # ylab("Seconds >100 ºC") +
       # xlab("Standing Biomass (g/m2)") +
       theme_bw() +
@@ -606,6 +613,7 @@ ggplot(filter(pfire_data_summ, id != "fabio naturale"),
        aes(avg_fuel_ht, s_abv100)) +
       geom_point(aes(shape = location, color = id)) +
       theme_bw()
+
 ```
 
 ```{r pfire-bar-plots}
@@ -613,12 +621,12 @@ ggplot(filter(pfire_data_summ, id != "fabio naturale"),
 pfire_bar_data <- pfire_data_summ %>% 
       group_by(location) %>% 
       summarise(n_obs = length(location),
-                avg_s_abv100 = mean(s_abv100),
-                se_s_abv100 = sd(s_abv100)/sqrt(n_obs),
-                avg_heat_flux = mean(heat_flux_abv100),
-                se_heat_flux = sd(heat_flux_abv100)/sqrt(n_obs),
-                avg_max_temp = mean(max_temp),
-                se_max_temp = sd(max_temp)/sqrt(n_obs))
+                avg_s_abv100 = mean(s_abv100, na.rm = T),
+                se_s_abv100 = sd(s_abv100, na.rm = T)/sqrt(n_obs),
+                avg_heat_flux = mean(heat_flux_abv100, na.rm = T),
+                se_heat_flux = sd(heat_flux_abv100, na.rm = T)/sqrt(n_obs),
+                avg_max_temp = mean(max_temp, na.rm = T),
+                se_max_temp = sd(max_temp, na.rm = T)/sqrt(n_obs))
 
 
 ggplot(pfire_bar_data,
@@ -652,12 +660,13 @@ ggplot(pfire_bar_data,
 ```
 
 ```{r flame height sensors max temp}
+
 ggplot(pfire_data_summ,
        aes(total_biomass, max_temp)) +
       geom_point(aes(color = location)) +
       # scale_fill_continuous(low = "yellow", high = "red") +
       # geom_bar(stat = "identity", position = "dodge", aes(fill = factor(pct_green))) +
-      facet_grid(location~.) +
+      facet_grid(.~location) +
       ylab("Maximum Temperature ºC") +
       # xlab("Standing Biomass (g/m2)") +
       theme_bw() +
@@ -672,6 +681,7 @@ ggplot(filter(pfire_data_summ, id != "fabio naturale"),
        aes(avg_fuel_ht, max_temp)) +
       geom_point(aes(shape = location, color = id)) +
       theme_bw()
+
 ```
 
 ```{r flame height sensor heat flux}
@@ -698,6 +708,19 @@ ggplot(filter(pfire_data_summ, id != "fabio naturale"),
       theme_bw()
 ```
 
+```{r}
+txt_label <- pfire_temps %>% 
+      group_by(id) %>% 
+      summarise(tempC = max(tempC, na.rm = T)) %>% 
+      ungroup(.) %>% 
+      left_join(., select(pfire_temps, id, tempC, time))
+
+ggplot(pfire_temps, aes(time, tempC, color = id)) +
+      geom_line() +
+      geom_text(data = txt_label, aes(label = id), nudge_y = 20, show.legend = F) +
+      theme_classic()
+
+```
 
 
 # Plot Experimental & Prescribed Fire Temperatures
@@ -705,7 +728,7 @@ ggplot(filter(pfire_data_summ, id != "fabio naturale"),
 ```{r fabio and prescribed fire, eval=F}
 # levels(d2$location)
 pfire_data_summ$pct_green[pfire_data_summ$pct_green<50] <- 25
-names(d2)
+# names(d2)
 pfire_data_summ <- pfire_data_summ %>% 
       rename(fire_id = id, s_abv100 = s_abv100)
 
