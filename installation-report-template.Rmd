@@ -1,5 +1,5 @@
 ---
-title: "Installation Report: Fort Jackson"
+title: "Installation Report: `r params$inst_name`"
 subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-borne diseases<h1>
 author: 
 - SERDP Project RC-2636
@@ -12,8 +12,11 @@ output:
   pdf_document:
     toc: yes
 date: "`r Sys.Date()`"
+params:
+      inst_name: "Fort Jackson"
 ---
-```{r set installation name, echo=F}
+
+```{r set installation name options, echo=F}
 # inst_name values 
 # 1 "Avon Park AFR"
 # 2 "Camp Blanding"
@@ -24,9 +27,6 @@ date: "`r Sys.Date()`"
 # 7 "Fort Jackson"
 # 8 "Moody AFB"
 # 9 "Tyndall AFB"
-
-inst_name = "Fort Jackson"
-
 ```
 
 ```{r setup, include=FALSE}
@@ -53,6 +53,13 @@ def_theme <- theme(legend.title = element_blank(),
 invasion_color <- scale_color_viridis_d()
 invasion_fill <- scale_fill_viridis_d()
 installation_color <- "blue"
+
+```
+
+```{r set installation name, echo=F}
+
+## set installation name from yaml header parameter
+inst_name = params$inst_name
 
 ```
 
