@@ -13,7 +13,7 @@ output:
     toc: yes
 date: "`r Sys.Date()`"
 params:
-      inst_name: "Fort Jackson"
+      inst_name: "Camp Blanding"
 ---
 
 ```{r set installation name options, echo=F}
@@ -63,18 +63,24 @@ inst_name = params$inst_name
 
 ```
 
-```{r load plot visit data}
+```{r load plot visit data processing ASK ABOUT WORDING OF PLOT VISIT VS TOTAL}
 
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 plot_visit_data$imcy_inv <- factor(plot_visit_data$imcy_inv, levels=c("uninvaded","invaded"), labels = c("Uninvaded","Invaded"))
 
-n_plots <- n_distinct(filter(plot_visit_data, installation_full_name==paste(inst_name)))
+n_plots <- filter(plot_visit_data, installation_full_name==inst_name)
+n_plots <- n_distinct(n_plots$plot_id)
+
 n_fire_yrs <- 
       plot_visit_data %>% 
       filter(installation_full_name==paste(inst_name)) %>% 
       n_distinct(.$years_since_fire)
 
+n_total_plots_all <- n_distinct(plot_visit_data$plot_id)
+n_total_plots_all_invaded <- n_distinct(filter(plot_visit_data, imcy_inv=="Invaded"))
 
+n_plots_invaded_inst <- n_distinct(filter(plot_visit_data, imcy_inv=="Invaded" &  installation_full_name==paste(inst_name)))
+                              
 ```
 
 ```{r woody 100m subplot for processing for tick dependency, results='hide'}
@@ -410,19 +416,20 @@ Our specific objectives are to:
 
 ## Number of plots sampled 
 
-There were `r n_plots` plots established and sampled at `r paste(inst_name)`. 
+A total of `r n_plots` plot(s) were established and sampled at `r paste(inst_name)`. Of the `r n_plots`, there were `r n_plots_invaded_inst` plot(s) with a cogongrass invasion. 
 
 ```{r installation plots visited figure, fig.width=7.5}
 
 plot_nums <- plot_visit_data %>%
-      group_by(installation_full_name, imcy_inv, years_since_fire) %>% 
+      group_by(installation_full_name, imcy_inv, years_since_fire, plot_id) %>% 
       summarise(plot_ct = n_distinct(plot_id)) %>% 
       mutate(inst_flag = ifelse(installation_full_name==inst_name,T,F))
 tot_plots <- plot_visit_data %>%
-      group_by(installation_full_name) %>% 
-      summarise(total_plots = n_distinct(plot_id))
+      group_by(installation_full_name, imcy_inv) %>% 
+      summarise(plot_ct = n_distinct(plot_id)) %>% 
+      mutate(inst_flag = ifelse(installation_full_name==inst_name,T,F))
 
-plot_nums %>% 
+tot_plots %>% 
       ungroup(.) %>% 
       mutate(installation_full_name = str_replace(installation_full_name, " ", "\n")
 ) %>% 
@@ -440,7 +447,9 @@ plot_nums %>%
 
 ```
 
-## Range of fire history across all installations
+## Range of fire history at all installations
+
+Across all installations, we established `r n_total_plots_all` plot(s) in areas ranging in time since last fire from `r min(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire, na.rm = T)` to `r max(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire, na.rm = T)` years. Of the `r n_total_plots_all`, there were `r n_total_plots_all_invaded` plot(s) with a cogongrass invasion.
 
 ``` {r fire invasion by installation figure}
 
@@ -460,7 +469,7 @@ plot_visit_data %>%
 
 ## Range of fire history sampled `r paste("at ", inst_name)`
 
-We established plots in areas at `r paste(inst_name)` ranging in time since last fire from `r min(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire)` to `r max(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire)` years.
+We established plots in areas at `r paste(inst_name)` ranging in time since last fire from `r min(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire, na.rm = T)` to `r max(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire, na.rm = T)` years.
 
 ```{r sampling fire history at specific installation figure}
 
@@ -480,32 +489,32 @@ plot_nums %>%
 
 # Tick Species Overview
 
-### Lone star ticks, *Amblyomma americanum*
+### Lone star tick, *Amblyomma americanum*
 **abbreviation: Am. am**
 
 ![](pictures/lone-star-ticks.png)
 \n
 
 
-### Gulf coast ticks, *Amblyomma maculatum* 
+### Gulf coast tick, *Amblyomma maculatum* 
 **abbreviation: Am. mac**
 
 ![](pictures/gulf-coast-ticks.png)
 \n
 
-### American dog ticks, *Dermecentor variablis* 
+### American dog tick, *Dermecentor variablis* 
 **abbreviation: De. var**
 
 ![](pictures/american-dog-ticks.png)
 \n
 
-### Brown dog ticks, *Rhipicephalus sanguineus* 
+### Brown dog tick, *Rhipicephalus sanguineus* 
 **abbreviation: Rh. san**
 
 ![](pictures/brown-dog-ticks.png)
 \n
 
-### Black-legged or deer ticks, *Ixodes scapularis* 
+### Black-legged or deer tick, *Ixodes scapularis* 
 **abbreviation: Ix. sc**
 
 ![](pictures/deer-ticks.png)
@@ -515,7 +524,27 @@ plot_nums %>%
 
 ## Raw tick abundance at each installation
 
-Note different scales on each panel.
+```{r raw tick numbers figure caption processing}
+
+n_total_raw_ticks_all <- sum(tick_data$tick_count)
+
+n_raw_ticks_inst_2017 <- filter(tick_data, installation_full_name==inst_name & visit_year==2017)%>% 
+  group_by(visit_year) %>% 
+  summarise(raw_ticks_sum = sum(.$tick_count))
+
+n_raw_ticks_inst_2018 <- filter(tick_data, installation_full_name==inst_name & visit_year==2018)%>% 
+  group_by(visit_year) %>% 
+  summarise(raw_ticks_sum = sum(.$tick_count))
+
+#unique(tick_data$life_stage)
+#filter(tick_data, life_stage=="Adult" & installation=="tyndall") %>% 
+#  select(count, tick_count, life_stage) %>% 
+#  summary(.)
+
+
+```
+
+A total of `r n_total_raw_ticks_all` ticks were collected across all installations. At `r paste(inst_name)` in `r n_raw_ticks_inst_2017` ticks were collected and in `r n_raw_ticks_inst_2018` ticks were collected. Note the different tick abundance scales on each panel.
 
 ```{r raw tick numbers by installation figure}
 
@@ -543,7 +572,7 @@ tick_data %>%
 
 ## Tick abundance and fire history
 
-The figure below shows the general relationship between the abundance of adult and nymph life-stage ticks (observations of larvae were counted as "1") across all the installations. The points contributed by `r paste(inst_name)` are highlighted in blue. The y-axis (tick abundance) is natural-log transformed, i.e., a value of 2 corresponds to exp(2) = `r exp(2)`. The total number of ticks collected at `r paste(inst_name)` was `r total_ticks`. 
+The figure below shows the general relationship between the abundance of adult and nymph life-stage ticks (observations of larvae were counted as "1") across all the installations. The points contributed by `r paste(inst_name)` are highlighted in blue. The y-axis (tick abundance) is natural-log transformed, i.e., a value of 2 corresponds to exp(2) = `r round(exp(2))`. The total number of ticks collected at `r paste(inst_name)` was `r total_ticks`. 
 
 ```{r tick abundance fire all, eval = F}
 
@@ -601,6 +630,8 @@ inst_data <- tick_data_plot_summary %>%
 
 ## Tick abundance and percent litter cover
 
+General trend tick abundance increases with percent litter cover.
+
 ```{r tick abundance vs litter cover figure}
 
 inst_data <- tick_data_sum %>% 
@@ -624,7 +655,7 @@ inst_data <- tick_data_sum %>%
 
 ## Tick abundance and average dry litter biomass
 
-Tick abundance plotted against dried litter biomass in invaded and uninvaded plots. 
+More litter biomass increases with tick abundance. 
 
 ```{r tick-litter-biomass figure}
 
@@ -647,6 +678,8 @@ inst_data <- tick_data_sum %>%
 ```
 
 ## Tick abundance and litter moisture
+
+In uninvaded plots, tick abundance increases with litter moisture. No relationship in invaded.
 
 ```{r tick litter moisture figure}
 
@@ -671,7 +704,7 @@ inst_data <- tick_data_sum %>%
 
 ## Tick abundance and canopy cover
 
-Log-linear relationship, where there are more ticks in plots with more canopy cover.
+More ticks in plots with more canopy cover.
 
 ```{r tick-canopy-cover figure}
 
@@ -696,7 +729,7 @@ inst_data <- tick_data_sum %>%
 
 ## Tick abundance and host density 
 
-Log-linear relationship between tick density and host density
+No relationship between host density and tick abundance
 
 ```{r tick-hosts relationship figure}
 
@@ -722,6 +755,8 @@ inst_data <- tick_data_sum %>%
 # Fire history relationships
 
 ## Canopy cover and years since fire
+
+Canopy cover increases with time since fire
 
 ```{r create canopy cover years since fire figure}
 
@@ -765,6 +800,8 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
 
 ## Host density and canopy cover
 
+Small negative relationship with decreasing host density and canopy cover.
+
 ```{r dung-hosts-canopy-cover relationship figure}
 
 inst_data <- tick_data_sum %>% 
@@ -784,6 +821,8 @@ inst_data <- tick_data_sum %>%
 ```
 
 ## Deer specific dung clusters and years since fire
+
+No relationship with host density (specifically deer) and time since fire.
 
 ```{r specific deer dung clusters figure}
 
@@ -808,6 +847,8 @@ inst_data <- dung_plot_data %>%
 
 ## Percent litter and years since fire
 
+Percent litter increases with time since fire.
+
 ```{r pct-litter-fire figure, eval = T}
 
 inst_data <- quadrat10_summaries %>% 
@@ -829,7 +870,9 @@ inst_data <- quadrat10_summaries %>%
 )
 ```
 
-## Percent litter biomass and years since fire
+## Litter biomass and years since fire
+
+Litter biomass increases with time since fire.
 
 ```{r litter biomass figure}
 
@@ -852,6 +895,8 @@ inst_data <- biomass_plot_summary %>%
 ```
 
 ## Percent vegetation cover and years since fire
+
+Uninvaded plots saw a decrease in herbaceous vegetation cover with time since fire. Cogongrass invaded plots had higher herbaceous vegetation cover.
 
 ```{r veg cover plot level figure}
 
@@ -902,6 +947,8 @@ inst_data <- species_richness %>%
 
 ## Overstory species richness and years since fire
 
+Tree species richness (>1m and >3cm dbh) increased with time since fire in invaded and uninvaded plots.
+
 ```{r tree richness figure}
 
 inst_data <- tree_data_plot_summary %>% 
@@ -918,13 +965,15 @@ inst_data <- tree_data_plot_summary %>%
       def_theme +
       ylab("Richness") +
       xlab("Years since fire") +
-      ggtitle("Tree diversity vs. time since fire") +
+      #ggtitle("Tree diversity vs. time since fire") +
       NULL
 )
 
 ```
 
 ## Total tree DBH and years since fire
+
+Some/no relationship with total tree DBH and time since fire.
 
 ```{r tree total dbh figure}
 
