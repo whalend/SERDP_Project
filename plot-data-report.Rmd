@@ -1132,7 +1132,7 @@ filter(dung_data, is.na(years_since_fire))$plot_id
 # dung_data <- rename(dung_data, clusters1m = `1m`, clusters2m = `2m`)
 dung_plot_data <- dung_data %>% 
       # filter(species == "deer") %>% 
-      group_by(installation, plot_id, visit_year, years_since_fire, imcy_inv, species) %>% 
+      group_by(installation, plot_id, visit_year, years_since_fire, imcy_inv, species, installation_full_name) %>% 
       summarise(
             total_clusters1m = sum(dung1m, na.rm = T),
             avg_clusters1m = mean(dung1m, na.rm = T),
