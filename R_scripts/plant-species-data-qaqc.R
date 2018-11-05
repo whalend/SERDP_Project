@@ -66,6 +66,27 @@ species_data$scientific_name <- paste(species_data$Genus,species_data$Species, s
 sort(unique(species_data$scientific_name))
 ## Fixed Genus/Species naming errors ##
 
+#### steven adding species functional groups from elena ####
+
+names(species_data)
+summary(species_data)
+unique(species_data$functional_group)
+
+species_data$functional_group[species_data$Order=="2493"] <- "forb"
+species_data$functional_group[species_data$Order=="2925"] <- "forb"
+species_data$functional_group[species_data$Order=="2228"] <- "forb"
+species_data$functional_group[species_data$Order=="2641"] <- "forb"
+species_data$functional_group[species_data$Order=="2477"] <- "forb"
+species_data$functional_group[species_data$Order=="3029"] <- "shrub"
+
+species_data$functional_group[species_data$Order=="2606"] <- "forb"
+species_data$functional_group[species_data$Order=="2487"] <- "forb"
+species_data$functional_group[species_data$Order=="2486"] <- "forb"
+species_data$functional_group[species_data$Order=="2544"] <- "forb"
+
+# order # 2048 and 3507 still unknown
+
+
 
 write_csv(species_data, "data/processed_data/species1m.csv")
 
