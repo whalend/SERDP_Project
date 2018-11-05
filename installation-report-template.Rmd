@@ -440,6 +440,7 @@ tot_plots %>%
       invasion_fill +
       ylab("Number of sample plots") +
       xlab("") +
+      scale_y_continuous(breaks = seq(0, 14, by = 7)) +
       theme_classic() +
       def_theme +
       theme(legend.direction = "vertical") +
@@ -561,6 +562,7 @@ tick_data %>%
       facet_grid(visit_year~., scales = "free_y") +
       xlab("") +
       ylab("Tick abundance") +
+      scale_y_continuous(breaks = seq(0, 250, by = 50)) +
       theme_bw() +
       theme(legend.position = "none",
             axis.text.x = element_text(angle = 290),
@@ -622,7 +624,7 @@ inst_data <- tick_data_plot_summary %>%
       geom_point(data = inst_data, aes(years_since_fire, log1p(total_ticks)), color = installation_color, size = 2)  +
       theme_classic() +
       xlab("Years since fire") +
-      ylab("log( tick abundance + 1 )") +
+      ylab("log(tick abundance + 1)") +
       def_theme +
       NULL)
 
@@ -646,7 +648,7 @@ inst_data <- tick_data_sum %>%
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = T) +
       theme_classic() +
       xlab(expression(paste("Litter cover (%)"))) +
-      ylab("log( tick abundance + 1 )") +
+      ylab("log(tick abundance + 1)") +
       def_theme +
       NULL
 )
@@ -672,7 +674,7 @@ inst_data <- tick_data_sum %>%
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = F) +
       theme_classic() +
       xlab(expression(paste("Litter biomass (g ", m^{-2}, ")"))) +
-      ylab("log( tick abundance + 1 )") +
+      ylab("log(tick abundance + 1)") +
       def_theme
 )
 ```
@@ -696,7 +698,7 @@ inst_data <- tick_data_sum %>%
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = F) +
       theme_classic() +
       xlab(expression(paste("Litter moisture (%)"))) +
-      ylab("log( tick abundance + 1 )") +
+      ylab("log(tick abundance + 1)") +
       def_theme +
       NULL
 )
@@ -721,7 +723,7 @@ inst_data <- tick_data_sum %>%
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm") +
       theme_classic() +
       xlab(expression(paste("Canopy cover (%)"))) +
-      ylab("log( tick abundance + 1 )") +
+      ylab("log(tick abundance + 1)") +
       def_theme +
       NULL
 )
@@ -745,8 +747,8 @@ inst_data <- tick_data_sum %>%
       geom_point(data = inst_data, aes(log1p(total_clusters1m), log1p(total_ticks)), color = installation_color, size = 2)  +
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm") +
       theme_classic() +
-      xlab(expression(paste("log( # of dung clusters + 1)"))) +
-      ylab("log( tick abundance + 1 )") +
+      xlab(expression(paste("log(dung clusters + 1)"))) +
+      ylab("log(tick abundance + 1)") +
       def_theme +
       NULL
 )
@@ -794,13 +796,13 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
       geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", se = T, alpha = .2) +
       theme_classic() +
       xlab(expression(paste("Years since fire"))) +
-      ylab("log( dung clusters + 1 )") +
+      ylab("log(dung clusters + 1)") +
       def_theme
 ```
 
 ## Host density and canopy cover
 
-Small negative relationship with decreasing host density and canopy cover.
+Negative relationship with decreasing host density and canopy cover.
 
 ```{r dung-hosts-canopy-cover relationship figure}
 
@@ -816,7 +818,7 @@ inst_data <- tick_data_sum %>%
       geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", se = T, alpha = .2) +
       theme_classic() +
       xlab(expression(paste("Canopy cover (%)"))) +
-      ylab("log( dung clusters + 1 )") +
+      ylab("log(dung clusters + 1)") +
       def_theme
 ```
 
@@ -839,7 +841,7 @@ inst_data <- dung_plot_data %>%
             color = installation_color, size = 2)  +      
       geom_smooth(aes(fill = imcy_inv), se = T, method = "lm", alpha = .2) +
       theme_classic() +
-      ylab("log(dung clusters)") +
+      ylab("log(dung clusters + 1)") +
       xlab("Years since fire") +
       def_theme +
       NULL)
@@ -1002,7 +1004,7 @@ inst_data <- tree_data_plot_summary %>%
 
 ## Proportion pine DBH and years since fire
 
-The dashed line is just for the data where pine makes up *less than* 60% of the total DBH; the dotted line is for the data where pine makes up *more than* 60% of the total DBH. The solid line is the overall mean regression fit.
+This figure  represents the percentage of total DBH in a plot that is pine. The solid line is the overall mean regression fit, showing percent pine DBH decreasing with years since fire.
 
 ```{r proportion pine dbh figure}
 
