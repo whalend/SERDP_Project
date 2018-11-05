@@ -42,7 +42,7 @@ For this assay we will deploy **1** mesh bag containing **10 nymph** and **10 ad
 
 Each mesh bag will be partially buried under the existing litter and protected from wildlife predation by a cage made of hardware cloth. Bags were examined weekly to determine the number of nymphs and adults surviving until all ticks succumbed to desiccation. 
 
-We will collect microclimate data by placing a temperature/relative humidity logger adjacent to each mesh bag. Each logger was housed in a capped 18-inch length of 1.5 inch diameter PVC pipe to protect it from rainfall and direct sunlight. Holes were drilled around the bottom six inches of the pipe to allow greater airflow and better reflect ambient temperature and relative humidity. The temperature/RH logger and tick cage were secured in place by wiring them to a piece of rebar sunk Xinches into the ground.
+We will collect microclimate data by placing a temperature/relative humidity logger (HOBO U23 Pro v2, Onset Computer Corporation, Bourne, MA) adjacent to each mesh bag. Each logger was housed in a capped 18-inch length of 1.5 inch diameter PVC pipe to protect it from rainfall and direct sunlight. Holes were drilled around the bottom six inches of the pipe to allow greater airflow and better reflect ambient temperature and relative humidity. The temperature/RH logger and tick cage were secured in place by wiring them to a piece of rebar sunk Xinches into the ground.
 
 In each plot area, we collected data on understory vegetation composition (species, functional groups), stem density, and cover of vegetation, litter, and bare ground. We also measured litter depth, vegetation height, and quantified the overstory canopy cover.
 
