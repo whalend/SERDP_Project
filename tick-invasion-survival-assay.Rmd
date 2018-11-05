@@ -38,6 +38,15 @@ We will perform a second assay during 2019 to determine the effects of fire, and
 
 # Experimental Design - Plant invasion & microclimate suitability (2018)
 
+## Site Description
+
+The study site was located in Alachua, FL, on a private landowner's property off FL State Road 121 (29°54'05"N,82°25'20"W). The site is a longleaf pine (*Pinus palustris*) dominated forest with distinctinvaded and uninvaded habitat. There is a substanstial *Imperata cylindrica* invasion (15 m x 150 m) on the property along the roadside, surrounded on all other sides by an uninvaded area. The uninvaded habitat (20 m x 200 m) features a typical native longleaf pine ecosystem with wiregrass (*Aristida stricta*), wild blackberry (*Rubus*), and hickory (*Carya*).
+
+## Tick Survival
+
+(start date june 21, 2018)
+(ticks received from National Tick Research and Education Resources, Department of Entomology and Plant Pathology, Oklahoma State University, Stillwater, OK)
+
 For this assay we will deploy **1** mesh bag containing **10 nymph** and **10 adult** life stage *A. americanum* ticks in **12** invaded and **12** uninvaded plots (1 m x 1 m) in a pine dominated forest habitat. ~~We aim to identify forests with invaded and uninvaded habitat that were last burned during the past 12-24 months.~~
 
 Each mesh bag will be partially buried under the existing litter and protected from wildlife predation by a cage made of hardware cloth. Bags were examined weekly to determine the number of nymphs and adults surviving until all ticks succumbed to desiccation. 
