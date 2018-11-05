@@ -56,6 +56,16 @@ installation_color <- "blue"
 
 ```
 
+```{r knitcitations, cache = F}
+
+library(knitcitations)
+cleanbib()   
+cite_options(citation_format = "pandoc")
+library(bibtex)
+library(RefManageR)
+
+```
+
 ```{r set installation name, echo=F}
 
 ## set installation name from yaml header parameter
@@ -1035,13 +1045,33 @@ inst_data <- tree_data_plot_summary %>%
 
 ```
 
-# Supplementary Information - Tick Survival Assay 
+# Supplementary Information - Tick Survival Assay Project
+
+## Project Background
+
+Recent studies demonstrate that invasive plants can alter TBD risk via both direct effects on tick survival and indirect effects mediated by tick hosts. For example, *Microstegium vimineum* has been shown experimentally to reduce survival of *A. americanum* (lone star tick) and *Dermacentor variabilis* (American dog tick) relative to native vegetation `r citep("Civitello 2008 Journal of Medical Entomology")`; conversely the removal of invasive *Berberis thunbergii* (Japanese barberry) significantly reduces the survival of *I. scapularis* `r citep("10.1603/EN10131")`. Thus both positive and negative direct effects of invasive plants on tick survival have the potential to influence tick population dynamics. There is also growing evidence of indirect effects mediated by host responses to plant invasions, including increased infestation of *Peromyscus leucopus* (white-footed mice) by *I. scapularis* in mixed stands of invasive shrubs `r citep(list("10.1603/0022-2585(2006)43[1142:DBREUA]2.0.CO;2", "10.1603/022.038.0404"))` and increased abundance of *A. americanum* due to attraction of white-tailed deer to dense thickets of *Lonicera maackii* (Amur honeysuckle) `r citep("10.1073/pnas.1008362107")`.
+
+**No ecological studies have addressed the effects of plant invasions and potential interactions with climate change or fire regimes for TBD risk.**
+
+This project conducts a survival assay of *A. americanum* to assess tick mortality and plant invasion interactions, as well as microclimate suitability for tick survival. For this assay we will deploy **1** mesh bag containing **10 nymph** and **10 adult** (5 male and 5 female) life stage *A. americanum* ticks in **12** *I. cylindrica* invaded and **12** native plots (1 m x 1 m) in a pine dominated forest habitat. Each mesh bag will be stood up vertically at the litter layer (to mimic natural questing habitat) inside of a constructed metal wire cage to deter scavengers. Microclimate data is taken by temperature and relative humidity loggers that are attached in a PVC housing next to the cage that record measurements every 5 minutes. Ticks were checked regularly approximately every **10-14** days to monitor their survival. Below are the figures for tick survival since launch on June 1, 2018. Ticks will be monitored continuously until all tick life stage morality has reached 100%.
+
+### Comparative Tick Survival
+
+Comparison of adult and nymph life stages of the lone star tick in native and invaded sample plots. All life stages see a higher mortality in native plots, with nymphs feeling the effects in a shorter amount of time.
+
+![](figures/tick-survival-assay/survivalfigsTogether.png)
 
 ```{r import tick-survival-assay}
 
 ```
 
 # Supplementary Information - Cogongrass fire temperatures from small scale experiments
+
+
+**(a)** The “maximum temperature” at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient.
+
+**(b)** The "seconds above 100°C"" accounts for the amount of time temperature probes recorded temperatures above 100°C at each of the heights for each biomass amount.
+![](figures/temperature-fig.png)
 
 ```{r import cogon-fire-data}
 
