@@ -42,27 +42,21 @@ We will perform a second assay during 2019 to determine the effects of fire, and
 
 The study site was located in Alachua, FL, on a private landowner's property off FL State Road 121 (29°54'05"N, 82°25'20"W). The site is a longleaf pine (*Pinus palustris*) dominated forest with distinct invaded and uninvaded habitat. There is a substanstial and dense cogongrass (*Imperata cylindrica*) invasion (X m x X m) on the property along the roadside, surrounded on all other sides by an uninvaded area. The uninvaded habitat (X m x X m) features a typical native longleaf pine ecosystem. The native plant community includes wiregrass (*Aristida stricta*), common dewberry (*Rubus flagellaris*), and hickory (*Carya sp.*), and *Andropogon sp.* grasses.
 
+## Vegetation Sampling
 
-(start date june 21, 2018)
+At each of the 24 plots, the plant communities were surveyed within 1 m x 1 m quadrats on the launch day. Data was collected on herbaceous plant height, stem density, litter percent cover, bare ground percent, litter depth, and overstory canopy cover. In addition, light data was obtained at each of the plots using a light bar (xxx type from xxx place) to assess the light availability at ground level where the ticks were placed. 
+
 ## Experimental Setup
 
-A total of 24 plots (1 m x 1 m) were established on the property equally spaced approximately X m apart, 12 invaded and 12 uninvaded. In each plot a 0.1 mm? mesh bags were deployed containing **10 nymph**, **5 female adult**, and **5 male adult** life stage *Amblyomma americanum* ticks (reared at National Tick Research and Educational Resource, Department of Entomology and Plant Pathology, Oklahoma State University, Stillwater, OK). Cylindrical wire mesh cylindrical 0.5 m in height were constructed with lids to contain the mesh bags and deter from wildlife predation and scavengers. Each mesh bag containing ticks was stood up vertically at the base of the litter layer and tied to a flag to mimic natural questing behavior. Microclimate data was collected by placing the temperature/relative humidity logger (HOBO U23 Pro v2, Onset Computer Corporation, Bourne, MA) adjacent to each cage setup. Each logger was housed in a capped 18-inch length of 1.5 inch diameter PVC pipe to protect it from rainfall and direct sunlight. Holes were drilled on four sides six inches apart along the length of the pipe to allow greater airflow and better reflect ambient temperature and relative humidity. The temperature/RH logger and tick cage were secured vertically in place by wiring them to a piece of rebar sunk six inches into the ground.
-
-## Vegetative Sampling
+A total of 24 plots (1 m x 1 m) were established on the property equally spaced approximately X m apart, 12 invaded and 12 uninvaded. At the center of each plot, 0.1 mm? mesh bags were deployed containing **10 nymph**, **5 female adult**, and **5 male adult** life stage *Amblyomma americanum* ticks (reared at National Tick Research and Educational Resource, Department of Entomology and Plant Pathology, Oklahoma State University, Stillwater, OK). The bags were knotted tightly at one end to minimize chance of escape by the ticks. Cylindrical wire mesh cylindrical 0.5 m in height were constructed with lids to contain the mesh bags and deter from wildlife predation and scavengers. Each mesh bag containing ticks was stood up vertically at the base of the litter layer and tied to a flag to mimic natural questing behavior. Microclimate data was collected by placing the temperature/relative humidity logger (HOBO U23 Pro v2, Onset Computer Corporation, Bourne, MA) adjacent to each cage setup. Each logger was housed in a capped 18-inch length of 1.5 inch diameter PVC pipe to protect it from rainfall and direct sunlight. Holes were drilled on four sides six inches apart along the length of the pipe to allow greater airflow and better reflect ambient temperature and relative humidity. The temperature/relative humidity data loggers collected time points of the environmental conditions every five minutes during the full length of the study. Data was transfered off the loggers every 60 days to clear the memory and ensure proper functioning continued. The temperature/RH logger and tick cage were secured vertically in place by wiring them to a piece of rebar sunk six inches into the ground.
 
 ## Tick Survival
 
+The mesh bags containing *Amblyomma americanum* ticks within the wire cages complete with tempature/relative humidity loggers were launched at all plots on 21 June 2018. Bags were examined approximately every 10-14 days to determine the number of nymphs and adults surviving. At each visit, bags were removed from the cages but not opened. The survival of each individual tick was determined by assessing their reponse to stimulation. Ticks were blown on to release CO2 to see any natural tick questing responses to an environmental stimulus. Ticks were also pressed down against a surface (pinching by fingers or clipboards) in attempt to see any responses. Any signs of movement qualified the tick as living. If there was no reponse by the tick, it was marked as dead and continued to be monitored in subsequent visits to assure the previous mortality designation was correct. After each bag was processed, they were placed vertically back into the cages attached to the flag to remain upright. Visits continued to the site until XXXX date when all ticks succumbed to desiccation.
 
-Each mesh bag will be partially buried under the existing litter and protected from wildlife predation by a cage made of hardware cloth. Bags were examined weekly to determine the number of nymphs and adults surviving until all ticks succumbed to desiccation. 
-
-We will collect microclimate data by placing a temperature/relative humidity logger (HOBO U23 Pro v2, Onset Computer Corporation, Bourne, MA) adjacent to each mesh bag. Each logger was housed in a capped 18-inch length of 1.5 inch diameter PVC pipe to protect it from rainfall and direct sunlight. Holes were drilled around the bottom six inches of the pipe to allow greater airflow and better reflect ambient temperature and relative humidity. The temperature/RH logger and tick cage were secured in place by wiring them to a piece of rebar sunk Xinches into the ground.
-
-In each plot area, we collected data on understory vegetation composition (species, functional groups), stem density, and cover of vegetation, litter, and bare ground. We also measured litter depth, vegetation height, and quantified the overstory canopy cover.
+## Tick Survial Analysis
 
 Survival results were analyzed using Cox proportional hazards regression models.
-
-## Vegetative and Microclimate Sampling
-
 
 
 # Experimental Design - Interaction of plant invasion and fire (2018)
