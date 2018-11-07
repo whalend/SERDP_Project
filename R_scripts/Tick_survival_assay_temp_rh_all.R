@@ -34,3 +34,4 @@ df1 <- filter(df1, is.na(tempC)==FALSE)
 
 write_csv(df1, "data/processed_data/tick_survival_combined_temperature_rh.csv")
 
+#cool dude
