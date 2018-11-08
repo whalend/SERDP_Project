@@ -430,8 +430,8 @@ qplot(x = dbh, y = height, data = tree_data)
 qplot(x = height, y = char, data = tree_data) +
       geom_abline(intercept = 0, slope = 1)
 ## all looks good - "outlier" values already checked
-str(tree_data)
-summary(tree_data)
+# str(tree_data)
+# summary(tree_data)
 
 sort(unique(tree_data$species))
 filter(tree_data, species=="tlt") %>%
