@@ -81,7 +81,7 @@ legend("bottomleft",
        inset=c(-0.035,.1))
 
 legend("bottomright",
-       legend=c("alive", "dead", NA,"0-10cm", "10-20cm", "20-40cm", "40-80cm", ">100cm"),
+       legend=c("alive", "dead", NA,"0-10cm", "10-20cm", "20-40cm", "40-80cm", ">80cm"),
        col="black",
        pch=c(21,21,NA,rep(21,5)),
        pt.bg=c("black", "white", NA, "black", "black", "black", "black", "black"),
