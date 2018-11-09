@@ -15,6 +15,7 @@ plot_data <- plot_data %>%
       select(plot_id, Longitude = lon, Latitude = lat, installation_full_name)
 
 stem_map_data <- tree_data %>%
+      arrange(desc(date)) %>%
       filter(!duplicated(stem_id)) %>%
       select(stem_id, plot_id, tag, dbh, health, distance, azimuth, scientific_name, Genus) %>%
       mutate(
