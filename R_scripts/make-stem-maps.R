@@ -21,11 +21,11 @@ stem_map_data <- tree_data %>%
       mutate(
             Genus = if_else(Genus %in% c("Acer","Carya", "Pinus", "Quercus"), Genus, "other"),
              symbol.pch = case_when(
-                   Genus == "Acer" ~ 17,
-                   Genus == "Carya" ~ 18,
-                   Genus == "Pinus" ~ 19,
-                   Genus == "Quercus" ~ 15,
-                   Genus == "other" ~ 3,
+                   Genus == "Acer" ~ 24,
+                   Genus == "Carya" ~ 23,
+                   Genus == "Pinus" ~ 21,
+                   Genus == "Quercus" ~ 22,
+                   Genus == "other" ~ 25,
                    ),
              symbol.colors = case_when(
                    Genus == "Acer" ~ "darkorange",
@@ -33,7 +33,14 @@ stem_map_data <- tree_data %>%
                    Genus == "Pinus" ~ "red",
                    Genus == "Quercus" ~ "blue",
                    Genus == "other" ~ "black",
-                   )
+                   ),
+            symbol.fill = case_when(
+                  Genus == "Acer" ~ "darkorange",
+                  Genus == "Carya" ~ "brown",
+                  Genus == "Pinus" ~ "red",
+                  Genus == "Quercus" ~ "blue",
+                  Genus == "other" ~ "black",
+            )
              )
 
 
@@ -77,7 +84,7 @@ legend("bottomleft",
        legend=unique(tmp$Genus),
        col=unique(tmp$symbol.colors),
        pch=unique(tmp$symbol.pch),
-       # pt.bg=c("darkorange", "brown", "red", "blue", "black"),
+       pt.bg=unique(tmp$symbol.fill),
        cex=0.8,
        inset=c(-0.035,.1))
 
@@ -101,4 +108,4 @@ dev.off()
 
 }
 
-
+dev.off()
