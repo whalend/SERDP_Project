@@ -88,6 +88,7 @@ logger_2 <- logger_2 %>%
   filter(RH > 15)
 
 summary(logger_2)
+
 #### logger 2 is most messed up, avg RH jumps from 64.82 to 90.15 when removing < 15 ####
 
 #### Logger 9 processing
@@ -124,12 +125,50 @@ summary(logger_19)
 
 #### Attempting to average temp and RH per treatment PER DAY ####
 
-temp_rh_data_invaded <- temp_rh_data_invaded
-
-aggregate(temp_rh_data_invaded[, 3:4], mean)
-  
-
+#### should be 435,392 data points and 127 dates ###
  
+temp_rh_data_grouped <- temp_rh_data %>% 
+  group_by(date, status, logger_id) %>%
+  summarise(avg_daily_tempC = mean(tempC),
+            avg_daily_RH = mean(RH),
+            min_tempC = min(tempC),
+            max_tempC = max(tempC)) %>%
+  ungroup(.) %>% 
+  group_by(date, status) %>% 
+  summarise(avg_daily_tempC = mean(avg_daily_tempC),
+            avg_daily_RH = mean(avg_daily_RH),
+            avg_min_tempC = mean(min_tempC),
+            avg_max_tempC = mean(max_tempC))
 
+View(temp_rh_data_grouped)
+
+def_theme <- theme(legend.title = element_blank(),
+                   legend.text = element_text(size = 12),
+                   legend.position = "top",
+                   axis.text = element_text(size = 12),
+                   axis.title = element_text(size = 16),
+                   plot.title = element_text(size = 28),
+                   strip.background = element_blank(),
+                   panel.grid = element_blank())
+invasion_color <- scale_color_viridis_d()
+invasion_fill <- scale_fill_viridis_d()
+
+
+
+
+(date_RH_fig <- ggplot(temp_rh_data_grouped,
+                       aes(date, avg_daily_RH)) +
+    geom_smooth(aes(fill = status, color = imcy_inv), se = T, method = "lm", alpha = .2) +
+    geom_point(aes(color = status)) +
+    invasion_color +
+    invasion_fill +
+    geom_point(data = temp_rh_data_grouped, aes(date, avg_daily_RH) +
+    #theme_classic() +
+    xlab("date") +
+    ylab("daily RH") +
+    def_theme +
+    NULL))
+
+plot(temp_rh_data_grouped$date, temp_rh_data_grouped$avg_daily_RH)
 
 
