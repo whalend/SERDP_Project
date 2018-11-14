@@ -144,7 +144,7 @@ temp_rh_data %>%
 
 # lubridate::ymd_hms(paste(temp_rh_data$date, temp_rh_data$time))
 
-#### Attempting to average temp and RH per treatment PER DAY ####
+## Attempting to average temp and RH per treatment PER DAY ####
 
 ## should be 435,392 data points and 127 dates ##
 
@@ -182,7 +182,7 @@ invasion_color <- scale_color_viridis_d()
 invasion_fill <- scale_fill_viridis_d()
 
 
-ggplot(temp_rh_data_grouped, aes(date, avg_max_rh)) +
+p2 <- ggplot(temp_rh_data_grouped, aes(date, avg_max_rh)) +
       geom_smooth(aes(y = avg_daily_RH, fill = status, color = status), se = T, method = "lm", alpha = .2) +
       geom_point(aes(color = status), size = 2) +
       geom_point(data = temp_rh_data_grouped, aes(date, avg_min_rh, color = status), shape = 25, size = 2) +
@@ -191,8 +191,8 @@ ggplot(temp_rh_data_grouped, aes(date, avg_max_rh)) +
       invasion_fill +
       def_theme +
       theme_classic() +
-      xlab("date") +
-      ylab("daily RH") +
+      # xlab("date") +
+      ylab("avg daily RH") +
       def_theme +
       NULL
 
@@ -202,3 +202,22 @@ temp_rh_data_grouped %>%
       group_by(status) %>%
       summarise(days_minRH_blw80 = n())
 
+p1 <- ggplot(temp_rh_data_grouped, aes(date, avg_daily_tempC)) +
+      geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+      geom_point(aes(color = status), size = 2) +
+      geom_point(data = temp_rh_data_grouped, aes(y=avg_max_tempC, color = status), shape = 25, size = 2) +
+      geom_point(data = temp_rh_data_grouped, aes(y=avg_min_tempC, color = status), shape = 24, size = 2) +
+      # geom_hline(yintercept = 80, linetype = "dashed") +
+      invasion_color +
+      invasion_fill +
+      def_theme +
+      theme_classic() +
+      # xlab("date") +
+      # ylab("Daily ") +
+      def_theme +
+      NULL
+
+cowplot::plot_grid(p1,p2, ncol = 1)
+
+ggplot(temp_rh_data_grouped, aes(avg_max_tempC, avg_min_rh)) +
+      geom_point(aes(color = status))
