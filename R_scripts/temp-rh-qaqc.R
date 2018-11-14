@@ -182,8 +182,6 @@ invasion_color <- scale_color_viridis_d()
 invasion_fill <- scale_fill_viridis_d()
 
 
-
-
 ggplot(temp_rh_data_grouped, aes(date, avg_max_rh)) +
       geom_smooth(aes(y = avg_daily_RH, fill = status, color = status), se = T, method = "lm", alpha = .2) +
       geom_point(aes(color = status), size = 2) +
@@ -197,4 +195,10 @@ ggplot(temp_rh_data_grouped, aes(date, avg_max_rh)) +
       ylab("daily RH") +
       def_theme +
       NULL
+
+temp_rh_data_grouped %>%
+      ungroup(.) %>%
+      filter(avg_min_rh<80) %>%
+      group_by(status) %>%
+      summarise(days_minRH_blw80 = n())
 
