@@ -98,7 +98,7 @@ legend("bottomright",
 pdata = filter(plot_data, plot_id==unique(tmp$plot_id)) %>%
       mutate(plot_id = str_to_title(plot_id))
 
-mtext(paste("Plot ID: ", pdata$plot_id), font=2, line=8, cex=2)
+mtext(paste("Plot ID: ", pdata$plot_id), font = 2, line=8, cex=2)
 
 mtext(paste("Longitude ",pdata$Longitude,"\nLatitude ", pdata$Latitude, sep=""), line=5.75)
 
