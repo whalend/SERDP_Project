@@ -168,6 +168,11 @@ temp_rh_data_grouped <- temp_rh_data %>%
             avg_min_rh = mean(avg_min_rh)
             )
 
+temp_rh_data_grouped <- temp_rh_data_grouped %>% 
+  mutate(days = julian(date, origin = as.Date("2018-06-21")))
+
+## Added days since launch ####
+
 # View(temp_rh_data_grouped)
 
 def_theme <- theme(legend.title = element_blank(),
@@ -221,3 +226,56 @@ cowplot::plot_grid(p1,p2, ncol = 1)
 
 ggplot(temp_rh_data_grouped, aes(avg_max_tempC, avg_min_rh)) +
       geom_point(aes(color = status))
+
+
+
+
+
+## Steven doing random stuffs ####
+
+ggplot(temp_rh_data_grouped, aes(days, avg_daily_RH)) + 
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) +
+  invasion_color +
+  invasion_fill +
+  def_theme+
+  NULL
+
+ggplot(temp_rh_data_grouped, aes(days, avg_daily_RH)) + 
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(data = temp_rh_data_grouped, aes(y = avg_max_rh, color = status), size = 2) +
+  geom_point(data = temp_rh_data_grouped, aes(y = avg_min_rh, color = status), shape = 24, stroke = 1.05) +
+  invasion_color +
+  invasion_fill +
+  def_theme +
+  NULL
+
+## grouping by individual date time points attempt QUESTION ####
+# only one temp/rh measurement taken per timepoint, no min/max unless you take min/max between 12 loggers of same treatment?
+
+temp_rh_data_timepoints <- temp_rh_data %>% 
+  filter(RH >= 20, date != "2018-06-21") %>%
+  group_by(date, time, status, logger_id, days) %>% 
+  summarise(avg_daily_tempC = mean(tempC),
+            max_tempC = max(tempC),
+            min_tempC = min(tempC),
+            avg_daily_RH = mean(RH),
+            avg_max_rh = max(RH),
+            avg_min_rh = min(RH)
+  ) %>%
+  ungroup(.) %>%
+  group_by(date, time, status, days) %>%
+  summarise(avg_daily_tempC = mean(avg_daily_tempC),
+            avg_max_tempC = mean(max_tempC),
+            avg_min_tempC = mean(min_tempC),
+            avg_daily_RH = mean(avg_daily_RH),
+            avg_max_rh = mean(avg_max_rh),
+            avg_min_rh = mean(avg_min_rh)
+  )
+
+View(temp_rh_data_timepoints)
+
+#interesting
+
+temp_rh_data_timepoints_noon <- temp_rh_data_timepoints %>% 
+  filter(time == "12:00:00")
