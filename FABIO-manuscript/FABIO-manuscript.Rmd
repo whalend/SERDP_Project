@@ -16,7 +16,8 @@ affiliation:
 # - affil: null
 #   affilnum: 3
 output: 
-  html_document: null
+  html_document: 
+    self_contained: yes
   word_document: null
   pdf_document:
     fig_caption: yes
@@ -398,6 +399,8 @@ d1 <- anti_join(all_fabio_fires_data %>%
           all_fabio_fires_data %>%
       filter(structure == "both", litter_biomass > 999))
 
+d1$location <- factor(d1$location, levels = c("50cm","25cm","0cm"))
+
 ggplot(d1, aes(total_biomass, s_abv100)) +
       geom_smooth(aes(linetype = structure, color = structure, fill = structure), method = "lm", alpha = .2) +
       geom_point(aes(color = structure, shape = structure), size = 2) +
@@ -633,31 +636,32 @@ p_fire_summary <- prescribed_fire %>%
                 se_s_abv100 = sd_s_abv100/sqrt(n)) %>% 
       mutate(type = "natural")
 
-(max_temp_fig <- ggplot(fabio_fires, aes(biomass, avg2_max_temp)) +
+p_fire_summary$location <- factor(p_fire_summary$location, levels = c("50cm","25cm","0cm"))
+
+
+(max_temp_fig <- ggplot(d1, aes(total_biomass, avg2_max_temp)) +
       # scale_color_discrete(h.start = 20) +
       scale_color_manual(values=c("red","blue")) +
       
-      # geom_bar(stat = "identity", fill = "grey60") +
-      # scale_fill_continuous(low = "yellow", high = "red") +
-      # geom_errorbar(aes(ymin = avg_max_temp + se_max_temp, 
-      #                   ymax = avg_max_temp - se_max_temp),
-      #               width = .1) +
-      # geom_line(aes(color = structure, linetype = structure)) +
-      geom_smooth(aes(color = structure, linetype = structure, fill = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
-      geom_point(aes(color = structure, shape = structure), size = 1.5) +
+      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
+      geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
+      geom_point(aes(color = structure, shape = structure)) +
             
       ## Prescribed fire data ##
       # geom_point(data = prescribed_fire, aes(total_biomass, max_temp), size = 1) +
-      geom_point(data = p_fire_summary, aes(avg_biomass, avg_max_temp, shape = type, color = type), size = 2.5) +
       geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, ymax = avg_max_temp + sd_max_temp, ymin = avg_max_temp - sd_max_temp), width = .1) +
       geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
+      geom_point(data = p_fire_summary, aes(avg_biomass, avg_max_temp, shape = type, color = type), size = 2, fill = "gold") +
       # geom_boxplot(data = prescribed_fire, aes(total_biomass, max_temp)) +
       ## ##
             
-      scale_shape_manual(values = c("natural" = 15, "piled" = 16, "standing" = 17)) +
-      scale_color_manual(values = c("piled" = "red", "standing" = "blue", "natural" = "gold")) +
+      scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19)) +
+      scale_color_manual(values = c("piled" = "red", "standing" = "blue", "natural" = "black", "both" = "purple")) +
+      scale_fill_manual(values = c("both"="purple","piled"="red","standing"="cyan")) +
+      scale_linetype_manual(values=c("piled"="solid","standing"="solid","both"="dashed")) +
       
-      facet_grid(.~location) +
+      facet_grid(location~.) +
+      
       ylab("Maximum temperature (ºC)") +
       xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
       theme_bw() +
@@ -665,7 +669,7 @@ p_fire_summary <- prescribed_fire %>%
       # theme_classic() +
       theme(legend.title = element_blank(),
             legend.text = element_text(size = 12),
-            legend.position = c(.92, .1),
+            # legend.position = c(.92, .1),
             legend.background = element_blank(),
             strip.background = element_blank(),
             panel.grid = element_blank(),
@@ -792,7 +796,8 @@ kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
 
 (s_abv100_fig <- ggplot(d1, aes(total_biomass, s_abv100)) +
       # geom_line(aes(color = source, linetype = location)) +
-      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
+      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
+      geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
       geom_point(aes(color = structure, shape = structure)) +
       # scale_color_grey(start = .2, end = .8) +
       # scale_color_manual(values=c("red","blue")) +
@@ -804,11 +809,13 @@ kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
       geom_point(data = p_fire_summary, aes(avg_biomass, avg_s_abv100, shape = type, color = type), size = 2, fill = "gold") +
       ## ##
        
-       scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19)) +
+      scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19)) +
       scale_color_manual(values = c("piled" = "red", "standing" = "blue", "natural" = "black", "both" = "purple")) +
-       scale_fill_manual(values = c("both"="purple","piled"="red","standing"="cyan")) +
+      scale_fill_manual(values = c("both"="purple","piled"="red","standing"="cyan")) +
+      scale_linetype_manual(values=c("piled"="solid","standing"="solid","both"="dashed")) +
+      # scale_y_continuous(limits = c(0, 1000)) +
       
-      facet_grid(location~.) +
+      facet_grid(location~., scales = "free_y") +
       # scale_shape_manual(values = 21) +
       theme_bw() +
        scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
@@ -825,7 +832,7 @@ kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
             )
 )
 
-
+# summary(lm(s_abv100 ~ total_biomass*structure, data = filter(d1, location=="0cm", structure!="both")))
 # s_abv100_avg_plot <- ggplot(fabio_fires_summary, aes(biomass, avg_s_abv100)) +
 #       # scale_color_discrete(h.start = 20) +
 #       scale_color_grey(start = .3, end = .8) +
@@ -923,16 +930,20 @@ ggplot(fabio_fires_summary, aes(biomass, avg_heat_flux_abv100)) +
 
 cowplot::plot_grid(
       max_temp_fig +
-            xlab("") +
-            theme(legend.position = "none"),
+            # xlab("") +
+            theme(legend.position = "none",
+                  strip.text = element_blank(),
+                  ),
             
       s_abv100_fig +
-            theme(strip.text = element_blank(),
-                  legend.position = c(.9,.80)), 
-                   ncol = 1, labels = "auto")
+            theme(
+                  # strip.text = element_blank(),
+                  legend.position = c(.2,.25)
+                  ), 
+                   nrow = 1, labels = "auto")
 
 
-ggsave("figures/temperature-fig.png", width = 7.5, height = 6)
+ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
 
 ```
 
@@ -1197,7 +1208,7 @@ write.bibtex(file="knitcitations.bib")
 
 \newpage
 
-```{r Table1, results='asis', echo=FALSE, cache=FALSE}
+```{r Table1, results='asis', echo=FALSE, cache=FALSE, eval=F}
 kable(head(iris), caption = "A glimpse of the famous *Iris* dataset.")
 ```
 
@@ -1225,7 +1236,7 @@ kable(head(iris), caption = "A glimpse of the famous *Iris* dataset.")
 
 \blandscape
 
-```{r Fig2, echo=FALSE, fig.cap="Second figure in landscape format.", cache=FALSE}
+```{r Fig2, echo=FALSE, fig.cap="Second figure in landscape format.", cache=FALSE, eval=F}
 a <- sort(rnorm(100))
 b <- c(rep("Group Small", 35), rep("Group Big", 65))
 boxplot(a ~ b)
