@@ -17,7 +17,7 @@ names(temp_rh_data)
 temp_rh_data <- temp_rh_data %>%
   mutate(status = ifelse(logger_id <= 12, "invaded", "native"))
 
-#### Added invaded/native status ####
+#### Added invaded/native status and days since launch ####
 
 temp_rh_data_invaded <- temp_rh_data %>%
   filter(status =="invaded")
@@ -125,6 +125,9 @@ summary(logger_19)
 temp_rh_data <- temp_rh_data %>%
       mutate(date_time = lubridate::ymd_hms(paste(date,time)))
 
+temp_rh_data <- temp_rh_data %>% 
+  mutate(days = julian(date, origin = as.Date("2018-06-21")))
+
 # ggplot(temp_rh_data, aes(date_time, RH)) +
       # geom_point(aes(color = as.numeric(logger_id), shape = status), alpha = .2)
 
@@ -150,7 +153,7 @@ temp_rh_data %>%
 
 temp_rh_data_grouped <- temp_rh_data %>%
       filter(RH >= 20, date != "2018-06-21") %>%
-      group_by(date, status, logger_id) %>%
+      group_by(date, status, logger_id, days) %>%
       summarise(avg_daily_tempC = mean(tempC),
             max_tempC = max(tempC),
             min_tempC = min(tempC),
@@ -159,7 +162,7 @@ temp_rh_data_grouped <- temp_rh_data %>%
             avg_min_rh = min(RH)
             ) %>%
       ungroup(.) %>%
-      group_by(date, status) %>%
+      group_by(date, status, days) %>%
       summarise(avg_daily_tempC = mean(avg_daily_tempC),
             avg_min_tempC = mean(min_tempC),
             avg_max_tempC = mean(max_tempC),
@@ -168,12 +171,10 @@ temp_rh_data_grouped <- temp_rh_data %>%
             avg_min_rh = mean(avg_min_rh)
             )
 
-temp_rh_data_grouped <- temp_rh_data_grouped %>% 
-  mutate(days = julian(date, origin = as.Date("2018-06-21")))
-
 ## Added days since launch ####
+summary(temp_rh_data_grouped)
 
-# View(temp_rh_data_grouped)
+#View(temp_rh_data_grouped)
 
 def_theme <- theme(legend.title = element_blank(),
                    legend.text = element_text(size = 12),
@@ -183,9 +184,8 @@ def_theme <- theme(legend.title = element_blank(),
                    plot.title = element_text(size = 28),
                    strip.background = element_blank(),
                    panel.grid = element_blank())
-invasion_color <- scale_color_viridis_d()
-invasion_fill <- scale_fill_viridis_d()
-
+invasion_color <- scale_color_manual(values = c("red","blue"))
+invasion_fill <- scale_color_manual(values = c("red","blue"))
 
 p2 <- ggplot(temp_rh_data_grouped, aes(date, avg_max_rh)) +
       geom_smooth(aes(y = avg_daily_RH, fill = status, color = status), se = T, method = "lm", alpha = .2) +
@@ -227,55 +227,248 @@ cowplot::plot_grid(p1,p2, ncol = 1)
 ggplot(temp_rh_data_grouped, aes(avg_max_tempC, avg_min_rh)) +
       geom_point(aes(color = status))
 
-
-
-
-
 ## Steven doing random stuffs ####
 
-ggplot(temp_rh_data_grouped, aes(days, avg_daily_RH)) + 
+# ggplot(temp_rh_data_grouped, aes(days, avg_daily_RH)) + 
+#   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+#   geom_point(aes(color = status)) +
+#   invasion_color +
+#   invasion_fill +
+#   def_theme+
+#   NULL
+
+# #ggplot(temp_rh_data_grouped, aes(days, avg_daily_RH)) + 
+#   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+#   geom_point(aes(color = status), size = 2) +
+#   geom_point(data = temp_rh_data_grouped, aes(y = avg_max_rh, color = status), shape = 25, size = 2) +
+#   geom_point(data = temp_rh_data_grouped, aes(y = avg_min_rh, color = status), shape = 24, stroke = 1.05) +
+#   invasion_color +
+#   invasion_fill +
+#   def_theme +
+#   NULL
+
+temp_rh_survival1 <- temp_rh_data_grouped %>% 
+  filter(between(days, 1, 40))
+temp_rh_survival2 <- temp_rh_data_grouped %>% 
+  filter(between(days, 41, 80))
+temp_rh_survival3 <- temp_rh_data_grouped %>% 
+  filter(between(days, 81, 126))
+
+## Figures for day 1-126 intervals for RH ####
+
+surv1_rh <- ggplot(temp_rh_survival1, aes(days, avg_daily_RH, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
-  geom_point(aes(color = status)) +
+  geom_point(aes(color = status)) + 
+  geom_hline(yintercept = 80, linetype = "dashed") +
+  geom_point(data = temp_rh_survival1, aes(y = avg_min_rh, color = status), shape = 25) +
+  #geom_point(data = temp_rh_survival1, aes(y = avg_max_rh, color = status), shape = 24) +
   invasion_color +
   invasion_fill +
-  def_theme+
+  def_theme + 
   NULL
 
-ggplot(temp_rh_data_grouped, aes(days, avg_daily_RH)) + 
+surv2_rh <- ggplot(temp_rh_survival2, aes(days, avg_daily_RH, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
-  geom_point(data = temp_rh_data_grouped, aes(y = avg_max_rh, color = status), size = 2) +
-  geom_point(data = temp_rh_data_grouped, aes(y = avg_min_rh, color = status), shape = 24, stroke = 1.05) +
+  geom_point(aes(color = status)) +  
+  geom_hline(yintercept = 80, linetype = "dashed") +
+  geom_point(data = temp_rh_survival2, aes(y = avg_min_rh, color = status), shape = 25) +
+  #geom_point(data = temp_rh_survival2, aes(y = avg_max_rh, color = status), shape = 24) +
+  invasion_color +
+  invasion_fill +
+  def_theme + 
+  NULL
+
+surv3_rh <- ggplot(temp_rh_survival3, aes(days, avg_daily_RH, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) + 
+  geom_hline(yintercept = 80, linetype = "dashed") +
+  geom_point(data = temp_rh_survival3, aes(y = avg_min_rh, color = status), shape = 25) +
+  #geom_point(data = temp_rh_survival3, aes(y = avg_max_rh, color = status), shape = 24) +
+  invasion_color +
+  invasion_fill +
+  def_theme + 
+  NULL
+
+## Figures for day 1-126 intervals for TEMP ####
+
+surv1_temp <- ggplot(temp_rh_survival1, aes(days, avg_daily_tempC, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) + 
+  #geom_point(data = temp_rh_survival1, aes(y = avg_min_tempC, color = status), shape = 25) +
+  geom_point(data = temp_rh_survival1, aes(y = avg_max_tempC, color = status), shape = 24) +
+  invasion_color +
+  invasion_fill +
+  def_theme + 
+  NULL
+
+surv2_temp <- ggplot(temp_rh_survival2, aes(days, avg_daily_tempC, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) + 
+  #geom_point(data = temp_rh_survival2, aes(y = avg_min_tempC, color = status), shape = 25) +
+  geom_point(data = temp_rh_survival2, aes(y = avg_max_tempC, color = status), shape = 24) +
+  invasion_color +
+  invasion_fill +
+  def_theme + 
+  NULL
+
+surv3_temp <- ggplot(temp_rh_survival3, aes(days, avg_daily_tempC, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) + 
+  #geom_point(data = temp_rh_survival3, aes(y = avg_min_tempC, color = status), shape = 25) +
+  geom_point(data = temp_rh_survival3, aes(y = avg_max_tempC, color = status), shape = 24) +
+  invasion_color +
+  invasion_fill +
+  def_theme + 
+  NULL
+
+#surv1_temp_rh <- ggplot(temp_rh_survival1, aes(days, avg_min_rh, color = status)) +
+  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  #geom_point(aes(color = status)) +
+  #scale_y_continuous("avg_min_rh", sec.axis = sec_axis(temp_rh_survival1, name = "avg_max_tempC")) +
+  #invasion_color +
+  #invasion_fill +
+  #def_theme +
+  #NULL
+
+avg_min_rhs_days_intervals <- cowplot::plot_grid(surv1_rh, surv2_rh, surv3_rh, ncol = 3)
+ggsave(plot = avg_min_rhs_days_intervals, "figures/tick-survival-assay/avg_min_rhs_days_intervals.png")
+
+avg_max_temps_days_intervals <- cowplot::plot_grid(surv1_temp, surv2_temp, surv3_temp, ncol = 3)
+ggsave(plot = avg_max_temps_days_intervals, "figures/tick-survival-assay/avg_max_temps_days_intervals.png")
+
+## plots for first check up date 14 days ####
+
+temp_rh_surv_first_check <- temp_rh_data_grouped %>% 
+  filter(days <= 14)
+
+surv_first_check_rh <- ggplot(temp_rh_surv_first_check, aes(days, avg_min_rh, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = 0) +
+  geom_point(aes(color = status)) +
   invasion_color +
   invasion_fill +
   def_theme +
   NULL
 
+surv_first_check_temp <- ggplot(temp_rh_surv_first_check, aes(days, avg_max_tempC, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = 0) +
+  geom_point(aes(color = status)) +
+  invasion_color +
+  invasion_fill +
+  def_theme +
+  NULL
+
+max_temp_min_rh_first_check <- cowplot::plot_grid(surv_first_check_rh, surv_first_check_temp, ncol = 2)
+ggsave(plot = max_temp_min_rh_first_check, "figures/tick-survival-assay/max_temp_min_rh_first_check.png")
+
 ## grouping by individual date time points attempt QUESTION ####
 # only one temp/rh measurement taken per timepoint, no min/max unless you take min/max between 12 loggers of same treatment?
 
-temp_rh_data_timepoints <- temp_rh_data %>% 
-  filter(RH >= 20, date != "2018-06-21") %>%
-  group_by(date, time, status, logger_id, days) %>% 
-  summarise(avg_daily_tempC = mean(tempC),
-            max_tempC = max(tempC),
-            min_tempC = min(tempC),
-            avg_daily_RH = mean(RH),
-            avg_max_rh = max(RH),
-            avg_min_rh = min(RH)
-  ) %>%
-  ungroup(.) %>%
-  group_by(date, time, status, days) %>%
-  summarise(avg_daily_tempC = mean(avg_daily_tempC),
-            avg_max_tempC = mean(max_tempC),
-            avg_min_tempC = mean(min_tempC),
-            avg_daily_RH = mean(avg_daily_RH),
-            avg_max_rh = mean(avg_max_rh),
-            avg_min_rh = mean(avg_min_rh)
-  )
+# #temp_rh_data_timepoints <- temp_rh_data %>% 
+#   group_by(time, status, logger_id, days) %>% 
+#   summarise(avg_daily_tempC = mean(tempC),
+#             avg_daily_RH = mean(RH)
+#             ) %>%
+#   ungroup(.) %>%
+#   group_by(time, status, days, logger_id) %>%
+#   summarise(avg_daily_tempC = mean(avg_daily_tempC),
+#             avg_daily_RH = mean(avg_daily_RH)
+#   )
 
-View(temp_rh_data_timepoints)
+## Begin processing for time above/below data ####
 
-#interesting
+rh_below_80 <- temp_rh_data %>% 
+  filter(RH != 1) %>% 
+  filter(RH <= 80) %>% 
+  group_by(status, logger_id) %>% 
+  summarise(obs = n(),
+            hrs = obs/12,
+            days = hrs/24)
 
-temp_rh_data_timepoints_noon <- temp_rh_data_timepoints %>% 
-  filter(time == "12:00:00")
+#View(rh_below_80)
+
+rh_below_80_avg <- temp_rh_data %>% 
+  filter(RH != 1) %>% 
+  filter(RH <= 80) %>% 
+  group_by(status, logger_id) %>% 
+  summarise(obs = n(),
+            hrs = obs/12,
+            days = hrs/24) %>% 
+  ungroup(.) %>% 
+  group_by(status) %>% 
+  summarise(avg_days = mean(days),
+            sd = sd(days))
+
+temp_above_35 <- temp_rh_data %>% 
+  filter(tempC >= 35) %>% 
+  group_by(status, logger_id) %>% 
+  summarise(obs = n(),
+            hrs = obs/12,
+            days = hrs/24) 
+
+temp_above_35_avg <- temp_rh_data %>% 
+  filter(tempC >= 35) %>% 
+  group_by(status, logger_id) %>% 
+  summarise(obs = n(),
+            hrs = obs/12,
+            days = hrs/24) %>% 
+  ungroup(.) %>% 
+  group_by(status) %>% 
+  summarise(avg_days = mean(days),
+            sd = sd(days))
+
+#View(temp_above_35)
+
+avg_days_below_80rh <- ggplot(rh_below_80_avg, aes(status, avg_days, color = status)) +
+  geom_point() +
+  geom_bar(stat = "identity") +
+  invasion_color +
+  invasion_fill +
+  #xlab("Invasion status") +
+  ylab("Average time below 80% RH (days)") +
+  def_theme +
+  theme(legend.position = "none") +
+  NULL
+
+avg_days_above_35_tempC <- ggplot(temp_above_35_avg, aes(status, avg_days, color = status)) +
+  geom_point() +
+  geom_bar(stat = "identity") +
+  #geom_errorbar(data = temp_above_35_avg, 
+                #aes(ymin=avg_days_above_35_tempC - sd, 
+                                              #ymax=avg_days_above_35_tempC + sd)) +
+  invasion_color +
+  invasion_fill +
+  #xlab("Invasion status") +
+  ylab("Average time above 35 C (days)") +
+  def_theme +
+  theme(legend.position = "none") +
+  NULL
+
+avg_time_days_temp_rh_barchart <- cowplot::plot_grid(avg_days_below_80rh, avg_days_above_35_tempC, ncol = 2)
+
+ggsave(plot = avg_time_days_temp_rh_barchart, "figures/tick-survival-assay/avg_time_days_temp_rh_barchart.png")
+
+avg_days_rh_boxplot <- ggplot(rh_below_80, aes(status, days, color = status)) +
+  geom_boxplot() +
+  invasion_color +
+  invasion_fill +
+  def_theme +
+  ylab("time below 80 rh (days)") +
+  theme(legend.position = "none") +
+  NULL
+
+ggsave(plot = avg_days_rh_boxplot, "figures/tick-survival-assay/avg_days_rh_boxplot.png")
+
+avg_days_temp_boxplot <- ggplot(temp_above_35, aes(status, days, color = status)) +
+  geom_boxplot() +
+  invasion_color +
+  invasion_fill +
+  def_theme +
+  ylab("time above 35 C (days") +
+  theme(legend.position = "none") +
+  NULL
+
+ggsave(plot = avg_days_temp_boxplot, "figures/tick-survival-assay/avg_days_temp_boxplot.png")
+
+avg_days_temp_rh_boxplot <- cowplot::plot_grid(avg_days_rh_boxplot, avg_days_temp_boxplot, ncol = 2)
+
+ggsave(plot = avg_days_temp_rh_boxplot, "figures/tick-survival-assay/avg_days_temp_rh_boxplot.png")
