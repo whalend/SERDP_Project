@@ -646,6 +646,7 @@ p_fire_summary$location <- factor(p_fire_summary$location, levels = c("50cm","25
       geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
       geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
       geom_point(aes(color = structure, shape = structure)) +
+      # geom_smooth(color = "black", linetype = "dotdash", method = "lm") +
             
       ## Prescribed fire data ##
       # geom_point(data = prescribed_fire, aes(total_biomass, max_temp), size = 1) +
@@ -719,8 +720,11 @@ p_fire_summary$location <- factor(p_fire_summary$location, levels = c("50cm","25
 
 ```{r maxtemp_linear_models}
 
-max_temp_lm_full <- glm(max_temp ~ biomass + biomass*structure + biomass*location + structure:location + avg_air_temp + avg_rh, 
-                  data = fabio_fires, na.action = "na.fail")
+d2 <- filter(d1, structure != "both") %>% 
+      mutate(location = as.character(location))
+
+max_temp_lm_full <- glm(avg2_max_temp ~ total_biomass + total_biomass*structure + total_biomass*location + structure:location,
+                  data = d2, na.action = "na.fail")
 # summary(max_temp_lm_full)
 
 # options(na.action = "na.fail")
@@ -729,54 +733,90 @@ max_temp_lm_full <- glm(max_temp ~ biomass + biomass*structure + biomass*locatio
 # filter(dd, delta < 10)
 
 # 0cm location ####
-fabio_fires_0cm <- filter(fabio_fires, location == "0cm")
-max_temp_0cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_0cm)
+fabio_fires_0cm <- filter(d2, location == "0cm")
+max_temp_0cm <- lm(avg2_max_temp ~ total_biomass*structure, data = fabio_fires_0cm)
 summary(max_temp_0cm)
 # dredge(max_temp_0cm, extra = c("R^2"))
 ## Interaction not p<.05 significant, eaual support for additive model
-max_temp_0cm <- lm(max_temp ~ biomass + structure, data = fabio_fires_0cm)
-summary(max_temp_0cm)
+max_temp_0cm <- lm(avg2_max_temp ~ total_biomass + structure, data = fabio_fires_0cm)
+(summ_max_temp_0cm <- summary(max_temp_0cm))
+summ_max_temp_0cm$adj.r.squared
 
-my_row_names <- c("(Intercept)", "Biomass", "Structure: standing")
+my_row_names <- c("Intercept", "Biomass", "Structure: standing")
 coef0cm <- as.data.frame(summary(max_temp_0cm)$coefficients)
 rownames(coef0cm) <- my_row_names
 coef0cm <- cbind(coef0cm, confint(max_temp_0cm))
 kable(coef0cm, digits = 3, caption = "Max temperature at ground level")
+coef0cm <- coef0cm %>% 
+      mutate(Location = "0cm", 
+             Variable = my_row_names) %>% 
+      select(Variable, Estimate:Location)
 
 # 25cm location ####
-fabio_fires_25cm <- filter(fabio_fires, location == "25cm")
-max_temp_25cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_25cm)
+fabio_fires_25cm <- filter(d2, location == "25cm")
+max_temp_25cm <- lm(avg2_max_temp ~ total_biomass*structure, data = fabio_fires_25cm)
 summary(max_temp_25cm)
 # dredge(max_temp_25cm, extra = c("R^2"))
 ## Interaction marginal p=.07, biomass-only model teensy bit better
-max_temp_25cm <- lm(max_temp ~ biomass + structure, data = fabio_fires_25cm)
-summary(max_temp_25cm)
+max_temp_25cm <- lm(avg2_max_temp ~ total_biomass + structure, data = fabio_fires_25cm)
+(summ_max_temp_25cm <- summary(max_temp_25cm))
+summ_max_temp_25cm$adj.r.squared
 
-my_row_names <- c("(Intercept)", "Biomass", "Structure: standing")
+my_row_names <- c("Intercept", "Biomass", "Structure: standing")
 coef25cm <- as.data.frame(summary(max_temp_25cm)$coefficients)
 rownames(coef25cm) <- my_row_names
 coef25cm <- cbind(coef25cm, confint(max_temp_25cm))
 kable(coef25cm, digits = 3, caption = "Max temperature at 25cm")
+coef25cm <- mutate(coef25cm, location = "25cm",
+                   Variable = my_row_names) %>% 
+      select(Variable, Estimate:Location)
 
 # 50cm location ####
-fabio_fires_50cm <- filter(fabio_fires, location == "50cm")
-max_temp_50cm <- lm(max_temp ~ biomass*structure, data = fabio_fires_50cm)
+fabio_fires_50cm <- filter(d2, location == "50cm")
+max_temp_50cm <- lm(avg2_max_temp ~ total_biomass*structure, data = fabio_fires_50cm)
 summary(max_temp_50cm)
 # dredge(max_temp_50cm, extra = c("R^2"))
-## Interaction significant, but not structure main effect 
 
-my_row_names <- c("(Intercept)", "Biomass", "Structure: standing", "Biomass*Standing")
+max_temp_50cm <- lm(avg2_max_temp ~ total_biomass + structure, data = fabio_fires_50cm)
+(summ_max_temp_50cm <- summary(max_temp_50cm))
+summ_max_temp_50cm$adj.r.squared
+
+my_row_names <- c("Intercept", "Biomass", "Structure: standing")
 coef50cm <-  as.data.frame(summary(max_temp_50cm)$coefficients)
 rownames(coef50cm) <- my_row_names
 coef50cm <- cbind(coef50cm, confint(max_temp_50cm))
 kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
+coef50cm <- mutate(coef50cm, location = "50cm",
+                   Variable = my_row_names) %>% 
+      select(Variable, Estimate:Location)
+
+```
+
+**Estimates from fitted maximum temperature models**
+```{r table all maxtemp coefs}
+
+all_maxtemp_coefs <- rbind(coef50cm, coef25cm, coef0cm)
+kable(all_maxtemp_coefs, digits = 4)
+
+```
+
+**Maximum temperature model's R^2^**
+```{r maxtemp adj rsquared}
+
+adj_rsquare_df <- data.frame(cbind(
+      c(summ_max_temp_50cm$adj.r.squared, summ_max_temp_25cm$adj.r.squared,
+        summ_max_temp_0cm$adj.r.squared), c("50cm","25cm","0cm")))
+adj_rsquare_df$X1 <- as.numeric(as.character(adj_rsquare_df$X1))
+colnames(adj_rsquare_df) <- c("Adj. R-squared","Location")
+
+kable(adj_rsquare_df, digits = 2)
 
 ```
 
 
 ### Time above 100 ºC figure
 
-```{r compare_secsAbv100 }
+```{r compare_secsAbv100 fig }
 
 # bowman_s_abv100 <- read_csv("~/SERDP_Project/data/bowman-etal-s_abv100.csv")
 # bowman_s_abv100$source <- "Piled (Bowman et al.)"
@@ -862,29 +902,44 @@ kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
 ```
 
 ```{r s_abv100_linear_models}
-my_row_names <- c("(Intercept)", "Biomass", "Strcture: standing")
-s_abv100_lm <- lm(log1p(s_abv100) ~ biomass + biomass*structure + biomass*location + structure*location + avg_air_temp + avg_rh + pct_fuel_moisture + avg_wind_speed, 
-                  data = fabio_fires, na.action = na.fail)
+
+s_abv100_lm <- lm(s_abv100 ~ total_biomass + total_biomass*structure + total_biomass*location + structure*location, data = d2, na.action = na.fail)
 # summary(s_abv100_lm)
 
 # dd <- dredge(update(s_abv100_lm, .~. -avg_air_temp -avg_rh -pct_fuel_moisture), extra = c("adjR^2"))
 # filter(dd, delta < 10)
 
+## Above 100 at 0cm model ####
+s_abv100_0cm <- lm(s_abv100 ~ total_biomass*structure, data = filter(d2, location == "0cm"))
+(summ_s_abv100_0cm <- summary(s_abv100_0cm))
 
-s_abv100_0cm <- lm(s_abv100 ~ (biomass) + structure, data = filter(fabio_fires, location == "0cm"))
+my_row_names <- c("Intercept", "Biomass", "Structure: standing", "Biomass X Structure")
 coef0cm <- as.data.frame(summary(s_abv100_0cm)$coefficients)
 rownames(coef0cm) <- my_row_names
 kable(coef0cm, digits = 3, caption = "Time above 100 ºC (seconds) at ground level")
+coef0cm <- mutate(coef0cm, Location = "0cm",
+                  Variable = my_row_names) %>% 
+      select(Variable, Estimate:Location)
 
-s_abv100_25cm <- lm(s_abv100 ~ (biomass) + structure, data = filter(fabio_fires, location == "25cm"))
+## Above 100 at 25cm model ####
+s_abv100_25cm <- lm(s_abv100 ~ total_biomass*structure, data = filter(d2, location == "25cm"))
+(summ_s_abv100_25cm <- summary(s_abv100_25cm))
 coef25cm <- as.data.frame(summary(s_abv100_25cm)$coefficients)
 rownames(coef25cm) <- my_row_names
 kable(coef25cm, digits = 3, caption = "Time above 100 ºC (seconds) at 25cm")
+coef25cm <- mutate(coef25cm, Location = "25cm",
+                   Variable = my_row_names) %>% 
+      select(Variable, Estimate:Location)
 
-s_abv100_50cm <- lm(s_abv100 ~ (biomass) + structure, data = filter(fabio_fires, location == "50cm"))
+## Above 100 at 50cm ####
+s_abv100_50cm <- lm(s_abv100 ~ total_biomass*structure, data = filter(d2, location == "50cm"))
+(summ_s_abv100_50cm <- summary(s_abv100_50cm))
 coef50cm <- as.data.frame(summary(s_abv100_50cm)$coefficients)
-rownames(coef50cm) <- my_row_names
+# rownames(coef50cm) <- my_row_names
 kable(coef50cm, digits = 3, caption = "Time above 100 ºC (seconds) at 50cm")
+coef50cm <- mutate(coef50cm, Location = "50cm",
+                   Variable = my_row_names) %>% 
+      select(Variable, Estimate:Location)
 
 ```
 
@@ -926,6 +981,30 @@ ggplot(fabio_fires_summary, aes(biomass, avg_heat_flux_abv100)) +
 ```
  
 
+**Estimates from fitted time above 100 ºC models**
+```{r time above 100 fitted models}
+
+all_s_abv100_models <- rbind(coef50cm, coef25cm, coef0cm)
+kable(all_s_abv100_models, digits = 4)
+
+```
+
+**Time above 100 ºC model's R^2^**
+```{r abv100 ad r squared}
+
+abv100_rsquared_df <- data.frame(cbind(
+      c(summ_s_abv100_50cm$adj.r.squared, summ_s_abv100_25cm$adj.r.squared,
+        summ_s_abv100_0cm$adj.r.squared), c("50cm","25cm","0cm")))
+abv100_rsquared_df$X1 <- as.numeric(as.character(abv100_rsquared_df$X1))
+colnames(abv100_rsquared_df) <- c("Adj. R-squared","Location")
+
+kable(abv100_rsquared_df, digits = 2)
+
+```
+
+
+
+### Multi-panel temperature figure
 ```{r temperature-combined-figure, fig.height=6}
 
 cowplot::plot_grid(
@@ -988,11 +1067,14 @@ ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
 #             plot.margin = unit(c(.5,.5,.5,.5), "cm")
 #             )
 
+d1
+prescribed_fire
 (flame_height_fig <- ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
       struc_colors +
       geom_point(alpha = .2) +
       stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 100), aes(shape = structure)) +
        # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2) +
+      scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19))
       theme_bw() +
       scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
       xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
