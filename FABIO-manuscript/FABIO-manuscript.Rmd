@@ -1067,7 +1067,7 @@ ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
 
 ### Flame height figure
 
-```{r flame height fig}
+```{r flame ht fig, eval=F}
 
 # bowman_flame_ht <- read_csv("~/SERDP_Project/data/bowman-etal-flame-height.csv")
 # bowman_flame_ht$source <- "Piled (Bowman et al.)"
@@ -1108,7 +1108,9 @@ ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
 # d1
 # prescribed_fire
 # p_fire_summary
+```
 
+```{r flame ht pub fig}
 (flame_height_fig <- ggplot(d1, aes(total_biomass, avg_flame_ht)) +
       # struc_colors +
       # geom_point(aes(shape = structure), size = 2) +
@@ -1125,11 +1127,12 @@ ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
       geom_errorbar(data = p_fire_flame_ht, aes(x = avg_biomass, y = avg_flame_ht, ymax = avg_flame_ht + sd_flame_ht, ymin = avg_flame_ht - sd_flame_ht), width = .1) +
       geom_errorbarh(data = p_fire_flame_ht, aes(x = avg_biomass, y = avg_flame_ht, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
       geom_point(data = p_fire_flame_ht, aes(avg_biomass, avg_flame_ht, shape = type, color = type), size = 2, fill = "gold") +
+      ## ##
             
       scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19)) +
       scale_color_manual(values = c("piled" = "red", "standing" = "blue", "natural" = "black", "both" = "purple")) +
       scale_fill_manual(values = c("both" = "purple", "piled" = "red", "standing" = "cyan")) +
-      scale_linetype_manual(values=c("piled" = "solid", "standing" = "solid", "both" = "dashed")) +      
+      scale_linetype_manual(values=c("piled" = "solid", "standing" = "solid", "both" = "dashed")) +
       
       theme_bw() +
       scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
@@ -1149,15 +1152,15 @@ ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
 
 ```
 
-```{r flame height model}
+```{r flame height modeling}
 
 f_ht_mod <- lm(avg_flame_ht ~ biomass*structure + avg_fuel_ht*structure, data = fires_biomass)
 summary(f_ht_mod)
-sjPlot::plot_model(f_ht_mod, type = "int")
+# sjPlot::plot_model(f_ht_mod, type = "int")
 
 f_ht_mod2 <- lm(avg_flame_ht ~ biomass*structure + avg_fuel_ht, data = fires_biomass)
 summary(f_ht_mod2)
-sjPlot::plot_model(f_ht_mod2, type = "pred", terms = c("biomass", "structure"))
+# sjPlot::plot_model(f_ht_mod2, type = "pred", terms = c("biomass", "structure"))
 
 f_ht_mod3 <- lm(avg_flame_ht ~ biomass*structure, data = fires_biomass)
 summary(f_ht_mod3)
@@ -1240,18 +1243,33 @@ ggplot(fires_biomass, aes(avg_fuel_ht, avg_flame_ht, color = structure)) +
 # m1 <- lm(pct_consumed ~ 0 + biomass, data = filter(fires_biomass, structure=="standing", biomass<1500))
 # summary(m1)
 # sjPlot::plot_model(m1, type = "pred", terms = "biomass", show.data = T)
-d2
-(pct_consumed_fig <- ggplot(fires_biomass, aes(total_biomass, pct_consumed, color = structure)) +
-      struc_colors +
-      # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", formula = y~log(x), se = T, size = .8, alpha = .2) +
-      stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 100), aes(shape = structure)) +
-      geom_point(aes(shape = structure), alpha = .2, position = position_dodge(width = 100)) +
-      # geom_point() +
+pct_consumed_data <- d1 %>% filter(!duplicated(fire_id)) %>% 
+      select(structure, total_biomass, pct_consumed) %>% 
+      mutate(p_consumed = pct_consumed*.01,
+             p_consumed = if_else(p_consumed==1, .99, p_consumed),
+             pct_consumed = p_consumed * 100)
+
+ggplot(filter(pct_consumed_data, structure == "standing"),
+       aes((total_biomass), (pct_consumed))) +
+      geom_point() +
+      geom_smooth(se = F)
+
+(pct_consumed_fig <- ggplot(pct_consumed_data, aes(total_biomass, pct_consumed)) +
+      
+      geom_smooth(data = filter(pct_consumed_data, structure=="standing"), aes(color = structure, fill = structure, linetype = structure), method = "loess", se = F, size = .8, alpha = .2, show.legend = F) +
+      geom_smooth(data = filter(pct_consumed_data, structure!="standing"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
+      geom_point(aes(color = structure, shape = structure)) +
+      
+      scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19)) +
+      scale_color_manual(values = c("piled" = "red", "standing" = "blue", "natural" = "black", "both" = "purple")) +
+      scale_fill_manual(values = c("both" = "purple", "piled" = "red", "standing" = "cyan")) +
+      scale_linetype_manual(values=c("piled" = "solid", "standing" = "solid", "both" = "dashed")) +
+      
       theme_bw() +
       xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
       ylab("Mass consumed (%)") +
       scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
-      scale_y_continuous(breaks = c(0, 20, 40, 60, 80,100), labels = c("0","20","40","60","80", "100"), limits = c(0, 100)) +
+      scale_y_continuous(breaks = c(0, 20, 40, 60, 80,100), labels = c("0","20","40","60","80", "100"), limits = c(0, 102)) +
       theme(legend.title = element_blank(), 
             # legend.direction = "vertical",
             legend.position = c(.8,.4),
@@ -1281,12 +1299,42 @@ select(t)
 
 ```{r pct consumed model}
 
-# summary(glm(pct_consumed ~ biomass*structure, data = fires_biomass, family ="inverse.gaussian"))
+pct_consumed_data <- pct_consumed_data %>% 
+      mutate(p_consumed = pct_consumed*.01,
+             p_consumed = if_else(p_consumed==1, .99, p_consumed))
+pcons_model_data <- filter(pct_consumed_data, structure!="both")
+
+m1 <- glm(p_consumed ~ total_biomass*structure, data = pcons_model_data, family = "quasibinomial")
+summary(m1)
 # car::Anova(pct_consumed ~ biomass*structure, data = fires_biomass)
 
-pct_consumed_data <- fires_biomass %>% 
-      select(biomass, structure, pct_consumed)
-pct_consumed_breg <- betareg::betareg(pct_consumed*.01 ~ biomass*structure, data = fires_biomass)
+pct_consumed_breg <- betareg::betareg(p_consumed ~ total_biomass*structure, data = pcons_model_data)
+# filter(pct_consumed_data, structure!="both")
+summary(pct_consumed_breg)
+
+m2 <- betareg::betareg(p_consumed ~ total_biomass + structure, data = pcons_model_data)
+summary(m2)
+
+m3 <- betareg::betareg(p_consumed ~ total_biomass, data = pcons_model_data)
+summary(m3)
+
+AIC(m2, m3, pct_consumed_breg)
+
+emmeans::joint_tests(pct_consumed_breg)
+
+lmtest::lrtest(m2,pct_consumed_breg, m3)
+
+plot(fitted(pct_consumed_breg),resid(pct_consumed_breg))
+
+pct_consumed_breg$fitted.values
+pct_consumed_breg$nobs
+
+plot(pcons_model_data$total_biomass, fitted(pct_consumed_breg))
+
+# plot(pct_consumed_breg)
+
+marginal <- emmeans::emmeans(pct_consumed_breg, ~ structure)
+pairs(marginal, adjust = "tukey")
 
 
 ```
