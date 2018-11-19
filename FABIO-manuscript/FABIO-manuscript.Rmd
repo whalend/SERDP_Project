@@ -356,7 +356,7 @@ all_fabio_fires_biomass <- fires_biomass1 %>%
              rate_of_spread_ms = 1/rate_of_spread_50cm*2,
              litter_biomass = ifelse(structure=="piled" & litter_biomass==0, biomass, litter_biomass),
              pct_piled = 100*litter_biomass/total_biomass) %>% 
-            select(fire_id, structure, total_biomass, pct_piled, rate_of_spread_ms, avg_flame_ht, litter_biomass, pct_fuel_moisture, est_pct_fuel_moisture)
+            select(fire_id, structure, total_biomass, pct_piled, rate_of_spread_ms, avg_flame_ht, pct_consumed, litter_biomass, pct_fuel_moisture, est_pct_fuel_moisture)
 
 # average the 5 highest temperatures at each height & position
 mean_max_temp <- fire_temps1 %>% 
@@ -576,6 +576,47 @@ pairs(model_data2, lower.panel = panel.cor, diag.panel = panel.hist,
 
 ```
 
+```{r summarise prescribed fire data}
+
+prescribed_fire$s_abv100[is.na(prescribed_fire$s_abv100)==TRUE] <- 0
+prescribed_fire$heat_flux_abv100[is.na(prescribed_fire$heat_flux_abv100)==TRUE] <- 0
+
+# summary(prescribed_fire)
+p_fire_summary <- prescribed_fire %>% 
+      group_by(location) %>% 
+      summarise(avg_biomass = mean(total_biomass, na.rm = T),
+                n = length(total_biomass),
+                sd_biomass = sd(total_biomass, na.rm = T),
+                se_biomass = sd_biomass/sqrt(n),
+                avg_max_temp = mean(max_temp, na.rm = T),
+                sd_max_temp = sd(max_temp, na.rm = T),
+                se_max_temp = sd_max_temp/sqrt(n),
+                avg_s_abv100 = mean(s_abv100, na.rm = T),
+                sd_s_abv100 = sd(s_abv100, na.rm = T),
+                se_s_abv100 = sd_s_abv100/sqrt(n)
+                ) %>% 
+      mutate(type = "natural")
+
+p_fire_summary$location <- factor(p_fire_summary$location, levels = c("50cm","25cm","0cm"))
+
+p_fire_flame_ht <- prescribed_fire %>% 
+      select(id, total_biomass, avg_flame_ht) %>% 
+      filter(!duplicated(id)) %>% 
+      filter(id != "fabio naturale") %>%
+      mutate(type = "natural") %>% 
+      group_by(type) %>% 
+      summarise(n = length(id),
+                sd_flame_ht = sd(avg_flame_ht),
+                se_flame_ht = sd_flame_ht/n,
+                avg_flame_ht = mean(avg_flame_ht),
+                avg_biomass = mean(total_biomass),
+                sd_biomass = sd(total_biomass),
+                se_biomass = sd_biomass/n)
+      
+
+```
+
+
 ### Linear models of maximum temperature
 The "maximum temperature" at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient (Fig. 3). 
 
@@ -618,31 +659,10 @@ The "maximum temperature" at each height is the average of the maximum temperatu
 #             )
 fabio_fires_summary$structure <- stringr::str_to_title(fabio_fires_summary$structure)
 
-prescribed_fire$s_abv100[is.na(prescribed_fire$s_abv100)==TRUE] <- 0
-prescribed_fire$heat_flux_abv100[is.na(prescribed_fire$heat_flux_abv100)==TRUE] <- 0
-
-# summary(prescribed_fire)
-p_fire_summary <- prescribed_fire %>% 
-      group_by(location) %>% 
-      summarise(avg_biomass = mean(total_biomass, na.rm = T),
-                n = length(total_biomass),
-                sd_biomass = sd(total_biomass, na.rm = T),
-                se_biomass = sd_biomass/sqrt(n),
-                avg_max_temp = mean(max_temp, na.rm = T),
-                sd_max_temp = sd(max_temp, na.rm = T),
-                se_max_temp = sd_max_temp/sqrt(n),
-                avg_s_abv100 = mean(s_abv100, na.rm = T),
-                sd_s_abv100 = sd(s_abv100, na.rm = T),
-                se_s_abv100 = sd_s_abv100/sqrt(n)) %>% 
-      mutate(type = "natural")
-
-p_fire_summary$location <- factor(p_fire_summary$location, levels = c("50cm","25cm","0cm"))
-
 
 (max_temp_fig <- ggplot(d1, aes(total_biomass, avg2_max_temp)) +
-      # scale_color_discrete(h.start = 20) +
-      scale_color_manual(values=c("red","blue")) +
-      
+      struc_colors +
+      struc_fill +
       geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
       geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
       geom_point(aes(color = structure, shape = structure)) +
@@ -767,7 +787,7 @@ coef25cm <- as.data.frame(summary(max_temp_25cm)$coefficients)
 rownames(coef25cm) <- my_row_names
 coef25cm <- cbind(coef25cm, confint(max_temp_25cm))
 kable(coef25cm, digits = 3, caption = "Max temperature at 25cm")
-coef25cm <- mutate(coef25cm, location = "25cm",
+coef25cm <- mutate(coef25cm, Location = "25cm",
                    Variable = my_row_names) %>% 
       select(Variable, Estimate:Location)
 
@@ -786,7 +806,7 @@ coef50cm <-  as.data.frame(summary(max_temp_50cm)$coefficients)
 rownames(coef50cm) <- my_row_names
 coef50cm <- cbind(coef50cm, confint(max_temp_50cm))
 kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
-coef50cm <- mutate(coef50cm, location = "50cm",
+coef50cm <- mutate(coef50cm, Location = "50cm",
                    Variable = my_row_names) %>% 
       select(Variable, Estimate:Location)
 
@@ -811,6 +831,24 @@ colnames(adj_rsquare_df) <- c("Adj. R-squared","Location")
 
 kable(adj_rsquare_df, digits = 2)
 
+```
+
+```{r figures setup, eval = F}
+      struc_colors +
+      struc_fill +
+      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
+      geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
+      geom_point(aes(color = structure, shape = structure)) +
+            
+      ## Prescribed fire data ##
+      geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, ymax = avg_max_temp + sd_max_temp, ymin = avg_max_temp - sd_max_temp), width = .1) +
+      geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
+      geom_point(data = p_fire_summary, aes(avg_biomass, avg_max_temp, shape = type, color = type), size = 2, fill = "gold") +
+            
+      scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19)) +
+      scale_color_manual(values = c("piled" = "red", "standing" = "blue", "natural" = "black", "both" = "purple")) +
+      scale_fill_manual(values = c("both"="purple","piled"="red","standing"="cyan")) +
+      scale_linetype_manual(values=c("piled"="solid","standing"="solid","both"="dashed"))
 ```
 
 
@@ -1067,14 +1105,32 @@ ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
 #             plot.margin = unit(c(.5,.5,.5,.5), "cm")
 #             )
 
-d1
-prescribed_fire
-(flame_height_fig <- ggplot(fires_biomass, aes(biomass, avg_flame_ht, color = structure)) +
-      struc_colors +
-      geom_point(alpha = .2) +
-      stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 100), aes(shape = structure)) +
+# d1
+# prescribed_fire
+# p_fire_summary
+
+(flame_height_fig <- ggplot(d1, aes(total_biomass, avg_flame_ht)) +
+      # struc_colors +
+      # geom_point(aes(shape = structure), size = 2) +
+      # stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 100), aes(shape = structure)) +
        # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2) +
-      scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19))
+            
+      # struc_colors +
+      # struc_fill +
+      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
+      geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
+      geom_point(aes(color = structure, shape = structure)) +
+            
+      ## Prescribed fire data ##
+      geom_errorbar(data = p_fire_flame_ht, aes(x = avg_biomass, y = avg_flame_ht, ymax = avg_flame_ht + sd_flame_ht, ymin = avg_flame_ht - sd_flame_ht), width = .1) +
+      geom_errorbarh(data = p_fire_flame_ht, aes(x = avg_biomass, y = avg_flame_ht, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
+      geom_point(data = p_fire_flame_ht, aes(avg_biomass, avg_flame_ht, shape = type, color = type), size = 2, fill = "gold") +
+            
+      scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19)) +
+      scale_color_manual(values = c("piled" = "red", "standing" = "blue", "natural" = "black", "both" = "purple")) +
+      scale_fill_manual(values = c("both" = "purple", "piled" = "red", "standing" = "cyan")) +
+      scale_linetype_manual(values=c("piled" = "solid", "standing" = "solid", "both" = "dashed")) +      
+      
       theme_bw() +
       scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
       xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
@@ -1099,17 +1155,52 @@ f_ht_mod <- lm(avg_flame_ht ~ biomass*structure + avg_fuel_ht*structure, data = 
 summary(f_ht_mod)
 sjPlot::plot_model(f_ht_mod, type = "int")
 
-f_ht_mod2 <- lm(avg_flame_ht ~ biomass + structure, data = fires_biomass)
+f_ht_mod2 <- lm(avg_flame_ht ~ biomass*structure + avg_fuel_ht, data = fires_biomass)
 summary(f_ht_mod2)
 sjPlot::plot_model(f_ht_mod2, type = "pred", terms = c("biomass", "structure"))
 
-AIC(f_ht_mod, f_ht_mod2)
-anova(f_ht_mod, f_ht_mod2)
+f_ht_mod3 <- lm(avg_flame_ht ~ biomass*structure, data = fires_biomass)
+summary(f_ht_mod3)
+
+AIC(f_ht_mod, f_ht_mod2, f_ht_mod3)
+anova(f_ht_mod, f_ht_mod2, f_ht_mod3)
+
+car::Anova(f_ht_mod3, type = "II")
+car::Anova(f_ht_mod3, type = "III")
+
+# sjPlot::plot_model(f_ht_mod3, type = "pred", terms = c("biomass", "structure"))
+sjPlot::plot_model(f_ht_mod3, type = "int", show.data = T)
 
 ```
 
 
+**Flame height model coefficients**
+```{r flame ht model coefs}
+
+flame_ht_mod_summ <- summary(f_ht_mod3)
+
+my_row_names <- c("Intercept", "Biomass", "Structure: standing", "Biomass X Structure")
+flame_ht_coefs <- as.data.frame(flame_ht_mod_summ$coefficients)
+kable(flame_ht_coefs, digits = 3, caption = "Model estimates of flame heights from FABIO piled vs. standing")
+
+flame_ht_coefs <- flame_ht_coefs %>% 
+      mutate(Variable = my_row_names) %>% 
+      select(Variable, Estimate:ncol(flame_ht_coefs))
+
+```
+
+**Flame height model ANOVA table (Type II F-test)**
+```{r flame ht model Anova type2}
+
+# require(car)
+f_ht_anova <- car::Anova(f_ht_mod3, type = "II")
+
+kable(f_ht_anova, digits = 3)
+
+```
+
 ```{r fuel height, eval=F}
+
 ggplot(fires_biomass, aes(biomass, avg_fuel_ht, color = structure)) +
       # scale_color_grey(start = .3, end = .8) +
       struc_colors +
@@ -1149,12 +1240,12 @@ ggplot(fires_biomass, aes(avg_fuel_ht, avg_flame_ht, color = structure)) +
 # m1 <- lm(pct_consumed ~ 0 + biomass, data = filter(fires_biomass, structure=="standing", biomass<1500))
 # summary(m1)
 # sjPlot::plot_model(m1, type = "pred", terms = "biomass", show.data = T)
-
-(pct_consumed_fig <- ggplot(fires_biomass, aes(biomass, pct_consumed, color = structure)) +
+d2
+(pct_consumed_fig <- ggplot(fires_biomass, aes(total_biomass, pct_consumed, color = structure)) +
       struc_colors +
-      geom_point(alpha = .2) +
       # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", formula = y~log(x), se = T, size = .8, alpha = .2) +
       stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 100), aes(shape = structure)) +
+      geom_point(aes(shape = structure), alpha = .2, position = position_dodge(width = 100)) +
       # geom_point() +
       theme_bw() +
       xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
@@ -1184,7 +1275,19 @@ t <- skimr::skim(
             group_by(biomass)
             )
 str(t)
-select(t, )
+select(t)
+
+```
+
+```{r pct consumed model}
+
+# summary(glm(pct_consumed ~ biomass*structure, data = fires_biomass, family ="inverse.gaussian"))
+# car::Anova(pct_consumed ~ biomass*structure, data = fires_biomass)
+
+pct_consumed_data <- fires_biomass %>% 
+      select(biomass, structure, pct_consumed)
+pct_consumed_breg <- betareg::betareg(pct_consumed*.01 ~ biomass*structure, data = fires_biomass)
+
 
 ```
 
