@@ -128,6 +128,9 @@ temp_rh_data <- temp_rh_data %>%
 temp_rh_data <- temp_rh_data %>% 
   mutate(days = julian(date, origin = as.Date("2018-06-21")))
 
+filter(temp_rh_data, date == "2018-10-25") %>% 
+  select(date, days)
+
 # ggplot(temp_rh_data, aes(date_time, RH)) +
       # geom_point(aes(color = as.numeric(logger_id), shape = status), alpha = .2)
 
@@ -260,6 +263,11 @@ surv1_rh <- ggplot(temp_rh_survival1, aes(days, avg_daily_RH, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
   geom_point(aes(color = status)) + 
   geom_hline(yintercept = 80, linetype = "dashed") +
+  geom_vline(xintercept = (11), linetype = "dashed") +
+  geom_vline(xintercept = (15), linetype = "dashed") +
+  geom_vline(xintercept = (25), linetype = "dashed") +
+  geom_vline(xintercept = (32), linetype = "dashed") +
+  geom_vline(xintercept = (39), linetype = "dashed") +
   geom_point(data = temp_rh_survival1, aes(y = avg_min_rh, color = status), shape = 25) +
   #geom_point(data = temp_rh_survival1, aes(y = avg_max_rh, color = status), shape = 24) +
   invasion_color +
@@ -271,6 +279,9 @@ surv2_rh <- ggplot(temp_rh_survival2, aes(days, avg_daily_RH, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
   geom_point(aes(color = status)) +  
   geom_hline(yintercept = 80, linetype = "dashed") +
+  geom_vline(xintercept = (55), linetype = "dashed") +
+  geom_vline(xintercept = (67), linetype = "dashed") +
+  geom_vline(xintercept = (77), linetype = "dashed") +
   geom_point(data = temp_rh_survival2, aes(y = avg_min_rh, color = status), shape = 25) +
   #geom_point(data = temp_rh_survival2, aes(y = avg_max_rh, color = status), shape = 24) +
   invasion_color +
@@ -282,6 +293,9 @@ surv3_rh <- ggplot(temp_rh_survival3, aes(days, avg_daily_RH, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
   geom_point(aes(color = status)) + 
   geom_hline(yintercept = 80, linetype = "dashed") +
+  geom_vline(xintercept = (89), linetype = "dashed") +
+  geom_vline(xintercept = (98), linetype = "dashed") +
+  geom_vline(xintercept = (110), linetype = "dashed") +
   geom_point(data = temp_rh_survival3, aes(y = avg_min_rh, color = status), shape = 25) +
   #geom_point(data = temp_rh_survival3, aes(y = avg_max_rh, color = status), shape = 24) +
   invasion_color +
