@@ -21,26 +21,28 @@ unique(tick_survival$Invaded)
 
 tick_survival$Date <- as.Date.character(as.integer(tick_survival$Date), format = "%Y%m%d")
 
-tick_survival <- tick_survival %>% 
+tick_survival <- tick_survival %>%
   mutate(days = julian(Date, origin = as.Date("2018-06-21")))
 
 #### Merging all adults to one ####
 
-tick_survival <- tick_survival %>% 
+tick_survival <- tick_survival %>%
   mutate(total_adults_alive = adult_F_alive + adult_M_alive,
          total_adults_dead = adult_F_dead + adult_M_dead,
          total_adult_survival = total_adults_alive/(total_adults_alive + total_adults_dead))
 
-tick_survival <- tick_survival %>% 
+tick_survival <- tick_survival %>%
   mutate(Invaded = ifelse(Invaded == "Yes", "invaded", "native"))
 
 
 #View(tick_survival)
 
-tick_survival_grouped <- tick_survival %>% 
+tick_survival_grouped <- tick_survival %>%
   group_by(visit_number, Invaded, days) %>%
   summarise(avg_nymph_survival = mean(nymph_survival),
-            avg_adult_survival = mean(total_adult_survival))
+            sd_nymph_survival = sd(nymph_survival),
+            avg_adult_survival = mean(total_adult_survival),
+            sd_adult_survival = sd(total_adult_survival))
 
 #View(tick_survival_grouped)
 
@@ -61,16 +63,18 @@ invasion_color <- scale_color_manual(values = c("red","blue"))
 invasion_fill <- scale_color_manual(values = c("red","blue"))
 
 ggplot(tick_survival_grouped, aes(days, avg_nymph_survival, color = Invaded)) +
-  geom_smooth() +
-  geom_point() + 
+  geom_smooth(aes(fill = Invaded), show.legend = F, alpha = .2) +
+  geom_point() +
+  geom_errorbar(aes(ymin = avg_nymph_survival - sd_nymph_survival, ymax = avg_nymph_survival + sd_nymph_survival, color = Invaded), width = .1) +
   invasion_color +
   invasion_fill +
+  theme_bw() +
   def_theme +
   NULL
 
 ggplot(tick_survival_grouped, aes(days, avg_adult_survival, color = Invaded)) +
   geom_smooth(aes(fill = Invaded, color = Invaded), se = T, alpha = .2) +
-  geom_point() + 
+  geom_point() +
   invasion_color +
   invasion_fill +
   def_theme +
@@ -81,22 +85,24 @@ ggplot(tick_survival_grouped, aes(days, avg_adult_survival, color = Invaded)) +
 #### Drews graphs ####
 
 nymph_survival_all_time <- ggplot(data = tick_survival) +
-  stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, nymph_survival, color = Invaded),
-              se = T, alpha = .2) +  invasion_color +
+              se = T, alpha = .2) +
+  invasion_color +
   invasion_fill +
-  def_theme +
+  theme_classic() +
   ggtitle(label = "Nymphs") +
   theme(plot.title = element_text(hjust = 0.5)) +
   xlab("Days") +
   ylab("Survival") +
   theme(legend.position = "none") +
-  #theme(axis.title.x = element_blank()) + 
+  def_theme +
+  #theme(axis.title.x = element_blank()) +
   NULL
 
 f_adult_survival_all_time <-ggplot(data = tick_survival) +
-  stat_summary(aes(days, adult_F_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, adult_F_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, adult_F_survival, color = Invaded),
               se = T, alpha = .2) +  invasion_color +
@@ -110,7 +116,7 @@ f_adult_survival_all_time <-ggplot(data = tick_survival) +
   NULL
 
 n_adult_survival_all_time <-ggplot(data = tick_survival) +
-  stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, adult_M_survival, color = Invaded),
               se = T, alpha = .2) +
@@ -121,28 +127,28 @@ n_adult_survival_all_time <-ggplot(data = tick_survival) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(legend.position = "none") +
   xlab("Days") +
-  #theme(axis.title.x = element_blank()) + 
+  #theme(axis.title.x = element_blank()) +
   theme(axis.title.y = element_blank()) +
   NULL
 
-cowplot::plot_grid(nymph_survival_all_time, 
-                   f_adult_survival_all_time, n_adult_survival_all_time, ncol = 3)         
+cowplot::plot_grid(nymph_survival_all_time,
+                   f_adult_survival_all_time, n_adult_survival_all_time, ncol = 3)
 
 ## Begin break up by 40 day increments ####
 
-tick_survival_40 <- tick_survival %>% 
+tick_survival_40 <- tick_survival %>%
   filter(days <=40)
-  
+
 tick_survival_80 <- tick_survival %>%
   filter(between(days, 41, 80))
 
-tick_survival_120 <- tick_survival %>% 
+tick_survival_120 <- tick_survival %>%
   filter(between(days, 81, 150))
 
 # nymphs by days interval
 
 nymph_survival_40 <- ggplot(data = tick_survival_40) +
-  stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, nymph_survival, color = Invaded),
               se = T, alpha = .2) +  invasion_color +
@@ -154,13 +160,13 @@ nymph_survival_40 <- ggplot(data = tick_survival_40) +
   ylim(0, 1) +
   xlab("Days") +
   ylab("Survival") +
-  theme(legend.position = "none", 
+  theme(legend.position = "none",
         plot.title = element_text(size=12, face = "bold")) +
-  #theme(axis.title.x = element_blank()) + 
+  #theme(axis.title.x = element_blank()) +
   NULL
 
 nymph_survival_80 <- ggplot(data = tick_survival_80) +
-  stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, nymph_survival, color = Invaded),
               se = T, alpha = .2) +  invasion_color +
@@ -173,13 +179,13 @@ nymph_survival_80 <- ggplot(data = tick_survival_80) +
   xlab("Days") +
   #ylab("Survival") +
   theme(legend.position = "none") +
-  #theme(axis.title.x = element_blank()) + 
+  #theme(axis.title.x = element_blank()) +
   theme(axis.title.y = element_blank(),
         plot.title = element_text(size=12, face = "bold")) +
   NULL
 
 nymph_survival_120 <- ggplot(data = tick_survival_120) +
-  stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, nymph_survival, color = Invaded),
               se = T, alpha = .2) +  invasion_color +
@@ -192,18 +198,18 @@ nymph_survival_120 <- ggplot(data = tick_survival_120) +
   xlab("Days") +
   #ylab("Survival") +
   theme(legend.position = "none") +
-  #theme(axis.title.x = element_blank()) + 
+  #theme(axis.title.x = element_blank()) +
   theme(axis.title.y = element_blank(),
         plot.title = element_text(size=12, face = "bold")) +
   NULL
 
-nymphs_intervals <- cowplot::plot_grid(nymph_survival_40, 
+nymphs_intervals <- cowplot::plot_grid(nymph_survival_40,
                    nymph_survival_80, nymph_survival_120, ncol =3)
 
 # adult F by days
 
 adult_F_survival_40 <- ggplot(data = tick_survival_40) +
-  stat_summary(aes(days, adult_F_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, adult_F_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, adult_F_survival, color = Invaded),
               se = T, alpha = .2) +  invasion_color +
@@ -217,11 +223,11 @@ adult_F_survival_40 <- ggplot(data = tick_survival_40) +
   ylab("Survival") +
   theme(legend.position = "none",
         plot.title = element_text(size=12, face = "bold")) +
-  #theme(axis.title.x = element_blank()) + 
+  #theme(axis.title.x = element_blank()) +
   NULL
 
 adult_F_survival_80 <- ggplot(data = tick_survival_80) +
-  stat_summary(aes(days, adult_F_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, adult_F_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, adult_F_survival, color = Invaded),
               se = T, alpha = .2) +  invasion_color +
@@ -234,13 +240,13 @@ adult_F_survival_80 <- ggplot(data = tick_survival_80) +
   xlab("Days") +
   #ylab("Survival") +
   theme(legend.position = "none") +
-  #theme(axis.title.x = element_blank()) + 
+  #theme(axis.title.x = element_blank()) +
   theme(axis.title.y = element_blank(),
         plot.title = element_text(size=12, face = "bold")) +
   NULL
 
 adult_F_survival_120 <- ggplot(data = tick_survival_120) +
-  stat_summary(aes(days, adult_F_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, adult_F_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, adult_F_survival, color = Invaded),
               se = T, alpha = .2) +  invasion_color +
@@ -253,19 +259,19 @@ adult_F_survival_120 <- ggplot(data = tick_survival_120) +
   xlab("Days") +
   #ylab("Survival") +
   theme(legend.position = "none") +
-  #theme(axis.title.x = element_blank()) + 
+  #theme(axis.title.x = element_blank()) +
   theme(axis.title.y = element_blank(),
         plot.title = element_text(size=12, face = "bold")) +
   NULL
 
-adult_F_intervals <- cowplot::plot_grid(adult_F_survival_40, 
+adult_F_intervals <- cowplot::plot_grid(adult_F_survival_40,
                    adult_F_survival_80, adult_F_survival_120, ncol =3)
 
 
 # adult M by days
 
 adult_M_survival_40 <- ggplot(data = tick_survival_40) +
-  stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, adult_M_survival, color = Invaded),
               se = T, alpha = .2) +  invasion_color +
@@ -279,11 +285,11 @@ adult_M_survival_40 <- ggplot(data = tick_survival_40) +
   ylab("Survival") +
   theme(legend.position = "none",
         plot.title = element_text(size=12, face = "bold")) +
-  #theme(axis.title.x = element_blank()) + 
+  #theme(axis.title.x = element_blank()) +
   NULL
 
 adult_M_survival_80 <- ggplot(data = tick_survival_80) +
-  stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, adult_M_survival, color = Invaded),
               se = T, alpha = .2) +  invasion_color +
@@ -296,13 +302,13 @@ adult_M_survival_80 <- ggplot(data = tick_survival_80) +
   xlab("Days") +
   #ylab("Survival") +
   theme(legend.position = "none") +
-  #theme(axis.title.x = element_blank()) + 
+  #theme(axis.title.x = element_blank()) +
   theme(axis.title.y = element_blank(),
         plot.title = element_text(size=12, face = "bold")) +
   NULL
 
 adult_M_survival_120 <- ggplot(data = tick_survival_120) +
-  stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded), 
+  stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, adult_M_survival, color = Invaded),
               se = T, alpha = .2) +  invasion_color +
@@ -315,12 +321,12 @@ adult_M_survival_120 <- ggplot(data = tick_survival_120) +
   xlab("Days") +
   #ylab("Survival") +
   theme(legend.position = "none") +
-  #theme(axis.title.x = element_blank()) + 
+  #theme(axis.title.x = element_blank()) +
   theme(axis.title.y = element_blank(),
         plot.title = element_text(size=12, face = "bold")) +
   NULL
 
-adult_M_intervals <- cowplot::plot_grid(adult_M_survival_40, 
+adult_M_intervals <- cowplot::plot_grid(adult_M_survival_40,
                    adult_M_survival_80, adult_M_survival_120, ncol =3)
 
 
@@ -453,10 +459,10 @@ summary(logger_19)
 temp_rh_data <- temp_rh_data %>%
   mutate(date_time = lubridate::ymd_hms(paste(date,time)))
 
-temp_rh_data <- temp_rh_data %>% 
+temp_rh_data <- temp_rh_data %>%
   mutate(days = julian(date, origin = as.Date("2018-06-21")))
 
-filter(temp_rh_data, date == "2018-10-25") %>% 
+filter(temp_rh_data, date == "2018-10-25") %>%
   select(date, days)
 
 # ggplot(temp_rh_data, aes(date_time, RH)) +
@@ -560,7 +566,7 @@ ggplot(temp_rh_data_grouped, aes(avg_max_tempC, avg_min_rh)) +
 
 ## Steven doing random stuffs ####
 
-# ggplot(temp_rh_data_grouped, aes(days, avg_daily_RH)) + 
+# ggplot(temp_rh_data_grouped, aes(days, avg_daily_RH)) +
 #   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
 #   geom_point(aes(color = status)) +
 #   invasion_color +
@@ -568,7 +574,7 @@ ggplot(temp_rh_data_grouped, aes(avg_max_tempC, avg_min_rh)) +
 #   def_theme+
 #   NULL
 
-# #ggplot(temp_rh_data_grouped, aes(days, avg_daily_RH)) + 
+# #ggplot(temp_rh_data_grouped, aes(days, avg_daily_RH)) +
 #   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
 #   geom_point(aes(color = status), size = 2) +
 #   geom_point(data = temp_rh_data_grouped, aes(y = avg_max_rh, color = status), shape = 25, size = 2) +
@@ -578,18 +584,18 @@ ggplot(temp_rh_data_grouped, aes(avg_max_tempC, avg_min_rh)) +
 #   def_theme +
 #   NULL
 
-temp_rh_survival1 <- temp_rh_data_grouped %>% 
+temp_rh_survival1 <- temp_rh_data_grouped %>%
   filter(between(days, 1, 40))
-temp_rh_survival2 <- temp_rh_data_grouped %>% 
+temp_rh_survival2 <- temp_rh_data_grouped %>%
   filter(between(days, 41, 80))
-temp_rh_survival3 <- temp_rh_data_grouped %>% 
+temp_rh_survival3 <- temp_rh_data_grouped %>%
   filter(between(days, 81, 126))
 
 ## Figures for day 1-126 intervals for RH ####
 
 surv1_rh <- ggplot(temp_rh_survival1, aes(days, avg_daily_RH, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
-  geom_point(aes(color = status)) + 
+  geom_point(aes(color = status)) +
   geom_hline(yintercept = 80, linetype = "dashed") +
   geom_vline(xintercept = (11), linetype = "dashed") +
   geom_vline(xintercept = (15), linetype = "dashed") +
@@ -603,12 +609,12 @@ surv1_rh <- ggplot(temp_rh_survival1, aes(days, avg_daily_RH, color = status)) +
   ylab("Average daily RH") +
   xlab("Days") +
   theme(legend.position = "none") +
-  def_theme + 
+  def_theme +
   NULL
 
 surv2_rh <- ggplot(temp_rh_survival2, aes(days, avg_daily_RH, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
-  geom_point(aes(color = status)) +  
+  geom_point(aes(color = status)) +
   geom_hline(yintercept = 80, linetype = "dashed") +
   geom_vline(xintercept = (55), linetype = "dashed") +
   geom_vline(xintercept = (67), linetype = "dashed") +
@@ -620,12 +626,12 @@ surv2_rh <- ggplot(temp_rh_survival2, aes(days, avg_daily_RH, color = status)) +
   xlab("Days") +
   theme(axis.title.y = element_blank()) +
   theme(legend.position = "none") +
-  def_theme + 
+  def_theme +
   NULL
 
 surv3_rh <- ggplot(temp_rh_survival3, aes(days, avg_daily_RH, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
-  geom_point(aes(color = status)) + 
+  geom_point(aes(color = status)) +
   geom_hline(yintercept = 80, linetype = "dashed") +
   geom_vline(xintercept = (89), linetype = "dashed") +
   geom_vline(xintercept = (98), linetype = "dashed") +
@@ -637,14 +643,14 @@ surv3_rh <- ggplot(temp_rh_survival3, aes(days, avg_daily_RH, color = status)) +
   xlab("Days") +
   theme(axis.title.y = element_blank()) +
   theme(legend.position = "none") +
-  def_theme + 
+  def_theme +
   NULL
 
 ## Figures for day 1-126 intervals for TEMP ####
 
 surv1_temp <- ggplot(temp_rh_survival1, aes(days, avg_daily_tempC, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
-  geom_point(aes(color = status)) + 
+  geom_point(aes(color = status)) +
   #geom_point(data = temp_rh_survival1, aes(y = avg_min_tempC, color = status), shape = 25) +
   geom_point(data = temp_rh_survival1, aes(y = avg_max_tempC, color = status), shape = 24) +
   invasion_color +
@@ -658,12 +664,12 @@ surv1_temp <- ggplot(temp_rh_survival1, aes(days, avg_daily_tempC, color = statu
   xlab("Days") +
   ylab("Average daily temp C") +
   theme(legend.position = "none") +
-  def_theme + 
+  def_theme +
   NULL
 
 surv2_temp <- ggplot(temp_rh_survival2, aes(days, avg_daily_tempC, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
-  geom_point(aes(color = status)) + 
+  geom_point(aes(color = status)) +
   #geom_point(data = temp_rh_survival2, aes(y = avg_min_tempC, color = status), shape = 25) +
   geom_point(data = temp_rh_survival2, aes(y = avg_max_tempC, color = status), shape = 24) +
   invasion_color +
@@ -675,12 +681,12 @@ surv2_temp <- ggplot(temp_rh_survival2, aes(days, avg_daily_tempC, color = statu
   xlab("Days") +
   theme(axis.title.y = element_blank()) +
   theme(legend.position = "none") +
-  def_theme + 
+  def_theme +
   NULL
 
 surv3_temp <- ggplot(temp_rh_survival3, aes(days, avg_daily_tempC, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
-  geom_point(aes(color = status)) + 
+  geom_point(aes(color = status)) +
   #geom_point(data = temp_rh_survival3, aes(y = avg_min_tempC, color = status), shape = 25) +
   geom_point(data = temp_rh_survival3, aes(y = avg_max_tempC, color = status), shape = 24) +
   invasion_color +
@@ -692,7 +698,7 @@ surv3_temp <- ggplot(temp_rh_survival3, aes(days, avg_daily_tempC, color = statu
   xlab("Days") +
   theme(axis.title.y = element_blank()) +
   theme(legend.position = "none") +
-  def_theme + 
+  def_theme +
   NULL
 
 #surv1_temp_rh <- ggplot(temp_rh_survival1, aes(days, avg_min_rh, color = status)) +
@@ -712,7 +718,7 @@ avg_max_temps_days_intervals <- cowplot::plot_grid(surv1_temp, surv2_temp, surv3
 
 ## plots for first check up date 14 days ####
 
-temp_rh_surv_first_check <- temp_rh_data_grouped %>% 
+temp_rh_surv_first_check <- temp_rh_data_grouped %>%
   filter(days <= 14)
 
 surv_first_check_rh <- ggplot(temp_rh_surv_first_check, aes(days, avg_min_rh, color = status)) +
@@ -737,8 +743,8 @@ max_temp_min_rh_first_check <- cowplot::plot_grid(surv_first_check_rh, surv_firs
 ## grouping by individual date time points attempt QUESTION ####
 # only one temp/rh measurement taken per timepoint, no min/max unless you take min/max between 12 loggers of same treatment?
 
-# #temp_rh_data_timepoints <- temp_rh_data %>% 
-#   group_by(time, status, logger_id, days) %>% 
+# #temp_rh_data_timepoints <- temp_rh_data %>%
+#   group_by(time, status, logger_id, days) %>%
 #   summarise(avg_daily_tempC = mean(tempC),
 #             avg_daily_RH = mean(RH)
 #             ) %>%
@@ -750,43 +756,43 @@ max_temp_min_rh_first_check <- cowplot::plot_grid(surv_first_check_rh, surv_firs
 
 ## Begin processing for time above/below data ####
 
-rh_below_80 <- temp_rh_data %>% 
-  filter(RH != 1) %>% 
-  filter(RH <= 80) %>% 
-  group_by(status, logger_id) %>% 
+rh_below_80 <- temp_rh_data %>%
+  filter(RH != 1) %>%
+  filter(RH <= 80) %>%
+  group_by(status, logger_id) %>%
   summarise(obs = n(),
             hrs = obs/12,
             days = hrs/24)
 
 #View(rh_below_80)
 
-rh_below_80_avg <- temp_rh_data %>% 
-  filter(RH != 1) %>% 
-  filter(RH <= 80) %>% 
-  group_by(status, logger_id) %>% 
+rh_below_80_avg <- temp_rh_data %>%
+  filter(RH != 1) %>%
+  filter(RH <= 80) %>%
+  group_by(status, logger_id) %>%
   summarise(obs = n(),
             hrs = obs/12,
-            days = hrs/24) %>% 
-  ungroup(.) %>% 
-  group_by(status) %>% 
+            days = hrs/24) %>%
+  ungroup(.) %>%
+  group_by(status) %>%
   summarise(avg_days = mean(days),
             sd = sd(days))
 
-temp_above_35 <- temp_rh_data %>% 
-  filter(tempC >= 35) %>% 
-  group_by(status, logger_id) %>% 
+temp_above_35 <- temp_rh_data %>%
+  filter(tempC >= 35) %>%
+  group_by(status, logger_id) %>%
   summarise(obs = n(),
             hrs = obs/12,
-            days = hrs/24) 
+            days = hrs/24)
 
-temp_above_35_avg <- temp_rh_data %>% 
-  filter(tempC >= 35) %>% 
-  group_by(status, logger_id) %>% 
+temp_above_35_avg <- temp_rh_data %>%
+  filter(tempC >= 35) %>%
+  group_by(status, logger_id) %>%
   summarise(obs = n(),
             hrs = obs/12,
-            days = hrs/24) %>% 
-  ungroup(.) %>% 
-  group_by(status) %>% 
+            days = hrs/24) %>%
+  ungroup(.) %>%
+  group_by(status) %>%
   summarise(avg_days = mean(days),
             sd = sd(days))
 
@@ -806,8 +812,8 @@ avg_days_below_80rh <- ggplot(rh_below_80_avg, aes(status, avg_days, color = sta
 avg_days_above_35_tempC <- ggplot(temp_above_35_avg, aes(status, avg_days, color = status)) +
   geom_point() +
   geom_bar(stat = "identity") +
-  #geom_errorbar(data = temp_above_35_avg, 
-  #aes(ymin=avg_days_above_35_tempC - sd, 
+  #geom_errorbar(data = temp_above_35_avg,
+  #aes(ymin=avg_days_above_35_tempC - sd,
   #ymax=avg_days_above_35_tempC + sd)) +
   invasion_color +
   invasion_fill +
