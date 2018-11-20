@@ -49,8 +49,6 @@ tick_survival_grouped <- tick_survival %>%
 
 #+ set theme ####
 
-
-
 def_theme <- theme(legend.title = element_blank(),
                    legend.text = element_text(size = 12),
                    legend.position = "top",
@@ -87,7 +85,7 @@ ggplot(tick_survival_grouped, aes(days, avg_adult_survival, color = Invaded)) +
 nymph_survival_all_time <- ggplot(data = tick_survival) +
   stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
-  stat_smooth(aes(days, nymph_survival, color = Invaded),
+  stat_smooth(aes(days, nymph_survival, color = Invaded, fill = Invaded),
               se = T, alpha = .2) +
   invasion_color +
   invasion_fill +
