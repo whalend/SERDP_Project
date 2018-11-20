@@ -1,20 +1,26 @@
 ---
-title: "Installation Report: `r params$inst_name`"
-subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-borne diseases<h1>
-author: 
-- SERDP Project RC-2636
-- Whalen W. Dillon, Drew T. Hiatt, Steven Cabrera
+title: 'Installation Report: `r params$inst_name`'
+author:
+- "SERDP Project RC-2636"
+- "Report authors: Whalen W. Dillon, Drew T. Hiatt, Steven Cabrera"
+- "Project principal investigators: Brian Allan, S. Luke Flory, Mike Dietze"
+date: "`r Sys.Date()`"
 output:
   html_document:
     self_contained: no
-    toc: true
-    toc_float: true
+    toc: yes
+    toc_float: yes
+  word_document:
+    toc: yes
   pdf_document:
     toc: yes
-date: "`r Sys.Date()`"
+subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-borne
+  diseases<h1>
 params:
-      inst_name: "Camp Blanding"
+  inst_name: Camp Blanding
 ---
+
+
 
 ```{r set installation name options, echo=F}
 # inst_name values 
@@ -424,7 +430,8 @@ Our specific objectives are to:
 
 3. Calibrate a spatially explicit model of TBD risk in response to fire-invasion interactions   and examine the responses of fire, plant invasions, wildlife, TBD risk, using simulations of    climate change scenarios.
 
-## Number of plots sampled 
+
+# Number of plots sampled 
 
 A total of `r n_plots` plot(s) were established and sampled at `r paste(inst_name)`. Of the `r n_plots`, there were `r n_plots_invaded_inst` plot(s) with a cogongrass invasion. 
 
@@ -497,39 +504,6 @@ plot_nums %>%
       NULL
 
 ```
-
-# Tick Species Overview
-
-### Lone star tick, *Amblyomma americanum*
-**abbreviation: Am. am**
-
-![](pictures/lone-star-ticks.png)
-\n
-
-
-### Gulf coast tick, *Amblyomma maculatum* 
-**abbreviation: Am. mac**
-
-![](pictures/gulf-coast-ticks.png)
-\n
-
-### American dog tick, *Dermecentor variablis* 
-**abbreviation: De. var**
-
-![](pictures/american-dog-ticks.png)
-\n
-
-### Brown dog tick, *Rhipicephalus sanguineus* 
-**abbreviation: Rh. san**
-
-![](pictures/brown-dog-ticks.png)
-\n
-
-### Black-legged or deer tick, *Ixodes scapularis* 
-**abbreviation: Ix. sc**
-
-![](pictures/deer-ticks.png)
-\n
 
 # Tick Abundance Relationships
 
@@ -1045,7 +1019,45 @@ inst_data <- tree_data_plot_summary %>%
 
 ```
 
-# Supplementary Information - Tick Survival Assay Project
+# Supplementary Information - Commonly encountered tick species
+
+## Lone star tick, *Amblyomma americanum*
+**abbreviation: Am. am**
+
+![](pictures/lone-star-ticks.png)
+
+\newpage
+
+
+## Gulf coast tick, *Amblyomma maculatum* 
+**abbreviation: Am. mac**
+
+![](pictures/gulf-coast-ticks.png)
+
+\newpage
+
+## American dog tick, *Dermecentor variablis* 
+**abbreviation: De. var**
+
+![](pictures/american-dog-ticks.png)
+
+\newpage
+
+## Brown dog tick, *Rhipicephalus sanguineus* 
+**abbreviation: Rh. san**
+
+![](pictures/brown-dog-ticks.png)
+
+\newpage
+
+## Black-legged or deer tick, *Ixodes scapularis* 
+**abbreviation: Ix. sc**
+
+![](pictures/deer-ticks.png)
+
+\newpage
+
+# Supplementary Information - Tick survival in cogongrass invasions
 
 ## Project Background
 
@@ -1065,13 +1077,18 @@ Comparison of adult and nymph life stages of the lone star tick in native and in
 
 ```
 
+\newpage
+
+
 # Supplementary Information - Cogongrass fire temperatures from small scale experiments
 
 
 **(a)** The “maximum temperature” at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient.
 
 **(b)** The "seconds above 100°C"" accounts for the amount of time temperature probes recorded temperatures above 100°C at each of the heights for each biomass amount.
+
 ![](figures/temperature-fig.png)
+
 
 ```{r import cogon-fire-data}
 
