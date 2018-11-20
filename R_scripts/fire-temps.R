@@ -72,7 +72,7 @@ fabio_blanding_50cm <- mutate(fabio_blanding_50cm, location = "50cm", probe_type
 # plot(fabio_blanding_50cm$time, fabio_blanding_50cm$tempC)
 
 #+ Load FABIO Burn Biomass Data ----
-fabio_burns <- read_csv("~/Dropbox (UF)/SERDP-Project/data/fabio-burns.csv")
+fabio_burns <- read_csv("data/raw_data/fires_data/fabio-burns.csv")
 fabio_burns$date <- as.Date(
       as.character(fabio_burns$date), format = "%Y%m%d")
 
