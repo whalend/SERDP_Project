@@ -124,8 +124,6 @@ Using the exotic invasive cogongrass we illustrate how changing the fuel structu
 It can be deployed in the field or in a more controlled "laboratory" setting. 
 
 
-
-
 # METHODS
 
 ## Study site
@@ -175,26 +173,28 @@ We harvested ~50 kg of standing cogongrass from an invasion at the Biven's Arm R
 5.	Statistical Analysis
 
 
-### Fine Aboveground Biomass Incineration Organizer (FABIO)
+## Fine Aboveground Biomass Incineration Organizer (FABIO)
 ![](figures/FABIOdraft.jpg)
 
 ## Data collection and analysis
 
-Our experimental design was to conduct six burns, three piled and three standing, for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. 
+Our experimental design was to conduct six burns, three using piled fuel and three using standing fuel, for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. We ultimately conducted 32 fires in this experiment. One additional fire was done in the 1000g category due to mislabeling during biomass sorting and weighing.
+
+For comparison points to the measurements from these experimental fires we also show data collected during a prescribed fire and data from a small number of experimental burns using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a long-leaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass *Aristida stricta* (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~640 acre area.
 
 Thermocouple sensor specs
 Thermocouple logger specs
 
 Weather data was recorded at a two second interval during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA) mounted on a tripod to be ~1 m above the ground.
 
-We used linear regression to model the average maximum temperature and time above 100 ºC at each probe height, and the average flame height, rate of spread, and percent consumed from each fire. Fuel load (mass) and fuel structure (piled vs. standing) were used as explanatory variables, with fuel load treated as continuous. We tested the main effects and interaction of these variables. If the interaction did not have a strong effect we fit a new model with only main effects. We report results from models that
+We used ordinary least squares linear regression to model the response variables of average maximum temperature and time above 100 ºC at each probe height, the average flame height, and the rate of spread. We used beta regression to model the proportion of biomass consumed from each experimental fire. Fuel load (mass) and fuel structure (piled vs. standing) were used as explanatory variables in each model, and fuel load was entered as a continuous variable. We tested the main effects and interaction of fuel load and fuel structure. If the interaction did not have a strong effect we refit the model using only the main additive effects. Our main goal in this modeling was to assess the effect of fuel structure (piled vs. standing) on measures of fire intensity and behavior.
 
-We applied a linear model where
+OLS models had the following form:
 
 $$
-y_{i} = \alpha + \beta_{1}*biomass_{i} + \beta_{2}*biomass_{i}*structure_{i}
+y_{i} = \alpha + \beta_{1}fuel \ load_{i} + \beta_{2}fuel \ load_{i}*\beta_{3}fuel \ structure_{i} + \epsilon
 $$
-
+where $y_{i}$ was either average maximum temperature, time above 100 ºC, average flame height, or the rate of spread.
 
 ```{r load data from FABIO experiment}
 
@@ -432,41 +432,6 @@ ggplot(aes(total_biomass, s_abv100)) +
       scale_color_viridis_c() +
       theme_bw() +
       NULL
-
-```
-
-
-```{r Table1 fire-weather-table, results='asis'}
-
-# fires_biomass
-fire_wx_table <- left_join(
-      select(fire_weather_summary, -n_obs),
-      select(fires_biomass, fire_id, biomass, structure)
-             ) %>% 
-      arrange(fire_id) %>%
-      mutate(avg_air_temp = round(avg_air_temp, 2),
-             se_air_temp = round(se_air_temp, 2),
-             avg_rh = round(avg_rh, 2),
-             se_rh = round(se_rh, 2),
-             avg_wind_speed = round(avg_wind_speed, 2),
-             se_wind_speed = round(se_wind_speed, 2),
-             air_temp_avg_se = paste(avg_air_temp, " ± ", se_air_temp),
-             rh_avg_se = paste(avg_rh, " ± ", se_rh),
-             wind_speed_avg_se = paste(avg_wind_speed, " ± ", se_wind_speed)) %>% 
-      select(fire_id, date, structure, biomass, air_temp_avg_se:wind_speed_avg_se)
-
-fire_wx_table <- fire_wx_table %>% mutate(fire_id = seq_len(length(fire_id)))
-
-wxtable_col_names <- c("Fire ID", "Date", "Structure", "Biomass", "Air temperature (ºC)", "RH (%)", "Wind Speed (m s^-1^)")
-
-fire_wx_table
-
-wxtable <- knitr::kable(
-      fire_wx_table, col.names = wxtable_col_names, align = 'c',
-      caption = "Summary of weather for each fire (means ± SE). Fire IDs 54, 56, 70, & 74 were assigned values from their paired fires 53, 55, 69, & 73 due to missing data.")
-wxtable
-
-# xtable::xtable(fire_wx_table)
 
 ```
 
@@ -1074,6 +1039,8 @@ kable(abv100_rsquared_df, digits = 2)
 
 
 ### Multi-panel temperature figure
+
+
 ```{r max sabv100 pub figure, fig.height=7.5, fig.width=7.5}
 
 cowplot::plot_grid(
@@ -1373,12 +1340,18 @@ pairs(marginal, adjust = "tukey")
 
 ```
 
+Run a beta regression for modeling proportional response data, i.e. the proportion of initial biomass burned by the fire.
+
 ```{r pct consumed model summary}
 
 pct_consumed_breg <- betareg::betareg(p_consumed ~ total_biomass*structure, data = pcons_model_data)
 
+summary(pct_consumed_breg)
+
 
 ```
+
+For the piled fires, the small amounts of remaining biomass that weren't consumed consisted mostly of the thicker stems of the grass. We did not model the relationship for the fires where fuel structure was "both" piled and standing.
 
 ```{r pct consumed fitted model figure}
 
@@ -1429,21 +1402,20 @@ We did not record rate of spread for fires with "both" fuel structure.
 ## Analyze rate of spread with zeroes and with zeroes excluded as NA.
 
 ## Filter data to fires where rate of spread was measured
-ros_data <- d1 %>% 
-      filter(!is.na(rate_of_spread_ms)) %>% 
-      filter(!duplicated(fire_id)) %>% 
-      select(structure, total_biomass, rate_of_spread_ms) %>% 
-      mutate(rate_of_spread_ms = if_else(rate_of_spread_ms==Inf, 0, rate_of_spread_ms))
+# ros_data <- d1 %>% 
+#       filter(!is.na(rate_of_spread_ms)) %>% 
+#       filter(!duplicated(fire_id)) %>% 
+#       select(structure, total_biomass, rate_of_spread_ms) %>% 
+#       mutate(rate_of_spread_ms = if_else(rate_of_spread_ms==Inf, 0, rate_of_spread_ms))
 
-unique(ros_data$structure)
+# unique(ros_data$structure)
 ## We did not record rate of spread for fires with "both" fuel structure
 
 # View(filter(fires_biomass, rate_of_spread_50cm>62, structure=="standing"))
-(ros_fig <- ggplot(filter(fires_biomass, rate_of_spread_ms<1), 
+(ros_fig <- ggplot(fires_biomass, 
        aes(biomass, rate_of_spread_ms, color = structure)) +
             
       geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
-      # geom_smooth(data = filter(pct_consumed_data, structure!="standing"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
       geom_point(aes(color = structure, shape = structure)) +
       
       scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19)) +
@@ -1475,7 +1447,45 @@ unique(ros_data$structure)
 
 ```
 
-```{r ros-flame-consumed-fig}
+```{r ros modeling}
+
+ros_model1 <- lm(rate_of_spread_ms ~ total_biomass*structure + avg_air_temp, data = fires_biomass)
+summary(ros_model1)
+
+ros_model2 <- lm(rate_of_spread_ms ~ total_biomass*structure, data = fires_biomass)
+summary(ros_model2)
+
+AIC(ros_model1, ros_model2)
+
+```
+
+```{r ros model summary}
+
+ros_model_summ <- summary(ros_model1)
+ros_model_coef <- as.data.frame(ros_model_summ$coefficients)
+var_names <- c("Intercept", "Biomass", "Structure: standing", "Air temperature", "Biomass X Structure")
+ros_model_coef <- ros_model_coef %>% 
+      mutate(Variable = var_names) %>% 
+      select(Variable, 1:ncol(ros_model_coef))
+
+knitr::kable(ros_model_coef, digits = 3)
+
+ros_model_summ$adj.r.squared
+
+```
+
+**Flame height model ANOVA table (Type II F-test)**
+```{r ros model ANOVA table}
+
+ros_anova <- car::Anova(ros_model1)
+ros_anova <- ros_anova[c(1:nrow(ros_anova)-1),]
+rownames(ros_anova) <- c("Biomass", "Structure: standing", "Air temperature", "Biomass X Structure")
+
+knitr::kable(ros_anova)
+
+```
+
+```{r ros-flame-consumed-fig, fig.height=8, fig.width=4}
 
 cowplot::plot_grid(
       flame_height_fig +
@@ -1490,13 +1500,13 @@ ggsave("figures/ros-flame-consumed.png", height = 8, width = 4)
 
 ```
 
-We used the statistical language `R` `r citep(citation())` for all our analyses. These were implemented in dynamic rmarkdown documents using `knitr` `r citep(citation("knitr"))` and `rmarkdown` `r citep(citation("rmarkdown"))` packages. All the multilevel models were fitted with `lme4` `r citep(citation("lme4"))`. 
+The confidence interval for the standing fuels in the rate of spread panel (b) don't extend to the 250g fuel load because only one fire at that fuel load had a measurable rate of spread. 
 
+We used the statistical language `R` `r citep(citation())` for all our analyses. These were implemented in dynamic rmarkdown documents using `knitr` `r citep(citation("knitr"))` and `rmarkdown` `r citep(citation("rmarkdown"))` packages. All the multilevel models were fitted with `lme4` `r citep(citation("lme4"))`. 
 
 
 # RESULTS
 
-Trees in forest A grew taller than those in forest B (mean height: `r mean(25, 31, 28)` versus `r mean(13, 19, 16)` m). And many more cool results that get updated dynamically.
 
 
 
@@ -1535,7 +1545,9 @@ write.bibtex(file="knitcitations.bib")
 \newpage
 
 ```{r Table1, results='asis', echo=FALSE, cache=FALSE, eval=F}
+
 kable(head(iris), caption = "A glimpse of the famous *Iris* dataset.")
+
 ```
 
 
@@ -1550,27 +1562,68 @@ kable(head(iris), caption = "A glimpse of the famous *Iris* dataset.")
 
 \newpage
 
-![Figure 1](figures/Fig2_3panel.pdf)
-\newpage
-
 
 \newpage
 
-![](figures/timeandmaxtempPanels2x2.pdf)
+
+\newpage
+
 
 \newpage
 
 \blandscape
 
 ```{r Fig2, echo=FALSE, fig.cap="Second figure in landscape format.", cache=FALSE, eval=F}
+
 a <- sort(rnorm(100))
 b <- c(rep("Group Small", 35), rep("Group Big", 65))
 boxplot(a ~ b)
+
 ```
 
 \elandscape
 
 \clearpage
+
+\newpage
+
+# Appendix 1
+
+**Table A1.** Weather during experimental fires.
+
+```{r Table1 fire-weather-table, results='asis'}
+
+# fires_biomass
+fire_wx_table <- left_join(
+      select(fire_weather_summary, -n_obs),
+      select(fires_biomass, fire_id, biomass, structure)
+             ) %>% 
+      arrange(fire_id) %>%
+      mutate(avg_air_temp = round(avg_air_temp, 2),
+             se_air_temp = round(se_air_temp, 2),
+             avg_rh = round(avg_rh, 2),
+             se_rh = round(se_rh, 2),
+             avg_wind_speed = round(avg_wind_speed, 2),
+             se_wind_speed = round(se_wind_speed, 2),
+             air_temp_avg_se = paste(avg_air_temp, " ± ", se_air_temp),
+             rh_avg_se = paste(avg_rh, " ± ", se_rh),
+             wind_speed_avg_se = paste(avg_wind_speed, " ± ", se_wind_speed)) %>% 
+      select(fire_id, date, structure, biomass, air_temp_avg_se:wind_speed_avg_se)
+
+fire_wx_table <- fire_wx_table %>% mutate(fire_id = seq_len(length(fire_id)))
+
+wxtable_col_names <- c("Fire ID", "Date", "Structure", "Biomass", "Air temperature (ºC)", "RH (%)", "Wind Speed (m s^-1^)")
+
+fire_wx_table
+
+wxtable <- knitr::kable(
+      fire_wx_table, col.names = wxtable_col_names, align = 'c',
+      caption = "Summary of weather for each fire (means ± SE). Fire IDs 54, 56, 70, & 74 were assigned values from their paired fires 53, 55, 69, & 73 due to missing data.")
+wxtable
+
+# xtable::xtable(fire_wx_table)
+
+```
 
 
 
