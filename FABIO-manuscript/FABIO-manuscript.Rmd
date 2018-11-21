@@ -16,9 +16,9 @@ affiliation:
 # - affil: null
 #   affilnum: 3
 output: 
+  word_document: null
   html_document: 
     self_contained: yes
-  word_document: null
   pdf_document:
     fig_caption: yes
     # fig_height:
@@ -174,7 +174,7 @@ We harvested ~50 kg of standing cogongrass from an invasion at the Biven's Arm R
 
 
 ## Fine Aboveground Biomass Incineration Organizer (FABIO)
-![](figures/FABIOdraft.jpg)
+![Figure 1.](figures/FABIOdraft.jpg)
 
 ## Data collection and analysis
 
@@ -203,7 +203,7 @@ where $y_{i}$ was either average maximum temperature, time above 100 ºC, averag
 
 fires_biomass1 <- read_csv("~/SERDP_Project/data/fabio-fires-biomass.csv")
 fires_biomass <- filter(fires_biomass1, date > "2017-11-30")
-summary(fires_biomass)
+# summary(fires_biomass)
 fires_biomass <- fires_biomass %>% 
       select(date, fire_id, biomass, structure:max_fuel_ht, avg_fuel_ht) %>% 
       mutate(f_structure = as.factor(structure),
@@ -285,7 +285,7 @@ fabio_fires <- join_all(list(m_temp, a2_m_temp, t_abv100),
                type = "full", match = "all")
 
 
-summary(fabio_fires)
+# summary(fabio_fires)
 fabio_fires$s_abv100[is.na(fabio_fires$s_abv100)] <- 0
 fabio_fires$heat_flux_abv100[is.na(fabio_fires$heat_flux_abv100)] <- 0
 
@@ -383,7 +383,7 @@ all_fabio_fires_data <- left_join(
       mean_max_temp,
       all_fabio_fires_biomass) %>% 
       left_join(., time_abv100)
-summary(all_fabio_fires_data)
+# summary(all_fabio_fires_data)
 
 all_fabio_fires_data <- all_fabio_fires_data %>%
       filter(is.na(structure)==FALSE,
@@ -505,18 +505,31 @@ pfire_wx_data <- read_csv("~/SERDP_Project/data/prescribed-fire-weather-20170706
 #       skim(pct_fuel_moisture)
 # names(fires_biomass)
 
-ggplot(fires_biomass, aes(structure, pct_fuel_moisture, color = structure)) +
-      # geom_boxplot() +
-      geom_point(size = 1, alpha = .5) +
-      stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = .5)) +
+ggplot(fires_biomass, aes(structure, pct_fuel_moisture)) +
+      geom_boxplot(aes(color = structure)) +
+      stat_summary(aes(fill = structure), fun.y = "mean", geom = "point", shape = 22, size = 3, show.legend = F) +
+      geom_point(aes(color = structure),size = 1, alpha = 1, show.legend = F) +
       struc_colors +
+      struc_fill +
       theme_classic() +
-      ylab("Fuel moisture (%)") +
-      xlab("Date")
+      ylab("Estimated fuel moisture (%)") +
+      # xlab("Date")
+      theme(legend.position = "none") +
+      NULL
 
+fires_biomass %>% 
+      group_by(structure) %>% 
+      summarise(nobs = n(),
+                min_moisture = min(pct_fuel_moisture),
+                avg_moisture = mean(pct_fuel_moisture),
+                max_moisture = max(pct_fuel_moisture),
+                sd_moisture = sd(pct_fuel_moisture),
+                se_moisture = sd_moisture/sqrt(nobs)) %>% 
+      knitr::kable(., digits = 2)
+      
 ```
 
-Across all fires fuel moisture content ranged from 4.6 to 19.6% (mean = 11.49±0.56%). 
+Across all fires fuel moisture content ranged from 4.6 to 19.6% (mean = 11.5 ± 0.6% SE). Moisture of fuels used for piled fires ranged from 4.6 to 15.3% (mean = 11.2 ± 0.7% SE) and for standing fires from 6.8 to 19.6% (mean = 11.8 ± 0.9% SE). 
 
 
 
@@ -594,7 +607,7 @@ p_fire_flame_ht <- prescribed_fire %>%
 
 
 ### Linear models of maximum temperature
-The "maximum temperature" at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient (Fig. 3). 
+The "maximum temperature" at each height for each fire was calculated by averaging the five highest temperatures for each probe and then averaging these values across the three temperature probes located at each height. For some of the fires with the lowest amount of biomass (250 g) probe temperatures did not deviate from near-ambient (Fig. 3). 
 
 ```{r maxtemp-figure, eval = F}
 
@@ -682,7 +695,7 @@ maxtemp_fig_labels <- data.frame(
       avg2_max_temp = c(rep(950, 3))
       )
 
-(max_temp_fig <- ggplot(d1, aes(total_biomass, avg2_max_temp)) +
+max_temp_fig <- ggplot(d1, aes(total_biomass, avg2_max_temp)) +
       
       geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
       geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
@@ -723,12 +736,14 @@ maxtemp_fig_labels <- data.frame(
             # panel.background = element_blank(),
             # axis.line = element_line(colour = "black")
             )
-)
+
+# max_temp_fig
 
 ```
 
 ```{r maxtemp linear models}
 
+## Exclude "both" structure from model fitting
 d2 <- filter(d1, structure != "both") %>% 
       mutate(location = as.character(location))
 
@@ -744,18 +759,18 @@ max_temp_lm_full <- glm(avg2_max_temp ~ total_biomass + total_biomass*structure 
 # 0cm location ####
 fabio_fires_0cm <- filter(d2, location == "0cm")
 max_temp_0cm <- lm(avg2_max_temp ~ total_biomass*structure, data = fabio_fires_0cm)
-summary(max_temp_0cm)
+# summary(max_temp_0cm)
 # dredge(max_temp_0cm, extra = c("R^2"))
 ## Interaction not p<.05 significant, eaual support for additive model
 max_temp_0cm <- lm(avg2_max_temp ~ total_biomass + structure, data = fabio_fires_0cm)
-(summ_max_temp_0cm <- summary(max_temp_0cm))
-summ_max_temp_0cm$adj.r.squared
+summ_max_temp_0cm <- summary(max_temp_0cm)
+# summ_max_temp_0cm$adj.r.squared
 
 my_row_names <- c("Intercept", "Biomass", "Structure: standing")
 coef0cm <- as.data.frame(summary(max_temp_0cm)$coefficients)
 rownames(coef0cm) <- my_row_names
 coef0cm <- cbind(coef0cm, confint(max_temp_0cm))
-kable(coef0cm, digits = 3, caption = "Max temperature at ground level")
+# kable(coef0cm, digits = 3, caption = "Max temperature at ground level")
 coef0cm <- coef0cm %>% 
       mutate(Location = "0cm", 
              Variable = my_row_names) %>% 
@@ -764,18 +779,18 @@ coef0cm <- coef0cm %>%
 # 25cm location ####
 fabio_fires_25cm <- filter(d2, location == "25cm")
 max_temp_25cm <- lm(avg2_max_temp ~ total_biomass*structure, data = fabio_fires_25cm)
-summary(max_temp_25cm)
+# summary(max_temp_25cm)
 # dredge(max_temp_25cm, extra = c("R^2"))
 ## Interaction marginal p=.07, biomass-only model teensy bit better
 max_temp_25cm <- lm(avg2_max_temp ~ total_biomass + structure, data = fabio_fires_25cm)
-(summ_max_temp_25cm <- summary(max_temp_25cm))
-summ_max_temp_25cm$adj.r.squared
+summ_max_temp_25cm <- summary(max_temp_25cm)
+# summ_max_temp_25cm$adj.r.squared
 
 my_row_names <- c("Intercept", "Biomass", "Structure: standing")
 coef25cm <- as.data.frame(summary(max_temp_25cm)$coefficients)
 rownames(coef25cm) <- my_row_names
 coef25cm <- cbind(coef25cm, confint(max_temp_25cm))
-kable(coef25cm, digits = 3, caption = "Max temperature at 25cm")
+# kable(coef25cm, digits = 3, caption = "Max temperature at 25cm")
 coef25cm <- mutate(coef25cm, Location = "25cm",
                    Variable = my_row_names) %>% 
       select(Variable, Estimate:Location)
@@ -783,12 +798,12 @@ coef25cm <- mutate(coef25cm, Location = "25cm",
 # 50cm location ####
 fabio_fires_50cm <- filter(d2, location == "50cm")
 max_temp_50cm <- lm(avg2_max_temp ~ total_biomass*structure, data = fabio_fires_50cm)
-summary(max_temp_50cm)
+# summary(max_temp_50cm)
 # dredge(max_temp_50cm, extra = c("R^2"))
 
 max_temp_50cm <- lm(avg2_max_temp ~ total_biomass + structure, data = fabio_fires_50cm)
-(summ_max_temp_50cm <- summary(max_temp_50cm))
-summ_max_temp_50cm$adj.r.squared
+summ_max_temp_50cm <- summary(max_temp_50cm)
+# summ_max_temp_50cm$adj.r.squared
 
 my_row_names <- c("Intercept", "Biomass", "Structure: standing")
 coef50cm <-  as.data.frame(summary(max_temp_50cm)$coefficients)
@@ -805,7 +820,9 @@ coef50cm <- mutate(coef50cm, Location = "50cm",
 ```{r table all maxtemp coefs}
 
 all_maxtemp_coefs <- rbind(coef50cm, coef25cm, coef0cm)
-kable(all_maxtemp_coefs, digits = 4)
+all_maxtemp_coefs <- all_maxtemp_coefs %>% 
+      select(Location, Variable, 1:ncol(all_maxtemp_coefs))
+kable(all_maxtemp_coefs, digits = 2)
 
 ```
 
@@ -894,7 +911,7 @@ kable(adj_rsquare_df, digits = 2)
 
 sabv_fig_labels <- data.frame(location = c("50cm","25cm","0cm"), pid = c("b","d","f"), total_biomass = c(200,200,200), s_abv100 = c(150,200,775))
 
-(s_abv100_fig <- ggplot(d1, aes(total_biomass, s_abv100)) +
+s_abv100_fig <- ggplot(d1, aes(total_biomass, s_abv100)) +
       # geom_line(aes(color = source, linetype = location)) +
       geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
       geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
@@ -932,7 +949,8 @@ sabv_fig_labels <- data.frame(location = c("50cm","25cm","0cm"), pid = c("b","d"
             axis.title = element_text(size = 14),
             strip.text = element_text(size = 12)
             )
-)
+
+# s_abv100_fig
 
 ```
 
@@ -946,32 +964,32 @@ s_abv100_lm <- lm(s_abv100 ~ total_biomass + total_biomass*structure + total_bio
 
 ## Above 100 at 0cm model ####
 s_abv100_0cm <- lm(s_abv100 ~ total_biomass*structure, data = filter(d2, location == "0cm"))
-(summ_s_abv100_0cm <- summary(s_abv100_0cm))
+summ_s_abv100_0cm <- summary(s_abv100_0cm)
 
 my_row_names <- c("Intercept", "Biomass", "Structure: standing", "Biomass X Structure")
 coef0cm <- as.data.frame(summary(s_abv100_0cm)$coefficients)
 rownames(coef0cm) <- my_row_names
-kable(coef0cm, digits = 3, caption = "Time above 100 ºC (seconds) at ground level")
+# kable(coef0cm, digits = 3, caption = "Time above 100 ºC (seconds) at ground level")
 coef0cm <- mutate(coef0cm, Location = "0cm",
                   Variable = my_row_names) %>% 
       select(Variable, Estimate:Location)
 
 ## Above 100 at 25cm model ####
 s_abv100_25cm <- lm(s_abv100 ~ total_biomass*structure, data = filter(d2, location == "25cm"))
-(summ_s_abv100_25cm <- summary(s_abv100_25cm))
+summ_s_abv100_25cm <- summary(s_abv100_25cm)
 coef25cm <- as.data.frame(summary(s_abv100_25cm)$coefficients)
 rownames(coef25cm) <- my_row_names
-kable(coef25cm, digits = 3, caption = "Time above 100 ºC (seconds) at 25cm")
+# kable(coef25cm, digits = 3, caption = "Time above 100 ºC (seconds) at 25cm")
 coef25cm <- mutate(coef25cm, Location = "25cm",
                    Variable = my_row_names) %>% 
       select(Variable, Estimate:Location)
 
 ## Above 100 at 50cm ####
 s_abv100_50cm <- lm(s_abv100 ~ total_biomass*structure, data = filter(d2, location == "50cm"))
-(summ_s_abv100_50cm <- summary(s_abv100_50cm))
+summ_s_abv100_50cm <- summary(s_abv100_50cm)
 coef50cm <- as.data.frame(summary(s_abv100_50cm)$coefficients)
 # rownames(coef50cm) <- my_row_names
-kable(coef50cm, digits = 3, caption = "Time above 100 ºC (seconds) at 50cm")
+# kable(coef50cm, digits = 3, caption = "Time above 100 ºC (seconds) at 50cm")
 coef50cm <- mutate(coef50cm, Location = "50cm",
                    Variable = my_row_names) %>% 
       select(Variable, Estimate:Location)
@@ -1020,7 +1038,9 @@ ggplot(fabio_fires_summary, aes(biomass, avg_heat_flux_abv100)) +
 ```{r time above 100 fitted models}
 
 all_s_abv100_models <- rbind(coef50cm, coef25cm, coef0cm)
-kable(all_s_abv100_models, digits = 4)
+all_s_abv100_models <- all_s_abv100_models %>% 
+      select(Location, Variable, 1:ncol(all_s_abv100_models))
+kable(all_s_abv100_models, digits = 2)
 
 ```
 
@@ -1040,7 +1060,6 @@ kable(abv100_rsquared_df, digits = 2)
 
 ### Multi-panel temperature figure
 
-
 ```{r max sabv100 pub figure, fig.height=7.5, fig.width=7.5}
 
 cowplot::plot_grid(
@@ -1053,7 +1072,7 @@ cowplot::plot_grid(
       s_abv100_fig +
             theme(
                   # strip.text = element_blank(),
-                  legend.position = c(.2,.25)
+                  legend.position = c(.25,.25)
                   ),
       nrow = 1
       # labels = "auto"
@@ -1111,7 +1130,7 @@ cowplot::plot_grid(
 
 ```{r flame ht pub fig}
 
-(flame_height_fig <- ggplot(d1, aes(total_biomass, avg_flame_ht)) +
+flame_height_fig <- ggplot(d1, aes(total_biomass, avg_flame_ht)) +
       # struc_colors +
       # geom_point(aes(shape = structure), size = 2) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 100), aes(shape = structure)) +
@@ -1148,31 +1167,32 @@ cowplot::plot_grid(
             plot.margin = unit(c(.5,.5,.5,.5), "cm"),
             panel.grid = element_blank()
             )
-)
+
+# flame_height_fig
 
 ```
 
 ```{r flame height modeling}
 
 f_ht_mod <- lm(avg_flame_ht ~ biomass*structure + avg_fuel_ht*structure, data = fires_biomass)
-summary(f_ht_mod)
+# summary(f_ht_mod)
 # sjPlot::plot_model(f_ht_mod, type = "int")
 
 f_ht_mod2 <- lm(avg_flame_ht ~ biomass*structure + avg_fuel_ht, data = fires_biomass)
-summary(f_ht_mod2)
+# summary(f_ht_mod2)
 # sjPlot::plot_model(f_ht_mod2, type = "pred", terms = c("biomass", "structure"))
 
 f_ht_mod3 <- lm(avg_flame_ht ~ biomass*structure, data = fires_biomass)
-summary(f_ht_mod3)
+# summary(f_ht_mod3)
 
-AIC(f_ht_mod, f_ht_mod2, f_ht_mod3)
-anova(f_ht_mod, f_ht_mod2, f_ht_mod3)
+# AIC(f_ht_mod, f_ht_mod2, f_ht_mod3)
+# anova(f_ht_mod, f_ht_mod2, f_ht_mod3)
 
-car::Anova(f_ht_mod3, type = "II")
-car::Anova(f_ht_mod3, type = "III")
+# car::Anova(f_ht_mod3, type = "II")
+# car::Anova(f_ht_mod3, type = "III")
 
 # sjPlot::plot_model(f_ht_mod3, type = "pred", terms = c("biomass", "structure"))
-sjPlot::plot_model(f_ht_mod3, type = "int", show.data = T)
+# sjPlot::plot_model(f_ht_mod3, type = "int", show.data = T)
 
 ```
 
@@ -1184,11 +1204,12 @@ flame_ht_mod_summ <- summary(f_ht_mod3)
 
 my_row_names <- c("Intercept", "Biomass", "Structure: standing", "Biomass X Structure")
 flame_ht_coefs <- as.data.frame(flame_ht_mod_summ$coefficients)
-kable(flame_ht_coefs, digits = 3, caption = "Model estimates of flame heights from FABIO piled vs. standing")
 
 flame_ht_coefs <- flame_ht_coefs %>% 
       mutate(Variable = my_row_names) %>% 
-      select(Variable, Estimate:ncol(flame_ht_coefs))
+      select(Variable, 1:ncol(flame_ht_coefs))
+
+kable(flame_ht_coefs, digits = 2, caption = "Model estimates of flame heights from experimental fires")
 
 ```
 
@@ -1254,7 +1275,7 @@ pct_consumed_data <- d1 %>% filter(!duplicated(fire_id)) %>%
 #       geom_point() +
 #       geom_smooth(se = F)
 
-(pct_consumed_fig <- ggplot(pct_consumed_data, aes(total_biomass, pct_consumed)) +
+pct_consumed_fig <- ggplot(pct_consumed_data, aes(total_biomass, pct_consumed)) +
       
       geom_smooth(data = filter(pct_consumed_data, structure=="standing"), aes(color = structure, fill = structure, linetype = structure), method = "loess", se = F, size = .8, alpha = .2, show.legend = F) +
       geom_smooth(data = filter(pct_consumed_data, structure!="standing"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
@@ -1280,7 +1301,8 @@ pct_consumed_data <- d1 %>% filter(!duplicated(fire_id)) %>%
             plot.margin = unit(c(.5,.5,.5,.5), "cm"),
             panel.grid = element_blank()
             )
-)
+
+# pct_consumed_fig
 
 ```
 
@@ -1302,28 +1324,28 @@ select(t)
 pcons_model_data <- filter(pct_consumed_data, structure!="both")
 
 m1 <- glm(p_consumed ~ total_biomass*structure, data = pcons_model_data, family = "gaussian")
-summary(m1)
-car::Anova(m1)
+# summary(m1)
+# car::Anova(m1)
 
 # library(betareg)
 pct_consumed_breg <- betareg::betareg(p_consumed ~ total_biomass*structure, data = pcons_model_data)
 # filter(pct_consumed_data, structure!="both")
 summary(pct_consumed_breg)
-car::Anova(pct_consumed_breg, type = "II")# suggested don't use in this post http://rcompanion.org/handbook/J_02.html, 
-lmtest::coeftest(pct_consumed_breg)
-emmeans::joint_tests(pct_consumed_breg)
-lmtest::lrtest(pct_consumed_breg)
-rcompanion::nagelkerke(pct_consumed_breg)
+# car::Anova(pct_consumed_breg, type = "II")# suggested don't use in this post http://rcompanion.org/handbook/J_02.html, 
+# lmtest::coeftest(pct_consumed_breg)
+# emmeans::joint_tests(pct_consumed_breg)
+# lmtest::lrtest(pct_consumed_breg)
+# rcompanion::nagelkerke(pct_consumed_breg)
 
 m2 <- betareg::betareg(p_consumed ~ total_biomass + structure, data = pcons_model_data)
-summary(m2)
+# summary(m2)
 
 m3 <- betareg::betareg(p_consumed ~ total_biomass, data = pcons_model_data)
-summary(m3)
+# summary(m3)
 
-AIC(m2, m3, pct_consumed_breg)
+# AIC(m2, m3, pct_consumed_breg)
 
-lmtest::lrtest(m2,m3,pct_consumed_breg)
+# lmtest::lrtest(m2,m3,pct_consumed_breg)
 
 # plot(fitted(pct_consumed_breg),resid(pct_consumed_breg))
 # plot(pct_consumed_breg)
@@ -1335,8 +1357,7 @@ lmtest::lrtest(m2,m3,pct_consumed_breg)
 
 
 marginal <- emmeans::emmeans(pct_consumed_breg, ~ structure)
-pairs(marginal, adjust = "tukey")
-
+# pairs(marginal, adjust = "tukey")
 
 ```
 
@@ -1346,7 +1367,15 @@ Run a beta regression for modeling proportional response data, i.e. the proporti
 
 pct_consumed_breg <- betareg::betareg(p_consumed ~ total_biomass*structure, data = pcons_model_data)
 
-summary(pct_consumed_breg)
+pct_consumed_summ <- summary(pct_consumed_breg)
+
+my_row_names <- c("Intercept", "Biomass", "Structure: standing", "Biomass X Structure")
+pct_consumed_coefs <- as.data.frame(pct_consumed_summ$coefficients)
+
+pct_consumed_coefs <- pct_consumed_coefs %>% 
+      mutate(Variable = my_row_names) %>% 
+      select(Variable, Estimate = 1, `Std. Error` = 2, `z value` = 3, `Pr(>|z|)` = 4)
+
 
 
 ```
@@ -1387,7 +1416,8 @@ pct_consumed_fig <- ggplot(sjp.p.consumed$data, aes(x, predicted)) +
             plot.margin = unit(c(.5,.5,.5,.5), "cm"),
             panel.grid = element_blank()
             )
-pct_consumed_fig
+
+# pct_consumed_fig
 
 ```
 
@@ -1412,7 +1442,7 @@ We did not record rate of spread for fires with "both" fuel structure.
 ## We did not record rate of spread for fires with "both" fuel structure
 
 # View(filter(fires_biomass, rate_of_spread_50cm>62, structure=="standing"))
-(ros_fig <- ggplot(fires_biomass, 
+ros_fig <- ggplot(fires_biomass, 
        aes(biomass, rate_of_spread_ms, color = structure)) +
             
       geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
@@ -1443,19 +1473,21 @@ We did not record rate of spread for fires with "both" fuel structure.
             plot.margin = unit(c(.5,.5,.5,.5), "cm"),
             panel.grid = element_blank()
             )
-)
+
+# ros_fig
 
 ```
 
 ```{r ros modeling}
 
 ros_model1 <- lm(rate_of_spread_ms ~ total_biomass*structure + avg_air_temp, data = fires_biomass)
-summary(ros_model1)
+# summary(ros_model1)
 
 ros_model2 <- lm(rate_of_spread_ms ~ total_biomass*structure, data = fires_biomass)
-summary(ros_model2)
+# summary(ros_model2)
 
-AIC(ros_model1, ros_model2)
+# AIC(ros_model1, ros_model2)
+# anova(ros_model1, ros_model2)
 
 ```
 
@@ -1465,8 +1497,9 @@ ros_model_summ <- summary(ros_model1)
 ros_model_coef <- as.data.frame(ros_model_summ$coefficients)
 var_names <- c("Intercept", "Biomass", "Structure: standing", "Air temperature", "Biomass X Structure")
 ros_model_coef <- ros_model_coef %>% 
-      mutate(Variable = var_names) %>% 
-      select(Variable, 1:ncol(ros_model_coef))
+      mutate(Variable = var_names, 
+             Response = "Rate of spread") %>% 
+      select(Response, Variable, 1:ncol(ros_model_coef))
 
 knitr::kable(ros_model_coef, digits = 3)
 
@@ -1474,18 +1507,24 @@ ros_model_summ$adj.r.squared
 
 ```
 
-**Flame height model ANOVA table (Type II F-test)**
+**Rate of spread model ANOVA table (Type II F-test)**
 ```{r ros model ANOVA table}
 
+rnames <- c("Biomass", "Structure: standing", "Air temperature", "Biomass X Structure")
 ros_anova <- car::Anova(ros_model1)
 ros_anova <- ros_anova[c(1:nrow(ros_anova)-1),]
-rownames(ros_anova) <- c("Biomass", "Structure: standing", "Air temperature", "Biomass X Structure")
 
-knitr::kable(ros_anova)
+ros_anova <- ros_anova %>% 
+      mutate(Variable = rnames,
+             Response = "Rate of spread") %>% 
+      select(Response, Variable, 1:ncol(ros_anova))
+
+
+knitr::kable(ros_anova, digits = 2)
 
 ```
 
-```{r ros-flame-consumed-fig, fig.height=8, fig.width=4}
+```{r flame ros consumed fig, fig.height=8, fig.width=4}
 
 cowplot::plot_grid(
       flame_height_fig +
@@ -1500,7 +1539,41 @@ ggsave("figures/ros-flame-consumed.png", height = 8, width = 4)
 
 ```
 
-The confidence interval for the standing fuels in the rate of spread panel (b) don't extend to the 250g fuel load because only one fire at that fuel load had a measurable rate of spread. 
+The confidence interval around the fitted line for the standing fuels in the rate of spread panel (b) doesn't extend to the 250g fuel load because only one fire at that fuel load had a measurable rate of spread. 
+
+```{r flame ros consumed tables}
+
+flame_ht_coefs <- flame_ht_coefs %>% 
+      mutate(Response = "Flame height") %>% 
+      select(Response, 1:ncol(flame_ht_coefs)) %>% 
+      rename(`Crit. value` = `t value`,
+             `P value` = `Pr(>|t|)`)
+ros_model_coef <- ros_model_coef %>% 
+      rename(`Crit. value` = `t value`,
+             `P value` = `Pr(>|t|)`)
+pct_consumed_coefs <- pct_consumed_coefs %>% 
+      mutate(Response = "Percent consumed") %>% 
+      select(Response, 1:ncol(pct_consumed_coefs)) %>% 
+      rename(`Crit. value` = `z value`,
+             `P value` = `Pr(>|z|)`)
+
+flame_ros_consumed_coefs <- rbind(
+      flame_ht_coefs,
+      ros_model_coef,
+      pct_consumed_coefs
+)
+
+knitr::kable(flame_ros_consumed_coefs, digits = 2)
+
+flame_ros_consumed_r2 <- data.frame(
+      "Response" = c("Flame height", "Rate of spread", "Percent consumed"),
+      "R-squared" = c(flame_ht_mod_summ$adj.r.squared, ros_model_summ$adj.r.squared, pct_consumed_summ$pseudo.r.squared)
+)
+
+knitr::kable(flame_ros_consumed_r2, digits = 2)
+
+```
+
 
 We used the statistical language `R` `r citep(citation())` for all our analyses. These were implemented in dynamic rmarkdown documents using `knitr` `r citep(citation("knitr"))` and `rmarkdown` `r citep(citation("rmarkdown"))` packages. All the multilevel models were fitted with `lme4` `r citep(citation("lme4"))`. 
 
