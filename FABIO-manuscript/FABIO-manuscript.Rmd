@@ -16,9 +16,9 @@ affiliation:
 # - affil: null
 #   affilnum: 3
 output: 
-  word_document: null
   html_document: 
     self_contained: yes
+  word_document: null
   pdf_document:
     fig_caption: yes
     # fig_height:
@@ -180,21 +180,21 @@ We harvested ~50 kg of standing cogongrass from an invasion at the Biven's Arm R
 
 Our experimental design was to conduct six burns, three using piled fuel and three using standing fuel, for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. We ultimately conducted 32 fires in this experiment. One additional fire was done in the 1000g category due to mislabeling during biomass sorting and weighing.
 
-For comparison points to the measurements from these experimental fires we also show data collected during a prescribed fire and data from a small number of experimental burns using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a long-leaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass *Aristida stricta* (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~640 acre area.
+For comparison points to the measurements from these experimental fires we also show data collected during a prescribed fire and data from a small number of experimental burns using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a long-leaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass *Aristida stricta* (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~250 hectare management unit.
 
-Thermocouple sensor specs
-Thermocouple logger specs
+*Temperature recording*
+For all fires we used HOBO J,K,S,T thermocouple loggers (Model U12, Onset Computer Corporation, Bourne MA) with type-K thermoucouples resulting in a measurement range of 0 to 1250 ºC. In the experimental fires we used wire probes insulated in braided steel that were 91.4 cm long with a diamter of XX mm. These probes were robust to exposure to multiple fires and could be used continuously. During the prescribed fire the thermocouple wire was fiberglass insulated and any length of wire exposed to flames had to be removed. Although the braided steel insulated probes were more expensive they were ultimately more economical because they didn't degrade when exposed to flames.
 
-Weather data was recorded at a two second interval during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA) mounted on a tripod to be ~1 m above the ground.
+Weather data was recorded at a two second interval during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA) mounted on a tripod 1 m above the ground. Data points were matched to the time of each fire and average values were calculated for air temperature, relative humidity, and wind speed.
 
-We used ordinary least squares linear regression to model the response variables of average maximum temperature and time above 100 ºC at each probe height, the average flame height, and the rate of spread. We used beta regression to model the proportion of biomass consumed from each experimental fire. Fuel load (mass) and fuel structure (piled vs. standing) were used as explanatory variables in each model, and fuel load was entered as a continuous variable. We tested the main effects and interaction of fuel load and fuel structure. If the interaction did not have a strong effect we refit the model using only the main additive effects. Our main goal in this modeling was to assess the effect of fuel structure (piled vs. standing) on measures of fire intensity and behavior.
+We used ordinary least squares linear regression to model the response variables of average maximum temperature, time above 100 ºC at each probe height, the average flame height, and the rate of spread. We used beta regression to model the proportion of biomass consumed. Fuel load (mass) and fuel structure (piled vs. standing) were used as explanatory variables in each model, and fuel load was entered as a continuous variable. We tested the main effects and interaction of fuel load and fuel structure along with weather covariates (e.g. air temperature, wind speed, relative humidity). Statistically insignificant weather variables were excluded from final models. Because our main goal was to assess the effect of fuel structure (piled vs. standing) on measures of fire intensity and behavior we at minimum retained fuel structure and biomass as main effects in all models.
 
-OLS models had the following form:
+Regression models had the following general form:
 
 $$
 y_{i} = \alpha + \beta_{1}fuel \ load_{i} + \beta_{2}fuel \ load_{i}*\beta_{3}fuel \ structure_{i} + \epsilon
 $$
-where $y_{i}$ was either average maximum temperature, time above 100 ºC, average flame height, or the rate of spread.
+where $y_{i}$ was either average maximum temperature, time above 100 ºC, average flame height, or the rate of spread. 
 
 ```{r load data from FABIO experiment}
 
@@ -402,11 +402,12 @@ d1 <- anti_join(all_fabio_fires_data %>%
 
 d1$location <- factor(d1$location, levels = c("50cm","25cm","0cm"))
 
+d1 <- rbind(filter(d1,fire_id > 42),
+            filter(d1,structure=="both"))
+
 ```
 
-We limited the data for fires with both standing and piled (litter) to those where litter biomass was 500g (n=5). Our expectation is that the litter biomass increases fuel continuity and therefore affects the behavior of fires with relatively small standing fuel loads, i.e., 250g m^-2^ of standing fuel alone is different from a fire with an additional 500g ^-2^ of piled fuel (litter). In this example, we would expect that the 750g m^-2^ total (standing + piled) to have similar fire intensity to 750g m^-2^ of standing only fuel. 
-
-The data for fires with both piled and standing were from a separate experiment run where fuel moisture was less uniform by design. Greater heterogeneity of fuel moisture and different weather conditions are likely sources of noise seen in the scatter plots.  
+We limited the data for fires with both standing and piled (litter) to those where litter biomass was 500g (n=5). Our expectation is that the litter biomass increases fuel continuity and therefore affects the behavior of fires with relatively small standing fuel loads, i.e., 250g m^-2^ of standing fuel alone is different from a fire with an additional 500g ^-2^ of piled fuel (litter). In this example, we expect that the 750g m^-2^ total (standing + piled) to have similar fire intensity to 750g m^-2^ of standing only fuel. 
 
 ```{r test figures, eval=F}
 
@@ -468,7 +469,6 @@ panel.hist <- function(x, ...)
 }
 ```
 
-
 ```{r prescribed fire data}
 
 prescribed_fire <- read_csv("~/SERDP_Project/data/prescribed_fire_data_summarized.csv")
@@ -493,8 +493,31 @@ pfire_wx_data <- read_csv("~/SERDP_Project/data/prescribed-fire-weather-20170706
 
 ```
 
+We used the statistical language `R` `r citep(citation())` for all our analyses. These were implemented in dynamic rmarkdown documents using `knitr` `r citep(citation("knitr"))` and `rmarkdown` `r citep(citation("rmarkdown"))` packages. OLS models were fit using the `lm` function in the `stats` package included with `R` and the beta regression of the proportion of biomass consumed was fit using the `betareg` package (@Cribari-Neto_2010).
 
-### Fuel moisture
+
+# RESULTS
+```{r figures setup, eval = T}
+      
+      # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
+      # geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
+      # geom_point(aes(color = structure, shape = structure)) +
+      #       
+      # ## Prescribed fire data ##
+      # geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, ymax = avg_max_temp + sd_max_temp, ymin = avg_max_temp - sd_max_temp), width = .1) +
+      # geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
+      # geom_point(data = p_fire_summary, aes(avg_biomass, avg_max_temp, shape = type, color = type), size = 2, fill = "gold") +
+            
+shapes <- scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19))
+
+colors <- scale_color_manual(values = c("piled" = "red", "standing" = "blue", "natural" = "black", "both" = "purple"))
+
+fills <- scale_fill_manual(values = c("both"="purple","piled"="red","standing"="cyan"))
+
+linetypes <- scale_linetype_manual(values=c("piled"="solid","standing"="solid","both"="dashed"))
+
+```
+## Fuel moisture
 
 ```{r fuel_moisture}
 
@@ -505,33 +528,37 @@ pfire_wx_data <- read_csv("~/SERDP_Project/data/prescribed-fire-weather-20170706
 #       skim(pct_fuel_moisture)
 # names(fires_biomass)
 
-ggplot(fires_biomass, aes(structure, pct_fuel_moisture)) +
-      geom_boxplot(aes(color = structure)) +
+# all_fabio_fires_biomass
+ggplot(d1, aes(structure, est_pct_fuel_moisture)) +
+      geom_boxplot(aes(color = structure), outlier.shape = 8) +
+      geom_point(aes(color = structure),size = 1, alpha = .5, show.legend = F) +
       stat_summary(aes(fill = structure), fun.y = "mean", geom = "point", shape = 22, size = 3, show.legend = F) +
-      geom_point(aes(color = structure),size = 1, alpha = 1, show.legend = F) +
-      struc_colors +
-      struc_fill +
+
+      colors + 
+      scale_fill_manual(values = c("both"="purple","piled"="red","standing"="blue")) +
+      shapes +
+      linetypes +
+
       theme_classic() +
       ylab("Estimated fuel moisture (%)") +
       # xlab("Date")
       theme(legend.position = "none") +
       NULL
 
-fires_biomass %>% 
+d1 %>% 
+      filter(!duplicated(fire_id)) %>% 
       group_by(structure) %>% 
       summarise(nobs = n(),
-                min_moisture = min(pct_fuel_moisture),
-                avg_moisture = mean(pct_fuel_moisture),
-                max_moisture = max(pct_fuel_moisture),
-                sd_moisture = sd(pct_fuel_moisture),
+                min_moisture = min(est_pct_fuel_moisture, na.rm = T),
+                avg_moisture = mean(est_pct_fuel_moisture, na.rm = T),
+                max_moisture = max(est_pct_fuel_moisture, na.rm = T),
+                sd_moisture = sd(est_pct_fuel_moisture, na.rm = T),
                 se_moisture = sd_moisture/sqrt(nobs)) %>% 
       knitr::kable(., digits = 2)
       
 ```
 
-Across all fires fuel moisture content ranged from 4.6 to 19.6% (mean = 11.5 ± 0.6% SE). Moisture of fuels used for piled fires ranged from 4.6 to 15.3% (mean = 11.2 ± 0.7% SE) and for standing fires from 6.8 to 19.6% (mean = 11.8 ± 0.9% SE). 
-
-
+Across all experimental fires, fuel moisture content ranged from 4.6 to 19.6% (mean = 11.5 ± 0.6% SE). Moisture of fuels used for piled fires ranged from 4.6 to 15.3% (mean = 11.2 ± 0.7% SE) and for standing fires from 6.8 to 19.6% (mean = 11.8 ± 0.9% SE). Fuel moisture was 
 
 ```{r eval=F}
 
@@ -606,7 +633,7 @@ p_fire_flame_ht <- prescribed_fire %>%
 ```
 
 
-### Linear models of maximum temperature
+## Maximum temperature
 The "maximum temperature" at each height for each fire was calculated by averaging the five highest temperatures for each probe and then averaging these values across the three temperature probes located at each height. For some of the fires with the lowest amount of biomass (250 g) probe temperatures did not deviate from near-ambient (Fig. 3). 
 
 ```{r maxtemp-figure, eval = F}
@@ -809,14 +836,17 @@ my_row_names <- c("Intercept", "Biomass", "Structure: standing")
 coef50cm <-  as.data.frame(summary(max_temp_50cm)$coefficients)
 rownames(coef50cm) <- my_row_names
 coef50cm <- cbind(coef50cm, confint(max_temp_50cm))
-kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
+# kable(coef50cm, digits = 3, caption = "Max temperature at 50cm")
 coef50cm <- mutate(coef50cm, Location = "50cm",
                    Variable = my_row_names) %>% 
       select(Variable, Estimate:Location)
 
 ```
 
-**Estimates from fitted maximum temperature models**
+**Estimates from fitted maximum temperature model**
+
+Maximum temperature is a function of fuel load (biomass), fuel structure, and the interaction of fuel load and fuel structure.
+
 ```{r table all maxtemp coefs}
 
 all_maxtemp_coefs <- rbind(coef50cm, coef25cm, coef0cm)
@@ -839,26 +869,8 @@ kable(adj_rsquare_df, digits = 2)
 
 ```
 
-```{r figures setup, eval = F}
-      struc_colors +
-      struc_fill +
-      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
-      geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
-      geom_point(aes(color = structure, shape = structure)) +
-            
-      ## Prescribed fire data ##
-      geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, ymax = avg_max_temp + sd_max_temp, ymin = avg_max_temp - sd_max_temp), width = .1) +
-      geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
-      geom_point(data = p_fire_summary, aes(avg_biomass, avg_max_temp, shape = type, color = type), size = 2, fill = "gold") +
-            
-      scale_shape_manual(values = c("natural" = 23, "piled" = 2, "standing" = 0, "both" = 19)) +
-      scale_color_manual(values = c("piled" = "red", "standing" = "blue", "natural" = "black", "both" = "purple")) +
-      scale_fill_manual(values = c("both"="purple","piled"="red","standing"="cyan")) +
-      scale_linetype_manual(values=c("piled"="solid","standing"="solid","both"="dashed"))
-```
 
-
-### Time above 100 ºC figure
+## Time above 100 ºC
 
 ```{r compare_secsAbv100 fig, eval=F}
 
@@ -1058,7 +1070,7 @@ kable(abv100_rsquared_df, digits = 2)
 ```
 
 
-### Multi-panel temperature figure
+## Multi-panel temperature figure
 
 ```{r max sabv100 pub figure, fig.height=7.5, fig.width=7.5}
 
@@ -1083,7 +1095,7 @@ cowplot::plot_grid(
 ```
 
 
-### Flame height figure
+## Flame height
 
 ```{r flame ht fig, eval=F}
 
@@ -1214,7 +1226,7 @@ kable(flame_ht_coefs, digits = 2, caption = "Model estimates of flame heights fr
 ```
 
 **Flame height model ANOVA table (Type II F-test)**
-```{r flame ht model Anova type2}
+```{r flame ht model Anova type2, eval = F}
 
 # require(car)
 f_ht_anova <- car::Anova(f_ht_mod3, type = "II")
@@ -1252,7 +1264,7 @@ ggplot(fires_biomass, aes(avg_fuel_ht, avg_flame_ht, color = structure)) +
 ```
 
 
-### Biomass consumed figure
+## Biomass consumed figure
 
 ```{r compare biomass consumption}
 
@@ -1330,7 +1342,7 @@ m1 <- glm(p_consumed ~ total_biomass*structure, data = pcons_model_data, family 
 # library(betareg)
 pct_consumed_breg <- betareg::betareg(p_consumed ~ total_biomass*structure, data = pcons_model_data)
 # filter(pct_consumed_data, structure!="both")
-summary(pct_consumed_breg)
+# summary(pct_consumed_breg)
 # car::Anova(pct_consumed_breg, type = "II")# suggested don't use in this post http://rcompanion.org/handbook/J_02.html, 
 # lmtest::coeftest(pct_consumed_breg)
 # emmeans::joint_tests(pct_consumed_breg)
@@ -1423,7 +1435,7 @@ pct_consumed_fig <- ggplot(sjp.p.consumed$data, aes(x, predicted)) +
 
 
 
-### Rate of spread figure
+## Rate of spread
 Rate of spread was measured by recording the number of seconds it took the fire-line to travel 50 cm and then converted to units of m s^-1^. 
 We did not record rate of spread for fires with "both" fuel structure.
 
@@ -1491,6 +1503,7 @@ ros_model2 <- lm(rate_of_spread_ms ~ total_biomass*structure, data = fires_bioma
 
 ```
 
+**ROS model coefficient estimates**
 ```{r ros model summary}
 
 ros_model_summ <- summary(ros_model1)
@@ -1503,7 +1516,7 @@ ros_model_coef <- ros_model_coef %>%
 
 knitr::kable(ros_model_coef, digits = 3)
 
-ros_model_summ$adj.r.squared
+# ros_model_summ$adj.r.squared
 
 ```
 
@@ -1524,7 +1537,7 @@ knitr::kable(ros_anova, digits = 2)
 
 ```
 
-```{r flame ros consumed fig, fig.height=8, fig.width=4}
+```{r flame ros consumed fig, fig.height=7.5, fig.width=4}
 
 cowplot::plot_grid(
       flame_height_fig +
@@ -1535,7 +1548,7 @@ cowplot::plot_grid(
       pct_consumed_fig +
             theme(legend.position = "none"),
       ncol = 1, labels = "auto")
-ggsave("figures/ros-flame-consumed.png", height = 8, width = 4)
+ggsave("figures/ros-flame-consumed.png", height = 7.5, width = 4)
 
 ```
 
@@ -1575,19 +1588,9 @@ knitr::kable(flame_ros_consumed_r2, digits = 2)
 ```
 
 
-We used the statistical language `R` `r citep(citation())` for all our analyses. These were implemented in dynamic rmarkdown documents using `knitr` `r citep(citation("knitr"))` and `rmarkdown` `r citep(citation("rmarkdown"))` packages. All the multilevel models were fitted with `lme4` `r citep(citation("lme4"))`. 
-
-
-# RESULTS
-
-
-
-
-
 # DISCUSSION
 
-Discuss.
-
+The data for fires with both piled and standing were from a separate experiment run where fuel moisture was less uniform by design. Greater heterogeneity of fuel moisture and different weather conditions are likely sources of noise seen in the scatter plots.  
 
 
 # CONCLUSIONS
@@ -1600,8 +1603,10 @@ Discuss.
 
 # REFERENCES
 
-```{r write_citations, cache=FALSE, include=FALSE}
+```{r write_citations, cache=FALSE, include=FALSE, eval=F}
+
 write.bibtex(file="knitcitations.bib")
+
 ```
 
 <div id = "refs"></div>
