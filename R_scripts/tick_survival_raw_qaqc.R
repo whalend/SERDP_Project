@@ -9,7 +9,7 @@ library(stringi)
 
 #+ load tick survival data ####
 
-tick_survival <- read_csv("data/raw_data/tick_survival_assay/TickSurvivalAssay_dataentry.csv")
+tick_survival <- read_csv("data/raw_data/tick_survival_assay/TickSurvival_actual.csv")
 
 summary(tick_survival)
 
@@ -23,6 +23,8 @@ tick_survival$Date <- as.Date.character(as.integer(tick_survival$Date), format =
 
 tick_survival <- tick_survival %>%
   mutate(days = julian(Date, origin = as.Date("2018-06-21")))
+
+range(tick_survival$days)
 
 #### Merging all adults to one ####
 
@@ -89,13 +91,14 @@ nymph_survival_all_time <- ggplot(data = tick_survival) +
               se = T, alpha = .2) +
   invasion_color +
   invasion_fill +
-  theme_classic() +
+  def_theme +
+  #theme_classic() +
   ggtitle(label = "Nymphs") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  xlab("Days") +
+  xlab(" ") +
   ylab("Survival") +
-  theme(legend.position = "none") +
-  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  scale_x_continuous(limits = c(0, 159 )) +
   #theme(axis.title.x = element_blank()) +
   NULL
 
@@ -108,12 +111,13 @@ f_adult_survival_all_time <-ggplot(data = tick_survival) +
   def_theme +
   ggtitle(label = "Female Adults") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(legend.position = "none") +
+  guides(fill=FALSE, color=FALSE) +
   theme(axis.title.y = element_blank()) +
+  scale_x_continuous(limits = c(0, 159 )) +
   xlab("Days") +
   NULL
 
-n_adult_survival_all_time <-ggplot(data = tick_survival) +
+m_adult_survival_all_time <-ggplot(data = tick_survival) +
   stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, adult_M_survival, color = Invaded),
@@ -123,14 +127,15 @@ n_adult_survival_all_time <-ggplot(data = tick_survival) +
   def_theme +
   ggtitle(label = "Male Adults") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(legend.position = "none") +
-  xlab("Days") +
+  guides(fill=FALSE, color=FALSE) +
+  scale_x_continuous(limits = c(0, 159 )) +
+  xlab(" ") +
   #theme(axis.title.x = element_blank()) +
   theme(axis.title.y = element_blank()) +
   NULL
 
 cowplot::plot_grid(nymph_survival_all_time,
-                   f_adult_survival_all_time, n_adult_survival_all_time, ncol = 3)
+                   f_adult_survival_all_time, m_adult_survival_all_time, ncol = 3)
 
 ## Begin break up by 40 day increments ####
 
@@ -581,6 +586,70 @@ ggplot(temp_rh_data_grouped, aes(avg_max_tempC, avg_min_rh)) +
 #   invasion_fill +
 #   def_theme +
 #   NULL
+
+#### figure for max temps all time all days ####
+
+max_temp_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_max_tempC, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) +
+  geom_hline(yintercept = 35, linetype = "dashed") +
+  geom_vline(xintercept = (11), linetype = "dashed") +
+  geom_vline(xintercept = (15), linetype = "dashed") +
+  geom_vline(xintercept = (25), linetype = "dashed") +
+  geom_vline(xintercept = (32), linetype = "dashed") +
+  geom_vline(xintercept = (39), linetype = "dashed") +
+  geom_vline(xintercept = (55), linetype = "dashed") +
+  geom_vline(xintercept = (67), linetype = "dashed") +
+  geom_vline(xintercept = (77), linetype = "dashed") +
+  geom_vline(xintercept = (89), linetype = "dashed") +
+  geom_vline(xintercept = (98), linetype = "dashed") +
+  geom_vline(xintercept = (110), linetype = "dashed") +
+  geom_point(data = temp_rh_data_grouped, aes(y = avg_max_tempC, color = status), shape = 25) +
+  invasion_color +
+  invasion_fill +
+  ylab("Avg daily max temp C") +
+  xlab(" ") +
+  scale_x_continuous(limits = c(0, 159 )) +
+  guides(fill=FALSE, color=FALSE) +
+  def_theme +
+  NULL
+
+#### figure for min rhs all time all days ####
+
+min_rh_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_min_rh, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) +
+  geom_hline(yintercept = 80, linetype = "dashed") +
+  geom_vline(xintercept = (11), linetype = "dashed") +
+  geom_vline(xintercept = (15), linetype = "dashed") +
+  geom_vline(xintercept = (25), linetype = "dashed") +
+  geom_vline(xintercept = (32), linetype = "dashed") +
+  geom_vline(xintercept = (39), linetype = "dashed") +
+  geom_vline(xintercept = (55), linetype = "dashed") +
+  geom_vline(xintercept = (67), linetype = "dashed") +
+  geom_vline(xintercept = (77), linetype = "dashed") +
+  geom_vline(xintercept = (89), linetype = "dashed") +
+  geom_vline(xintercept = (98), linetype = "dashed") +
+  geom_vline(xintercept = (110), linetype = "dashed") +
+  geom_point(data = temp_rh_data_grouped, aes(y = avg_min_rh, color = status), shape = 25) +
+  invasion_color +
+  invasion_fill +
+  ylab("Avg daily min RH") +
+  xlab("Days") +
+  scale_x_continuous(limits = c(0, 159 )) +
+  guides(fill=FALSE, color=FALSE) +
+  def_theme +
+  NULL
+
+cowplot::plot_grid(nymph_survival_all_time,
+                   max_temp_all_time, min_rh_all_time, ncol = 1)
+cowplot::plot_grid(m_adult_survival_all_time,
+                   max_temp_all_time, min_rh_all_time, ncol = 1)
+cowplot::plot_grid(f_adult_survival_all_time,
+                   max_temp_all_time, min_rh_all_time, ncol = 1)
+
+
+##################### sep by days
 
 temp_rh_survival1 <- temp_rh_data_grouped %>%
   filter(between(days, 1, 40))
