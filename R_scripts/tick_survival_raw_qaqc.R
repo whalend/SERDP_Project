@@ -34,8 +34,7 @@ tick_survival <- tick_survival %>%
          total_adult_survival = total_adults_alive/(total_adults_alive + total_adults_dead))
 
 tick_survival <- tick_survival %>%
-  mutate(Invaded = ifelse(Invaded == "Yes", "invaded", "native"))
-
+  mutate(Invaded = ifelse(Invaded == "Yes", "invaded", "native")) 
 
 #View(tick_survival)
 
@@ -87,7 +86,8 @@ nymph_survival_all_time <- ggplot(data = tick_survival) +
   stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, nymph_survival, color = Invaded, fill = Invaded),
-              se = T, alpha = .2) +
+              se = T, alpha = .2, geom = "path") +
+  #stat_smooth
   invasion_color +
   invasion_fill +
   def_theme +
@@ -131,7 +131,7 @@ f_adult_survival_all_time <-ggplot(data = tick_survival) +
   scale_y_continuous(limits = c(0, 1 )) +
   scale_x_continuous(limits = c(0, 159 )) +
   ylab("Survival") +
-  xlab("Days") +
+  xlab(" ") +
   geom_vline(xintercept = (11), linetype = "dashed") +
   geom_vline(xintercept = (15), linetype = "dashed") +
   geom_vline(xintercept = (25), linetype = "dashed") +
@@ -184,7 +184,7 @@ m_adult_survival_all_time <-ggplot(data = tick_survival) +
 tick_survival_all_time <- cowplot::plot_grid(nymph_survival_all_time,
                    f_adult_survival_all_time, m_adult_survival_all_time, ncol = 3)
 
-ggsave(plot = tick_survival_all_time, "figures/tick-survival-assay/tick_survival_all_time.png")
+#ggsave(plot = tick_survival_all_time, "figures/tick-survival-assay/tick_survival_all_time.png")
 
 ## Begin break up by 40 day increments ####
 
@@ -402,6 +402,10 @@ names(temp_rh_data)
 
 temp_rh_data <- temp_rh_data %>%
   mutate(status = ifelse(logger_id <= 12, "invaded", "native"))
+
+temp_rh_data$logger_id <- as.integer(temp_rh_data$logger_id)
+
+  
 
 #### Added invaded/native status and days since launch ####
 
@@ -706,9 +710,9 @@ m_adult_temp_rh_all_time <- cowplot::plot_grid(m_adult_survival_all_time,
 f_adult_temp_rh_all_time <- cowplot::plot_grid(f_adult_survival_all_time,
                    max_temp_all_time, min_rh_all_time, ncol = 1)
 
-ggsave(plot = nymphs_temp_rh_all_time, "figures/tick-survival-assay/nymphs_temp_rh_all_time.png")
-ggsave(plot = m_adult_temp_rh_all_time, "figures/tick-survival-assay/m_adult_temp_rh_all_time.png")
-ggsave(plot = f_adult_temp_rh_all_time, "figures/tick-survival-assay/f_adult_temp_rh_all_time.png")
+ggsave(plot = nymphs_temp_rh_all_time, height = 10, width = 7, "figures/tick-survival-assay/nymphs_temp_rh_all_time.png")
+ggsave(plot = m_adult_temp_rh_all_time, height = 10, width = 7,"figures/tick-survival-assay/m_adult_temp_rh_all_time.png")
+ggsave(plot = f_adult_temp_rh_all_time, height = 10, width = 7, "figures/tick-survival-assay/f_adult_temp_rh_all_time.png")
 
 ##################### sep by days
 
@@ -885,8 +889,8 @@ max_temp_min_rh_first_check <- cowplot::plot_grid(surv_first_check_rh, surv_firs
 ## Begin processing for time above/below data ####
 
 rh_below_80 <- temp_rh_data %>%
-  filter(RH != 1) %>%
-  filter(RH <= 80) %>%
+  filter(between(RH, 20, 80)) %>%
+  #filter(RH <= 80) %>%
   group_by(status, logger_id) %>%
   summarise(obs = n(),
             hrs = obs/12,
@@ -895,8 +899,8 @@ rh_below_80 <- temp_rh_data %>%
 #View(rh_below_80)
 
 rh_below_80_avg <- temp_rh_data %>%
-  filter(RH != 1) %>%
-  filter(RH <= 80) %>%
+  filter(between(RH, 20, 80)) %>%
+  #filter(RH <= 80) %>%
   group_by(status, logger_id) %>%
   summarise(obs = n(),
             hrs = obs/12,
@@ -964,6 +968,8 @@ avg_days_rh_boxplot <- ggplot(rh_below_80, aes(status, days, color = status)) +
   theme(legend.position = "none") +
   NULL
 
+#View(rh_below_80)
+
 #ggsave(plot = avg_days_rh_boxplot, "figures/tick-survival-assay/avg_days_rh_boxplot.png")
 
 avg_days_temp_boxplot <- ggplot(temp_above_35, aes(status, days, color = status)) +
@@ -989,3 +995,151 @@ nymph_surv_max_temp <- cowplot::plot_grid(nymphs_intervals, avg_max_temps_days_i
 adult_F_surv_max_temp <- cowplot::plot_grid(adult_F_intervals, avg_max_temps_days_intervals, ncol = 1)
 adult_M_surv_max_temp <- cowplot::plot_grid(adult_M_intervals, avg_max_temps_days_intervals, ncol = 1)
 
+#### analysis of bag specific survial w/ temp/rh ####
+
+temp_rh_data_bag_specific <- temp_rh_data %>%
+  filter(RH >= 20, date != "2018-06-21") %>%
+  group_by(date, status, logger_id, days) %>%
+  summarise(max_tempC = max(tempC),
+            min_rh = min(RH)
+  ) %>% 
+   ungroup(.) %>%
+   filter(days <=11) %>%  
+   group_by(logger_id, status) %>%
+   summarise(obs = n(),
+             avg_max_tempC = mean(max_tempC),
+             max_tempC_sd = sd(max_tempC),
+             max_temp_se = max_tempC_sd/sqrt(obs),
+             avg_min_rh = mean(min_rh),
+             min_rh_sd = sd(min_rh),
+             min_rh_se = min_rh_sd/sqrt(obs)
+  )
+
+#View(temp_rh_data_bag_specific)
+
+survival_for_temp_rh_11_days <- tick_survival %>% 
+  filter(days == "11") %>% 
+  select(logger_id, Invaded, nymph_survival, adult_F_survival, adult_M_survival)
+
+survival_temp_rh <-  left_join(temp_rh_data_bag_specific, survival_for_temp_rh_11_days,
+                          by = c("logger_id", "status"="Invaded"))
+
+View(survival_temp_rh)
+range(survival_temp_rh$avg_max_tempC)
+#### 11 days first check figures for TEMP ####
+
+nymph_temp_11_days <- ggplot(survival_temp_rh, aes(avg_max_tempC, nymph_survival,
+                                                      color = status)) +
+  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) +
+  geom_errorbarh(aes(xmin = avg_max_tempC - max_temp_se, 
+                     xmax = avg_max_tempC + max_temp_se)) +
+  invasion_color +
+  invasion_fill +
+  ylab("Survival") +
+  xlab(" ") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Nymphs")  +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(limits = c(0, 1 )) +
+  scale_x_continuous(limits = c(30, 43)) +
+  NULL
+
+adult_F_temp_11_days <- ggplot(survival_temp_rh, aes(avg_max_tempC, adult_F_survival,
+                                                      color = status)) +
+  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) +
+  #geom_errorbarh(aes(xmin = avg_max_tempC - max_temp_se, 
+                    #xmax = avg_max_tempC + max_temp_se)) + 
+  invasion_color +
+  invasion_fill +
+  ylab(" ") +
+  xlab("Avg max temp C ") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Adult Females") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(limits = c(0, 1 )) +
+  scale_x_continuous(limits = c(30, 43)) +
+  NULL
+
+adult_M_temp_11_days <- ggplot(survival_temp_rh, aes(avg_max_tempC, adult_M_survival,
+                                                      color = status)) +
+  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) +
+  #geom_errorbarh(aes(xmin = avg_max_tempC - max_temp_se, 
+                     #xmax = avg_max_tempC + max_temp_se)) + 
+  invasion_color +
+  invasion_fill +
+  ylab(" ") +
+  xlab(" ") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Adult Males") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(limits = c(0, 1 )) +
+  scale_x_continuous(limits = c(30, 43)) +
+  NULL
+
+survival_temp_first_check <- cowplot::plot_grid(nymph_temp_11_days, 
+                                                adult_F_temp_11_days, 
+                                                adult_M_temp_11_days, ncol = 3)
+
+ggsave(plot = survival_temp_first_check, height = 5, width = 10, "figures/tick-survival-assay/survival_temp_first_check.png")
+#### 11 days survival for RH ####
+
+nymph_rh_11_days <- ggplot(survival_temp_rh, aes(avg_min_rh, nymph_survival,
+                                                      color = status)) +
+  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) +
+  geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se, 
+                     xmax = avg_min_rh + min_rh_se)) +
+  invasion_color +
+  invasion_fill +
+  ylab("Survival") +
+  xlab(" ") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Nymphs")  +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(limits = c(0, 1 )) +
+  NULL
+
+adult_F_rh_11_days <- ggplot(survival_temp_rh, aes(avg_min_rh, adult_F_survival,
+                                                 color = status)) +
+  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) +
+  geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se, 
+                     xmax = avg_min_rh + min_rh_se)) +
+  invasion_color +
+  invasion_fill +
+  ylab(" ") +
+  xlab("Avg min RH") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Female Adults")  +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(limits = c(0, 1 )) +
+  NULL
+
+adult_M_rh_11_days <- ggplot(survival_temp_rh, aes(avg_min_rh, adult_M_survival,
+                                                 color = status)) +
+  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(aes(color = status)) +
+  geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se, 
+                     xmax = avg_min_rh + min_rh_se)) +
+  invasion_color +
+  invasion_fill +
+  ylab(" ") +
+  xlab(" ") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Male Adults")  +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(limits = c(0, 1 )) +
+  NULL
+
+survival_rh_first_check <- cowplot::plot_grid(nymph_rh_11_days, adult_F_rh_11_days, adult_M_rh_11_days, ncol = 3)
+
+ggsave(plot = survival_rh_first_check, height = 5, width = 10, "figures/tick-survival-assay/survival_rh_first_check.png")
