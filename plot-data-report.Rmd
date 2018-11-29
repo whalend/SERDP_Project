@@ -1839,6 +1839,7 @@ summary(tick_host_model)
 
 ```
 
+There isn't any relationship. During discussion at the PI meeting in August 2018 Brian suggested that it's possible that the hosts are more homogeneously distributed across the landscape because it is generally similar. In contrast, the ticks may be responding to smaller scale heterogeneity. 
 
 # Host abundance
 Host abundance tended to be slightly lower with increasing canopy cover and time since fire. The trend isn't significant
@@ -1913,6 +1914,10 @@ host_trees_mod <- lm(log1p(total_clusters1m) ~ total_dbh, data = tick_data_sum)
 summary(host_trees_mod)
 
 ```
+
+A question asked at the August 2018 PI meeting was whether there was an effect of installation for host data. 
+
+**This still needs to be addressed** 
 
 # Initial/exploratory linear (OLS) models
 ```{r linear models ticks, eval=F}
