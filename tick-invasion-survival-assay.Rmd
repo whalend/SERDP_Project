@@ -1,5 +1,6 @@
 ---
 title: "Tick Survival Assay - Invaded vs. Uninvaded"
+author: "Brian F. Allan, Steven Cabrera, Whalen W. Dillon, S. Luke Flory, Allison Gardner, Drew T. Hiatt"
 output:
   word_document: default
   pdf_document: default
@@ -52,7 +53,7 @@ A total of 24 plots (1 m x 1 m) were established on the property equally spaced 
 
 ## Tick Survival
 
-The mesh bags containing *Amblyomma americanum* ticks within the wire cages complete with tempature/relative humidity loggers were launched at all plots on 21 June 2018. Bags were examined approximately every 10-14 days to determine the number of nymphs and adults surviving. At each visit, bags were removed from the cages but not opened. The survival of each individual tick was determined by assessing their reponse to stimulation. Ticks were blown on to release CO2 to see any natural tick questing responses to an environmental stimulus. Ticks were also pressed down against a surface (pinching by fingers or clipboards) in attempt to see any responses. Any signs of movement qualified the tick as living. If there was no reponse by the tick, it was marked as dead and continued to be monitored in subsequent visits to assure the previous mortality designation was correct. After each bag was processed, they were placed vertically back into the cages attached to the flag to remain upright. Visits continued to the site until XXXX date when all ticks succumbed to desiccation.
+The mesh bags containing *Amblyomma americanum* ticks within the wire cages complete with tempature/relative humidity loggers were launched at all plots on 21 June 2018. Bags were examined approximately every 10-14 days and after major weather events (dramatic changes in temperature or rainfall) to determine the number of nymphs and adults surviving. At each visit, bags were removed from the cages but not opened. The survival of each individual tick was determined by assessing their reponse to stimulation. Ticks were blown on to release CO_2_ to see any natural tick questing responses to an environmental stimulus. Ticks were also pressed down against a surface (pinching by fingers or clipboards) in attempt to see any responses. Any signs of movement qualified the tick as living. If there was no reponse by the tick, it was marked as dead and continued to be monitored in subsequent visits to assure the previous mortality designation was correct. After each bag was processed, they were placed vertically back into the cages attached to the flag to remain upright. Visits continued to the site until XXXX date when all ticks succumbed to desiccation.
 
 ## Tick Survial Analysis
 
