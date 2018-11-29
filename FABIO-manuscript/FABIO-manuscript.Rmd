@@ -17,7 +17,7 @@ affiliation:
 #   affilnum: 3
 output: 
   html_document: 
-    self_contained: yes
+    self_contained: no
   word_document: null
   pdf_document:
     fig_caption: yes
@@ -123,6 +123,8 @@ Using the exotic invasive cogongrass we illustrate how changing the fuel structu
 
 It can be deployed in the field or in a more controlled "laboratory" setting. 
 
+We qualitatively compare the fire intensity and behavior measurements from these experimental fires, where the fuel load was entirely piled or entirely standing, to measurements made for five experimental fires with a combination of piled and standing fuels, and to measurements made during a prescribed fire in a longleaf pine ecosystem.
+
 
 # METHODS
 
@@ -173,21 +175,28 @@ We harvested ~50 kg of standing cogongrass from an invasion at the Biven's Arm R
 5.	Statistical Analysis
 
 
-## Fine Aboveground Biomass Incineration Organizer (FABIO)
+## Experimental apparatus: Fine Aboveground Biomass Incineration Organizer (FABIO)
+The fine aboveground biomass incineration organizer (FABIO) is a freestanding device for outdoor use to efficiently manipulate fuel structure and assess the effects on fire intensity (Figure 2). These outdoor small-scale (1m^2^) experimental fires allow for repeated measurements of fire intensity across multiple fuel loads without the onerous task of setting up all of the experimental plots prior to a large-scale prescribed that is subject to weather conditions and sufficient personnel. The FABIO is equipped with nine type K braided steel insulated thermocouples (TP875 Extech Instruments, Nashua, NH, USA) that were 100 cm long with a diameter of XX mm at the point of measurement. These thermocouples were robust to exposure to multiple fires and could therefore be used continuously throughout the day. Thermocouples were connected to HOBO J,K,S,T thermocouple loggers (Model U12, Onset Computer Corporation, Bourne, MA, USA) capable of recording temperatures between 0 and 1250 ºC every second. The loggers were housed in Pelican cases (1010 Micro Case, Torrance, CA, USA) with foam inserts (1012 Pick N Pluck). A small hole drilled in the lid of each case to pass through the thermocouple wire. In order to more accurately capture temperatures throughout the fire profile, three thermocouples are placed at each of three heights (ground level, 25cm, and 50cm) with equidistant horizontal spacing. Two measurements of flame heights are quantified using passive flame height sensors. The passive flame height sensors are twisted cotton string (XXX) soaked in flame retardant (Phos-Chek LC-95, ICL Performance Products LC, Ontario, CA, USA) and dried for at least 24 hours. The strings are tied to a horizontal piece of steel conduit so that they hang vertically and we used two for each fire (see Figure 2). The flame height sensors we used were capable of measuring heights up to 275cm and allow for rapid replacement between experimental fires. Passive flame height sensors like these have been used previously for in situ fire behavior experiment and provide a reliable measurement for quantifying flame heights that is free from human biases (Flory et al. 2015; Kolaks et al. 2004; Ryan 1981).
+
+
 ![Figure 1.](figures/FABIOdraft.jpg)
 
 ## Data collection and analysis
 
-Our experimental design was to conduct six burns, three using piled fuel and three using standing fuel, for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. We ultimately conducted 32 fires in this experiment. One additional fire was done in the 1000g category due to mislabeling during biomass sorting and weighing.
+### Experimental design
+We burned three fires using piled fuel and three fires using standing fuel for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. We ultimately burned 32 fires in this experiment, with one additional fire in the 1000g category due to mislabeling during biomass sorting and weighing. We put the fire intensity and behavior measurements from these experimental fires in the context of measurements made during a prescribed fire in a longleaf pine ecosystem, and measurements made for five experimental fires using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a longleaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass *Aristida stricta* (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~250 hectare management unit.
 
-For comparison points to the measurements from these experimental fires we also show data collected during a prescribed fire and data from a small number of experimental burns using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a long-leaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass *Aristida stricta* (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~250 hectare management unit.
+### Temperature and weather measurement
+We recorded temperatures every second for all fires. 
 
-*Temperature recording*
-For all fires we used HOBO J,K,S,T thermocouple loggers (Model U12, Onset Computer Corporation, Bourne MA) with type-K thermoucouples resulting in a measurement range of 0 to 1250 ºC. In the experimental fires we used wire probes insulated in braided steel that were 91.4 cm long with a diamter of XX mm. These probes were robust to exposure to multiple fires and could be used continuously. During the prescribed fire the thermocouple wire was fiberglass insulated and any length of wire exposed to flames had to be removed. Although the braided steel insulated probes were more expensive they were ultimately more economical because they didn't degrade when exposed to flames.
+For the 32 experimental fires where the fuel loads were either piled or standing we used the braided steel insulated thermocouples (TP875 Extech Instruments, Nashua, NH, USA) that were 100 cm long with a diameter of XX mm at the point of measurement.  
 
-Weather data was recorded at a two second interval during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA) mounted on a tripod 1 m above the ground. Data points were matched to the time of each fire and average values were calculated for air temperature, relative humidity, and wind speed.
+During the prescribed fire we used braided glass insulated wire probes (TC6-K, Onset Computer Corporation, Bourne, MA, USA) and wire was only good for a single exposure to direct flame. The bead wire probes were more expensive, but ultimately more economical because they didn't degrade when exposed to flames. Weather data was recorded every two seconds during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA, USA) mounted on a tripod 1m above the ground. Data points were matched to the time of each fire and average values were calculated for air temperature, relative humidity, and wind speed.
 
-We used ordinary least squares linear regression to model the response variables of average maximum temperature, time above 100 ºC at each probe height, the average flame height, and the rate of spread. We used beta regression to model the proportion of biomass consumed. Fuel load (mass) and fuel structure (piled vs. standing) were used as explanatory variables in each model, and fuel load was entered as a continuous variable. We tested the main effects and interaction of fuel load and fuel structure along with weather covariates (e.g. air temperature, wind speed, relative humidity). Statistically insignificant weather variables were excluded from final models. Because our main goal was to assess the effect of fuel structure (piled vs. standing) on measures of fire intensity and behavior we at minimum retained fuel structure and biomass as main effects in all models.
+
+
+### Statistical analyses
+We used ordinary least squares linear regressions to model the response variables of average maximum temperature, time above 100 ºC at each probe height, the average flame height, and the rate of spread. We used beta regression to model the proportion of biomass consumed. Fuel load (mass) and fuel structure (piled vs. standing) were used as explanatory variables in each model, and fuel load was entered as a continuous variable. We tested the main effects and interaction of fuel load and fuel structure along with weather covariates (e.g. air temperature, wind speed, relative humidity). Statistically insignificant weather variables were excluded from final models. Because our main goal was to assess the effect of fuel structure (piled vs. standing) on measures of fire intensity and behavior we at minimum retained fuel structure and biomass as main effects in all models.
 
 Regression models had the following general form:
 
@@ -717,7 +726,7 @@ fabio_fires_summary$structure <- stringr::str_to_title(fabio_fires_summary$struc
 ```{r maxtemp pub fig}
 maxtemp_fig_labels <- data.frame(
       location = c("50cm","25cm","0cm"), 
-      pid = c("a","c","e"), 
+      pid = c("d","e","f"), 
       total_biomass = c(200,200,200),
       avg2_max_temp = c(rep(950, 3))
       )
@@ -921,7 +930,7 @@ kable(adj_rsquare_df, digits = 2)
 
 ```{r secs abv100 pub fig}
 
-sabv_fig_labels <- data.frame(location = c("50cm","25cm","0cm"), pid = c("b","d","f"), total_biomass = c(200,200,200), s_abv100 = c(150,200,775))
+sabv_fig_labels <- data.frame(location = c("50cm","25cm","0cm"), pid = c("a","b","c"), total_biomass = c(200,200,200), s_abv100 = c(162,200,775))
 
 s_abv100_fig <- ggplot(d1, aes(total_biomass, s_abv100)) +
       # geom_line(aes(color = source, linetype = location)) +
@@ -1075,17 +1084,14 @@ kable(abv100_rsquared_df, digits = 2)
 ```{r max sabv100 pub figure, fig.height=7.5, fig.width=7.5}
 
 cowplot::plot_grid(
-      max_temp_fig +
-            # xlab("") +
-            theme(legend.position = "none",
-                  strip.text = element_blank(),
-                  ),
-            
       s_abv100_fig +
             theme(
-                  # strip.text = element_blank(),
+                  strip.text = element_blank(),
                   legend.position = c(.25,.25)
                   ),
+      max_temp_fig +
+            # xlab("") +
+            theme(legend.position = "none"),
       nrow = 1
       # labels = "auto"
       )
