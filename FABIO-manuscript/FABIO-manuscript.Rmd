@@ -1092,7 +1092,7 @@ cowplot::plot_grid(
       max_temp_fig +
             # xlab("") +
             theme(legend.position = "none"),
-      nrow = 1
+      nrow = 1, rel_widths = c(1,1.05)
       # labels = "auto"
       )
 
@@ -1543,7 +1543,7 @@ knitr::kable(ros_anova, digits = 2)
 
 ```
 
-```{r flame ros consumed fig, fig.height=7.5, fig.width=4}
+```{r flame ros consumed pub figure, fig.height=7.5, fig.width=4}
 
 cowplot::plot_grid(
       flame_height_fig +
@@ -1554,7 +1554,7 @@ cowplot::plot_grid(
       pct_consumed_fig +
             theme(legend.position = "none"),
       ncol = 1, labels = "auto")
-ggsave("figures/ros-flame-consumed.png", height = 7.5, width = 4)
+# ggsave("figures/ros-flame-consumed.png", height = 7.5, width = 4)
 
 ```
 
