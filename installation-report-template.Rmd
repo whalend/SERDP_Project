@@ -14,10 +14,11 @@ output:
     toc: yes
   pdf_document:
     toc: yes
+  always_allow_html: yes
 subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-borne
   diseases<h1>
 params:
-  inst_name: Camp Blanding
+  inst_name: Fort Jackson
 ---
 
 
@@ -42,6 +43,8 @@ knitr::opts_chunk$set(warning = F)
 knitr::opts_chunk$set(message = F)
 knitr::opts_chunk$set(dpi = 150)
 
+library(knitr)
+library(kableExtra)
 library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi); library(stringr)
 library(tidyr)
@@ -438,7 +441,7 @@ A total of `r n_plots` plot(s) were established and sampled at `r paste(inst_nam
 ```{r installation plots visited figure, fig.width=7.5}
 
 plot_nums <- plot_visit_data %>%
-      group_by(installation_full_name, imcy_inv, years_since_fire, plot_id) %>% 
+      group_by(installation_full_name, imcy_inv, years_since_fire) %>% 
       summarise(plot_ct = n_distinct(plot_id)) %>% 
       mutate(inst_flag = ifelse(installation_full_name==inst_name,T,F))
 tot_plots <- plot_visit_data %>%
@@ -526,10 +529,11 @@ n_raw_ticks_inst_2018 <- filter(tick_data, installation_full_name==inst_name & v
 #  select(count, tick_count, life_stage) %>% 
 #  summary(.)
 
+#`r n_raw_ticks_inst_2017` ### for below  next to 2018
 
 ```
 
-A total of `r n_total_raw_ticks_all` ticks were collected across all installations. At `r paste(inst_name)` in `r n_raw_ticks_inst_2017` ticks were collected and in `r n_raw_ticks_inst_2018` ticks were collected. Note the different tick abundance scales on each panel.
+A total of `r n_total_raw_ticks_all` ticks were collected across all installations. At `r paste(inst_name)` in  ticks were collected and in `r n_raw_ticks_inst_2018` ticks were collected. Note the different tick abundance scales on each panel.
 
 ```{r raw tick numbers by installation figure}
 
@@ -1091,5 +1095,80 @@ Comparison of adult and nymph life stages of the lone star tick in native and in
 
 
 ```{r import cogon-fire-data}
+
+```
+# Supplementary Information - Data Dictionary
+
+Below is dictionary for all data parameters used in the attached raw data files for `r paste(inst_name)`.
+
+## Common among all data files
+
+```{r common parameters across all data, echo=FALSE}
+
+
+  
+
+```
+
+## Plot visit and invasion status
+
+```{r plot visit & invasion status, echo=FALSE}
+
+
+
+```
+
+## Vegetation - Plant species
+
+```{r vegatation plant species of 1m quadrats, echo=FALSE}
+
+
+
+```
+
+## Vegetation - quadrat measurements, biomass, and canopy cover 
+
+```{r vegetation data in 1m quadrats, biomass, and canopy cover, echo=FALSE}
+
+
+
+```
+
+## Trees - raw
+
+```{r raw tree data, echo=FALSE}
+
+
+
+```
+
+## Trees - summary
+
+```{r summarized tree data to plot level, echo=FALSE}
+
+
+
+```
+
+## Woody subplot
+
+```{r woody subplot, echo=FALSE}
+
+
+
+```
+
+## Ticks
+
+```{r ticks, echo=FALSE}
+
+
+
+```
+
+## Dung
+
+```{r dung, echo=FALSE}
+
 
 ```

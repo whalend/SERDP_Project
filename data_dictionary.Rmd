@@ -2,11 +2,13 @@
 title: "SERDP Data Dictionary"
 author: "Steven Cabrera"
 date: "October 2, 2018"
-output: html_document
+output:
+  html_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = F)
 library(knitr)
 library(kableExtra)
 ```
@@ -28,6 +30,7 @@ kable(common_fields) %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T)
   
+kable
 
 ```
 
