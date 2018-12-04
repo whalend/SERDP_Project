@@ -58,8 +58,8 @@ def_theme <- theme(legend.title = element_blank(),
             strip.background = element_blank(),
             panel.grid = element_blank()
             )
-invasion_color <- scale_color_viridis_d()
-invasion_fill <- scale_fill_viridis_d()
+invasion_color <- scale_color_manual(values = c("dodgerblue","red3"))
+invasion_fill <- scale_fill_manual(values = c("dodgerblue","red3"))
 installation_color <- "blue"
 
 ```
@@ -445,7 +445,7 @@ A total of `r n_plots` plot(s) were established and sampled at `r paste(inst_nam
 ```{r installation plots visited figure, fig.width=7.5}
 
 plot_nums <- plot_visit_data %>%
-      group_by(installation_full_name, imcy_inv, years_since_fire, plot_id) %>% 
+      group_by(installation_full_name, imcy_inv, years_since_fire) %>% 
       summarise(plot_ct = n_distinct(plot_id)) %>% 
       mutate(inst_flag = ifelse(installation_full_name==inst_name,T,F))
 tot_plots <- plot_visit_data %>%
@@ -460,7 +460,7 @@ tot_plots %>%
       ggplot(aes(installation_full_name, plot_ct, label=plot_ct)) +
       geom_col(aes(color = inst_flag), size = 4, show.legend = F) +
       geom_col(aes(fill = imcy_inv)) +
-      scale_color_manual(values = c("TRUE" = "blue", "FALSE" = NA)) +
+      scale_color_manual(values = c("TRUE" = "gold", "FALSE" = NA)) +
       invasion_fill +
       ylab("Number of sample plots") +
       xlab("") +
@@ -471,6 +471,8 @@ tot_plots %>%
       NULL
 
 ```
+
+![](documents/FtJackson/FtJacksonBaseReportMap.png)
 
 \newpage
 
@@ -493,8 +495,6 @@ plot_visit_data %>%
       NULL
 
 ```
-
-\newpage
 
 ## Range of fire history sampled `r paste("at ", inst_name)`
 
@@ -571,6 +571,8 @@ tick_data %>%
 
 ```
 
+\newpage
+
 ## Tick abundance and fire history
 
 The figure below shows the general relationship between the abundance of adult and nymph life-stage ticks (observations of larvae were counted as "1") across all the installations. The points contributed by `r paste(inst_name)` are highlighted in blue. The y-axis (tick abundance) is natural-log transformed, i.e., a value of 2 corresponds to exp(2) = `r round(exp(2))`. The total number of ticks collected at `r paste(inst_name)` was `r total_ticks`. 
@@ -629,6 +631,8 @@ inst_data <- tick_data_plot_summary %>%
 
 ```
 
+\newpage
+
 ## Tick abundance and percent litter cover
 
 General trend tick abundance increases with percent litter cover.
@@ -653,6 +657,7 @@ inst_data <- tick_data_sum %>%
 )
 ```
 
+\newpage
 
 ## Tick abundance and average dry litter biomass
 
@@ -677,6 +682,8 @@ inst_data <- tick_data_sum %>%
       def_theme
 )
 ```
+
+\newpage
 
 ## Tick abundance and litter moisture
 
@@ -703,6 +710,8 @@ inst_data <- tick_data_sum %>%
 )
 ```
 
+\newpage
+
 ## Tick abundance and canopy cover
 
 More ticks in plots with more canopy cover.
@@ -727,6 +736,8 @@ inst_data <- tick_data_sum %>%
       NULL
 )
 ```
+
+\newpage
 
 ## Tick abundance and host density 
 
@@ -753,6 +764,8 @@ inst_data <- tick_data_sum %>%
 )
 ```
 
+\newpage
+
 # Fire history relationships
 
 ## Canopy cover and years since fire
@@ -777,6 +790,8 @@ ggplot(canopy_cover_summary, aes(years_since_fire, avg_canopy_cover)) +
       theme(legend.title = element_blank())
 ```
 
+\newpage
+
 ## Host density and years since fire
 
 Host abundance tended to be slightly lower with increasing time since fire and canopy cover. The trend isn't significant.
@@ -799,6 +814,8 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
       def_theme
 ```
 
+\newpage
+
 ## Host density and canopy cover
 
 Negative relationship with decreasing host density and canopy cover.
@@ -820,6 +837,8 @@ inst_data <- tick_data_sum %>%
       ylab("log(dung clusters + 1)") +
       def_theme
 ```
+
+\newpage
 
 ## Deer specific dung clusters and years since fire
 
@@ -846,6 +865,8 @@ inst_data <- dung_plot_data %>%
       NULL)
 ```
 
+\newpage
+
 ## Percent litter and years since fire
 
 Percent litter increases with time since fire.
@@ -871,6 +892,8 @@ inst_data <- quadrat10_summaries %>%
 )
 ```
 
+\newpage
+
 ## Litter biomass and years since fire
 
 Litter biomass increases with time since fire.
@@ -894,6 +917,8 @@ inst_data <- biomass_plot_summary %>%
 )
 
 ```
+
+\newpage
 
 ## Percent vegetation cover and years since fire
 
@@ -922,6 +947,8 @@ inst_data <- veg_cover_plot_data %>%
 
 ```
 
+\newpage
+
 ## Understory species richness and years since fire
 
 Species richness at the quadrat level was highly variable, though tended to be highest during the first year following fire.
@@ -945,6 +972,8 @@ inst_data <- species_richness %>%
       theme(legend.position = c(.8,.8))
 )
 ```
+
+\newpage
 
 ## Overstory species richness and years since fire
 
@@ -972,6 +1001,8 @@ inst_data <- tree_data_plot_summary %>%
 
 ```
 
+\newpage
+
 ## Total tree DBH and years since fire
 
 Some/no relationship with total tree DBH and time since fire.
@@ -998,8 +1029,9 @@ inst_data <- tree_data_plot_summary %>%
       NULL
 )
 
-
 ```
+
+\newpage
 
 ## Proportion pine DBH and years since fire
 
@@ -1031,8 +1063,9 @@ inst_data <- tree_data_plot_summary %>%
       NULL
 )
 
-
 ```
+
+\newpage
 
 # Supplementary Information - Commonly encountered tick species
 
@@ -1082,29 +1115,41 @@ Recent studies demonstrate that invasive plants can alter TBD risk via both dire
 
 This project conducts a survival assay of *A. americanum* to assess tick mortality and plant invasion interactions, as well as microclimate suitability for tick survival. For this assay we will deploy **1** mesh bag containing **10 nymph** and **10 adult** (5 male and 5 female) life stage *A. americanum* ticks in **12** *I. cylindrica* invaded and **12** native plots (1 m x 1 m) in a pine dominated forest habitat. Each mesh bag will be stood up vertically at the litter layer (to mimic natural questing habitat) inside of a constructed metal wire cage to deter scavengers. Microclimate data is taken by temperature and relative humidity loggers that are attached in a PVC housing next to the cage that record measurements every 5 minutes. Ticks were checked regularly approximately every **10-14** days to monitor their survival. Below are the figures for tick survival since launch on June 1, 2018. Ticks will be monitored continuously until all tick life stage morality has reached 100%.
 
-### Comparative Tick Survival
+\newpage
+
+## Comparing Tick Survival
 
 Comparison of adult and nymph life stages of the lone star tick in native and invaded sample plots. All life stages see a higher mortality in native plots, with nymphs feeling the effects in a shorter amount of time.
 
 ![](figures/tick-survival-assay/survivalfigsTogether.png)
 
-```{r import tick-survival-assay}
+\newpage
 
-```
+![](figures/tick-survival-assay/f_adult_temp_rh_all_time.png)
 
 \newpage
 
-
 # Supplementary Information - Cogongrass fire temperatures from small scale experiments
 
+Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from 1m2 to landscape (hectares) scales is driven by weather conditions and fuel characteristics, including fuel load, structure, moisture, and continuity. Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an integral part of the landscape. However, specific information is known about relatively few species, and while valuable, this information is often obtained by studies conducted across a spectrum of realism. Methods range from in situ approaches where measurements are made before, during, and after prescribed fires (high realism, low replication), to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings (low realism, highly replicable). Fire ecology experiments in the field often only manipulate the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often piled horizontally even though fuel complexes are typically more heterogeneous with substantial vertical structure that affects fire behavior (Loudermilk2014).
+
+In this paper we present an experimental apparatus that can bridge the gap between making measurements of flammability at the lab bench and the limited replication of prescribed fires. The Fine Aboveground Biomass Incineration Organizer (FABIO) enables experimental manipulation of fuel load and structure at a relatively small but realistic and relevant scale of 1m2. We expect our design will be most useful for grasses or grass-like fuels, but it could be used or adapted for other fuel types such as small shrubs and trees. The fine aboveground biomass incineration organizer (FABIO) is a freestanding device for outdoor use to efficiently manipulate fuel structure and assess the effects on fire intensity (Figure 2). These outdoor small-scale 1m2 experimental fires allow for repeated measurements of fire intensity across multiple fuel loads without the onerous task of setting up all of the experimental plots prior to a large-scale prescribed that is subject to weather conditions and sufficient personnel.
+
+We burned three fires using piled fuel and three fires using standing fuel for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. We ultimately burned 32 fires in this experiment, with one additional fire in the 1000g category due to mislabeling during biomass sorting and weighing. We put the fire intensity and behavior measurements from these experimental fires in the context of measurements made during a prescribed fire in a longleaf pine ecosystem, and measurements made for five experimental fires using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a longleaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass Aristida stricta (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~250 hectare management unit.
+
+For the 32 experimental fires where the fuel loads were either piled or standing we used the braided steel insulated thermocouples (TP875 Extech Instruments, Nashua, NH, USA) that were 100 cm long. During the prescribed fire we used braided glass insulated wire probes (TC6-K, Onset Computer Corporation, Bourne, MA, USA) and wire was only good for a single exposure to direct flame. The bead wire probes were more expensive, but ultimately more economical because they didn't degrade when exposed to flames. The probes were attached to HOBO U12 thermocouple temperature data loggers (Onset Computer Corporation, Bourne, MA, USA). Weather data was recorded every two seconds during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA, USA) mounted on a tripod 1m above the ground. Data points were matched to the time of each fire and average values were calculated for air temperature, relative humidity, and wind speed.
+
+\newpage
+
+![](figures/fabio-schematic.png)
+
+Schematic of the fine aboveground biomass incineration organizer (FABIO) (a), and the FABIO during an experimental burn (b). Schematic legend: 1. 3.18 cm (1-1/4”) punched angle iron holding welded 4ga. wire with approx. 10cm x 10cm openings, 2. 1.91 cm (¾”) metal conduit, 3. flame retardant soaked cotton twine, 4. thermocouple temperature data loggers (HOBO U12), inside of weatherproof cases (Pelican 1010), and 5. type K thermocouples with braided steel wire leads (TP875 Extech Instruments, Nashua, NH, USA).
+
+\newpage
+
+![](figures/temperature-fig.png)
 
 **(a)** The “maximum temperature” at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient.
 
 **(b)** The "seconds above 100°C"" accounts for the amount of time temperature probes recorded temperatures above 100°C at each of the heights for each biomass amount.
 
-![](figures/temperature-fig.png)
-
-
-```{r import cogon-fire-data}
-
-```
