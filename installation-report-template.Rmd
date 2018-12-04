@@ -60,7 +60,7 @@ def_theme <- theme(legend.title = element_blank(),
             )
 invasion_color <- scale_color_manual(values = c("dodgerblue","red3"))
 invasion_fill <- scale_fill_manual(values = c("dodgerblue","red3"))
-installation_color <- "blue"
+installation_color <- "gold"
 
 ```
 
