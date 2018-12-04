@@ -1068,7 +1068,7 @@ inst_data <- tree_data_plot_summary %>%
 
 \newpage
 
-# Supplementary Information - Commonly encountered tick species
+# Appendix 1 - Commonly encountered tick species
 
 ## Lone star tick, *Amblyomma americanum*
 **abbreviation: Am. am**
@@ -1106,7 +1106,7 @@ inst_data <- tree_data_plot_summary %>%
 
 \newpage
 
-# Supplementary Information - Tick survival in cogongrass invasions
+# Appendix 2 - Tick survival in cogongrass invasions
 
 ## Project Background
 
@@ -1130,7 +1130,7 @@ Comparison of adult and nymph life stages of the lone star tick in native and in
 
 \newpage
 
-# Supplementary Information - Cogongrass fire temperatures from small scale experiments
+# Appendix 3 - Cogongrass fire intensity from small scale experiments
 
 Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from 1m2 to landscape (hectares) scales is driven by weather conditions and fuel characteristics, including fuel load, structure, moisture, and continuity. Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an integral part of the landscape. However, specific information is known about relatively few species, and while valuable, this information is often obtained by studies conducted across a spectrum of realism. Methods range from in situ approaches where measurements are made before, during, and after prescribed fires (high realism, low replication), to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings (low realism, highly replicable). Fire ecology experiments in the field often only manipulate the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often piled horizontally even though fuel complexes are typically more heterogeneous with substantial vertical structure that affects fire behavior (Loudermilk2014).
 
@@ -1156,14 +1156,14 @@ Schematic of the fine aboveground biomass incineration organizer (FABIO) (a), an
 
 \newpage
 
-# Supplementary Information - Data Dictionary
+# Appendix 4 - Data Dictionary
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(knitr)
 library(kableExtra)
 ```
 
-## Common among all dataframes
+## Common among all data files
 
 ```{r common parameters across all data, echo=FALSE}
 
