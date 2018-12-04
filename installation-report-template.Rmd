@@ -471,7 +471,8 @@ tot_plots %>%
       NULL
 
 ```
-Figure 1: The total number of plots sampled at each installation visited in the 2017 and 2018 field seasons. The number of sites with cogongrass invasion are indicated in red.
+
+**Figure 1:** The total number of plots sampled at each installation visited in the 2017 and 2018 field seasons. The number of sites with cogongrass invasion are indicated in red.
 
 ![](documents/FtJackson/FtJacksonBaseReportMap.png)
 
@@ -496,6 +497,8 @@ plot_visit_data %>%
       NULL
 
 ```
+
+**Figure 2:** Cumulative number of plots sampled in a range of fire history in terms of years since fire across all installations. Plots with one year since fire were most common (n = 20), and 10 years since fire least common (n = 1).
 
 ## Range of fire history sampled `r paste("at ", inst_name)`
 
@@ -545,7 +548,7 @@ n_raw_ticks_inst_2018 <- filter(tick_data, installation_full_name==inst_name & v
 
 ```
 
-A total of `r n_total_raw_ticks_all` ticks were collected across all installations. At `r paste(inst_name)` in `r n_raw_ticks_inst_2017` ticks were collected and in `r n_raw_ticks_inst_2018` ticks were collected. Note the different tick abundance scales on each panel.
+A total of `r n_total_raw_ticks_all` ticks were collected across all installations. At `r paste(inst_name)` in `r n_raw_ticks_inst_2017` ticks were collected and in `r n_raw_ticks_inst_2018` ticks were collected. Note the different scales of the y-axis on each panel.
 
 ```{r raw tick numbers by installation figure}
 
@@ -576,7 +579,7 @@ tick_data %>%
 
 ## Tick abundance and fire history
 
-The figure below shows the general relationship between the abundance of adult and nymph life-stage ticks (observations of larvae were counted as "1") across all the installations. The points contributed by `r paste(inst_name)` are highlighted in blue. The y-axis (tick abundance) is natural-log transformed, i.e., a value of 2 corresponds to exp(2) = `r round(exp(2))`. The total number of ticks collected at `r paste(inst_name)` was `r total_ticks`. 
+The figure below shows the general relationship between the abundance of adult and nymph life-stage ticks (observations of larvae were counted as "1") across all the installations. The points contributed by `r paste(inst_name)` are highlighted in blue. The y-axis (tick abundance) is natural-log transformed, i.e., a value of 2 corresponds to about `r round(exp(2))` ticks. We collected a total of `r total_ticks` ticks at `r paste(inst_name)`. 
 
 ```{r tick abundance fire all, eval = F}
 
@@ -1179,8 +1182,7 @@ kable(common_fields) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T)
-  
-
+ 
 ```
 
 ## Plot visit and invasion status
