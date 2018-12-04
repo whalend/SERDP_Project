@@ -521,12 +521,14 @@ plot_nums %>%
 
 n_total_raw_ticks_all <- sum(tick_data$tick_count)
 
-n_raw_ticks_inst_2017 <- filter(tick_data, installation_full_name==inst_name & visit_year==2017)%>% 
-  group_by(visit_year) %>% 
-  summarise(raw_ticks_sum = sum(.$tick_count))
+n_raw_ticks_inst_2017 <- tick_data %>% 
+      filter(installation_full_name==inst_name & visit_year==2017) %>% 
+      # group_by(visit_year) %>%
+      summarise(raw_ticks_sum = sum(.$tick_count))
+      
 
 n_raw_ticks_inst_2018 <- filter(tick_data, installation_full_name==inst_name & visit_year==2018)%>% 
-  group_by(visit_year) %>% 
+  # group_by(visit_year) %>% 
   summarise(raw_ticks_sum = sum(.$tick_count))
 
 #unique(tick_data$life_stage)
