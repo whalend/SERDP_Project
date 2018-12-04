@@ -12,12 +12,13 @@ output:
     toc_float: yes
   word_document:
     toc: yes
+    reference_docx: rmarkdown_styles.docx
   pdf_document:
     toc: yes
 subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-borne
   diseases<h1>
 params:
-  inst_name: Camp Blanding
+  inst_name: Fort Jackson
 ---
 
 
@@ -430,6 +431,9 @@ Our specific objectives are to:
 
 3. Calibrate a spatially explicit model of TBD risk in response to fire-invasion interactions   and examine the responses of fire, plant invasions, wildlife, TBD risk, using simulations of    climate change scenarios.
 
+This progress report is intended to provide the managers at each installation that have granted access to collect data results from preliminary summaries and analyses of the data we collected. We emphasize that these are **preliminary results** summarizing the data and presenting general patterns of the relationships we are exploring with further statistical modeling. In most figures, the data points for `r paste(inst_name)` are highlighted in the context of the general pattern from plots sampled across all the installations.
+
+###### Page break
 
 # Number of plots sampled 
 
@@ -465,6 +469,8 @@ tot_plots %>%
 
 ```
 
+###### Page break
+
 ## Range of fire history at all installations
 
 Across all installations, we established `r n_total_plots_all` plot(s) in areas ranging in time since last fire from `r min(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire, na.rm = T)` to `r max(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire, na.rm = T)` years. Of the `r n_total_plots_all`, there were `r n_total_plots_all_invaded` plot(s) with a cogongrass invasion.
@@ -484,6 +490,8 @@ plot_visit_data %>%
       NULL
 
 ```
+
+###### Page break
 
 ## Range of fire history sampled `r paste("at ", inst_name)`
 
