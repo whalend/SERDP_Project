@@ -6,13 +6,14 @@ author:
 - "Project principal investigators: Brian Allan, S. Luke Flory, Mike Dietze"
 date: "`r Sys.Date()`"
 output:
+  word_document:
+    toc: yes
+    pandoc_args: [
+    "--filter", "word-pagebreak-filter.R"] 
   html_document:
     self_contained: no
     toc: yes
     toc_float: yes
-  word_document:
-    toc: yes
-    reference_docx: rmarkdown_styles.docx
   pdf_document:
     toc: yes
 subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-borne
@@ -417,6 +418,8 @@ tick_data_sum <- join_all(list(tick_biomass_data, tick_canopycover_data, tick_qu
 summary(tick_data_sum)
 ```
 
+\newpage
+
 # Project Summary
 
 Tick-borne diseases (TBDs) represent a major public health threat in North America, particularly for military personnel training on Department of Defense (DoD) installations. We received funding from the Strategic Environmental Research and Development Programto explore several of the predicted consequences of climate change on fire regimes and plant communities, and their interactions with wildlife, for human risk of exposure to TBDs in the southeastern U.S.
@@ -433,7 +436,7 @@ Our specific objectives are to:
 
 This progress report is intended to provide the managers at each installation that have granted access to collect data results from preliminary summaries and analyses of the data we collected. We emphasize that these are **preliminary results** summarizing the data and presenting general patterns of the relationships we are exploring with further statistical modeling. In most figures, the data points for `r paste(inst_name)` are highlighted in the context of the general pattern from plots sampled across all the installations.
 
-###### Page break
+\newpage
 
 # Number of plots sampled 
 
@@ -469,7 +472,7 @@ tot_plots %>%
 
 ```
 
-###### Page break
+\newpage
 
 ## Range of fire history at all installations
 
@@ -491,7 +494,7 @@ plot_visit_data %>%
 
 ```
 
-###### Page break
+\newpage
 
 ## Range of fire history sampled `r paste("at ", inst_name)`
 
@@ -512,6 +515,8 @@ plot_nums %>%
       NULL
 
 ```
+
+\newpage
 
 # Tick Abundance Relationships
 
