@@ -34,7 +34,7 @@ tick_survival <- tick_survival %>%
          total_adult_survival = total_adults_alive/(total_adults_alive + total_adults_dead))
 
 tick_survival <- tick_survival %>%
-  mutate(Invaded = ifelse(Invaded == "Yes", "invaded", "native")) 
+  mutate(Invaded = ifelse(Invaded == "Yes", "invaded", "native"))
 
 #View(tick_survival)
 
@@ -197,7 +197,8 @@ tick_survival_80 <- tick_survival %>%
 tick_survival_120 <- tick_survival %>%
   filter(between(days, 81, 150))
 
-# nymphs by days interval
+
+# nymphs by days interval ####
 
 nymph_survival_40 <- ggplot(data = tick_survival_40) +
   stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
@@ -258,7 +259,7 @@ nymph_survival_120 <- ggplot(data = tick_survival_120) +
 nymphs_intervals <- cowplot::plot_grid(nymph_survival_40,
                    nymph_survival_80, nymph_survival_120, ncol =3)
 
-# adult F by days
+# adult F by days ####
 
 adult_F_survival_40 <- ggplot(data = tick_survival_40) +
   stat_summary(aes(days, adult_F_survival, fill = Invaded, color = Invaded),
@@ -320,7 +321,7 @@ adult_F_intervals <- cowplot::plot_grid(adult_F_survival_40,
                    adult_F_survival_80, adult_F_survival_120, ncol =3)
 
 
-# adult M by days
+# adult M by days ####
 
 adult_M_survival_40 <- ggplot(data = tick_survival_40) +
   stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded),
@@ -405,7 +406,7 @@ temp_rh_data <- temp_rh_data %>%
 
 temp_rh_data$logger_id <- as.integer(temp_rh_data$logger_id)
 
-  
+
 
 #### Added invaded/native status and days since launch ####
 
@@ -1002,9 +1003,9 @@ temp_rh_data_bag_specific <- temp_rh_data %>%
   group_by(date, status, logger_id, days) %>%
   summarise(max_tempC = max(tempC),
             min_rh = min(RH)
-  ) %>% 
+  ) %>%
    ungroup(.) %>%
-   filter(days <=11) %>%  
+   filter(days <=11) %>%
    group_by(logger_id, status) %>%
    summarise(obs = n(),
              avg_max_tempC = mean(max_tempC),
@@ -1017,8 +1018,8 @@ temp_rh_data_bag_specific <- temp_rh_data %>%
 
 #View(temp_rh_data_bag_specific)
 
-survival_for_temp_rh_11_days <- tick_survival %>% 
-  filter(days == "11") %>% 
+survival_for_temp_rh_11_days <- tick_survival %>%
+  filter(days == "11") %>%
   select(logger_id, Invaded, nymph_survival, adult_F_survival, adult_M_survival)
 
 survival_temp_rh <-  left_join(temp_rh_data_bag_specific, survival_for_temp_rh_11_days,
@@ -1032,7 +1033,7 @@ nymph_temp_11_days <- ggplot(survival_temp_rh, aes(avg_max_tempC, nymph_survival
                                                       color = status)) +
   #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
   geom_point(aes(color = status)) +
-  geom_errorbarh(aes(xmin = avg_max_tempC - max_temp_se, 
+  geom_errorbarh(aes(xmin = avg_max_tempC - max_temp_se,
                      xmax = avg_max_tempC + max_temp_se)) +
   invasion_color +
   invasion_fill +
@@ -1050,8 +1051,8 @@ adult_F_temp_11_days <- ggplot(survival_temp_rh, aes(avg_max_tempC, adult_F_surv
                                                       color = status)) +
   #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
   geom_point(aes(color = status)) +
-  #geom_errorbarh(aes(xmin = avg_max_tempC - max_temp_se, 
-                    #xmax = avg_max_tempC + max_temp_se)) + 
+  #geom_errorbarh(aes(xmin = avg_max_tempC - max_temp_se,
+                    #xmax = avg_max_tempC + max_temp_se)) +
   invasion_color +
   invasion_fill +
   ylab(" ") +
@@ -1068,8 +1069,8 @@ adult_M_temp_11_days <- ggplot(survival_temp_rh, aes(avg_max_tempC, adult_M_surv
                                                       color = status)) +
   #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
   geom_point(aes(color = status)) +
-  #geom_errorbarh(aes(xmin = avg_max_tempC - max_temp_se, 
-                     #xmax = avg_max_tempC + max_temp_se)) + 
+  #geom_errorbarh(aes(xmin = avg_max_tempC - max_temp_se,
+                     #xmax = avg_max_tempC + max_temp_se)) +
   invasion_color +
   invasion_fill +
   ylab(" ") +
@@ -1082,8 +1083,8 @@ adult_M_temp_11_days <- ggplot(survival_temp_rh, aes(avg_max_tempC, adult_M_surv
   scale_x_continuous(limits = c(30, 43)) +
   NULL
 
-survival_temp_first_check <- cowplot::plot_grid(nymph_temp_11_days, 
-                                                adult_F_temp_11_days, 
+survival_temp_first_check <- cowplot::plot_grid(nymph_temp_11_days,
+                                                adult_F_temp_11_days,
                                                 adult_M_temp_11_days, ncol = 3)
 
 ggsave(plot = survival_temp_first_check, height = 5, width = 10, "figures/tick-survival-assay/survival_temp_first_check.png")
@@ -1093,7 +1094,7 @@ nymph_rh_11_days <- ggplot(survival_temp_rh, aes(avg_min_rh, nymph_survival,
                                                       color = status)) +
   #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
   geom_point(aes(color = status)) +
-  geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se, 
+  geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
                      xmax = avg_min_rh + min_rh_se)) +
   invasion_color +
   invasion_fill +
@@ -1110,7 +1111,7 @@ adult_F_rh_11_days <- ggplot(survival_temp_rh, aes(avg_min_rh, adult_F_survival,
                                                  color = status)) +
   #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
   geom_point(aes(color = status)) +
-  geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se, 
+  geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
                      xmax = avg_min_rh + min_rh_se)) +
   invasion_color +
   invasion_fill +
@@ -1127,7 +1128,7 @@ adult_M_rh_11_days <- ggplot(survival_temp_rh, aes(avg_min_rh, adult_M_survival,
                                                  color = status)) +
   #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
   geom_point(aes(color = status)) +
-  geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se, 
+  geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
                      xmax = avg_min_rh + min_rh_se)) +
   invasion_color +
   invasion_fill +
