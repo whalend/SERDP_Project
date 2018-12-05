@@ -200,9 +200,8 @@ During the prescribed fire we used braided glass insulated wire probes (TC6-K, O
 
 
 ### Statistical analyses
-<<<<<<< HEAD
+
 We used ordinary least squares linear regressions to model the response variables of average maximum temperature, time above 100 ºC at each probe height, the average flame height, and the rate of spread. We used beta regression to model the proportion of biomass consumed. Fuel load (mass) and fuel structure (piled vs. standing) were used as explanatory variables in each model, and fuel load was entered as a continuous variable. We tested the main effects and interaction of fuel load and fuel structure along with weather covariates (e.g. air temperature, wind speed, relative humidity). Statistically insignificant weather variables were excluded from final models. Because our main goal was to assess the effect of fuel structure (piled vs. standing) on measures of fire intensity and behavior we retained fuel structure and biomass as main effects in all models.
-=======
 
 We used ordinary least squares linear regressions to model the response variables of average maximum temperature, time above 100 ºC at each probe height, the average flame height, and the rate of spread. We used beta regression to model the proportion of biomass consumed. Fuel load (mass) and fuel structure (piled vs. standing) were used as explanatory variables in each model, and fuel load was entered as a continuous variable. We tested the main effects and interaction of fuel load and fuel structure along with weather covariates (e.g. air temperature, wind speed, relative humidity). Statistically insignificant weather variables were excluded from final models. Because our main goal was to assess the effect of fuel structure (piled vs. standing) on measures of fire intensity and behavior we at minimum retained fuel structure and biomass as main effects in all models.
 >>>>>>> 3bd679af1e59b55e524bb447c711e5e33e73f6ab
@@ -574,7 +573,6 @@ fuel_moisture <- d1 %>%
                 avg_moisture = mean(pct_fuel_moisture, na.rm = T),
                 max_moisture = max(pct_fuel_moisture, na.rm = T),
                 sd_moisture = sd(pct_fuel_moisture, na.rm = T),
-<<<<<<< HEAD
                 se_moisture = sd_moisture/sqrt(nobs)) 
       
 knitr::kable(fuel_moisture, digits = 2)
@@ -584,10 +582,9 @@ standing_fuels <- d1 %>%
 
 piled_fuels <- d1 %>% 
       filter(!duplicated(fire_id), structure=="piled")
-=======
+
                 se_moisture = sd_moisture/sqrt(nobs)) %>% 
       knitr::kable(., digits = 2)
->>>>>>> 3bd679af1e59b55e524bb447c711e5e33e73f6ab
       
 ```
 
@@ -661,11 +658,8 @@ p_fire_flame_ht <- prescribed_fire %>%
                 avg_biomass = mean(total_biomass),
                 sd_biomass = sd(total_biomass),
                 se_biomass = sd_biomass/n)
-<<<<<<< HEAD
 
 kable(select(p_fire_summary, location, avg_max_temp:se_s_abv100), digits = 2)      
-=======
->>>>>>> 3bd679af1e59b55e524bb447c711e5e33e73f6ab
 
 ```
 
