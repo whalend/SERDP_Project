@@ -645,9 +645,15 @@ p_fire_flame_ht <- prescribed_fire %>%
                 sd_biomass = sd(total_biomass),
                 se_biomass = sd_biomass/n)
 
-kable(select(p_fire_summary, location, avg_max_temp:se_s_abv100), digits = 2)      
+```
+
+Prescribed Fire Summary Table
+```{r rx fire summary table}
+
+kable(select(p_fire_summary, location, avg_max_temp:se_s_abv100), digits = 2)
 
 ```
+
 
 
 ## Maximum temperature
@@ -1723,12 +1729,12 @@ fire_wx_table <- left_join(
       select(fires_biomass, fire_id, biomass, structure)
              ) %>% 
       arrange(fire_id) %>%
-      mutate(avg_air_temp = round(avg_air_temp, 2),
-             se_air_temp = round(se_air_temp, 2),
-             avg_rh = round(avg_rh, 2),
-             se_rh = round(se_rh, 2),
-             avg_wind_speed = round(avg_wind_speed, 2),
-             se_wind_speed = round(se_wind_speed, 2),
+      mutate(avg_air_temp = round(avg_air_temp, 1),
+             se_air_temp = round(se_air_temp, 1),
+             avg_rh = round(avg_rh, 1),
+             se_rh = round(se_rh, 1),
+             avg_wind_speed = round(avg_wind_speed, 1),
+             se_wind_speed = round(se_wind_speed, 1),
              air_temp_avg_se = paste(avg_air_temp, " ± ", se_air_temp),
              rh_avg_se = paste(avg_rh, " ± ", se_rh),
              wind_speed_avg_se = paste(avg_wind_speed, " ± ", se_wind_speed)) %>% 
@@ -1738,7 +1744,7 @@ fire_wx_table <- fire_wx_table %>% mutate(fire_id = seq_len(length(fire_id)))
 
 wxtable_col_names <- c("Fire ID", "Date", "Structure", "Biomass", "Air temperature (ºC)", "RH (%)", "Wind Speed (m s^-1^)")
 
-fire_wx_table
+# fire_wx_table
 
 wxtable <- knitr::kable(
       fire_wx_table, col.names = wxtable_col_names, align = 'c',
