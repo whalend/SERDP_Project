@@ -94,7 +94,7 @@ summary(tick_data)
 
 write_csv(tick_data, "data/processed_data/ticks.csv")
 
-### Steven stopped processing, begin processing by installation ###
+### Steven stopped processing, begin processing by installation ####
 
 tick_data <- read_csv("data/processed_data/ticks.csv")
 summary(tick_data)
@@ -193,11 +193,19 @@ write_csv(ticks_tyndall, "data/processed_by_installation/tyndall_afb/ticks_tynda
 #### Filter for Fort Jackson ####
 
 ticks_jackson <- ticks_grouped %>%
-  filter(installation=="jackson")
+      filter(installation=="jackson", !is.na(species_name))
 
-ticks_jackson <- filter(ticks_jackson) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+jackson_plots <- plot_visit_data %>%
+      filter(installation=="jackson") %>%
+      select(installation, plot_id, visit_year, date=visit_date)
+
+ticks_jackson <- left_join(jackson_plots, ticks_jackson)
+
+ticks_jackson <- ticks_jackson %>%
+      mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
+      select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+
+
 
 summary(ticks_jackson)
 
