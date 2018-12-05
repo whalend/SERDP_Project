@@ -3,7 +3,7 @@ title: 'Installation Report: `r params$inst_name`'
 author:
 - "SERDP Project RC-2636"
 - "Report authors: Whalen W. Dillon, Drew T. Hiatt, Steven Cabrera"
-- "Project principal investigators: Brian Allan, S. Luke Flory, Mike Dietze"
+- "Project principal investigators: Brian F. Allan, S. Luke Flory, Michael C. Dietze"
 date: "`r Sys.Date()`"
 output:
   word_document:
@@ -21,8 +21,6 @@ subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-
 params:
   inst_name: Fort Jackson
 ---
-
-
 
 ```{r set installation name options, echo=F}
 # inst_name values 
@@ -440,6 +438,8 @@ This progress report is intended to provide the managers at each installation th
 
 # Number of plots sampled 
 
+![](documents/FtJackson/FtJacksonBaseReportMap.png)
+
 A total of `r n_plots` plot(s) were established and sampled at `r paste(inst_name)`. Of the `r n_plots`, there were `r n_plots_invaded_inst` plot(s) with a cogongrass invasion. 
 
 ```{r installation plots visited figure, fig.width=7.5}
@@ -473,8 +473,6 @@ tot_plots %>%
 ```
 
 **Figure 1:** The total number of plots sampled at each installation visited in the 2017 and 2018 field seasons. The number of sites with cogongrass invasion are indicated in red.
-
-![](documents/FtJackson/FtJacksonBaseReportMap.png)
 \newpage
 
 ## Range of fire history at all installations
@@ -577,6 +575,7 @@ tick_data %>%
       NULL
 
 ```
+
 **Figure 4:** The raw number of ticks collected at each installation is recorded for each visit year. The zero values occurring for installations in 2017 and 2018 are because those installations were not visited in those years.
 
 \newpage
@@ -638,13 +637,12 @@ inst_data <- tick_data_plot_summary %>%
       NULL)
 
 ```
+
 **Figure 5:** Across all installations, we see a general trend that more time since fire has a positive relationship with tick abundance in both native and invaded plots. Plot data points recorded specifically at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
 ## Tick abundance and percent litter cover
-
-General trend tick abundance increases with percent litter cover.
 
 ```{r tick abundance vs litter cover figure}
 
@@ -665,13 +663,12 @@ inst_data <- tick_data_sum %>%
       NULL
 )
 ```
+
 **Figure 6:** A positive relationship is seen with percent litter cover and tick abundance across all installations. Litter cover is estimated by averaging of the litter cover in four 1m x 1m quadrats in each sampled plot. It is hypothesized that more litter cover creates a more suitable environment for tick survival (see Supplementary Information - Tick survival in cogongrass invasions). Plot data points recorded specifically at `r inst_name` are in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
 ## Tick abundance and average dry litter biomass
-
-More litter biomass increases with tick abundance. 
 
 ```{r tick-litter-biomass figure}
 
@@ -692,13 +689,12 @@ inst_data <- tick_data_sum %>%
       def_theme
 )
 ```
+
 **Figure 7:** A positive relationship is seen between litter biomass and tick abundance across all installations. Litter biomass estimates are from oven dried biomass collected at four 25cm x 25cm quadrats in each plot. Plot data points recorded specifically at `r inst_name` are in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
 ## Tick abundance and litter moisture
-
-In uninvaded plots, tick abundance increases with litter moisture. No relationship in invaded.
 
 ```{r tick litter moisture figure}
 
@@ -720,15 +716,14 @@ inst_data <- tick_data_sum %>%
       NULL
 )
 ```
+
 **Figure 8:** Tick abundance tended to be higher with greater litter moisture in uninvaded plots across all installations. We did not detect any relationship in cogongrass-invaded plots. Litter moisture was calculated as the difference between fresh and dried weight from biomass collected at four 25cm x 25cm quadrats in each plot. Plot data points recorded at `r inst_name` are shown in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
-Places with that maintain higher humidity at ground-level are likely to be more favorable for tick survival, and therefore may be positively associated with tick abundance. Our measurement of litter moisture is very coarse because it is from a single point in time and so highly dependent on weather conditions leading up to sampling. We can't say whether a particular location generally has greater litter moisture from these data alone.
+Places with maintain higher humidity at ground-level are likely to be more favorable for tick survival, and therefore may be positively associated with tick abundance. Our measurement of litter moisture is very coarse because it is from a single point in time and so highly dependent on weather conditions leading up to sampling. We can't say whether a particular location generally has greater litter moisture from these data alone.
 
 \newpage
 
 ## Tick abundance and canopy cover
-
-More ticks in plots with more canopy cover.
 
 ```{r tick-canopy-cover figure}
 
@@ -750,6 +745,7 @@ inst_data <- tick_data_sum %>%
       NULL
 )
 ```
+
 **Figure 9:** There was a positive relationship between tick abundance and overstory canopy cover in uninvaded plots. It is hypothesized denser canopy cover creates a more suitable microclimate at ground level for tick survival (see Supplementary Information - Tick survival in cogongrass invasions). Data recorded at `r inst_name` are shown in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
@@ -776,6 +772,7 @@ inst_data <- tick_data_sum %>%
       NULL
 )
 ```
+
 **Figure 10:** We did not detect a relationship between density of host dung clusters in terms of log and tick abundance. The most common host species dung encountered at all installations was deer, with some rabbit and wild turkey. Dung clusters were counted if seen within one meter to either side of four 50-meter line transects surveyed at each plot. Data points from `r inst_name` are in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
@@ -783,8 +780,6 @@ inst_data <- tick_data_sum %>%
 # Fire history relationships
 
 ## Canopy cover and years since fire
-
-Canopy cover increases with time since fire
 
 ```{r create canopy cover years since fire figure}
 
@@ -803,13 +798,12 @@ ggplot(canopy_cover_summary, aes(years_since_fire, avg_canopy_cover)) +
       def_theme +
       theme(legend.title = element_blank())
 ```
+
 **Figure 11:** Overstory tree canopy cover tended to be greater with more time since fire. Data points at `r inst_name` are in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
 ## Host density and years since fire
-
-Host abundance tended to be slightly lower with increasing time since fire and canopy cover. The trend isn't significant.
 
 ```{r dung-host-fire history relationship figure}
 
@@ -828,6 +822,7 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
       ylab("log(dung clusters + 1)") +
       def_theme
 ```
+
 **Figure 12:** There is a slight negative relationship between the number of host dung clusters and time since last fire in the plots with no cogongrass invasion; in invaded plots there is no trend. Data points at `r inst_name` are in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
@@ -851,13 +846,12 @@ inst_data <- tick_data_sum %>%
       ylab("log(dung clusters + 1)") +
       def_theme
 ```
+
 **Figure 13:** There is a slight negative relationship between observed host dung clusters and overstory tree canopy cover across all plots. Data points at `r inst_name` are in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
 ## Deer specific dung clusters and years since fire
-
-No relationship with host density (specifically deer) and time since fire.
 
 ```{r specific deer dung clusters figure}
 
@@ -879,6 +873,7 @@ inst_data <- dung_plot_data %>%
       def_theme +
       NULL)
 ```
+
 **Figure 14:** We did not detect a relationship between time since fire and host abundance when looking at deer dung clusters only. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 We examined the relationship between tick abundance and evidence of deer host abundance specifically because deer are particularly mobile and therefore may reintroduce ticks into recently burned areas.
@@ -907,13 +902,12 @@ inst_data <- quadrat10_summaries %>%
       NULL
 )
 ```
+
 **Figure 15:** We observed a positive relationship between litter cover and time since fire in both uninvaded and invaded plots and cogongrass-invaded plots. Uninvaded plots generally had greater litter cover. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
 ## Litter biomass and years since fire
-
-Litter biomass increases with time since fire.
 
 ```{r litter biomass figure}
 
@@ -934,13 +928,12 @@ inst_data <- biomass_plot_summary %>%
 )
 
 ```
+
 **Figure 16:**  There is a positive relationship litter biomass and time since fire in both uninvaded and cogongrass-invaded plots. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
 ## Percent vegetation cover and years since fire
-
-Uninvaded plots saw a decrease in herbaceous vegetation cover with time since fire. Cogongrass invaded plots had higher herbaceous vegetation cover.
 
 ```{r veg cover plot level figure}
 
@@ -964,13 +957,12 @@ inst_data <- veg_cover_plot_data %>%
 )
 
 ```
+
 **Figure 17:**  In uninvaded sites, there was a negative relationship with between herbaceous cover and time since fire. Increasing density of cogongrass invasions drastically increases vegetation cover as time since fire increases in cogongrass-invaded plots. Note that the sample size of invaded plots is very small. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
 ## Understory species richness and years since fire
-
-Species richness at the quadrat level was highly variable, though tended to be highest during the first year following fire.
 
 ```{r plot richness fig}
 
@@ -991,13 +983,12 @@ inst_data <- species_richness %>%
       theme(legend.position = c(.8,.8))
 )
 ```
+
 **Figure 18:** Across all plots there was a slight negative relationship between herbaceous species richness and time since fire. Species richness has large variability that is influenced by management and natural disturbances other than prescribed fire. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
 ## Overstory species richness and years since fire
-
-Tree species richness (>1m and >3cm dbh) increased with time since fire in invaded and uninvaded plots.
 
 ```{r tree richness figure}
 
@@ -1020,6 +1011,7 @@ inst_data <- tree_data_plot_summary %>%
 )
 
 ```
+
 **Figure 19:** There was a positive relationship between overstory species richness and time since fire. Only tree species with a DBH ≥ 3 cm and height ≥ 1m were recorded. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
@@ -1049,9 +1041,8 @@ inst_data <- tree_data_plot_summary %>%
 )
 
 ```
-**Figure 20:** No relationship in native sites with total tree DBH and time since fire. Total DBH is the cumulative value of all tree diameters recorded within the plot. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
-\newpage
+**Figure 20:** No relationship in native sites with total tree DBH and time since fire. Total DBH is the cumulative value of all tree diameters recorded within the plot. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 ```{r proportion pine dbh figure, eval=F}
 ## Proportion pine DBH and years since fire
@@ -1095,7 +1086,6 @@ inst_data <- tree_data_plot_summary %>%
 ![](pictures/lone-star-ticks.png)
 
 \newpage
-
 
 ## Gulf coast tick, *Amblyomma maculatum* 
 **abbreviation: Am. mac**
@@ -1142,9 +1132,8 @@ This project conducts a survival assay of *A. americanum* to assess tick mortali
 Comparison of adult and nymph life stages of the lone star tick in native and cogongrass-invaded areas plots. All life stages experience greater mortality in native plots, with nymphs dying sonner than adults.
 
 ![](figures/tick-survival-assay/survivalfigsTogether.png)
-**Figure 21:** Average tick survival (+ SE) over time at 12 locations in a cogongrass-invasion (red) and 12 locations in a nearby native understory (blue).
 
-\newpage
+**Figure:** Average tick survival (+ SE) over time at 12 locations in a cogongrass-invasion (red) and 12 locations in a nearby native understory (blue).
 
 ```{r tick survival figure, eval=F}
 tick_survival <- read_csv("data/raw_data/tick_survival_assay/TickSurvival_actual.csv")
@@ -1341,17 +1330,18 @@ In this paper we present an experimental apparatus that can bridge the gap betwe
 We burned three fires using piled fuel and three fires using standing fuel for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. We ultimately burned 32 fires in this experiment, with one additional fire in the 1000g category due to mislabeling during biomass sorting and weighing. We put the fire intensity and behavior measurements from these experimental fires in the context of measurements made during a prescribed fire in a longleaf pine ecosystem, and measurements made for five experimental fires using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a longleaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass Aristida stricta (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~250 hectare management unit.
 
 For the 32 experimental fires where the fuel loads were either piled or standing we used the braided steel insulated thermocouples (TP875 Extech Instruments, Nashua, NH, USA) that were 100 cm long. During the prescribed fire we used braided glass insulated wire probes (TC6-K, Onset Computer Corporation, Bourne, MA, USA) and wire was only good for a single exposure to direct flame. The bead wire probes were more expensive, but ultimately more economical because they didn't degrade when exposed to flames. The probes were attached to HOBO U12 thermocouple temperature data loggers (Onset Computer Corporation, Bourne, MA, USA). Weather data was recorded every two seconds during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA, USA) mounted on a tripod 1m above the ground. Data points were matched to the time of each fire and average values were calculated for air temperature, relative humidity, and wind speed.
-
 \newpage
 
+\newpage
 ![](figures/fabio-schematic.png)
 
-Schematic of the fine aboveground biomass incineration organizer (FABIO) (a), and the FABIO during an experimental burn (b). Schematic legend: 1. 3.18 cm (1-1/4”) punched angle iron holding welded 4ga. wire with approx. 10cm x 10cm openings, 2. 1.91 cm (¾”) metal conduit, 3. flame retardant soaked cotton twine, 4. thermocouple temperature data loggers (HOBO U12), inside of weatherproof cases (Pelican 1010), and 5. type K thermocouples with braided steel wire leads (TP875 Extech Instruments, Nashua, NH, USA).
+**Figure:** Schematic of the fine aboveground biomass incineration organizer (FABIO) (a), and the FABIO during an experimental burn (b). Schematic legend: 1. 3.18 cm (1-1/4”) punched angle iron holding welded 4ga. wire with approx. 10cm x 10cm openings, 2. 1.91 cm (¾”) metal conduit, 3. flame retardant soaked cotton twine, 4. thermocouple temperature data loggers (HOBO U12), inside of weatherproof cases (Pelican 1010), and 5. type K thermocouples with braided steel wire leads (TP875 Extech Instruments, Nashua, NH, USA).
 
 \newpage
 
 ![](figures/max sabv100 pub figure-1.png)
-Fitted regression lines between maximum temperature (a-c) or time above 100 ºC (d-f) and fuel load for either piled or standing fuel structure at 50 cm, 25 cm, and 0 cm above ground level.
+
+**Figure:** Fitted regression lines between maximum temperature (a-c) or time above 100 ºC (d-f) and fuel load for either piled or standing fuel structure at 50 cm, 25 cm, and 0 cm above ground level.
 
 The “maximum temperature” at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient.
 
@@ -1362,12 +1352,13 @@ The "Seconds above 100°C"" is the amount of time temperatures were recorded abo
 # Appendix 4 - Data Dictionary
 
 ```{r data dictionary setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(knitr)
-library(kableExtra)
-```
 
-\newpage
+# knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+# library(kableExtra)
+column_names <- c("Field name", "Data type", "Description")
+
+```
 
 ## Common among all data files
 
@@ -1381,7 +1372,9 @@ common_fields <- data.frame(
     "date that set of data was collected. format: YYYY-MM-DD", 
     "year the plot was visited"))
 
-kable(common_fields) #%>%
+names(common_fields) <- column_names
+
+knitr::kable(common_fields, padding = 4, longtable = TRUE, format = "markdown") #%>%
   # kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   # column_spec(1, bold = T, border_right = T) %>%
   # column_spec(2, border_right = T)
@@ -1405,7 +1398,9 @@ plot_visit_cogon_fields <- data.frame(
     "latitudinal y-coordinate of plot_id", 
     "number of years since the sample area was last burned"))
 
-kable(plot_visit_cogon_fields) #%>%
+names(plot_visit_cogon_fields) <- column_names
+
+kable(plot_visit_cogon_fields, padding = 4, longtable = TRUE, format = "markdown" ) #%>%
   # kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   # column_spec(1, bold = T, border_right = T) %>%
   # column_spec(2, border_right = T)
@@ -1427,7 +1422,9 @@ quadrat_species_fields <- data.frame(
     "estimate of the species' percent cover in the plot based on an average of four square meter quadrats", 
     "estimate of the species' stem count in the plot based on an average of four square meter quadrats"))
 
-kable(quadrat_species_fields) #%>%
+names(quadrat_species_fields) <- column_names
+
+kable(quadrat_species_fields, padding = 4, longtable = T, formate = "markdown") #%>%
   # kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   # column_spec(1, bold = T, border_right = T) %>%
   # column_spec(2, border_right = T)
@@ -1457,7 +1454,9 @@ quadrat_biomass_canopy_fields <- data.frame(
     "estimate of *dried* litter mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
     "estimate of canopy cover in the plot based on the average of four manual densiometer measurements at four square meter quadrats"))
 
-kable(quadrat_biomass_canopy_fields) #%>%
+names(quadrat_biomass_canopy_fields) <- column_names
+
+kable(quadrat_biomass_canopy_fields, padding = 4, longtable = T, format = "markdown") #%>%
   # kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   # column_spec(1, bold = T, border_right = T) %>%
   # column_spec(2, border_right = T)
@@ -1484,7 +1483,9 @@ trees_raw_fields <- data.frame(
     "height of the tree (m). if NA, tree height was not measured", 
     "height of visible char on the tree due to fire (m). if NA, char height was not measured"))
 
-kable(trees_raw_fields) #%>%
+names(trees_raw_fields) <- column_names
+
+kable(trees_raw_fields, padding = 4, longtable = T, format = "markdown") #%>%
   # kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   # column_spec(1, bold = T, border_right = T) %>%
   # column_spec(2, border_right = T)
@@ -1508,7 +1509,9 @@ trees_summary_fields <- data.frame(
     "estimate of a species tree height in the plot based on average of recorded tree height measurements (m)", 
     "estimate of a species char height in the plot based on average of recorded char height measurements (m)"))
 
-kable(trees_summary_fields) #%>%
+names(trees_summary_fields) <- column_names
+
+kable(trees_summary_fields, padding = 4, longtable = T, format = "markdown") #%>%
   # kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   # column_spec(1, bold = T, border_right = T) %>%
   # column_spec(2, border_right = T)
@@ -1528,7 +1531,9 @@ woody_subplot_fields <- data.frame(
   description = c("species of the individals to at least Genus level. if NA, unable to identify",
     "number of woody stems with height greater than 1m within a 5.64m radius from plot center"))
 
-kable(woody_subplot_fields) #%>%
+names(woody_subplot_fields) <- column_names
+
+kable(woody_subplot_fields, padding = 4, longtable = T, format = "markdown") #%>%
   # kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   # column_spec(1, bold = T, border_right = T) %>%
   # column_spec(2, border_right = T)
@@ -1549,13 +1554,16 @@ ticks_fields <- data.frame(
     "life stage of tick. ex: adult, nymph, larvae", 
     "number of ticks found in the plot based on four dry ice traps per plot and cloth dragging"))
 
-kable(ticks_fields) #%>%
+names(ticks_fields) <- column_names
+
+kable(ticks_fields, padding = 4, longtable = T, format = "markdown") #%>%
   # kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   # column_spec(1, bold = T, border_right = T) %>%
   # column_spec(2, border_right = T) %>% 
   # footnote(general = ("Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no ticks were collected."))
 
 ```
+
 Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no ticks were collected.
 
 \newpage
@@ -1572,23 +1580,25 @@ dung_fields <- data.frame(
     "number of dung deposit *events* found from 1m on either side of a 50m transect. note: each individual rabbit pellet was counted as a single event", 
     "number of dung deposit *events* found from 2m on either side of a 50m transect. note: each individual rabbit pellet was counted as a single event"))
 
-kable(dung_fields) #%>%
+names(dung_fields) <- column_names
+
+kable(dung_fields, padding = 4, longtable = T, format = "markdown") #%>%
   # kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   # column_spec(1, bold = T, border_right = T) %>%
   # column_spec(2, border_right = T) %>% 
   # footnote(general = "Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no dung was found.")
 
 ```
+
 Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no ticks were collected.
 
 \newpage
 
 # Appendix 5 - Stem Maps
+
 Maps of the locations of each tree stem measured in each plot based on the center of the circular plot being at 0 meters and the sighted direction corresponding to the compass direction.
 
-\newpage
-
-```{r}
+```{r attempt to automate stem map output, eval=F, echo=F}
 
 stem_maps <- list.files("stem_maps/", pattern = "jackson")
 
@@ -1599,19 +1609,13 @@ for(i in stem_maps){
 
 ```
 
-
 ![](stem_maps/jackson a1.png)
-
 \newpage
 
 ![](stem_maps/jackson b1.png)
-
 \newpage
-
 ![](stem_maps/jackson c1.png)
-
 \newpage
-
 ![](stem_maps/jackson d1.png)
 
 \newpage
