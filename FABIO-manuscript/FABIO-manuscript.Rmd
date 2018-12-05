@@ -129,6 +129,7 @@ We qualitatively compare the fire intensity and behavior measurements from these
 # METHODS
 
 ## Study site
+
 We harvested ~50 kg of standing cogongrass from an invasion at the Biven's Arm Research Station (BARS), Florida, USA. The fuel was stored in a shed for 48-hours to protect it from rainfall, and then spread outside in a cleared area to dry for ~72 hours. We raked through the pile each day to increase drying, while carefully maintaining stem orientation in the same direction. We found that consistent stem orientation was more efficient for weighing and loading fuels vertically into the FABIO. 
 
 1.	Study Species
@@ -176,6 +177,7 @@ We harvested ~50 kg of standing cogongrass from an invasion at the Biven's Arm R
 
 
 ## Experimental apparatus: Fine Aboveground Biomass Incineration Organizer (FABIO)
+
 The fine aboveground biomass incineration organizer (FABIO) is a freestanding device for outdoor use to efficiently manipulate fuel structure and assess the effects on fire intensity (Figure 2). These outdoor small-scale (1m^2^) experimental fires allow for repeated measurements of fire intensity across multiple fuel loads without the onerous task of setting up all of the experimental plots prior to a large-scale prescribed that is subject to weather conditions and sufficient personnel. The FABIO is equipped with nine type K braided steel insulated thermocouples (TP875 Extech Instruments, Nashua, NH, USA) that were 100 cm long with a diameter of XX mm at the point of measurement. These thermocouples were robust to exposure to multiple fires and could therefore be used continuously throughout the day. Thermocouples were connected to HOBO J,K,S,T thermocouple loggers (Model U12, Onset Computer Corporation, Bourne, MA, USA) capable of recording temperatures between 0 and 1250 ºC every second. The loggers were housed in Pelican cases (1010 Micro Case, Torrance, CA, USA) with foam inserts (1012 Pick N Pluck). A small hole drilled in the lid of each case to pass through the thermocouple wire. In order to more accurately capture temperatures throughout the fire profile, three thermocouples are placed at each of three heights (ground level, 25cm, and 50cm) with equidistant horizontal spacing. Two measurements of flame heights are quantified using passive flame height sensors. The passive flame height sensors are twisted cotton string (XXX) soaked in flame retardant (Phos-Chek LC-95, ICL Performance Products LC, Ontario, CA, USA) and dried for at least 24 hours. The strings are tied to a horizontal piece of steel conduit so that they hang vertically and we used two for each fire (see Figure 2). The flame height sensors we used were capable of measuring heights up to 275cm and allow for rapid replacement between experimental fires. Passive flame height sensors like these have been used previously for in situ fire behavior experiment and provide a reliable measurement for quantifying flame heights that is free from human biases (Flory et al. 2015; Kolaks et al. 2004; Ryan 1981).
 
 
@@ -184,9 +186,11 @@ The fine aboveground biomass incineration organizer (FABIO) is a freestanding de
 ## Data collection and analysis
 
 ### Experimental design
+
 We burned three fires using piled fuel and three fires using standing fuel for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. We ultimately burned 32 fires in this experiment, with one additional fire in the 1000g category due to mislabeling during biomass sorting and weighing. We put the fire intensity and behavior measurements from these experimental fires in the context of measurements made during a prescribed fire in a longleaf pine ecosystem, and measurements made for five experimental fires using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a longleaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass *Aristida stricta* (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~250 hectare management unit.
 
 ### Temperature and weather measurement
+
 We recorded temperatures every second for all fires. 
 
 For the 32 experimental fires where the fuel loads were either piled or standing we used the braided steel insulated thermocouples (TP875 Extech Instruments, Nashua, NH, USA) that were 100 cm long with a diameter of XX mm at the point of measurement.  
@@ -196,6 +200,7 @@ During the prescribed fire we used braided glass insulated wire probes (TC6-K, O
 
 
 ### Statistical analyses
+
 We used ordinary least squares linear regressions to model the response variables of average maximum temperature, time above 100 ºC at each probe height, the average flame height, and the rate of spread. We used beta regression to model the proportion of biomass consumed. Fuel load (mass) and fuel structure (piled vs. standing) were used as explanatory variables in each model, and fuel load was entered as a continuous variable. We tested the main effects and interaction of fuel load and fuel structure along with weather covariates (e.g. air temperature, wind speed, relative humidity). Statistically insignificant weather variables were excluded from final models. Because our main goal was to assess the effect of fuel structure (piled vs. standing) on measures of fire intensity and behavior we at minimum retained fuel structure and biomass as main effects in all models.
 
 Regression models had the following general form:
@@ -447,6 +452,7 @@ ggplot(aes(total_biomass, s_abv100)) +
 
 
 ```{r pairs-panel-fxns}
+
 panel.cor <- function(x, y, digits = 2, cex.cor, ...)
 {
   usr <- par("usr"); on.exit(par(usr))
@@ -506,6 +512,7 @@ We used the statistical language `R` `r citep(citation())` for all our analyses.
 
 
 # RESULTS
+
 ```{r figures setup, eval = T}
       
       # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
@@ -526,6 +533,7 @@ fills <- scale_fill_manual(values = c("both"="purple","piled"="red","standing"="
 linetypes <- scale_linetype_manual(values=c("piled"="solid","standing"="solid","both"="dashed"))
 
 ```
+
 ## Fuel moisture
 
 ```{r fuel_moisture}
@@ -538,7 +546,7 @@ linetypes <- scale_linetype_manual(values=c("piled"="solid","standing"="solid","
 # names(fires_biomass)
 
 # all_fabio_fires_biomass
-ggplot(d1, aes(structure, est_pct_fuel_moisture)) +
+ggplot(d1, aes(structure, pct_fuel_moisture)) +
       geom_boxplot(aes(color = structure), outlier.shape = 8) +
       geom_point(aes(color = structure),size = 1, alpha = .5, show.legend = F) +
       stat_summary(aes(fill = structure), fun.y = "mean", geom = "point", shape = 22, size = 3, show.legend = F) +
@@ -558,10 +566,10 @@ d1 %>%
       filter(!duplicated(fire_id)) %>% 
       group_by(structure) %>% 
       summarise(nobs = n(),
-                min_moisture = min(est_pct_fuel_moisture, na.rm = T),
-                avg_moisture = mean(est_pct_fuel_moisture, na.rm = T),
-                max_moisture = max(est_pct_fuel_moisture, na.rm = T),
-                sd_moisture = sd(est_pct_fuel_moisture, na.rm = T),
+                min_moisture = min(pct_fuel_moisture, na.rm = T),
+                avg_moisture = mean(pct_fuel_moisture, na.rm = T),
+                max_moisture = max(pct_fuel_moisture, na.rm = T),
+                sd_moisture = sd(pct_fuel_moisture, na.rm = T),
                 se_moisture = sd_moisture/sqrt(nobs)) %>% 
       knitr::kable(., digits = 2)
       
@@ -569,7 +577,7 @@ d1 %>%
 
 Across all experimental fires, fuel moisture content ranged from 4.6 to 19.6% (mean = 11.5 ± 0.6% SE). Moisture of fuels used for piled fires ranged from 4.6 to 15.3% (mean = 11.2 ± 0.7% SE) and for standing fires from 6.8 to 19.6% (mean = 11.8 ± 0.9% SE). Fuel moisture was 
 
-```{r eval=F}
+```{r fire profiles, eval=F}
 
 ggplot(fire_temps_avg, aes(time, tempC)) +
       geom_line(aes(color = structure)) +
@@ -637,23 +645,21 @@ p_fire_flame_ht <- prescribed_fire %>%
                 avg_biomass = mean(total_biomass),
                 sd_biomass = sd(total_biomass),
                 se_biomass = sd_biomass/n)
-<<<<<<< HEAD
 
 ```
 
 Prescribed Fire Summary Table
+
 ```{r rx fire summary table}
 
 kable(select(p_fire_summary, location, avg_max_temp:se_s_abv100), digits = 2)
-=======
-      
->>>>>>> 8aefe5b1e7b57c9fa016fea0102881f1b38e643e
 
 ```
 
 
 
 ## Maximum temperature
+
 The "maximum temperature" at each height for each fire was calculated by averaging the five highest temperatures for each probe and then averaging these values across the three temperature probes located at each height. For some of the fires with the lowest amount of biomass (250 g) probe temperatures did not deviate from near-ambient (Fig. 3). 
 
 ```{r maxtemp-figure, eval = F}
@@ -735,6 +741,7 @@ fabio_fires_summary$structure <- stringr::str_to_title(fabio_fires_summary$struc
 ```      
 
 ```{r maxtemp pub fig}
+
 maxtemp_fig_labels <- data.frame(
       location = c("50cm","25cm","0cm"), 
       pid = c("d","e","f"), 
@@ -1029,6 +1036,7 @@ coef50cm <- mutate(coef50cm, Location = "50cm",
 ```
 
 ```{r compare_heatFlux_abv100, eval=F}
+
 flux_abv100 <- ggplot(fabio_fires, aes(biomass, heat_flux_abv100)) +
       # geom_line(aes(color = source, linetype = location)) +
       geom_point(aes(color = structure)) +
