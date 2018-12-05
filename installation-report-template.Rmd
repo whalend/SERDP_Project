@@ -423,7 +423,7 @@ summary(tick_data_sum)
 
 # Project Summary
 
-Tick-borne diseases (TBDs) represent a major public health threat in North America, particularly for military personnel training on Department of Defense (DoD) installations. We received funding from the Strategic Environmental Research and Development Programto explore several of the predicted consequences of climate change on fire regimes and plant communities, and their interactions with wildlife, for human risk of exposure to TBDs in the southeastern U.S.
+Tick-borne diseases (TBDs) represent a major public health threat in North America, particularly for military personnel training on Department of Defense (DoD) installations. We received funding from the Strategic Environmental Research and Development Program to explore several of the predicted consequences of climate change on fire regimes and plant communities, and their interactions with wildlife, for human risk of exposure to TBDs in the southeastern U.S.
 
 ![](pictures/serdp-flow-chart.png)
 
@@ -586,7 +586,7 @@ tick_data %>%
 
 ## Tick abundance and fire history
 
-The figure below shows the general relationship between the abundance of adult and nymph life-stage ticks (observations of larvae were counted as "1") across all the installations. The points contributed by `r paste(inst_name)` are highlighted in blue. The y-axis (tick abundance) is natural-log transformed, i.e., a value of 2 corresponds to about `r round(exp(2))` ticks. We collected a total of `r total_ticks` ticks at `r paste(inst_name)`. 
+The figure below shows the general relationship between the abundance of adult and nymph life-stage ticks (observations of larvae were counted as "1") across all the installations. The points contributed by `r paste(inst_name)` are highlighted in `r installation_color`. The y-axis (tick abundance) is natural-log transformed, i.e., a value of 2 corresponds to about `r round(exp(2))` ticks. We collected a total of `r total_ticks` ticks at `r paste(inst_name)`. 
 
 ```{r tick abundance fire all, eval = F}
 
@@ -668,7 +668,7 @@ inst_data <- tick_data_sum %>%
 )
 ```
 
-**Figure 6:** A positive relationship is seen with percent litter cover and tick abundance across all installations. Litter cover is estimated by averaging of the litter cover in four 1m x 1m quadrats in each sampled plot. It is hypothesized that more litter cover creates a more suitable environment for tick survival (see Supplementary Information - Tick survival in cogongrass invasions). Plot data points recorded specifically at `r inst_name` are in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
+**Figure 6:** A positive relationship is seen with percent litter cover and tick abundance across all installations. Litter cover is estimated by averaging the litter cover in four 1m x 1m quadrats in each sampled plot. It is hypothesized that more litter cover creates a more suitable environment for tick survival (see Appendix 2 - Tick survival in cogongrass invasions). Plot data points recorded specifically at `r inst_name` are in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
@@ -723,7 +723,7 @@ inst_data <- tick_data_sum %>%
 
 **Figure 8:** Tick abundance tended to be higher with greater litter moisture in uninvaded plots across all installations. We did not detect any relationship in cogongrass-invaded plots. Litter moisture was calculated as the difference between fresh and dried weight from biomass collected at four 25cm x 25cm quadrats in each plot. Plot data points recorded at `r inst_name` are shown in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
-Places with maintain higher humidity at ground-level are likely to be more favorable for tick survival, and therefore may be positively associated with tick abundance. Our measurement of litter moisture is very coarse because it is from a single point in time and so highly dependent on weather conditions leading up to sampling. We can't say whether a particular location generally has greater litter moisture from these data alone.
+Places that maintain higher humidity at ground-level are likely to be more favorable for tick survival, and therefore may be positively associated with tick abundance. Our measurement of litter moisture is very coarse because it is from a single point in time and so highly dependent on weather conditions leading up to sampling. We can't say whether a particular location generally has greater litter moisture from these data alone.
 
 \newpage
 
@@ -750,7 +750,7 @@ inst_data <- tick_data_sum %>%
 )
 ```
 
-**Figure 9:** There was a positive relationship between tick abundance and overstory canopy cover in uninvaded plots. It is hypothesized denser canopy cover creates a more suitable microclimate at ground level for tick survival (see Supplementary Information - Tick survival in cogongrass invasions). Data recorded at `r inst_name` are shown in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
+**Figure 9:** There was a positive relationship between tick abundance and overstory canopy cover in uninvaded plots. It is hypothesized denser canopy cover creates a more suitable microclimate at ground level for tick survival (see Appendix 2 - Tick survival in cogongrass invasions). Data recorded at `r inst_name` are shown in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
@@ -803,7 +803,7 @@ ggplot(canopy_cover_summary, aes(years_since_fire, avg_canopy_cover)) +
       theme(legend.title = element_blank())
 ```
 
-**Figure 11:** Overstory tree canopy cover tended to be greater with more time since fire. Data points at `r inst_name` are in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
+**Figure 11:** Overstory tree canopy cover tended to be greater with increasing time since fire. Data points at `r inst_name` are in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 \newpage
 
@@ -933,7 +933,9 @@ inst_data <- biomass_plot_summary %>%
 
 ```
 
-**Figure 16:**  There is a positive relationship litter biomass and time since fire in both uninvaded and cogongrass-invaded plots. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
+**Figure 16:**  There is a positive relationship between litter biomass and time since fire in both uninvaded and cogongrass-invaded plots. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
+
+Increasing time since last fire generally trends towards a higher accumulation of litter biomass and cover. The higher quantity of litter in these less frequently burned areas could be a potential driver of tick abundance or survival. 
 
 \newpage
 
@@ -1046,7 +1048,7 @@ inst_data <- tree_data_plot_summary %>%
 
 ```
 
-**Figure 20:** No relationship in native sites with total tree DBH and time since fire. Total DBH is the cumulative value of all tree diameters recorded within the plot. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
+**Figure 20:** There was no relationship in native sites with total tree DBH and time since fire, and a slight negative trend in invaded plots though sample size is small. Total DBH is the cumulative value of all tree diameters recorded within the plot. Data points at `r inst_name` are recorded in `r installation_color`. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.
 
 ```{r proportion pine dbh figure, eval=F}
 ## Proportion pine DBH and years since fire
@@ -1127,7 +1129,7 @@ Recent studies demonstrate that invasive plants can alter TBD risk via both dire
 
 **No ecological studies have addressed the effects of plant invasions and potential interactions with climate change or fire regimes for TBD risk.**
 
-This project conducts a survival assay of *A. americanum* to assess tick mortality and plant invasion interactions, as well as microclimate suitability for tick survival. For this assay we will deploy **1** mesh bag containing **10 nymph** and **10 adult** (5 male and 5 female) life stage *A. americanum* ticks in **12** *I. cylindrica* invaded and **12** native plots (1 m x 1 m) in a pine dominated forest habitat. Each mesh bag will be stood up vertically at the litter layer (to mimic natural questing habitat) inside of a constructed metal wire cage to deter scavengers. Microclimate data is taken by temperature and relative humidity loggers that are attached in a PVC housing next to the cage that record measurements every 5 minutes. Ticks were checked regularly approximately every **10-14** days to monitor their survival. Below are the figures for tick survival since launch on June 1, 2018. Ticks will be monitored continuously until all tick life stage morality has reached 100%.
+This project conducts a survival assay of *A. americanum* to assess tick mortality and plant invasion interactions, as well as microclimate suitability for tick survival. For this assay we will deploy **1** mesh bag containing **10 nymph** and **10 adult** (5 male and 5 female) life stage *A. americanum* ticks in **12** *I. cylindrica* invaded and **12** native plots (1 m x 1 m) in a pine dominated forest habitat. Each mesh bag will be stood up vertically at the litter layer (to mimic natural questing habitat) inside of a constructed metal wire cage to deter scavengers. Microclimate data is taken by temperature and relative humidity loggers that are attached in a PVC housing next to the cage that record measurements every 5 minutes. Ticks were checked regularly approximately every **10-14** days to monitor their survival. Below are the figures for tick survival since launch on June 21, 2018. Ticks will be monitored continuously until all tick life stage morality has reached 100%.
 
 \newpage
 
@@ -1525,7 +1527,7 @@ trees_raw_fields <- data.frame(
     "species of the individals to at least Genus level. if NA, unable to identify",
     "diameter at breast height of the tree (cm)", 
     "tree relative canopy position. ex: e = emergent, d = dominant, c = codominant,  i = intermediate, u = understory", 
-    "health class assigned (alive or dead) of each tree", 
+    "health class assigned (alive or dead) of each tree. ex: 1 = alive, 0 = dead", 
     "distance from the center of the plot to the midpoint of the tree (m)", 
     "azimuth of the tree relative to plot center using a sighting compass (°)", 
     "height of the tree (m). if NA, tree height was not measured", 
@@ -1619,7 +1621,7 @@ ticks_fields <- data.frame(
   data_type = c(
     "character", "character", "numeric"),
   description = c("species of the individals to at least Genus level. if NA, unable to identify",
-    "life stage of tick. ex: adult, nymph, larvae", 
+    "life stage of tick. ex: A = adult, N = nymph, L = larvae", 
     "number of ticks found in the plot based on four dry ice traps per plot and cloth dragging"))
 
 names(ticks_fields) <- column_names
@@ -1632,7 +1634,7 @@ kable(ticks_fields, padding = 4, longtable = T, format = "markdown") #%>%
 
 ```
 
-Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no ticks were collected.
+Some plot_id may contain NAs in the “species_name” and “life_stage” fields at the sampled plot but have zeros for “tick_count”. These are placeholder zeros to show that the plot was sampled and no ticks were collected. 
 
 \newpage
 >>>>>>> 7df9713695d2e8e4a70f5be2fd6921e3dc7ec419
@@ -1663,7 +1665,7 @@ kable(dung_fields, padding = 4, longtable = T, format = "markdown") #%>%
 
 ```
 
-Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no ticks were collected.
+Some plot_id may contain NAs in the “species” field at the sampled plot but have zeros in “dung1m” and “dung2m”. These are placeholder zeros to show that the plot was sampled and no ticks were collected. 
 
 \newpage
 
