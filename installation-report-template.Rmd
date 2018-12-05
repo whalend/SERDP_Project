@@ -553,11 +553,7 @@ n_raw_ticks_inst_2018 <- filter(tick_data, installation_full_name==inst_name & v
 
 ```
 
-<<<<<<< HEAD
-A total of `r n_total_raw_ticks_all` ticks were collected across all installations. At `r paste(inst_name)` in  ticks were collected and in `r n_raw_ticks_inst_2018` ticks were collected. Note the different tick abundance scales on each panel.
-=======
-A total of `r n_total_raw_ticks_all` ticks were collected across all installations. At `r paste(inst_name)` in `r n_raw_ticks_inst_2017` ticks were collected and in `r n_raw_ticks_inst_2018` ticks were collected. Note the different scales of the y-axis on each panel.
->>>>>>> 7df9713695d2e8e4a70f5be2fd6921e3dc7ec419
+A total of `r n_total_raw_ticks_all` ticks were collected across all installations. At `r paste(inst_name)`, `r n_raw_ticks_inst_2017` ticks were collected in 2017, and `r n_raw_ticks_inst_2018` ticks were collected in 2018. Note the different scales of the y-axis on each panel.
 
 ```{r raw tick numbers by installation figure}
 
