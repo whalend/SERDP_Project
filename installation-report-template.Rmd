@@ -16,6 +16,7 @@ output:
     toc_float: yes
   pdf_document:
     toc: yes
+  always_allow_html: yes
 subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-borne
   diseases<h1>
 params:
@@ -42,6 +43,8 @@ knitr::opts_chunk$set(warning = F)
 knitr::opts_chunk$set(message = F)
 knitr::opts_chunk$set(dpi = 150)
 
+library(knitr)
+library(kableExtra)
 library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi); library(stringr)
 library(tidyr)
@@ -546,10 +549,15 @@ n_raw_ticks_inst_2018 <- filter(tick_data, installation_full_name==inst_name & v
 #  select(count, tick_count, life_stage) %>% 
 #  summary(.)
 
+#`r n_raw_ticks_inst_2017` ### for below  next to 2018
 
 ```
 
+<<<<<<< HEAD
+A total of `r n_total_raw_ticks_all` ticks were collected across all installations. At `r paste(inst_name)` in  ticks were collected and in `r n_raw_ticks_inst_2018` ticks were collected. Note the different tick abundance scales on each panel.
+=======
 A total of `r n_total_raw_ticks_all` ticks were collected across all installations. At `r paste(inst_name)` in `r n_raw_ticks_inst_2017` ticks were collected and in `r n_raw_ticks_inst_2018` ticks were collected. Note the different scales of the y-axis on each panel.
+>>>>>>> 7df9713695d2e8e4a70f5be2fd6921e3dc7ec419
 
 ```{r raw tick numbers by installation figure}
 
@@ -1380,13 +1388,50 @@ knitr::kable(common_fields, padding = 4, longtable = TRUE, format = "markdown") 
   # column_spec(2, border_right = T)
  
 ```
+<<<<<<< HEAD
+# Supplementary Information - Data Dictionary
+
+Below is dictionary for all data parameters used in the attached raw data files for `r paste(inst_name)`.
+
+## Common among all data files
+
+```{r common parameters across all data, echo=FALSE}
+
+
+  
+
+```
+=======
 
 \newpage
+>>>>>>> 7df9713695d2e8e4a70f5be2fd6921e3dc7ec419
 
 ## Plot visit and invasion status
 
 ```{r plot visit & invasion status, echo=FALSE}
 
+<<<<<<< HEAD
+
+
+```
+
+## Vegetation - Plant species
+
+```{r vegatation plant species of 1m quadrats, echo=FALSE}
+
+
+
+```
+
+## Vegetation - quadrat measurements, biomass, and canopy cover 
+
+```{r vegetation data in 1m quadrats, biomass, and canopy cover, echo=FALSE}
+
+
+
+```
+
+=======
 plot_visit_cogon_fields <- data.frame(
   field_name = c("imcy_inv", "avg_tiller_density_m2", "xcoord_lon", "ycoord_lat",
                  "years_since_fire"),
@@ -1465,10 +1510,17 @@ kable(quadrat_biomass_canopy_fields, padding = 4, longtable = T, format = "markd
 
 \newpage
 
+>>>>>>> 7df9713695d2e8e4a70f5be2fd6921e3dc7ec419
 ## Trees - raw
 
 ```{r raw tree data, echo=FALSE}
 
+<<<<<<< HEAD
+
+
+```
+
+=======
 trees_raw_fields <- data.frame(
   field_name = c("tag", "species_name", "dbh", "canopy", "health", "distance", "azimuth", "height", "char"),
   data_type = c(
@@ -1494,10 +1546,17 @@ kable(trees_raw_fields, padding = 4, longtable = T, format = "markdown") #%>%
 
 \newpage
 
+>>>>>>> 7df9713695d2e8e4a70f5be2fd6921e3dc7ec419
 ## Trees - summary
 
 ```{r summarized tree data to plot level, echo=FALSE}
 
+<<<<<<< HEAD
+
+
+```
+
+=======
 trees_summary_fields <- data.frame(
   field_name = c( "species_name", "canopy", "health", "total_dbh", "avg_height", "avg_char"),
   data_type = c(
@@ -1520,10 +1579,17 @@ kable(trees_summary_fields, padding = 4, longtable = T, format = "markdown") #%>
 
 \newpage
 
+>>>>>>> 7df9713695d2e8e4a70f5be2fd6921e3dc7ec419
 ## Woody subplot
 
 ```{r woody subplot, echo=FALSE}
 
+<<<<<<< HEAD
+
+
+```
+
+=======
 woody_subplot_fields <- data.frame(
   field_name = c("species_name", "stems_100m2"),
   data_type = c(
@@ -1542,10 +1608,16 @@ kable(woody_subplot_fields, padding = 4, longtable = T, format = "markdown") #%>
 
 \newpage
 
+>>>>>>> 7df9713695d2e8e4a70f5be2fd6921e3dc7ec419
 ## Ticks
 
 ```{r ticks, echo=FALSE}
 
+<<<<<<< HEAD
+
+
+```
+=======
 ticks_fields <- data.frame(
   field_name = c("species_name", "life_stage", "tick_count"),
   data_type = c(
@@ -1567,11 +1639,16 @@ kable(ticks_fields, padding = 4, longtable = T, format = "markdown") #%>%
 Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no ticks were collected.
 
 \newpage
+>>>>>>> 7df9713695d2e8e4a70f5be2fd6921e3dc7ec419
 
 ## Dung
 
 ```{r dung, echo=FALSE}
 
+<<<<<<< HEAD
+
+```
+=======
 dung_fields <- data.frame(
   field_name = c("species", "dung1m", "dung2m"),
   data_type = c(
@@ -1653,3 +1730,4 @@ for(i in stem_maps){
 \newpage
 
 ![](stem_maps/jackson m1.png)
+>>>>>>> 7df9713695d2e8e4a70f5be2fd6921e3dc7ec419
