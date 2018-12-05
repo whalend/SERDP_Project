@@ -129,15 +129,16 @@ summary(ticks_grouped)
 #### Filter for Camp Blanding ####
 
 ticks_blanding <- ticks_grouped %>%
-  filter(installation=="blanding")
+  filter(installation=="blanding", !is.na(species_name))
 
-ticks_blanding <- filter(ticks_blanding) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+blanding_plots <- plot_visit_data %>%
+  filter(installation=="blanding") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(ticks_blanding)
+ticks_blanding <- left_join(blanding_plots, ticks_blanding)
 
-filter(ticks_blanding, plot_id=="blanding h1") %>%
+ticks_blanding <- ticks_blanding %>%
+  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_blanding, "data/processed_by_installation/camp_blanding/ticks_blanding.csv")
@@ -145,15 +146,16 @@ write_csv(ticks_blanding, "data/processed_by_installation/camp_blanding/ticks_bl
 #### Filter for Avon Park ####
 
 ticks_avonpark <- ticks_grouped %>%
-  filter(installation=="avonpark")
+  filter(installation=="avonpark", !is.na(species_name))
 
-ticks_avonpark <- filter(ticks_avonpark) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+avonpark_plots <- plot_visit_data %>%
+  filter(installation=="avonpark") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(ticks_avonpark)
+ticks_avonpark <- left_join(avonpark_plots, ticks_avonpark)
 
-filter(ticks_avonpark, plot_id=="avonpark c2") %>%
+ticks_avonpark <- ticks_avonpark %>%
+  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_avonpark, "data/processed_by_installation/avon_park_afr/ticks_avonpark.csv")
@@ -161,15 +163,16 @@ write_csv(ticks_avonpark, "data/processed_by_installation/avon_park_afr/ticks_av
 #### Filter for Eglin AFB ####
 
 ticks_eglin <- ticks_grouped %>%
-  filter(installation=="eglin")
+  filter(installation=="eglin", !is.na(species_name))
 
-ticks_eglin <- filter(ticks_eglin) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+eglin_plots <- plot_visit_data %>%
+  filter(installation=="eglin") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(ticks_eglin)
+ticks_eglin <- left_join(eglin_plots, ticks_eglin)
 
-filter(ticks_eglin, plot_id=="eglin i1") %>%
+ticks_eglin <- ticks_eglin %>%
+  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_eglin, "data/processed_by_installation/eglin_afb/ticks_eglin.csv")
@@ -177,15 +180,16 @@ write_csv(ticks_eglin, "data/processed_by_installation/eglin_afb/ticks_eglin.csv
 #### Filter for Tyndall AFB ####
 
 ticks_tyndall <- ticks_grouped %>%
-  filter(installation=="tyndall")
+  filter(installation=="tyndall", !is.na(species_name))
 
-ticks_tyndall <- filter(ticks_tyndall) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+tyndall_plots <- plot_visit_data %>%
+  filter(installation=="tyndall") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(ticks_tyndall)
+ticks_tyndall <- left_join(tyndall_plots, ticks_tyndall)
 
-filter(ticks_tyndall, plot_id=="tyndall c1") %>%
+ticks_tyndall <- ticks_tyndall %>%
+  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_tyndall, "data/processed_by_installation/tyndall_afb/ticks_tyndall.csv")
@@ -205,27 +209,21 @@ ticks_jackson <- ticks_jackson %>%
       mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
       select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
-
-
-summary(ticks_jackson)
-
-filter(ticks_jackson, plot_id=="jackson c1") %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
-
 write_csv(ticks_jackson, "data/processed_by_installation/fort_jackson/ticks_jackson.csv")
 
 #### Filter for Fort Benning ####
 
 ticks_benning <- ticks_grouped %>%
-  filter(installation=="benning")
+  filter(installation=="benning", !is.na(species_name))
 
-ticks_benning <- filter(ticks_benning) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+benning_plots <- plot_visit_data %>%
+  filter(installation=="benning") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(ticks_benning)
+ticks_benning <- left_join(benning_plots, ticks_benning)
 
-filter(ticks_benning, plot_id=="benning c1") %>%
+ticks_benning <- ticks_benning %>%
+  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_benning, "data/processed_by_installation/fort_benning/ticks_benning.csv")
@@ -233,15 +231,16 @@ write_csv(ticks_benning, "data/processed_by_installation/fort_benning/ticks_benn
 #### Filter for Camp Shelby ####
 
 ticks_shelby <- ticks_grouped %>%
-  filter(installation=="shelby")
+  filter(installation=="shelby", !is.na(species_name))
 
-ticks_shelby <- filter(ticks_shelby) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+shelby_plots <- plot_visit_data %>%
+  filter(installation=="shelby") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(ticks_shelby)
+ticks_shelby <- left_join(shelby_plots, ticks_shelby)
 
-filter(ticks_shelby, plot_id=="shelby c1") %>%
+ticks_shelby <- ticks_shelby %>%
+  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_shelby, "data/processed_by_installation/camp_shelby/ticks_shelby.csv")
@@ -249,15 +248,16 @@ write_csv(ticks_shelby, "data/processed_by_installation/camp_shelby/ticks_shelby
 #### Filter for Fort Gordon####
 
 ticks_gordon <- ticks_grouped %>%
-  filter(installation=="gordon")
+  filter(installation=="gordon", !is.na(species_name))
 
-ticks_gordon <- filter(ticks_gordon) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+gordon_plots <- plot_visit_data %>%
+  filter(installation=="gordon") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(ticks_gordon)
+ticks_gordon <- left_join(gordon_plots, ticks_gordon)
 
-filter(ticks_gordon, plot_id=="gordon v1") %>%
+ticks_gordon <- ticks_gordon %>%
+  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_gordon, "data/processed_by_installation/fort_gordon/ticks_gordon.csv")
@@ -265,21 +265,22 @@ write_csv(ticks_gordon, "data/processed_by_installation/fort_gordon/ticks_gordon
 #### Filter for Moody AFB ####
 
 ticks_moody <- ticks_grouped %>%
-  filter(installation=="moody")
+  filter(installation=="moody", !is.na(species_name))
 
-ticks_moody <- filter(ticks_moody) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+gordon_moody <- plot_visit_data %>%
+  filter(installation=="moody") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(ticks_moody)
+ticks_moody <- left_join(moody_plots, ticks_moody)
 
-filter(ticks_moody, plot_id=="moody k1") %>%
+ticks_moody <- ticks_moody %>%
+  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
   select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
 write_csv(ticks_moody, "data/processed_by_installation/moody_afb/ticks_moody.csv")
 
 #### Steven stopped, question about multiple dates for all data and random NAs ####
-
+# fixed NAs
 
 ########################
 # ggplot(tick_data %>%

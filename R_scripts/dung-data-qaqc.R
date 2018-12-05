@@ -108,19 +108,14 @@ dung_blanding <- dung_grouped %>%
   filter(installation=="blanding", !is.na(species))
 
 blanding_plots <- plot_visit_data %>%
-      filter(installation=="blanding", plot_id != "blanding theater_cogon") %>%
-      select(installation, plot_id, visit_year)
+  filter(installation=="blanding") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-d1 <- left_join(blanding_plots, dung_blanding)
-unique(d1$species)
+dung_blanding <- left_join(blanding_plots, dung_blanding)
 
-dung_blanding <- filter(dung_blanding) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species, dung1m, dung2m)
-
-summary(dung_blanding)
-
-filter(dung_blanding, plot_id=="blanding h1") %>%
+dung_blanding <- dung_blanding %>%
+  mutate(dung1m = ifelse(is.na(dung1m)==TRUE, 0, dung1m),
+         dung2m = ifelse(is.na(dung2m)==TRUE, 0, dung2m)) %>%
   select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_blanding, "data/processed_by_installation/camp_blanding/dung_blanding.csv")
@@ -128,15 +123,17 @@ write_csv(dung_blanding, "data/processed_by_installation/camp_blanding/dung_blan
 #### Filter for Avon Park ####
 
 dung_avonpark <- dung_grouped %>%
-  filter(installation=="avonpark")
+  filter(installation=="avonpark", !is.na(species))
 
-dung_avonpark <- filter(dung_avonpark) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species, dung1m, dung2m)
+avonpark_plots <- plot_visit_data %>%
+  filter(installation=="avonpark") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(dung_avonpark)
+dung_avonpark <- left_join(avonpark_plots, dung_avonpark)
 
-filter(dung_avonpark, plot_id=="avonpark c1") %>%
+dung_avonpark <- dung_avonpark %>%
+  mutate(dung1m = ifelse(is.na(dung1m)==TRUE, 0, dung1m),
+         dung2m = ifelse(is.na(dung2m)==TRUE, 0, dung2m)) %>%
   select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_avonpark, "data/processed_by_installation/avon_park_afr/dung_avonpark.csv")
@@ -144,15 +141,17 @@ write_csv(dung_avonpark, "data/processed_by_installation/avon_park_afr/dung_avon
 #### Filter for Eglin AFB ####
 
 dung_eglin <- dung_grouped %>%
-  filter(installation=="eglin")
+  filter(installation=="eglin", !is.na(species))
 
-dung_eglin <- filter(dung_eglin) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species, dung1m, dung2m)
+eglin_plots <- plot_visit_data %>%
+  filter(installation=="eglin") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(dung_eglin)
+dung_eglin <- left_join(eglin_plots, dung_eglin)
 
-filter(dung_eglin, plot_id=="eglin c1") %>%
+dung_eglin <- dung_eglin %>%
+  mutate(dung1m = ifelse(is.na(dung1m)==TRUE, 0, dung1m),
+         dung2m = ifelse(is.na(dung2m)==TRUE, 0, dung2m)) %>%
   select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_eglin, "data/processed_by_installation/eglin_afb/dung_eglin.csv")
@@ -160,15 +159,17 @@ write_csv(dung_eglin, "data/processed_by_installation/eglin_afb/dung_eglin.csv")
 #### Filter for Tyndall AFB ####
 
 dung_tyndall <- dung_grouped %>%
-  filter(installation=="tyndall")
+  filter(installation=="tyndall", !is.na(species))
 
-dung_tyndall <- filter(dung_tyndall) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species, dung1m, dung2m)
+tyndall_plots <- plot_visit_data %>%
+  filter(installation=="tyndall") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(dung_tyndall)
+dung_tyndall <- left_join(tyndall_plots, dung_tyndall)
 
-filter(dung_tyndall, plot_id=="tyndall h1") %>%
+dung_tyndall <- dung_tyndall %>%
+  mutate(dung1m = ifelse(is.na(dung1m)==TRUE, 0, dung1m),
+         dung2m = ifelse(is.na(dung2m)==TRUE, 0, dung2m)) %>%
   select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_tyndall, "data/processed_by_installation/tyndall_afb/dung_tyndall.csv")
@@ -190,26 +191,22 @@ dung_jackson <- dung_jackson %>%
              dung2m = ifelse(is.na(dung2m)==TRUE, 0, dung2m)) %>%
       select(plot_id, date, visit_year, species, dung1m, dung2m)
 
-
-summary(dung_jackson)
-
-filter(dung_jackson, plot_id=="jackson h1") %>%
-  select(plot_id, date, visit_year, species, dung1m, dung2m)
-
 write_csv(dung_jackson, "data/processed_by_installation/fort_jackson/dung_jackson.csv")
 
 #### Filter for Fort Benning ####
 
 dung_benning <- dung_grouped %>%
-  filter(installation=="benning")
+  filter(installation=="benning", !is.na(species))
 
-dung_benning <- filter(dung_benning) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species, dung1m, dung2m)
+benning_plots <- plot_visit_data %>%
+  filter(installation=="benning") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(dung_benning)
+dung_benning <- left_join(benning_plots, dung_benning)
 
-filter(dung_benning, plot_id=="benning h1") %>%
+dung_benning <- dung_benning %>%
+  mutate(dung1m = ifelse(is.na(dung1m)==TRUE, 0, dung1m),
+         dung2m = ifelse(is.na(dung2m)==TRUE, 0, dung2m)) %>%
   select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_benning, "data/processed_by_installation/fort_benning/dung_benning.csv")
@@ -217,15 +214,17 @@ write_csv(dung_benning, "data/processed_by_installation/fort_benning/dung_bennin
 #### Filter for Camp Shelby ####
 
 dung_shelby <- dung_grouped %>%
-  filter(installation=="shelby")
+  filter(installation=="shelby", !is.na(species))
 
-dung_shelby <- filter(dung_shelby) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species, dung1m, dung2m)
+shelby_plots <- plot_visit_data %>%
+  filter(installation=="shelby") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(dung_shelby)
+dung_shelby <- left_join(shelby_plots, dung_shelby)
 
-filter(dung_shelby, plot_id=="shelby h1") %>%
+dung_shelby <- dung_shelby %>%
+  mutate(dung1m = ifelse(is.na(dung1m)==TRUE, 0, dung1m),
+         dung2m = ifelse(is.na(dung2m)==TRUE, 0, dung2m)) %>%
   select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_shelby, "data/processed_by_installation/camp_shelby/dung_shelby.csv")
@@ -233,15 +232,17 @@ write_csv(dung_shelby, "data/processed_by_installation/camp_shelby/dung_shelby.c
 #### Filter for Fort Gordon ####
 
 dung_gordon <- dung_grouped %>%
-  filter(installation=="gordon")
+  filter(installation=="gordon", !is.na(species))
 
-dung_gordon <- filter(dung_gordon) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species, dung1m, dung2m)
+gordon_plots <- plot_visit_data %>%
+  filter(installation=="gordon") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(dung_gordon)
+dung_gordon <- left_join(gordon_plots, dung_gordon)
 
-filter(dung_gordon, plot_id=="gordon x1") %>%
+dung_gordon <- dung_gordon %>%
+  mutate(dung1m = ifelse(is.na(dung1m)==TRUE, 0, dung1m),
+         dung2m = ifelse(is.na(dung2m)==TRUE, 0, dung2m)) %>%
   select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_gordon, "data/processed_by_installation/fort_gordon/dung_gordon.csv")
@@ -249,17 +250,20 @@ write_csv(dung_gordon, "data/processed_by_installation/fort_gordon/dung_gordon.c
 #### Filter for Moody AFB ####
 
 dung_moody <- dung_grouped %>%
-  filter(installation=="moody")
+  filter(installation=="moody", !is.na(species))
 
-dung_moody <- filter(dung_moody) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species, dung1m, dung2m)
+moody_plots <- plot_visit_data %>%
+  filter(installation=="moody") %>%
+  select(installation, plot_id, visit_year, date=visit_date)
 
-summary(dung_moody)
+dung_moody <- left_join(moody_plots, dung_moody)
 
-filter(dung_moody, plot_id=="moody k1") %>%
+dung_moody <- dung_moody %>%
+  mutate(dung1m = ifelse(is.na(dung1m)==TRUE, 0, dung1m),
+         dung2m = ifelse(is.na(dung2m)==TRUE, 0, dung2m)) %>%
   select(plot_id, date, visit_year, species, dung1m, dung2m)
 
 write_csv(dung_moody, "data/processed_by_installation/moody_afb/dung_moody.csv")
 
 #### Steven stopped processing to installation, ask about random NAs as in ticks ####
+# ^ random  NAs fixed

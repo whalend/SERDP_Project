@@ -1,29 +1,16 @@
 plot_id,date,visit_year,species_name,life_stage,tick_count
-eglin a1,2018-08-05,2018,Amblyomma americanum,N,1
-eglin a1,2018-08-05,2018,NA,NA,0
 eglin b1,2017-08-19,2017,NA,NA,0
-eglin b2,2018-08-05,2018,NA,NA,0
-eglin c1,2018-06-15,2018,NA,NA,0
+eglin p1,2017-08-19,2017,Rhipicephalus sanguineus,A,1
 eglin d1,2017-08-17,2017,Amblyomma americanum,A,3
 eglin d1,2017-08-17,2017,Amblyomma americanum,N,8
-eglin e1,2018-06-15,2018,NA,NA,0
-eglin extra,2018-06-13,2018,Amblyomma americanum,A,2
-eglin extra,2018-06-13,2018,Amblyomma americanum,N,1
-eglin extra,2018-06-13,2018,Rhipicephalus sanguineus,A,1
-eglin extra,2018-06-15,2018,Amblyomma americanum,A,1
-eglin extra,2018-06-15,2018,Rhipicephalus sanguineus,A,1
+eglin h1,2017-08-16,2017,NA,NA,0
+eglin a1,2018-06-11,2018,NA,NA,0
+eglin b2,2018-06-15,2018,NA,NA,0
+eglin c1,2018-06-13,2018,NA,NA,0
+eglin e1,2018-06-12,2018,NA,NA,0
 eglin f1,2018-06-15,2018,Amblyomma americanum,A,1
-eglin f1,2018-08-05,2018,Amblyomma americanum,A,1
-eglin f1,2018-08-05,2018,NA,NA,0
-eglin g1,2018-06-15,2018,Amblyomma americanum,A,2
-eglin h1,2017-08-17,2017,Amblyomma americanum,A,1
-eglin h1,2017-08-17,2017,Amblyomma americanum,N,69
-eglin h1,2017-08-17,2017,Rhipicephalus sanguineus,A,1
+eglin g1,2018-06-11,2018,NA,NA,0
 eglin i1,2018-06-12,2018,Amblyomma americanum,A,8
 eglin i1,2018-06-12,2018,Amblyomma americanum,N,13
 eglin i1,2018-06-12,2018,Rhipicephalus sanguineus,A,4
-eglin i1,2018-06-12,2018,NA,NA,0
-eglin i1,2018-06-15,2018,Amblyomma americanum,A,1
-eglin j1,2018-06-15,2018,Amblyomma americanum,A,4
-eglin j1,2018-06-15,2018,Amblyomma americanum,N,2
-eglin p1,2017-08-19,2017,Rhipicephalus sanguineus,A,1
+eglin j1,2018-06-13,2018,NA,NA,0

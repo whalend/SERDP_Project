@@ -1,29 +1,19 @@
 plot_id,date,visit_year,species_name,life_stage,tick_count
-shelby a1,2018-08-13,2018,NA,NA,0
-shelby a2,2018-08-13,2018,NA,NA,0
-shelby b1,2017-09-23,2017,Amblyomma americanum,A,4
-shelby b1,2017-09-23,2017,Amblyomma americanum,N,2
-shelby b2,2018-08-16,2018,NA,NA,0
+shelby f1,2017-09-21,2017,NA,NA,0
+shelby b1,2017-09-22,2017,NA,NA,0
+shelby d1,2017-09-23,2017,Amblyomma americanum,A,1
+shelby b2,2017-09-24,2017,NA,NA,0
 shelby b3,2017-09-24,2017,Amblyomma americanum,A,1
 shelby b3,2017-09-24,2017,Amblyomma americanum,N,1
-shelby b3,2018-08-16,2018,Dermacentor variabilis,A,1
-shelby b3,2018-08-16,2018,NA,NA,0
-shelby c1,2018-08-13,2018,Amblyomma maculatum,A,1
-shelby c1,2018-08-13,2018,NA,NA,0
-shelby d1,2017-09-23,2017,Amblyomma americanum,A,1
-shelby e1,2018-08-13,2018,NA,NA,0
-shelby extra,2017-09-26,2017,Amblyomma americanum,A,1
-shelby extra,2018-08-15,2018,Amblyomma maculatum,A,1
-shelby f1,2017-09-23,2017,Amblyomma americanum,A,1
-shelby g1,2017-09-26,2017,Amblyomma americanum,A,1
-shelby g1,2017-09-26,2017,Amblyomma americanum,N,26
-shelby g1,2017-09-26,2017,unknown,N,1
+shelby g1,2017-09-25,2017,NA,NA,0
+shelby a1,2018-08-11,2018,NA,NA,0
+shelby a2,2018-08-12,2018,NA,NA,0
+shelby b2,2018-08-15,2018,NA,NA,0
+shelby b3,2018-08-15,2018,NA,NA,0
+shelby c1,2018-08-11,2018,NA,NA,0
+shelby e1,2018-08-12,2018,NA,NA,0
 shelby h1,2018-08-13,2018,Amblyomma americanum,N,1
 shelby h1,2018-08-13,2018,Amblyomma maculatum,A,2
-shelby h1,2018-08-13,2018,NA,NA,0
 shelby i1,2018-08-13,2018,NA,NA,0
-shelby j1,2018-08-16,2018,Amblyomma americanum,N,3
-shelby j1,2018-08-16,2018,Dermacentor variabilis,A,2
-shelby j1,2018-08-16,2018,NA,NA,0
-shelby k1,2018-08-16,2018,Dermacentor variabilis,A,1
-shelby k1,2018-08-16,2018,NA,NA,0
+shelby j1,2018-08-14,2018,NA,NA,0
+shelby k1,2018-08-14,2018,NA,NA,0
