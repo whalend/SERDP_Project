@@ -80,8 +80,8 @@ There are 3 `NA` values in the coarse fire history columns. The `NA`s correspond
 
 ```{r make installation map, echo=F, results='hide', eval=F}
 
-library(rgdal); library(sp); library(maptools)
-installations <- rgdal::readOGR("data/selected_installations.shp", verbose = F)
+library(rgdal); library(sp); library(maptools); library(sf)
+installations <- readOGR("data/selected_installations.shp")
 summary(installations)
 # installations$FULLNAME
 # bases <- c("Tyndall AFB","Ft. Benning","Camp Blanding","Ft. Jackson","Eglin AFB","Ft. Gordon","Camp Shelby","Avon Park AFR","Moody AFB")
@@ -89,6 +89,60 @@ summary(installations)
 # installations <- installations[installations$FULLNAME%in%bases,]
 # summary(installations)
 # plot(installations, col = installations$FULLNAME)
+plots <- read_sf("data/plot-locations.shp")
+
+# plot(installations)
+# plot(plots, add = T)
+
+library(ggmap)
+library(maps)
+library(mapdata)
+
+states <- map_data("state")
+southeast <- subset(states, region %in% c("florida", "mississippi", "alabama", "georgia", "south carolina"))
+
+ggplot(data = southeast) + 
+      geom_polygon(aes(x = long, y = lat, group = group), fill = "palegreen", color = "black") + 
+      coord_fixed(1.3)
+
+
+library(tmap)
+library(tmaptools)
+vignette("tmap-getstarted")
+
+data("World")
+
+tm_shape(World) +
+      tm_polygons("HPI")
+
+tmap_mode("view")
+tm_shape(World) +
+      tm_polygons("HPI")
+
+data(World, metro, rivers, land)
+
+tmap_mode("plot")
+## tmap mode set to plotting
+
+tm_shape(installations) +
+      tm_polygons(col = "blue") +
+      # tm_borders("white", lwd = .5) +
+      tm_text("FULLNAME") +
+      tm_shape(land) +
+      tm_raster("elevation", palette = terrain.colors(10))
+
+tm_shape(metro) +
+    tm_symbols(col = "red", size = "pop2020", scale = .5) +
+tm_legend(show = FALSE)
+
+tmap_mode("view")
+tm_basemap("Esri.WorldGrayCanvas") +
+      # tm_shape(southeast) + tm_borders("black", lwd = .5) +
+      tm_shape(installations) + 
+      tm_polygons(col = "red") +
+      tm_text("FULLNAME", col = "black", just = "top", ymod = 1)
+      # tm_shape(plots) +
+      # tm_symbols(col = "blue", size = .0001)
 
 ```
 
