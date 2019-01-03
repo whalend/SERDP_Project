@@ -1,10 +1,11 @@
 #' # Script for doing QA/QC on tick data
 
-library(plyr); library(dplyr);
+library(plyr)
+library(dplyr)
 library(readr)
 library(stringi)
 library(ggplot2)
-library(tidyverse)
+# library(tidyverse)
 
 #' Tick Abundance Estimates
 
@@ -16,11 +17,11 @@ plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 
 sort(unique(tick_data$plot_id))
 tick_data$plot_id <- tolower(tick_data$plot_id)
-tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
+# tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
 
 tick_data <- tick_data %>%
   mutate(plot_id = paste(installation, plot_id, sep = " "),
-         plot_id=tolower(plot_id)) %>%
+         plot_id = tolower(plot_id)) %>%
   filter(date>20170601)
 
 sort(unique(tick_data$plot_id))
@@ -44,25 +45,27 @@ summary(tick_data)
 
 ## Steven processing, added concatenation for plot_id & installation line 17 ##
 
-### Made locations consistent ####
+## Made locations consistent ####
+
+tick_data$location <- tolower(tick_data$location)
+unique(tick_data$location)
 
 # tolower()
 # toupper()
-tick_data$location[tick_data$location=="nw"] <- "NW"
-tick_data$location[tick_data$location=="ne"] <- "NE"
-tick_data$location[tick_data$location=="Se"] <- "SE"
-tick_data$location[tick_data$location=="se"] <- "SE"
-tick_data$location[tick_data$location=="sw"] <- "SW"
+# tick_data$location[tick_data$location=="nw"] <- "NW"
+# tick_data$location[tick_data$location=="ne"] <- "NE"
+# tick_data$location[tick_data$location=="Se"] <- "SE"
+# tick_data$location[tick_data$location=="se"] <- "SE"
+# tick_data$location[tick_data$location=="sw"] <- "SW"
 
-tick_data$location[tick_data$location=="North"] <- "N"
-tick_data$location[tick_data$location=="South"] <- "S"
-tick_data$location[tick_data$location=="East"] <- "E"
-tick_data$location[tick_data$location=="West"] <- "W"
-tick_data$location[tick_data$location=="west"] <- "W"
-tick_data$location[tick_data$location=="C"] <- "Center"
-tick_data$location[tick_data$location=="center"] <- "Center"
-tick_data$location[tick_data$location=="extra"] <- "Extra"
-
+# tick_data$location[tick_data$location=="north"] <- "n"
+# tick_data$location[tick_data$location=="south"] <- "s"
+# tick_data$location[tick_data$location=="east"] <- "e"
+# tick_data$location[tick_data$location=="West"] <- "W"
+# tick_data$location[tick_data$location=="west"] <- "w"
+# tick_data$location[tick_data$location=="C"] <- "Center"
+# tick_data$location[tick_data$location=="center"] <- "Center"
+# tick_data$location[tick_data$location=="extra"] <- "Extra"
 
 
 unique(plot_visit_data$plot_id) %in% unique(tick_data$plot_id)
@@ -75,15 +78,18 @@ anti_join(plot_visit_data, tick_data, "plot_id") %>%
 
 sort(unique(tick_data$plot_id))
 
-### Added zeroes for all visited plots that were missing ###
+# Added zeroes for all visited plots that were missing
 
+
+# Make species id consistent ####
 sort(unique(tick_data$species))
+tick_data$species <- tolower(tick_data$species)
 
-tick_data$species[tick_data$species=="am. Am"] <- "Am. am"
-tick_data$species[tick_data$species=="Am. Am"] <- "Am. am"
-tick_data$species[tick_data$species=="Am. Mac"] <- "Am. mac"
-tick_data$species[tick_data$species=="de. Var"] <- "De. var"
-tick_data$species[tick_data$species=="De. Var"] <- "De. var"
+tick_data$species[tick_data$species=="am. am"] <- "Am. am"
+# tick_data$species[tick_data$species=="Am. Am"] <- "Am. am"
+tick_data$species[tick_data$species=="am. mac"] <- "Am. mac"
+tick_data$species[tick_data$species=="de. var"] <- "De. var"
+# tick_data$species[tick_data$species=="De. Var"] <- "De. var"
 tick_data$species[tick_data$species=="rh. san"] <- "Rh. san"
 
 tick_data$date <- as.Date(as.character(tick_data$date), format = "%Y%m%d")
@@ -92,197 +98,80 @@ tick_data <- tick_data %>%
 
 summary(tick_data)
 
-write_csv(tick_data, "data/processed_data/ticks.csv")
-
-### Steven stopped processing, begin processing by installation ####
-
-tick_data <- read_csv("data/processed_data/ticks.csv")
-summary(tick_data)
-names(tick_data)
-unique(tick_data$species)
-tick_data <- tick_data %>%
-  mutate(species_name = case_when(species=="Am. am" ~ "Amblyomma americanum",
-         species=="Am. mac" ~ "Amblyomma maculatum",
-         species=="De. var" ~ "Dermacentor variabilis",
-         species=="Rh. san" ~ "Rhipicephalus sanguineus",
-         species=="unknown" ~ "unknown"))
-
-tick_data$species_name
-unique(tick_data$species_name)
-filter(tick_data, species=="unknown")$species_name
+# filter(tick_data, plot_id!="tyndall c2", species=="Rh. san")
 
 write_csv(tick_data, "data/processed_data/ticks.csv")
 
+
+# Merge corrected/confirmed data from Illinois -----------------------
+
+## Page sent a spreadsheet with all the 2017/2018 vials processed
+## Species and life stages were confirmed/corrected
+## A sample id code was added
+## I'm adding back the zeroes in the original data for completeness
+
+library(readxl)
+library(readr)
+library(dplyr)
+
+illini_data <- read_xlsx("data/raw_data/ticks-dna-2018_Updated_Datasheet.xlsx", sheet = 1)
+
 tick_data <- read_csv("data/processed_data/ticks.csv")
+tick_data_zeroes <- filter(tick_data, count<1)
 
-ticks_grouped <- tick_data %>%
-  group_by(installation, plot_id, date, visit_year, species_name, life_stage) %>%
-  summarise(tick_count = sum(count, na.rm = T))
+names(illini_data)
+names(tick_data_zeroes)
 
-summary(ticks_grouped)
+sort(unique(illini_data$location))
+sort(unique(tick_data_zeroes$location))
+illini_data$location <- tolower(illini_data$location)
 
-###is.na(ticks_grouped$species)
-###ticks_grouped <- ticks_grouped %>%
-###  filter(!is.na(species)) %>%
-###  select(installation, plot_id, date, visit_year, species, life_stage, tick_count)
+illini_data$location[illini_data$location=="c"] <- "center"
+illini_data$location[illini_data$location=="e"] <- "east"
+illini_data$location[illini_data$location=="n"] <- "north"
+illini_data$location[illini_data$location=="s"] <- "south"
+illini_data$location[illini_data$location=="w"] <- "west"
 
-#### Filter for Camp Blanding ####
+sort(unique(illini_data$species))
+# sort(unique(tick_data$species))
 
-ticks_blanding <- ticks_grouped %>%
-  filter(installation=="blanding", !is.na(species_name))
+illini_data <- illini_data %>%
+      mutate(date = as.Date(date),
+             installation = tolower(installation))
 
-blanding_plots <- plot_visit_data %>%
-  filter(installation=="blanding") %>%
-  select(installation, plot_id, visit_year, date=visit_date)
+sort(unique(tick_data_zeroes$plot_id))
+# unique(tick_data_zeroes$life_stage)
 
-ticks_blanding <- left_join(blanding_plots, ticks_blanding)
+tick_data_corrected <- full_join(illini_data,
+                        tick_data_zeroes)
+summary(tick_data_corrected)
 
-ticks_blanding <- ticks_blanding %>%
-  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
+tick_data_corrected <- tick_data_corrected %>%
+      select(-notes, -Notes, -drag_time) %>%
+      mutate(visit_year = lubridate::year(date))
 
-write_csv(ticks_blanding, "data/processed_by_installation/camp_blanding/ticks_blanding.csv")
 
-#### Filter for Avon Park ####
+## Add full species names ####
+# tick_data <- read_csv("data/processed_data/ticks.csv")
+# summary(tick_data)
+names(tick_data_corrected)
+unique(tick_data_corrected$species)
+tick_data_corrected <- tick_data_corrected %>%
+  mutate(species_name = case_when(
+        species=="Am. am" ~ "Amblyomma americanum",
+        species=="Am. mac" ~ "Amblyomma maculatum",
+        species=="De. var" ~ "Dermacentor variabilis",
+        species=="Rh. san" ~ "Rhipicephalus sanguineus",
+        species=="unknown" ~ "unknown"))
 
-ticks_avonpark <- ticks_grouped %>%
-  filter(installation=="avonpark", !is.na(species_name))
+# tick_data_corrected$species_name
+unique(tick_data_corrected$species_name)
 
-avonpark_plots <- plot_visit_data %>%
-  filter(installation=="avonpark") %>%
-  select(installation, plot_id, visit_year, date=visit_date)
+write_csv(tick_data_corrected, "data/processed_data/ticks.csv")
 
-ticks_avonpark <- left_join(avonpark_plots, ticks_avonpark)
 
-ticks_avonpark <- ticks_avonpark %>%
-  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
 
-write_csv(ticks_avonpark, "data/processed_by_installation/avon_park_afr/ticks_avonpark.csv")
-
-#### Filter for Eglin AFB ####
-
-ticks_eglin <- ticks_grouped %>%
-  filter(installation=="eglin", !is.na(species_name))
-
-eglin_plots <- plot_visit_data %>%
-  filter(installation=="eglin") %>%
-  select(installation, plot_id, visit_year, date=visit_date)
-
-ticks_eglin <- left_join(eglin_plots, ticks_eglin)
-
-ticks_eglin <- ticks_eglin %>%
-  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
-
-write_csv(ticks_eglin, "data/processed_by_installation/eglin_afb/ticks_eglin.csv")
-
-#### Filter for Tyndall AFB ####
-
-ticks_tyndall <- ticks_grouped %>%
-  filter(installation=="tyndall", !is.na(species_name))
-
-tyndall_plots <- plot_visit_data %>%
-  filter(installation=="tyndall") %>%
-  select(installation, plot_id, visit_year, date=visit_date)
-
-ticks_tyndall <- left_join(tyndall_plots, ticks_tyndall)
-
-ticks_tyndall <- ticks_tyndall %>%
-  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
-
-write_csv(ticks_tyndall, "data/processed_by_installation/tyndall_afb/ticks_tyndall.csv")
-
-#### Filter for Fort Jackson ####
-
-ticks_jackson <- ticks_grouped %>%
-      filter(installation=="jackson", !is.na(species_name))
-
-jackson_plots <- plot_visit_data %>%
-      filter(installation=="jackson") %>%
-      select(installation, plot_id, visit_year, date=visit_date)
-
-ticks_jackson <- left_join(jackson_plots, ticks_jackson)
-
-ticks_jackson <- ticks_jackson %>%
-      mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
-      select(plot_id, date, visit_year, species_name, life_stage, tick_count)
-
-write_csv(ticks_jackson, "data/processed_by_installation/fort_jackson/ticks_jackson.csv")
-
-#### Filter for Fort Benning ####
-
-ticks_benning <- ticks_grouped %>%
-  filter(installation=="benning", !is.na(species_name))
-
-benning_plots <- plot_visit_data %>%
-  filter(installation=="benning") %>%
-  select(installation, plot_id, visit_year, date=visit_date)
-
-ticks_benning <- left_join(benning_plots, ticks_benning)
-
-ticks_benning <- ticks_benning %>%
-  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
-
-write_csv(ticks_benning, "data/processed_by_installation/fort_benning/ticks_benning.csv")
-
-#### Filter for Camp Shelby ####
-
-ticks_shelby <- ticks_grouped %>%
-  filter(installation=="shelby", !is.na(species_name))
-
-shelby_plots <- plot_visit_data %>%
-  filter(installation=="shelby") %>%
-  select(installation, plot_id, visit_year, date=visit_date)
-
-ticks_shelby <- left_join(shelby_plots, ticks_shelby)
-
-ticks_shelby <- ticks_shelby %>%
-  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
-
-write_csv(ticks_shelby, "data/processed_by_installation/camp_shelby/ticks_shelby.csv")
-
-#### Filter for Fort Gordon####
-
-ticks_gordon <- ticks_grouped %>%
-  filter(installation=="gordon", !is.na(species_name))
-
-gordon_plots <- plot_visit_data %>%
-  filter(installation=="gordon") %>%
-  select(installation, plot_id, visit_year, date=visit_date)
-
-ticks_gordon <- left_join(gordon_plots, ticks_gordon)
-
-ticks_gordon <- ticks_gordon %>%
-  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
-
-write_csv(ticks_gordon, "data/processed_by_installation/fort_gordon/ticks_gordon.csv")
-
-#### Filter for Moody AFB ####
-
-ticks_moody <- ticks_grouped %>%
-  filter(installation=="moody", !is.na(species_name))
-
-gordon_moody <- plot_visit_data %>%
-  filter(installation=="moody") %>%
-  select(installation, plot_id, visit_year, date=visit_date)
-
-ticks_moody <- left_join(moody_plots, ticks_moody)
-
-ticks_moody <- ticks_moody %>%
-  mutate(tick_count = ifelse(is.na(tick_count)==TRUE, 0, tick_count)) %>%
-  select(plot_id, date, visit_year, species_name, life_stage, tick_count)
-
-write_csv(ticks_moody, "data/processed_by_installation/moody_afb/ticks_moody.csv")
-
-#### Steven stopped, question about multiple dates for all data and random NAs ####
-# fixed NAs
-
-########################
+## initial plotting ####
 # ggplot(tick_data %>%
 # group_by(installation,years_since_fire,Species) %>%
 # summarise(tick_number = sum(count)),
