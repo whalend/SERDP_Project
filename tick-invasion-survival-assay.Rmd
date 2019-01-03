@@ -82,6 +82,13 @@ Similar to 2018 design, but will explicitly address the time since fire (will ex
 - Rebar to suspend PVC housing allowing probe to "float"
 - Flags to mark plots and mesh bag locations
 
+
+# Compare biomass differences of invaded vs. uninvaded with the field data
+Auxiliary data collection of tick abundances in invasions especially. 
+
+If abundance is similar/same as uninvaded then increase in risk due to longer survival; if shorter then the effect on risk could be equivocal.
+
+
 # References
 ```{r write_citations, cache=FALSE, include=FALSE}
 write.bibtex(file="tick-assay-citations.bib")
