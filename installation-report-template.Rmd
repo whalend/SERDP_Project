@@ -346,8 +346,8 @@ tick_data <- left_join(
 
 tick_data$life_stage <- factor(
       tick_data$life_stage, 
-      levels = c("A","N","L"),
-      labels = c("Adult","Nymph","Larval"))
+      levels = c("adult","nymph"),
+      labels = c("Adult","Nymph"))
 
 tick_data <- tick_data %>% 
       mutate(tick_count = ifelse(life_stage=="Larval",1,count),
