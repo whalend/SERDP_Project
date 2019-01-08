@@ -19,7 +19,7 @@ output:
 subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-borne
   diseases<h1>
 params:
-  inst_name: Camp Blanding
+  inst_name: Moody AFB
 ---
 
 ```{r set installation name options, echo=F}
@@ -1417,7 +1417,7 @@ kable(plot_visit_cogon_fields, padding = 4, longtable = TRUE, format = "markdown
 
 ##### Page Break
 
-## Vegetation - plant species
+## Vegetation - quadrat plant species
 
 ```{r vegatation plant species of 1m quadrats, echo=FALSE}
 
@@ -1616,49 +1616,15 @@ for(i in stem_maps){
 
 ```
 
-![](stem_maps/blanding a1.png)
-##### Page Break
-
-![](stem_maps/blanding b1.png)
-##### Page Break
-![](stem_maps/blanding c1.png)
-##### Page Break
-![](stem_maps/blanding d1.png)
+![](stem_maps/moody a1.png)
 
 ##### Page Break
 
-![](stem_maps/blanding e1.png)
+
+
+![](stem_maps/moody b1.png)
 
 ##### Page Break
 
-![](stem_maps/blanding f1.png)
+![](stem_maps/moody k1.png)
 
-##### Page Break
-
-![](stem_maps/blanding g1.png)
-
-##### Page Break
-
-![](stem_maps/blanding h1.png)
-
-##### Page Break
-
-![](stem_maps/blanding i1.png)
-
-##### Page Break
-
-![](stem_maps/blanding j1.png)
-
-##### Page Break
-
-![](stem_maps/blanding k1.png)
-
-##### Page Break
-
-![](stem_maps/blanding m1.png)
-
-##### Page Break
-
-![](stem_maps/blanding n1.png)
-
-##### Page Break
