@@ -13,6 +13,7 @@
 library(dplyr)
 library(readr)
 
+plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 tick_data <- read_csv("data/processed_data/ticks.csv")
 
 ticks_grouped <- tick_data %>%
@@ -167,7 +168,7 @@ write_csv(ticks_gordon, "data/processed_by_installation/fort_gordon/ticks_gordon
 ticks_moody <- ticks_grouped %>%
       filter(installation=="moody", !is.na(species_name))
 
-gordon_moody <- plot_visit_data %>%
+moody_plots <- plot_visit_data %>%
       filter(installation=="moody") %>%
       select(installation, plot_id, visit_year, date=visit_date)
 
