@@ -9,7 +9,7 @@ library(stringi)
 
 #+ load tick survival data ####
 
-tick_survival <- read_csv("data/raw_data/tick_survival_assay/TickSurvival_actual.csv")
+tick_survival <- read_csv("data/raw_data/tick_survival_assay/TickSurvivaldata_CleanedVersion.csv")
 
 summary(tick_survival)
 
@@ -18,6 +18,8 @@ unique(tick_survival$Date)
 names(tick_survival)
 
 unique(tick_survival$Invaded)
+
+colnames(tick_survival) <- c("LocationID", "Tag", "Invaded", "Date", "JulianDay", "nymphs_alive", "nymphs_dead", "nymph_survival", "adult_F_alive", "adult_F_dead", "adult_F_survival", "adult_M_alive", "adult_M_dead", "adult_M_survival", "Avg CC", "NOTES", "days")
 
 tick_survival$Date <- as.Date.character(as.integer(tick_survival$Date), format = "%Y%m%d")
 
@@ -36,6 +38,12 @@ tick_survival <- tick_survival %>%
 tick_survival <- tick_survival %>%
   mutate(Invaded = ifelse(Invaded == "Yes", "invaded", "native"))
 
+## adding visit number, ADD NEW VISITS EACH TIME
+
+days_adding_visit_number <- data.frame(days = unique(tick_survival$days), visit_number= as.double(seq(1,17,1))) 
+
+tick_survival <- left_join(tick_survival, days_adding_visit_number)
+
 #View(tick_survival)
 
 tick_survival_grouped <- tick_survival %>%
@@ -45,7 +53,7 @@ tick_survival_grouped <- tick_survival %>%
             avg_adult_survival = mean(total_adult_survival),
             sd_adult_survival = sd(total_adult_survival))
 
-#View(tick_survival_grouped)
+View(tick_survival_grouped)
 
 
 #+ set theme ####
@@ -96,9 +104,9 @@ nymph_survival_all_time <- ggplot(data = tick_survival) +
   theme(plot.title = element_text(hjust = 0.5)) +
   xlab(" ") +
   ylab("Survival") +
-  guides(fill=FALSE, color=FALSE) +
+  #guides(fill=FALSE, color=FALSE) +
   scale_y_continuous(limits = c(0, 1 )) +
-  scale_x_continuous(limits = c(0, 159 )) +
+  scale_x_continuous(limits = c(0, 202)) +
   geom_vline(xintercept = (11), linetype = "dashed") +
   geom_vline(xintercept = (15), linetype = "dashed") +
   geom_vline(xintercept = (25), linetype = "dashed") +
@@ -113,6 +121,8 @@ nymph_survival_all_time <- ggplot(data = tick_survival) +
   geom_vline(xintercept = (126), linetype = "dashed") +
   geom_vline(xintercept = (146), linetype = "dashed") +
   geom_vline(xintercept = (159), linetype = "dashed") +
+  geom_vline(xintercept = (175), linetype = "dashed") +
+  geom_vline(xintercept = (202), linetype = "dashed") +
   #theme(axis.title.x = element_blank()) +
   NULL
 
@@ -129,7 +139,7 @@ f_adult_survival_all_time <-ggplot(data = tick_survival) +
   #theme(legend.position = c(0, 0), legend.justification = c(0, 0)) +
   #theme(axis.title.y = element_blank()) +
   scale_y_continuous(limits = c(0, 1 )) +
-  scale_x_continuous(limits = c(0, 159 )) +
+  scale_x_continuous(limits = c(0, 202)) +
   ylab("Survival") +
   xlab(" ") +
   geom_vline(xintercept = (11), linetype = "dashed") +
@@ -146,6 +156,8 @@ f_adult_survival_all_time <-ggplot(data = tick_survival) +
   geom_vline(xintercept = (126), linetype = "dashed") +
   geom_vline(xintercept = (146), linetype = "dashed") +
   geom_vline(xintercept = (159), linetype = "dashed") +
+  geom_vline(xintercept = (175), linetype = "dashed") +
+  geom_vline(xintercept = (202), linetype = "dashed") +
   NULL
 
 m_adult_survival_all_time <-ggplot(data = tick_survival) +
@@ -160,7 +172,7 @@ m_adult_survival_all_time <-ggplot(data = tick_survival) +
   theme(plot.title = element_text(hjust = 0.5)) +
   guides(fill=FALSE, color=FALSE) +
   scale_y_continuous(limits = c(0, 1 )) +
-  scale_x_continuous(limits = c(0, 159 )) +
+  scale_x_continuous(limits = c(0, 202)) +
   xlab(" ") +
   ylab("Survival") +
   #theme(axis.title.x = element_blank()) +
@@ -179,6 +191,8 @@ m_adult_survival_all_time <-ggplot(data = tick_survival) +
   geom_vline(xintercept = (126), linetype = "dashed") +
   geom_vline(xintercept = (146), linetype = "dashed") +
   geom_vline(xintercept = (159), linetype = "dashed") +
+  geom_vline(xintercept = (175), linetype = "dashed") +
+  geom_vline(xintercept = (202), linetype = "dashed") +
   NULL
 
 tick_survival_all_time <- cowplot::plot_grid(nymph_survival_all_time,
@@ -189,16 +203,16 @@ tick_survival_all_time <- cowplot::plot_grid(nymph_survival_all_time,
 ## Begin break up by 40 day increments ####
 
 tick_survival_40 <- tick_survival %>%
-  filter(days <=40)
+  filter(days <=66)
 
 tick_survival_80 <- tick_survival %>%
-  filter(between(days, 41, 80))
+  filter(between(days, 67, 132))
 
 tick_survival_120 <- tick_survival %>%
-  filter(between(days, 81, 150))
+  filter(between(days, 133, 202))
 
 
-# nymphs by days interval ####
+# nymphs by days interval NOT USED PROBABLY ####
 
 nymph_survival_40 <- ggplot(data = tick_survival_40) +
   stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
@@ -209,7 +223,7 @@ nymph_survival_40 <- ggplot(data = tick_survival_40) +
   def_theme +
   ggtitle(label = "Nymphs") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  xlim(0, 40) +
+  xlim(0, 66) +
   ylim(0, 1) +
   xlab("Days") +
   ylab("Survival") +
@@ -227,7 +241,7 @@ nymph_survival_80 <- ggplot(data = tick_survival_80) +
   def_theme +
   ggtitle(label = "Nymphs") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  xlim(40, 80) +
+  xlim(67, 132) +
   ylim(0, 1) +
   xlab("Days") +
   #ylab("Survival") +
@@ -246,7 +260,7 @@ nymph_survival_120 <- ggplot(data = tick_survival_120) +
   def_theme +
   ggtitle(label = "Nymphs") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  xlim(80, 126) +
+  xlim(133, 202) +
   ylim(0, 1) +
   xlab("Days") +
   #ylab("Survival") +
@@ -259,7 +273,7 @@ nymph_survival_120 <- ggplot(data = tick_survival_120) +
 nymphs_intervals <- cowplot::plot_grid(nymph_survival_40,
                    nymph_survival_80, nymph_survival_120, ncol =3)
 
-# adult F by days ####
+# adult F by days NOT USED ####
 
 adult_F_survival_40 <- ggplot(data = tick_survival_40) +
   stat_summary(aes(days, adult_F_survival, fill = Invaded, color = Invaded),
@@ -321,7 +335,7 @@ adult_F_intervals <- cowplot::plot_grid(adult_F_survival_40,
                    adult_F_survival_80, adult_F_survival_120, ncol =3)
 
 
-# adult M by days ####
+# adult M by days NOT USED####
 
 adult_M_survival_40 <- ggplot(data = tick_survival_40) +
   stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded),
@@ -405,6 +419,8 @@ temp_rh_data <- temp_rh_data %>%
   mutate(status = ifelse(logger_id <= 12, "invaded", "native"))
 
 temp_rh_data$logger_id <- as.integer(temp_rh_data$logger_id)
+
+join(temp_rh_data, days_adding_visit_number)
 
 
 
@@ -663,13 +679,15 @@ max_temp_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_max_tempC, color
   geom_vline(xintercept = (126), linetype = "dashed") +
   geom_vline(xintercept = (146), linetype = "dashed") +
   geom_vline(xintercept = (159), linetype = "dashed") +
+  geom_vline(xintercept = (175), linetype = "dashed") +
+  geom_vline(xintercept = (202), linetype = "dashed") +
   geom_point(data = temp_rh_data_grouped, aes(y = avg_max_tempC, color = status), shape = 25) +
   invasion_color +
   invasion_fill +
   ylab("Avg daily max temp C") +
   xlab(" ") +
   scale_y_continuous(labels = scaleFUN) +
-  scale_x_continuous(limits = c(0, 159 )) +
+  scale_x_continuous(limits = c(0, 202)) +
   guides(fill=FALSE, color=FALSE) +
   def_theme +
   NULL
@@ -694,12 +712,14 @@ min_rh_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_min_rh, color = st
   geom_vline(xintercept = (126), linetype = "dashed") +
   geom_vline(xintercept = (146), linetype = "dashed") +
   geom_vline(xintercept = (159), linetype = "dashed") +
+  geom_vline(xintercept = (175), linetype = "dashed") +
+  geom_vline(xintercept = (202), linetype = "dashed") +
   geom_point(data = temp_rh_data_grouped, aes(y = avg_min_rh, color = status), shape = 25) +
   invasion_color +
   invasion_fill +
   ylab("Avg daily min RH") +
   xlab("Days") +
-  scale_x_continuous(limits = c(0, 159 )) +
+  scale_x_continuous(limits = c(0, 202)) +
   guides(fill=FALSE, color=FALSE) +
   def_theme +
   NULL
@@ -718,11 +738,11 @@ ggsave(plot = f_adult_temp_rh_all_time, height = 10, width = 7, "figures/tick-su
 ##################### sep by days
 
 temp_rh_survival1 <- temp_rh_data_grouped %>%
-  filter(between(days, 1, 40))
+  filter(between(days, 1, 66))
 temp_rh_survival2 <- temp_rh_data_grouped %>%
-  filter(between(days, 41, 80))
+  filter(between(days, 67, 132))
 temp_rh_survival3 <- temp_rh_data_grouped %>%
-  filter(between(days, 81, 126))
+  filter(between(days, 133, 202))
 
 ## Figures for day 1-126 intervals for RH ####
 
@@ -978,7 +998,7 @@ avg_days_temp_boxplot <- ggplot(temp_above_35, aes(status, days, color = status)
   invasion_color +
   invasion_fill +
   def_theme +
-  ylab("time above 35 C (days") +
+  ylab("time above 35 C (days)") +
   theme(legend.position = "none") +
   NULL
 
@@ -986,7 +1006,7 @@ avg_days_temp_boxplot <- ggplot(temp_above_35, aes(status, days, color = status)
 
 avg_days_temp_rh_boxplot <- cowplot::plot_grid(avg_days_rh_boxplot, avg_days_temp_boxplot, ncol = 2)
 
-#ggsave(plot = avg_days_temp_rh_boxplot, "figures/tick-survival-assay/avg_days_temp_rh_boxplot.png")
+ggsave(plot = avg_days_temp_rh_boxplot, "figures/tick-survival-assay/avg_days_temp_rh_boxplot.png", height = 7, width = 7)
 
 nymph_surv_min_rh <- cowplot::plot_grid(nymphs_intervals, avg_min_rhs_days_intervals, ncol = 1)
 adult_F_surv_min_rh <- cowplot::plot_grid(adult_F_intervals, avg_min_rhs_days_intervals, ncol = 1)
