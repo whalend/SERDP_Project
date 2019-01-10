@@ -32,6 +32,7 @@ for(f in file_list){
 }
 
 head(df1)
+tail(df1)
 unique(df1$logger_id)
 summary(df1)
 df1 <- filter(df1, is.na(tempC)==FALSE)# remove NA rows from data
