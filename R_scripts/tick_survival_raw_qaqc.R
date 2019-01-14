@@ -29,13 +29,13 @@ colnames(tick_survival) <- c("LocationID", "Tag", "Invaded", "Date", "JulianDay"
 
 range(tick_survival$days)
 
-tick_survival_long <- tick_survival %>% 
-  select(LocationID:JulianDay, days, nymph_survival, adult_F_survival, adult_M_survival) %>% 
-  gather(., key = life_stage, value = survival, -LocationID:-days) %>% 
+tick_survival_long <- tick_survival %>%
+  select(LocationID:JulianDay, days, nymph_survival, adult_F_survival, adult_M_survival) %>%
+  gather(., key = life_stage, value = survival, -LocationID:-days) %>%
   mutate(Invaded = ifelse(Invaded == "Yes", "invaded", "native"))
 summary(tick_survival_long)
 
-  
+
 
 #### Merging all adults to one ####
 
@@ -49,7 +49,7 @@ tick_survival <- tick_survival %>%
 
 ## adding visit number, ADD NEW VISITS EACH TIME
 
-days_adding_visit_number <- data.frame(days = unique(tick_survival$days), visit_number= as.double(seq(1,17,1))) 
+days_adding_visit_number <- data.frame(days = unique(tick_survival$days), visit_number= as.double(seq(1,17,1)))
 
 tick_survival <- left_join(tick_survival, days_adding_visit_number)
 
@@ -979,7 +979,19 @@ rh_below_80 <- temp_rh_data %>%
             hrs = obs/12,
             days = hrs/24)
 
+rh_below_80_Jun_Sep <- temp_rh_data %>%
+      filter(between(RH, 20, 80), date < "2018-10-01") %>%
+      #filter(RH <= 80) %>%
+      group_by(status, logger_id) %>%
+      summarise(obs = n(),
+                hrs = obs/12,
+                days = hrs/24)
+
 #View(rh_below_80)
+
+ggplot(filter(temp_rh_data, between(RH,20,80), logger_id==13), aes(date_time, 1/RH)) +
+      geom_path()
+      # geom_path(aes(y=tempC, color = as.factor(logger_id)))
 
 rh_below_80_avg <- temp_rh_data %>%
   filter(between(RH, 20, 80)) %>%
@@ -1013,7 +1025,7 @@ temp_above_35_avg <- temp_rh_data %>%
 
 #View(temp_above_35)
 
-avg_days_below_80rh <- ggplot(rh_below_80_avg, aes(status, avg_days, color = status)) +
+avg_days_below_80rh <- ggplot(rh_below_80_avg, aes(status, avg_days, fill = status)) +
   geom_point() +
   geom_bar(stat = "identity") +
   invasion_color +
@@ -1024,7 +1036,7 @@ avg_days_below_80rh <- ggplot(rh_below_80_avg, aes(status, avg_days, color = sta
   theme(legend.position = "none") +
   NULL
 
-avg_days_above_35_tempC <- ggplot(temp_above_35_avg, aes(status, avg_days, color = status)) +
+avg_days_above_35_tempC <- ggplot(temp_above_35_avg, aes(status, avg_days, fill = status)) +
   geom_point() +
   geom_bar(stat = "identity") +
   #geom_errorbar(data = temp_above_35_avg,
@@ -1042,7 +1054,8 @@ avg_time_days_temp_rh_barchart <- cowplot::plot_grid(avg_days_below_80rh, avg_da
 
 #ggsave(plot = avg_time_days_temp_rh_barchart, "figures/tick-survival-assay/avg_time_days_temp_rh_barchart.png")
 
-avg_days_rh_boxplot <- ggplot(rh_below_80, aes(status, days, color = status)) +
+avg_days_rh_boxplot <- ggplot(filter(rh_below_80, !(logger_id %in% c(1,19))),
+aes(status, days, color = status)) +
   geom_boxplot() +
   invasion_color +
   invasion_fill +
@@ -1051,6 +1064,16 @@ avg_days_rh_boxplot <- ggplot(rh_below_80, aes(status, days, color = status)) +
   theme(legend.position = "none") +
   NULL
 
+
+ggplot(rh_below_80_Jun_Sep,
+       aes(status, days, color = status)) +
+      geom_boxplot(notch = F) +
+      invasion_color +
+      invasion_fill +
+      def_theme +
+      ylab("time below 80 rh (days)") +
+      theme(legend.position = "none") +
+      NULL
 #View(rh_below_80)
 
 #ggsave(plot = avg_days_rh_boxplot, "figures/tick-survival-assay/avg_days_rh_boxplot.png")
