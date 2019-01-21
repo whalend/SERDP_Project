@@ -6,6 +6,7 @@ library(tidyverse)
 # library(readr)
 # library(ggplot2)
 library(stringi)
+library(stringr)
 library(ggplot2)
 
 #+ load tick survival data ####
@@ -32,9 +33,19 @@ range(tick_survival$days)
 tick_survival_long <- tick_survival %>%
   select(LocationID:JulianDay, days, nymph_survival, adult_F_survival, adult_M_survival) %>%
   gather(., key = life_stage, value = survival, -LocationID:-days) %>%
-  mutate(Invaded = ifelse(Invaded == "Yes", "invaded", "native"))
+  mutate(Invaded = ifelse(Invaded == "Yes", "invaded", "native"),
+         sex = case_when(
+               str_detect(life_stage, "adult_M") ~ "male",
+               str_detect(life_stage, "adult_F") ~ "female",
+               str_detect(life_stage, "nymph") ~ "nymph"
+         ),
+         life_stage = case_when(
+               str_detect(life_stage, "adult") ~ "adult",
+               str_detect(life_stage, "nymph") ~ "nymph"
+         ))
 summary(tick_survival_long)
-
+# unique(tick_survival_long$life_stage)
+# unique(tick_survival_long$sex)
 
 
 #### Merging all adults to one ####
@@ -98,10 +109,28 @@ ggplot(tick_survival_grouped, aes(days, avg_adult_survival, color = Invaded)) +
   NULL
 
 unique(tick_survival$days)
+
 #### Drews graphs ####
 
 nymph_survival_all_time <- ggplot(data = tick_survival) +
-  stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
+      geom_vline(xintercept = (11), linetype = "dashed") +
+      geom_vline(xintercept = (15), linetype = "dashed") +
+      geom_vline(xintercept = (25), linetype = "dashed") +
+      geom_vline(xintercept = (32), linetype = "dashed") +
+      geom_vline(xintercept = (39), linetype = "dashed") +
+      geom_vline(xintercept = (55), linetype = "dashed") +
+      geom_vline(xintercept = (67), linetype = "dashed") +
+      geom_vline(xintercept = (77), linetype = "dashed") +
+      geom_vline(xintercept = (89), linetype = "dashed") +
+      geom_vline(xintercept = (98), linetype = "dashed") +
+      geom_vline(xintercept = (110), linetype = "dashed") +
+      geom_vline(xintercept = (126), linetype = "dashed") +
+      geom_vline(xintercept = (146), linetype = "dashed") +
+      geom_vline(xintercept = (159), linetype = "dashed") +
+      geom_vline(xintercept = (175), linetype = "dashed") +
+      geom_vline(xintercept = (202), linetype = "dashed") +
+
+      stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, nymph_survival, fill = Invaded, color = Invaded),
               se = T, alpha = .2, geom = "path") +
@@ -116,22 +145,6 @@ nymph_survival_all_time <- ggplot(data = tick_survival) +
   guides(fill=FALSE, color=FALSE) +
   scale_y_continuous(limits = c(0, 1 )) +
   scale_x_continuous(limits = c(0, 202)) +
-  geom_vline(xintercept = (11), linetype = "dashed") +
-  geom_vline(xintercept = (15), linetype = "dashed") +
-  geom_vline(xintercept = (25), linetype = "dashed") +
-  geom_vline(xintercept = (32), linetype = "dashed") +
-  geom_vline(xintercept = (39), linetype = "dashed") +
-  geom_vline(xintercept = (55), linetype = "dashed") +
-  geom_vline(xintercept = (67), linetype = "dashed") +
-  geom_vline(xintercept = (77), linetype = "dashed") +
-  geom_vline(xintercept = (89), linetype = "dashed") +
-  geom_vline(xintercept = (98), linetype = "dashed") +
-  geom_vline(xintercept = (110), linetype = "dashed") +
-  geom_vline(xintercept = (126), linetype = "dashed") +
-  geom_vline(xintercept = (146), linetype = "dashed") +
-  geom_vline(xintercept = (159), linetype = "dashed") +
-  geom_vline(xintercept = (175), linetype = "dashed") +
-  geom_vline(xintercept = (202), linetype = "dashed") +
   #theme(axis.title.x = element_blank()) +
   NULL
 
@@ -169,7 +182,7 @@ f_adult_survival_all_time <-ggplot(data = tick_survival) +
   geom_vline(xintercept = (202), linetype = "dashed") +
   NULL
 
-m_adult_survival_all_time <-ggplot(data = tick_survival) +
+m_adult_survival_all_time <- ggplot(data = tick_survival) +
   stat_summary(aes(days, adult_M_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, adult_M_survival, color = Invaded, fill = Invaded),
@@ -209,11 +222,9 @@ tick_survival_all_time <- cowplot::plot_grid(nymph_survival_all_time,
 
 #### making stacked all life stages ######
 
-all_stages_stacked <-ggplot(data = tick_survival_long) +
-  stat_summary(aes(days, survival, color = Invaded, shape = life_stage),
-               fun.data = mean_se, geom = "pointrange") +
-  stat_smooth(aes(days, survival, color = Invaded, linetype = life_stage),
-               se = T, alpha = .2, fill = NA) +
+all_stages_stacked <- ggplot(data = tick_survival_long, aes(days, survival, color = Invaded, shape = life_stage)) +
+  stat_summary(fun.data = mean_se, geom = "pointrange") +
+  # stat_smooth(se = T, alpha = .2, fill = NA, show.legend = F) +
   # stat_summary(aes(days, adult_F_survival,  color = Invaded),
   #              fun.data = mean_se, geom = "pointrange", shape = 22) +
   # stat_smooth(aes(days, adult_F_survival, color = Invaded),
@@ -460,8 +471,10 @@ temp_rh_data <- temp_rh_data %>%
 
 temp_rh_data$logger_id <- as.integer(temp_rh_data$logger_id)
 
-join(temp_rh_data, days_adding_visit_number)
+# join(temp_rh_data, days_adding_visit_number)
 
+temp_rh_data <- temp_rh_data %>%
+      mutate(date_time = lubridate::ymd_hms(paste(date,time)))
 
 
 #### Added invaded/native status and days since launch ####
@@ -508,6 +521,8 @@ unique(messed_up_loggers$logger_id)
 logger_1 <- temp_rh_data %>%
   filter(logger_id == "01")
 
+plot(logger_1$date_time, logger_1$RH)
+
 messed_up_logger_1 <- messed_up_loggers %>%
   filter(logger_id == "01")
 
@@ -525,6 +540,12 @@ summary(logger_1)
 
 logger_2 <- temp_rh_data %>%
   filter(logger_id == "02")
+
+plot(logger_2$date_time, logger_2$RH)
+
+# logger_3 <- temp_rh_data %>%
+#       filter(logger_id == "03")
+# plot(logger_3$date_time, logger_3$RH)
 
 messed_up_logger_2 <- messed_up_loggers %>%
   filter(logger_id == "02")
@@ -568,9 +589,6 @@ summary(logger_19)
 
 ## logger 19 avg RH jump from 72.72 to 77.57 removing < 15 RH ##
 
-
-temp_rh_data <- temp_rh_data %>%
-  mutate(date_time = lubridate::ymd_hms(paste(date,time)))
 
 temp_rh_data <- temp_rh_data %>%
   mutate(days = julian(date, origin = as.Date("2018-06-21")))
