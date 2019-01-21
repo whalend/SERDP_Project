@@ -1,0 +1,56 @@
+---
+title: "Climate Changes Impacts on Fire Regimes, Plant Invasions, and Tick-Borne Diseases \n RC-2636"
+author: ""
+date: "`r Sys.Date()`"
+output: 
+  word_document:
+        toc: yes
+        reference_docx: interim-report-stylingbreaks1.docx
+  html_document:
+        toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+##### Page Break
+
+# Part 1: Field surveys across DoD installations
+
+##### Page Break
+
+"burn unit" = "burn block" = A discrete area within a larger prescribed or fire use project
+
+(https://www.nwcg.gov/term/glossary/burn-block%C2%A0)
+
+Installations typically have multiple larger management units or trainining areas that are made up of smaller burn blocks. There are training and ecological management needs that are considered in the management plan of each area, such as land navigation training for troops and maintaining habitat for species on the federal threatened and endangered species list (e.g. the red cockaded woodpecker). The fire management applied to the burn blocks within the larger areas varies based on the vegetation and the training uses and management goals. 
+
+# Technical Approach
+
+## Experimental design (from a statistical perspective): Allie
+
+Our goal was recording potential differences in vegetation type and conditions, tick host use, and tick abundances, between congongrass-invaded and uninvaded areas across the range of fire histories at each installation.
+
+
+
+## Field sampling design: Whalen
+
+Following the experimental design, we established plots to achieve a stratified sampling that covered the range of fire history at each installation. We obtained fire history and known cogongrass invasions as GIS layers from each installation and identified potential plot locations based on time since last fire. In burn blocks with a cogongrass invasion we established one plot in the invaded area and one plot in an univaded area. In burn blocks without we established one plot in an area representative of the vegetation conditions in the block.
+
+### Plot design
+Each plot had a circular center plot for measuring vegetation and four 50-m originating from the plot center. The center of each plot was marked with a flag and GPS coordinates were recorded. Within a 12.6 m radius (up to approximately 500 m^2^) from the plot center we recorded the DBH of all trees ≥ 3 cm DBH. Within the 12.6 m radius plot we established a 5.6 m radius (~100 m^2^) subplot to record the abundance of woody species (shrubs and trees) that were < 3 cm DBH and ≥ 100 cm tall.
+
+We will record understory/herbaceous vegetation and litter cover at 4 quadrats (1m x 1m) at 10m along each transect in the circular plot:
+•	% cover of each species, litter, and bare ground
+•	Overall height of standing vegetation and litter
+
+At 10m along each transect we will remove a 25cm x 25cm area of understory vegetation, litter, and duff layers to quantify biomass.
+
+We will collect ticks using CO2 traps left in each plot for 24-hours. All collected ticks will be sent to the Allan Lab at the University of Illinois for assessment of pathogens and the host species they obtained blood meals from. We will estimate abundance of tick hosts, e.g., white-tailed deer, along each transect in each plot by surveying for dung clusters.
+
+![Field plot design](figures/plot-design-revised.png)
+
+##### Page Break
+
+# 
