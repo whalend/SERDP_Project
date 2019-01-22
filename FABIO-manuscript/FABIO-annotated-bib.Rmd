@@ -4,6 +4,7 @@ author: "W.W. Dillon"
 date: "1/17/2019"
 output: html_document
 bibliography: /Users/whalendillon/references.bib
+csl: /Users/whalendillon/Zotero/styles/chicago-annotated-bibliography.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -39,3 +40,21 @@ While this paper picks on the limitations of laboratory experiments to inform fi
 @GanteaumeFlammabilitylittersampled2014
 
 They present results showing that flammability measurements from "reconstructed" fuel beds in lab experiments differed from "intact" fuelbeds collected from the field.
+
+
+# Temperatures recorded during grass fires
+
+
+**@clements2007observing Observing the dynamics of wildland grass fires: FireFlux - A field validation experiment.**
+
+ - Maximum ranging from 752 - 835 ºC
+
+**Bailey & Anderson 1980. Fire temperatures in grass, shrub, and aspen forest communities of central Alberta**
+
+ - Grassland average maximum temperature 186 ± 10 S.E. measured using temperature pellets at heights of 0, 5, 15, 30, and 45 cm
+
+**Ramsay & Oxley 1996. Fire temperatures and postfire plant community dynamics in Ecuadorian grass páramo**
+
+ - "sometimes >500 ºC" using temperature crayons ranging from 65-670 ºC at 1 m, 65 cm, 35 cm, and 5 cm above ground level.
+ 
+ - Temperatures were recorded within the grass tussocks. Highest temperatures occurred int he upper leaves of the tussocks and the lowest temperatures at the base of the tussocks
