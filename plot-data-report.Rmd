@@ -1516,6 +1516,7 @@ summary(tick_fire_model)
 
 ```
 
+Tick abundances may also be influenced by some of the other land uses that happen on DoD installations, such as cattle grazing, hunting, and most obviously training. Grazers may treat their cattle to reduce ectoparasite (e.g. ticks) loads and the pathogens they transmit. These treatments are often effective in deterring parasite attachment, killing parasites through contact, and can lower the production and viability of parasite eggs. For example, Avon Park AFR leases some areas for cattle grazing and we confirmed that some grazers used treatments that will reduce tick loads (e.g., moxidectin, Cydectin, Aguilar-Tipacamu & Rodriguez-Vivas 2003). 
 
 ## Seasonal sampling
 
