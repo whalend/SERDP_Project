@@ -1,5 +1,6 @@
 ---
-title: "Climate Changes Impacts on Fire Regimes, Plant Invasions, and Tick-Borne Diseases \n RC-2636"
+title: "Climate Changes Impacts on Fire Regimes, Plant Invasions, and Tick-Borne Diseases"
+subtitle: "RC-2636" 
 author: ""
 date: "`r Sys.Date()`"
 output: 
@@ -10,9 +11,20 @@ output:
         toc: yes
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F)
 ```
+
+##### Page Break
+
+# List of Acronyms
+| | |
+|------|------|
+| DBH | Diameter at breast height (height = 1.37 m) |
+| GIS | Geographic information system |
+| GPS | Global positioning system |
+
 
 ##### Page Break
 
@@ -36,21 +48,27 @@ Our goal was recording potential differences in vegetation type and conditions, 
 
 ## Field sampling design: Whalen
 
-Following the experimental design, we established plots to achieve a stratified sampling that covered the range of fire history at each installation. We obtained fire history and known cogongrass invasions as GIS layers from each installation and identified potential plot locations based on time since last fire. In burn blocks with a cogongrass invasion we established one plot in the invaded area and one plot in an univaded area. In burn blocks without we established one plot in an area representative of the vegetation conditions in the block.
+Following the experimental design, we established plots to achieve a stratified sampling that covered the range of fire history at each installation. We obtained fire history and known cogongrass invasions as GIS layers from each installation and identified potential plot locations based on time since last fire. Potential locations were sent to our contacts at the installation to solicit further guidance on selecting the final set of candidate locations and arranging access. Our sampling season coincided with the prescribed fire management season at most installations, so the fire data we had on hand was sometimes out of date by the time a visit was arranged. In burn blocks with a cogongrass invasion we established one plot in the invaded area and one plot in an univaded area. In burn blocks without an invasion we established one plot in an area representative of the vegetation conditions in the block.
 
 ### Plot design
-Each plot had a circular center plot for measuring vegetation and four 50-m originating from the plot center. The center of each plot was marked with a flag and GPS coordinates were recorded. Within a 12.6 m radius (up to approximately 500 m^2^) from the plot center we recorded the DBH of all trees ≥ 3 cm DBH. Within the 12.6 m radius plot we established a 5.6 m radius (~100 m^2^) subplot to record the abundance of woody species (shrubs and trees) that were < 3 cm DBH and ≥ 100 cm tall.
 
-We will record understory/herbaceous vegetation and litter cover at 4 quadrats (1m x 1m) at 10m along each transect in the circular plot:
-•	% cover of each species, litter, and bare ground
-•	Overall height of standing vegetation and litter
+Each plot consisted of a main circular center plot, a circular subplot, four four 1 m x 1 m qudarats, four 25 cm x 25 cm quadrats, four 50 m transects, and four locations for sampling tick abundance (Plot Design Figure). In the main circular plot (12.6 m radius, approximately 500 m^2^) and subplot (5.6 m radius, approximately 100 m^2^) we measured trees and saplings. Ground vegetation and litter were measured in the 1 m and 25 cm quadrats located 10 m from plot center in each of the cardinal directions. The 50 m transects originated at the plot center going in each cardinal direction and were used to estimate tick-host abundance. Tick abundance sampling locations were placed 8-10 m from the plot center in the NW, NE, SE, and SW areas. The center of each plot was marked with a flag and GPS coordinates were recorded using a Garmin Oregon 650t unit (Olathe, KS).
 
-At 10m along each transect we will remove a 25cm x 25cm area of understory vegetation, litter, and duff layers to quantify biomass.
+![Figure: Field plot design](figures/plot-design-revised.png)
 
-We will collect ticks using CO2 traps left in each plot for 24-hours. All collected ticks will be sent to the Allan Lab at the University of Illinois for assessment of pathogens and the host species they obtained blood meals from. We will estimate abundance of tick hosts, e.g., white-tailed deer, along each transect in each plot by surveying for dung clusters.
 
-![Field plot design](figures/plot-design-revised.png)
+### Data collection
+
+Within the 12.6 m radius plot we measured the DBH of all trees ≥ 3 cm DBH, and recorded the distance and azimuth from the plot center to each tree. In the 5.6 m radius subplot we recorded the abundance of woody species (shrubs and tree seedlings/saplings) that were < 3 cm DBH and ≥ 100 cm tall. We measured vegetation and litter conditions in the four 1 m quadrats, including the percent cover of each plant species, total plant cover, litter cover, and bare ground, and the number of stems of species. We also made three measurements of vegetation height and litter depth across each quadrat. The 25 cm quadrats were placed adjacent to each 1 m quadrat in an area representative of the conditions in the larger qudrat, and we collected vegetation and litter in order to estimate biomass. We also estimated overstory canopy cover for the plot by taking measurements using a spherical convex densiometer (Forestry Suppliers, Jackson, MS) while standing at each 1 m quadrat and facing plot center.
+
+We collected ticks using CO_2_ traps placed in each plot for 24 hours. After 24 hours, ticks were counted and removed from the tape using tweezers, placed in vials with 70% ethanol, and transported to the Flory Lab at the University of Florida where they were identified, sorted, and counted by species, life stage, and sex. Sorted ticks were then shipped to the Allan Lab at the University of Illinois where they underwent a second round of identification and sorting, and were subsampled to conduct pathogen analysis (Part 3). 
+
+Tick traps were constructed by mounting 5-quart hard-sided coolers (Igloo, Katy, TX) onto the center of 0.635 cm (0.25 in) thick plywood pieces cut to 35 cm x 28 cm. There was approximately 7.6 cm between the edge of the plywood and all sides of the cooler. Two 0.48 cm (3/16 in) holes were drilled through each side of the cooler just above the bottom of the interior. Strips of double-sided carpet tape (DF 545, ShurTape, Hickory, NC) measuring 4.77 cm (1.88 in) wide were attached to the plywood surface surrounding the cooler. Each trap was baited with 1.5 kg of dry ice, which sublimated out through the holes drilled in the coolers. A rain cover made from corrugated plastic roofing cut to cover the entire footprint of the trap was attached to the top of each cooler by drilling a 0.48 cm hole through the center of the cooler lid and securing the roofing using a bolt and a wing-nut.
+
+We conducted host-dung surveys along each 50 m transect to estimate abundance of tick hosts near the plot area. Observed dung clusters of host species was tallied within 0 to 1 m of the transect line, totaling 400 m^2^ of surveyed area. Species were identified by dung characteristics.
+
+All collected ticks will be sent to the Allan Lab at the University of Illinois for assessment of pathogens and the host species they obtained blood meals from.
 
 ##### Page Break
 
-# 
+
