@@ -2,12 +2,14 @@
 
 library(plyr)
 library(tidyverse)
-# library(dplyr)
-# library(readr)
-# library(ggplot2)
+library(dplyr)
+library(readr)
+library(ggplot2)
 library(stringi)
 library(stringr)
 library(ggplot2)
+library(cowplot)
+install.packages("cowplot")
 
 #+ load tick survival data ####
 
@@ -60,11 +62,11 @@ tick_survival <- tick_survival %>%
 
 ## adding visit number, ADD NEW VISITS EACH TIME
 
-days_adding_visit_number <- data.frame(days = unique(tick_survival$days), visit_number= as.double(seq(1,17,1)))
+days_adding_visit_number <- data.frame(days = unique(tick_survival$days), visit_number= as.double(seq(1,18,1)))
 
 tick_survival <- left_join(tick_survival, days_adding_visit_number)
 
-#View(tick_survival)
+View(tick_survival)
 
 tick_survival_grouped <- tick_survival %>%
   group_by(visit_number, Invaded, days) %>%
@@ -73,7 +75,7 @@ tick_survival_grouped <- tick_survival %>%
             avg_adult_survival = mean(total_adult_survival),
             sd_adult_survival = sd(total_adult_survival))
 
-#View(tick_survival_grouped)
+View(tick_survival_grouped)
 
 
 #+ set theme ####
@@ -112,24 +114,11 @@ unique(tick_survival$days)
 
 #### Drews graphs ####
 
-nymph_survival_all_time <- ggplot(data = tick_survival) +
-      geom_vline(xintercept = (11), linetype = "dashed") +
-      geom_vline(xintercept = (15), linetype = "dashed") +
-      geom_vline(xintercept = (25), linetype = "dashed") +
-      geom_vline(xintercept = (32), linetype = "dashed") +
-      geom_vline(xintercept = (39), linetype = "dashed") +
-      geom_vline(xintercept = (55), linetype = "dashed") +
-      geom_vline(xintercept = (67), linetype = "dashed") +
-      geom_vline(xintercept = (77), linetype = "dashed") +
-      geom_vline(xintercept = (89), linetype = "dashed") +
-      geom_vline(xintercept = (98), linetype = "dashed") +
-      geom_vline(xintercept = (110), linetype = "dashed") +
-      geom_vline(xintercept = (126), linetype = "dashed") +
-      geom_vline(xintercept = (146), linetype = "dashed") +
-      geom_vline(xintercept = (159), linetype = "dashed") +
-      geom_vline(xintercept = (175), linetype = "dashed") +
-      geom_vline(xintercept = (202), linetype = "dashed") +
+vline_days <- c(unique(tick_survival$days))
 
+nymph_survival_all_time <- ggplot(data = tick_survival) +
+      geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
+      
       stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),
                fun.data = mean_se, geom = "pointrange") +
   stat_smooth(aes(days, nymph_survival, fill = Invaded, color = Invaded),
@@ -144,7 +133,7 @@ nymph_survival_all_time <- ggplot(data = tick_survival) +
   ylab("Survival") +
   guides(fill=FALSE, color=FALSE) +
   scale_y_continuous(limits = c(0, 1 )) +
-  scale_x_continuous(limits = c(0, 202)) +
+  scale_x_continuous(limits = c(0, 216)) +
   #theme(axis.title.x = element_blank()) +
   NULL
 
@@ -161,25 +150,10 @@ f_adult_survival_all_time <-ggplot(data = tick_survival) +
   #theme(legend.position = c(0, 0), legend.justification = c(0, 0)) +
   #theme(axis.title.y = element_blank()) +
   scale_y_continuous(limits = c(0, 1 )) +
-  scale_x_continuous(limits = c(0, 202)) +
+  scale_x_continuous(limits = c(0, 216)) +
   ylab("Survival") +
   xlab(" ") +
-  geom_vline(xintercept = (11), linetype = "dashed") +
-  geom_vline(xintercept = (15), linetype = "dashed") +
-  geom_vline(xintercept = (25), linetype = "dashed") +
-  geom_vline(xintercept = (32), linetype = "dashed") +
-  geom_vline(xintercept = (39), linetype = "dashed") +
-  geom_vline(xintercept = (55), linetype = "dashed") +
-  geom_vline(xintercept = (67), linetype = "dashed") +
-  geom_vline(xintercept = (77), linetype = "dashed") +
-  geom_vline(xintercept = (89), linetype = "dashed") +
-  geom_vline(xintercept = (98), linetype = "dashed") +
-  geom_vline(xintercept = (110), linetype = "dashed") +
-  geom_vline(xintercept = (126), linetype = "dashed") +
-  geom_vline(xintercept = (146), linetype = "dashed") +
-  geom_vline(xintercept = (159), linetype = "dashed") +
-  geom_vline(xintercept = (175), linetype = "dashed") +
-  geom_vline(xintercept = (202), linetype = "dashed") +
+  geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
   NULL
 
 m_adult_survival_all_time <- ggplot(data = tick_survival) +
@@ -194,27 +168,12 @@ m_adult_survival_all_time <- ggplot(data = tick_survival) +
   theme(plot.title = element_text(hjust = 0.5)) +
   guides(fill=FALSE, color=FALSE) +
   scale_y_continuous(limits = c(0, 1 )) +
-  scale_x_continuous(limits = c(0, 202)) +
+  scale_x_continuous(limits = c(0, 216)) +
   xlab(" ") +
   ylab("Survival") +
   #theme(axis.title.x = element_blank()) +
   #theme(axis.title.y = element_blank()) +
-  geom_vline(xintercept = (11), linetype = "dashed") +
-  geom_vline(xintercept = (15), linetype = "dashed") +
-  geom_vline(xintercept = (25), linetype = "dashed") +
-  geom_vline(xintercept = (32), linetype = "dashed") +
-  geom_vline(xintercept = (39), linetype = "dashed") +
-  geom_vline(xintercept = (55), linetype = "dashed") +
-  geom_vline(xintercept = (67), linetype = "dashed") +
-  geom_vline(xintercept = (77), linetype = "dashed") +
-  geom_vline(xintercept = (89), linetype = "dashed") +
-  geom_vline(xintercept = (98), linetype = "dashed") +
-  geom_vline(xintercept = (110), linetype = "dashed") +
-  geom_vline(xintercept = (126), linetype = "dashed") +
-  geom_vline(xintercept = (146), linetype = "dashed") +
-  geom_vline(xintercept = (159), linetype = "dashed") +
-  geom_vline(xintercept = (175), linetype = "dashed") +
-  geom_vline(xintercept = (202), linetype = "dashed") +
+  geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
   NULL
 
 tick_survival_all_time <- cowplot::plot_grid(nymph_survival_all_time,
@@ -222,8 +181,16 @@ tick_survival_all_time <- cowplot::plot_grid(nymph_survival_all_time,
 
 #### making stacked all life stages ######
 
-all_stages_stacked <- ggplot(data = tick_survival_long, aes(days, survival, color = Invaded, shape = life_stage)) +
-  stat_summary(fun.data = mean_se, geom = "pointrange") +
+avg_survival <- tick_survival_long %>%
+  group_by(days, Invaded, life_stage) %>% 
+  summarise(avg_surv= mean(survival))
+
+all_stages_stacked <- ggplot(data = tick_survival_long, aes(days, survival*100, color = Invaded, shape = life_stage)) +
+  geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
+  geom_hline(yintercept = 50, linetype = "solid", color = "gray") +
+  geom_path(data=avg_survival, aes(days, avg_surv*100), show.legend = F) +
+  stat_summary(fun.data = mean_se, geom = "pointrange", alpha=0.80, show.legend = F) +
+  stat_summary(fun.y = mean, geom = "point", size=3) +
   # stat_smooth(se = T, alpha = .2, fill = NA, show.legend = F) +
   # stat_summary(aes(days, adult_F_survival,  color = Invaded),
   #              fun.data = mean_se, geom = "pointrange", shape = 22) +
@@ -235,19 +202,20 @@ all_stages_stacked <- ggplot(data = tick_survival_long, aes(days, survival, colo
   #             se = T, alpha = .2) +
   invasion_color +
   invasion_fill +
-  def_theme +
   theme_bw() +
+  def_theme +
   ggtitle(label = "Tick Survival") +
   theme(plot.title = element_text(hjust = 0.5)) +
   #guides(fill=FALSE, color=FALSE) +
-  scale_y_continuous(limits = c(0, 1 )) +
-  scale_x_continuous(limits = c(0, 202)) +
+  scale_y_continuous(limits = c(0, 100 )) +
+  scale_x_continuous(limits = c(0, 216)) +
+  #scale_shape_manual(values = c(1,2)) +
   xlab("Days") +
-  ylab("Survival") +
+  ylab("Survival(%)") +
   NULL
 
 
-#ggsave(plot = all_stages_stacked, "figures/tick-survival-assay/all_stages_stacked.png", height = 7, width = 7)
+ggsave(plot = all_stages_stacked, "figures/tick-survival-assay/all_stages_stacked.png", height = 7, width = 7)
 
 #ggsave(plot = tick_survival_all_time, "figures/tick-survival-assay/tick_survival_all_time.png")
 
@@ -1267,3 +1235,4 @@ adult_M_rh_11_days <- ggplot(survival_temp_rh, aes(avg_min_rh, adult_M_survival,
 survival_rh_first_check <- cowplot::plot_grid(nymph_rh_11_days, adult_F_rh_11_days, adult_M_rh_11_days, ncol = 3)
 
 ggsave(plot = survival_rh_first_check, height = 5, width = 10, "figures/tick-survival-assay/survival_rh_first_check.png")
+
