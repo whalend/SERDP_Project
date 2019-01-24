@@ -9,6 +9,10 @@ output:
         reference_docx: interim-report-stylingbreaks1.docx
   html_document:
         toc: yes
+bibliography: 
+      - knitcitations.bib
+      - references.bib
+csl: bib_styles/ecology.csl
 ---
 
 
