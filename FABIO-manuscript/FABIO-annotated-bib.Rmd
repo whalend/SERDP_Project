@@ -3,8 +3,10 @@ title: "FABIO - Annotated Bibliography"
 author: "W.W. Dillon"
 date: "1/17/2019"
 output: html_document
-bibliography: /Users/whalendillon/references.bib
-csl: /Users/whalendillon/Zotero/styles/chicago-annotated-bibliography.csl
+bibliography: 
+      - knitcitations.bib
+      - references.bib
+csl: bib_styles/chicago-annotated-bibliography.csl
 ---
 
 ```{r setup, include=FALSE}

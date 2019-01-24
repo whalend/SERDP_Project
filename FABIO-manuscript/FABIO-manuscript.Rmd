@@ -30,15 +30,15 @@ output:
     template: manuscript.latex
 capsize: normalsize
 classoption: a4paper
-csl: ecology.csl
+csl: international-journal-of-wildland-fire.csl
 documentclass: article
-fontsize: 11pt
+fontsize: 12pt
 footerdate: yes
 geometry: margin=1in
 linenumbers: yes
 bibliography:
       - knitcitations.bib
-      - /Users/whalendillon/references.bib
+      - references.bib
 spacing: doublespacing
 abstract: no
 ---
@@ -1673,7 +1673,7 @@ The data for fires with both piled and standing were from a separate experiment 
 
 # REFERENCES
 
-```{r write_citations, cache=FALSE, include=FALSE, eval=F}
+```{r write_citations, cache=FALSE, include=FALSE, eval=T}
 
 write.bibtex(file="knitcitations.bib")
 
