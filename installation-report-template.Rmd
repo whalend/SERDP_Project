@@ -20,6 +20,10 @@ subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-
   diseases<h1>
 params:
   inst_name: Moody AFB
+bibliography: 
+      - knitcitations.bib
+      - references.bib
+csl: bib_styles/ecology.csl
 ---
 
 ```{r set installation name options, echo=F}
@@ -1135,7 +1139,7 @@ This project conducts a survival assay of *A. americanum* to assess tick mortali
 
 ## Comparing Tick Survival
 
-Comparison of adult and nymph life stages of the lone star tick in native and cogongrass-invaded areas plots. All life stages experience greater mortality in native plots, with nymphs dying sonner than adults.
+Comparison of adult and nymph life stages of the lone star tick in native and cogongrass-invaded areas plots. All life stages experience greater mortality in native plots, with nymphs dying sooner than adults.
 
 ![](figures/tick-survival-assay/survivalfigsTogether.png)
 
@@ -1329,11 +1333,11 @@ tick_survival_all_time <- cowplot::plot_grid(
 
 # Appendix 3 - Cogongrass fire intensity from small scale experiments
 
-Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from 1m2 to landscape (hectares) scales is driven by weather conditions and fuel characteristics, including fuel load, structure, moisture, and continuity. Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an integral part of the landscape. However, specific information is known about relatively few species, and while valuable, this information is often obtained by studies conducted across a spectrum of realism. Methods range from in situ approaches where measurements are made before, during, and after prescribed fires (high realism, low replication), to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings (low realism, highly replicable). Fire ecology experiments in the field often only manipulate the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often piled horizontally even though fuel complexes are typically more heterogeneous with substantial vertical structure that affects fire behavior (Loudermilk2014).
+Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from 1m2 to landscape (hectares) scales is driven by weather conditions and fuel characteristics, including fuel load, structure, moisture, and continuity. Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an integral part of the landscape. However, specific information is known about relatively few species, and while valuable, this information is often obtained by studies conducted across a spectrum of realism. Methods range from in situ approaches where measurements are made before, during, and after prescribed fires (high realism, low replication), to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings (low realism, highly replicable). Fire ecology experiments in the field often only manipulate the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often piled horizontally even though fuel complexes are typically more heterogeneous with substantial vertical structure that affects fire behavior [@Loudermilk2014].
 
-In this paper we present an experimental apparatus that can bridge the gap between making measurements of flammability at the lab bench and the limited replication of prescribed fires. The Fine Aboveground Biomass Incineration Organizer (FABIO) enables experimental manipulation of fuel load and structure at a relatively small but realistic and relevant scale of 1m2. We expect our design will be most useful for grasses or grass-like fuels, but it could be used or adapted for other fuel types such as small shrubs and trees. The fine aboveground biomass incineration organizer (FABIO) is a freestanding device for outdoor use to efficiently manipulate fuel structure and assess the effects on fire intensity (Figure 2). These outdoor small-scale 1m2 experimental fires allow for repeated measurements of fire intensity across multiple fuel loads without the onerous task of setting up all of the experimental plots prior to a large-scale prescribed that is subject to weather conditions and sufficient personnel.
+In this paper we present an experimental apparatus that can bridge the gap between making measurements of flammability at the lab bench and the limited replication of prescribed fires. The Fine Aboveground Biomass Incineration Organizer (FABIO) enables experimental manipulation of fuel load and structure at a relatively small but realistic and relevant scale of 1m^2^. We expect our design will be most useful for grasses or grass-like fuels, but it could be used or adapted for other fuel types such as small shrubs and trees. The fine aboveground biomass incineration organizer (FABIO) is a freestanding device for outdoor use to efficiently manipulate fuel structure and assess the effects on fire intensity (Figure 2). These outdoor small-scale 1m^2^ experimental fires allow for repeated measurements of fire intensity across multiple fuel loads without the onerous task of setting up all of the experimental plots prior to a large-scale prescribed that is subject to weather conditions and sufficient personnel.
 
-We burned three fires using piled fuel and three fires using standing fuel for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. We ultimately burned 32 fires in this experiment, with one additional fire in the 1000g category due to mislabeling during biomass sorting and weighing. We put the fire intensity and behavior measurements from these experimental fires in the context of measurements made during a prescribed fire in a longleaf pine ecosystem, and measurements made for five experimental fires using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a longleaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass Aristida stricta (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~250 hectare management unit.
+We burned three fires using piled fuel and three fires using standing fuel for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. We ultimately burned 32 fires in this experiment, with one additional fire in the 1000g category due to mislabeling during biomass sorting and weighing. We put the fire intensity and behavior measurements from these experimental fires in the context of measurements made during a prescribed fire in a longleaf pine ecosystem, and measurements made for five experimental fires using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a longleaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass *Aristida stricta* (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~250 hectare management unit.
 
 For the 32 experimental fires where the fuel loads were either piled or standing we used the braided steel insulated thermocouples (TP875 Extech Instruments, Nashua, NH, USA) that were 100 cm long. During the prescribed fire we used braided glass insulated wire probes (TC6-K, Onset Computer Corporation, Bourne, MA, USA) and wire was only good for a single exposure to direct flame. The bead wire probes were more expensive, but ultimately more economical because they didn't degrade when exposed to flames. The probes were attached to HOBO U12 thermocouple temperature data loggers (Onset Computer Corporation, Bourne, MA, USA). Weather data was recorded every two seconds during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA, USA) mounted on a tripod 1m above the ground. Data points were matched to the time of each fire and average values were calculated for air temperature, relative humidity, and wind speed.
 ##### Page Break
@@ -1349,9 +1353,9 @@ For the 32 experimental fires where the fuel loads were either piled or standing
 
 **Figure 23:** Fitted regression lines between maximum temperature (a-c) or time above 100 ºC (d-f) and fuel load for either piled or standing fuel structure at 50 cm, 25 cm, and 0 cm above ground level.
 
-The “maximum temperature” at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient.
+The "maximum temperature" at each height is the average of the maximum temperatures from the three temperature probes located at that height. For some of the fires with the lowest amount of biomass (250 g) the probe temperature did not deviate from near-ambient.
 
-The "Seconds above 100°C"" is the amount of time temperatures were recorded above 100°C at each of the heights for each biomass amount.
+The "Seconds above 100°C" is the amount of time temperatures were recorded above 100°C at each of the heights for each biomass amount.
 
 ##### Page Break
 
@@ -1508,7 +1512,7 @@ trees_summary_fields <- data.frame(
   field_name = c( "species_name", "canopy", "health", "total_dbh", "avg_height", "avg_char"),
   data_type = c(
     "character", "character", "character", "numeric", "numeric", "numeric"),
-  description = c("species of the individals to at least Genus level. if NA, unable to identify", 
+  description = c("species of the individuals to at least Genus level. if NA, unable to identify", 
     "record of all individuals of the same species in the plot that share common canopy position", 
     "record of all individuals of the same species in the plot that share common health class", 
     "total dbh of all individuals of the same species in the plot that share common canopy position and health class (cm)",
@@ -1535,7 +1539,7 @@ woody_subplot_fields <- data.frame(
   field_name = c("species_name", "stems_100m2"),
   data_type = c(
     "character", "numeric"),
-  description = c("species of the individals to at least Genus level. if NA, unable to identify",
+  description = c("species of the individuals to at least Genus level. if NA, unable to identify",
     "number of woody stems with height greater than 1m within a 5.64m radius from plot center"))
 
 names(woody_subplot_fields) <- column_names
@@ -1557,7 +1561,7 @@ ticks_fields <- data.frame(
   field_name = c("species_name", "life_stage", "tick_count"),
   data_type = c(
     "character", "character", "numeric"),
-  description = c("species of the individals to at least Genus level. if NA, unable to identify",
+  description = c("species of the individuals to at least Genus level. if NA, unable to identify",
     "life stage of tick. ex: A = adult, N = nymph, L = larvae", 
     "number of ticks found in the plot based on four dry ice traps per plot and cloth dragging"))
 
