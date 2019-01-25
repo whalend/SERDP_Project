@@ -257,20 +257,20 @@ shelby,shelby b3,ne,2018-08-16,trap,Am. mac,adult,1,S,B3,A,T,M,A,SB3ATMA,2018,Am
 shelby,shelby j1,sw,2018-08-16,trap,Am. am,nymph,3,S,J1,D,T,A,N,SJ1DTAN,2018,Amblyomma americanum
 shelby,shelby j1,se,2018-08-16,trap,Am. mac,adult,2,S,J1,F,T,M,A,SJ1FTMA,2018,Amblyomma maculatum
 shelby,shelby k1,sw,2018-08-16,trap,Am. mac,adult,1,S,K1,D,T,M,A,SK1DTMA,2018,Amblyomma maculatum
-gordon,gordon r1,nw,2018-08-23,trap,Am. am,nymph,8,G,R1,B,T,A,N,GR1BTAN,2018,Amblyomma americanum
-gordon,gordon r1,sw,2018-08-23,trap,Am. am,nymph,1,G,R1,D,T,A,N,GR1DTAN,2018,Amblyomma americanum
-gordon,gordon s1,ne,2018-08-23,trap,Am. am,nymph,2,G,S1,A,T,A,N,GS1ATAN,2018,Amblyomma americanum
-gordon,gordon s1,nw,2018-08-23,trap,Am. am,nymph,9,G,S1,B,T,A,N,GS1BTAN,2018,Amblyomma americanum
-gordon,gordon s1,se,2018-08-23,trap,Am. am,nymph,1,G,S1,F,T,A,N,GS1FTAN,2018,Amblyomma americanum
-gordon,gordon t1,nw,2018-08-23,trap,Am. am,nymph,1,G,T1,B,T,A,N,GT1BTAN,2018,Amblyomma americanum
-gordon,gordon t1,se,2018-08-23,trap,Am. am,nymph,1,G,T1,F,T,A,N,GT1FTAN,2018,Amblyomma americanum
-gordon,gordon t1,se,2018-08-23,trap,Am. mac,adult,1,G,T1,F,T,M,A,GT1FTMA,2018,Amblyomma maculatum
-gordon,gordon v1,ne,2018-08-23,trap,Am. am,adult,1,G,V1,A,T,A,A,GV1ATAA,2018,Amblyomma americanum
-gordon,gordon v1,ne,2018-08-23,trap,Am. am,nymph,9,G,V1,A,T,A,N,GV1ATAN,2018,Amblyomma americanum
-gordon,gordon v1,nw,2018-08-23,trap,Am. am,adult,3,G,V1,B,T,A,A,GV1BTAA,2018,Amblyomma americanum
-gordon,gordon v1,nw,2018-08-23,trap,Am. am,nymph,7,G,V1,B,T,A,N,GV1BTAN,2018,Amblyomma americanum
-gordon,gordon v1,sw,2018-08-23,trap,Am. am,nymph,4,G,V1,D,T,A,N,GV1DTAN,2018,Amblyomma americanum
-gordon,gordon w1,sw,2018-08-23,trap,Am. am,nymph,24,G,W1,D,T,A,N,GW1DTAN,2018,Amblyomma americanum
+gordon,gordon h1,nw,2018-08-23,trap,Am. am,nymph,8,G,R1,B,T,A,N,GR1BTAN,2018,Amblyomma americanum
+gordon,gordon h1,sw,2018-08-23,trap,Am. am,nymph,1,G,R1,D,T,A,N,GR1DTAN,2018,Amblyomma americanum
+gordon,gordon g1,ne,2018-08-23,trap,Am. am,nymph,2,G,S1,A,T,A,N,GS1ATAN,2018,Amblyomma americanum
+gordon,gordon g1,nw,2018-08-23,trap,Am. am,nymph,9,G,S1,B,T,A,N,GS1BTAN,2018,Amblyomma americanum
+gordon,gordon g1,se,2018-08-23,trap,Am. am,nymph,1,G,S1,F,T,A,N,GS1FTAN,2018,Amblyomma americanum
+gordon,gordon f1,nw,2018-08-23,trap,Am. am,nymph,1,G,T1,B,T,A,N,GT1BTAN,2018,Amblyomma americanum
+gordon,gordon f1,se,2018-08-23,trap,Am. am,nymph,1,G,T1,F,T,A,N,GT1FTAN,2018,Amblyomma americanum
+gordon,gordon f1,se,2018-08-23,trap,Am. mac,adult,1,G,T1,F,T,M,A,GT1FTMA,2018,Amblyomma maculatum
+gordon,gordon e1,ne,2018-08-23,trap,Am. am,adult,1,G,V1,A,T,A,A,GV1ATAA,2018,Amblyomma americanum
+gordon,gordon e1,ne,2018-08-23,trap,Am. am,nymph,9,G,V1,A,T,A,N,GV1ATAN,2018,Amblyomma americanum
+gordon,gordon e1,nw,2018-08-23,trap,Am. am,adult,3,G,V1,B,T,A,A,GV1BTAA,2018,Amblyomma americanum
+gordon,gordon e1,nw,2018-08-23,trap,Am. am,nymph,7,G,V1,B,T,A,N,GV1BTAN,2018,Amblyomma americanum
+gordon,gordon e1,sw,2018-08-23,trap,Am. am,nymph,4,G,V1,D,T,A,N,GV1DTAN,2018,Amblyomma americanum
+gordon,gordon d1,sw,2018-08-23,trap,Am. am,nymph,24,G,W1,D,T,A,N,GW1DTAN,2018,Amblyomma americanum
 blanding,blanding b1,north,2017-06-08,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2017,NA
 blanding,blanding b1,south,2017-06-08,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2017,NA
 blanding,blanding b1,east,2017-06-08,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2017,NA
@@ -537,24 +537,24 @@ shelby,shelby j1,ne,2018-08-16,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
 shelby,shelby k1,nw,2018-08-16,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
 shelby,shelby k1,ne,2018-08-16,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
 shelby,shelby k1,se,2018-08-16,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon r1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon r1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon s1,sw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon t1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon t1,sw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon v1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon w1,nw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon w1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon w1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon x1,nw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon x1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon x1,sw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon x1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon y1,nw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon y1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon y1,sw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon y1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon z1,nw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon z1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon z1,sw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
-gordon,gordon z1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon h1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon h1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon g1,sw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon f1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon f1,sw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon e1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon d1,nw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon d1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon d1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon c1,nw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon c1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon c1,sw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon c1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon b1,nw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon b1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon b1,sw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon b1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon a1,nw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon a1,ne,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon a1,sw,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA
+gordon,gordon a1,se,2018-08-23,trap,NA,NA,0,NA,NA,NA,NA,NA,NA,NA,2018,NA

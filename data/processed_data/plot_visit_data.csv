@@ -31,7 +31,7 @@ moody,moody k1,uninvaded,2017-08-30,2006,NA,11,2017,-83.183563,30.950761,Moody A
 blanding,blanding k1,uninvaded,2018-05-22,2015,NA,3,2018,-82.023445,29.837378,Camp Blanding
 blanding,blanding m1,uninvaded,2018-05-15,2007,NA,11,2018,-81.968503,29.84575,Camp Blanding
 blanding,blanding n1,uninvaded,2018-05-24,2013,NA,5,2018,-81.977192,29.83789,Camp Blanding
-blanding,blanding theater_cogon,invaded,2018-05-16,NA,NA,NA,2018,-81.98388,29.943511,Camp Blanding
+blanding,blanding theater_cogon,invaded,2018-05-16,NA,NA,NA,2018,NA,NA,NA
 blanding,blanding h1,uninvaded,2018-05-17,2018,NA,0,2018,-81.949534,29.866916,Camp Blanding
 blanding,blanding g1,uninvaded,2018-05-18,2018,NA,0,2018,-81.950797,29.869148,Camp Blanding
 blanding,blanding c1,uninvaded,2018-05-16,2017,NA,1,2018,-81.997211,29.826576,Camp Blanding
@@ -95,11 +95,11 @@ shelby,shelby h1,uninvaded,2018-08-13,2014,NA,4,2018,-88.958222,31.073167,Camp S
 shelby,shelby i1,uninvaded,2018-08-13,2012,NA,6,2018,-88.954874,31.071573,Camp Shelby
 shelby,shelby j1,uninvaded,2018-08-14,2012,NA,6,2018,-89.231414,31.208952,Camp Shelby
 shelby,shelby k1,uninvaded,2018-08-14,NA,NA,NA,2018,-89.209579,31.213312,Camp Shelby
-gordon,gordon z1,uninvaded,2018-08-20,2016,NA,2,2018,-82.185351,33.355677,Fort Gordon
-gordon,gordon y1,uninvaded,2018-08-20,2017,NA,1,2018,-82.176099,33.357005,Fort Gordon
-gordon,gordon x1,uninvaded,2018-08-20,2014,NA,4,2018,-82.212831,33.35564,Fort Gordon
-gordon,gordon w1,uninvaded,2018-08-21,2013,"plot hardwood dominated ""reference plot"", at edge of pine dominated stand",5,2018,-82.187065,33.343386,Fort Gordon
-gordon,gordon v1,uninvaded,2018-08-21,2009,NA,9,2018,-82.187841,33.342135,Fort Gordon
-gordon,gordon t1,uninvaded,2018-08-21,2015,NA,3,2018,-82.195633,33.34406,Fort Gordon
-gordon,gordon s1,uninvaded,2018-08-22,2016,NA,2,2018,-82.284032,33.364516,Fort Gordon
-gordon,gordon r1,uninvaded,2018-08-22,2018,evidence of chemical treatment to reduce understory/midstory of oaks/hardwoods,0,2018,-82.2853,33.364136,Fort Gordon
+gordon,gordon a1,uninvaded,2018-08-20,2016,NA,2,2018,-82.185351,33.355677,Fort Gordon
+gordon,gordon b1,uninvaded,2018-08-20,2017,NA,1,2018,-82.176099,33.357005,Fort Gordon
+gordon,gordon c1,uninvaded,2018-08-20,2014,NA,4,2018,-82.212831,33.35564,Fort Gordon
+gordon,gordon d1,uninvaded,2018-08-21,2013,"plot hardwood dominated ""reference plot"", at edge of pine dominated stand",5,2018,-82.187065,33.343386,Fort Gordon
+gordon,gordon e1,uninvaded,2018-08-21,2009,NA,9,2018,-82.187841,33.342135,Fort Gordon
+gordon,gordon f1,uninvaded,2018-08-21,2015,NA,3,2018,-82.195633,33.34406,Fort Gordon
+gordon,gordon g1,uninvaded,2018-08-22,2016,NA,2,2018,-82.284032,33.364516,Fort Gordon
+gordon,gordon h1,uninvaded,2018-08-22,2018,evidence of chemical treatment to reduce understory/midstory of oaks/hardwoods,0,2018,-82.2853,33.364136,Fort Gordon
