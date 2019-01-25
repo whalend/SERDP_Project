@@ -20,14 +20,25 @@ cogon_data <- cogon_data %>%
   filter(date>20170601)
 
 cogon_data$date <- as.Date(as.character(cogon_data$date), format = "%Y%m%d")
-cogon_data <- cogon_data %>% 
-  mutate(visit_year = lubridate::year(cogon_data$date))
+cogon_data <- cogon_data %>%
+  mutate(visit_year = lubridate::year(cogon_data$date),
+         plot_id = case_when(
+               plot_id=="gordon z1" ~ "gordon a1",
+               plot_id=="gordon y1" ~ "gordon b1",
+               plot_id=="gordon x1" ~ "gordon c1",
+               plot_id=="gordon w1" ~ "gordon d1",
+               plot_id=="gordon v1" ~ "gordon e1",
+               plot_id=="gordon t1" ~ "gordon f1",
+               plot_id=="gordon s1" ~ "gordon g1",
+               plot_id=="gordon r1" ~ "gordon h1",
+               TRUE ~ plot_id
+         ))
 
 sort(unique(cogon_data$plot_id))
 
 summary(cogon_data)
 
-filter(cogon_data, is.na(dry_biomass)) %>% 
+filter(cogon_data, is.na(dry_biomass)) %>%
   select(date, plot_id, Quadrant, CogonSampleID, dry_biomass)
 
 #### Missing dry biomass from Shelby due to transportation regulations ####
@@ -44,86 +55,86 @@ summary(cogon_data)
 summary(plot_visit_data)
 unique(plot_visit_data$imcy_inv)
 
-cogon_grouped <- cogon_data %>% 
-  group_by(site, plot_id, date, visit_year) %>% 
+cogon_grouped <- cogon_data %>%
+  group_by(site, plot_id, date, visit_year) %>%
   summarise(avg_tiller_density_m2 = mean(tiller_density), na.rm = T)
 
-plot_visit_cogon <- 
+plot_visit_cogon <-
   left_join(plot_visit_data, cogon_grouped)
 
-plot_visit_cogon <- plot_visit_cogon %>% 
-  ungroup(.) %>% 
-  select(installation, plot_id, visit_year, imcy_inv, avg_tiller_density_m2, 
+plot_visit_cogon <- plot_visit_cogon %>%
+  ungroup(.) %>%
+  select(installation, plot_id, visit_year, imcy_inv, avg_tiller_density_m2,
          xcoord_lon, ycoord_lat, years_since_fire)
 
 #### Cogon for Blanding ####
 
-plot_visit_cogongrass_blanding <- plot_visit_cogon %>% 
-  filter(installation=="blanding") %>% 
+plot_visit_cogongrass_blanding <- plot_visit_cogon %>%
+  filter(installation=="blanding") %>%
   select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_blanding, "data/processed_by_installation/camp_blanding/plot_visit_invasion_status_blanding.csv")
 
 #### Cogon for Avon Park ####
 
-plot_visit_cogongrass_avonpark <- plot_visit_cogon %>% 
-  filter(installation=="avonpark") %>% 
+plot_visit_cogongrass_avonpark <- plot_visit_cogon %>%
+  filter(installation=="avonpark") %>%
   select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_avonpark, "data/processed_by_installation/avon_park_afr/plot_visit_invasion_status_avonpark.csv")
 
 #### Cogon for Eglin ####
 
-plot_visit_cogongrass_eglin <- plot_visit_cogon %>% 
-  filter(installation=="eglin") %>% 
+plot_visit_cogongrass_eglin <- plot_visit_cogon %>%
+  filter(installation=="eglin") %>%
   select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_eglin, "data/processed_by_installation/eglin_afb/plot_visit_invasion_status_eglin.csv")
 
 #### Cogon for Tyndall ####
 
-plot_visit_cogongrass_tyndall <- plot_visit_cogon %>% 
-  filter(installation=="tyndall") %>% 
+plot_visit_cogongrass_tyndall <- plot_visit_cogon %>%
+  filter(installation=="tyndall") %>%
   select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_tyndall, "data/processed_by_installation/tyndall_afb/plot_visit_invasion_status_tyndall.csv")
 
 #### Cogon for Jackson ####
 
-plot_visit_cogongrass_jackson <- plot_visit_cogon %>% 
-  filter(installation=="jackson") %>% 
+plot_visit_cogongrass_jackson <- plot_visit_cogon %>%
+  filter(installation=="jackson") %>%
   select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_jackson, "data/processed_by_installation/fort_jackson/plot_visit_invasion_status_jackson.csv")
 
 #### Cogon for Benning ####
 
-plot_visit_cogongrass_benning <- plot_visit_cogon %>% 
-  filter(installation=="benning") %>% 
+plot_visit_cogongrass_benning <- plot_visit_cogon %>%
+  filter(installation=="benning") %>%
   select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_benning, "data/processed_by_installation/fort_benning/plot_visit_invasion_status_benning.csv")
 
 #### Cogon for Shelby ####
 
-plot_visit_cogongrass_shelby <- plot_visit_cogon %>% 
-  filter(installation=="shelby") %>% 
+plot_visit_cogongrass_shelby <- plot_visit_cogon %>%
+  filter(installation=="shelby") %>%
   select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_shelby, "data/processed_by_installation/camp_shelby/plot_visit_invasion_status_shelby.csv")
 
 #### Cogon for Gordon ####
 
-plot_visit_cogongrass_gordon <- plot_visit_cogon %>% 
-  filter(installation=="gordon") %>% 
+plot_visit_cogongrass_gordon <- plot_visit_cogon %>%
+  filter(installation=="gordon") %>%
   select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_gordon, "data/processed_by_installation/fort_gordon/plot_visit_invasion_status_gordon.csv")
 
 #### Cogon for Moody ####
 
-plot_visit_cogongrass_moody <- plot_visit_cogon %>% 
-  filter(installation=="moody") %>% 
+plot_visit_cogongrass_moody <- plot_visit_cogon %>%
+  filter(installation=="moody") %>%
   select(plot_id, visit_year, imcy_inv, avg_tiller_density_m2, xcoord_lon, ycoord_lat, years_since_fire)
 
 write_csv(plot_visit_cogongrass_moody, "data/processed_by_installation/moody_afb/plot_visit_invasion_status_moody.csv")
