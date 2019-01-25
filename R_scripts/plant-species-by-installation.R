@@ -2,6 +2,11 @@
 
 ## CHECK: depends on plant-species-data-qaqc.R
 
+library(plyr); library(dplyr);
+library(readr)
+
+species_data <- read_csv("data/processed_data/species1m.csv")
+
 #### Steven begin processing for individual installations ####
 
 summary(species_data)

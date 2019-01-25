@@ -2,6 +2,9 @@
 
 ## CHECK: depends on dung-data-qaqc.R having been processed
 
+library(plyr); library(dplyr);
+library(readr)
+
 #### Steven begin processing by installation ####
 
 dung_data <- read_csv("data/processed_data/dung.csv")

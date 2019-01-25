@@ -2,6 +2,11 @@
 
 ## CHECK: depends on tree-data-qaqc.R
 
+library(plyr); library(dplyr);
+library(readr)
+
+tree_data <- read_csv("data/processed_data/trees.csv")
+
 #### Sorting raw data to each installation ####
 
 trees_raw_blanding <- tree_data %>%
