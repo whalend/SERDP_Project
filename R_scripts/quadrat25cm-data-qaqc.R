@@ -88,19 +88,31 @@ biomass_data$standing_fuel_mass_dry[is.na(biomass_data$standing_fuel_mass_dry) &
 
 biomass_data$date[biomass_data$plot_id=="blanding c1" & biomass_data$date==20170608] <- 20170609
 
-filter(biomass_data, plot_id=="blanding c1") %>% 
+filter(biomass_data, plot_id=="blanding c1") %>%
   select(plot_id, date)
 
 biomass_data$date <- as.Date(as.character(biomass_data$date), format = "%Y%m%d")
-biomass_data <- biomass_data %>% 
-  mutate(visit_year = lubridate::year(biomass_data$date))
+biomass_data <- biomass_data %>%
+  mutate(visit_year = lubridate::year(biomass_data$date),
+         plot_id = case_when(
+               plot_id=="gordon z1" ~ "gordon a1",
+               plot_id=="gordon y1" ~ "gordon b1",
+               plot_id=="gordon x1" ~ "gordon c1",
+               plot_id=="gordon w1" ~ "gordon d1",
+               plot_id=="gordon v1" ~ "gordon e1",
+               plot_id=="gordon t1" ~ "gordon f1",
+               plot_id=="gordon s1" ~ "gordon g1",
+               plot_id=="gordon r1" ~ "gordon h1",
+               TRUE ~ plot_id
+         ))
 summary(biomass_data)
+
+unique(biomass_data$plot_id)
 
 write_csv(biomass_data, "data/processed_data/quadrat25cm.csv")
 
-#### Steven done processing, begin filter to installation level ####
 
-biomass_data <- read_csv("data/processed_data/quadrat25cm.csv")
+# biomass_data <- read_csv("data/processed_data/quadrat25cm.csv")
 summary(biomass_data)
 names(biomass_data)
 
@@ -113,37 +125,36 @@ biomass_grouped <- biomass_data %>%
 
 summary(biomass_grouped)
 
-#### Done grouping, combination of canopy, quad1m and quad25cm on new script ####
+## Done grouping, combination of canopy, quad1m and quad25cm on new script: quadrat_biomass_canopy_cover-qaqc.R ####
 
-###########
-biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
-biomass_data <- left_join(
-      select(biomass_data, installation,plot_id,fuel_mass_wet,litter_mass_wet),
-      select(plot_data, installation:full_names),
-      by = c("installation","plot_id")
-)
-# biomass_data$last_fire_year <- as.integer(biomass_data$last_fire_year)
-# biomass_data$years_since_fire <- 2017 - biomass_data$last_fire_year
-
-ggplot(biomass_data,
-       aes(years_since_fire, fuel_mass_wet*16)) +
-      geom_point(aes(color = installation), position = "jitter") +
-      # facet_grid(.~installation) +
-      # geom_smooth(method = "loess")
-      theme_bw() +
-      ylab(expression(paste("Standing biomass (g/", m^{2}, ")"))) +
-      xlab("Years since last fire") +
-      ggtitle("Fresh standing biomass across burn units at each installation",
-              subtitle = "(measurements at 25cm quadrats)")
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass-hitter.png", height=7)
-
-ggplot(biomass_data %>% group_by(installation, last_fire_year),
-       aes(years_since_fire, litter_mass_wet*16)) +
-      geom_point(aes(color = installation), position = "jitter") +
-      # facet_grid(.~installation) +
-      theme_bw() +
-      ylab(expression(paste("Litter biomass (g/", m^{2}, ")"))) +
-      xlab("Years since last fire") +
-      ggtitle("Fresh litter biomass across burn units at each installation",
-              subtitle = "(measurements at 25cm quadrats)")
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass-jitter.png", height=7)
+# biomass_data$fuel_mass_wet <- round(as.numeric(biomass_data$fuel_mass_wet),2)
+# biomass_data <- left_join(
+#       select(biomass_data, installation,plot_id,fuel_mass_wet,litter_mass_wet),
+#       select(plot_data, installation:full_names),
+#       by = c("installation","plot_id")
+# )
+# # biomass_data$last_fire_year <- as.integer(biomass_data$last_fire_year)
+# # biomass_data$years_since_fire <- 2017 - biomass_data$last_fire_year
+#
+# ggplot(biomass_data,
+#        aes(years_since_fire, fuel_mass_wet*16)) +
+#       geom_point(aes(color = installation), position = "jitter") +
+#       # facet_grid(.~installation) +
+#       # geom_smooth(method = "loess")
+#       theme_bw() +
+#       ylab(expression(paste("Standing biomass (g/", m^{2}, ")"))) +
+#       xlab("Years since last fire") +
+#       ggtitle("Fresh standing biomass across burn units at each installation",
+#               subtitle = "(measurements at 25cm quadrats)")
+# # ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass-hitter.png", height=7)
+#
+# ggplot(biomass_data %>% group_by(installation, last_fire_year),
+#        aes(years_since_fire, litter_mass_wet*16)) +
+#       geom_point(aes(color = installation), position = "jitter") +
+#       # facet_grid(.~installation) +
+#       theme_bw() +
+#       ylab(expression(paste("Litter biomass (g/", m^{2}, ")"))) +
+#       xlab("Years since last fire") +
+#       ggtitle("Fresh litter biomass across burn units at each installation",
+#               subtitle = "(measurements at 25cm quadrats)")
+# # ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass-jitter.png", height=7)

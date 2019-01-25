@@ -167,6 +167,21 @@ tick_data_corrected <- tick_data_corrected %>%
 # tick_data_corrected$species_name
 unique(tick_data_corrected$species_name)
 
+tick_data_corrected <- tick_data_corrected %>%
+      mutate(plot_id = case_when(
+            plot_id=="gordon z1" ~ "gordon a1",
+            plot_id=="gordon y1" ~ "gordon b1",
+            plot_id=="gordon x1" ~ "gordon c1",
+            plot_id=="gordon w1" ~ "gordon d1",
+            plot_id=="gordon v1" ~ "gordon e1",
+            plot_id=="gordon t1" ~ "gordon f1",
+            plot_id=="gordon s1" ~ "gordon g1",
+            plot_id=="gordon r1" ~ "gordon h1",
+            TRUE ~ plot_id
+      ))
+
+unique(tick_data_corrected$plot_id)
+
 write_csv(tick_data_corrected, "data/processed_data/ticks.csv")
 
 

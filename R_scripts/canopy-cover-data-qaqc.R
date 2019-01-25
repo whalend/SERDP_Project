@@ -62,30 +62,30 @@ write_csv(canopy_cover, "data/processed_data/canopy-cover.csv")
 canopy_cover <- read_csv("data/processed_data/canopy-cover.csv")
 summary(canopy_cover)
 
-filter(canopy_cover, is.na(fill_dots)) %>% 
+filter(canopy_cover, is.na(fill_dots)) %>%
   select(date, plot_id, direction, fill_dots, pct_canopy_cover)
 
-filter(canopy_cover, plot_id=="blanding c1") %>% 
+filter(canopy_cover, plot_id=="blanding c1") %>%
   select(date, plot_id, direction, fill_dots, pct_canopy_cover)
 
-canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1" 
+canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1"
                        & canopy_cover$direction=="N"] <- 23.3
-canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1" 
+canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1"
                        & canopy_cover$direction=="S"] <- 24.7
-canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1" 
+canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1"
                        & canopy_cover$direction=="E"] <- 44.5
-canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1" 
+canopy_cover$fill_dots[canopy_cover$plot_id=="blanding c1"
                        & canopy_cover$direction=="W"] <- 37
 
 ## Added missing fill_dots in blanding c1 ##
 
-canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" & 
+canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" &
                        canopy_cover$direction=="N"] <- 27
-canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" & 
+canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" &
                          canopy_cover$direction=="S"] <- 23
-canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" & 
+canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" &
                          canopy_cover$direction=="E"] <- 15
-canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" & 
+canopy_cover$fill_dots[canopy_cover$date=="20180515" & canopy_cover$plot_id=="blanding c1" &
                          canopy_cover$direction=="W"] <- 77
 ## Messed up and forgot dates, fixing the 2018 blanding c1's ##
 
@@ -98,25 +98,38 @@ canopy_cover$date[canopy_cover$plot_id=="shelby f1" & canopy_cover$date==2017092
 
 
 canopy_cover$date <- as.Date(as.character(canopy_cover$date), format = "%Y%m%d")
-canopy_cover <- canopy_cover %>% 
-  filter(distance %in% c(10)) 
+canopy_cover <- canopy_cover %>%
+  filter(distance %in% c(10))
 
-canopy_cover <- canopy_cover %>% 
-  mutate(visit_year = lubridate::year(canopy_cover$date))
+canopy_cover <- canopy_cover %>%
+  mutate(visit_year = lubridate::year(canopy_cover$date),
+         plot_id = case_when(
+               plot_id=="gordon z1" ~ "gordon a1",
+               plot_id=="gordon y1" ~ "gordon b1",
+               plot_id=="gordon x1" ~ "gordon c1",
+               plot_id=="gordon w1" ~ "gordon d1",
+               plot_id=="gordon v1" ~ "gordon e1",
+               plot_id=="gordon t1" ~ "gordon f1",
+               plot_id=="gordon s1" ~ "gordon g1",
+               plot_id=="gordon r1" ~ "gordon h1",
+               TRUE ~ plot_id
+         ))
 
 summary(canopy_cover)
 
-filter(canopy_cover, plot_id=="blanding c1") %>% 
+filter(canopy_cover, plot_id=="blanding c1") %>%
   select(installation, plot_id, date)
+
+unique(canopy_cover$plot_id)
 
 write_csv(canopy_cover, "data/processed_data/canopy-cover.csv")
 
 #### Steven checked processing, looks good ####
 
-canopy_grouped <- canopy_cover %>% 
-  group_by(installation, plot_id, date, visit_year) %>% 
+canopy_grouped <- canopy_cover %>%
+  group_by(installation, plot_id, date, visit_year) %>%
   summarise(avg_pct_canopy_cover = mean(pct_canopy_cover, na.rm = T))
 
 summary(canopy_grouped)
 
-#### Done grouping, combination of canopy, quad1m and quad25cm on new script ####
+#### Done grouping, combination of canopy, quad1m and quad25cm on new script: quadrat_biomass_canopy_cover-qaqc.R ####

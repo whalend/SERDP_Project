@@ -20,6 +20,19 @@ subplot_data <- subplot_data %>%
          plot_id=tolower(plot_id)) %>%
   filter(date>20170601)
 
+subplot_data <- subplot_data %>%
+      mutate(plot_id = case_when(
+            plot_id=="gordon z1" ~ "gordon a1",
+            plot_id=="gordon y1" ~ "gordon b1",
+            plot_id=="gordon x1" ~ "gordon c1",
+            plot_id=="gordon w1" ~ "gordon d1",
+            plot_id=="gordon v1" ~ "gordon e1",
+            plot_id=="gordon t1" ~ "gordon f1",
+            plot_id=="gordon s1" ~ "gordon g1",
+            plot_id=="gordon r1" ~ "gordon h1",
+            TRUE ~ plot_id
+      ))
+
 subplot_data <- subplot_data[ -c(4:5)]
 
 #### Removed 0-50cm and 51-99cm columns ####
@@ -36,104 +49,37 @@ anti_join(plot_visit_data, subplot_data, "plot_id") %>%
 
 sort(unique(subplot_data$veg_id))
 
-# Will fix random subplot veg_id when entered 
+# Will fix random subplot veg_id when entered
 
 filter(subplot_data, over_100cm>100)
 filter(subplot_data, plot_id=="tyndall h1")
 
 ## 1300 Ilex for Tyndall h1 is correct ##
 
-write_csv(subplot_data, "data/processed_data/woodysubplot.csv")
+unique(subplot_data$plot_id)
 
-#### Steven stopped processing here, begin filtering by installation ####
 
-subplot_data <- read_csv("data/processed_data/woodysubplot.csv")
+# subplot_data <- read_csv("data/processed_data/woodysubplot.csv")
 summary(subplot_data)
 names(subplot_data)
 
-subplot_data <- subplot_data %>% 
-  mutate(stems_100m2 = round(if_else(date<"2018-01-01", over_100cm*.599,over_100cm*1)))
+subplot_data <- subplot_data %>%
+  mutate(stems_100m2 = round(if_else(date<"2018-01-01", over_100cm*.599,over_100cm*1)),
+         species_name = paste(Genus, Species, sep = " "),
+         date = as.Date(as.character(date), format = "%Y%m%d"),
+         visit_year = lubridate::year(date))
 
-subplot_data <- subplot_data %>% 
-  mutate(species_name = paste(Genus, Species, sep = " "))
 
-filter(subplot_data, plot_id=="tyndall h1") %>% 
+filter(subplot_data, plot_id=="tyndall h1") %>%
   select(plot_id, date, species_name, over_100cm, stems_100m2)
 
-subplot_data$stems_100m2[subplot_data$plot_id=="tyndall h1" & 
+subplot_data$stems_100m2[subplot_data$plot_id=="tyndall h1" &
                            subplot_data$species_name=="Ilex glabra"] <- 1300
 
-#### Filter for Camp Blanding ####
+names(subplot_data)
+names(plot_visit_data)
 
-woody_subplot_blanding <- subplot_data %>% 
-  filter(installation=="blanding") %>% 
-  select(plot_id, date, visit_year, species_name, stems_100m2)
-
-write_csv(woody_subplot_blanding, "data/processed_by_installation/camp_blanding/woody_subplot_blanding.csv")
-
-#### Filter for Avon Park AFR ####
-
-woody_subplot_avonpark <- subplot_data %>% 
-  filter(installation=="avonpark") %>% 
-  select(plot_id, date, visit_year, species_name, stems_100m2)
-
-write_csv(woody_subplot_avonpark, "data/processed_by_installation/avon_park_afr/woody_subplot_avonpark.csv")
-
-#### Filter for Eglin AFB ####
-
-woody_subplot_eglin <- subplot_data %>% 
-  filter(installation=="eglin") %>% 
-  select(plot_id, date, visit_year, species_name, stems_100m2)
-
-write_csv(woody_subplot_eglin, "data/processed_by_installation/eglin_afb/woody_subplot_eglin.csv")
-
-#### Filter for Tyndall AFB ####
-
-woody_subplot_tyndall <- subplot_data %>% 
-  filter(installation=="tyndall") %>% 
-  select(plot_id, date, visit_year, species_name, stems_100m2)
-
-write_csv(woody_subplot_tyndall, "data/processed_by_installation/tyndall_afb/woody_subplot_tyndall.csv")
-
-#### Filter for Fort Jackson ####
-
-woody_subplot_jackson <- subplot_data %>% 
-  filter(installation=="jackson") %>% 
-  select(plot_id, date, visit_year, species_name, stems_100m2)
-
-write_csv(woody_subplot_jackson, "data/processed_by_installation/fort_jackson/woody_subplot_jackson.csv")
-
-#### Filter for Fort Benning ####
-
-woody_subplot_benning <- subplot_data %>% 
-  filter(installation=="benning") %>% 
-  select(plot_id, date, visit_year, species_name, stems_100m2)
-
-write_csv(woody_subplot_benning, "data/processed_by_installation/fort_benning/woody_subplot_benning.csv")
-
-#### Filter for Camp Shelby ####
-
-woody_subplot_shelby <- subplot_data %>% 
-  filter(installation=="shelby") %>% 
-  select(plot_id, date, visit_year, species_name, stems_100m2)
-
-write_csv(woody_subplot_shelby, "data/processed_by_installation/camp_shelby/woody_subplot_shelby.csv")
-
-#### Filter for Fort Gordon ####
-
-woody_subplot_gordon <- subplot_data %>% 
-  filter(installation=="gordon") %>% 
-  select(plot_id, date, visit_year, species_name, stems_100m2)
-
-write_csv(woody_subplot_gordon, "data/processed_by_installation/fort_gordon/woody_subplot_gordon.csv")
-
-#### Filter for Moody AFB ####
-
-woody_subplot_moody <- subplot_data %>% 
-  filter(installation=="moody") %>% 
-  select(plot_id, date, visit_year, species_name, stems_100m2)
-
-write_csv(woody_subplot_moody, "data/processed_by_installation/moody_afb/woody_subplot_moody.csv")
+subplot_data <- left_join(subplot_data,
+                          select(plot_visit_data, -notes))
 
 write_csv(subplot_data, "data/processed_data/woodysubplot.csv")
-

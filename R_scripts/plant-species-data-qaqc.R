@@ -86,7 +86,20 @@ species_data$functional_group[species_data$Order=="2544"] <- "forb"
 
 # order # 2048 and 3507 still unknown
 
+species_data <- species_data %>%
+      mutate(plot_id = case_when(
+            plot_id=="gordon z1" ~ "gordon a1",
+            plot_id=="gordon y1" ~ "gordon b1",
+            plot_id=="gordon x1" ~ "gordon c1",
+            plot_id=="gordon w1" ~ "gordon d1",
+            plot_id=="gordon v1" ~ "gordon e1",
+            plot_id=="gordon t1" ~ "gordon f1",
+            plot_id=="gordon s1" ~ "gordon g1",
+            plot_id=="gordon r1" ~ "gordon h1",
+            TRUE ~ plot_id
+      ))
 
+unique(species_data$plot_id)
 
 write_csv(species_data, "data/processed_data/species1m.csv")
 
@@ -107,207 +120,57 @@ n_distinct(d2$functional_group)
 sort(unique(species_data$functional_group__1))
 sort(unique(species_data$veg_id))
 
-#### Steven begin processing for individual installations ####
-
-summary(species_data)
-names(species_data)
-
-species_grouped <- species_data %>%
-  group_by(installation, plot_id, date, visit_year, veg_id, functional_group, Genus, Species) %>%
-  summarise(avg_pct_cover = mean(pct_cover, na.rm = T),
-            num_stems_m2 = sum(ht_under50cm, ht50_100cm, ht_over100cm, na.rm=T)/4)
-
-summary(species_grouped)
-
-species_grouped <- species_grouped %>% 
-  mutate(species_name = paste(Genus, Species, sep = " "))
-
-# Added species_name concatenation of Genus & Species
-
-filter(species_grouped, num_stems_m2>400)$plot_id
-filter(species_data, plot_id=="avonpark e2", veg_id=="imcy") %>%
-      select(ht_under50cm:ht_over100cm)
-
-species_data <- species_data %>%
-      filter(!is.na(transect_id))
-
-write_csv(species_data, "data/processed_data/species1m.csv")
-
-## Removed avon park cogon plots from species_data
-
-species_data <- read_csv("data/processed_data/species1m.csv")
-
-summary(species_grouped)
-
-#### Filter for Fort Benning ####
-
-species_benning <- species_grouped %>%
-  filter(installation=="benning")
-
-summary(species_benning)
-
-species_benning <- filter(species_benning) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
-
-write_csv(species_benning, "data/processed_by_installation/fort_benning/species_benning.csv")
-
-#### Filter for Camp Blanding ####
-
-species_blanding <- species_grouped %>%
-  filter(installation=="blanding")
-
-summary(species_blanding)
-
-species_blanding <- filter(species_blanding) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
-
-write_csv(species_blanding, "data/processed_by_installation/camp_blanding/species_blanding.csv")
-
-#### Filter for Avon Park AFR ####
-
-species_avonpark <- species_grouped %>%
-  filter(installation=="avonpark")
-
-summary(species_avonpark)
-
-species_avonpark <- filter(species_avonpark) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
-
-write_csv(species_avonpark, "data/processed_by_installation/avon_park_afr/species_avonpark.csv")
-
-#### Filter for Eglin AFB ####
-
-species_eglin <- species_grouped %>%
-  filter(installation=="eglin")
-
-summary(species_eglin)
-
-species_eglin <- filter(species_eglin) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
-
-write_csv(species_eglin, "data/processed_by_installation/eglin_afb/species_eglin.csv")
-
-#### Filter for Tyndall AFB ####
-
-species_tyndall <- species_grouped %>%
-  filter(installation=="tyndall")
-
-summary(species_tyndall)
-
-species_tyndall <- filter(species_tyndall) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
-
-write_csv(species_tyndall, "data/processed_by_installation/tyndall_afb/species_tyndall.csv")
-
-#### Filter for Fort Jackson ####
-
-species_jackson <- species_grouped %>%
-  filter(installation=="jackson")
-
-summary(species_jackson)
-
-species_jackson <- filter(species_jackson) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
-
-write_csv(species_jackson, "data/processed_by_installation/fort_jackson/species_jackson.csv")
-
-#### Filter for Camp Shelby ####
-
-species_shelby <- species_grouped %>%
-  filter(installation=="shelby")
-
-summary(species_shelby)
-
-species_shelby <- filter(species_shelby) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
-
-write_csv(species_shelby, "data/processed_by_installation/camp_shelby/species_shelby.csv")
-
-#### Filter for Fort Gordon ####
-
-species_gordon <- species_grouped %>%
-  filter(installation=="gordon")
-
-summary(species_gordon)
-
-species_gordon <- filter(species_gordon) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
-
-write_csv(species_gordon, "data/processed_by_installation/fort_gordon/species_gordon.csv")
-
-#### Filter for Moody AFB ####
-
-species_moody <- species_grouped %>%
-  filter(installation=="moody")
-
-summary(species_moody)
-
-species_moody <- filter(species_moody) %>%
-  ungroup(.) %>%
-  select(plot_id, date, visit_year, species_name, functional_group, avg_pct_cover, num_stems_m2)
-
-write_csv(species_moody, "data/processed_by_installation/moody_afb/species_moody.csv")
-
-#### Completion of filtering all species to each of 9 installations ####
 
 #################
 #### NOT RUN ####
 #############################################################################
-species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10")))
-length(unique(species_sub$veg_id))
-summary(species_sub)
+# species_sub <- (filter(species_data, quadrat_id %in% c("e10","w10","n10","s10")))
+# length(unique(species_sub$veg_id))
+# summary(species_sub)
+#
+# ## Testing for differences in dense vs. less dense data collection
+# hist(log(species_data$pct_cover))
+# var(log(species_data$pct_cover))
+# hist(log(species_sub$pct_cover))
+# var(log(species_sub$pct_cover))
+# t.test(log(species_data$pct_cover), log(species_sub$pct_cover),
+#        var.equal = T, paired = F)
 
-## Testing for differences in dense vs. less dense data collection
-hist(log(species_data$pct_cover))
-var(log(species_data$pct_cover))
-hist(log(species_sub$pct_cover))
-var(log(species_sub$pct_cover))
-t.test(log(species_data$pct_cover), log(species_sub$pct_cover),
-       var.equal = T, paired = F)
 
+# species_over_5pct <- filter(species_data, pct_cover>5)
+# # species_sub_over_5pct <- filter(species_sub_over_5pct, cogongrass != "NA")
+#
+# ggplot(species_over_5pct,
+#        aes(years_since_fire, pct_cover, color = veg_id)) +
+#       geom_point(position="jitter") +
+#       theme_bw() +
+#       facet_grid(installation~imcy_inv) +
+#       ylab("% cover") +
+#       xlab("Years since fire") +
+#       ggtitle("Range of species cover (>5%) at 1-meter quadrats")
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/species-pct-cover.png",
+#        height = 7)
 
-species_over_5pct <- filter(species_data, pct_cover>5)
-# species_sub_over_5pct <- filter(species_sub_over_5pct, cogongrass != "NA")
-
-ggplot(species_over_5pct,
-       aes(years_since_fire, pct_cover, color = veg_id)) +
-      geom_point(position="jitter") +
-      theme_bw() +
-      facet_grid(installation~imcy_inv) +
-      ylab("% cover") +
-      xlab("Years since fire") +
-      ggtitle("Range of species cover (>5%) at 1-meter quadrats")
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/species-pct-cover.png",
-       height = 7)
-
-# datac$se <- datac$sd / sqrt(datac$N)
-avg_species_cover <- species_data %>%
-      group_by(installation, imcy_inv, years_since_fire) %>%
-      summarise(avg_pct_cover = mean(pct_cover),
-                # n_obs = length(veg_id),
-                max_pct_cover = max(pct_cover),
-                se = sd(pct_cover)/sqrt(length(pct_cover)))
-ggplot(avg_species_cover,
-       aes(as.factor(years_since_fire), avg_pct_cover, fill = imcy_inv)) +
-      geom_bar(stat = "identity", position = "dodge") +
-      geom_errorbar(aes(ymin = avg_pct_cover + se, ymax = avg_pct_cover - se),
-                    width = .2, position=position_dodge(width = .9)) +
-      facet_grid(installation~.) +
-      theme_bw() +
-      ylab("Average % cover") +
-      xlab("Years since fire") +
-      ggtitle("Averaged % cover of vegetation for each plot",
-              subtitle = "averaged across 1-meter quadrats")
-ggsave("~/Dropbox (UF)/SERDP-Project/figures/avg-pct-cover-bars.png",
-       height = 7)
+# # datac$se <- datac$sd / sqrt(datac$N)
+# avg_species_cover <- species_data %>%
+#       group_by(installation, imcy_inv, years_since_fire) %>%
+#       summarise(avg_pct_cover = mean(pct_cover),
+#                 # n_obs = length(veg_id),
+#                 max_pct_cover = max(pct_cover),
+#                 se = sd(pct_cover)/sqrt(length(pct_cover)))
+# ggplot(avg_species_cover,
+#        aes(as.factor(years_since_fire), avg_pct_cover, fill = imcy_inv)) +
+#       geom_bar(stat = "identity", position = "dodge") +
+#       geom_errorbar(aes(ymin = avg_pct_cover + se, ymax = avg_pct_cover - se),
+#                     width = .2, position=position_dodge(width = .9)) +
+#       facet_grid(installation~.) +
+#       theme_bw() +
+#       ylab("Average % cover") +
+#       xlab("Years since fire") +
+#       ggtitle("Averaged % cover of vegetation for each plot",
+#               subtitle = "averaged across 1-meter quadrats")
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/avg-pct-cover-bars.png",
+#        height = 7)
 
 # species_sub <- (filter(species_data2, !quadrat_id %in% c("w2","w4","n2","n4","s2","s4","e2","e4")))
 # species_sub_plot <- ggplot(species_sub %>%
@@ -328,20 +191,20 @@ ggsave("~/Dropbox (UF)/SERDP-Project/figures/avg-pct-cover-bars.png",
 # summarise(occurrence = length(unique(plotid))) %>%
 # arrange(desc(occurrence))
 
-head(species_data)
-
-ggplot(species_data %>%
-             group_by(installation, plot_id) %>%
-             summarise(richness = length(unique(veg_id))),
-       aes(plot_id, richness)) +
-      geom_point() +
-      facet_grid(.~installation) +
-      theme_bw()
-
-ggplot(species_data %>%
-             filter(pct_cover > 1) %>%
-             group_by(installation, plot_id),
-       aes(plot_id, pct_cover, color = veg_id)) +
-      geom_point(position = "jitter") +
-      facet_grid(.~installation) +
-      theme_bw()
+# head(species_data)
+#
+# ggplot(species_data %>%
+#              group_by(installation, plot_id) %>%
+#              summarise(richness = length(unique(veg_id))),
+#        aes(plot_id, richness)) +
+#       geom_point() +
+#       facet_grid(.~installation) +
+#       theme_bw()
+#
+# ggplot(species_data %>%
+#              filter(pct_cover > 1) %>%
+#              group_by(installation, plot_id),
+#        aes(plot_id, pct_cover, color = veg_id)) +
+#       geom_point(position = "jitter") +
+#       facet_grid(.~installation) +
+#       theme_bw()
