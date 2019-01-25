@@ -19,6 +19,8 @@ summary(tree_data)
 filter(tree_data, is.na(plot_id)) %>%
   select(date, installation, plot_id, record_id, stem_id, dbh, tag, species)
 
+unique(tree_data$plot_id)
+
 tree_data = filter(tree_data, !is.na(plot_id))
 
 filter(tree_data, is.na(dbh)) %>%
@@ -81,9 +83,21 @@ filter(tree_data, azimuth=="-1") %>%
   select(record_id, date, plot_id, tag, species, dbh, azimuth)
 
 tree_data$azimuth[tree_data$tag=="3765"] <- 0
-
 ## Added azimuth values for trees in Benning A1/J1 and Gordon V1 ##
 ## Stem IDs 1199 and 1807 have no azimuth recorded ##
+
+tree_data <- tree_data %>%
+      mutate(plot_id = case_when(
+            plot_id=="gordon z1" ~ "gordon a1",
+            plot_id=="gordon y1" ~ "gordon b1",
+            plot_id=="gordon x1" ~ "gordon c1",
+            plot_id=="gordon w1" ~ "gordon d1",
+            plot_id=="gordon v1" ~ "gordon e1",
+            plot_id=="gordon t1" ~ "gordon f1",
+            plot_id=="gordon s1" ~ "gordon g1",
+            plot_id=="gordon r1" ~ "gordon h1",
+            TRUE ~ plot_id
+      ))
 
 unique(plot_visit_data$plot_id) %in% unique(tree_data$plot_id)
 
@@ -109,7 +123,6 @@ filter(tree_data, is.na(distance), plot_id!="blanding theater_cogon") %>%
   select(installation, plot_id, date, tag, species, distance)
 
 tree_data$distance[tree_data$tag=="1755"] <- 11.5
-
 ## Distance -- Changed tag 1755, tag 120 Eglin P1 has no value NA ##
 
 filter(tree_data, is.na(height)) %>%
@@ -145,7 +158,6 @@ tree_data$distance[tree_data$tag=="3034"] <- 8.9
 tree_data$distance[tree_data$tag=="4223"] <- 8.3
 tree_data$distance[tree_data$tag=="3775"] <- 5.3
 tree_data$distance[tree_data$stem_id=="1818"] <- 8.1
-
 ## Corrected distances over 12.6 due to straight error or no decimal ##
 
 filter(tree_data, height>50) %>%
@@ -153,19 +165,15 @@ filter(tree_data, height>50) %>%
 
 tree_data$height[tree_data$tag=="3650"] <- 7.6
 tree_data$height[tree_data$tag=="4613"] <- 13.2
-
 ## Corrected unrealistic high heights that were missing decimal points ##
 
 filter(tree_data, height<2) %>%
   select(date, plot_id, stem_id, tag, species, dbh, height)
-
 ## Low tree heights of 1.4, 1.4, 0.6 are correct ##
 
 filter(tree_data, char>15) %>%
   select(date, plot_id, stem_id, tag, species, dbh, char)
-
 tree_data$char[tree_data$tag=="3076"] <- 0.42
-
 ## Changed char from 42 to 0.42 ##
 
 summary(tree_data)
@@ -181,6 +189,9 @@ unique(tree_data$plot_id)
 # tree_data <- read_csv("data/processed_data/trees.csv")
 # summary(tree_data)
 # names(tree_data)
+
+tree_data <- tree_data %>%
+      rename(species_name = Species)
 
 unique(tree_data$species_name)
 unique(tree_data$Genus)
@@ -202,18 +213,7 @@ tree_data$species[tree_data$azimuth==251 & tree_data$plot_id=="shelby c1"] <- "P
 
 
 tree_data <- tree_data %>%
-  mutate(species_name = paste(Genus, Species, sep = " "),
-         plot_id = case_when(
-               plot_id=="gordon z1" ~ "gordon a1",
-               plot_id=="gordon y1" ~ "gordon b1",
-               plot_id=="gordon x1" ~ "gordon c1",
-               plot_id=="gordon w1" ~ "gordon d1",
-               plot_id=="gordon v1" ~ "gordon e1",
-               plot_id=="gordon t1" ~ "gordon f1",
-               plot_id=="gordon s1" ~ "gordon g1",
-               plot_id=="gordon r1" ~ "gordon h1",
-               TRUE ~ plot_id
-         ))
+  mutate(species_name = paste(Genus, Species, sep = " "))
 
 unique(tree_data$plot_id)
 
