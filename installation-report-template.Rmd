@@ -18,25 +18,26 @@ output:
   always_allow_html: yes
 subtitle: <h1>Climate change impacts on fire regimes, plant invasions, and tick-borne
   diseases<h1>
-params:
-  inst_name: Moody AFB
 bibliography: 
       - knitcitations.bib
-      - references.bib
+      - serdp_references.bib
 csl: bib_styles/ecology.csl
+params:
+  inst_name: Fort Gordon
 ---
 
 ```{r set installation name options, echo=F}
-# inst_name values 
-# 1 "Avon Park AFR"
-# 2 "Camp Blanding"
-# 3 "Camp Shelby"
-# 4 "Eglin AFB"
-# 5 "Fort Benning"
-# 6 "Fort Gordon"
-# 7 "Fort Jackson"
-# 8 "Moody AFB"
-# 9 "Tyndall AFB"
+# inst_name values to go in the params argument in the YAML header above
+## provide name without quotation marks
+# 1 Avon Park AFR
+# 2 Camp Blanding
+# 3 Camp Shelby
+# 4 Eglin AFB
+# 5 Fort Benning
+# 6 Fort Gordon
+# 7 Fort Jackson
+# 8 Moody AFB
+# 9 Tyndall AFB
 ```
 
 ```{r setup, include=FALSE}
@@ -1333,7 +1334,7 @@ tick_survival_all_time <- cowplot::plot_grid(
 
 # Appendix 3 - Cogongrass fire intensity from small scale experiments
 
-Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from 1m2 to landscape (hectares) scales is driven by weather conditions and fuel characteristics, including fuel load, structure, moisture, and continuity. Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an integral part of the landscape. However, specific information is known about relatively few species, and while valuable, this information is often obtained by studies conducted across a spectrum of realism. Methods range from in situ approaches where measurements are made before, during, and after prescribed fires (high realism, low replication), to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings (low realism, highly replicable). Fire ecology experiments in the field often only manipulate the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often piled horizontally even though fuel complexes are typically more heterogeneous with substantial vertical structure that affects fire behavior [@Loudermilk2014].
+Fine surface fuels play a major role in the ignition, spread, and intensity of fires. Fire behavior from 1m^2^ to landscape (hectares) scales is driven by weather conditions and fuel characteristics, including fuel load, structure, moisture, and continuity. Understanding how fuel characteristics influence fire intensity, severity, and behavior is imperative for fire ecologists, modelers, and land managers where fire is an integral part of the landscape. However, specific information is known about relatively few species, and while valuable, this information is often obtained by studies conducted across a spectrum of realism. Methods range from in situ approaches where measurements are made before, during, and after prescribed fires (high realism, low replication), to laboratory bench approaches where small amounts of fuel are combusted in highly controlled settings (low realism, highly replicable). Fire ecology experiments in the field often only manipulate the fuel load or type, necessarily sacrificing some realism in fuel structure. Fuels are often piled horizontally even though fuel complexes are typically more heterogeneous with substantial vertical structure that affects fire behavior [@Loudermilk2014].
 
 In this paper we present an experimental apparatus that can bridge the gap between making measurements of flammability at the lab bench and the limited replication of prescribed fires. The Fine Aboveground Biomass Incineration Organizer (FABIO) enables experimental manipulation of fuel load and structure at a relatively small but realistic and relevant scale of 1m^2^. We expect our design will be most useful for grasses or grass-like fuels, but it could be used or adapted for other fuel types such as small shrubs and trees. The fine aboveground biomass incineration organizer (FABIO) is a freestanding device for outdoor use to efficiently manipulate fuel structure and assess the effects on fire intensity (Figure 2). These outdoor small-scale 1m^2^ experimental fires allow for repeated measurements of fire intensity across multiple fuel loads without the onerous task of setting up all of the experimental plots prior to a large-scale prescribed that is subject to weather conditions and sufficient personnel.
 
@@ -1436,8 +1437,7 @@ quadrat_species_fields <- data.frame(
 
 names(quadrat_species_fields) <- column_names
 
-kable(quadrat_species_fields)
-#kable(quadrat_species_fields, padding = 4, longtable = T, formate = "markdown") 
+kable(quadrat_species_fields, padding = 4, longtable = T, format = "markdown")
 
 ```
 
@@ -1620,15 +1620,44 @@ for(i in stem_maps){
 
 ```
 
-![](stem_maps/moody a1.png)
+![](stem_maps/gordon a1.png)
 
 ##### Page Break
 
-
-
-![](stem_maps/moody b1.png)
+![](stem_maps/gordon b1.png)
 
 ##### Page Break
 
-![](stem_maps/moody k1.png)
+![](stem_maps/gordon c1.png)
 
+##### Page Break
+
+![](stem_maps/gordon d1.png)
+
+##### Page Break
+
+![](stem_maps/gordon e1.png)
+
+##### Page Break
+
+![](stem_maps/gordon f1.png)
+
+##### Page Break
+
+![](stem_maps/gordon g1.png)
+
+##### Page Break
+
+![](stem_maps/gordon h1.png)
+
+##### Page Break
+
+# References
+
+```{r write_citations, cache=FALSE, include=FALSE, eval=T}
+
+write.bibtex(file="knitcitations.bib")
+
+```
+
+<div id = "refs"></div>
