@@ -40,7 +40,8 @@ stem_map_data <- tree_data %>%
                   Genus == "Pinus" ~ "red",
                   Genus == "Quercus" ~ "blue",
                   Genus == "other" ~ "black",
-            )
+            ),
+            health = ifelse(health<1, "dead","alive")
              )
 
 
