@@ -1293,7 +1293,7 @@ summary(deer_dung_model)
 
 tick_data_import <- read_csv("data/processed_data/ticks.csv")
 tick_data_import
-summary(tick_data_import)
+str(tick_data_import)
 # skimr::skim(tick_data_import)
 
 sort(unique(tick_data_import$plot_id))
@@ -1305,19 +1305,21 @@ unique(tick_data_import$life_stage)
 names(plot_visit_data)
 names(tick_data_import)
 tick_data <- tick_data_import %>% 
-      mutate(life_stage = factor(life_stage, levels = c("A","N","L"),))
-summary(tick_data)
+      mutate(life_stage = factor(life_stage, 
+                                 levels = c("adult","nymph"), 
+                                 labels = c("Adult","Nymph"))) %>% 
+      rename(tick_count = count)
+str(tick_data)
+str(plot_visit_data)
 
 tick_data <- left_join(
-      select(tick_data, -notes),
-      select(plot_visit_data, -notes)
+      tick_data,
+      plot_visit_data
 )
 summary(tick_data)
 
-tick_data$life_stage <- factor(
-      tick_data$life_stage, 
-      levels = c("A","N","L"),
-      labels = c("Adult","Nymph","Larval"))
+filter(tick_data, is.na(imcy_inv))$location
+
 # summary(tick_data)
 # filter(tick_data, is.na(years_since_fire))$plot_id
 # filter(tick_data, is.na(imcy_inv))$plot_id
@@ -1330,10 +1332,10 @@ tick_data$life_stage <- factor(
 # tick_data$date <- as.Date(as.character(tick_data$date), format = "%Y%m%d")
 
 ## Count larvae bombs as "1"
-tick_data <- tick_data %>% 
-      mutate(tick_count = ifelse(life_stage=="Larval",1,count),
-             tick_count = ifelse(is.na(tick_count),0,tick_count))
-summary(tick_data)
+# tick_data <- tick_data %>% 
+#       mutate(tick_count = ifelse(life_stage=="Larval",1,count),
+#              tick_count = ifelse(is.na(tick_count),0,tick_count))
+# summary(tick_data)
 # filter(tick_data, is.na(tick_count))$count
 
 ```
@@ -1468,6 +1470,8 @@ tick_subplot_data <- left_join(
 tick_data_sum <- join_all(list(tick_biomass_data, tick_canopycover_data, tick_quad10_data, tick_host_data, tick_host_data, tick_tree_data, tick_subplot_data, tick_vegcover_data))
 
 summary(tick_data_sum)
+
+write_csv(tick_data_sum, "data/all_plotlevel_data.csv")
 
 # filter(tick_data_sum, is.na(avg_pct_litter))$plot_id
 
