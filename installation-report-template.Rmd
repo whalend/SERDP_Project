@@ -485,7 +485,7 @@ tot_plots %>%
 
 ## Range of fire history at all installations
 
-Across all installations, we established `r n_total_plots_all` plot(s) in areas ranging in time since last fire from `r min(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire, na.rm = T)` to `r max(filter(plot_visit_data, installation_full_name==inst_name)$years_since_fire, na.rm = T)` years. Of the `r n_total_plots_all`, there were `r n_total_plots_all_invaded` plot(s) with a cogongrass invasion.
+Across all installations, we established `r n_total_plots_all` plot(s) in areas ranging in time since last fire from `r min(plot_visit_data$years_since_fire, na.rm = T)` to `r max(plot_visit_data$years_since_fire, na.rm = T)` years. Of the `r n_total_plots_all`, there were `r n_total_plots_all_invaded` plot(s) with a cogongrass invasion.
 
 ``` {r fire invasion by installation figure}
 
@@ -1430,9 +1430,9 @@ quadrat_species_fields <- data.frame(
   field_name = c("species_name", "functional_group" , "avg_pct_cover", "num_stems_m2"),
   data_type = c(
     "character", "character", "numeric", "numeric"),
-  description = c("species of the individals to at least Genus level. if NA, unable to      identify",
+  description = c("species of the individuals to at least Genus level. if NA, unable to      identify",
     "functional group of the species. ex: graminoid, forb, shrub, tree", 
-    "estimate of  the species' percent cover in the plot based on an average of the four 1-square meter quadrats", 
+    "estimate of the species' percent cover in the plot based on an average of the four 1-square meter quadrats", 
     "estimate of the species' stem count in the plot based on an average of the four 1-square meter quadrats"))
 
 names(quadrat_species_fields) <- column_names
@@ -1451,18 +1451,18 @@ quadrat_biomass_canopy_fields <- data.frame(
   field_name = c("avg_woody_veg_ht", "avg_herb_veg_ht", "avg_litter_ht", "avg_pct_green", "avg_pct_litter", "avg_pct_wood_litter", "avg_pct_bare", "avg_standing_fuel_mass_wet_m2", "avg_litter_mass_wet_m2", "avg_standing_fuel_mass_dry_m2", "avg_litter_mass_dry_m2", "avg_pct_canopy_cover"),
   data_type = c(
     "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric"),
-  description = c("estimate of woody plant species height in the plot based on an average of three measurements per four square meter quadrats (cm). maximum height cut off at 2m",
-    "estimate of herbaceous plant species height in the plot based on an average of three measurements per four square meter quadrats (cm). maximum height cut off at 2m", 
-    "estimate of litter depth in the plot based on an average of three measurements per four square meter quadrats (cm)", 
-    "estimate of percent green of plant material in the plot based on the average of estimates at four square meter quadrats", 
-    "estimate of percent litter cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats", 
-    "estimate of percent woody litter cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats. includes: fallen branches/logs, twigs, pine cones", 
-    "estimate of pure bare ground cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats", 
-    "estimate of *fresh* standing vegetation mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
-    "estimate of *fresh* litter mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
-    "estimate of *dried* standing vegetation mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
+  description = c("estimate of woody plant species height in the plot based on an average of three measurements at each of the four 1-square meter quadrats (cm). maximum height cut off at 2m",
+    "estimate of herbaceous plant species height in the plot based on an average of three measurements at each of the four 1-square meter quadrats (cm). maximum height cut off at 2m", 
+    "estimate of litter depth in the plot based on an average of three measurements at each of the four 1-square meter quadrats (cm)", 
+    "estimate of percent green of plant material in the plot based on the average of estimates at each of the four 1-square meter quadrats", 
+    "estimate of percent litter cover in the plot based on the average of estimates at each of the four 1-square meter quadrats", 
+    "estimate of percent woody litter cover in the plot based on the average of estimates at each of the four 1-square meter quadrats. includes: fallen branches/logs, twigs, pine cones", 
+    "estimate of bare ground cover in the plot based on the average of estimates at each of the four 1-square meter quadrats", 
+    "estimate of *fresh* standing vegetation mass in the plot based on the average of measurements at each of the 25cm quadrats (g)", 
+    "estimate of *fresh* litter mass in the plot based on the average of the measurements from each of the four 25cm quadrats (g)", 
+    "estimate of *dried* standing vegetation mass in the plot based on the average of the measurements from each of the four 25cm quadrats (g)", 
     "estimate of *dried* litter mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
-    "estimate of canopy cover in the plot based on the average of four manual densiometer measurements at four square meter quadrats"))
+    "estimate of canopy cover in the plot based on the average of densiometer measurements at each of the 1-square meter quadrats"))
 
 names(quadrat_biomass_canopy_fields) <- column_names
 
