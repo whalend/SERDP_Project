@@ -1,19 +1,20 @@
 # Fire Data
 library(sp); library(rgdal); library(maptools); library(rgeos);
-#library(RSAGA)
-# library(raster)
+library(sf)
 library(plyr); library(dplyr);
 library(ggplot2)
-# library(sf);
+#library(RSAGA)
+# library(raster)
 
+plot_locations <- st_read("data/plot-locations.shp")
 
 # Camp Blanding Fire Data -------------------------------------------------
 
-blanding_fire <- readOGR("data/CampBlanding/Fire_Layer_for_Whalen.shp", integer64 = "allow.loss")
+blanding_fire <- st_read("data/CampBlanding/Fire_Layer_for_Whalen.shp")
 summary(blanding_fire)
-blanding_fire@data$installation <- "Camp Blanding"
-blanding_fire@data$FID <- seq(1,nrow(blanding_fire@data),1)
-blanding_fire@data <- blanding_fire@data %>%
+blanding_fire$installation <- "Camp Blanding"
+blanding_fire$FID <- seq(1,nrow(blanding_fire),1)
+blanding_fire <- blanding_fire %>%
       select(-sdsFeatu_1, -wildland_1) %>%
       select(FID, everything()) %>%
       rename(eventDy = dateEvent,
@@ -21,51 +22,56 @@ blanding_fire@data <- blanding_fire@data %>%
              # fPeri = featurePer,
              risklvl = riskLevel,
              fireCat = wildlandFi,
-             fireTyp = wildland_2,
+             fireType = wildland_2,
              burnDt = Burn_date,
              ignite = ignSource,
-             FireYr = Fire_Year)
+             fireYr = Fire_Year)
 
-cogon_fire <- readOGR("data/fire-cogon-intersect.shp")
-summary(cogon_fire)
-
-cogon_fire@data <- right_join(cogon_fire@data %>%
-      group_by(Site_Name) %>%
-      summarise(fire_frequency = (2016-2002)/length(Fire_Year)),
-      cogon_fire@data)
+# cogon_fire <- readOGR("data/fire-cogon-intersect.shp")
+# summary(cogon_fire)
+#
+# cogon_fire@data <- right_join(cogon_fire@data %>%
+#       group_by(Site_Name) %>%
+#       summarise(fire_frequency = (2016-2002)/length(Fire_Year)),
+#       cogon_fire@data)
 # st_write(fire_freq, dsn = "data/CampBlanding/cogon_fire_frequency.shp")
 
-plot(cogon_fire, col = cogon_fire$fire_frequency)
-
-blanding_fire@data$fireCat[is.na(blanding_fire@data$fireCat)] <- "TBD"
+# plot(cogon_fire, col = cogon_fire$fire_frequency)
+str(blanding_fire)
+summary(blanding_fire)
+# blanding_fire$fireCat[is.na(blanding_fire$fireCat)] <- "TBD"
+unique(blanding_fire$fireCat)
 rxfire <- blanding_fire[blanding_fire$fireCat == "Prescribed",]
-rxfire@data$burnDt <- as.Date(rxfire@data$burnDt)
+rxfire$burnDt <- as.Date(rxfire$burnDt)
 summary(rxfire)
-rxfire@data <- droplevels(rxfire@data %>%
-      select(-ignite, -fireCat))
+rxfire <- rxfire %>%
+      mutate(ignite = droplevels(ignite),
+             fireCat = droplevels(fireCat)) %>%
+      select(-eventDy)
 
 # library(lubridate)
-rxfire@data <- mutate(rxfire@data,
+rxfire <- mutate(rxfire,
                  burnYr = lubridate::year(burnDt),
                  burnMo = lubridate::month(burnDt),
                  burnMo2 = lubridate::round_date(burnDt, "month"))
 # detach("package:lubridate", unload=TRUE)
-writeOGR(rxfire, "data/Camp-Blanding/","rxfires", "ESRI Shapefile",
-         overwrite_layer = T)
+# writeOGR(rxfire, "data/Camp-Blanding/","rxfires", "ESRI Shapefile",
+         # overwrite_layer = T)
 
 # summary(readOGR("data/Camp-Blanding/rxfires.shp"))
 
-ggplot(rxfire@data %>% group_by(burnMo2) %>%
+ggplot(rxfire %>%
+             group_by(fireYr, Season) %>%
              summarise(fires = length(burnDt)),
-       aes(burnMo2, fires)) +
+       aes(fireYr, fires, fill = Season)) +
       geom_bar(stat = "identity") +
       # geom_point() +
       # geom_line() +
-      scale_x_date(date_breaks = "1 year", date_labels = "%Y/%m") +
+      # scale_x_date(date_breaks = "1 year", date_labels = "%Y/%m") +
       # scale_y_continuous(limits = c(0, 13)) +
       theme_bw()
 
-ggplot(rxfire@data %>% group_by(burnYr) %>%
+ggplot(rxfire %>% group_by(burnYr) %>%
              summarise(area = sum(fArea)),
        aes(burnYr, area)) +
       geom_bar(stat = "identity") +
@@ -75,20 +81,64 @@ ggplot(rxfire@data %>% group_by(burnYr) %>%
       # scale_y_continuous(limits = c(0, 13)) +
       theme_bw()
 
-temp <- gCentroid(rxfire, byid = T)
-temp <- SpatialPointsDataFrame(temp, rxfire[1]@data)
-names(temp) <- "ptFID"
-temp <- raster::intersect(temp, rxfire)
-df <- temp@data %>%
-      group_by(ptFID) %>%
-      summarise(fires = length(FID),
-                fri15yr = (2018-2003)/fires,
-                lastBrn = (2018)-max(burnYr),
-                frindex = (1/fri15yr)/lastBrn)
-rxfire@data <- left_join(rxfire@data, df, by = c("FID" = "ptFID"))
-plot(rxfire, col = rxfire$fri15yr)
 
-writeOGR(rxfire, "data/Camp-Blanding/","rxfires2","ESRI Shapefile")
+## Working on calculation a fire return interval
+
+# plot(rxfire[1])
+# plot(st_centroid(rxfire, of), add = T, pch = 3, size = 5)
+# plot(tmp)
+# st_point_on_surface(rxfire)
+# temp <- rgdal::readOGR("data/CampBlanding/Fire_Layer_for_Whalen.shp")
+# temp$FID <- seq(1,nrow(temp),1)
+# temp1 <- gCentroid(temp, byid = T)
+# names(temp1) <- "ptFID"
+# temp1 <- SpatialPointsDataFrame(temp1, temp[1])
+
+tmp <- st_centroid(rxfire, of_largest_polygon = T)
+tmp <- st_join(select(tmp, ptFID = FID), rxfire)
+
+tmp <- tmp %>%
+      filter(fireYr > 2002) %>%
+      group_by(ptFID) %>%
+      summarise(
+            lastBrn = 2018-max(burnYr, na.rm = T),
+            fires = length(FID),
+            fri15yr = 15/fires,
+            frindex = (1/fri15yr)/lastBrn)
+
+plot(st_join(rxfire, tmp)[20])
+# plot(plot_locations[1], add = T, pch = 3, size = 10)
+
+
+st_crs(rxfire)
+temp <- st_transform(plot_locations, crs = st_crs(rxfire)) %>%
+      mutate(ptFID = seq(1, nrow(.),1)) %>%
+      st_join(.,
+              select(rxfire, FID, fireYr, burnYr))
+
+# temp <- raster::intersect(plot_locations, rxfire)
+temp <- temp %>%
+      filter(fireYr > 2002) %>%
+      group_by(plot_id) %>%
+      summarise(
+            lastBrn = 2018-max(burnYr, na.rm = T),
+            fires = length(FID),
+            fri15yr = 15/fires,
+            frindex = (1/fri15yr)/lastBrn)
+
+fri <- st_join(rxfire, temp)
+fri <- fri %>%
+      # filter(!is.na(fri15yr)) %>%
+      select(FID, purpose, fireType, burnDt, Season:frindex)
+plot(fri[14])
+
+# plot(temp)
+# st_write(temp, "data")
+
+# rxfire@data <- left_join(rxfire@data, df, by = c("FID" = "ptFID"))
+# plot(rxfire, col = rxfire$fri15yr)
+
+# writeOGR(rxfire, "data/Camp-Blanding/","rxfires2","ESRI Shapefile")
 
 ## Make inidividual shapefiles for each fire year ####
 yr <- seq(2007,2018,1)#REQUIRED: change the end year as needed
@@ -240,7 +290,7 @@ eglin_fires@data$fire_yday <- lubridate::yday(eglin_fires@data$fire_date)
 eglin_rxfires <- eglin_fires[eglin_fires$FIRETYPE=="prescribed",]
 summary(eglin_rxfires)
 plot(eglin_rxfires[eglin_rxfires$fire_year > 2013,], col = eglin_rxfires$fire_year)
-writeOGR(eglin_rxfires, "data/Eglin-AFB/", "eglin_rxfires", driver = "ESRI Shapefile")
+# writeOGR(eglin_rxfires, "data/Eglin-AFB/", "eglin_rxfires", driver = "ESRI Shapefile")
 
 # shapefiles for each year
 yr <- seq(2006,2018,1)
