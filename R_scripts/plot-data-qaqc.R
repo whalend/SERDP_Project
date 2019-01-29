@@ -53,8 +53,13 @@ plot_shp$inst_full_name[plot_shp$instal=="gordon"] <- "Fort Gordon"
 
 unique(plot_shp$inst_full_name)
 
+
+plot_shp <- sf::st_read("data/plot-locations.shp")
+plot_shp <- plot_shp %>%
+      select(name, instal, lon, lat, plot_id, pid, pid2,
+             inst_name = inst_f_)
 #+ Write out new shapefile
-rgdal::writeOGR(plot_shp, dsn = "data", layer = "plot-locations", driver = "ESRI Shapefile", overwrite_layer = T)
+sf::st_write(plot_shp, "data/plot-locations.shp", delete_layer = T)
 
 #+ Make regular data frame ####
 plot_locs <- plot_shp@data
