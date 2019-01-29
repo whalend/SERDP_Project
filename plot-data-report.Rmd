@@ -1464,12 +1464,34 @@ tick_tree_data <- left_join(
 
 tick_subplot_data <- left_join(
       tick_data_plot_summary,
-      ungroup(subplot_plot_summary)
+      ungroup(subplot_plot_summary) %>% 
+            select(-imcy_inv)
 )
+
+tick_subplot_data <- tick_subplot_data %>% 
+      mutate(total_stems_100m2 = case_when(
+            plot_id == "blanding g1" ~ 0,
+            plot_id == "blanding h1" ~ 0,
+            plot_id == "tyndall b1" ~ 0,
+            plot_id == "blanding c" ~ 0,
+            TRUE ~ total_stems_100m2
+      ),
+      shrub_sap_rich = case_when(
+            plot_id == "blanding g1" ~ 0,
+            plot_id == "blanding h1" ~ 0,
+            plot_id == "tyndall b1" ~ 0,
+            plot_id == "blanding c" ~ 0,
+            TRUE ~ total_stems_100m2
+      ))
 
 tick_data_sum <- join_all(list(tick_biomass_data, tick_canopycover_data, tick_quad10_data, tick_host_data, tick_host_data, tick_tree_data, tick_subplot_data, tick_vegcover_data))
 
+tick_data_sum <- left_join(tick_data_sum,
+          select(plot_visit_data, plot_id, visit_year, visit_date))
+
 summary(tick_data_sum)
+
+
 
 write_csv(tick_data_sum, "data/all_plotlevel_data.csv")
 
