@@ -160,6 +160,15 @@ unique(plot_visit_data$plot_id)
 write_csv(plot_visit_data, "data/processed_data/plot_visit_data.csv")
 
 
+
+# Join plot visit dates to spatial data ####
+pvisit_data <- read_csv("data/processed_data/plot_visit_data.csv")
+
+plot_shp <- left_join(plot_shp,
+                      select(pvisit_data, -notes, -xcoord_lon, -ycoord_lat))
+
+st_write(plot_shp, "data/plot_visit.shp")
+
 #+ initial plotting of plot visit data ####
 # ggplot(plot_visit_data %>%
 #              group_by(installation) %>%
