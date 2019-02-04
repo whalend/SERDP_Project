@@ -6,26 +6,48 @@ library(ggplot2)
 #library(RSAGA)
 # library(raster)
 
-plot_locations <- st_read("data/plot-locations.shp")
+plot_locations <- st_read("data/plot_visit.shp")
+
+plot_locations <- plot_locations %>%
+      rename(inst = instal,
+             visit_date = vist_dt,
+             last_fire = lst_fr_,
+             yrs_since_fire = yrs_sn_,
+             visit_yr = vist_yr,
+             imcy = imcy_nv) %>%
+      select(-instllt, -instl__) %>%
+      filter(!is.na(visit_yr))
+
+# summary(plot_locations)
+# filter(plot_locations, is.na(last_fire))$plot_id
+## no fire history for shelby k1
 
 # Camp Blanding Fire Data -------------------------------------------------
 
 blanding_fire <- st_read("data/CampBlanding/Fire_Layer_for_Whalen.shp")
 summary(blanding_fire)
-blanding_fire$installation <- "Camp Blanding"
-blanding_fire$FID <- seq(1,nrow(blanding_fire),1)
+blanding_fire$inst_name <- "Camp Blanding"
+# blanding_fire$FID <- seq(1,nrow(blanding_fire),1)
 blanding_fire <- blanding_fire %>%
-      select(-sdsFeatu_1, -wildland_1) %>%
-      select(FID, everything()) %>%
-      rename(eventDy = dateEvent,
-             fArea = featureAre,
-             # fPeri = featurePer,
-             risklvl = riskLevel,
-             fireCat = wildlandFi,
-             fireType = wildland_2,
-             burnDt = Burn_date,
-             ignite = ignSource,
-             fireYr = Fire_Year)
+      select(inst_name,
+             fArea_ac = featureAre,
+             fCause = ignSource,
+             fType = wildland_2,
+             fDate = Burn_date,
+             season = Season,
+             purpose)
+
+blanding_fire <- blanding_fire %>%
+      mutate(fYear = lubridate::year(fDate),
+             fMonth = lubridate::month(fDate))
+
+# Camp Blanding "Growing Season" and "Dormant Season"
+summary(filter(blanding_fire, season == "Growing Season"))
+## a "Growing Season" burn is Feburary through September
+filter(blanding_fire, season == "Growing Season", fMonth==2)
+
+summary(filter(blanding_fire, season == "Dormant Season"))
+## a "Dormant Seson" burn is October through January
 
 # cogon_fire <- readOGR("data/fire-cogon-intersect.shp")
 # summary(cogon_fire)
@@ -35,6 +57,8 @@ blanding_fire <- blanding_fire %>%
 #       summarise(fire_frequency = (2016-2002)/length(Fire_Year)),
 #       cogon_fire@data)
 # st_write(fire_freq, dsn = "data/CampBlanding/cogon_fire_frequency.shp")
+
+## Blanding Rx fire data ####
 
 # plot(cogon_fire, col = cogon_fire$fire_frequency)
 str(blanding_fire)
@@ -60,10 +84,10 @@ rxfire <- mutate(rxfire,
 
 # summary(readOGR("data/Camp-Blanding/rxfires.shp"))
 
-ggplot(rxfire %>%
-             group_by(fireYr, Season) %>%
-             summarise(fires = length(burnDt)),
-       aes(fireYr, fires, fill = Season)) +
+ggplot(blanding_fire %>%
+             group_by(fYear, season) %>%
+             summarise(fires = length(fDate)),
+       aes(fYear, fires, fill = season)) +
       geom_bar(stat = "identity") +
       # geom_point() +
       # geom_line() +
@@ -82,55 +106,59 @@ ggplot(rxfire %>% group_by(burnYr) %>%
       theme_bw()
 
 
-## Working on calculation a fire return interval
+## Working on calculation a fire return interval ####
 
 # plot(rxfire[1])
 # plot(st_centroid(rxfire, of), add = T, pch = 3, size = 5)
 # plot(tmp)
 # st_point_on_surface(rxfire)
-# temp <- rgdal::readOGR("data/CampBlanding/Fire_Layer_for_Whalen.shp")
-# temp$FID <- seq(1,nrow(temp),1)
+temp <- blanding_fire
+temp$FID <- seq(1,nrow(temp),1)
 # temp1 <- gCentroid(temp, byid = T)
-# names(temp1) <- "ptFID"
+#
 # temp1 <- SpatialPointsDataFrame(temp1, temp[1])
 
-tmp <- st_centroid(rxfire, of_largest_polygon = T)
-tmp <- st_join(select(tmp, ptFID = FID), rxfire)
+tmp <- st_centroid(temp, of_largest_polygon = T)
+tmp <- select(tmp, FID)
+
+tmp <- st_join(tmp, temp)
 
 tmp <- tmp %>%
-      filter(fireYr > 2002) %>%
-      group_by(ptFID) %>%
+      filter(fYear > 2002) %>%
+      group_by(FID.x) %>%
       summarise(
-            lastBrn = 2018-max(burnYr, na.rm = T),
-            fires = length(FID),
+            lastBrn = 2018-max(fYear, na.rm = T),
+            fires = length(FID.x),
             fri15yr = 15/fires,
             frindex = (1/fri15yr)/lastBrn)
-
-plot(st_join(rxfire, tmp)[20])
+tmp <- st_join(temp, tmp)
+plot(tmp[14])
 # plot(plot_locations[1], add = T, pch = 3, size = 10)
 
 
-st_crs(rxfire)
-temp <- st_transform(plot_locations, crs = st_crs(rxfire)) %>%
+# st_crs(rxfire)
+temp <- st_transform(plot_locations, crs = st_crs(temp)) %>%
       mutate(ptFID = seq(1, nrow(.),1)) %>%
       st_join(.,
-              select(rxfire, FID, fireYr, burnYr))
+              select(temp, FID, fYear))
 
 # temp <- raster::intersect(plot_locations, rxfire)
-temp <- temp %>%
-      filter(fireYr > 2002) %>%
+temp17 <- temp %>%
+      filter(visit_yr == 2017, fYear<2018) %>%
       group_by(plot_id) %>%
       summarise(
-            lastBrn = 2018-max(burnYr, na.rm = T),
+            lastBrn = 2017-max(fYear, na.rm = T),
             fires = length(FID),
             fri15yr = 15/fires,
             frindex = (1/fri15yr)/lastBrn)
 
-fri <- st_join(rxfire, temp)
+
+
+fri <- st_join(blanding_fire, temp17)
 fri <- fri %>%
-      # filter(!is.na(fri15yr)) %>%
-      select(FID, purpose, fireType, burnDt, Season:frindex)
-plot(fri[14])
+      filter(!is.na(fri15yr)) %>%
+      select(plot_id, fri15yr, fType)
+plot(fri[1])
 
 # plot(temp)
 # st_write(temp, "data")
@@ -141,6 +169,7 @@ plot(fri[14])
 # writeOGR(rxfire, "data/Camp-Blanding/","rxfires2","ESRI Shapefile")
 
 ## Make inidividual shapefiles for each fire year ####
+
 yr <- seq(2007,2018,1)#REQUIRED: change the end year as needed
 # library(raster)#REQUIRED in your library
 for(y in yr){
@@ -273,20 +302,38 @@ blanding_rx_fire <- blanding_fire_2018[blanding_fire$wildlandFi=="Prescribed",]
 
 
 # Eglin AFB  --------------------------------------------------------------
-eglin_fires <- readOGR("data/EglinAFB/Eglin_Fire_Database_04_26_2018.shp", integer64 = "allow.loss")
+
+eglin_fires <- st_read("data/EglinAFB/Eglin_Fire_Database_04_26_2018.shp")
+eglin_fires$inst_name = "Eglin AFB"
 summary(eglin_fires)
-eglin_fires@data <- select(eglin_fires@data, -SDSMETADAT, -AREASIZEUO, -(PERIMETERS:MGRSCENTRO), -CONTAINDAT, -INSTALLATI, -(CREATEDATE:SHAPE_LEN), -SDSID)
-str(eglin_fires@data)
+eglin_fires <- eglin_fires %>%
+      select(inst_name,
+             fArea_ac = AREASIZE,
+             fCause = CAUSETYPE,
+             fType = FIRETYPE,
+             fDate = FIRESTARTD) %>%
+      mutate(fDate = as.Date(as.character(fDate), format = "%Y%m%d"),
+            fYear = lubridate::year(fDate),
+             fMonth = lubridate::month(fDate),
+            season = case_when(
+                  between(fMonth, 2,9) ~ "growing",
+                  TRUE ~ "dormant"
+            ),
+             purpose = NA
+             )
+
+# filter(eglin_fires, season=="dormant")$fMonth
+# str(eglin_fires)
 
 # convert to date format
 # require(lubridate)
-eglin_fires@data$fire_date <- lubridate::ymd(eglin_fires@data$FIRESTARTD)
-eglin_fires@data$fire_year <- lubridate::year(eglin_fires@data$fire_date)
-eglin_fires@data$fire_mnth <- lubridate::floor_date(eglin_fires@data$fire_date, unit="month")
-eglin_fires@data$fire_yday <- lubridate::yday(eglin_fires@data$fire_date)
+# eglin_fires@data$fire_date <- lubridate::ymd(eglin_fires@data$FIRESTARTD)
+# eglin_fires@data$fire_year <- lubridate::year(eglin_fires@data$fire_date)
+# eglin_fires@data$fire_mnth <- lubridate::floor_date(eglin_fires@data$fire_date, unit="month")
+# eglin_fires@data$fire_yday <- lubridate::yday(eglin_fires@data$fire_date)
 # detach("package:lubridate", unload=TRUE)
 
-
+## Eglin Rx Fires (Not Run) ####
 eglin_rxfires <- eglin_fires[eglin_fires$FIRETYPE=="prescribed",]
 summary(eglin_rxfires)
 plot(eglin_rxfires[eglin_rxfires$fire_year > 2013,], col = eglin_rxfires$fire_year)
@@ -316,61 +363,13 @@ plot(gDifference(`Eglin-rxfire2006`, `Eglin-rxfire2015`), add = T, col = "blue")
 plot(`Eglin-rxfire2015`, add = T, col = "orange")
 
 
-# Avon Park AFB -----------------------------------------------------------
-# burn2017 <- readOGR("data/Avon-Park/fire_shapefiles/Burns_2017.shp")
 
-shp_list <- list.files("data/AvonPark/fire_shapefiles/", pattern = "[shp]$")
-shp_list <- strsplit(shp_list, ".shp")
-for(shp in shp_list){
-      # df <- readOGR(dsn = "data/Avon-Park/fire_shapefiles/", layer = shp)
-      # df <-
-      assign(shp,
-             readOGR(dsn = "data/AvonPark/fire_shapefiles/", layer = shp))
-}
-summary(burn06)
-burn06$Type[burn06$Type=="prescribed"] <- "Prescribed"
-burn06@data <- droplevels(burn06@data)
-writeOGR(burn06, "data/AvonPark/fire_shapefiles/", "Burns_2006", driver = "ESRI Shapefile", overwrite_layer = T)
-summary(burn07)
-summary(burn08)
-summary(Burns_2009)
-Burns_2009$Type[Burns_2009$Type=="Prescibed"] <- "Prescribed"
-Burns_2009@data <- droplevels(Burns_2009@data)
-writeOGR(Burns_2009, "data/AvonPark/fire_shapefiles/", "Burns_2009", driver = "ESRI Shapefile", overwrite_layer = T)
-summary(Burns_2010)
-summary(Burns_2011)
-summary(Burns_2012)
-summary(Burns_2013)
-summary(Burns_2014)
-summary(Burns_2015)
-Burns_2015$Type[Burns_2015$Type=="Prescibed"|Burns_2015$Type=="Presrcibed"] <- "Prescribed"
-Burns_2015@data <- droplevels(Burns_2015@data)
-writeOGR(Burns_2015, "data/AvonPark/fire_shapefiles/", "Burns_2015", driver = "ESRI Shapefile", overwrite_layer = T)
-summary(Burns_2016)
-summary(Burns_2017)
+# Fire master shapefile ####
 
-rm(shp)
-shp_list <- as.list(.GlobalEnv)
-for(shp in shp_list){
-      df <- shp[shp@data$Type=="Prescribed",]
-      # df <-
-      writeOGR(df,
-               dsn = "data/AvonPark/fire_shapefiles/",
-               layer = paste("AvonPark_rxfire", sep=""),
-               driver = "ESRI Shapefile", overwrite_layer = T)
-}
-
-all_invasives <- readOGR("data/AvonPark/APAFR_AllInvasives_Merge2.shp")
-summary(all_invasives)
-unique(all_invasives$CommonName)
-avp_cogongrass <- all_invasives[all_invasives$CommonName=="Cogon Grass",]
-avp_cogongrass@data <- droplevels(avp_cogongrass@data)
-writeOGR(avp_cogongrass, "data/AvonPark/", "avp_cogon", driver = "ESRI Shapefile")
-
-
-# readShapePoly()
-# sf::read_sf("data/Avon-Park/FireBreaks.shp")
-
+fire_master <- rbind(
+      st_transform(blanding_fire, crs = 4326),
+      st_transform(eglin_fires, crs = 4326)
+)
 
 
 # Camp Shelby -------------------------------------------------------------
