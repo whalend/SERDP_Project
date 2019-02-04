@@ -9,7 +9,7 @@ library(plyr); library(dplyr)
 field_names <- c("inst_name", "fArea_ac", "fCause", "fType", "fDate",
                  "season", "purpose", "fYear", "fMonth")
 
-
+# load fire data ####
 eglin_fires <- st_read("data/EglinAFB/Eglin_Fire_Database_04_26_2018.shp")
 eglin_fires$inst_name = "Eglin AFB"
 summary(eglin_fires)
