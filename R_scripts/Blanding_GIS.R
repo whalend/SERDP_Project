@@ -97,4 +97,34 @@ ggplot(blanding_fires %>% group_by(fYear) %>%
       ylab("Area burned (acres)") +
       ggtitle("Camp Blanding")
 
+## Make inidividual shapefiles for each fire year ####
 
+# yr <- seq(2007,2018,1)#REQUIRED: change the end year as needed
+# # library(raster)#REQUIRED in your library
+# for(y in yr){
+#       df <- rxfire[rxfire@data$burnYr == y,]
+#       centroids <- gCentroid(df, byid = T)
+#       centroids <- SpatialPointsDataFrame(
+#             centroids, #SpatialPoints object
+#             df[1]@data #Dataframe
+#       )
+#       names(centroids) <- "ptFID"
+#       centroids <- raster::intersect(centroids, rxfire)
+#       df@data <- left_join(
+#             df@data,
+#             ## Summarise data to calculate number of fires and fire frequency
+#             centroids@data %>%
+#                   group_by(ptFID) %>%
+#                   summarise(fires = length(FID),
+#                             fri15yr = (2018-2002)/fires,
+#                             lastBrn = max(burnYr)
+#                             # frindex = (1/fri15yr)/range(burnYr)
+#                   ),
+#             by = c("FID"="ptFID")
+#       )
+#       writeOGR(df,
+#                dsn = "data/Camp-Blanding/rxfire_by_year/",
+#                layer = paste("rxfire", y, sep=""),
+#                driver = "ESRI Shapefile", overwrite_layer = T)
+#       assign(paste("rxfire", y, sep=""), df)
+# }
