@@ -24,7 +24,13 @@ plot_locations <- plot_locations %>%
 
 source("R_scripts/AvonPark_GIS.R")
 source("R_scripts/Blanding_GIS.R")
+source("R_scripts/Eglin_GIS.R")
 
+
+fire_master <- rbind(
+      st_transform(blanding_fire, crs = 4326),
+      st_transform(eglin_fires, crs = 4326)
+)
 
 ## Working on calculation a fire return interval ####
 
@@ -167,31 +173,8 @@ rxfire2015@data <- left_join(
 # blanding_rx_fire <- blanding_fire_2018[blanding_fire$wildlandFi=="Prescribed",]
 
 
-# Fire master shapefile ####
-
-fire_master <- rbind(
-      st_transform(blanding_fire, crs = 4326),
-      st_transform(eglin_fires, crs = 4326)
-)
 
 
-# Camp Shelby -------------------------------------------------------------
-shelby_fire <- readOGR("data/CampShelby/FireManagementArea.shp")
-plot(shelby_fire)
-summary(shelby_fire)
-
-shelby_cogon <- readOGR("data/CampShelby/NuisanceSpeciesManagement.shp")
-summary(shelby_cogon)
-
-shelby_cogon_untrt <- shelby_cogon[shelby_cogon$Status=="MAPPED ONLY",]
-summary(shelby_cogon_untrt)
-shelby_cogon_untrt@data <- droplevels(select(
-      shelby_cogon_untrt@data,
-      OBJECTID:dateDesign,featureAre,featurePer,narrative,sdsFeatu_1,
-      treatmentT,user_flag,Date_sampl,pop_year,Shape_STAr,Shape_STLe))
-shelby_cogon_untrt$sdsFeatu_1[shelby_cogon_untrt$sdsFeatu_1=="IMPERATA CYLINDRICA, INVASIVE"] <- "COGONGRASS"
-shelby_cogon_untrt$sdsFeatu_1 <- tolower(droplevels(shelby_cogon_untrt$sdsFeatu_1))
-writeOGR(shelby_cogon_untrt, "data/CampShelby/", "untreated_cogon", driver = "ESRI Shapefile")
 
 
 # Moody AFB ---------------------------------------------------------------
