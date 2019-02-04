@@ -288,6 +288,9 @@ avp_fires <- rbind(avp_fires,
                                 fDate, season, purpose, fYear, fMonth)
 )
 
+rm(list=ls(pattern = "urn"))
+rm(list=ls(pattern = "shp"))
+
 # burn06$Type[burn06$Type=="prescribed"] <- "Prescribed"
 # burn06@data <- droplevels(burn06@data)
 # writeOGR(burn06, "data/AvonPark/fire_shapefiles/", "Burns_2006", driver = "ESRI Shapefile", overwrite_layer = T)
