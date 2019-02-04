@@ -11,11 +11,11 @@ field_names <- c("inst_name", "fArea_ac", "fCause", "fType", "fDate",
 
 # Camp Blanding Fire Data -------------------------------------------------
 
-blanding_fire <- st_read("data/CampBlanding/Fire_Layer_for_Whalen.shp")
-summary(blanding_fire)
-blanding_fire$inst_name <- "Camp Blanding"
+blanding_fires <- st_read("data/CampBlanding/Fire_Layer_for_Whalen.shp")
+summary(blanding_fires)
+blanding_fires$inst_name <- "Camp Blanding"
 # blanding_fire$FID <- seq(1,nrow(blanding_fire),1)
-blanding_fire <- blanding_fire %>%
+blanding_fires <- blanding_fires %>%
       select(inst_name,
              fArea_ac = featureAre,
              fCause = ignSource,
@@ -24,16 +24,16 @@ blanding_fire <- blanding_fire %>%
              season = Season,
              purpose)
 
-blanding_fire <- blanding_fire %>%
+blanding_fires <- blanding_fires %>%
       mutate(fYear = lubridate::year(fDate),
              fMonth = lubridate::month(fDate))
 
 # Camp Blanding "Growing Season" and "Dormant Season"
-summary(filter(blanding_fire, season == "Growing Season"))
+summary(filter(blanding_fires, season == "Growing Season"))
 ## a "Growing Season" burn is Feburary through September
-filter(blanding_fire, season == "Growing Season", fMonth==2)
+filter(blanding_fires, season == "Growing Season", fMonth==2)
 
-summary(filter(blanding_fire, season == "Dormant Season"))
+summary(filter(blanding_fires, season == "Dormant Season"))
 ## a "Dormant Seson" burn is October through January
 
 # cogon_fire <- readOGR("data/fire-cogon-intersect.shp")
@@ -47,49 +47,54 @@ summary(filter(blanding_fire, season == "Dormant Season"))
 
 ## Blanding Rx fire data ####
 
-# plot(cogon_fire, col = cogon_fire$fire_frequency)
-str(blanding_fire)
-summary(blanding_fire)
-# blanding_fire$fireCat[is.na(blanding_fire$fireCat)] <- "TBD"
-unique(blanding_fire$fireCat)
-rxfire <- blanding_fire[blanding_fire$fireCat == "Prescribed",]
-rxfire$burnDt <- as.Date(rxfire$burnDt)
-summary(rxfire)
-rxfire <- rxfire %>%
-      mutate(ignite = droplevels(ignite),
-             fireCat = droplevels(fireCat)) %>%
-      select(-eventDy)
-
-# library(lubridate)
-rxfire <- mutate(rxfire,
-                 burnYr = lubridate::year(burnDt),
-                 burnMo = lubridate::month(burnDt),
-                 burnMo2 = lubridate::round_date(burnDt, "month"))
-# detach("package:lubridate", unload=TRUE)
-# writeOGR(rxfire, "data/Camp-Blanding/","rxfires", "ESRI Shapefile",
-# overwrite_layer = T)
+# # plot(cogon_fire, col = cogon_fire$fire_frequency)
+# str(blanding_fire)
+# summary(blanding_fire)
+#
+# rxfire <- blanding_fire[blanding_fire$fireCat == "Prescribed",]
+# rxfire$burnDt <- as.Date(rxfire$burnDt)
+# summary(rxfire)
+# rxfire <- rxfire %>%
+#       mutate(ignite = droplevels(ignite),
+#              fireCat = droplevels(fireCat)) %>%
+#       select(-eventDy)
+#
+# # library(lubridate)
+# rxfire <- mutate(rxfire,
+#                  burnYr = lubridate::year(burnDt),
+#                  burnMo = lubridate::month(burnDt),
+#                  burnMo2 = lubridate::round_date(burnDt, "month"))
+# # detach("package:lubridate", unload=TRUE)
+# # writeOGR(rxfire, "data/Camp-Blanding/","rxfires", "ESRI Shapefile",
+# # overwrite_layer = T)
 
 # summary(readOGR("data/Camp-Blanding/rxfires.shp"))
 
-ggplot(blanding_fire %>%
+ggplot(blanding_fires %>%
              group_by(fYear, season) %>%
              summarise(fires = length(fDate)),
-       aes(fYear, fires, fill = season)) +
+       aes(as.factor(fYear), fires, fill = season)) +
       geom_bar(stat = "identity") +
       # geom_point() +
       # geom_line() +
       # scale_x_date(date_breaks = "1 year", date_labels = "%Y/%m") +
       # scale_y_continuous(limits = c(0, 13)) +
-      theme_bw()
+      theme_classic() +
+      theme(legend.position = c(.15,.9),
+            legend.title = element_blank())
 
-ggplot(rxfire %>% group_by(burnYr) %>%
-             summarise(area = sum(fArea)),
-       aes(burnYr, area)) +
-      geom_bar(stat = "identity") +
-      # geom_point() +
+ggplot(blanding_fires %>% group_by(fYear) %>%
+             summarise(area = sum(fArea_ac)),
+       aes(as.factor(fYear), area)) +
+      # geom_bar(stat = "identity") +
+      # geom_boxplot(aes(group = fYear)) +
+      geom_point() +
       # geom_line() +
       # scale_x_date(date_breaks = "1 year", date_labels = "%Y/%m") +
       # scale_y_continuous(limits = c(0, 13)) +
-      theme_bw()
+      theme_bw() +
+      xlab("Calendar year (Jan. 1 - Dec. 31)") +
+      ylab("Area burned (acres)") +
+      ggtitle("Camp Blanding")
 
 
