@@ -103,7 +103,12 @@ add_visit_number <- data.frame(days = unique(tick_survival$days), visit_number= 
 tick_survival <- left_join(tick_survival, add_visit_number)
 tick_survival_long <- left_join(tick_survival_long, add_visit_number)
 
-write_csv(tick_survival_long, "data/processed_data/tick_survival_long.csv", append = T)
+# head(tick_survival_long)
+
+tick_survival_long <- tick_survival_long %>%
+      select(LocationID:life_stage, sex, alive:visit_number)
+
+write_csv(tick_survival_long, "data/processed_data/tick_survival_long.csv")
 
 # View(tick_survival)
 
