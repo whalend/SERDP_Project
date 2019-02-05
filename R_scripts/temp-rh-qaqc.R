@@ -243,4 +243,3 @@ ggplot(temp_rh_data_grouped, aes(avg_dailymax_tempC, avg_dailymin_rh)) +
 #   invasion_fill +
 #   def_theme +
 #   NULL
-
