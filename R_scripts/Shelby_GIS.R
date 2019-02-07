@@ -10,7 +10,17 @@ field_names <- c("inst_name", "fArea_ac", "fCause", "fType", "fDate",
                  "season", "purpose", "fYear", "fMonth")
 
 # load fire data ####
-shelby_fire <- st_read("data/CampShelby/FireManagementArea.shp")
+
+# data provided by Camp Shelby personnel
+shelby_fire_history <- st_read("data/CampShelby/FireHistory.shp")
+
+# data provided in 2017 by USFS
+shelby_fire.03_16 <- st_read("data/CampShelby/fireAndFlora/firehis_pl.shp")
+
+# data provided in 2018 by USFS
+
+
+# shelby_fire <- st_read("data/CampShelby/FireManagementArea.shp")
 plot(shelby_fire)
 summary(shelby_fire)
 
