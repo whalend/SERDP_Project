@@ -25,6 +25,8 @@ plot_locations <- plot_locations %>%
 source("R_scripts/AvonPark_GIS.R")
 source("R_scripts/Blanding_GIS.R")
 source("R_scripts/Eglin_GIS.R")
+source("R_scripts/Shelby_GIS.R")
+source("R_scripts/Moody_GIS.R")
 
 
 fire_master <- rbind(
@@ -177,55 +179,6 @@ rxfire2015@data <- left_join(
 
 
 
-# Moody AFB ---------------------------------------------------------------
-shp_list <- list.files("data/MoodyAFB/fire-shapefiles/", pattern = "[shp]$")
-shp_list <- strsplit(shp_list, ".shp")
-for(shp in shp_list){
-      # df <- readOGR(dsn = "data/Avon-Park/fire_shapefiles/", layer = shp)
-      # df <-
-      assign(shp,
-             readOGR(dsn = "data/MoodyAFB/fire-shapefiles/", layer = shp))
-}
-rm(shp)
-rm(shp_list)
-rm(list = ls(pattern = "Moody"))
-
-# Assign and fill new field with fire fiscal year
-shp_list <- as.list(.GlobalEnv)
-
-library(stringi)
-shp_number <- 1
-for(shp in shp_list){
-      year = stri_sub(names(shp_list)[shp_number], from = 3, length = 4)
-      shp$fire_fiscal_year = year
-      assign(names(shp_list)[shp_number], shp)
-      shp_number = shp_number + 1
-      rm(shp)
-}
-
-RX2017_select <- spTransform(RX2017_select, crs(RX2013_select))
-RX2016_select <- spTransform(RX2016_select, crs(RX2013_select))
-RX2015_select <- spTransform(RX2015_select, crs(RX2013_select))
-
-rx_merged <- rbind(RX1996_select, RX1999_select, RX2003_select, RX2005_select, RX2006_select, RX2007_select, RX2009_select, RX2012_select, RX2013_select, RX2015_select, RX2016_select, RX2017_select)
-# rx9699 <- raster::union(RX1996_select, RX1999_select)
-
-rx_merged@data$id <- rownames(rx_merged@data)
-rx_merged_pts <- fortify(rx_merged, region = "id")
-rx_merged_df <- join(rx_merged_pts, rx_merged@data, by = "id")
-
-writeOGR(rx_merged, dsn = "data/MoodyAFB/", layer = "rx_selected_fires_merged", driver = "ESRI Shapefile")
-
-library(RColorBrewer)
-library(viridis)
-
-ggplot(rx_merged_df) +
-      aes(long, lat, fill = fire_fiscal_year) +
-      geom_polygon() +
-      # geom_path(color = "white") +
-      coord_equal() +
-      scale_fill_gradientn(colors = inferno(n = n_distinct(rx_merged_df$fire_fiscal_year))) +
-      theme_bw()
 
 
 # Fort Gordon ####
