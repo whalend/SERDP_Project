@@ -22,13 +22,14 @@ plot_locations <- plot_locations %>%
 # filter(plot_locations, is.na(last_fire))$plot_id
 ## no fire history for shelby k1
 
-source("R_scripts/AvonPark_GIS.R")
-source("R_scripts/Blanding_GIS.R")
-source("R_scripts/Eglin_GIS.R")
-source("R_scripts/Shelby_GIS.R")
-source("R_scripts/Moody_GIS.R")
-source("R_scripts/Gordon_GIS.R")
-source("R_scripts/Benning_GIS.R")
+source("R_scripts/AvonPark_Fires_GIS.R")
+source("R_scripts/Blanding_Fires_GIS.R")
+source("R_scripts/Eglin_Fires_GIS.R")
+source("R_scripts/Shelby_Fires_GIS.R")
+source("R_scripts/Moody_Fires_GIS.R")
+source("R_scripts/Gordon_Fires_GIS.R")
+source("R_scripts/Benning__Fires_GIS.R")
+source("R_scripts/Jackson_Fires_GIS.R")
 
 
 fire_master <- rbind(
