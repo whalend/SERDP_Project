@@ -135,4 +135,5 @@ jackson_fires <- jackson_fires %>%
                   TRUE ~ "NA"
             ),
             fType = "prescribed"
-            )
+            ) %>%
+      select(-fDate2)
