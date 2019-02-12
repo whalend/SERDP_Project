@@ -27,6 +27,8 @@ source("R_scripts/Blanding_GIS.R")
 source("R_scripts/Eglin_GIS.R")
 source("R_scripts/Shelby_GIS.R")
 source("R_scripts/Moody_GIS.R")
+source("R_scripts/Gordon_GIS.R")
+source("R_scripts/Benning_GIS.R")
 
 
 fire_master <- rbind(
