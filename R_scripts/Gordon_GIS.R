@@ -10,7 +10,7 @@ field_names <- c("inst_name", "fArea_ac", "fCause", "fType", "fDate",
                  "season", "purpose", "fYear", "fMonth")
 
 # load fire data ####
-gordon_fire <- st_read("data/FtGordon/wildland_fire.shp")
+gordon_fire <- st_read("data/FtGordon/wildland_fire.shp", quiet = T)
 summary(gordon_fire)
 names(gordon_fire)
 
@@ -24,6 +24,11 @@ gordon_fire <- gordon_fire %>%
                   sdsFeature=="Growing" ~ "Growing",
                   TRUE ~ "NA"
             ),
+            ## Estimate that the "Growing" season they identified begins on March 15th
+            tmp = as.numeric(fMonth,lubridate::day(fDate), sep=""),
+            season = if_else(
+                  between(tmp, 315,930), "growing","dormant"
+                  ),
             fType = case_when(
                   sdsFeature=="Prescribed Burn" ~ "prescribed",
                   sdsFeature=="Prescribed Fire" ~ "prescribed",
@@ -35,6 +40,8 @@ gordon_fire <- gordon_fire %>%
              fType, fDate, season, purpose, fYear, fMonth)
 
 summary(gordon_fire)
+
+
 
 # yr <- seq(1995,2018,1)
 # library(raster)
