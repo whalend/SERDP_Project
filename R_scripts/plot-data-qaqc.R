@@ -9,80 +9,80 @@ library(stringi)
 
 #+ examine plot location data ####
 
-plot_shp <- rgdal::readOGR("data/plot-locations.shp")# read in spatial data
-plot_shp@data$xcoord_lon <- plot_shp@coords[,1]# add coords to data frame slot
-plot_shp@data$ycoord_lat <- plot_shp@coords[,2]
-
-unique(plot_shp$name)
-
-plot_shp@data <- plot_shp@data %>%
-      mutate(name = as.character(name),
-             instal= as.character(instal),
-             pid = tolower(substr(name, start = nchar(name)-1, stop = nchar(name))),
-             pid = case_when(
-                   pid=="z1" ~ "a1",
-                   pid=="y1" ~ "b1",
-                   pid=="x1" ~ "c1",
-                   pid=="w1" ~ "d1",
-                   pid=="v1" ~ "e1",
-                   pid=="t1" ~ "f1",
-                   pid=="s1" ~ "g1",
-                   pid=="r1" ~ "h1",
-                   TRUE ~ pid
-             ),
-             plot_id = paste(instal, pid, sep = " "),
-             pid2 = toupper(paste(substr(pid, 1,1), "-", substr(pid, 2,2), sep = ""))
-      )
-
-unique(plot_shp$instal)
-
-#+ Create labels column for installation full names
-plot_shp$inst_full_name[plot_shp$instal=="movietheatercog"] <- "Camp Blanding"
-plot_shp$inst_full_name[plot_shp$instal=="blanding"] <- "Camp Blanding"
-plot_shp$inst_full_name[plot_shp$instal=="eglin"] <- "Eglin AFB"
-plot_shp$inst_full_name[plot_shp$instal=="tyndall"] <- "Tyndall AFB"
-plot_shp$inst_full_name[plot_shp$instal=="cogoncoast"] <- "Tyndall AFB"
-plot_shp$inst_full_name[plot_shp$instal=="avonpark"] <- "Avon Park AFR"
-plot_shp$inst_full_name[plot_shp$instal=="cogon10x"] <- "Avon Park AFR"
-plot_shp$inst_full_name[plot_shp$instal=="cogon p"] <- "Avon Park AFR"
-plot_shp$inst_full_name[plot_shp$instal=="shelby"] <- "Camp Shelby"
-plot_shp$inst_full_name[plot_shp$instal=="moody"] <- "Moody AFB"
-plot_shp$inst_full_name[plot_shp$instal=="jackson"] <- "Fort Jackson"
-plot_shp$inst_full_name[plot_shp$instal=="benning"] <- "Fort Benning"
-plot_shp$inst_full_name[plot_shp$instal=="gordon"] <- "Fort Gordon"
-
-unique(plot_shp$inst_full_name)
+# plot_shp <- rgdal::readOGR("data/plot-locations.shp")# read in spatial data
+# # plot_shp@data$xcoord_lon <- plot_shp@coords[,1]# add coords to data frame slot
+# # plot_shp@data$ycoord_lat <- plot_shp@coords[,2]
+#
+# sort(unique(plot_shp$name))
+#
+# plot_shp@data <- plot_shp@data %>%
+#       mutate(name = as.character(name),
+#              instal= as.character(instal),
+#              pid = tolower(substr(name, start = nchar(name)-1, stop = nchar(name))),
+#              pid = case_when(
+#                    pid=="z1" ~ "a1",
+#                    pid=="y1" ~ "b1",
+#                    pid=="x1" ~ "c1",
+#                    pid=="w1" ~ "d1",
+#                    pid=="v1" ~ "e1",
+#                    pid=="t1" ~ "f1",
+#                    pid=="s1" ~ "g1",
+#                    pid=="r1" ~ "h1",
+#                    TRUE ~ pid
+#              ),
+#              plot_id = paste(instal, pid, sep = " "),
+#              pid2 = toupper(paste(substr(pid, 1,1), "-", substr(pid, 2,2), sep = ""))
+#       )
+#
+# unique(plot_shp$instal)
+#
+# #+ Create labels column for installation full names
+# plot_shp$inst_full_name[plot_shp$instal=="movietheatercog"] <- "Camp Blanding"
+# plot_shp$inst_full_name[plot_shp$instal=="blanding"] <- "Camp Blanding"
+# plot_shp$inst_full_name[plot_shp$instal=="eglin"] <- "Eglin AFB"
+# plot_shp$inst_full_name[plot_shp$instal=="tyndall"] <- "Tyndall AFB"
+# plot_shp$inst_full_name[plot_shp$instal=="cogoncoast"] <- "Tyndall AFB"
+# plot_shp$inst_full_name[plot_shp$instal=="avonpark"] <- "Avon Park AFR"
+# plot_shp$inst_full_name[plot_shp$instal=="cogon10x"] <- "Avon Park AFR"
+# plot_shp$inst_full_name[plot_shp$instal=="cogon p"] <- "Avon Park AFR"
+# plot_shp$inst_full_name[plot_shp$instal=="shelby"] <- "Camp Shelby"
+# plot_shp$inst_full_name[plot_shp$instal=="moody"] <- "Moody AFB"
+# plot_shp$inst_full_name[plot_shp$instal=="jackson"] <- "Fort Jackson"
+# plot_shp$inst_full_name[plot_shp$instal=="benning"] <- "Fort Benning"
+# plot_shp$inst_full_name[plot_shp$instal=="gordon"] <- "Fort Gordon"
+#
+# unique(plot_shp$inst_full_name)
 
 
 plot_shp <- sf::st_read("data/plot-locations.shp")
-plot_shp <- plot_shp %>%
-      select(name, instal, lon, lat, plot_id, pid, pid2,
-             inst_name = inst_f_)
-#+ Write out new shapefile
-sf::st_write(plot_shp, "data/plot-locations.shp", delete_layer = T)
+# plot_shp <- plot_shp %>%
+#       select(instal, lon, lat, plot_id, pid, pid2,
+#              inst_name = inst_f_)
+# #+ Write out new shapefile
+# sf::st_write(plot_shp, "data/plot-locations.shp", delete_layer = T)
 
 #+ Make regular data frame ####
-plot_locs <- plot_shp@data
-summary(plot_locs)
-str(plot_locs)
-sort(as.character(plot_locs$name))# sort plot names alphabetically
+# plot_locs <- plot_shp@data
+# summary(plot_locs)
+# str(plot_locs)
+# sort(as.character(plot_locs$name))# sort plot names alphabetically
 
 #' We have a few "plots" that are locations of cogongrass invasions that we marked to send to land managers. I'll remove those in the next section. Currently there are 98 plot locations and we need to remove three "extra" cogon plots. There was a "movie theater cogon" plot at Camp Blanding that we sampled but does not have any recorded burn history. It's in a kind of funny place.
 #'
 
 #+ revise plot location data ####
-plot_locs <- plot_locs %>%
-      rename(installation = instal,
-             installation_full_name = inst_full_name)
-
-str(plot_locs)
-summary(plot_locs)
-duplicated(plot_locs$plot_id)# check for duplicate plot ids
-unique(plot_locs$plot_id)
-
-plot_locs$plot_id[plot_locs$plot_id=="movietheatercog on"] <- "blanding theater_cogon"
-
-write_csv(plot_locs, "data/processed_data/plot_locations.csv")# save checked data
+# plot_locs <- plot_locs %>%
+#       rename(installation = instal,
+#              installation_full_name = inst_full_name)
+#
+# str(plot_locs)
+# summary(plot_locs)
+# duplicated(plot_locs$plot_id)# check for duplicate plot ids
+# unique(plot_locs$plot_id)
+#
+# plot_locs$plot_id[plot_locs$plot_id=="movietheatercog on"] <- "blanding theater_cogon"
+#
+# write_csv(plot_locs, "data/processed_data/plot_locations.csv")# save checked data
 
 
 
@@ -111,11 +111,11 @@ filter(plot_visit_data, is.na(last_fire_year))
 
 # plot_visit_data <- filter(plot_visit_data, !is.na(last_fire_year))
 
-names(plot_locs)
+# names(plot_locs)
 names(plot_visit_data)
-unique(plot_locs$plot_id)
-unique(plot_visit_data$plot_id)
-unique(plot_visit_data$plot_id) %in% unique(plot_locs$plot_id)
+sort(unique(plot_shp$plot_id))
+sort(unique(plot_visit_data$plot_id))
+unique(plot_visit_data$plot_id) %in% unique(plot_shp$plot_id)
 
 plot_visit_data <- plot_visit_data %>%
       mutate(plot_id = case_when(
@@ -134,12 +134,11 @@ plot_visit_data <- plot_visit_data %>%
 # join plot locations to plot visit data
 plot_visit_data <- left_join(
       plot_visit_data,
-      select(plot_locs, -pid, -name, -lon, -lat))
+      select(plot_shp, -pid, -name))
 summary(plot_visit_data)
-
 # filter(plot_visit_data, is.na(xcoord_lon))$plot_id
 
-plot_visit_data$notes
+# plot_visit_data$notes
 
 sort(plot_visit_data$plot_id)
 sort(duplicated(plot_visit_data$plot_id))
@@ -152,9 +151,13 @@ filter(plot_visit_data, is.na(years_since_fire))$plot_id
 plot_visit_data <- plot_visit_data %>%
       mutate(last_fire_year = ifelse(plot_id=="shelby j1",2012,last_fire_year),
              years_since_fire = visit_year - last_fire_year) %>%
-      select(installation:visit_year, xcoord_lon:installation_full_name)
+      select(installation:visit_year, lon:inst_name)
 
-unique(plot_visit_data$plot_id)
+# filter(plot_visit_data, is.na(inst_name))$plot_id
+# plot_visit_data <- plot_visit_data %>%
+#       filter(plot_id != "blanding theater_cogon")
+
+# sort(unique(plot_visit_data$plot_id))
 
 #+ write out plot visit data ####
 write_csv(plot_visit_data, "data/processed_data/plot_visit_data.csv")
@@ -165,7 +168,7 @@ write_csv(plot_visit_data, "data/processed_data/plot_visit_data.csv")
 pvisit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 
 plot_shp <- left_join(plot_shp,
-                      select(pvisit_data, -notes, -xcoord_lon, -ycoord_lat))
+                      select(pvisit_data, -installation, -notes, -lon, -lat))
 
 st_write(plot_shp, "data/plot_visit.shp")
 

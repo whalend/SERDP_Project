@@ -100,7 +100,7 @@ summary(tick_data)
 
 # filter(tick_data, plot_id!="tyndall c2", species=="Rh. san")
 
-write_csv(tick_data, "data/processed_data/ticks.csv")
+# write_csv(tick_data, "data/processed_data/ticks.csv")
 
 
 # Merge corrected/confirmed data from Illinois -----------------------
@@ -147,9 +147,9 @@ tick_data_corrected <- full_join(illini_data,
 summary(tick_data_corrected)
 
 tick_data_corrected <- tick_data_corrected %>%
-      select(-notes, -Notes, -drag_time) %>%
+      select(-Notes) %>%
       mutate(visit_year = lubridate::year(date))
-
+sort(unique(tick_data_corrected$plot_id))
 
 ## Add full species names ####
 # tick_data <- read_csv("data/processed_data/ticks.csv")
@@ -162,7 +162,8 @@ tick_data_corrected <- tick_data_corrected %>%
         species=="Am. mac" ~ "Amblyomma maculatum",
         species=="De. var" ~ "Dermacentor variabilis",
         species=="Rh. san" ~ "Rhipicephalus sanguineus",
-        species=="unknown" ~ "unknown"))
+        species=="unknown" ~ "unknown")
+        ))
 
 # tick_data_corrected$species_name
 unique(tick_data_corrected$species_name)
@@ -177,10 +178,11 @@ tick_data_corrected <- tick_data_corrected %>%
             plot_id=="gordon t1" ~ "gordon f1",
             plot_id=="gordon s1" ~ "gordon g1",
             plot_id=="gordon r1" ~ "gordon h1",
+            plot_id=="blanding c" ~ "blanding c1",
             TRUE ~ plot_id
       ))
 
-unique(tick_data_corrected$plot_id)
+sort(unique(tick_data_corrected$plot_id))
 
 write_csv(tick_data_corrected, "data/processed_data/ticks.csv")
 
