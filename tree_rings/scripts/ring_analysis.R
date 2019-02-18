@@ -62,7 +62,7 @@ ggplot(ring_data_2013, aes(year, ring_width, color = treatment)) +
 
 #### NEW measuRING data ####
 
-cross1_data <- read_csv("tree_rings/data/widths_master_crossSection1.csv")
+cross1_data <- read_csv("tree_rings/data/cross1_data_post66.csv")
 
 summary(cross1_data)
 
@@ -73,6 +73,8 @@ cross1_data <- cross1_data %>%
                                grepl("AN", cs_id) ~ "AN",
                                grepl("DC", cs_id) ~ "DC",
                                grepl("DN", cs_id) ~ "DN"))
+
+#tail(cross1_data)
 
 cross1_data_good <- cross1_data %>% 
   filter(between(year, 2015, 2017))
@@ -93,7 +95,7 @@ ggsave(plot = cross1_most_accurate, height = 5, width = 10, "tree_rings/figures/
 cross1_all_time <- ggplot(cross1_data, aes(year, ring_width_mm, color = treatment)) +
   geom_point(alpha = 0.2) + 
   #scale_x_continuous(labels = scaleFUN) +
-  scale_x_continuous(limits = c(2012, 2019), breaks = c(2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019)) +
+  scale_x_continuous(limits = c(2012, 2019), breaks = c(2013, 2014, 2015, 2016, 2017, 2018)) +
   stat_summary(fun.data = "mean_se", geom = "pointrange", 
                position = position_dodge(width = 0.7)) +
   treatment_color +
@@ -102,5 +104,10 @@ cross1_all_time <- ggplot(cross1_data, aes(year, ring_width_mm, color = treatmen
 
 ggsave(plot = cross1_all_time, height = 5, width = 10, "tree_rings/figures/width_crossSection1_all_time.png")
 
-filter(cross1_data, is.na(ring_width_mm) & treatment == "DC")
+filter(cross1_data, is.na(ring_width_mm) & year == 2015)
+filter(cross1_data, ring_width_mm > 13)
+filter(cross1_data, cs_id=="30-B_DC_crossSection1")
 
+cross1_data %>% 
+  group_by(treatment) %>% 
+  summarise(count = length(treatment)/6)
