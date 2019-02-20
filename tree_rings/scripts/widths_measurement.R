@@ -5,6 +5,7 @@ library(measuRing)
 library(plyr)
 library(tidyr)
 library(readr)
+library(ggplot2)
 citation("measuRing")
 
 #### TREE SAMPLE 1-S_DC ####
@@ -794,6 +795,7 @@ updated_29_B_AC_one <- update(updated_29_B_AC_one, exclu = excl_29_B_AC_one)
 
 widths_29_B_AC_one <- ringWidths(tree_29_B_AC_one, inclu = incl_29_B_AC_one, exclu = excl_29_B_AC_one, last.yr = 2018, ppi = 600)
 
+ggsave(plot = updated_29_B_AC_one, width = 12, height = 8, "tree_rings/figures/measuring_example_29_B.png" )
 # tree_29_B_AC_two <- ('tree_rings/pictures/2-T_AN_crossSection2.png')
 # ring_29_B_AC_two <- ringDetect(image = tree_29_B_AC_two, ppi = 600, last.yr = 2018)
 # incl_29_B_AC_two <- c(15, 86, 272, 456, 590, 672, 775)
