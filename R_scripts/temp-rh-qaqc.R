@@ -179,50 +179,52 @@ temp_rh_data_grouped <- temp_rh_data %>%
                 avg_dailymin_rh = mean(avg_min_rh)
       )
 
-summary(temp_rh_data_grouped)
+write_csv(temp_rh_data_grouped, "data/processed_data/tick_temp_rh_grouped.csv")
+
+# summary(temp_rh_data_grouped)
 
 
-p2 <- ggplot(temp_rh_data_grouped, aes(date, avg_dailymax_rh)) +
-      geom_smooth(aes(y = avg_daily_RH, fill = status, color = status), se = T, method = "lm", alpha = .2) +
-      geom_point(aes(color = status), size = 2) +
-      geom_point(data = temp_rh_data_grouped, aes(date, avg_dailymin_rh, color = status), shape = 25, size = 2) +
-      geom_hline(yintercept = 80, linetype = "dashed") +
-      invasion_color +
-      invasion_fill +
-      def_theme +
-      theme_classic() +
-      xlab("Date") +
-      ylab("avg daily RH") +
-      def_theme +
-      NULL
-
-temp_rh_data_grouped %>%
-      ungroup(.) %>%
-      filter(avg_dailymin_rh<80) %>%
-      group_by(status) %>%
-      summarise(days_minRH_blw80 = n())
-
-p1 <- ggplot(temp_rh_data_grouped, aes(date, avg_daily_tempC)) +
-      geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
-      geom_point(aes(color = status), size = 2) +
-      geom_point(data = temp_rh_data_grouped, aes(y=avg_dailymax_tempC, color = status), shape = 25, size = 2) +
-      geom_point(data = temp_rh_data_grouped, aes(y=avg_dailymin_tempC, color = status), shape = 24, size = 2) +
-      # geom_hline(yintercept = 80, linetype = "dashed") +
-      invasion_color +
-      invasion_fill +
-      def_theme +
-      theme_classic() +
-      # xlab("date") +
-      # ylab("Daily ") +
-      def_theme +
-      NULL
-
-cowplot::plot_grid(p1,p2, ncol = 1)
-
-ggplot(temp_rh_data_grouped, aes(avg_dailymax_tempC, avg_dailymin_rh)) +
-      geom_point(aes(color = status)) +
-      invasion_color +
-      def_theme
+# p2 <- ggplot(temp_rh_data_grouped, aes(date, avg_dailymax_rh)) +
+#       geom_smooth(aes(y = avg_daily_RH, fill = status, color = status), se = T, method = "lm", alpha = .2) +
+#       geom_point(aes(color = status), size = 2) +
+#       geom_point(data = temp_rh_data_grouped, aes(date, avg_dailymin_rh, color = status), shape = 25, size = 2) +
+#       geom_hline(yintercept = 80, linetype = "dashed") +
+#       invasion_color +
+#       invasion_fill +
+#       def_theme +
+#       theme_classic() +
+#       xlab("Date") +
+#       ylab("avg daily RH") +
+#       def_theme +
+#       NULL
+#
+# temp_rh_data_grouped %>%
+#       ungroup(.) %>%
+#       filter(avg_dailymin_rh<80) %>%
+#       group_by(status) %>%
+#       summarise(days_minRH_blw80 = n())
+#
+# p1 <- ggplot(temp_rh_data_grouped, aes(date, avg_daily_tempC)) +
+#       geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+#       geom_point(aes(color = status), size = 2) +
+#       geom_point(data = temp_rh_data_grouped, aes(y=avg_dailymax_tempC, color = status), shape = 25, size = 2) +
+#       geom_point(data = temp_rh_data_grouped, aes(y=avg_dailymin_tempC, color = status), shape = 24, size = 2) +
+#       # geom_hline(yintercept = 80, linetype = "dashed") +
+#       invasion_color +
+#       invasion_fill +
+#       def_theme +
+#       theme_classic() +
+#       # xlab("date") +
+#       # ylab("Daily ") +
+#       def_theme +
+#       NULL
+#
+# cowplot::plot_grid(p1,p2, ncol = 1)
+#
+# ggplot(temp_rh_data_grouped, aes(avg_dailymax_tempC, avg_dailymin_rh)) +
+#       geom_point(aes(color = status)) +
+#       invasion_color +
+#       def_theme
 
 ## Steven doing random stuffs ####
 

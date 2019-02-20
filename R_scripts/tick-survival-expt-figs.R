@@ -1,7 +1,8 @@
 # Tick survival experiment figures
 
-source("R_scripts/tick_survival_raw_qaqc.R")
-source("R_scripts/temp-rh-qaqc.R")
+# source("R_scripts/tick_survival_raw_qaqc.R")
+# source("R_scripts/temp-rh-qaqc.R")# This can take a long time (big dataframes)
+
 
 # load packages ####
 library(plyr)
@@ -13,6 +14,9 @@ library(tidyverse)
 library(ggplot2)
 library(cowplot)
 
+# load data ####
+temp_rh_data_grouped <- read_csv("data/processed_data/tick_temp_rh_grouped.csv")
+tick_survival_long <- read_csv("data/processed_data/tick_survival_long.csv")
 
 # define variables ####
 
