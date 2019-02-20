@@ -4,6 +4,14 @@ source("R_scripts/tick_survival_raw_qaqc.R")
 source("R_scripts/temp-rh-qaqc.R")
 
 # load packages ####
+library(plyr)
+library(tidyverse)
+# library(dplyr)
+# library(readr)
+# library(stringi)
+# library(stringr)
+library(ggplot2)
+library(cowplot)
 
 
 # define variables ####
@@ -25,8 +33,6 @@ invasion_fill <- scale_color_manual(values = c("red","deepskyblue"))
 vline_days <- c(unique(tick_survival$days))
 
 temp_rh_data <- left_join(temp_rh_data, add_visit_number)
-
-
 
 
 # Figure for max temps all time all days ####
@@ -289,9 +295,8 @@ rh_below_80_Jun_Sep <- temp_rh_data %>%
 
 #View(rh_below_80)
 
-ggplot(filter(temp_rh_data, between(RH,20,80), logger_id==13), aes(date_time, 1/RH)) +
-      geom_path()
-# geom_path(aes(y=tempC, color = as.factor(logger_id)))
+# ggplot(filter(temp_rh_data, between(RH,20,80), logger_id==13), aes(date_time, 1/RH)) +
+      # geom_path()
 
 rh_below_80_avg <- temp_rh_data %>%
       filter(between(RH, 20, 80)) %>%
@@ -326,8 +331,8 @@ temp_above_35_avg <- temp_rh_data %>%
 #View(temp_above_35)
 
 rh_threshold <- ggplot(rh_below_80, aes(status, days)) +
-      geom_boxplot() +
-      geom_point(aes(color = status), position = "jitter") +
+      geom_boxplot(outlier.shape = 1) +
+      geom_point(aes(color = status), position = position_jitter(width = .1)) +
       invasion_color +
       invasion_fill +
       #xlab("Invasion status") +
@@ -336,9 +341,10 @@ rh_threshold <- ggplot(rh_below_80, aes(status, days)) +
       theme(legend.position = "none") +
       NULL
 
-avg_days_above_35_tempC <- ggplot(temp_above_35_avg, aes(status, avg_days, fill = status)) +
-      geom_point() +
-      geom_bar(stat = "identity") +
+days_above_35_tempC <- ggplot(temp_above_35, aes(status, days)) +
+      geom_boxplot(outlier.shape = 1) +
+      geom_point(aes(color = status), position = position_jitter(width = .1)) +
+      # geom_bar(stat = "identity") +
       #geom_errorbar(data = temp_above_35_avg,
       #aes(ymin=avg_days_above_35_tempC - sd,
       #ymax=avg_days_above_35_tempC + sd)) +
@@ -350,13 +356,15 @@ avg_days_above_35_tempC <- ggplot(temp_above_35_avg, aes(status, avg_days, fill 
       theme(legend.position = "none") +
       NULL
 
-avg_time_days_temp_rh_barchart <- cowplot::plot_grid(avg_days_below_80rh, avg_days_above_35_tempC, ncol = 2)
+avg_time_days_temp_rh_barchart <- cowplot::plot_grid(rh_threshold, days_above_35_tempC, ncol = 2)
 
 #ggsave(plot = avg_time_days_temp_rh_barchart, "figures/tick-survival-assay/avg_time_days_temp_rh_barchart.png")
 
-avg_days_rh_boxplot <- ggplot(filter(rh_below_80, !(logger_id %in% c(1,19))),
-                              aes(status, days, color = status)) +
+avg_days_rh_boxplot <- ggplot(
+      filter(rh_below_80, !(logger_id %in% c(01,19))),
+      aes(status, days, color = status)) +
       geom_boxplot() +
+      geom_point() +
       invasion_color +
       invasion_fill +
       def_theme +
@@ -465,18 +473,31 @@ avg_survival <- tick_survival_long %>%
       group_by(days, Invaded, life_stage) %>%
       summarise(avg_surv = mean(survival))
 
-all_stages_stacked <- ggplot(data = tick_survival_long, aes(days, survival*100, shape = life_stage, color = Invaded)) +
-      geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
+all_stages_stacked <- ggplot(
+      data = tick_survival_long,
+      aes(days, survival*100, shape = life_stage, color = Invaded)
+      ) +
+
+      # geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
       geom_hline(yintercept = 50, linetype = "solid", color = "gray") +
+
       stat_summary(fun.data = mean_se, geom = "pointrange", alpha=0.80, show.legend = F) +
       stat_summary(fun.y = mean, geom = "point") +
+
       geom_step(data = avg_survival, aes(days, avg_surv*100, linetype = life_stage), show.legend = F) +
+
+      # facet_grid(.~sex) +
+
       invasion_color +
       invasion_fill +
       theme_classic() +
       def_theme +
-      ggtitle(label = "Tick Survival") +
-      theme(plot.title = element_text(hjust = 0.5)) +
+      # ggtitle(label = "Tick Survival") +
+      theme(
+            # plot.title = element_text(hjust = 0.5)
+            # strip.text = element_text(size = 18),
+            legend.position = c(.1,.15)
+            ) +
       #guides(fill=FALSE, color=FALSE) +
       scale_y_continuous(limits = c(0, 100 )) +
       scale_x_continuous(limits = c(0, 216)) +
@@ -486,7 +507,7 @@ all_stages_stacked <- ggplot(data = tick_survival_long, aes(days, survival*100, 
       NULL
 
 
-# ggsave(plot = all_stages_stacked, "figures/tick-survival-assay/all_stages_stacked.png", height = 7, width = 7)
+ggsave(plot = all_stages_stacked, "figures/tick-survival-assay/all_stages_stacked.png", height = 7, width = 7, dpi = 300)
 
 #ggsave(plot = tick_survival_all_time, "figures/tick-survival-assay/tick_survival_all_time.png")
 

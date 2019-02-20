@@ -136,4 +136,9 @@ jackson_fires <- jackson_fires %>%
             ),
             fType = "prescribed"
             ) %>%
-      select(-fDate2)
+      select(-fDate2, -comments)
+
+rm(list=ls(pattern = "yr"))
+rm(projection)
+rm(sf)
+
