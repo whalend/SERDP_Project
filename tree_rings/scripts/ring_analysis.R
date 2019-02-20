@@ -375,6 +375,7 @@ rw_mod_data <- left_join(
 
 m2 <- lm(ring_width_mm~treatment + average_vwc+tree_density + diam2014, data = rw_mod_data)
 summary(m2)
+broom::tidy(m2)
 
 mm1 <- lme4::lmer(ring_width_mm ~ average_vwc+ tree_density + diam2014 + (1|Plot), data = rw_mod_data)
 summary(mm1)  
@@ -452,8 +453,8 @@ density_soil_moisture <- density_soil_moisture %>%
             tree_density = mean(tree_density, na.rm = T))
 
 tree_density_figure_two <- ggplot(density_soil_moisture, aes(average_vwc, tree_density, color = Treatment)) +
-  geom_point(size = 1.3, alpha = .5) +
-  geom_smooth(method = "lm", se = T) +
+  geom_point(size = 1.3, alpha = .6) +
+  geom_smooth(method = "lm", se = T, alpha = 0.18) +
   #facet_grid(~year) +
   treatment_color +
   def_theme +
@@ -470,7 +471,7 @@ rw_diameter_trt_facet <- rw_diam_soil_density %>%
   #treatment_color +
   facet_grid(.~treatment)
 
-ggsave(plot = rw_diameter_trt_facet, width = 25, height = 20, "tree_rings/figures/rw_diameter_trt_facet.png")
+ggsave(plot = rw_diameter_trt_facet, width = 15, height = 7, "tree_rings/figures/rw_diameter_trt_facet.png")
 
 rw_soil_facet_trt <- rw_soil_trees %>% 
   filter(between(year,2014,2017)) %>% 
@@ -501,3 +502,19 @@ annual_ratio_figure <- ggplot(rw_diameter_data, aes(year, rw_diam_ratio, color =
   stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 0.7)) +
   def_theme +
   NULL
+
+tree_density_trt <- left_join(tree_density, bivens_treatments) 
+
+tree_density_trt_avg <- tree_density_trt %>% 
+  group_by(Treatment) %>% 
+  summarise(average_tree_density = mean(tree_density))
+
+tree_density_boxplot <- tree_density_trt %>% 
+  ggplot(aes(Treatment, tree_density, color = Treatment)) +
+  geom_boxplot() +
+  geom_point(alpha = 0.2, position= "jitter") +
+  treatment_color
+  #stat_summary(data = tree_density, fun.data = "mean_se", geom = "pointrange", 
+                   #position = position_dodge(width = 0.7)
+
+ggsave(plot = tree_density_boxplot, width = 13, height = 7, "tree_rings/figures/tree_density_boxplot.png")
