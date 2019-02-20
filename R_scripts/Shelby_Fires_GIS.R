@@ -362,6 +362,7 @@ shelby_fires <- rbind(
       FireHistory %>%
             mutate(inst_name = "Camp Shelby",
                    fDate = NA,
+                   fDate = as.Date(fDate),
                    fMonth = NA,
                    fCause = NA,
                    fType = "prescribed",
@@ -372,7 +373,8 @@ shelby_fires <- rbind(
                    fCause, fType, fDate,
                    season = Season,
                    purpose, fYear, fMonth)
-)
+) %>%
+      mutate(fDate = as.Date(paste(fYear, "-10-31", sep = "")))
 
 rm(list=ls(pattern = "Presc"))
 rm(list=ls(pattern = "DeSo"))
@@ -381,7 +383,7 @@ rm(FireHistory)
 shelby_fires <- st_transform(shelby_fires, crs = 3814)
 
 # shelby_fire <- st_read("data/CampShelby/FireManagementArea.shp")
-plot(shelby_fires[8])
+# plot(shelby_fires[8])
 
 
 # congongrass data ####

@@ -43,7 +43,8 @@ rm(sf); rm(projection)
 
 moody_fires <- moody_fires %>%
       mutate(inst_name = "Moody AFB",
-             fDate = NA,
+             # fDate = NA,
+             fDate = as.Date(paste(fYear,"-10-31", sep="")),
              fMonth = NA,
              fCause = NA,
              fType = "prescribed",

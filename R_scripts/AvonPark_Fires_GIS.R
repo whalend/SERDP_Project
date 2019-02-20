@@ -30,7 +30,7 @@ rm(burn06)
 
 # Combine shapefiles into one ####
 ## check field names: create and rename as necessary
-Burns_2006
+# Burns_2006
 avp_fires <- Burns_2006 %>%
       mutate(inst_name = "Avon Park AFR",
              fDate = as.Date(paste(Year,Month,Day, sep = "-")),
@@ -287,6 +287,7 @@ avp_fires <- rbind(avp_fires,
                                 fType = Type,
                                 fDate, season, purpose, fYear, fMonth)
 )
+
 
 rm(list=ls(pattern = "urn"))
 rm(list=ls(pattern = "shp"))
