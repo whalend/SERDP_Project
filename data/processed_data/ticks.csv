@@ -1,6 +1,6 @@
 installation,plot_id,location,date,collection_method,species,life_stage,count,site_code,plot_id_code,location_code,collection_method_code,species_code,life_stage_code,sample_id,visit_year,species_name
-blanding,blanding c,extra,2017-06-07,Whalen,Am. am,nymph,1,B,C,X,W,A,N,BCXWAN,2017,Amblyomma americanum
-blanding,blanding c,extra,2017-06-07,Whalen,De. var,adult,1,B,C,X,W,V,A,BCXWVA,2017,Dermacentor variabilis
+blanding,blanding c1,extra,2017-06-07,Whalen,Am. am,nymph,1,B,C,X,W,A,N,BCXWAN,2017,Amblyomma americanum
+blanding,blanding c1,extra,2017-06-07,Whalen,De. var,adult,1,B,C,X,W,V,A,BCXWVA,2017,Dermacentor variabilis
 blanding,blanding a1,extra,2017-06-09,Drag,Am. am,adult,2,B,A1,X,D,A,A,BA1XDAA,2017,Amblyomma americanum
 blanding,blanding a1,east,2017-06-10,trap,Am. am,adult,1,B,A1,E,T,A,A,BA1ETAA,2017,Amblyomma americanum
 blanding,blanding a1,extra,2017-06-10,Whalen,Am. am,adult,1,B,A1,X,W,A,A,BA1XWAA,2017,Amblyomma americanum
