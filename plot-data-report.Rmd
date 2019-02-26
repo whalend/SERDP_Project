@@ -307,17 +307,6 @@ quadrat_data <- read_csv("data/processed_data/quadrat1m.csv")
       # mutate(visit_year = lubridate::year(date))
 # filter(quadrat_data, is.na(years_since_fire))
 
-## This is all done in the 'quadrat-data-qaqc.R' script
-# quadrat_data$herb_veg_ht1 <- as.numeric(quadrat_data$herb_veg_ht1)
-# quadrat_data$herb_veg_ht2 <- as.numeric(quadrat_data$herb_veg_ht2)
-# quadrat_data$herb_veg_ht3 <- as.numeric(quadrat_data$herb_veg_ht3)
-# quadrat_data$woody_veg_ht1[is.na(quadrat_data$woody_veg_ht1)] <- 0
-# quadrat_data$woody_veg_ht1 <- as.numeric(quadrat_data$woody_veg_ht1)
-# quadrat_data$herb_veg_ht1[is.na(quadrat_data$herb_veg_ht1)] <- 0
-# quadrat_data$herb_veg_ht1 <- as.numeric(quadrat_data$herb_veg_ht1)
-# quadrat_data$pct_green[quadrat_data$pct_green=="<1"] <- 0.5
-# quadrat_data$pct_green <- as.numeric(quadrat_data$pct_green)
-
 quadrat_data <- left_join(
       select(quadrat_data, -notes),
       select(plot_visit_data, -notes)
@@ -507,24 +496,39 @@ veg_cover_data <- left_join(
 
 ```
 
-```{r fxgroup fig, eval=F}
+```{r fxgroup fig, eval=T}
 ## WTF???
 
-(fxgroup_cover_fig <- ggplot(filter(veg_cover_data, !is.na(last_fire_year)), 
-       aes(years_since_fire, avg_pct_cover)) +
-      geom_point(aes(color = imcy_inv), position = "jitter") +
+fx_group_data <- species10_data %>% 
+      mutate(fx_group = case_when(
+            functional_group=="algae" ~ "moss/lichen",
+            functional_group=="moss" ~ "moss/lichen",
+            functional_group=="lichen" ~ "moss/lichen",
+            functional_group=="forb/shrub" ~ "forb",
+            functional_group=="shrub/tree" ~ "shrub",
+            TRUE ~ functional_group
+            )) %>% 
+      filter(!is.na(functional_group))
+
+(fxgroup_cover_fig <- ggplot(filter(fx_group_data, !is.na(last_fire_year)), 
+       aes(years_since_fire, pct_cover)) +
+      geom_point(aes(color = imcy_inv), position = position_jitter(width=.15), alpha = .5) +
+       
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
-      # geom_smooth() +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm") +
       invasion_color +
-      facet_grid(inst_name~.) +
+      facet_grid(.~fx_group) +
       theme_bw() +
       def_theme +
       theme(legend.position = "top")
 )
 
+# filter(veg_cover_data, functional_group=="algae")$plot_id
+## avonpark g1
+
 ```
 
-```{r average species cover, fig.height=9}
+```{r average species cover}
 
 # datac$se <- datac$sd / sqrt(datac$N)
 # species_data$imcy_inv <- factor(species_data$imcy_inv, levels = c("uninvaded","invaded"))
@@ -553,7 +557,7 @@ veg_cover_quadrats <- species10_data %>%
 
 ### figure
 ggplot(veg_cover_quadrats, aes(years_since_fire, quadrat_veg_cover)) +
-      geom_point(aes(color = imcy_inv), size = 2) +
+      geom_point(aes(color = imcy_inv), size = 2, position=position_jitter(width = .2), alpha = .6) +
       geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", alpha = .2) +
       invasion_color +
       invasion_fill +
@@ -582,7 +586,7 @@ veg_cover_plot_data <- species10_data %>%
       aes(years_since_fire, plot_avg_veg_cover)) +
       # geom_bar(aes(fill = imcy_inv), stat = "identity", position = "dodge") +
       # geom_errorbar(aes(ymin = plot_avg_veg_cover + se_veg_cover, ymax = plot_avg_veg_cover - se_veg_cover), width = 0, position=position_dodge(width = .9)) +
-      geom_point(aes(color = imcy_inv), size = 2) +
+      geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .15), alpha = .6) +
       geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", alpha = .2) +
       invasion_fill +
       invasion_color +
@@ -632,7 +636,7 @@ quadrat_species_richness <- species10_data %>%
 
 There were `r length(invaded_quadrats$quadrat_invaded)` (`r round(100*length(invaded_quadrats$quadrat_invaded)/length(quadrat_species_richness$richness), digits = 1)` %) 1-m quadrats located in invaded areas representing `r n_distinct(invaded_quadrats$years_since_fire)` different years since fire at `r n_distinct(invaded_quadrats$installation)` different installations (`r unique(invaded_quadrats$inst_name)`).
 
-```{r quadrat richness figure}
+```{r quadrat richness figure, eval = F}
 
 ## All points
 # ggplot(quadrat_species_richness, aes(years_since_fire, richness, color = invasion_status)) +
@@ -650,33 +654,37 @@ There were `r length(invaded_quadrats$quadrat_invaded)` (`r round(100*length(inv
 
 (quadrat_richness_fig <- ggplot(quadrat_species_richness, aes(years_since_fire, richness, color = invasion_status)) +
       # geom_boxplot(aes(fill = quadrat_invaded), position = "dodge") +
-      # geom_point(aes(color = invasion_status), alpha = .5, size = 1) +
-      # geom_smooth(show.legend = F, alpha = .2, aes(fill = invasion_status)) +
+      geom_point(aes(color = invasion_status), alpha = .6, size = 2, position = position_jitter(width = .15)) +
+      geom_smooth(show.legend = F, alpha = .2, aes(fill = invasion_status), method = "lm") +
       # stat_summary(fun.y = "mean", geom = "point") +
-      stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = .5)) +
+      # stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = .5)) +
       # facet_grid(inst_name~.) +
       invasion_color +
       invasion_fill +
-      # theme_classic() +
-      theme_bw() +
+      theme_classic() +
+      # theme_bw() +
       def_theme +
       ylab("Richness") +
       xlab("Years since fire") +
       ggtitle("1m quadrat understory species diversity") +
-      theme(strip.background = element_blank()) +
+      theme(
+       # strip.background = element_blank(),
+            legend.background = element_rect(color="black"),
+            legend.position = c(.88,.85),
+            ) +
       NULL
 )
 
 ```
 
-Species richness at the quadrat level was highly variable, though tended to be highest during the first year following fire.
+Species richness was highly variable, though tended to be highest during the first year following fire.
 
 ```{r plot richness fig}
 
 (plot_richness_fig <- ggplot(species_richness, aes(years_since_fire, richness, color = imcy_inv)) +
       # geom_boxplot(aes(fill = quadrat_invaded), position = "dodge") +
-      geom_smooth(show.legend = F, alpha = .2, aes(fill = imcy_inv)) +
-      geom_point(aes(color = imcy_inv), size = 1) +
+      geom_smooth(show.legend = F, alpha = .2, aes(fill = imcy_inv), method = "lm") +
+      geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .15)) +
       # stat_summary(fun.y = "mean", geom = "point") +
       # stat_summary(fun.data = "mean_se", geom = "pointrange", alpha = .7) +
       invasion_color +
@@ -686,7 +694,8 @@ Species richness at the quadrat level was highly variable, though tended to be h
       ylab("Richness") +
       xlab("Years since fire") +
       ggtitle("Plot understory species diversity") +
-      theme(legend.position = c(.8,.8))
+      theme(legend.position = c(.85,.85),
+            legend.background = element_rect(color = "black"))
 )
 
 # (plot10_richness_fig <- ggplot(species10_richness, aes(years_since_fire, richness, color = imcy_inv)) +
@@ -810,7 +819,7 @@ summary(biomass_plot_summary)
 (stand_biomass_fig <- ggplot(biomass_plot_summary,
        aes(years_since_fire, avg_dry_standing_gm2, color = imcy_inv)) +
       geom_point() +
-      stat_summary(fun.data = "mean_se", geom = "pointrange") +
+      # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm", show.legend = F) +
       invasion_color +
       invasion_fill +
@@ -821,20 +830,23 @@ summary(biomass_plot_summary)
       xlab("Years since last fire") +
       ggtitle("Dry standing biomass",
               subtitle = "(measurements at 25cm quadrats)") +
-      theme(legend.title = element_blank()) +
       def_theme +
+      theme(legend.title = element_blank(),
+            legend.position = c(.85,.85),
+            legend.background = element_rect(color = "black")) +
       NULL
 )
 
 ggplot(biomass_plot_summary,
        aes(imcy_inv, avg_wet_standing_gm2, color = imcy_inv)) +
       geom_boxplot(show.legend = F, outlier.shape = 1) +
-      geom_point(position = "jitter") +
+      geom_point(position = position_jitter(width = .15)) +
       invasion_color +
       invasion_fill +
       theme_bw() +
-      theme(legend.title = element_blank()) +
       def_theme +
+      theme(legend.title = element_blank(),
+            legend.position = "none") +
       NULL
       
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass.png", height=7.5, width = 7.5)
@@ -847,7 +859,7 @@ ggplot(biomass_plot_summary,
         aes(years_since_fire, avg_dry_litter_gm2, color = imcy_inv)) +
       geom_point() +
       # geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "loess", linetype = "dashed", se = F) +
-      geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm") +
+      geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm", show.legend = F) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       invasion_color +
       invasion_fill +
@@ -858,8 +870,10 @@ ggplot(biomass_plot_summary,
       xlab("Years since last fire") +
       # ggtitle("Dry litter biomass",
               # subtitle = "(measurements at 25cm quadrats)") +
-      def_theme
-       # theme(legend.position = c(.85,.85))
+      def_theme +
+      theme(legend.position = c(.88,.88),
+            legend.background = element_rect(color = "black")) +
+       NULL
 )
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass.png", height = 7.5, width = 7.5)
@@ -1319,11 +1333,12 @@ sort(unique(tick_data_import$plot_id))
 sort(unique(tick_data_import$installation))
 sort(unique(tick_data_import$species))
 unique(tick_data_import$life_stage)
-
+unique(tick_data_import$location)
 # plot_visit_data
 names(plot_visit_data)
 names(tick_data_import)
-tick_data <- tick_data_import %>% 
+
+tick_data <- tick_data_import %>%
       mutate(life_stage = factor(life_stage, 
                                  levels = c("adult","nymph"), 
                                  labels = c("Adult","Nymph"))) %>% 
@@ -1331,15 +1346,28 @@ tick_data <- tick_data_import %>%
 str(tick_data)
 str(plot_visit_data)
 
+
+tick_data %>%
+      filter(location != "extra") %>%
+      group_by(plot_id, visit_year) %>%
+      summarise(tick_count = sum(tick_count)) %>% 
+      ungroup(.) %>% 
+      group_by(visit_year) %>% 
+      summarise(plot_visits = length(plot_id))
+
+unique(plot_visit_data$plot_id)
+unique(tick_data$plot_id)
+
+
 tick_data <- left_join(
       tick_data,
-      plot_visit_data
+      select(plot_visit_data, -notes, -pid2, -visit_date)
 )
 summary(tick_data)
 
-filter(tick_data, is.na(imcy_inv))$location
+# filter(tick_data, is.na(imcy_inv))$location
+# sort(unique(tick_data$plot_id))
 
-# summary(tick_data)
 # filter(tick_data, is.na(years_since_fire))$plot_id
 # filter(tick_data, is.na(imcy_inv))$plot_id
 
@@ -1358,8 +1386,127 @@ filter(tick_data, is.na(imcy_inv))$location
 # filter(tick_data, is.na(tick_count))$count
 
 ```
+```{r summarize-tick-abundance-data, results='hide'}
 
-## Total ticks collected across burn units 
+# tick_data_life_stage_summary <- tick_data %>% 
+#       group_by(plot_id, visit_year, life_stage, years_since_fire, imcy_inv, inst_name, visit_date) %>% 
+#       summarise(total_ticks = sum(tick_count, na.rm = T)) %>% 
+#       ungroup(.) %>% 
+#       select(plot_id, visit_year, total_ticks, everything())
+
+
+tick_data_plot_summary <- tick_data %>% 
+      filter(location != "extra") %>%
+      group_by(installation, plot_id, visit_year) %>%
+      summarise(total_ticks = sum(tick_count)) %>% 
+      ungroup(.)
+
+tick_data_plot_summary <- left_join(
+      select(plot_visit_data, -notes),
+      tick_data_plot_summary
+)
+
+summary(tick_data_plot_summary)
+filter(tick_data_plot_summary, is.na(total_ticks)) %>% 
+      select(plot_id, visit_year) %>% 
+      arrange(plot_id)
+filter(tick_data_plot_summary, is.na(years_since_fire))$plot_id
+# filter(tick_data_plot_summary, is.na(imcy_inv))$plot_id
+
+tick_data_plot_summary <- tick_data_plot_summary %>% 
+      filter(plot_id != "blanding theater_cogon") %>% 
+      mutate(total_ticks = case_when(
+            is.na(total_ticks)==TRUE ~ 0,
+            TRUE ~ total_ticks
+      ))
+summary(tick_data_plot_summary)
+
+# plot_data
+# tick_data_sum <- left_join(plot_visit_data, tick_data_sum)
+# tick_data_sum$total_ticks[is.na(tick_data_sum$total_ticks)] <- 0
+
+# tick_data_plot_summary$plot_id[duplicated(tick_data_plot_summary$plot_id)]
+# biomass_plot_summary$plot_id[duplicated(biomass_plot_summary$plot_id)]
+
+tick_data_sum <- left_join(
+      tick_data_plot_summary, 
+      ungroup(biomass_plot_summary))
+
+tick_data_sum <- left_join(
+      tick_data_sum,
+      select(ungroup(quadrat10_summaries), -notes, -visit_date))
+
+tick_data_sum <- left_join(
+      tick_data_sum,
+      ungroup(veg_cover_plot_data, -n_obs)
+)
+
+tick_data_sum <- left_join(
+      tick_data_sum, 
+      ungroup(canopy_cover_summary) %>% 
+            select(-n_obs))
+
+tick_data_sum <- left_join(
+      tick_data_sum, 
+      dung_plot_data %>% 
+            ungroup(.) %>% 
+            group_by(plot_id, visit_year, years_since_fire, imcy_inv) %>% 
+            summarise(total_clusters1m = sum(total_clusters1m),
+                      total_clusters2m = sum(total_clusters2m)))
+
+tick_data_sum <- left_join(
+      tick_data_sum,
+      ungroup(tree_data_plot_summary))
+
+tick_data_sum <- left_join(
+      tick_data_sum,
+      ungroup(subplot_plot_summary) %>% 
+            select(-imcy_inv)
+)
+summary(tick_data_sum)
+# filter(tick_data_sum, is.na(shrub_sap_rich))$plot_id
+# filter(tick_data_sum, is.na(avg_tree_ht))$plot_id
+
+tick_data_sum <- tick_data_sum %>% 
+      mutate(total_stems_100m2 = case_when(
+            plot_id == "blanding g1" ~ 0,
+            plot_id == "blanding h1" ~ 0,
+            plot_id == "tyndall b1" ~ 0,
+            plot_id == "blanding c1" ~ 0,
+            TRUE ~ total_stems_100m2
+      ),
+      shrub_sap_rich = case_when(
+            plot_id == "blanding g1" ~ 0,
+            plot_id == "blanding h1" ~ 0,
+            plot_id == "tyndall b1" ~ 0,
+            plot_id == "blanding c1" ~ 0,
+            TRUE ~ total_stems_100m2
+      )) %>% 
+      select(-pid2)
+
+filter(biomass_plot_summary, plot_id=="shelby b1")$avg_dry_standing_gm2
+
+summary(tick_data_sum)
+filter(tick_data_sum, is.na(avg_dry_standing_gm2))$plot_id
+## Missing Shelby B1 2017 b/c it was cogongrass, so we didn't bring back
+str(tick_data_sum)
+# unique(tick_data_sum$imcy_inv)
+
+
+write_csv(tick_data_sum, "data/all_plotlevel_data.csv")
+
+# filter(tick_data_sum, is.na(avg_pct_litter))$plot_id
+
+# unique(tick_data_sum$inst_name)
+# unique(tree_data_summary$inst_name)
+
+
+# tick_data_sum$imcy_inv <- factor(tick_data_sum$imcy_inv, levels = c("Uninvaded","Invaded"), labels = c("Uninvaded","Invaded"))
+
+# skimr::skim(tick_data_sum)
+```
+
+## Total ticks collected 
 
 The high tick abundance for 8-years post-fire is driven by a single plot at Camp Blanding.
 
@@ -1400,205 +1547,52 @@ ggplot(aes(years_since_fire, log1p(tick_count), color = imcy_inv, fill = imcy_in
 
 ```
 
-## Tick species
 
-**Note the different scales of the y-axes**
+```{r tick abundance by installation fig}
 
-```{r tick species vs fire fig, fig.height=9}
-
-tick_data %>% 
-             filter(!is.na(years_since_fire)) %>% 
-             group_by(inst_name, years_since_fire, visit_year) %>%
-             summarise(tick_count = sum(tick_count)) %>% 
-      ggplot(aes(inst_name, tick_count, fill = inst_name)) +
-      # geom_point(position = "jitter") +
+ggplot(tick_data_sum, aes(inst_name, total_ticks, fill = inst_name)) +
+      # geom_boxplot()
       geom_col() +
-      scale_fill_brewer(palette = "Set1") +
-      facet_grid(visit_year~., scales = "free_y") +
-      xlab("") +
-      ylab("Tick abundance") +
+      scale_fill_viridis_d() +
+      facet_grid(visit_year~.) +
       theme_bw() +
-      # theme_classic() +
+      ylab("Tick abundance") +
       # def_theme +
-      theme(legend.position = "right",
-            panel.grid = element_blank(),
-            strip.background = element_blank()) +
+      theme(legend.title = element_blank()) +
       NULL
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/tick-species-installation.png", height=7.5, width = 7.5)
 
 ```
 
-
-## Summarize tick abundance data
-```{r summarize-tick-abundance-data, results='hide'}
-
-tick_data_life_stage_summary <- tick_data %>% 
-      group_by(plot_id, visit_year, life_stage, years_since_fire, imcy_inv, inst_name, date) %>% 
-      summarise(total_ticks = sum(tick_count)) %>% 
-      ungroup(.)
-
-
-tick_data_plot_summary <- tick_data %>% 
-      group_by(installation, plot_id, visit_year, years_since_fire, imcy_inv, inst_name) %>% 
-      summarise(total_ticks = sum(tick_count)) %>% 
-      ungroup(.)
-
-summary(tick_data_plot_summary)
-filter(tick_data_plot_summary, is.na(years_since_fire))$plot_id
-filter(tick_data_plot_summary, is.na(imcy_inv))$plot_id
-
-# plot_data
-# tick_data_sum <- left_join(plot_visit_data, tick_data_sum)
-# tick_data_sum$total_ticks[is.na(tick_data_sum$total_ticks)] <- 0
-
-tick_data_sum <- left_join(
-      tick_data_plot_summary, 
-      ungroup(biomass_plot_summary))
-
-tick_data_sum <- left_join(
-      tick_data_sum,
-      select(ungroup(quadrat10_summaries), -notes, -visit_date))
-
-tick_data_sum <- left_join(
-      tick_data_sum,
-      ungroup(veg_cover_plot_data, -n_obs)
-)
-
-tick_data_sum <- left_join(
-      tick_data_sum, 
-      ungroup(canopy_cover_summary) %>% 
-            select(-n_obs))
-
-tick_data_sum <- left_join(
-      tick_data_sum, 
-      dung_plot_data %>% 
-            ungroup(.) %>% 
-            group_by(plot_id, visit_year, years_since_fire, imcy_inv) %>% 
-            summarise(total_clusters1m = sum(total_clusters1m),
-                      total_clusters2m = sum(total_clusters2m)))
-
-tick_data_sum <- left_join(
-      tick_data_sum,
-      ungroup(tree_data_plot_summary))
-
-tick_data_sum <- left_join(
-      tick_data_sum,
-      ungroup(subplot_plot_summary) %>% 
-            select(-imcy_inv)
-)
-summary(tick_data_sum)
-
-tick_data_sum <- tick_data_sum %>% 
-      mutate(total_stems_100m2 = case_when(
-            plot_id == "blanding g1" ~ 0,
-            plot_id == "blanding h1" ~ 0,
-            plot_id == "tyndall b1" ~ 0,
-            plot_id == "blanding c1" ~ 0,
-            TRUE ~ total_stems_100m2
-      ),
-      shrub_sap_rich = case_when(
-            plot_id == "blanding g1" ~ 0,
-            plot_id == "blanding h1" ~ 0,
-            plot_id == "tyndall b1" ~ 0,
-            plot_id == "blanding c1" ~ 0,
-            TRUE ~ total_stems_100m2
-      ))
-
-filter(biomass_plot_summary, plot_id=="shelby b1")$avg_dry_standing_gm2
-
-tick_data_sum <- left_join(tick_data_sum,
-          select(plot_visit_data, plot_id, visit_year, visit_date))
-
-summary(tick_data_sum)
-filter(tick_data_sum, is.na(avg_dry_standing_gm2))$plot_id
-## Missing Shelby B1 2017 b/c it was cogongrass, so we didn't bring back
-
-
-
-
-write_csv(tick_data_sum, "data/all_plotlevel_data.csv")
-
-# filter(tick_data_sum, is.na(avg_pct_litter))$plot_id
-
-# unique(tick_data_sum$inst_name)
-# unique(tree_data_summary$inst_name)
-
-
-# tick_data_sum$imcy_inv <- factor(tick_data_sum$imcy_inv, levels = c("Uninvaded","Invaded"), labels = c("Uninvaded","Invaded"))
-
-# skimr::skim(tick_data_sum)
-```
-
-
-## Tick~fire log-linear relationship 
-
-```{r tick-fire}
-
-# unique(tick_data_plot_summary$inst_name)
-# filter(tick_data_plot_summary, is.na(inst_name))$plot_id
-
-(tick_fire_fig <- ggplot(filter(tick_data_plot_summary, !is.na(imcy_inv)), 
-       aes(years_since_fire, log1p(total_ticks))) +
-      # geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", linetype = "dashed", alpha = .2) +
-      geom_smooth(aes(fill = imcy_inv, color = imcy_inv), se = T, method = "lm", alpha = .2) +
-      # geom_smooth(se = F, method = "lm", linetype = 2, alpha = .2) +
-      geom_point(aes(color = imcy_inv), position = "jitter") +
-      invasion_color +
-      invasion_fill +
-      # geom_smooth(aes(color = imcy_inv), method = "loess",
-                  # linetype = "dashed", se = F, alpha = .2) +
-      # scale_shape_manual(values = c(inst_name=2, 19, 19, 19, 19, 19, 19, 19, 19)) +
-      theme_classic() +
-      xlab("Years since fire") +
-      ylab("log( tick abundance + 1 )") +
-      def_theme +
-      NULL)
-
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-vs-fire.png", height = 7.5, width = 7.5)
-
-```
-
-```{r model tick abundance vs fire}
-
-tick_fire_model <- lm(log1p(total_ticks) ~ years_since_fire, data = tick_data_plot_summary)
-summary(tick_fire_model)
-
-```
-
-Tick abundances may also be influenced by some of the other land uses that happen on DoD installations, such as cattle grazing, hunting, and most obviously training. Grazers may treat their cattle to reduce ectoparasite (e.g. ticks) loads and the pathogens they transmit. These treatments are often effective in deterring parasite attachment, killing parasites through contact, and can lower the production and viability of parasite eggs. For example, Avon Park AFR leases some areas for cattle grazing and we confirmed that some grazers used treatments that will reduce tick loads (e.g., moxidectin, Cydectin, Aguilar-Tipacamu & Rodriguez-Vivas 2003). 
-
 ## Seasonal sampling
 
 ```{r tick-abundance-by-date}
 
-tick_data$week <- lubridate::week((tick_data$date))
+tick_data$week <- lubridate::week((tick_data$visit_date))
 
-              # group_by(date, inst_name) %>% 
-             # summarise(abundance = sum(count))
-       
+             
 ggplot(filter(tick_data, !is.na(life_stage)),
-       aes(date, tick_count)) +
-      geom_line(aes(linetype = life_stage)) +
-      geom_point(aes(shape = life_stage), size = 2) +
+       aes(visit_date, tick_count)) +
+      # geom_line(aes(linetype = life_stage)) +
+      geom_point(aes(color = life_stage), size = 2, alpha = .7) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       # geom_bar(aes(fill = inst_name), stat = "identity") +
-      # facet_grid(.~visit_year)
-      scale_x_date(limits = c(as.Date("2017-06-06"),as.Date("2018-08-01")),
-                   date_breaks = "3 month") +
+      facet_grid(.~visit_year, scales = "free_x") +
+      # scale_x_date(limits = c(as.Date("2017-06-06"),as.Date("2018-08-01")),
+                   # date_breaks = "3 month") +
       # geom_smooth(alpha = .2) +
+      scale_color_viridis_d() +
       theme_classic() +
       ylab("Tick abundance") +
       xlab("") +
       def_theme +
-      theme(legend.position = ,
+      theme(legend.position = c(.5,.85),
             legend.background = element_rect(color="black"))
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-by-week.png", height=7.5, width = 7.5)
       
 ```
-
-
 
 ## Tick abundance vs. latitude
 
@@ -1627,13 +1621,51 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
 
 ```
 
+## Tick~fire log-linear relationship 
+
+```{r tick-fire}
+
+# unique(tick_data_plot_summary$inst_name)
+# filter(tick_data_plot_summary, is.na(inst_name))$plot_id
+
+(tick_fire_fig <- ggplot(filter(tick_data_sum,), 
+       aes(years_since_fire, log1p(total_ticks))) +
+      # geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", linetype = "dashed", alpha = .2) +
+      geom_smooth(aes(fill = imcy_inv, color = imcy_inv), se = T, method = "lm", alpha = .2) +
+      # geom_smooth(se = F, method = "lm", linetype = 2, alpha = .2) +
+      geom_point(aes(color = imcy_inv), position = "jitter") +
+      invasion_color +
+      invasion_fill +
+      # geom_smooth(aes(color = imcy_inv), method = "loess",
+                  # linetype = "dashed", se = F, alpha = .2) +
+      # scale_shape_manual(values = c(inst_name=2, 19, 19, 19, 19, 19, 19, 19, 19)) +
+      theme_classic() +
+      xlab("Years since fire") +
+      ylab("log( tick abundance + 1 )") +
+      def_theme +
+      NULL)
+
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-vs-fire.png", height = 7.5, width = 7.5)
+
+```
+
+```{r model tick abundance vs fire}
+
+tick_fire_model <- lm(log1p(total_ticks) ~ years_since_fire, data = tick_data_sum)
+summary(tick_fire_model)
+
+```
+
+Tick abundances may also be influenced by some of the other land uses that happen on DoD installations, such as cattle grazing, hunting, and most obviously training. Grazers may treat their cattle to reduce ectoparasite (e.g. ticks) loads and the pathogens they transmit. These treatments are often effective in deterring parasite attachment, killing parasites through contact, and can lower the production and viability of parasite eggs. For example, Avon Park AFR leases some areas for cattle grazing and we confirmed that some grazers used treatments that will reduce tick loads (e.g., moxidectin, Cydectin, Aguilar-Tipacamu & Rodriguez-Vivas 2003). 
+
+
 
 # Tick abundance vs. plot-level averages
 
 ## Understory vegetation cover
 ```{r tick-veg-cover}
 
-ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
+ggplot(tick_data_sum, 
        aes(plot_avg_veg_cover, log1p(total_ticks), color = imcy_inv)) +
       geom_point() +
       invasion_color +
@@ -2061,7 +2093,7 @@ summary(lm(avg_canopy_cover ~ years_since_fire, data = tick_data_sum))
 
 ```
 
-```{r ggpairs plot, eval=T}
+```{r ggpairs plot, eval=T, fig.width=14, fig.height=14}
 # install.packages("GGally")
 library(GGally)
 
@@ -2080,21 +2112,42 @@ model_data <- tick_data_sum %>%
              )
 # summary(model_data)
 
-ggpairs(select(
+tick_mod_inv_pairs <- ggpairs(select(
       model_data, 
-      total_ticks, years_since_fire, day_of_year, avg_dry_litter_gm2, avg_canopy_cover, total_clusters1m, total_dbh, pct_pinus_dbh, total_stems_100m2, lat, imcy_inv), aes(color = imcy_inv)) +
+      total_ticks, years_since_fire, day_of_year, avg_dry_litter_gm2, avg_canopy_cover, total_clusters1m, total_dbh, pct_pinus_dbh, total_stems_100m2, lat, imcy_inv), aes(color = imcy_inv),
+       upper = list(
+             continuous = function(data, mapping, ...) {
+                   ggally_cor(data = data, mapping = mapping) + invasion_color},
+             combo = function(data, mapping, ...) {
+                   ggally_box_no_facet(data = data, mapping = mapping) + invasion_fill}),
+    
+      lower = list(
+            continuous = function(data, mapping, ...) {
+                  ggally_points(data = data, mapping = mapping, alpha = .5, ) + invasion_color},
+            combo = function(data, mapping, ...) {
+                  ggally_facethist(data = data, mapping = mapping) + invasion_fill}),
+    
+    diag = list(
+          continuous = function(data, mapping, ...) {
+                ggally_densityDiag(data = data, mapping = mapping, alpha = .5) + invasion_fill}
+          # combo = function(data, mapping, ...) {
+          #       ggally_barDiag(data = data, mapping = mapping) + invasion_fill}
+          )
+    ) +
       # invasion_color +
       # invasion_fill +
       theme_bw() +
       theme(panel.grid = element_blank())
 
-ggpairs(select(
+# ggsave(plot = tick_mod_inv_pairs, "figures/pairs_plot_tick_mod.png", width = 18, height = 12)
+
+
+tick_mod_pairs <- ggpairs(select(
       model_data, 
       total_ticks, years_since_fire, day_of_year, avg_dry_litter_gm2, avg_canopy_cover, total_clusters1m, clusters_1_2, total_dbh, pct_pinus_dbh, total_stems_100m2, lat)) +
-      # invasion_color +
-      # invasion_fill +
       theme_bw() +
       theme(panel.grid = element_blank())
+# ggsave(plot = tick_mod_pairs, "figures/pairs_plot_tick_mod_bw.png", width = 18, height = 12)
 
 ```
 
