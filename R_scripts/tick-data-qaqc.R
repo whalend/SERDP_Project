@@ -9,33 +9,61 @@ library(ggplot2)
 
 #' Tick Abundance Estimates
 
+## We should generally have 103 plots for analysis (year/plot combination)
+
 #+ tick data ####
 tick_data <- read_csv("data/raw_data/ticks.csv")
 
 #+ plot visit data ####
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
+sort(unique(plot_visit_data$plot_id))
 
 sort(unique(tick_data$plot_id))
 tick_data$plot_id <- tolower(tick_data$plot_id)
-# tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
+tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
 
 tick_data <- tick_data %>%
-  mutate(plot_id = paste(installation, plot_id, sep = " "),
-         plot_id = tolower(plot_id)) %>%
-  filter(date>20170601)
+      filter(date>20170601) %>%
+      mutate(plot_id = paste(installation, plot_id, sep = " "),
+         plot_id = tolower(plot_id),
+         date = lubridate::ymd(date),
+         visit_year = lubridate::year(date),
+         location = tolower(location),
+         plot_id = case_when(
+               plot_id=="gordon z1" ~ "gordon a1",
+               plot_id=="gordon y1" ~ "gordon b1",
+               plot_id=="gordon x1" ~ "gordon c1",
+               plot_id=="gordon w1" ~ "gordon d1",
+               plot_id=="gordon v1" ~ "gordon e1",
+               plot_id=="gordon t1" ~ "gordon f1",
+               plot_id=="gordon s1" ~ "gordon g1",
+               plot_id=="gordon r1" ~ "gordon h1",
+               plot_id=="blanding c" ~ "blanding c1",
+               TRUE ~ plot_id
+         )) %>%
+      rename(visit_date = date)
 
 sort(unique(tick_data$plot_id))
 filter(tick_data, plot_id=="tyndall na")
 filter(tick_data, plot_id=="tyndall extra")
-
 tick_data$plot_id[tick_data$plot_id=="tyndall na"] = "tyndall extra"
 
-# tick_data <- left_join(
-# tick_data,
-# select(plot_data, installation,plot_id,fire_year:full_names),
+plot_visit_data$plot_id[!(plot_visit_data$plot_id%in%(unique(filter(tick_data, location != "extra")$plot_id)))]
+
+
+visits <- left_join(
+      plot_visit_data,
+      tick_data
+)
+
+
+tick_data_join <- full_join(
+      tick_data,
+      select(plot_visit_data, installation:lat, inst_name),
+      by = c("installation", "plot_id", "visit_year")
+)
+
 unique(tick_data$location)
-# by = c("installation", "plot_id")
-# )
 
 summary(tick_data)
 
@@ -44,11 +72,6 @@ summary(tick_data)
 # tick_data$years_since_fire[tick_data$installation=="moody"] <- 2017-2005
 
 ## Steven processing, added concatenation for plot_id & installation line 17 ##
-
-## Made locations consistent ####
-
-tick_data$location <- tolower(tick_data$location)
-unique(tick_data$location)
 
 # tolower()
 # toupper()
@@ -92,14 +115,15 @@ tick_data$species[tick_data$species=="de. var"] <- "De. var"
 # tick_data$species[tick_data$species=="De. Var"] <- "De. var"
 tick_data$species[tick_data$species=="rh. san"] <- "Rh. san"
 
-tick_data$date <- as.Date(as.character(tick_data$date), format = "%Y%m%d")
-tick_data <- tick_data %>%
-  mutate(visit_year = lubridate::year(tick_data$date))
+# tick_data$date <- lubridate::ymd(tick_data$date)
+# tick_data <- tick_data %>%
+#   mutate(visit_year = lubridate::year(tick_data$date))
+#
+# summary(tick_data)
+# unique(tick_data$plot_id)
 
-summary(tick_data)
-
+# xtabs(~visit_year + plot_id, data = tick_data)
 # filter(tick_data, plot_id!="tyndall c2", species=="Rh. san")
-
 # write_csv(tick_data, "data/processed_data/ticks.csv")
 
 
@@ -115,9 +139,29 @@ library(readr)
 library(dplyr)
 
 illini_data <- read_xlsx("data/raw_data/ticks-dna-2018_Updated_Datasheet.xlsx", sheet = 1)
+sort(unique(illini_data$plot_id))
 
-tick_data <- read_csv("data/processed_data/ticks.csv")
+illini_data <- illini_data %>%
+      mutate(plot_id = case_when(
+            plot_id=="gordon z1" ~ "gordon a1",
+            plot_id=="gordon y1" ~ "gordon b1",
+            plot_id=="gordon x1" ~ "gordon c1",
+            plot_id=="gordon w1" ~ "gordon d1",
+            plot_id=="gordon v1" ~ "gordon e1",
+            plot_id=="gordon t1" ~ "gordon f1",
+            plot_id=="gordon s1" ~ "gordon g1",
+            plot_id=="gordon r1" ~ "gordon h1",
+            plot_id=="blanding c" ~ "blanding c1",
+            TRUE ~ plot_id
+      ))
+
+
+
+
+
+# tick_data <- read_csv("data/processed_data/ticks.csv")
 tick_data_zeroes <- filter(tick_data, count<1)
+unique(tick_data_zeroes$plot_id)
 
 names(illini_data)
 names(tick_data_zeroes)
@@ -137,19 +181,37 @@ sort(unique(illini_data$species))
 
 illini_data <- illini_data %>%
       mutate(date = as.Date(date),
-             installation = tolower(installation))
+             installation = tolower(installation),
+             visit_year = lubridate::year(date)) %>%
+      rename(visit_date = date)
 
-sort(unique(tick_data_zeroes$plot_id))
 # unique(tick_data_zeroes$life_stage)
 
-tick_data_corrected <- full_join(illini_data,
-                        tick_data_zeroes)
+tick_data_zeroes <- anti_join(tick_data, illini_data,  by = c("plot_id","visit_year"))
+summary(tick_data_zeroes)
+sort(unique(tick_data_zeroes$plot_id))
+
+tick_data_zeroes
+
+
+tick_data_corrected <- full_join(
+      select(tick_data_zeroes, -notes, -drag_time),
+      select(illini_data, -Notes)
+      )
 summary(tick_data_corrected)
 
-tick_data_corrected <- tick_data_corrected %>%
-      select(-Notes) %>%
-      mutate(visit_year = lubridate::year(date))
 sort(unique(tick_data_corrected$plot_id))
+
+
+tick_data_corrected %>%
+      filter(location != "extra") %>%
+      group_by(plot_id, visit_year) %>%
+      summarise(count = sum(count)) %>%
+      arrange(plot_id)
+      ungroup(.) %>%
+      group_by(visit_year) %>%
+      summarise(plot_visits = length(plot_id))
+
 
 ## Add full species names ####
 # tick_data <- read_csv("data/processed_data/ticks.csv")
@@ -162,8 +224,8 @@ tick_data_corrected <- tick_data_corrected %>%
         species=="Am. mac" ~ "Amblyomma maculatum",
         species=="De. var" ~ "Dermacentor variabilis",
         species=="Rh. san" ~ "Rhipicephalus sanguineus",
-        species=="unknown" ~ "unknown")
-        ))
+        is.na(species)==TRUE ~ "unknown")
+        )
 
 # tick_data_corrected$species_name
 unique(tick_data_corrected$species_name)
@@ -183,6 +245,13 @@ tick_data_corrected <- tick_data_corrected %>%
       ))
 
 sort(unique(tick_data_corrected$plot_id))
+unique(tick_data_corrected$location)
+
+# tmp <- tick_data_corrected %>%
+#       filter(location != "extra") %>%
+#       group_by(plot_id, visit_year) %>%
+#       summarise(tick_count = sum(count))
+# tmp$plot_id
 
 write_csv(tick_data_corrected, "data/processed_data/ticks.csv")
 
