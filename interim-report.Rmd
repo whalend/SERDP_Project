@@ -4,14 +4,14 @@ subtitle: "RC-2636"
 author: ""
 date: "`r Sys.Date()`"
 output: 
+  html_document:
+        toc: yes
   word_document:
         toc: yes
         reference_docx: interim-report-stylingbreaks1.docx
-  html_document:
-        toc: yes
 bibliography: 
       - knitcitations.bib
-      - references.bib
+      - serdp_references.bib
 csl: bib_styles/ecology.csl
 ---
 
@@ -28,6 +28,7 @@ knitr::opts_chunk$set(message = F)
 ##### Page Break
 
 # List of Acronyms
+
 | | |
 |------|------|
 | DBH | Diameter at breast height (height = 1.37 m) |
@@ -59,6 +60,8 @@ Our goal was assessing the potential differences in vegetation type and conditio
 ## Field sampling design
 Following the experimental design, we established plots to achieve a stratified sampling that covered the range of fire history at each installation. We obtained fire history and known cogongrass invasions as GIS layers from each installation and identified potential plot locations based on time since last fire. Potential locations were sent to our contacts at the installation to solicit further guidance on selecting the final set of candidate locations and arranging access. Our sampling season coincided with the prescribed fire management season at most installations, so the fire data we had on hand was sometimes out of date by the time a visit was arranged. In burn blocks with a cogongrass invasion we established one plot in the invaded area and one plot in an univaded area, with at least 100 meters between the plots. In burn blocks without an invasion we established one plot in an area representative of the vegetation conditions in the burn block.
 
+![Figure XX. Burn unit map example](fort gordon)
+
 ### Plot design
 Each plot consisted of a main circular center plot (12.6 m radius, approximately 500 m^2^), a circular subplot (5.64 m radius, approximately 100 m^2^), four four 1 m x 1 m qudarats, four 25 cm x 25 cm quadrats, four 50 m transects, and four locations for sampling tick abundance (Figure 1). In the main circular plot and subplot we measured trees, saplings, and shrubs. Ground vegetation and litter were measured in the 1 m and 25 cm quadrats located 10 m from plot center in each of the cardinal directions. The 50 m transects originated at the plot center going in each cardinal direction and were used to estimate tick-host abundance. Tick abundance sampling locations were placed 8-10 m from the plot center in the NW, NE, SE, and SW areas. The center of each plot was marked with a flag and GPS coordinates were recorded using a Garmin Oregon 650t GPS unit (Olathe, KS).
 
@@ -69,6 +72,7 @@ Within the 12.6 m radius plot we recorded the DBH of all trees ≥ 3 cm DBH to t
 
 
 **Table 1.** Tree health categories.
+
 |Health code|Definition|
 |-----------|----------|
 | 0 | | dead, nothing living |
@@ -80,6 +84,7 @@ Within the 12.6 m radius plot we recorded the DBH of all trees ≥ 3 cm DBH to t
 
 
 **Table 2.** Tree canopy positions.
+
 |Canopy code|Definition|
 |-----------|----------|
 | U | | Understory, growing beneath the forest canopy, no direct sunlight |
@@ -105,6 +110,8 @@ To ensure that the ticks attracted by the traps but not stuck to the tape, were 
 
 ### Estimating host density
 We conducted host-dung surveys along each 50 m transect to estimate abundance of tick hosts near the plot area. Observed dung clusters of host species (e.g. white-tailed deer, *Odocoileus virginianus*) were tallied within 0 to 1 m of the transect line, totaling 400 m^2^ of surveyed area. Species were identified by dung characteristics.
+
+![Figure X. Dung survey]
 
 ##### Page Break
 
@@ -273,6 +280,8 @@ tree_data_plot_summary <- left_join(
 ```
 
 We recorded `r n_distinct(tree_data$tree_id)` tree and shrub species. The vast majority of the `r nrow(tree_data)` trees recorded were in either the *Pinus* (pine) or *Quercus* (oak) genus, with pine smaking up more than 50% of all trees recorded (Figure 6). Overall, tree diversity, quantified as species richness (the number of species), tended to be greater in uninvaded plots, and, regardless of invasion, higher with longer time since fire (Figure 7). Shrub and sapling density (stems over one meter tall but less than 3 cm DBH) measured in the center subplot ranged widely, but most plots had fewer than 40 stems per 100 m^2^ (Figure 8).
+
+![Figure XX. Stem map example](stem_maps/eglin b1.png)
 
 
 ```{r trees by installation}
@@ -464,11 +473,9 @@ biomass_plot_summary <- biomass_data %>%
 
 Percent cover of understory herbaceous vegetation measured at the 1 m^2^ quadrats tended to be lower with longer time since fire in the uninvaded plots, and higher with longer time since fire in the handful of cogongrass-invaded plots (Figure 9). The biomass of standing understory vegetation showed the same pattern as percent cover, but also ranged widely from 6 to over 1600 g m^-2^ (Figure 10). 
 
-Cogongrass-invaded plots didn't have significantly different herbaceous understory diversity (Figure 11), which is likely in part due to the relatively small sizes of invasions that we encountered. Most invasions did not cover the entire plot area, often resulting in two or three of the 1 m^2^ quadrats located in a area with little cogongrass cover. The variation in species richness decreased with increasing time since fire, changing most dramatically from three to four years since fire.
+```{r veg cover and mass fig}
 
-```{r veg cover fig}
-
-(veg_cover_fig <- ggplot(veg_cover_plot_data,
+veg_cover_fig <- ggplot(veg_cover_plot_data,
       aes(years_since_fire, plot_avg_veg_cover)) +
       geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .1)) +
       geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", alpha = .2, show.legend = F) +
@@ -481,22 +488,16 @@ Cogongrass-invaded plots didn't have significantly different herbaceous understo
       # ggtitle("Plot averages for herbaceous vegetation cover") +
       def_theme +
       theme(legend.position = c(.8,.9)) +
-      NULL)
+      NULL
 
-```
-
-**Figure 9.** Understory herbaceous vegetation cover versus time since fire. Light blue points and line are univaded plots and red points and line are invaded plots.
-
-```{r standing biomass fig}
-
-(stand_biomass_fig <- ggplot(biomass_plot_summary,
-       aes(years_since_fire, avg_dry_standing_gm2, color = imcy_inv)) +
+stand_biomass_fig <- ggplot(biomass_plot_summary,
+       aes(years_since_fire, avg_dry_standing_gm2/1000, color = imcy_inv)) +
       geom_point(size = 2, position = position_jitter(width = .1)) +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm", show.legend = F) +
       invasion_color +
       invasion_fill +
       theme_classic() +
-      ylab(expression(paste("Standing biomass (g ", m^{-2}, ")"))) +
+      ylab(expression(paste("Standing biomass (kg ", m^{-2}, ")"))) +
       xlab("Years since last fire") +
       # ggtitle("Dry standing biomass",
       #         subtitle = "(measurements at 25cm quadrats)") +
@@ -505,12 +506,21 @@ Cogongrass-invaded plots didn't have significantly different herbaceous understo
             legend.position = c(.85,.85),
             legend.background = element_rect(color = "black")) +
       NULL
-)
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/standing-biomass.png", height=7.5, width = 7.5)
+
+plot_grid(
+      veg_cover_fig +
+            xlab("") +
+            theme(legend.position = "none",
+                  axis.text.x = element_blank()),
+      stand_biomass_fig,
+      ncol = 1
+      )
 
 ```
 
-**Figure 10.** Dried mass of understory vegetation versus time since fire.
+**Figure 9.** Understory herbaceous vegetation. (a) Percent cover versus time since fire and (b) dried mass versus time since fire. The light blue points and line are univaded plots and red points and line are invaded plots.
+
+Cogongrass-invaded plots didn't have significantly different herbaceous understory diversity (Figure 11a), which is likely in part due to the relatively small sizes of invasions that we encountered. Most invasions did not cover the entire plot area, often resulting in two or three of the 1 m^2^ quadrats located in a area with little cogongrass cover. The variation in species richness decreased with increasing time since fire, changing most dramatically from three to four years since fire (Figure 11b). 
 
 ```{r plot richness fig}
 
@@ -555,7 +565,7 @@ plot_grid(
       plot_richness_fig +
             xlab("") + 
             theme(axis.text.x = element_blank(),
-                  axis.ticks = element_blank()),
+                  axis.ticks.x = element_blank()),
       richness_box_plot +
             theme(legend.position = "none"),
       labels = "auto", ncol = 1
@@ -563,9 +573,16 @@ plot_grid(
 
 ```
 
-**Figure 11.** Understory species diversity. (a) Species richness versus time since fire. (b) Box-plots of species richness illustrating that plots burned further in the past have lower variation in species richness. Open circles are the data points.
+**Figure 10.** Understory species diversity. (a) Species richness versus time since fire. (b) Box-plots of species richness illustrating that plots burned further in the past have lower variation in species richness. Open circles are the data points.
 
 
+## iNaturalist project
+
+We started an [iNaturalist project](https://www.inaturalist.org/projects/serdp-species) to develop a publicly available record of plant species we identified at DoD installations as part of this project. iNaturalist is a digital platform available via iOS, Android, and a website where professional and casual scientists and naturalists from around the world can upload observations of plants, animals, and fungi, and offer or seek help in species identification. An observation is tagged as "Research Grade" when identification has been supported by at least two members of the community, the observation was in the wild, and it includes a relatively accurate location and date. Research grade observations can be used for research and included in other websites, such as the Global Biodiversity Information Facility [GBIF](https://www.gbif.org/). During our field surveys, we identified over 270 species and currently 50% of these have been designated research grade. In the cases of rare species, such as pitcher plants, we either excluded coordinates or included coordinates that were imprecise (fuzzed approximately 1500 m) using functionality built into iNaturalist.
+
+![iNaturalist SERDP project]()
+
+## Litter cover, mass, and moisture content
 
 
 
@@ -583,13 +600,10 @@ pct_litter_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_pct_litt
       # theme(legend.position = c(.85,.1)) +
       NULL
 
-```
-```{r litter biomass fig}
-
-(litter_mass_fig <- ggplot(biomass_plot_summary,
-        aes(years_since_fire, avg_dry_litter_gm2, color = imcy_inv)) +
-      geom_point() +
-      # geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "loess", linetype = "dashed", se = F) +
+litter_mass_fig <- ggplot(biomass_plot_summary,
+        aes(years_since_fire, avg_dry_litter_gm2/1000, color = imcy_inv)) +
+            geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .1)) +      
+            # geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "loess", linetype = "dashed", se = F) +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm", show.legend = F) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange") +
       invasion_color +
@@ -597,16 +611,137 @@ pct_litter_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_pct_litt
       # geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2) +
       # facet_grid(.~installation) +
       theme_classic() +
-      ylab(expression(paste("Litter biomass (g ", m^{-2}, ")"))) +
+      ylab(expression(paste("Litter biomass (kg ", m^{-2}, ")"))) +
       xlab("Years since last fire") +
       # ggtitle("Dry litter biomass",
               # subtitle = "(measurements at 25cm quadrats)") +
       def_theme +
-      theme(legend.position = c(.88,.88),
-            legend.background = element_rect(color = "black")) +
        NULL
-)
+
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass.png", height = 7.5, width = 7.5)
 
+## Litter moisture
+litter_moisture_fig <- ggplot(filter(biomass_plot_summary, !is.na(years_since_fire)), 
+       aes(years_since_fire, avg_pct_litter_moisture, color = imcy_inv)) +
+            # geom_boxplot(aes(x=as.factor(years_since_fire)), show.legend = F) +
+      geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = F) +
+            geom_point(aes(color = imcy_inv), size = 2, position = position_jitterdodge()) +
+      invasion_color +
+      invasion_fill +
+      # geom_smooth(aes(), se = F, alpha = .2, method = "loess", show.legend = F, linetype = "dashed") +
+      # facet_grid(imcy_inv~.) +
+      theme_classic() +
+      # theme_bw() +
+      xlab("Years since fire") +
+      ylab("Litter moisture (%)") +
+      def_theme +
+      # theme(legend.position = c(.15,.9)) +
+      # ggtitle("Litter moisture") +
+      NULL
+
+plot_grid(
+      litter_mass_fig +
+            xlab("") +
+            theme(legend.position = c(.85,.87),
+            legend.background = element_rect(color = "black")) +
+            scale_y_continuous(
+                  breaks = c(0, 1, 2), labels = c("0","1","2"),
+                  limits = c(0,2.2)),
+      pct_litter_fig +
+            xlab("") +
+            theme(legend.position = "none"),
+      litter_moisture_fig +
+            theme(legend.position = "none"),
+      ncol = 1, labels = "auto"
+)
+
 ```
+
+**Figure 11.** Litter conditions versus time since fire for (a) percent cover, (b) dry mass, and (c) percent moisture. The light blue color is for uninvaded plots and red is for cogongrass-invaded plots.
+
+
+## Host abundances
+
+Dung surveys indicated that white-tailed deer and eastern cottontail rabbit were typically the most abundant host species at each installation (Figure 12). 
+
+```{r dung data, results='hide'}
+
+dung_data_import <- read_csv("data/processed_data/dung.csv")
+# summary(dung_data_import)
+# filter(dung_data_import, is.na(species), dung1m>0 | dung2m>0)$plot_id
+dung_data_import$species[is.na(dung_data_import$species) & dung_data_import$dung1m>0] <- "other"
+dung_data_import$species[is.na(dung_data_import$species) & dung_data_import$dung2m>0] <- "other"
+# filter(dung_data_import, is.na(dung1m)) %>% select(plot_id)
+
+dung_data <- dung_data_import 
+# sort(unique(dung_data$plot_id))
+# filter(dung_data, is.na(dung1m))
+
+dung_data <- left_join(
+      dung_data,
+      select(plot_visit_data, -notes))
+summary(dung_data)
+filter(dung_data, is.na(years_since_fire))$plot_id
+
+# dung_data <- rename(dung_data, clusters1m = `1m`, clusters2m = `2m`)
+dung_plot_data <- dung_data %>% 
+      # filter(species == "deer") %>% 
+      group_by(installation, plot_id, visit_year, years_since_fire, imcy_inv, species, inst_name) %>% 
+      summarise(
+            total_clusters1m = sum(dung1m, na.rm = T),
+            avg_clusters1m = mean(dung1m, na.rm = T),
+            total_clusters2m = sum(rowSums(cbind(dung1m,dung2m), na.rm=T)),
+            avg_clusters2m = mean(rowSums(cbind(dung1m,dung2m), na.rm=T))
+                )
+summary(dung_plot_data)
+# skimr::skim(dung_data_avg)
+
+```
+
+```{r dung species figure}
+
+(dung_species_fig <- ggplot(filter(dung_plot_data, !is.na(species)),
+                            aes(inst_name, log1p(total_clusters1m))) +
+       geom_col(aes(fill = species)) +
+      scale_color_viridis_d() +
+       scale_fill_viridis_d() +
+       facet_grid(visit_year~., scales = "free_y") +
+      # theme_classic() +
+       theme_bw() +
+      xlab("") +
+      ylab("log(# of dung clusters)") +
+      def_theme +
+       theme(legend.position = "right",
+            axis.text.x = element_text(angle = 290, vjust = .5, hjust = .1 )) +
+      NULL
+)
+
+# ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-species.png", height=7.5, width = 7.5)
+```
+
+**Figure 12.** Evidence of host species densities at each installation. Note that the y-axis has different scales in each panel. Zeroes (no bars) are installations that weren't visited during that year.
+
+```{r dung density vs time since fire}
+dung_species <- c("deer","cottontail", "turkey")
+(deer_dung_fig <- dung_plot_data %>% filter(species %in% dung_species) %>% 
+      ggplot(
+            aes(years_since_fire, log1p(total_clusters1m), color = imcy_inv)) +
+            geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .1)) +
+      invasion_fill +
+      invasion_color +
+      geom_smooth(aes(fill = imcy_inv), se = T, method = "lm", alpha = .2, show.legend = FALSE) +
+      theme_classic() +
+      ylab("log( # of deer dung clusters )") +
+      xlab("Years since fire") +
+      def_theme +
+      # theme(legend.position = c(.8,.9)) +
+      NULL
+)
+
+```
+
+
+## Tick abundances
+
+
