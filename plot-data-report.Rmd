@@ -189,7 +189,8 @@ plot_nums %>%
       # ggtitle("Plots in Burn Units Across Installations") +
       theme_classic() +
       def_theme +
-      # theme(lege) +
+theme(legend.position = c(.88,.95),
+            axis.text.x = element_text(angle = 290, vjust = .5, hjust = .1 )) +
       NULL
 
 plot_visit_data %>% 
@@ -741,7 +742,6 @@ ggplot(plot_fxgroups,
 
 ```
 
-There is no clear effect of cogongrass invasion on diversity in these data, however, the representation of invasion is very small within each time since fire grouping. In two cases we have only a single sampling point, so no estimate of variation. We do see a non-linear relationship with the time since last fire, where richness is initially highest a few months following a fire, then decreases for 1-2 years before increasing small amount and then declining again after about 6 years after the last fire.
 
 ```{r 5pct species cover, eval=F}
 
@@ -1788,7 +1788,7 @@ Tick abundance plotted against dried litter biomass in invaded and uninvaded plo
 ## Litter moisture
 ```{r tick-litter-moisture}
 
-(tick_litter_mass_fig <- ggplot(
+(tick_litter_moisture_fig <- ggplot(
       filter(tick_data_sum, !is.na(imcy_inv)), 
        aes(avg_pct_litter_moisture, log1p(total_ticks), color = imcy_inv)) +
       geom_point(aes()) +
