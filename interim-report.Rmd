@@ -15,7 +15,6 @@ bibliography:
 csl: bib_styles/ecology.csl
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F)
 knitr::opts_chunk$set(fig.width = 7.5, fig.height = 7.5)
@@ -60,7 +59,7 @@ Our goal was assessing the potential differences in vegetation type and conditio
 ## Field sampling design
 Following the experimental design, we established plots to achieve a stratified sampling that covered the range of fire history at each installation. We obtained fire history and known cogongrass invasions as GIS layers from each installation and identified potential plot locations based on time since last fire. Potential locations were sent to our contacts at the installation to solicit further guidance on selecting the final set of candidate locations and arranging access. Our sampling season coincided with the prescribed fire management season at most installations, so the fire data we had on hand was sometimes out of date by the time a visit was arranged. In burn blocks with a cogongrass invasion we established one plot in the invaded area and one plot in an univaded area, with at least 100 meters between the plots. In burn blocks without an invasion we established one plot in an area representative of the vegetation conditions in the burn block.
 
-![Figure XX. Burn unit map example](fort gordon)
+![Figure XX. Burn unit map example](documents/FtGordon/FortGordonRevisedBurnMap.png)
 
 ### Plot design
 Each plot consisted of a main circular center plot (12.6 m radius, approximately 500 m^2^), a circular subplot (5.64 m radius, approximately 100 m^2^), four four 1 m x 1 m qudarats, four 25 cm x 25 cm quadrats, four 50 m transects, and four locations for sampling tick abundance (Figure 1). In the main circular plot and subplot we measured trees, saplings, and shrubs. Ground vegetation and litter were measured in the 1 m and 25 cm quadrats located 10 m from plot center in each of the cardinal directions. The 50 m transects originated at the plot center going in each cardinal direction and were used to estimate tick-host abundance. Tick abundance sampling locations were placed 8-10 m from the plot center in the NW, NE, SE, and SW areas. The center of each plot was marked with a flag and GPS coordinates were recorded using a Garmin Oregon 650t GPS unit (Olathe, KS).
@@ -74,25 +73,25 @@ Within the 12.6 m radius plot we recorded the DBH of all trees ≥ 3 cm DBH to t
 **Table 1.** Tree health categories.
 
 |Health code|Definition|
-|-----------|----------|
-| 0 | | dead, nothing living |
-| 1 | | healthy |
-| 2 | | relatively healthy |
-| 3 | | unhealthy, barely alive stem |
-| 4 | | all stems are dead, but has living sprouts not making DBH |
-| 5 | | missing tree, the tree can’t be found during resampling |
+|:-----------:|----------|
+| 0 | dead, nothing living |
+| 1 | healthy |
+| 2 | relatively healthy |
+| 3 | unhealthy, barely alive stem |
+| 4 | all stems are dead, but has living sprouts not making DBH |
+| 5 | missing tree, the tree can’t be found during resampling |
 
 
 **Table 2.** Tree canopy positions.
 
 |Canopy code|Definition|
-|-----------|----------|
-| U | | Understory, growing beneath the forest canopy, no direct sunlight |
-| I | | Intermediate, extend toward the over-story canopy but receive little or no direct sunlight from above and none from the sides |
-| C | | Co-dominant, receive direct sunlight from above but limited sunlight from the sides |
-| D | | Dominant, extend high into the canopy, sticking out above most other trees, and receive direct sunlight from above and partly on its sides |
-| E | | Emergent, crown extends well above all surrounding trees (typically mature redwoods or possibly douglas-fir) |
-| S | | Stump, tree no longer has any stems (dead or alive) that make the DBH cutoff, if it does it’s a snag or dead standing stem. If stump present, but also has any stems ≥3cm dbh it is NOT a "stump." Assign canopy class of tallest stem even if it does not make DBH |
+|:-----------:|----------|
+| U | Understory, growing beneath the forest canopy, no direct sunlight |
+| I | Intermediate, extend toward the over-story canopy but receive little or no direct sunlight from above and none from the sides |
+| C | Co-dominant, receive direct sunlight from above but limited sunlight from the sides |
+| D | Dominant, extend high into the canopy, sticking out above most other trees, and receive direct sunlight from above and partly on its sides |
+| E | Emergent, crown extends well above all surrounding trees (typically mature redwoods or possibly douglas-fir) |
+| S | Stump, tree no longer has any stems (dead or alive) that make the DBH cutoff, if it does it’s a snag or dead standing stem. If stump present, but also has any stems ≥3cm dbh it is NOT a "stump." Assign canopy class of tallest stem even if it does not make DBH |
 
 
 ### Ground cover and litter data collection
@@ -584,7 +583,7 @@ We started an [iNaturalist project](https://www.inaturalist.org/projects/serdp-s
 
 ## Litter cover, mass, and moisture content
 
-
+Measurements of litter mass, percent cover, and moisture tended to increase with time since last fire, while only percent cover showed a significant difference in cogongrass-invaded versus uninvaded plots (Figure 11). Litter biomass tended to be a little higher in uninvaded plots, though not significantly (Figure 11a). Percent litter cover rapidly recovered following fires, reaching >50% within two years after fire for most uninvaded plots (Figure 11b). Litter moisture is depends on the prevailing weather conditions, so these results must be interpreted within the context of our sampling time in the southeastern U.S. (June - October). Litter moisture was predominantly <50% across all samples (Figure 11c).
 
 ```{r pct litter fig}
 
@@ -626,7 +625,7 @@ litter_moisture_fig <- ggplot(filter(biomass_plot_summary, !is.na(years_since_fi
        aes(years_since_fire, avg_pct_litter_moisture, color = imcy_inv)) +
             # geom_boxplot(aes(x=as.factor(years_since_fire)), show.legend = F) +
       geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = F) +
-            geom_point(aes(color = imcy_inv), size = 2, position = position_jitterdodge()) +
+            geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .1)) +
       invasion_color +
       invasion_fill +
       # geom_smooth(aes(), se = F, alpha = .2, method = "loess", show.legend = F, linetype = "dashed") +
@@ -663,7 +662,7 @@ plot_grid(
 
 ## Host abundances
 
-Dung surveys indicated that white-tailed deer and eastern cottontail rabbit were typically the most abundant host species at each installation (Figure 12). 
+We identified eight tick host species during dung surveys across all installations. White-tailed deer and eastern cottontail rabbit were typically the most abundant host species at each installation (Figure 12). At Avon Park AFR, cow dung made up a substantial amount of dung encountered due to domestic cattle grazing leases, illustrating the mutli-use character of this installation. Wild turkey (*Meleagris gallopavo*) made notable contribution to host density at Camp Blanding and Eglin AFB during 2018 surveys. Total host densities did not significantly differ between cogongrass-invaded and uninvaded areas, nor with time since last fire (Figure 13).
 
 ```{r dung data, results='hide'}
 
@@ -720,11 +719,13 @@ summary(dung_plot_data)
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-species.png", height=7.5, width = 7.5)
 ```
 
-**Figure 12.** Evidence of host species densities at each installation. Note that the y-axis has different scales in each panel. Zeroes (no bars) are installations that weren't visited during that year.
+**Figure 12.** Evidence of host species densities at each installation (dung clusters 400 m^-2^). Note that the y-axis has different scales in each panel. Zeroes (no bars) are installations that weren't visited during that year.
 
 ```{r dung density vs time since fire}
-dung_species <- c("deer","cottontail", "turkey")
-(deer_dung_fig <- dung_plot_data %>% filter(species %in% dung_species) %>% 
+
+dung_species <- c("deer", "cottontail", "turkey", "cow")
+(deer_dung_fig <- dung_plot_data #%>% filter(species %in% dung_species)
+      %>% 
       ggplot(
             aes(years_since_fire, log1p(total_clusters1m), color = imcy_inv)) +
             geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .1)) +
@@ -735,13 +736,125 @@ dung_species <- c("deer","cottontail", "turkey")
       ylab("log( # of deer dung clusters )") +
       xlab("Years since fire") +
       def_theme +
-      # theme(legend.position = c(.8,.9)) +
+      theme(legend.position = c(.72,.89),
+            legend.background = element_rect(color = "black")) +
       NULL
 )
 
 ```
 
+**Figure 13.** Host densities vs. time since fire in cogongrass-invaded and uninvaded plots. Blue indicates uninvaded plots and read indicates cogongrass-invaded plots.
+
 
 ## Tick abundances
 
+We collected four different tick species across all installations (Figure 14). The majority of ticks collected were in the nymph life stage during both sample seasons (Figure 15a) and belonged to the target species, *Amblyomma americanum* (Figure 15b). The small number of invaded areas had few ticks (Figure 15). The majority of ticks collected in 2017 were from Camp Blanding, FL and Eglin AFB, FL, while in 2018 most ticks collected were from Camp Blanding, FL, Fort Gordon, GA, and Tyndall AFB, FL (Figure 16). Tick abundances tended to increase with time since fire (Figure 17), indicating that tick abundance is reduced by prescribed fire management across these installations. 
 
+![](figures/four_tick_species.png)
+
+**Figure 14.** The four commonly collected tick species. (a) *Amblyomma americanum* (Lone star tick), (b) De. var: *Dermacentor variablis* (American dog tick), (c) Am. mac: *Amblyomma maculatum*, (d) Rh. san: *Rhipicephalus sanguineus* (brown dog tick).
+
+```{r tick data QC, results='hide'}
+
+tick_data_import <- read_csv("data/processed_data/ticks.csv")
+
+tick_data <- tick_data_import %>%
+      mutate(life_stage = factor(life_stage, 
+                                 levels = c("adult","nymph"), 
+                                 labels = c("Adult","Nymph"))) %>% 
+      rename(tick_count = count)
+
+tick_data <- left_join(
+      tick_data,
+      select(plot_visit_data, -notes, -pid2, -visit_date)
+)
+# summary(tick_data)
+
+tick_data_sum <- read_csv("data/all_plotlevel_data.csv")
+tick_data_sum <- tick_data_sum %>% 
+      mutate(imcy_inv = factor(imcy_inv, levels = c("Uninvaded","Invaded")))
+
+```
+
+```{r tick life stage species abundance}
+
+plot_grid(
+tick_data %>% 
+      filter(!is.na(imcy_inv), !is.na(life_stage), life_stage!="Larval") %>% 
+ggplot(aes(life_stage, tick_count, color = imcy_inv, fill = imcy_inv)) +
+      geom_col() +
+      invasion_color +
+      invasion_fill +
+      facet_grid(visit_year~.) +
+      xlab("") +
+      ylab("Tick abundance") +
+      theme_classic() +
+      def_theme +
+      theme(legend.position = "none",
+            legend.background = element_rect(color = "black")) +
+      NULL,
+
+
+tick_data %>% 
+      filter(!is.na(imcy_inv), !is.na(species), life_stage!="Larval") %>% 
+ggplot(aes(species, tick_count, color = imcy_inv, fill = imcy_inv)) +
+      geom_col() +
+      invasion_color +
+      invasion_fill +
+      xlab("") +
+      ylab("Tick abundance") +
+      theme_classic() +
+      facet_grid(visit_year~.) +
+      def_theme +
+      theme(legend.position = c(.85,.85),
+            legend.background = element_rect(color = "black")) +
+      NULL,
+ncol = 1, labels = "auto"
+)
+
+```
+
+**Figure 15.** Tick abundances grouped by (a) life stage and (b) species in each sample year. Am. am: *Amblyomma americanum*, Am. mac: *Amblyomma maculatum*, De. var: *Dermacentor variablis*, Rh. san: *Rhipicephalus sanguineus*. Blue indicates uninvaded and red indicates cogongrass-invaded.
+
+
+```{r tick abundance by installation fig}
+
+ggplot(tick_data_sum, aes(inst_name, total_ticks, fill = imcy_inv)) +
+      geom_col() +
+      invasion_fill +
+      facet_grid(visit_year~.) +
+      # theme_bw() +
+      theme_classic() +
+      ylab("Tick abundance") +
+      xlab("") +
+      def_theme +
+      theme(legend.position = c(.85,.85),
+            legend.background = element_rect(color = "black"),
+            axis.text.x = element_text(angle = 290, vjust = .5, hjust = .1 )) +
+      NULL
+
+```
+
+**Figure 16.** Tick abundances at each installation for each sample year. Blue indicates uninvaded and red indicates cogongrass-invaded.
+
+
+```{r tick abundance vs fire}
+
+(tick_fire_fig <- ggplot(filter(tick_data_sum,), 
+       aes(years_since_fire, log1p(total_ticks))) +
+      geom_smooth(aes(fill = imcy_inv, color = imcy_inv), se = T, method = "lm", alpha = .2, show.legend = F) +
+      geom_point(aes(color = imcy_inv), position = position_jitter(width=.1), size = 2) +
+      invasion_color +
+      invasion_fill +
+      theme_classic() +
+      xlab("Years since fire") +
+      ylab("Tick abundance (ln)") +
+      def_theme +
+       theme(legend.position = c(.9,.89),
+            legend.background = element_rect(color = "black")) +
+      NULL
+)
+
+```
+
+**Figure 17.** Natural-log transformed tick abundance and time since fire for cogongrass-invaded and uninvaded plots.
