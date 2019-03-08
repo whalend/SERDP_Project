@@ -697,8 +697,8 @@ dung_data <- dung_data_import
 dung_data <- left_join(
       dung_data,
       select(plot_visit_data, -notes))
-summary(dung_data)
-filter(dung_data, is.na(years_since_fire))$plot_id
+# summary(dung_data)
+# filter(dung_data, is.na(years_since_fire))$plot_id
 
 # dung_data <- rename(dung_data, clusters1m = `1m`, clusters2m = `2m`)
 dung_plot_data <- dung_data %>% 
@@ -710,7 +710,7 @@ dung_plot_data <- dung_data %>%
             total_clusters2m = sum(rowSums(cbind(dung1m,dung2m), na.rm=T)),
             avg_clusters2m = mean(rowSums(cbind(dung1m,dung2m), na.rm=T))
                 )
-summary(dung_plot_data)
+# summary(dung_plot_data)
 # skimr::skim(dung_data_avg)
 
 ```
