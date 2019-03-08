@@ -4,11 +4,11 @@ subtitle: "RC-2636"
 author: ""
 date: "`r Sys.Date()`"
 output: 
-  html_document:
-        toc: yes
   word_document:
         toc: yes
         reference_docx: interim-report-stylingbreaks1.docx
+  html_document:
+        toc: yes
 bibliography: 
       - knitcitations.bib
       - serdp_references.bib
@@ -30,6 +30,8 @@ knitr::opts_chunk$set(message = F)
 
 | | |
 |------|------|
+| AFB | Air force base |
+| AFR | Air force range |
 | DBH | Diameter at breast height (height = 1.37 m) |
 | GIS | Geographic information system |
 | GPS | Global positioning system |
@@ -39,15 +41,15 @@ knitr::opts_chunk$set(message = F)
 
 # Part 1: Field surveys across DoD installations
 
+![](figures/installations_visited_map.png)
+**Figure 1.** Study area map showing the location of each installation visited.
+
 ##### Page Break
 
 "burn unit" = "burn block" = A discrete area within a larger prescribed or fire use project
 
 (https://www.nwcg.gov/term/glossary/burn-block%C2%A0)
 
-Installations typically have multiple larger management units or trainining areas that are made up of smaller burn units. At some installations the burn units are the same as the training/management areas. There are training and ecological management needs that are considered in the management plan of each area, such as land navigation training for troops and maintaining habitat for species on the federal threatened and endangered species list (e.g. the red cockaded woodpecker). The fire management applied to the burn blocks within the larger areas varies based on the vegetation and the training uses and management goals.
-
-![Figure 1.](pictures/native_vs_cogongrass.png)
 
 
 # Technical Approach
@@ -57,14 +59,22 @@ Our goal was assessing the potential differences in vegetation type and conditio
 
 
 ## Field sampling design
-Following the experimental design, we established plots to achieve a stratified sampling that covered the range of fire history at each installation. We obtained fire history and known cogongrass invasions as GIS layers from each installation and identified potential plot locations based on time since last fire. Potential locations were sent to our contacts at the installation to solicit further guidance on selecting the final set of candidate locations and arranging access. Our sampling season coincided with the prescribed fire management season at most installations, so the fire data we had on hand was sometimes out of date by the time a visit was arranged. In burn blocks with a cogongrass invasion we established one plot in the invaded area and one plot in an univaded area, with at least 100 meters between the plots. In burn blocks without an invasion we established one plot in an area representative of the vegetation conditions in the burn block.
+Following the experimental design, we established plots to achieve a stratified sampling that covered the range of fire history at each installation. We obtained fire history and known cogongrass invasions as GIS layers from each installation and identified potential plot locations based on time since last fire. Potential locations were sent to our contacts at the installation to solicit further guidance on selecting the final set of candidate locations and arranging access. Our sampling season coincided with the prescribed fire management season at most installations, so the fire data we had on hand was sometimes out of date by the time a visit was arranged because fires had recently been conducted. In burn blocks with a cogongrass invasion we established one plot in the invaded area and one plot in an univaded area (Figure 2), with at least 100 meters between the plots. In burn blocks without an invasion we established one plot in an area representative of the vegetation conditions in the burn block.
 
-![Figure XX. Burn unit map example](documents/FtGordon/FortGordonRevisedBurnMap.png)
+![Figure 2. Native-dominated and cogongrass-invaded longleaf pine stands. The native stand was at Camp Blanding Joint Training Center, FL, and the cogongrass-invaded stand was at Avon Park AFR, FL.](pictures/native_vs_cogongrass.png)
+
+
+Installations typically have multiple larger management units or trainining areas that are made up of smaller burn units (e.g. Figure 3). At some installations the burn units are the same as the training/management areas. There are training and ecological management needs that are considered in the management plan of each area, such as land navigation training for troops and maintaining habitat for species on the federal threatened and endangered species list (e.g. the red cockaded woodpecker). The fire management applied to the burn blocks within the larger areas varies based on the vegetation and the training uses and management goals.
+
+![](documents/FtGordon/FortGordonRevisedBurnMap.png)
+**Figure 3.** Burn unit map for Fort Gordon, GA.
 
 ### Plot design
-Each plot consisted of a main circular center plot (12.6 m radius, approximately 500 m^2^), a circular subplot (5.64 m radius, approximately 100 m^2^), four four 1 m x 1 m qudarats, four 25 cm x 25 cm quadrats, four 50 m transects, and four locations for sampling tick abundance (Figure 1). In the main circular plot and subplot we measured trees, saplings, and shrubs. Ground vegetation and litter were measured in the 1 m and 25 cm quadrats located 10 m from plot center in each of the cardinal directions. The 50 m transects originated at the plot center going in each cardinal direction and were used to estimate tick-host abundance. Tick abundance sampling locations were placed 8-10 m from the plot center in the NW, NE, SE, and SW areas. The center of each plot was marked with a flag and GPS coordinates were recorded using a Garmin Oregon 650t GPS unit (Olathe, KS).
+Each plot consisted of a main circular center plot (12.6 m radius, approximately 500 m^2^), an inner circular subplot (5.64 m radius, approximately 100 m^2^), four four 1 m x 1 m qudarats, four 25 cm x 25 cm quadrats, four 50 m transects, and four locations for sampling tick abundance (Figure 4). In the main circular plot and subplot we measured trees, saplings, and shrubs. Ground vegetation and litter were measured in the 1 m and 25 cm quadrats located 10 m from plot center in each of the cardinal directions. The 50 m transects originated at the plot center going in each cardinal direction and were used to estimate tick-host abundance. Tick abundance sampling locations were placed 8-10 m from the plot center in the NW, NE, SE, and SW areas. The center of each plot was marked with a flag and GPS coordinates were recorded using a Garmin Oregon 650t GPS unit (Olathe, KS).
 
-![Figure 2. Field plot design](figures/plot-design-revised.png)
+![](figures/plot-design-revised.png)
+
+**Figure 4.** Sample plot design.
 
 ### Tree and shrub data collection
 Within the 12.6 m radius plot we recorded the DBH of all trees ≥ 3 cm DBH to the nearest 0.1 cm, and the distance (nearest 0.1 m) and azimuth (compass degrees) from the plot center to the center of each tree. Each tree was assigned a health category (Table 1) and relative canopy position (Table 2). We recorded the heights of at least 10 trees in the plot (or all trees if fewer than 10) that were representative of each identified canopy position. In the 5.64 m radius subplot we recorded the abundance of woody species (shrubs and tree seedlings/saplings) that were < 3 cm DBH and ≥ 100 cm tall. We also estimated overstory canopy cover for the plot by taking measurements using a spherical convex densiometer (Forestry Suppliers, Jackson, MS) while standing at each 1 m quadrat and facing plot center.
@@ -76,7 +86,7 @@ Within the 12.6 m radius plot we recorded the DBH of all trees ≥ 3 cm DBH to t
 |:-----------:|----------|
 | 0 | dead, nothing living |
 | 1 | healthy |
-| 2 | relatively healthy |
+| 2 | relatively healthy (few dead branches) |
 | 3 | unhealthy, barely alive stem |
 | 4 | all stems are dead, but has living sprouts not making DBH |
 | 5 | missing tree, the tree can’t be found during resampling |
@@ -95,22 +105,27 @@ Within the 12.6 m radius plot we recorded the DBH of all trees ≥ 3 cm DBH to t
 
 
 ### Ground cover and litter data collection
-We identified plant species and measured vegetation and litter conditions in each of the four 1 m quadrats. We recorded the percent cover of each plant species, total plant cover, litter cover, and bare ground, and counted the number of stems of each species rooted within the quadrat. Percent cover was visually estimated and estimates were calibrated among observers to ensure consistency. We measured the three tallest heights of woody species and the three tallest heights of non-woody species rooted within each quadrat. Heights were measured from the mineral soil surface. We also made three measurements of litter depth in each quadrat from the top of the litter level to the mineral soil surface. The 25 cm quadrats were placed adjacent to each 1 m quadrat in an area representative of the conditions in the larger qudrat, and we collected vegetation and litter in order to estimate biomass. We collected all above-ground fine vegetation and litter within the 25 cm quadrat into separate bags. Samples were weighed at the end of the day to estimate fresh weights, then were returned to the BARS at UF, placed in a 60ºC drying oven for at least 72 hours, and then weighed to obtain dry weights. The difference between fresh weight and dry weight was used to estimate moisture content. 
+We identified plant species and measured vegetation and litter conditions in each of the four 1 m quadrats. We recorded the percent cover of each plant species, total plant cover, litter cover, and bare ground, and counted the number of stems of each species rooted within the quadrat. Percent cover was visually estimated and estimates were calibrated among observers to ensure consistency. We measured the three tallest heights of woody species and the three tallest heights of non-woody species rooted within each quadrat. Heights were measured from the mineral soil surface. Three measurements of litter depth were taken in each quadrat from the top of the litter level to the mineral soil surface. The 25 cm quadrats were placed adjacent to each 1 m quadrat in an area representative of the conditions in the larger qudrat, and we collected vegetation and litter in order to estimate biomass for the plot. All above-ground fine vegetation and litter within the 25 cm quadrat were collected into separate bags. Samples were weighed at the end of the day to estimate fresh weights, then were returned to the BARS at UF, placed in a 60ºC drying oven for at least 72 hours, and then weighed to obtain dry weights. The difference between fresh weight and dry weight was used to estimate moisture content of litter and standing biomass. 
 
-![Figure 3. Sampling 1 m and 25 cm quadrats](pictures/harvestatblanding.jpeg)
+![](pictures/harvestatblanding.jpeg)
 
+**Figure 5.** Sampling 1 m and 25 cm quadrats.
 
 ### Tick sampling
-We primarily collected ticks using CO~2~ traps placed in each plot for 24 hours. Tick traps were constructed by mounting 5-quart hard-sided coolers (Igloo, Katy, TX) onto the center of 0.635 cm (0.25 inch) thick plywood pieces cut to 35 cm x 28 cm. There was approximately 7.6 cm between the edge of the plywood and all sides of the cooler. Two 0.48 cm (3/16 inch) holes were drilled through each side of the cooler just above the bottom of the interior. Strips of double-sided carpet tape (DF 545, ShurTape, Hickory, NC) measuring 4.77 cm (1.88 in) wide were attached to the plywood surface surrounding the cooler. Each trap was baited with 1.5 kg of dry ice, which sublimated out through the holes drilled in the coolers. A rain cover made from corrugated plastic roofing cut to cover the entire footprint of the trap was attached to the top of each cooler by drilling a 0.48 cm hole through the center of the cooler lid and securing the roofing using a bolt and a wing-nut.
+We primarily collected ticks using CO~2~ traps placed in each plot for 24 hours. Tick traps were constructed by mounting 5-quart hard-sided coolers (Igloo, Katy, TX) onto the center of 0.635 cm (0.25 inch) thick plywood pieces cut to 35 cm x 28 cm. There was approximately 7.6 cm between the edge of the plywood and all sides of the cooler. Two 0.48 cm (3/16 inch) holes were drilled through each side of the cooler just above the bottom of the interior. Strips of double-sided carpet tape (DF 545, ShurTape, Hickory, NC) measuring 4.77 cm (1.88 in) wide were attached to the plywood surface surrounding the cooler. Each trap was baited with 1.5 kg of dry ice, which sublimated out through the holes drilled in the coolers. The CO~2~ from the sublimating dry ice attracts nearby ticks to the trap. A rain cover, to protect the tape, was made from corrugated plastic roofing cut to cover the entire footprint of the trap was attached to the top of each cooler by drilling a 0.48 cm hole through the center of the cooler lid and securing the roofing using a bolt and a wing-nut (Figure 6).
 
-![Figure 4. Tick trap](pictures/Drew-tick-trap-2017-06-09_09-48-07_256-WD.jpeg)
+![](pictures/Drew-tick-trap-2017-06-09_09-48-07_256-WD.jpeg)
 
-To ensure that the ticks attracted by the traps but not stuck to the tape, were collected we dragged a 1 m x 1 m white canvas cloth across the area directly below each trap three times. Ticks were also collected off of personnel and were assigned a plot, burn unit, or installation depending on the confidence in where the encounter occurred. Ticks collected on traps were counted and removed from the tape using tweezers, placed in 2 mL vials (Corning 430659) with 70% ethanol, and transported to the Flory Lab at the University of Florida where they were identified, sorted, and counted by species, life stage, and sex. Sorted ticks were then shipped to the Allan Lab at the University of Illinois where they underwent a second round of identification and sorting, and were subsampled for pathogen analysis.
+**Figure 6.** Tick trap being deployed.
+
+To ensure that we colelcted ticks attracted by the traps but not stuck to the tape, we dragged a 1 m x 1 m white canvas cloth across the area directly below each trap three times. Ticks were also collected off of personnel and were assigned a plot, burn unit, or installation depending on the confidence in where the encounter occurred. Ticks collected on traps were counted and removed from the tape using tweezers, placed in 2 mL vials (Corning 430659) with 70% ethanol, and transported to the Flory Lab at the University of Florida where they were identified, sorted, and counted by species, life stage, and sex. Sorted ticks were then shipped to the Allan Lab at the University of Illinois where they underwent a second round of identification and sorting, and were subsampled for pathogen analysis.
 
 ### Estimating host density
-We conducted host-dung surveys along each 50 m transect to estimate abundance of tick hosts near the plot area. Observed dung clusters of host species (e.g. white-tailed deer, *Odocoileus virginianus*) were tallied within 0 to 1 m of the transect line, totaling 400 m^2^ of surveyed area. Species were identified by dung characteristics.
+We conducted host-dung surveys along each 50 m transect to estimate abundance of tick hosts near the plot area. Observed dung clusters of host species (e.g. white-tailed deer, *Odocoileus virginianus*) were tallied within 0 to 1 m of the transect line, totaling 400 m^2^ of surveyed area. Species were identified by dung characteristics (Figure 7).
 
-![Figure X. Dung survey]
+![](pictures/dung_transect_id.png)
+
+**Figure 7.** Tick-hosts dung survey and identification. (a) Field technician Elena Meyer surveying for tick-host dung, (b) turkey dung, (c) deer dung, (d) rabbit dung.
 
 ##### Page Break
 
@@ -164,7 +179,7 @@ max_yrs_since_fire <- max(plot_visit_data_noNA$years_since_fire)
 
 ```
 
-We established `r total_plots` total plots at `r num_installations` DoD installations across the southeast US. Of the `r total_plots` only `r invaded_plots` were invaded (Figure 5a). Fire history varied across the plots, ranging from 0 to `r max_yrs_since_fire` since the last fire (Figure 5b). The small number of cogongrass-invaded plots was due to a high level of awareness and recognition of cogongrass as a problematic species, and diligent management practices that quickly eradicate identified invasions. 
+We established `r total_plots` total plots at `r num_installations` DoD installations across the southeast US. Of the `r total_plots` only `r invaded_plots` were invaded (Figure 8a). Fire history varied across the plots, ranging from 0 to `r max_yrs_since_fire` years since the last fire (Figure 8b). The small number of cogongrass-invaded plots was due to a high level of awareness and recognition of cogongrass as a problematic species, and diligent management practices that quickly eradicate identified invasions. 
 
 ```{r summary of plots visited across installations}
 
@@ -221,7 +236,7 @@ fire_plot_nums <- plot_visit_data %>%
 
 ```
 
-**Figure 5.** Number of plots established. (a) Number of plots established at each of the DoD installations. (b) Number of plots established in each time since fire. The color shading indicates whether or not plots were in a cogongrass invasion - light blue is uninvadeda nd red is invaded.
+**Figure 8.** Number of plots established. (a) Number of plots established at each of the DoD installations. (b) Number of plots established in each time since fire. The color shading indicates whether or not plots were in a cogongrass invasion - light blue is uninvadeda nd red is invaded.
 
 ## Trees and shrubs
 ```{r load tree data, results='hide'}
@@ -278,9 +293,7 @@ tree_data_plot_summary <- left_join(
 
 ```
 
-We recorded `r n_distinct(tree_data$tree_id)` tree and shrub species. The vast majority of the `r nrow(tree_data)` trees recorded were in either the *Pinus* (pine) or *Quercus* (oak) genus, with pine smaking up more than 50% of all trees recorded (Figure 6). Overall, tree diversity, quantified as species richness (the number of species), tended to be greater in uninvaded plots, and, regardless of invasion, higher with longer time since fire (Figure 7). Shrub and sapling density (stems over one meter tall but less than 3 cm DBH) measured in the center subplot ranged widely, but most plots had fewer than 40 stems per 100 m^2^ (Figure 8).
-
-![Figure XX. Stem map example](stem_maps/eglin b1.png)
+We recorded `r n_distinct(tree_data$tree_id)` different tree and shrub species. The vast majority of the `r nrow(tree_data)` trees recorded were in either the *Pinus* (pine) or *Quercus* (oak) genus, with pine smaking up more than 50% of all trees recorded (Figure 9). Overall, tree diversity, quantified as species richness (the number of species), tended to be greater in uninvaded plots, and, regardless of invasion, higher with longer time since fire (Figure 10). Shrub and sapling density (stems over one meter tall but less than 3 cm DBH) measured in the center subplot ranged widely, but most plots had fewer than 40 stems per 100 m^2^ (Figure 12). Recording the location of each tree (distance and azimuth from plot center) enabled generating stem maps for each plot (e.g, Figure 13). Stem maps were included in reports sent to each installation, and can be used to help relocate individual trees for future data collection.
 
 
 ```{r trees by installation}
@@ -306,7 +319,7 @@ ggplot(tree_data %>%
 
 ```
 
-**Figure 6.** Number of trees recorded at each installation. The majority of trees belonged to the *Pinus* or *Quercus* genus.
+**Figure 9.** Number of trees recorded at each installation. The majority of trees belonged to the *Pinus* or *Quercus* genus.
 
 
 ```{r tree richness figure}
@@ -332,7 +345,7 @@ ggplot(tree_data %>%
 
 ```
 
-**Figure 7.** Tree diversity versus time since fire in invaded and uninvaded plots. Points are jittered horizontally to reduce overlap.
+**Figure 10.** Tree diversity versus time since fire in invaded and uninvaded plots. Points are jittered horizontally to reduce overlap.
 
 
 ```{r subplot figure}
@@ -372,7 +385,10 @@ subplot_plot_summary <- subplot_data %>%
 
 ```
 
-**Figure 8.** Shrub and sapling density. Points are jittered horizontally to reduce overlap.
+**Figure 12.** Shrub and sapling density. Points are jittered horizontally to reduce overlap.
+
+![](stem_maps/eglin b1.png)
+**Figure 13.** Stem map for Eglin AFB plot B1.
 
 
 ## Understory herbaceous cover and species
@@ -470,7 +486,7 @@ biomass_plot_summary <- biomass_data %>%
 
 ```
 
-Percent cover of understory herbaceous vegetation measured at the 1 m^2^ quadrats tended to be lower with longer time since fire in the uninvaded plots, and higher with longer time since fire in the handful of cogongrass-invaded plots (Figure 9). The biomass of standing understory vegetation showed the same pattern as percent cover, but also ranged widely from 6 to over 1600 g m^-2^ (Figure 10). 
+Percent cover of understory herbaceous vegetation measured at the 1 m^2^ quadrats tended to be lower with longer time since fire in the uninvaded plots, and higher with longer time since fire in the handful of cogongrass-invaded plots (Figure 14a). The biomass of standing understory vegetation showed the same pattern as percent cover, but also ranged widely from 6 to over 1600 g m^-2^ (Figure 14b). 
 
 ```{r veg cover and mass fig}
 
@@ -517,9 +533,9 @@ plot_grid(
 
 ```
 
-**Figure 9.** Understory herbaceous vegetation. (a) Percent cover versus time since fire and (b) dried mass versus time since fire. The light blue points and line are univaded plots and red points and line are invaded plots.
+**Figure 14.** Understory herbaceous vegetation. (a) Percent cover versus time since fire and (b) dried mass versus time since fire. The light blue points and line are univaded plots and red points and line are invaded plots.
 
-Cogongrass-invaded plots didn't have significantly different herbaceous understory diversity (Figure 11a), which is likely in part due to the relatively small sizes of invasions that we encountered. Most invasions did not cover the entire plot area, often resulting in two or three of the 1 m^2^ quadrats located in a area with little cogongrass cover. The variation in species richness decreased with increasing time since fire, changing most dramatically from three to four years since fire (Figure 11b). 
+Cogongrass-invaded plots didn't have significantly different herbaceous understory diversity (Figure 15a), which is likely in part due to the relatively small sizes of invasions that we encountered. Most invasions did not cover the entire plot area, often resulting in two or three of the 1 m^2^ quadrats located in a area with little cogongrass cover. The variation in species richness decreased with increasing time since fire, changing most dramatically from three to four years since fire (Figure 15b). 
 
 ```{r plot richness fig}
 
@@ -572,18 +588,19 @@ plot_grid(
 
 ```
 
-**Figure 10.** Understory species diversity. (a) Species richness versus time since fire. (b) Box-plots of species richness illustrating that plots burned further in the past have lower variation in species richness. Open circles are the data points.
+**Figure 15.** Understory species diversity. (a) Species richness versus time since fire. (b) Box-plots of species richness illustrating that plots burned further in the past have lower variation in species richness. Open circles are the data points.
 
 
 ## iNaturalist project
 
-We started an [iNaturalist project](https://www.inaturalist.org/projects/serdp-species) to develop a publicly available record of plant species we identified at DoD installations as part of this project. iNaturalist is a digital platform available via iOS, Android, and a website where professional and casual scientists and naturalists from around the world can upload observations of plants, animals, and fungi, and offer or seek help in species identification. An observation is tagged as "Research Grade" when identification has been supported by at least two members of the community, the observation was in the wild, and it includes a relatively accurate location and date. Research grade observations can be used for research and included in other websites, such as the Global Biodiversity Information Facility [GBIF](https://www.gbif.org/). During our field surveys, we identified over 270 species and currently 50% of these have been designated research grade. In the cases of rare species, such as pitcher plants, we either excluded coordinates or included coordinates that were imprecise (fuzzed approximately 1500 m) using functionality built into iNaturalist.
+We started an [iNaturalist project](https://www.inaturalist.org/projects/serdp-species) to develop a publicly available record of plant species we identified at DoD installations as part of this project (Figure 16). iNaturalist is a digital platform available via iOS, Android, and a website where professional and casual scientists and naturalists from around the world can upload observations of plants, animals, and fungi, and offer or seek help in species identification. An observation is tagged as "Research Grade" when identification has been supported by at least two members of the community, the observation was in the wild, and it includes a relatively accurate location and date. Research grade observations can be used for research and included in other websites, such as the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org/)). During our field surveys, we identified over 270 species and currently 50% of these have been designated research grade. In the cases of rare species, such as pitcher plants, we either excluded coordinates or included coordinates that were imprecise (fuzzed approximately 1500 m) using functionality built into the iNaturalist application.
 
-![iNaturalist SERDP project]()
+![](pictures/iNaturalist_pic.png)
+**Figure 16.** iNaturalist SERDP project
 
 ## Litter cover, mass, and moisture content
 
-Measurements of litter mass, percent cover, and moisture tended to increase with time since last fire, while only percent cover showed a significant difference in cogongrass-invaded versus uninvaded plots (Figure 11). Litter biomass tended to be a little higher in uninvaded plots, though not significantly (Figure 11a). Percent litter cover rapidly recovered following fires, reaching >50% within two years after fire for most uninvaded plots (Figure 11b). Litter moisture is depends on the prevailing weather conditions, so these results must be interpreted within the context of our sampling time in the southeastern U.S. (June - October). Litter moisture was predominantly <50% across all samples (Figure 11c).
+Measurements of litter mass, percent cover, and moisture tended to increase with time since last fire, while only percent cover showed a significant difference in cogongrass-invaded versus uninvaded plots (Figure 17). Litter biomass tended to be a little higher in uninvaded plots, though not significantly (Figure 17a). Percent litter cover rapidly recovered following fires, reaching >50% within two years after fire for most uninvaded plots (Figure 17b). Litter moisture is depends on the prevailing weather conditions, so these results must be interpreted within the context of our sampling time in the southeastern U.S. (June - October). Litter moisture was predominantly <50% across all samples (Figure 17c).
 
 ```{r pct litter fig}
 
@@ -657,12 +674,12 @@ plot_grid(
 
 ```
 
-**Figure 11.** Litter conditions versus time since fire for (a) percent cover, (b) dry mass, and (c) percent moisture. The light blue color is for uninvaded plots and red is for cogongrass-invaded plots.
+**Figure 17.** Litter conditions versus time since fire for (a) percent cover, (b) dry mass, and (c) percent moisture. The light blue color is for uninvaded plots and red is for cogongrass-invaded plots.
 
 
 ## Host abundances
 
-We identified eight tick host species during dung surveys across all installations. White-tailed deer and eastern cottontail rabbit were typically the most abundant host species at each installation (Figure 12). At Avon Park AFR, cow dung made up a substantial amount of dung encountered due to domestic cattle grazing leases, illustrating the mutli-use character of this installation. Wild turkey (*Meleagris gallopavo*) made notable contribution to host density at Camp Blanding and Eglin AFB during 2018 surveys. Total host densities did not significantly differ between cogongrass-invaded and uninvaded areas, nor with time since last fire (Figure 13).
+We identified eight tick host species during dung surveys across all installations. White-tailed deer (*Odocoileus virginianus*) and eastern cottontail rabbit (*Sylvilagus floridanus*) were typically the most abundant host species at each installation (Figure 18). At Avon Park AFR, cow dung made up a substantial amount of dung encountered due to domestic cattle grazing leases, illustrating the mutli-use character of this installation. Wild turkey (*Meleagris gallopavo*) made notable contribution to host density at Camp Blanding and Eglin AFB during 2018 surveys. Total host densities did not significantly differ between cogongrass-invaded and uninvaded areas, nor with time since last fire (Figure 19).
 
 ```{r dung data, results='hide'}
 
@@ -719,7 +736,7 @@ summary(dung_plot_data)
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-species.png", height=7.5, width = 7.5)
 ```
 
-**Figure 12.** Evidence of host species densities at each installation (dung clusters 400 m^-2^). Note that the y-axis has different scales in each panel. Zeroes (no bars) are installations that weren't visited during that year.
+**Figure 18.** Evidence of host species densities at each installation (dung clusters 400 m^-2^). Note that the y-axis has different scales in each panel. Zeroes (no bars) are installations that weren't visited during that year.
 
 ```{r dung density vs time since fire}
 
@@ -743,16 +760,16 @@ dung_species <- c("deer", "cottontail", "turkey", "cow")
 
 ```
 
-**Figure 13.** Host densities vs. time since fire in cogongrass-invaded and uninvaded plots. Blue indicates uninvaded plots and read indicates cogongrass-invaded plots.
+**Figure 19.** Host densities vs. time since fire in cogongrass-invaded and uninvaded plots. Blue indicates uninvaded plots and read indicates cogongrass-invaded plots.
 
 
 ## Tick abundances
 
-We collected four different tick species across all installations (Figure 14). The majority of ticks collected were in the nymph life stage during both sample seasons (Figure 15a) and belonged to the target species, *Amblyomma americanum* (Figure 15b). The small number of invaded areas had few ticks (Figure 15). The majority of ticks collected in 2017 were from Camp Blanding, FL and Eglin AFB, FL, while in 2018 most ticks collected were from Camp Blanding, FL, Fort Gordon, GA, and Tyndall AFB, FL (Figure 16). Tick abundances tended to increase with time since fire (Figure 17), indicating that tick abundance is reduced by prescribed fire management across these installations. 
+We collected four different tick species across all installations (Figure 20). The majority of ticks collected were in the nymph life stage during both sample seasons (Figure 21a) and belonged to the target species, *Amblyomma americanum* (Figure 21b). The small number of invaded areas had few ticks (Figure 21). The majority of ticks collected in 2017 were from Camp Blanding, FL and Eglin AFB, FL, while in 2018 most ticks collected were from Camp Blanding, FL, Fort Gordon, GA, and Tyndall AFB, FL (Figure 22). Tick abundances tended to increase with time since fire (Figure 23), indicating that tick abundance is reduced by prescribed fire management across these installations. 
 
 ![](figures/four_tick_species.png)
 
-**Figure 14.** The four commonly collected tick species. (a) *Amblyomma americanum* (Lone star tick), (b) De. var: *Dermacentor variablis* (American dog tick), (c) Am. mac: *Amblyomma maculatum*, (d) Rh. san: *Rhipicephalus sanguineus* (brown dog tick).
+**Figure 20.** The four commonly collected tick species. (a) *Amblyomma americanum* (Lone star tick), (b) De. var: *Dermacentor variablis* (American dog tick), (c) Am. mac: *Amblyomma maculatum*, (d) Rh. san: *Rhipicephalus sanguineus* (brown dog tick).
 
 ```{r tick data QC, results='hide'}
 
@@ -814,7 +831,7 @@ ncol = 1, labels = "auto"
 
 ```
 
-**Figure 15.** Tick abundances grouped by (a) life stage and (b) species in each sample year. Am. am: *Amblyomma americanum*, Am. mac: *Amblyomma maculatum*, De. var: *Dermacentor variablis*, Rh. san: *Rhipicephalus sanguineus*. Blue indicates uninvaded and red indicates cogongrass-invaded.
+**Figure 21.** Tick abundances grouped by (a) life stage and (b) species in each sample year. Am. am: *Amblyomma americanum*, Am. mac: *Amblyomma maculatum*, De. var: *Dermacentor variablis*, Rh. san: *Rhipicephalus sanguineus*. Blue indicates uninvaded and red indicates cogongrass-invaded.
 
 
 ```{r tick abundance by installation fig}
@@ -835,7 +852,7 @@ ggplot(tick_data_sum, aes(inst_name, total_ticks, fill = imcy_inv)) +
 
 ```
 
-**Figure 16.** Tick abundances at each installation for each sample year. Blue indicates uninvaded and red indicates cogongrass-invaded.
+**Figure 22.** Tick abundances at each installation for each sample year. Blue indicates uninvaded and red indicates cogongrass-invaded.
 
 
 ```{r tick abundance vs fire}
@@ -857,4 +874,4 @@ ggplot(tick_data_sum, aes(inst_name, total_ticks, fill = imcy_inv)) +
 
 ```
 
-**Figure 17.** Natural-log transformed tick abundance and time since fire for cogongrass-invaded and uninvaded plots.
+**Figure 23.** Natural-log transformed tick abundance and time since fire for cogongrass-invaded and uninvaded plots.
