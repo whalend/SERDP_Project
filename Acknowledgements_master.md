@@ -10,4 +10,11 @@ Pathogen analysis: L. Page Fredericks
 
 Research technician: Steven Cabrera
 
-Field technicians: Elena Meyer, Elizabeth White, Manuel ("Manny") Perez, Christina Harden, Alison Ochs, Tyler Hedlund
+Field technicians: 
+Taylor Clark,
+Christina Harden, 
+Tyler Hedlund, 
+Elena Meyer, 
+Alison Ochs, 
+Manuel "Manny" Perez, 
+Elizabeth White
