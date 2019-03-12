@@ -4,11 +4,11 @@ subtitle: "RC-2636"
 author: ""
 date: "`r Sys.Date()`"
 output: 
+  html_document:
+        toc: yes
   word_document:
         toc: yes
         reference_docx: interim-report-stylingbreaks1.docx
-  html_document:
-        toc: yes
 bibliography: 
       - knitcitations.bib
       - serdp_references.bib
@@ -293,7 +293,7 @@ tree_data_plot_summary <- left_join(
 
 ```
 
-We recorded `r n_distinct(tree_data$tree_id)` different tree and shrub species. The vast majority of the `r nrow(tree_data)` trees recorded were in either the *Pinus* (pine) or *Quercus* (oak) genus, with pine smaking up more than 50% of all trees recorded (Figure 9). Overall, tree diversity, quantified as species richness (the number of species), tended to be greater in uninvaded plots, and, regardless of invasion, higher with longer time since fire (Figure 10). Shrub and sapling density (stems over one meter tall but less than 3 cm DBH) measured in the center subplot ranged widely, but most plots had fewer than 40 stems per 100 m^2^ (Figure 12). Recording the location of each tree (distance and azimuth from plot center) enabled generating stem maps for each plot (e.g, Figure 13). Stem maps were included in reports sent to each installation, and can be used to help relocate individual trees for future data collection.
+We recorded `r n_distinct(tree_data$tree_id)` different tree and shrub species. The vast majority of the `r nrow(tree_data)` trees recorded were in either the *Pinus* (pine) or *Quercus* (oak) genus, with pine smaking up more than 50% of all trees recorded (Figure 9). Overall, tree diversity, quantified as species richness (the number of species), tended to be greater in uninvaded plots, and, regardless of invasion, higher with longer time since fire (Figure 10a). Shrub and sapling density (stems over one meter tall but less than 3 cm DBH) measured in the center subplot ranged widely, but most plots had fewer than 40 stems per 100 m^2^ (Figure 10b). Recording the location of each tree (distance and azimuth from plot center) enabled generating stem maps for each plot (e.g, Figure 11). Stem maps were included in reports sent to each installation, and can be used to help relocate individual trees for future data collection.
 
 
 ```{r trees by installation}
@@ -324,7 +324,7 @@ ggplot(tree_data %>%
 
 ```{r tree richness figure}
 
-(tree_richness_fig <- ggplot(tree_data_plot_summary, 
+tree_richness_fig <- ggplot(tree_data_plot_summary, 
        aes(years_since_fire, richness, color = imcy_inv)) +
       # stat_summary(fun.data = "mean_se", geom = "pointrange", size = 1) +
       geom_point(position = position_jitter(width = .1), size = 2) +
@@ -335,18 +335,15 @@ ggplot(tree_data %>%
        scale_y_continuous(limits = c(0,9.5), breaks = c(0,2,4,6,8)) +
       theme_classic() +
       def_theme +
-      ylab("Richness") +
+      ylab("Tree richness") +
       xlab("Years since fire") +
       # ggtitle("Tree diversity vs. time since fire") +
       NULL
-)
+
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-richness-by-fire.png", height=7.5, width = 7.5)
 
 ```
-
-**Figure 10.** Tree diversity versus time since fire in invaded and uninvaded plots. Points are jittered horizontally to reduce overlap.
-
 
 ```{r subplot figure}
 subplot_data_import <- read_csv("data/processed_data/woodysubplot.csv")
@@ -363,9 +360,9 @@ subplot_plot_summary <- subplot_data %>%
                 total_stems_100m2 = sum(stems_100m2))
 
 
-(shrub_saplings_fig <- ggplot(
+shrub_saplings_fig <- ggplot(
       filter(subplot_plot_summary, between(total_stems_100m2,0,500)),
-      aes(years_since_fire, total_stems_100m2, color = imcy_inv)) +
+      aes(years_since_fire, total_stems_100m2/100, color = imcy_inv)) +
       geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .1)) +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm", show.legend = F) +
             # geom_hline(yintercept = 40) +
@@ -376,19 +373,34 @@ subplot_plot_summary <- subplot_data %>%
       def_theme +
       # theme(legend.position = c(.85,.95)) +
       xlab("Years since fire") +
-      ylab(expression(paste("Shrub/sapling stem density (100 ", {m}^-2,") "))) +
+      ylab(expression(paste("Shrub/sapling stem density (", {m}^-2,") "))) +
       ggtitle("") +
       NULL
-)
+
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/subplot_density.png", height=7.5, width = 7.5)
 
 ```
 
-**Figure 12.** Shrub and sapling density. Points are jittered horizontally to reduce overlap.
+```{r tree richness and subplot figure}
+
+plot_grid(
+      tree_richness_fig +
+            xlab("") +
+            theme(legend.position = "none"),
+      shrub_saplings_fig +
+            theme(legend.position = c(.85,.85),
+            legend.background = element_rect(color = "black")),
+      ncol = 1
+)
+
+```
+
+
+**Figure 10.** Tree species richness (a) and shrub and sapling density (b) plotted against time since fire in cogongrass invaded (red) and uninvaded (blue) plots. Points are jittered horizontally to reduce overlap.
 
 ![](stem_maps/eglin b1.png)
-**Figure 13.** Stem map for Eglin AFB plot B1.
+**Figure 11.** Stem map for Eglin AFB plot B1.
 
 
 ## Understory herbaceous cover and species
@@ -486,7 +498,7 @@ biomass_plot_summary <- biomass_data %>%
 
 ```
 
-Percent cover of understory herbaceous vegetation measured at the 1 m^2^ quadrats tended to be lower with longer time since fire in the uninvaded plots, and higher with longer time since fire in the handful of cogongrass-invaded plots (Figure 14a). The biomass of standing understory vegetation showed the same pattern as percent cover, but also ranged widely from 6 to over 1600 g m^-2^ (Figure 14b). 
+Percent cover of understory herbaceous vegetation measured at the 1 m^2^ quadrats tended to be lower with longer time since fire in the uninvaded plots, and higher with longer time since fire in the handful of cogongrass-invaded plots (Figure 12a). The biomass of standing understory vegetation showed the same pattern as percent cover, but also ranged widely from 6 to over 1600 g m^-2^ (Figure 12b). 
 
 ```{r veg cover and mass fig}
 
@@ -533,9 +545,9 @@ plot_grid(
 
 ```
 
-**Figure 14.** Understory herbaceous vegetation. (a) Percent cover versus time since fire and (b) dried mass versus time since fire. The light blue points and line are univaded plots and red points and line are invaded plots.
+**Figure 12.** Understory herbaceous vegetation. (a) Percent cover versus time since fire and (b) dried mass versus time since fire. The light blue points and line are univaded plots and red points and line are invaded plots.
 
-Cogongrass-invaded plots didn't have significantly different herbaceous understory diversity (Figure 15a), which is likely in part due to the relatively small sizes of invasions that we encountered. Most invasions did not cover the entire plot area, often resulting in two or three of the 1 m^2^ quadrats located in a area with little cogongrass cover. The variation in species richness decreased with increasing time since fire, changing most dramatically from three to four years since fire (Figure 15b). 
+Cogongrass-invaded plots didn't have significantly different herbaceous understory diversity (Figure 13a), which is likely in part due to the relatively small sizes of invasions that we encountered. Most invasions did not cover the entire plot area, often resulting in two or three of the 1 m^2^ quadrats located in a area with little cogongrass cover. The variation in species richness decreased with increasing time since fire, changing most dramatically from three to four years since fire (Figure 13b). 
 
 ```{r plot richness fig}
 
@@ -580,7 +592,8 @@ plot_grid(
       plot_richness_fig +
             xlab("") + 
             theme(axis.text.x = element_blank(),
-                  axis.ticks.x = element_blank()),
+                  axis.ticks.x = element_blank(),
+                  legend.background = element_rect(color = "black")),
       richness_box_plot +
             theme(legend.position = "none"),
       labels = "auto", ncol = 1
@@ -588,21 +601,21 @@ plot_grid(
 
 ```
 
-**Figure 15.** Understory species diversity. (a) Species richness versus time since fire. (b) Box-plots of species richness illustrating that plots burned further in the past have lower variation in species richness. Open circles are the data points.
+**Figure 13.** Understory species diversity. (a) Species richness versus time since fire. (b) Box-plots of species richness illustrating that plots burned further in the past have lower variation in species richness. Open circles are the data points.
 
 
 ## iNaturalist project
 
-We started an [iNaturalist project](https://www.inaturalist.org/projects/serdp-species) to develop a publicly available record of plant species we identified at DoD installations as part of this project (Figure 16). iNaturalist is a digital platform available via iOS, Android, and a website where professional and casual scientists and naturalists from around the world can upload observations of plants, animals, and fungi, and offer or seek help in species identification. An observation is tagged as "Research Grade" when identification has been supported by at least two members of the community, the observation was in the wild, and it includes a relatively accurate location and date. Research grade observations can be used for research and included in other websites, such as the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org/)). During our field surveys, we identified over 270 species and currently 50% of these have been designated research grade. In the cases of rare species, such as pitcher plants, we either excluded coordinates or included coordinates that were imprecise (fuzzed approximately 1500 m) using functionality built into the iNaturalist application.
+We started an [iNaturalist project](https://www.inaturalist.org/projects/serdp-species) to develop a publicly available record of plant species we identified at DoD installations as part of this project (Figure 14). iNaturalist is a digital platform available via iOS, Android, and a website where scientists and naturalists with all levels of experience from around the world can upload observations of plants, animals, and fungi, and offer or seek help in species identification. An observation is tagged as "Research Grade" when identification has been supported by at least two members of the community, the observation was in the wild, and it includes a relatively accurate location and date. Research grade observations can be used for research and included in other websites, such as the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org/)). During our field surveys, we identified over 270 species and currently 50% of these have been designated research grade. In the cases of rare species, such as pitcher plants, we either excluded coordinates or included coordinates that were imprecise (fuzzed approximately 1500 m) using functionality built into the iNaturalist application.
 
 ![](pictures/iNaturalist_pic.png)
-**Figure 16.** iNaturalist SERDP project
+**Figure 14.** iNaturalist SERDP project
 
 ## Litter cover, mass, and moisture content
 
-Measurements of litter mass, percent cover, and moisture tended to increase with time since last fire, while only percent cover showed a significant difference in cogongrass-invaded versus uninvaded plots (Figure 17). Litter biomass tended to be a little higher in uninvaded plots, though not significantly (Figure 17a). Percent litter cover rapidly recovered following fires, reaching >50% within two years after fire for most uninvaded plots (Figure 17b). Litter moisture is depends on the prevailing weather conditions, so these results must be interpreted within the context of our sampling time in the southeastern U.S. (June - October). Litter moisture was predominantly <50% across all samples (Figure 17c).
+Measurements of litter mass, percent cover, and moisture tended to increase with time since last fire, while only percent cover showed a significant difference in cogongrass-invaded versus uninvaded plots (Figure 15). Litter biomass tended to be a little higher in uninvaded plots, though not significantly (Figure 15a). Percent litter cover rapidly recovered following fires, reaching >50% within two years after fire for most uninvaded plots (Figure 15b). Litter moisture is depends on the prevailing weather conditions, so these results must be interpreted within the context of our sampling time in the southeastern U.S. (June - October). Litter moisture was predominantly <50% across all samples (Figure 15c).
 
-```{r pct litter fig}
+```{r pct litter fig, fig.height=8}
 
 pct_litter_fig <- ggplot(quadrat10_summaries, aes(years_since_fire, avg_pct_litter)) +
       geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .1)) +
@@ -674,12 +687,12 @@ plot_grid(
 
 ```
 
-**Figure 17.** Litter conditions versus time since fire for (a) percent cover, (b) dry mass, and (c) percent moisture. The light blue color is for uninvaded plots and red is for cogongrass-invaded plots.
+**Figure 15.** Litter conditions versus time since fire for (a) percent cover, (b) dry mass, and (c) percent moisture. The light blue color is for uninvaded plots and red is for cogongrass-invaded plots.
 
 
 ## Host abundances
 
-We identified eight tick host species during dung surveys across all installations. White-tailed deer (*Odocoileus virginianus*) and eastern cottontail rabbit (*Sylvilagus floridanus*) were typically the most abundant host species at each installation (Figure 18). At Avon Park AFR, cow dung made up a substantial amount of dung encountered due to domestic cattle grazing leases, illustrating the mutli-use character of this installation. Wild turkey (*Meleagris gallopavo*) made notable contribution to host density at Camp Blanding and Eglin AFB during 2018 surveys. Total host densities did not significantly differ between cogongrass-invaded and uninvaded areas, nor with time since last fire (Figure 19).
+We identified eight tick host species during dung surveys across all installations. White-tailed deer (*Odocoileus virginianus*) and eastern cottontail rabbit (*Sylvilagus floridanus*) were typically the most abundant host species at each installation (Figure 16). At Avon Park AFR, cow dung made up a substantial amount of dung encountered due to domestic cattle grazing leases, illustrating the mutli-use character of this installation. Wild turkey (*Meleagris gallopavo*) made notable contribution to host density at Camp Blanding and Eglin AFB during 2018 surveys. Total host densities did not significantly differ between cogongrass-invaded and uninvaded areas, nor with time since last fire (Figure 17).
 
 ```{r dung data, results='hide'}
 
@@ -736,7 +749,7 @@ dung_plot_data <- dung_data %>%
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/dung-species.png", height=7.5, width = 7.5)
 ```
 
-**Figure 18.** Evidence of host species densities at each installation (dung clusters 400 m^-2^). Note that the y-axis has different scales in each panel. Zeroes (no bars) are installations that weren't visited during that year.
+**Figure 16.** Evidence of host species densities at each installation (dung clusters 400 m^-2^). Note that the y-axis has different scales in each panel. Zeroes (no bars) are installations that weren't visited during that year.
 
 ```{r dung density vs time since fire}
 
@@ -760,16 +773,16 @@ dung_species <- c("deer", "cottontail", "turkey", "cow")
 
 ```
 
-**Figure 19.** Host densities vs. time since fire in cogongrass-invaded and uninvaded plots. Blue indicates uninvaded plots and read indicates cogongrass-invaded plots.
+**Figure 17.** Host densities vs. time since fire in cogongrass-invaded and uninvaded plots. Blue indicates uninvaded plots and read indicates cogongrass-invaded plots.
 
 
 ## Tick abundances
 
-We collected four different tick species across all installations (Figure 20). The majority of ticks collected were in the nymph life stage during both sample seasons (Figure 21a) and belonged to the target species, *Amblyomma americanum* (Figure 21b). The small number of invaded areas had few ticks (Figure 21). The majority of ticks collected in 2017 were from Camp Blanding, FL and Eglin AFB, FL, while in 2018 most ticks collected were from Camp Blanding, FL, Fort Gordon, GA, and Tyndall AFB, FL (Figure 22). Tick abundances tended to increase with time since fire (Figure 23), indicating that tick abundance is reduced by prescribed fire management across these installations. 
+We collected four different tick species across all installations (Figure 18). The majority of ticks collected were in the nymph life stage during both sample seasons (Figure 19a) and belonged to the target species, *Amblyomma americanum* (Figure 19b). The small number of invaded areas had few ticks (Figure 19). The majority of ticks collected in 2017 were from Camp Blanding, FL and Eglin AFB, FL, while in 2018 most ticks collected were from Camp Blanding, FL, Fort Gordon, GA, and Tyndall AFB, FL (Figure 20). Tick abundances tended to increase with time since fire (Figure 21), indicating that, in general, tick abundance is reduced by more recent prescribed fire management across these installations. 
 
 ![](figures/four_tick_species.png)
 
-**Figure 20.** The four commonly collected tick species. (a) *Amblyomma americanum* (Lone star tick), (b) De. var: *Dermacentor variablis* (American dog tick), (c) Am. mac: *Amblyomma maculatum*, (d) Rh. san: *Rhipicephalus sanguineus* (brown dog tick).
+**Figure 18.** The four commonly collected tick species. (a) *Amblyomma americanum* (Lone star tick), (b) De. var: *Dermacentor variablis* (American dog tick), (c) Am. mac: *Amblyomma maculatum*, (d) Rh. san: *Rhipicephalus sanguineus* (brown dog tick).
 
 ```{r tick data QC, results='hide'}
 
@@ -831,7 +844,7 @@ ncol = 1, labels = "auto"
 
 ```
 
-**Figure 21.** Tick abundances grouped by (a) life stage and (b) species in each sample year. Am. am: *Amblyomma americanum*, Am. mac: *Amblyomma maculatum*, De. var: *Dermacentor variablis*, Rh. san: *Rhipicephalus sanguineus*. Blue indicates uninvaded and red indicates cogongrass-invaded.
+**Figure 19.** Tick abundances grouped by (a) life stage and (b) species in each sample year. Am. am: *Amblyomma americanum*, Am. mac: *Amblyomma maculatum*, De. var: *Dermacentor variablis*, Rh. san: *Rhipicephalus sanguineus*. Blue indicates uninvaded and red indicates cogongrass-invaded.
 
 
 ```{r tick abundance by installation fig}
@@ -852,7 +865,7 @@ ggplot(tick_data_sum, aes(inst_name, total_ticks, fill = imcy_inv)) +
 
 ```
 
-**Figure 22.** Tick abundances at each installation for each sample year. Blue indicates uninvaded and red indicates cogongrass-invaded.
+**Figure 20.** Tick abundances at each installation for each sample year. Blue indicates uninvaded and red indicates cogongrass-invaded.
 
 
 ```{r tick abundance vs fire}
@@ -874,4 +887,29 @@ ggplot(tick_data_sum, aes(inst_name, total_ticks, fill = imcy_inv)) +
 
 ```
 
-**Figure 23.** Natural-log transformed tick abundance and time since fire for cogongrass-invaded and uninvaded plots.
+**Figure 21.** Natural-log transformed tick abundance and time since fire for cogongrass-invaded and uninvaded plots.
+
+
+```{r tick-hosts}
+
+(tick_host_fig1 <- ggplot(
+      filter(tick_data_sum, !is.na(imcy_inv)), 
+       aes(log1p(total_clusters2m), log1p(total_ticks), color = imcy_inv)) +
+      geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = FALSE) +
+      geom_point(aes(color = imcy_inv), position = position_jitter(width=.1), size = 2) +
+      invasion_color +
+      invasion_fill +
+      theme_classic() +
+      xlab("Dung (ln)") +
+      ylab("Tick abundance (ln)") +
+      def_theme +
+      theme(legend.position = c(.85,.85),
+            legend.background = element_rect(color = "black")
+            ) +
+      NULL
+)
+
+```
+
+**Figure 22.** Natural-log transformed tick abundance plotted against natural-log transformed counts of host dung in cogongrass-invaded (red) and uninvaded (blue) plots. A small amount of noise was added to the points to reduce overlap. 
+
