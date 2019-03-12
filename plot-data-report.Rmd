@@ -1659,10 +1659,10 @@ summary(tick_fire_model)
 Tick abundances may also be influenced by some of the other land uses that happen on DoD installations, such as cattle grazing, hunting, and most obviously training. Grazers may treat their cattle to reduce ectoparasite (e.g. ticks) loads and the pathogens they transmit. These treatments are often effective in deterring parasite attachment, killing parasites through contact, and can lower the production and viability of parasite eggs. For example, Avon Park AFR leases some areas for cattle grazing and we confirmed that some grazers used treatments that will reduce tick loads (e.g., moxidectin, Cydectin, Aguilar-Tipacamu & Rodriguez-Vivas 2003). 
 
 
-
 # Tick abundance vs. plot-level averages
 
 ## Understory vegetation cover
+
 ```{r tick-veg-cover}
 
 ggplot(tick_data_sum, 
@@ -1876,6 +1876,16 @@ summary(tick_canopy_mod)
 
 tick_canopy_mod2 <- lm(log1p(total_ticks) ~ avg_canopy_cover + avg_pct_litter + avg_pct_litter_moisture, data = tick_data_sum)
 summary(tick_canopy_mod2)
+
+tick_canopy_mod3 <- lm(log1p(total_ticks) ~ avg_canopy_cover + avg_dry_litter_gm2 + avg_pct_litter_moisture, data = tick_data_sum)
+summary(tick_canopy_mod3)
+
+mod.glm1 <- glm(total_ticks ~ avg_canopy_cover + avg_pct_litter + avg_pct_litter_moisture, data = tick_data_sum, family = "quasipoisson")
+summary(mod.glm1)
+
+mod.glm2 <- glm(total_ticks ~ avg_canopy_cover + avg_dry_litter_gm2 + avg_pct_litter_moisture, data = tick_data_sum, family="quasipoisson")
+summary(mod.glm2)
+
 
 # model plots ####
 ### require(sjPlot) in user's package library
