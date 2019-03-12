@@ -4,11 +4,11 @@ subtitle: "RC-2636"
 author: ""
 date: "`r Sys.Date()`"
 output: 
-  html_document:
-        toc: yes
   word_document:
         toc: yes
         reference_docx: interim-report-stylingbreaks1.docx
+  html_document:
+        toc: yes
 bibliography: 
       - knitcitations.bib
       - serdp_references.bib
@@ -558,7 +558,7 @@ species_richness <- species10_data %>%
       mutate(ln_richness = log(richness),
              max_richness = max(richness))
 
-plot_richness_fig <- ggplot(species_richness, aes(years_since_fire, richness, color = imcy_inv)) +
+plot_richness_fig <- ggplot(species_richness, aes(as.factor(years_since_fire), richness, color = imcy_inv)) +
       geom_smooth(show.legend = F, alpha = .2, aes(fill = imcy_inv), method = "lm") +
       geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .1)) +
       invasion_color +
@@ -568,7 +568,7 @@ plot_richness_fig <- ggplot(species_richness, aes(years_since_fire, richness, co
       ylab("Richness") +
       xlab("Years since fire") +
       # ggtitle("Plot understory species diversity") +
-      theme(legend.position = c(.85,.85)) +
+      theme(legend.position = c(.83,.85)) +
       NULL
 
 
@@ -592,8 +592,8 @@ plot_grid(
       plot_richness_fig +
             xlab("") + 
             theme(axis.text.x = element_blank(),
-                  axis.ticks.x = element_blank(),
-                  legend.background = element_rect(color = "black")),
+                  # axis.ticks.x = element_blank(),
+                  legend.background = element_rect(color = "black", fill = NA)),
       richness_box_plot +
             theme(legend.position = "none"),
       labels = "auto", ncol = 1
@@ -601,7 +601,7 @@ plot_grid(
 
 ```
 
-**Figure 13.** Understory species diversity. (a) Species richness versus time since fire. (b) Box-plots of species richness illustrating that plots burned further in the past have lower variation in species richness. Open circles are the data points.
+**Figure 13.** Understory species diversity. (a) Species richness versus time since fire with a small amount of noise added to the points to reduce overlap. (b) Box-plots of species richness illustrating that plots burned further in the past have lower variation in species richness. Open circles are the data points.
 
 
 ## iNaturalist project
@@ -687,7 +687,7 @@ plot_grid(
 
 ```
 
-**Figure 15.** Litter conditions versus time since fire for (a) percent cover, (b) dry mass, and (c) percent moisture. The light blue color is for uninvaded plots and red is for cogongrass-invaded plots.
+**Figure 15.** Litter conditions versus time since fire for (a) percent cover, (b) dry mass, and (c) percent moisture. The light blue color is for uninvaded plots and red is for cogongrass-invaded plots. A small amount of noise was added to the points to reduce overlap.
 
 
 ## Host abundances
@@ -757,13 +757,13 @@ dung_species <- c("deer", "cottontail", "turkey", "cow")
 (deer_dung_fig <- dung_plot_data #%>% filter(species %in% dung_species)
       %>% 
       ggplot(
-            aes(years_since_fire, log1p(total_clusters1m), color = imcy_inv)) +
+            aes(years_since_fire, log1p(total_clusters2m), color = imcy_inv)) +
             geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .1)) +
       invasion_fill +
       invasion_color +
       geom_smooth(aes(fill = imcy_inv), se = T, method = "lm", alpha = .2, show.legend = FALSE) +
       theme_classic() +
-      ylab("log( # of deer dung clusters )") +
+      ylab("Host dung (ln)") +
       xlab("Years since fire") +
       def_theme +
       theme(legend.position = c(.72,.89),
@@ -773,12 +773,12 @@ dung_species <- c("deer", "cottontail", "turkey", "cow")
 
 ```
 
-**Figure 17.** Host densities vs. time since fire in cogongrass-invaded and uninvaded plots. Blue indicates uninvaded plots and read indicates cogongrass-invaded plots.
+**Figure 17.** Host densities vs. time since fire in cogongrass-invaded and uninvaded plots. Blue indicates uninvaded plots and read indicates cogongrass-invaded plots. A small amount of noise was added to the points to reduce overlap. A constant of one was added to dung counts before log-transformation so that values of zero on the log-scale of the figure correspond to true zeroes in the original data.
 
 
 ## Tick abundances
 
-We collected four different tick species across all installations (Figure 18). The majority of ticks collected were in the nymph life stage during both sample seasons (Figure 19a) and belonged to the target species, *Amblyomma americanum* (Figure 19b). The small number of invaded areas had few ticks (Figure 19). The majority of ticks collected in 2017 were from Camp Blanding, FL and Eglin AFB, FL, while in 2018 most ticks collected were from Camp Blanding, FL, Fort Gordon, GA, and Tyndall AFB, FL (Figure 20). Tick abundances tended to increase with time since fire (Figure 21), indicating that, in general, tick abundance is reduced by more recent prescribed fire management across these installations. 
+We collected four different tick species across all installations (Figure 18). The majority of ticks collected were in the nymph life stage during both sample seasons (Figure 19a) and belonged to the target species, *Amblyomma americanum* (Figure 19b). The small number of invaded areas had few ticks (Figure 19). The majority of ticks collected in 2017 were from Camp Blanding, FL and Eglin AFB, FL, while in 2018 most ticks collected were from Camp Blanding, FL, Fort Gordon, GA, and Tyndall AFB, FL (Figure 20). Tick abundances tended to increase with time since fire (Figure 21), indicating that, in general, tick abundance is reduced by more recent prescribed fire management across these installations. Across all sampling, tick abundances were unrelated to host abundances (Figure 22), suggesting that abiotic factors may be stronger drivers of tick abundances in these landscapes. For example, more recently burned areas usually have hotter and drier microclimates, as well as less litter that can provide refuge (Figure 23), resulting in poor conditions for tick survival
 
 ![](figures/four_tick_species.png)
 
@@ -887,7 +887,7 @@ ggplot(tick_data_sum, aes(inst_name, total_ticks, fill = imcy_inv)) +
 
 ```
 
-**Figure 21.** Natural-log transformed tick abundance and time since fire for cogongrass-invaded and uninvaded plots.
+**Figure 21.** Natural-log transformed tick abundance and time since fire for cogongrass-invaded and uninvaded plots. A small amount of noise was added to the points to reduce overlap. A constant of one was added to tick abundance prior to the log-transformation so that values of zero on the log-scale correspond to true zeroes. 
 
 
 ```{r tick-hosts}
@@ -911,5 +911,28 @@ ggplot(tick_data_sum, aes(inst_name, total_ticks, fill = imcy_inv)) +
 
 ```
 
-**Figure 22.** Natural-log transformed tick abundance plotted against natural-log transformed counts of host dung in cogongrass-invaded (red) and uninvaded (blue) plots. A small amount of noise was added to the points to reduce overlap. 
+**Figure 22.** Natural-log transformed tick abundance plotted against natural-log transformed counts of host dung in cogongrass-invaded (red) and uninvaded (blue) plots. A small amount of noise was added to the points to reduce overlap. A constant of one was added to tick and host abundance values prior to the log-transformation so that values of zero on the log-scale correspond to true zeroes.
 
+
+```{r tick-litter-mass}
+
+(tick_litter_mass_fig <- ggplot(
+      filter(tick_data_sum, !is.na(imcy_inv)), 
+       aes(avg_dry_litter_gm2, log1p(total_ticks), color = imcy_inv)) +
+      geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2, method = "lm", show.legend = F) +
+      geom_point(aes(color = imcy_inv), size = 2) +
+      invasion_color +
+      invasion_fill +
+      theme_classic() +
+      xlab(expression(paste("Litter biomass (g ", m^{-2}, ")"))) +
+      ylab("Tick abundance (ln)") +
+      def_theme +
+      theme(legend.position = c(.85,.85),
+            legend.background = element_rect(color = "black")
+            ) +
+      NULL
+)
+
+```
+
+**Figure 23.** Natural-log transformed tick abundance and litter biomass in cogongrass-invaded (red) and uninvaded (blue) plots. A constant of one was added to tick abundance prior to the log-transformation so that values of zero on the log-scale correspond to true zeroes. 
