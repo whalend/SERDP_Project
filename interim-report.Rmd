@@ -4,11 +4,11 @@ subtitle: "RC-2636"
 author: ""
 date: "`r Sys.Date()`"
 output: 
+  html_document:
+        toc: yes
   word_document:
         toc: yes
         reference_docx: interim-report-stylingbreaks1.docx
-  html_document:
-        toc: yes
 bibliography: 
       - knitcitations.bib
       - serdp_references.bib
@@ -293,7 +293,7 @@ tree_data_plot_summary <- left_join(
 
 ```
 
-We recorded `r n_distinct(tree_data$tree_id)` different tree and shrub species. The vast majority of the `r nrow(tree_data)` trees recorded were in either the *Pinus* (pine) or *Quercus* (oak) genus, with pine smaking up more than 50% of all trees recorded (Figure 9). Overall, tree diversity, quantified as species richness (the number of species), tended to be greater in uninvaded plots, and, regardless of invasion, higher with longer time since fire (Figure 10a). Shrub and sapling density (stems over one meter tall but less than 3 cm DBH) measured in the center subplot ranged widely, but most plots had fewer than 40 stems per 100 m^2^ (Figure 10b). Recording the location of each tree (distance and azimuth from plot center) enabled generating stem maps for each plot (e.g, Figure 11). Stem maps were included in reports sent to each installation, and can be used to help relocate individual trees for future data collection.
+We recorded `r n_distinct(tree_data$tree_id)` different tree and shrub species. The vast majority of the `r nrow(tree_data)` trees recorded were in either the *Pinus* (pine) or *Quercus* (oak) genus, with pine smaking up more than 50% of all trees recorded (Figure 9). Overall, tree diversity, quantified as the number of distinct species, tended to be greater in uninvaded plots, and, regardless of invasion, higher with longer time since fire (Figure 10a). A linear model with additive effects of time since fire and cogongrass invasion resulted in an adjusted R^2^ of 0.29. Shrub and sapling density (stems over one meter tall but less than 3 cm DBH) measured in the center subplot ranged widely, but most plots had fewer than 40 stems per 100 m^2^ (Figure 10b). The relationship between shrub and sapling density and time since last fire was not statistically significant. Recording the location of each tree (distance and azimuth from plot center) enabled generating stem maps for each plot (e.g, Figure 11). Stem maps were included in reports sent to each installation, and can be used to help relocate individual trees for future data collection.
 
 
 ```{r trees by installation}
@@ -326,22 +326,16 @@ ggplot(tree_data %>%
 
 tree_richness_fig <- ggplot(tree_data_plot_summary, 
        aes(years_since_fire, richness, color = imcy_inv)) +
-      # stat_summary(fun.data = "mean_se", geom = "pointrange", size = 1) +
       geom_point(position = position_jitter(width = .1), size = 2) +
       geom_smooth(aes(fill = imcy_inv), method = "lm", alpha = .2, show.legend = F) +
       invasion_color +
       invasion_fill +
-      # facet_grid(inst_name~.) +
-       scale_y_continuous(limits = c(0,9.5), breaks = c(0,2,4,6,8)) +
+      scale_y_continuous(limits = c(0,9.5), breaks = c(0,2,4,6,8)) +
       theme_classic() +
       def_theme +
       ylab("Tree richness") +
       xlab("Years since fire") +
-      # ggtitle("Tree diversity vs. time since fire") +
       NULL
-
-
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/tree-richness-by-fire.png", height=7.5, width = 7.5)
 
 ```
 
@@ -365,20 +359,16 @@ shrub_saplings_fig <- ggplot(
       aes(years_since_fire, total_stems_100m2/100, color = imcy_inv)) +
       geom_point(aes(color = imcy_inv), size = 2, position = position_jitter(width = .1)) +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm", show.legend = F) +
-            # geom_hline(yintercept = 40) +
       invasion_color +
       invasion_fill +
-      # facet_grid(.~veg_id) +
       theme_classic() +
       def_theme +
-      # theme(legend.position = c(.85,.95)) +
       xlab("Years since fire") +
-      ylab(expression(paste("Shrub/sapling stem density (", {m}^-2,") "))) +
+      ylab(expression(paste("Shrub & sapling stem density (", {m}^-2,") "))) +
       ggtitle("") +
       NULL
 
 
-# ggsave("~/Dropbox (UF)/SERDP-Project/figures/subplot_density.png", height=7.5, width = 7.5)
 
 ```
 
@@ -396,8 +386,30 @@ plot_grid(
 
 ```
 
-
 **Figure 10.** Tree species richness (a) and shrub and sapling density (b) plotted against time since fire in cogongrass invaded (red) and uninvaded (blue) plots. Points are jittered horizontally to reduce overlap.
+
+```{r tree richness model table}
+
+tree_richness_lm <- lm(richness ~ years_since_fire + imcy_inv, data = tree_data_plot_summary)
+# summary(tree_richness_lm)
+knitr::kable(broom::tidy(tree_richness_lm),
+             caption = "Table 1. Tree richness linear model results.")
+# broom::confint_tidy(tree_richness_lm)
+# broom::glance(tree_richness_lm) %>% select(adj.r.squared, )
+
+# broom::augment(lm(richness ~ years_since_fire + imcy_inv, data = tree_data_plot_summary))
+
+```
+
+```{r shrub sapling density model table, eval=F}
+
+subplot_plot_summary$density_m2 <- subplot_plot_summary$total_stems_100m2/100
+
+shrub_density_model <- lm(density_m2 ~ years_since_fire+imcy_inv, subplot_plot_summary)
+summary(shrub_density_model)
+
+```
+
 
 ![](stem_maps/eglin b1.png)
 **Figure 11.** Stem map for Eglin AFB plot B1.
