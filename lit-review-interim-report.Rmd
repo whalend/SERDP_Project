@@ -18,11 +18,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Longleaf pine (*Pinus palustris*) was at one point the one of the most ecologically significant tree species in the southern United States. A typical longleaf pine forest can be described as open-canpoy, fire-dependant forests with a herbaceous ground layer littered with grasses and diverse showy forbs. Longleaf pine forests are some of the most diverse natural areas in North America, with up to 40 vascular plant species in 1m^2^ (Walker and Peet 1983). Before major logging and industrial efforts, longleaf pine forests dominated the southeast covering approximately 92 million acres (Frost 2006). The longleaf pine's native range stretched along the Gulf and Atlantic coasts from Eastern Texas through to Virginia, and as far south as Central Florida (Boyer 1990). By 2005, an estimated 2.6 million acres of longleaf pine forest remained in its native range (Frost 2006). After decades of conversion  to agricultural lands and industrial urban developments, the longleaf pine is one of the most endangered ecosystems in the U.S. (Noss 1995). 
 
-FIGURE OF HISTORICAL AND CURRENT DISTRIBUTION
+FIGURE OF HISTORICAL AND CURRENT DISTRIBUTION (White et al 1998)
 
 Prescribed fire has been established as an important ecological process for the restoration and maintenance of longleaf pine systems. Frequent fire, every 1-10 years (Chapman 1932), are vital to reducing fuel loads and promoting understory diversity (Kirkman 2001). Regularly burned and maintained longleaf forests provide essential habitat for many threated and endangered wildlife species, including the gopher tortoise (*Gopherus polyphemus*), Eastern indigo snake (*Drymarchon couperi*), and red-cockaded woodpecker (*Picoides borealis*). Without fire in this ecosystem, longleaf forests can suffer by invasion of hardwoods and shrubs, resulting in rapid loss of herbaceous diversity (Christensen 1981).
 
-However, disturbance events such as fire, hurricanes, and harvesting have been shown to increase risk of invasion by exotic plants. Cogongrass (*Imperata cylindrica*) is a cosmopolitan grass species that is a weedy pest in at least 73 countries, and is especially problematic in the southeastern U.S. where it spreads and dominates in disturbed sites (MacDonald 2004, Holm et al., 1977). It is a successful invader in longleaf pine forests due to its extensive rhizome system, adaptation to poor soils, drought tolerance, and fire adaptability (Holm et al., 1977). Cogongrass rhizomes have been reported to account for 60% of plant's total biomass and contribute to its quick regeneration after burning or cutting (Sajise 1976). In areas where cogongrass is already present, areas that have been burned or have had greater biomass removal showed more cogongrass patches and larger patch size (Holzmueller 2012). When established, cogongrass will outcompete native vegetation creating a large monotypic understory with low species diversity and richness (Brewer 2008). Cogongrass has been shown to exhibit positive feedback mechanisms with fire by increasing fine fuel loads (Platt and Gottschalk 2001) and fire severity that is detrimental to southeastern pine forests (Lippincott 2000, Matlack 2002). The species can also alter typical fire cycles of southern forests. When burned, the subsequent fires in sites where cogongrass is dominant showed higher maxmimum temperatures at greater heights, with increased mortality of longleaf pines, which is typically fire-tolerant (Lippincott 2000). As a result, the spread of cogongrass is responsible for the loss of thousands of hectares of native habitat in southeastern U.S. forested lands (MacDonald 2004). 
+However, disturbance events such as fire, hurricanes, and harvesting have been shown to increase risk of invasion by exotic plants. Cogongrass (*Imperata cylindrica*) is a cosmopolitan grass species that is a weedy pest in at least 73 countries, and is especially problematic in the southeastern U.S. where it spreads and dominates in disturbed sites (MacDonald 2004, Holm et al., 1977). It is a successful invader in longleaf pine forests due to its extensive rhizome system, adaptation to poor soils, drought tolerance, and fire adaptability (Holm et al., 1977). Cogongrass rhizomes have been reported to account for 60% of plant's total biomass and contribute to its quick regeneration after burning or cutting (Sajise 1976). In areas where cogongrass is already present, areas that have been burned or have had greater biomass removal showed more cogongrass patches and larger patch size (Holzmueller 2012). When established, cogongrass will outcompete native vegetation creating a large monotypic understory with low species diversity and richness (Brewer 2008). Cogongrass has been shown to exhibit positive feedback mechanisms with fire by increasing fine fuel loads (Platt and Gottschalk 2001) and fire severity that is detrimental to southeastern pine forests (Lippincott 2000, Matlack 2002). The species can also alter typical fire cycles of southern forests. When burned, the subsequent fires in sites where cogongrass is dominant showed higher maxmimum temperatures at greater heights, with increased mortality of longleaf pines, which is typically fire-tolerant (Lippincott 2000). Cogongrass As a result, the spread of cogongrass is responsible for the loss of thousands of hectares of native habitat in southeastern U.S. forested lands (MacDonald 2004). 
 
 ##### end
 
@@ -89,3 +89,49 @@ Our specific objectives are to:
 3. Calibrate a spatially explicit model of TBD risk in response to fire-invasion interactions   and examine the responses of fire, plant invasions, wildlife, TBD risk, using simulations of    climate change scenarios.
 
 ```
+
+
+```{r} 
+
+stuff on fire tree mortality from varner disseratation 2005
+
+
+Hypothesized mechanisms for mortality of large trees after reintroduction of fire
+involve the direct effects of fire, such as root damage (Ryan and Frandsen 1991, Swezy
+and Agee 1991); vascular tissue damage (Martin 1963, Ryan 2000); leaf scorch (Ryan
+2000, Menges and Deyrup 2001); or canopy damage (Menges and Deyrup 2001; Figure
+2-4). Increased insect and pathogen attack of fire-stressed trees has also been suggested
+as an indirect cause of post-fire mortality in these communities (Ostrosina et al. 1997,
+Ostrosina et al. 1999, Menges and Deyrup 2001).
+Where fires have been reintroduced, tree death is reportedly correlated with damage
+to canopy foliage and branch meristems (Herman 1954, van Wagner 1973, Wade and
+Johansen 1986, Menges and Deyrup 2001, McHugh et al. 2003). Foliage scorch is
+considered less stressful than foliage consumption, which is generally associated with
+damaged branch cambia (Wade and Johansen 1986). Foliage consumption has been
+correlated with fire-caused mortality of slash pine in the Southeast (Johansen and Wade
+1987, Menges and Deyrup 2001). Nevertheless, pine mortality after reintroduction of fire
+has been observed without canopy damage (Varner et al. 2000, Kush et al. 2004).
+Regardless, canopy damage is one of many stressors to a tree, exacerbating stem or root
+damage, and ultimately contributing to excessive pine mortality rates after reintroduction
+fires. 
+12
+Post-fire tree decline and mortality can also result from fire-caused root damage
+(Wade and Johansen 1986, Swezy and Agee 1991, Busse et al. 2000). Lateral roots of
+longleaf pines are concentrated in the top 30 cm of mineral soil (Heyward 1933,
+Wahlenberg 1946) and in long-unburned longleaf pine forests, numerous branch roots
+grow up into duff horizons (Gordon and Varner 2002). In frequently-burned pinelands,
+soil heating and resulting root mortality are negligible (e.g., Heyward 1938). With fire
+suppression and duff accumulation, in contrast, pine roots in duff and in the surface
+mineral soil can be heated, damaged, or consumed in long-duration smoldering fires
+where temperatures can exceed lethal values for hours (Flinn and Wein 1977, Wade and
+Johansen 1986). Smoldering fires spread three orders of magnitude slower than surface
+fires and are typically concentrated in the lower duff (Oa horizon) beneath a thermal
+blanket of overlying Oe material (Hungerford et al. 1995). Although localized and small,
+the smoldering front transmits lethal heat loads (hours > 60°C) to 10 to 20 cm deep in the
+mineral soil (J.M. Varner, unpublished data). A similar mechanism of duff root heating
+was proposed as a cause of tree death and decline in ponderosa pine stands (P.
+ponderosa; Swezy and Agee 1991, Busse et al. 2000). Given the potential physiological
+impairment posed by large-scale root heating and consumption, mechanisms involving
+root damage deserve further study. 
+```
+
