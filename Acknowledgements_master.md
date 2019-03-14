@@ -1,8 +1,8 @@
 ## Acknowledgements
 
-Funding: SERDP Project RC-2636
+**Funding:** SERDP Project RC-2636
 
-*Personnel:*
+**Personnel:**
 
 Associate Project Manager: Drew Hiatt
 
