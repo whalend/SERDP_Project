@@ -311,8 +311,9 @@ fire_plot_nums <- plot_visit_data %>%
       inst_plot_nums +
             theme(legend.position = "none"),
       fire_plot_nums +
-            theme(legend.position = c(.6,.95)),
-      labels = "auto", ncol = 1
+            theme(legend.position = c(.8,.9),
+                  legend.background = element_rect(color = "black")),
+      ncol = 1
       )
 )
 # ggsave("figures/interim_report_num_of_plots.png", num_of_plots)
@@ -702,7 +703,7 @@ plot_grid(
                   legend.background = element_rect(color = "black", fill = NA)),
       richness_box_plot +
             theme(legend.position = "none"),
-      labels = "auto", ncol = 1
+      ncol = 1
       )
 
 ```
@@ -772,7 +773,7 @@ plot_grid(
             theme(legend.position = "none"),
       litter_moisture_fig +
             theme(legend.position = "none"),
-      ncol = 1, labels = "auto"
+      ncol = 1
 )
 
 ```
@@ -967,7 +968,7 @@ ggplot(aes(species, tick_count, color = imcy_inv, fill = imcy_inv)) +
       theme(legend.position = c(.85,.85),
             legend.background = element_rect(color = "black")) +
       NULL,
-ncol = 1, labels = "auto"
+ncol = 1
 )
 
 ```
