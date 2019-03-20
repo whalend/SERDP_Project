@@ -4,11 +4,11 @@ subtitle: "RC-2636"
 author: ""
 date: "`r Sys.Date()`"
 output: 
-  html_document:
-        toc: yes
   word_document:
         toc: yes
         reference_docx: interim-report-stylingbreaks1.docx
+  html_document:
+        toc: yes
 bibliography: 
       - knitcitations.bib
       - serdp_references.bib
@@ -55,9 +55,91 @@ knitr::opts_chunk$set(message = F)
 
 # Technical Approach
 
-## Experimental design (from a statistical perspective): Allie
-Our goal was assessing the potential differences in vegetation type and conditions, tick host use, and tick abundances, between congongrass-invaded and uninvaded areas across the range of fire histories at each installation.
+## Experimental design 
 
+The goal of our experimental design was to assess the potential effects
+of fire history (i.e., years since most recent burn) and cogongrass
+infestation on tick densities, host availability (i.e., dung pellet
+counts), and vegetation type and conditions (i.e., ...) across
+installations throughout our study region. The experimental design is
+summarized in Figure X. The study region is defined as five states in
+the southeastern U.S (i.e., Mississippi, Alabama, Georgia, South
+Carolina, and Florida). Within the study region, we collected field data
+at nine military installations (i.e., Avon Park AFR, Fort Benning, Camp
+Blanding, Eglin AFB, Fort Gordon, Fort Jackson, Moody AFB, Camp Shelby,
+and Tyndall AFB). Each installation was divided into burn units, with
+separate histories of controlled burns (number of burn units ranged from
+\# at INSTALLATION to \# at INSTALLATION). At least one plot was
+established within each burn unit. If part of a burn unit was infested
+with cogongrass, two plots were established (i.e., one in an invaded
+area and one in an uninvaded area). These plots were considered the
+smallest experimental unit of replication for all data analyses. The
+plots across all installations that have been visited to date are
+summarized in Table X.
+
+![](figures/experimental_design_concept.png)
+
+**Figure X.** Summary of overall experimental design for field data collection.
+
+**Table X. Summary of plots visited across all installations to date.**
+
+  **Installation**   **Number of Plots**   **Years Since Fire**   **Years Visited**             
+  ------------------ --------------------- ---------------------- ------------------- --------- ------------
+                     **Uninvaded**         **Invaded**            **Total**                     
+  Avon Park AFR      8                     4                      12                  0 -- 6    2017, 2018
+  Fort Benning       10                    0                      10                  0 -- 4    2018
+  Camp Blanding      13                    0                      13                  0 -- 10   2017, 2018
+  Eglin AFB          11                    0                      11                  0 -- 11   2017, 2018
+  Fort Gordon        8                     0                      8                   0 -- 9    2018
+  Fort Jackson       13                    0                      13                  0 -- 11   2018
+  Moody AFB          3                     0                      3                   0 -- 11   2017
+  Camp Shelby        9                     4                      13                  1 -- 7    2017, 2018
+  Tyndall AFB        8                     1                      9                   0 -- 6    2017, 2018
+  **Totals**         **83**                **9**                  **92**                        
+
+Due to intensive invasive plant management efforts by installation
+managers, many installations lacked congongrass infestations; only Avon
+Park AFR, Camp Shelby, and Tyndall AFB had substantial cogongrass
+infestations. Thus, to maximize the statistical power of each test, we
+developed separate statistical models to analyze (1) the effect of
+cogongrass infestation and (2) the effect of fire history on each
+response variable; these models guided our selection of burn units in
+which to collect data. The first model, designed to test the effect of
+cogongrass infestation on the response variables, is a nested split-plot
+design that considers the fixed main effects of installation $N_{i}$,
+burn unit nested within installation $B_{k\left( i \right)}$ (as the
+whole plot), and cogongrass invasion status $C_{l}$ (as the sub-plot),
+and the random effect of study year $Y_{j}$ (i.e., 2017 or 2018) on each
+response variable (Eqn. 1).
+
+$Y_{\text{ijkl}} = \mu + N_{i} + Y_{j} + B_{k\left( i \right)} + \varepsilon_{\text{ijk}} + C_{l} + \varepsilon_{\text{ijkl}}$
+Eqn. 1
+
+The second model, designed to test the effects of years since the most
+recent burn on the response variables, is a randomized complete block
+design that considers the fixed main effect of installation $N_{i}$,
+years since the most recent burn
+$\beta\left( x_{\text{ij}} - \overline{x} \right)$ as a covariate, and
+the random effect of study year $Y_{j}$ on each response variable (Eqn.
+2).
+
+$Y_{\text{ijk}} = \mu + \beta\left( x_{\text{ij}} - \overline{x} \right) + N_{i} + Y_{j} + NY_{\text{ij}} + \varepsilon_{\text{ijk}}$
+Eqn. 2
+
+A major consideration in the overall experimental design was whether to
+prioritize collecting data at the same plots over multiple years versus
+collecting data at a larger number of plots for a single time point. In
+general, we prioritized the latter, because (1) this design increases
+the power of our statistical tests, which use plot as the experimental
+unit, and (2) the short duration of the study (i.e., three planned field
+seasons) precluded a repeated-measures analysis of the response
+variables over time. However, in the event that a plot that had been
+visited in 2017 was burned, we revisited the same plot in 2018 to
+conduct a before-and-after comparison of the immediate impacts of the
+burn on the response variables. We also revisited in 2018 a subsample of
+the plots visited in 2017 to estimate inter-annual variation in the
+response variables, particularly tick density and host availability,
+throughout the study period.
 
 ## Field sampling design
 Following the experimental design, we established plots to achieve a stratified sampling that covered the range of fire history at each installation. We obtained fire history and known cogongrass invasions as GIS layers from each installation and identified potential plot locations based on time since last fire. Potential locations were sent to our contacts at the installation to solicit further guidance on selecting the final set of candidate locations and arranging access. Our sampling season coincided with the prescribed fire management season at most installations, so the fire data we had on hand was sometimes out of date by the time a visit was arranged because fires had recently been conducted. In burn blocks with a cogongrass invasion we established one plot in the invaded area and one plot in an univaded area (Figure 2), with at least 100 meters between the plots. In burn blocks without an invasion we established one plot in an area representative of the vegetation conditions in the burn block.
