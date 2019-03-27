@@ -181,6 +181,51 @@ temp_rh_data_grouped <- temp_rh_data %>%
 
 write_csv(temp_rh_data_grouped, "data/processed_data/tick_temp_rh_grouped.csv")
 
+
+##### steven testing for humidity times above below 80-82 ####
+
+temp_rh_humidity_testing_below_80 <- temp_rh_data %>% 
+   filter(between(RH, 20, 80), date != "2018-06-21") %>% 
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_below_80 = n(),
+            minutes_below_80 = obs_below_80*5) #%>% 
+  # ungroup(.) %>% 
+  # group_by(date, status, days) %>% 
+  # summarise(minutes_below_80 = minutes_below_80/1,
+  #           mean_below_80 = mean(minutes_below_80),
+  #           se_below_80 = sd(minutes_below_80)) %>% 
+  # select(date, status, days, minutes_below_80, mean_below_80, se_below_80)
+
+temp_rh_humidity_testing_between_80_82 <- temp_rh_data %>% 
+  filter(between(RH, 80, 82), date != "2018-06-21") %>% 
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_bw_80_82 = n(),
+            minutes_bw_80_82 = obs_bw_80_82*5) %>% 
+  select(date, status, logger_id, days, minutes_bw_80_82)
+
+temp_rh_humidity_testing_above_82 <- temp_rh_data %>% 
+  filter(RH >82, date != "2018-06-21") %>% 
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_above_82 = n(),
+            minutes_above_82 = obs_above_82*5) %>% 
+  select(date, status, logger_id, days, minutes_above_82)
+
+test1 <- left_join(temp_rh_humidity_testing_above_82, temp_rh_humidity_testing_between_80_82)
+humidity_minutes_by_logger <- left_join(test1, temp_rh_humidity_testing_below_80)
+
+humidity_means_se_treatment <- humidity_minutes_by_logger %>% 
+  group_by(date, status, days) %>% 
+  summarise(mean_above_82 = mean(minutes_above_82),
+            se_above_82 = sd(minutes_above_82),
+            mean_bw_80_82 = mean(minutes_bw_80_82),
+            se_bw_80_82 = sd(minutes_bw_80_82),
+            mean_below_80 = mean(minutes_below_80),
+            se_below_80 = sd(minutes_below_80))
+
+write_csv(humidity_minutes_by_logger, "data/processed_data/humidity_minutes_by_logger.csv")
+
+write_csv(humidity_means_se_treatment, "data/processed_data/humidity_means_se_treatment.csv")
+
 # summary(temp_rh_data_grouped)
 
 
