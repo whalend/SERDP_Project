@@ -213,6 +213,14 @@ temp_rh_humidity_testing_above_82 <- temp_rh_data %>%
 test1 <- left_join(temp_rh_humidity_testing_above_82, temp_rh_humidity_testing_between_80_82)
 humidity_minutes_by_logger <- left_join(test1, temp_rh_humidity_testing_below_80)
 
+humidity_minutes_by_logger[is.na(humidity_minutes_by_logger)] <- 0
+
+test34 <- humidity_minutes_by_logger %>% 
+  group_by(status) %>% 
+  summarise(mean_above = mean(minutes_above_82),
+            mean_bw = mean(minutes_bw_80_82),
+            mean_below = mean(minutes_below_80))
+
 humidity_means_se_treatment <- humidity_minutes_by_logger %>% 
   group_by(date, status, days) %>% 
   summarise(mean_above_82 = mean(minutes_above_82),
@@ -224,7 +232,8 @@ humidity_means_se_treatment <- humidity_minutes_by_logger %>%
 
 write_csv(humidity_minutes_by_logger, "data/processed_data/humidity_minutes_by_logger.csv")
 
-write_csv(humidity_means_se_treatment, "data/processed_data/humidity_means_se_treatment.csv")
+write_csv(
+  , "data/processed_data/humidity_means_se_treatment.csv")
 
 # summary(temp_rh_data_grouped)
 

@@ -902,3 +902,110 @@ adult_M_rh_11_days <- ggplot(survival_temp_rh, aes(avg_min_rh, adult_M_survival,
 survival_rh_first_check <- cowplot::plot_grid(nymph_rh_11_days, adult_F_rh_11_days, adult_M_rh_11_days, ncol = 3)
 
 ggsave(plot = survival_rh_first_check, height = 5, width = 10, "figures/tick-survival-assay/survival_rh_first_check.png")
+
+
+## Steven doing humidity time intervals ####
+
+#+load datar
+
+humidity_intervals <- read_csv("data/processed_data/humidity_minutes_by_logger.csv")
+tail(humidity_intervals)
+humidity_test <- ggplot(humidity_intervals, aes(days, minutes_above_82,
+                                                   color = status)) +
+  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(data = humidity_intervals,aes(y = minutes_above_82), color = status) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+                     #xmax = avg_min_rh + min_rh_se)) +
+  invasion_color +
+  invasion_fill +
+  ylab(" ") +
+  xlab("Avg min RH") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Female Adults")  +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  NULL
+
+humid_above <- ggplot(data = humidity_intervals) +
+  #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
+  
+  stat_summary(aes(days, minutes_above_82, fill = status, color = status),fun.data = mean_se, geom = "pointrange") +
+  #stat_smooth(aes(days, minutes_above_82, fill = status, color = status), se = T, alpha = .2) +
+  invasion_color +
+  invasion_fill +
+  def_theme +
+  #theme_classic() +
+  ggtitle(label = "Minutes above 82% RH") +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  xlab("Days") +
+  ylab("Time above 82% RH (mins)") +
+  #guides(fill=FALSE, color=FALSE) +
+  scale_y_continuous(limits = c(0, 1440 )) +
+  scale_x_continuous(limits = c(0, 264)) +
+  #theme(axis.title.x = element_blank()) +
+  NULL
+
+humid_bw <- ggplot(data = humidity_intervals) +
+  #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
+  
+  stat_summary(aes(days, minutes_bw_80_82, fill = status, color = status),fun.data = mean_se, geom = "pointrange") +
+  #stat_smooth(aes(days, minutes_above_82, fill = status, color = status), se = T, alpha = .2) +
+  invasion_color +
+  invasion_fill +
+  def_theme +
+  #theme_classic() +
+  ggtitle(label = "Minutes between 80-82% RH") +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  xlab("Days") +
+  ylab("Time b/w 80-82% RH (mins)") +
+  #guides(fill=FALSE, color=FALSE) +
+  scale_y_continuous(limits = c(0, 1440 )) +
+  scale_x_continuous(limits = c(0, 264)) +
+  #theme(axis.title.x = element_blank()) +
+  NULL
+
+humid_below <- ggplot(data = humidity_intervals) +
+  #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
+  
+  stat_summary(aes(days, minutes_below_80, fill = status, color = status),fun.data = mean_se, geom = "pointrange") +
+  #stat_smooth(aes(days, minutes_above_82, fill = status, color = status), se = T, alpha = .2) +
+  invasion_color +
+  invasion_fill +
+  def_theme +
+  #theme_classic() +
+  ggtitle(label = "Minutes below 80% RH") +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  xlab("Days") +
+  ylab("Time below 80% RH (mins)") +
+  #guides(fill=FALSE, color=FALSE) +
+  scale_y_continuous(limits = c(0, 1440 )) +
+  scale_x_continuous(limits = c(0, 264)) +
+  #theme(axis.title.x = element_blank()) +
+  NULL
+
+ggsave(plot = humid_above, height = 5, width = 10, "figures/tick-survival-assay/humid_above.png")
+ggsave(plot = humid_bw, height = 5, width = 10, "figures/tick-survival-assay/humid_bw.png")
+ggsave(plot = humid_below, height = 5, width = 10, "figures/tick-survival-assay/humid_below.png")
+
+cowplot::plot_grid(humid_above, humid_bw, humid_below, ncol= 1)
+
+
+humidity_what <- read_csv("data/processed_data/humidity_means_se_treatment.csv")
+
+humidity_test <- ggplot(humidity_test, aes(days, mean_above_82,
+                                                color = status)) +
+  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(data = humidity_intervals,aes(y = minutes_above_82), color = status) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+  #xmax = avg_min_rh + min_rh_se)) +
+  invasion_color +
+  invasion_fill +
+  ylab(" ") +
+  xlab("Avg min RH") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Female Adults")  +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  NULL
