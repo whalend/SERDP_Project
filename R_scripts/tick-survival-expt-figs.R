@@ -85,6 +85,28 @@ min_rh_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymin_rh, color
       NULL
 
 ggsave(plot = min_rh_all_time, height = 7, width = 7, "figures/tick-survival-assay/min_rh_all_time.png")
+
+##### blank for drew####
+min_rh_all_time_blank <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymin_rh, color = status)) +
+  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", formula = y ~ poly(x, 2), alpha = .2) +
+  #geom_point(aes(color = status)) +
+  #geom_hline(yintercept = 80, linetype = "solid", color = "gray") +
+  #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=.2) +
+  #geom_point(data = temp_rh_data_grouped, aes(y = avg_dailymin_rh, color = status)) +
+  invasion_color +
+  invasion_fill +
+  ylab("Average daily minimum %RH") +
+  xlab("Days") +
+  scale_y_continuous(breaks = c(50,60,70,80,90,100)) +
+  scale_x_continuous(limits = c(0, 264)) +
+  scale_x_continuous(breaks = c(0, 50, 100, 150, 200, 250)) +
+  guides(fill=FALSE, color=FALSE) +
+  def_theme +
+  NULL
+
+ggsave(plot = min_rh_all_time_blank, height = 7, width = 7, "figures/tick-survival-assay/min_rh_all_time_blank.png")
+#####
+
 ### changed for drew report, added more Y tick marks and removed scaleFUN, changed shape, removed tick visit vlines
 
 # Separate tempRH data into chunks of days ####
