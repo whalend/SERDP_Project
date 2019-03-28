@@ -282,7 +282,7 @@ write_csv(humidity_78, "data/processed_data/humidity_78.csv")
 
 
 temp_rh_humidity_testing_below_75 <- temp_rh_data %>% 
-  filter(between(RH, 20, 75), date != "2018-06-21") %>% 
+  filter(between(RH, 20, 74.99), date != "2018-06-21") %>% 
   group_by(date, status, logger_id, days) %>%
   summarise(obs_below_75 = n(),
             minutes_below_75 = obs_below_75*5) %>% 
@@ -296,7 +296,7 @@ temp_rh_humidity_testing_between_75_85 <- temp_rh_data %>%
   select(date, status, logger_id, days, minutes_bw_75_85)
 
 temp_rh_humidity_testing_above_85 <- temp_rh_data %>% 
-  filter(RH >85, date != "2018-06-21") %>% 
+  filter(RH >85.01, date != "2018-06-21") %>% 
   group_by(date, status, logger_id, days) %>%
   summarise(obs_above_85 = n(),
             minutes_above_85 = obs_above_85*5) %>% 
@@ -307,8 +307,11 @@ humidity_75 <- left_join(testing_75, temp_rh_humidity_testing_below_75)
 
 humidity_75[is.na(humidity_75)] <- 0
 tail(humidity_75)
+humidity_75 <- filter(humidity_75, minutes_above_85 <1441)
+#View(weird)
 write_csv(humidity_75, "data/processed_data/humidity_75.csv")
-
+#humidity_75 <- filter(humidity_75, minutes_above_85 >1441)
+#View(weird)
 
 ##### random ####
 # p2 <- ggplot(temp_rh_data_grouped, aes(date, avg_dailymax_rh)) +

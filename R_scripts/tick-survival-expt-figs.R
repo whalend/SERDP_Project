@@ -53,15 +53,16 @@ max_temp_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymax_tempC, 
       geom_point(data = temp_rh_data_grouped, aes(y = avg_dailymax_tempC, color = status)) +
       invasion_color +
       invasion_fill +
-      ylab("Avg daily max temp C") +
-      xlab(" ") +
+      ylab("Average daily maximum temperature °C") +
+      xlab("Days") +
       scale_y_continuous(breaks = c(15,20,25,30,35,40,45)) +
       scale_x_continuous(limits = c(0, 264)) +
+  scale_x_continuous(breaks = c(0, 50, 100, 150, 200, 250)) +
       guides(fill=FALSE, color=FALSE) +
       def_theme +
       NULL
 
-#ggsave(plot = max_temp_all_time, height = 7, width = 7, "figures/tick-survival-assay/max_temp_all_time.png")
+ggsave(plot = max_temp_all_time, height = 7, width = 7, "figures/tick-survival-assay/max_temp_all_time.png")
 ### changed for drew report, added more Y tick marks and removed scaleFUN, changed shape, removed tick visit vlines
 
 # Figure for min rhs all time all days ####
@@ -69,12 +70,12 @@ max_temp_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymax_tempC, 
 min_rh_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymin_rh, color = status)) +
       geom_smooth(aes(fill = status, color = status), se = T, method = "lm", formula = y ~ poly(x, 2), alpha = .2) +
       geom_point(aes(color = status)) +
-      geom_hline(yintercept = 80, linetype = "solid", color = "gray") +
-      geom_vline(xintercept = vline_days, linetype = "dashed", alpha=.2) +
+      #geom_hline(yintercept = 80, linetype = "solid", color = "gray") +
+      #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=.2) +
       geom_point(data = temp_rh_data_grouped, aes(y = avg_dailymin_rh, color = status)) +
       invasion_color +
       invasion_fill +
-      ylab("Avg daily min RH") +
+      ylab("Average daily minimum %RH") +
       xlab("Days") +
   scale_y_continuous(breaks = c(50,60,70,80,90,100)) +
   scale_x_continuous(limits = c(0, 264)) +
@@ -83,7 +84,7 @@ min_rh_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymin_rh, color
       def_theme +
       NULL
 
-#ggsave(plot = min_rh_all_time, height = 7, width = 7, "figures/tick-survival-assay/min_rh_all_time.png")
+ggsave(plot = min_rh_all_time, height = 7, width = 7, "figures/tick-survival-assay/min_rh_all_time.png")
 ### changed for drew report, added more Y tick marks and removed scaleFUN, changed shape, removed tick visit vlines
 
 # Separate tempRH data into chunks of days ####
@@ -1014,10 +1015,101 @@ ggsave(plot = humid_below, height = 5, width = 10, "figures/tick-survival-assay/
 cowplot::plot_grid(humid_above, humid_bw, humid_below, ncol= 1)
 ##### testing for new intervals of 78 ####
 
+humid_78 <- read_csv("data/processed_data/humidity_78.csv")
+
+humidity_test_78_above <- ggplot(humid_78, aes(days, minutes_above_85, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(data = humid_78,aes(y = minutes_above_85, color = status)) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+  invasion_color +
+  invasion_fill +
+  ylab("Minutes above 85% RH") +
+  xlab("Days") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Minutes above 85% RH")  +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  NULL
+
+humidity_test_78_below <- ggplot(humid_78, aes(days, minutes_below_78, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(data = humid_78,aes(y = minutes_below_78, color = status)) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+  invasion_color +
+  invasion_fill +
+  ylab("Minutes b 78% RH") +
+  xlab("Days") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Minutes b 78 % RH")  +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  NULL
+
+
 #####
 
-###### testing for new intervals of 78 ####
+###### testing for new intervals of 75 ####
 
+humid_75 <- read_csv("data/processed_data/humidity_75.csv")
+
+humidity_test_75_above <- ggplot(humid_75, aes(days, minutes_above_85, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", formula = y ~ (poly(x,2)), alpha = .2) +
+  geom_point(data = humid_75,aes(y = minutes_above_85, color = status), alpha = 0.16) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+  invasion_color +
+  invasion_fill +
+  ylab("Minutes above 85% RH") +
+  xlab("Days") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Minutes above 85 % RH")  +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  scale_y_continuous(breaks = c(0, 500, 1000, 1400)) +
+  scale_x_continuous(breaks = c(0, 50, 100, 150, 200, 250)) +
+  NULL
+
+ggsave(plot = humidity_test_75_above, height = 7, width = 7, "figures/tick-survival-assay/humidity_test_75_above.png")
+
+humidity_test_75_bw <- ggplot(humid_75, aes(days, minutes_bw_75_85, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", formula = y ~ (poly(x,2)), alpha = .2) +
+  geom_point(data = humid_75,aes(y = minutes_bw_75_85, color = status), alpha = 0.16) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+  invasion_color +
+  invasion_fill +
+  ylab("Minutes between 75-85% RH") +
+  xlab("Days") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Minutes between 75-85% RH")  +
+  scale_x_continuous(breaks = c(0, 50, 100, 150, 200, 250)) +
+  scale_y_continuous(breaks = c(0, 500, 1000, 1400)) +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  NULL
+
+ggsave(plot = humidity_test_75_bw, height = 7, width = 7, "figures/tick-survival-assay/humidity_test_75_bw.png")
+
+humidity_test_75_below <- ggplot(humid_75, aes(days, minutes_below_75, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", formula = y ~ (poly(x,2)), alpha = .2) +
+  geom_point(data = humid_75,aes(y = minutes_below_75, color = status), alpha = 0.16) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+  invasion_color +
+  invasion_fill +
+  ylab("Minutes below 75% RH") +
+  xlab("Days") +
+  scale_x_continuous(breaks = c(0, 50, 100, 150, 200, 250)) +
+  scale_y_continuous(breaks = c(0, 500, 1000, 1400)) +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Minutes below 75 % RH")  +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  NULL
+
+ggsave(plot = humidity_test_75_below, height = 7, width = 7, "figures/tick-survival-assay/humidity_test_75_below.png")
 
 ######
 
@@ -1040,3 +1132,4 @@ humidity_test <- ggplot(humidity_test, aes(days, mean_above_82,
   #theme(plot.title = element_text(hjust = 0.5)) +
   #scale_y_continuous(limits = c(0, 1 )) +
   NULL
+
