@@ -16,7 +16,9 @@ library(cowplot)
 
 # load data ####
 temp_rh_data_grouped <- read_csv("data/processed_data/tick_temp_rh_grouped.csv")
-tick_survival_long <- read_csv("data/processed_data/tick_survival_long.csv")
+tick_survival <- read_csv("data/processed_data/tick_survival_long.csv")
+#tail(temp_rh_data_grouped)
+#tail(tick_survival_long)
 
 # define variables ####
 
@@ -36,7 +38,7 @@ invasion_fill <- scale_color_manual(values = c("red","deepskyblue"))
 # set vline variable for marking visit dates
 vline_days <- c(unique(tick_survival$days))
 
-temp_rh_data <- left_join(temp_rh_data, add_visit_number)
+temp_rh_data <- left_join(temp_rh_data_grouped, tick_survival)
 
 
 # Figure for max temps all time all days ####
@@ -54,7 +56,7 @@ max_temp_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymax_tempC, 
       ylab("Avg daily max temp C") +
       xlab(" ") +
       scale_y_continuous(breaks = c(15,20,25,30,35,40,45)) +
-      scale_x_continuous(limits = c(0, 202)) +
+      scale_x_continuous(limits = c(0, 264)) +
       guides(fill=FALSE, color=FALSE) +
       def_theme +
       NULL
@@ -65,17 +67,18 @@ max_temp_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymax_tempC, 
 # Figure for min rhs all time all days ####
 
 min_rh_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymin_rh, color = status)) +
-      geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+      geom_smooth(aes(fill = status, color = status), se = T, method = "lm", formula = y ~ poly(x, 2), alpha = .2) +
       geom_point(aes(color = status)) +
       geom_hline(yintercept = 80, linetype = "solid", color = "gray") +
-      #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=.2) +
+      geom_vline(xintercept = vline_days, linetype = "dashed", alpha=.2) +
       geom_point(data = temp_rh_data_grouped, aes(y = avg_dailymin_rh, color = status)) +
       invasion_color +
       invasion_fill +
       ylab("Avg daily min RH") +
       xlab("Days") +
   scale_y_continuous(breaks = c(50,60,70,80,90,100)) +
-  scale_x_continuous(limits = c(0, 202)) +
+  scale_x_continuous(limits = c(0, 264)) +
+  scale_x_continuous(breaks = c(0, 50, 100, 150, 200, 250)) +
       guides(fill=FALSE, color=FALSE) +
       def_theme +
       NULL
@@ -910,26 +913,46 @@ ggsave(plot = survival_rh_first_check, height = 5, width = 10, "figures/tick-sur
 
 humidity_intervals <- read_csv("data/processed_data/humidity_minutes_by_logger.csv")
 tail(humidity_intervals)
-humidity_test <- ggplot(humidity_intervals, aes(days, minutes_above_82,
-                                                   color = status)) +
-  #geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
-  geom_point(data = humidity_intervals,aes(y = minutes_above_82), color = status) +
+
+##### testing for 80 80-82 82+ interval #####
+humidity_test_82 <- ggplot(humidity_intervals, aes(days, minutes_above_82, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+  geom_point(data = humidity_intervals,aes(y = minutes_above_82, color = status)) +
   #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
                      #xmax = avg_min_rh + min_rh_se)) +
   invasion_color +
   invasion_fill +
-  ylab(" ") +
-  xlab("Avg min RH") +
+  ylab("Minutes above 82% RH") +
+  xlab("Days") +
   def_theme +
   guides(fill=FALSE, color=FALSE) +
-  ggtitle(label = "Female Adults")  +
+  ggtitle(label = "Minutes above 82% RH")  +
   #theme(plot.title = element_text(hjust = 0.5)) +
   #scale_y_continuous(limits = c(0, 1 )) +
   NULL
 
+humidity_test_80b <- ggplot(humidity_intervals, aes(days, minutes_below_80, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", formula = y ~ (poly(x, 2)), alpha = .2) +
+  geom_point(data = humidity_intervals,aes(y = minutes_below_80, color = status)) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+  #xmax = avg_min_rh + min_rh_se)) +
+  invasion_color +
+  invasion_fill +
+  ylab("Minutes below 80% RH") +
+  xlab("Days") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Minutes b 80% RH")  +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  NULL
+
+
+
+
+
 humid_above <- ggplot(data = humidity_intervals) +
   #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
-  
   stat_summary(aes(days, minutes_above_82, fill = status, color = status),fun.data = mean_se, geom = "pointrange") +
   #stat_smooth(aes(days, minutes_above_82, fill = status, color = status), se = T, alpha = .2) +
   invasion_color +
@@ -941,8 +964,8 @@ humid_above <- ggplot(data = humidity_intervals) +
   xlab("Days") +
   ylab("Time above 82% RH (mins)") +
   #guides(fill=FALSE, color=FALSE) +
-  scale_y_continuous(limits = c(0, 1440 )) +
-  scale_x_continuous(limits = c(0, 264)) +
+  #scale_y_continuous(limits = c(0, 1440 )) +
+  #scale_x_continuous(limits = c(0, 264)) +
   #theme(axis.title.x = element_blank()) +
   NULL
 
@@ -960,8 +983,8 @@ humid_bw <- ggplot(data = humidity_intervals) +
   xlab("Days") +
   ylab("Time b/w 80-82% RH (mins)") +
   #guides(fill=FALSE, color=FALSE) +
-  scale_y_continuous(limits = c(0, 1440 )) +
-  scale_x_continuous(limits = c(0, 264)) +
+  #scale_y_continuous(limits = c(0, 1440 )) +
+  #scale_x_continuous(limits = c(0, 264)) +
   #theme(axis.title.x = element_blank()) +
   NULL
 
@@ -979,8 +1002,8 @@ humid_below <- ggplot(data = humidity_intervals) +
   xlab("Days") +
   ylab("Time below 80% RH (mins)") +
   #guides(fill=FALSE, color=FALSE) +
-  scale_y_continuous(limits = c(0, 1440 )) +
-  scale_x_continuous(limits = c(0, 264)) +
+  #scale_y_continuous(limits = c(0, 1440 )) +
+  #scale_x_continuous(limits = c(0, 264)) +
   #theme(axis.title.x = element_blank()) +
   NULL
 
@@ -989,6 +1012,14 @@ ggsave(plot = humid_bw, height = 5, width = 10, "figures/tick-survival-assay/hum
 ggsave(plot = humid_below, height = 5, width = 10, "figures/tick-survival-assay/humid_below.png")
 
 cowplot::plot_grid(humid_above, humid_bw, humid_below, ncol= 1)
+##### testing for new intervals of 78 ####
+
+#####
+
+###### testing for new intervals of 78 ####
+
+
+######
 
 
 humidity_what <- read_csv("data/processed_data/humidity_means_se_treatment.csv")

@@ -232,12 +232,85 @@ humidity_means_se_treatment <- humidity_minutes_by_logger %>%
 
 write_csv(humidity_minutes_by_logger, "data/processed_data/humidity_minutes_by_logger.csv")
 
-write_csv(
-  , "data/processed_data/humidity_means_se_treatment.csv")
+write_csv(humidity_means_se_treatment, "data/processed_data/humidity_means_se_treatment.csv")
 
-# summary(temp_rh_data_grouped)
+##### new testing for different thresholds ####
+##### theme #####
+def_theme <- theme(legend.title = element_blank(),
+                   legend.text = element_text(size = 12),
+                   legend.position = "top",
+                   axis.text = element_text(size = 12),
+                   axis.title = element_text(size = 16),
+                   plot.title = element_text(size = 28),
+                   strip.background = element_blank(),
+                   panel.grid = element_blank(),
+                   panel.background = element_blank())
+invasion_color <- scale_color_manual(values = c("red","deepskyblue"))
+invasion_fill <- scale_color_manual(values = c("red","deepskyblue"))
+
+## test for 78
+
+temp_rh_humidity_testing_below_78 <- temp_rh_data %>% 
+  filter(between(RH, 20, 78), date != "2018-06-21") %>% 
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_below_78 = n(),
+            minutes_below_78 = obs_below_78*5) %>% 
+  select(date, status, days, logger_id, minutes_below_78)
+
+temp_rh_humidity_testing_between_78_85 <- temp_rh_data %>% 
+  filter(between(RH, 78, 85), date != "2018-06-21") %>% 
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_bw_78_85 = n(),
+            minutes_bw_78_85 = obs_bw_78_85*5) %>% 
+  select(date, status, logger_id, days, minutes_bw_78_85)
+
+temp_rh_humidity_testing_above_85 <- temp_rh_data %>% 
+  filter(RH >85, date != "2018-06-21") %>% 
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_above_85 = n(),
+            minutes_above_85 = obs_above_85*5) %>% 
+  select(date, status, logger_id, days, minutes_above_85)
+
+testing_78 <- left_join(temp_rh_humidity_testing_above_85, temp_rh_humidity_testing_between_78_85)
+humidity_78 <- left_join(testing_78, temp_rh_humidity_testing_below_78)
+
+humidity_78[is.na(humidity_78)] <- 0
+
+write_csv(humidity_78, "data/processed_data/humidity_78.csv")
+
+## test for 75
 
 
+temp_rh_humidity_testing_below_75 <- temp_rh_data %>% 
+  filter(between(RH, 20, 75), date != "2018-06-21") %>% 
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_below_75 = n(),
+            minutes_below_75 = obs_below_75*5) %>% 
+  select(date, status, days, logger_id, minutes_below_75)
+
+temp_rh_humidity_testing_between_75_85 <- temp_rh_data %>% 
+  filter(between(RH, 75, 85), date != "2018-06-21") %>% 
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_bw_75_85 = n(),
+            minutes_bw_75_85 = obs_bw_75_85*5) %>% 
+  select(date, status, logger_id, days, minutes_bw_75_85)
+
+temp_rh_humidity_testing_above_85 <- temp_rh_data %>% 
+  filter(RH >85, date != "2018-06-21") %>% 
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_above_85 = n(),
+            minutes_above_85 = obs_above_85*5) %>% 
+  select(date, status, logger_id, days, minutes_above_85)
+
+testing_75 <- left_join(temp_rh_humidity_testing_above_85, temp_rh_humidity_testing_between_75_85)
+humidity_75 <- left_join(testing_75, temp_rh_humidity_testing_below_75)
+
+humidity_75[is.na(humidity_75)] <- 0
+tail(humidity_75)
+write_csv(humidity_75, "data/processed_data/humidity_75.csv")
+
+
+##### random ####
 # p2 <- ggplot(temp_rh_data_grouped, aes(date, avg_dailymax_rh)) +
 #       geom_smooth(aes(y = avg_daily_RH, fill = status, color = status), se = T, method = "lm", alpha = .2) +
 #       geom_point(aes(color = status), size = 2) +
