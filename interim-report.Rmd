@@ -313,10 +313,10 @@ fire_plot_nums <- plot_visit_data %>%
       fire_plot_nums +
             theme(legend.position = c(.8,.9),
                   legend.background = element_rect(color = "black")),
-      ncol = 1
+      ncol = 1, labels = "auto"
       )
 )
-# ggsave("figures/interim_report_num_of_plots.png", num_of_plots)
+# ggsave("figures/interim_report_num_of_plots.png", num_of_plots, width =7.5, height = 7.5)
 
 ```
 
@@ -448,7 +448,7 @@ shrub_saplings_fig <- ggplot(
       theme_classic() +
       def_theme +
       xlab("Years since fire") +
-      ylab(expression(paste("Shrub & sapling stem density (", {m}^-2,") "))) +
+      ylab(expression(paste("Shrub & sapling density (", {m}^-2,") "))) +
       ggtitle("") +
       NULL
 
@@ -465,8 +465,9 @@ plot_grid(
       shrub_saplings_fig +
             theme(legend.position = c(.85,.85),
             legend.background = element_rect(color = "black")),
-      ncol = 1
+      ncol = 1, labels = "auto"
 )
+# ggsave("figures/interim_report_tree_richness.png", width =7.5, height = 7.5)
 
 ```
 
@@ -636,8 +637,9 @@ plot_grid(
             theme(legend.position = "none",
                   axis.text.x = element_blank()),
       stand_biomass_fig,
-      ncol = 1
+      ncol = 1, labels = "auto"
       )
+# ggsave("figures/interim_report_veg_cover.png", width =7.5, height = 7.5)
 
 ```
 
@@ -773,8 +775,9 @@ plot_grid(
             theme(legend.position = "none"),
       litter_moisture_fig +
             theme(legend.position = "none"),
-      ncol = 1
+      ncol = 1, labels = "auto", label_x = .1
 )
+# ggsave("figures/interim_report_litter.png", width =7.5, height = 7.5)
 
 ```
 
