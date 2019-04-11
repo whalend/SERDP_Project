@@ -1,7 +1,7 @@
 # Fire Data
 library(sp); library(rgdal); library(maptools); library(rgeos);
 library(sf)
-library(plyr); library(dplyr);
+# library(plyr); library(dplyr);
 library(ggplot2)
 #library(RSAGA)
 # library(raster)
@@ -9,33 +9,47 @@ library(ggplot2)
 plot_locations <- st_read("data/plot_visit.shp")
 
 plot_locations <- plot_locations %>%
-      rename(inst = instal,
+      dplyr::rename(inst = instal,
              visit_date = vist_dt,
              last_fire = lst_fr_,
              yrs_since_fire = yrs_sn_,
              visit_yr = vist_yr,
              imcy = imcy_nv) %>%
-      select(-instllt, -instl__) %>%
-      filter(!is.na(visit_yr))
+      dplyr::select(-instllt, -instl__) %>%
+      dplyr::filter(!is.na(visit_yr))
 
 # summary(plot_locations)
 # filter(plot_locations, is.na(last_fire))$plot_id
 ## no fire history for shelby k1
 
-source("R_scripts/AvonPark_Fires_GIS.R")
-source("R_scripts/Blanding_Fires_GIS.R")
-source("R_scripts/Eglin_Fires_GIS.R")
-source("R_scripts/Shelby_Fires_GIS.R")
-source("R_scripts/Moody_Fires_GIS.R")
-source("R_scripts/Gordon_Fires_GIS.R")
-source("R_scripts/Benning__Fires_GIS.R")
-source("R_scripts/Jackson_Fires_GIS.R")
+# source("R_scripts/AvonPark_Fires_GIS.R")
+# rm(list=ls(pattern = "urn"))
+# rm(list=ls(pattern = "shp"))
+#
+# source("R_scripts/Benning_Fires_GIS.R")
+# source("R_scripts/Blanding_Fires_GIS.R")
+# source("R_scripts/Eglin_Fires_GIS.R")
+#
+# source("R_scripts/Gordon_Fires_GIS.R")
+# source("R_scripts/Jackson_Fires_GIS.R")
+# source("R_scripts/Moody_Fires_GIS.R")
+# source("R_scripts/Shelby_Fires_GIS.R")
+
+
 
 
 fire_master <- rbind(
-      st_transform(blanding_fire, crs = 4326),
-      st_transform(eglin_fires, crs = 4326)
+      st_transform(avp_fires, crs = 4326),
+      st_transform(benning_fires, crs = 4326),
+      st_transform(blanding_fires, crs = 4326),
+      st_transform(eglin_fires, crs = 4326),
+      st_transform(gordon_fire, crs = 4326),
+      st_transform(jackson_fires, crs = 4326),
+      st_transform(moody_fires, crs = 4326),
+      st_transform(shelby_fires, crs = 4326)
 )
+
+fire_master
 
 ## Working on calculation a fire return interval ####
 
@@ -43,7 +57,7 @@ fire_master <- rbind(
 # plot(st_centroid(rxfire, of), add = T, pch = 3, size = 5)
 # plot(tmp)
 # st_point_on_surface(rxfire)
-temp <- blanding_fire
+temp <- blanding_fires
 temp$FID <- seq(1,nrow(temp),1)
 # temp1 <- gCentroid(temp, byid = T)
 #
