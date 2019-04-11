@@ -2284,6 +2284,7 @@ cogon_data <- left_join(
       cogon_data_import %>% 
             mutate(visit_date = lubridate::ymd(date)),
       select(plot_visit_data, installation, visit_date, plot_id, years_since_fire, inst_name))
+
 ggplot(cogon_data, 
        aes(years_since_fire, tiller_density)) +
       geom_point(aes(color = inst_name), size = 2, position = "jitter") +
