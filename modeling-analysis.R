@@ -16,38 +16,39 @@ library(piecewiseSEM)
 # library(glmmTMB)
 # # install.packages("GLMMadaptive")
 # library(GLMMadaptive)
-#
-#
-# ## Model using GLMMadaptive ####
+
+
+## Model using GLMMadaptive ####
 # set.seed(1234)
 # n <- 100 # number of subjects
 # K <- 8 # number of measurements per subject
 # t_max <- 5 # maximum follow-up time
-#
-# # we constuct a data frame with the design:
-# # everyone has a baseline measurment, and then measurements at random follow-up times
+
+## we constuct a data frame with the design:
+## everyone has a baseline measurment, and then measurements at random follow-up times
 # DF <- data.frame(id = rep(seq_len(n), each = K),
 #                  time = c(replicate(n, c(0, sort(runif(K - 1, 0, t_max))))),
 #                  sex = rep(gl(2, n/2, labels = c("male", "female")), each = K))
-#
-# # design matrices for the fixed and random effects non-zero part
+
+## design matrices for the fixed and random effects non-zero part
 # X <- model.matrix(~ sex * time, data = DF)
 # Z <- model.matrix(~ 1, data = DF)
 # # design matrices for the fixed and random effects zero part
 # X_zi <- model.matrix(~ sex, data = DF)
 # Z_zi <- model.matrix(~ 1, data = DF)
-#
+
 # betas <- c(1.5, 0.05, 0.05, -0.03) # fixed effects coefficients non-zero part
 # shape <- 2 # shape/size parameter of the negative binomial distribution
 # gammas <- c(-1.5, 0.5) # fixed effects coefficients zero part
 # D11 <- 0.5 # variance of random intercepts non-zero part
 # D22 <- 0.4 # variance of random intercepts zero part
-#
-# # we simulate random effects
+
+## we simulate random effects
 # b <- cbind(rnorm(n, sd = sqrt(D11)), rnorm(n, sd = sqrt(D22)))
 # # linear predictor non-zero part
 # eta_y <- as.vector(X %*% betas + rowSums(Z * b[DF$id, 1, drop = FALSE]))
-# # linear predictor zero part
+
+## linear predictor zero part
 # eta_zi <- as.vector(X_zi %*% gammas + rowSums(Z_zi * b[DF$id, 2, drop = FALSE]))
 # # we simulate negative binomial longitudinal data
 # DF$y <- rnbinom(n * K, size = shape, mu = exp(eta_y))
@@ -73,18 +74,14 @@ library(piecewiseSEM)
 # fm1
 # zip_glmm
 # zip_gam
-#
-#
-#
-#
+
+
 # nbgam2 <- gam(count ~ spp * mined + s(site, bs = "re"), data = Salamanders,
 #               family = nb, method = "ML")
 # nbm2 <- glmmTMB(count ~ spp * mined + (1 | site), data = Salamanders,
 #                 family = nbinom2)
-#
-#
-#
-# ###
+
+
 
 ## Load SERDP data ####
 plotlevel_data <- read_csv("data/all_plotlevel_data.csv")
