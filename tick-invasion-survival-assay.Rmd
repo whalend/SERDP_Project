@@ -68,6 +68,15 @@ To examine the combined effects of invasions and fire intensity on tick mortalit
 
 The experimental burns all covered at least 75% of the plot area with most plots having >90% area burned. The invasive dominated plots all had >95% area burned. Overall tick mortality was ~98%, with 100% mortality in invaded plots and 95% mortality in native plots. One bag of ticks was untouched by fire (95% mortality) in a plot with native vegetation and no pine tree cover contributing dried needles to the fine fuel load.
 
+```{r survival analysis}
+
+# data(lung, package = "survival")
+# sf.lung <- survival::survfit(Surv(time, status) ~ 1, data = lung)
+# GGally::ggsurv(sf.lung)
+
+```
+
+
 
 # Experimental Design - Effects of interaction of plant invasion and fire on microclimate suitability (2019)
 
