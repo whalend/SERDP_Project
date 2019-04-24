@@ -435,11 +435,11 @@ ggsave(plot = avg_days_temp_rh_boxplot, "figures/tick-survival-assay/avg_days_te
 
 # Drews graphs ####
 
-nymph_survival_all_time <- ggplot(data = tick_survival) +
+nymph_survival_all_time <- ggplot(data = filter(tick_survival, life_stage=="nymph")) +
       geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
 
-      stat_summary(aes(days, nymph_survival, fill = Invaded, color = Invaded),fun.data = mean_se, geom = "pointrange") +
-      stat_smooth(aes(days, nymph_survival, fill = Invaded, color = Invaded), se = T, alpha = .2) +
+      stat_summary(aes(days, survival, fill = Invaded, color = Invaded),fun.data = mean_se, geom = "pointrange") +
+      stat_smooth(aes(days, survival, fill = Invaded, color = Invaded), se = T, alpha = .2) +
       invasion_color +
       invasion_fill +
       def_theme +
@@ -499,12 +499,12 @@ tick_survival_all_time <- cowplot::plot_grid(nymph_survival_all_time,
 
 # Stack all life stages ####
 
-avg_survival <- tick_survival_long %>%
+avg_survival <- tick_survival %>%
       group_by(days, Invaded, life_stage) %>%
       summarise(avg_surv = mean(survival))
 
 all_stages_stacked <- ggplot(
-      data = tick_survival_long,
+      data = tick_survival,
       aes(days, survival*100, shape = life_stage, color = Invaded)
       ) +
 
@@ -994,7 +994,7 @@ humid_above <- ggplot(data = humidity_intervals) +
 
 humid_bw <- ggplot(data = humidity_intervals) +
   #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
-  
+
   stat_summary(aes(days, minutes_bw_80_82, fill = status, color = status),fun.data = mean_se, geom = "pointrange") +
   #stat_smooth(aes(days, minutes_above_82, fill = status, color = status), se = T, alpha = .2) +
   invasion_color +
@@ -1013,7 +1013,7 @@ humid_bw <- ggplot(data = humidity_intervals) +
 
 humid_below <- ggplot(data = humidity_intervals) +
   #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=0.20) +
-  
+
   stat_summary(aes(days, minutes_below_80, fill = status, color = status),fun.data = mean_se, geom = "pointrange") +
   #stat_smooth(aes(days, minutes_above_82, fill = status, color = status), se = T, alpha = .2) +
   invasion_color +
