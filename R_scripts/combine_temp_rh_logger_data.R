@@ -34,7 +34,9 @@ for(f in file_list){
 head(df1)
 tail(df1)
 unique(df1$logger_id)
+View(df1)
 summary(df1)
+#tail(filter(df1, date == "2019-05-23"))
 df1 <- filter(df1, is.na(tempC)==FALSE)# remove NA rows from data
 
 write_csv(df1, "data/processed_data/tick_survival_combined_temperature_rh.csv")
