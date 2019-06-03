@@ -215,6 +215,8 @@ humidity_minutes_by_logger <- left_join(test1, temp_rh_humidity_testing_below_80
 
 humidity_minutes_by_logger[is.na(humidity_minutes_by_logger)] <- 0
 
+write_csv(humidity_minutes_by_logger, "data/processed_data/humidity_80_82_test.csv")
+
 test34 <- humidity_minutes_by_logger %>% 
   group_by(status) %>% 
   summarise(mean_above = mean(minutes_above_82),
