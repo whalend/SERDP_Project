@@ -46,7 +46,8 @@ temp_rh_data <- left_join(temp_rh_data_grouped, tick_survival)
 scaleFUN <- function(x) sprintf("%.1f", x)
 
 max_temp_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymax_tempC, color = status)) +
-      geom_smooth(aes(fill = status, color = status), se = T, method = "lm", alpha = .2) +
+      geom_smooth(aes(fill = status, color = status), se = T, method = "lm",
+                  alpha = .2) +
       geom_point(aes(color = status)) +
       #geom_hline(yintercept = 35, linetype = "solid", color = "gray") +
        #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=.2) +
@@ -59,7 +60,7 @@ max_temp_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymax_tempC, 
       #scale_x_continuous(limits = c(0, 306)) +
   #scale_x_continuous(breaks = c(0, 50, 100, 150, 200, 250, 300)) +
   expand_limits(x = 0, y = 0) +
-  scale_x_continuous(expand = c(0,0), limits = c(0,360), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
+  scale_x_continuous(expand = c(0,0), limits = c(0,336), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
   scale_y_continuous(expand = c(0,0), limits = c(5, 44), breaks = c(5, 10, 15, 20, 25, 30, 35, 40)) +
       guides(fill=FALSE, color=FALSE) +
       def_theme +
@@ -82,12 +83,12 @@ min_rh_all_time <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymin_rh, color
       xlab("Days") +
   expand_limits(x = 0, y = 0) +
   scale_y_continuous(expand = c(0,0), limits = c(30, 102), breaks = c(30, 40, 50,60,70,80,90,100)) +
-  scale_x_continuous(expand = c(0,0), limits = c(0, 360), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
+  scale_x_continuous(expand = c(0,0), limits = c(0, 350), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
       guides(fill=FALSE, color=FALSE) +
       def_theme +
       NULL
 
-ggsave(plot = min_rh_all_time, height = 7, width = 7, "figures/tick-survival-assay/min_rh_all_time.png")
+ggsave(plot = min_rh_all_time, height = 7, width = 7, "figures/tick-survival-assay/min_rh_all_time2.png")
 
 ##### blank for drew####
 min_rh_all_time_blank <- ggplot(temp_rh_data_grouped, aes(days, avg_dailymin_rh, color = status)) +
@@ -1092,9 +1093,10 @@ humidity_test_75_above <- ggplot(humid_75, aes(days, minutes_above_85, color = s
   ggtitle(label = "Minutes above 85 % RH")  +
   #theme(plot.title = element_text(hjust = 0.5)) +
   #scale_y_continuous(limits = c(0, 1 )) +
-  expand_limits(x = 0, y = 0) +
-  scale_x_continuous(expand = c(0,0), limits = c(0,360), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
-  scale_y_continuous(expand = c(0,0), limits = c(0,1450), breaks = c(0, 500, 1000, 1440)) +
+  #expand_limits(x = 0, y = 0) +
+  geom_hline(yintercept = 720, linetype = "dashed") +
+  scale_x_continuous(limits = c(0,360), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
+  scale_y_continuous(limits = c(0,1440), breaks = c(0, 500, 1000, 1400)) +
   NULL
 
 ggsave(plot = humidity_test_75_above, height = 7, width = 7, "figures/tick-survival-assay/humidity_test_75_above.png")
@@ -1110,9 +1112,10 @@ humidity_test_75_bw <- ggplot(humid_75, aes(days, minutes_bw_75_85, color = stat
   def_theme +
   guides(fill=FALSE, color=FALSE) +
   ggtitle(label = "Minutes between 75-85% RH")  +
-  expand_limits(x = 0, y = 0) +
-  scale_x_continuous(expand = c(0,0), limits = c(0,360), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
-  scale_y_continuous(expand = c(0,0), limits = c(0,1450), breaks = c(0, 500, 1000, 1440)) +
+  #expand_limits(x = 0, y = 0) +
+  geom_hline(yintercept = 720, linetype = "dashed") +
+  scale_x_continuous(limits = c(0,350), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
+  scale_y_continuous(limits = c(0,1440), breaks = c(0, 500, 1000, 1400)) +
   #theme(plot.title = element_text(hjust = 0.5)) +
   #scale_y_continuous(limits = c(0, 1 )) +
   NULL
@@ -1127,9 +1130,10 @@ humidity_test_75_below <- ggplot(humid_75, aes(days, minutes_below_75, color = s
   invasion_fill +
   ylab("Minutes below 75% RH") +
   xlab("Days") +
-  expand_limits(x = 0, y = 0) +
-  scale_x_continuous(expand = c(0,0), limits = c(0,360), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
-  scale_y_continuous(expand = c(0,0), limits = c(0,1450), breaks = c(0, 500, 1000, 1440)) +
+  #expand_limits(x = 0, y = 0) +
+  scale_x_continuous(limits = c(0,360), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
+  scale_y_continuous(limits = c(0,1440), breaks = c(0, 500, 1000, 1400)) +
+  geom_hline(yintercept = 720, linetype = "dashed") +
   def_theme +
   guides(fill=FALSE, color=FALSE) +
   ggtitle(label = "Minutes below 75 % RH")  +
