@@ -1,5 +1,6 @@
 ---
 title: "Tick Survival Assay - Invaded vs. Uninvaded"
+author: "Brian F. Allan, Steven Cabrera, Whalen W. Dillon, S. Luke Flory, Allison Gardner, Drew T. Hiatt"
 output:
   word_document: default
   pdf_document: default
@@ -27,7 +28,7 @@ library(RefManageR)
 
 *Background from proposal*  
 
-Recent studies demonstrate that invasive plants can alter TBD risk via both direct effects on tick survival and indirect effects mediated by tick hosts. For example, *Microstegium vimineum* has been shown experimentally to reduce survival of *A. americanum* and *Dermacentor variabilis* (American dog tick) relative to native vegetation `r citep("Civitello 2008 Journal of Medical Entomology")`; conversely the removal of invasive *Berberis thunbergii* (Japanese barberry) significantly reduces the survival of *I. scapularis* `r citep("10.1603/EN10131")`. Thus both positive and negative direct effects of invasive plants on tick survival have the potential to influence tick population dynamics. There is also growing evidence of indirect effects mediated by host responses to plant invasions, including increased infestation of *Peromyscus leucopus* (white-footed mice) by *I. scapularis* in mixed stands of invasive shrubs `r citep(list("10.1603/0022-2585(2006)43[1142:DBREUA]2.0.CO;2", "10.1603/022.038.0404"))` and increased abundance of *A. americanum* due to attraction of WTD to dense thickets of *Lonicera maackii* (Amur honeysuckle) `r citep("10.1073/pnas.1008362107")`.
+Recent studies demonstrate that invasive plants can alter TBD risk via both direct effects on tick survival and indirect effects mediated by tick hosts. For example, *Microstegium vimineum* has been shown experimentally to reduce survival of *Amblyomma americanum* and *Dermacentor variabilis* (American dog tick) relative to native vegetation `r citep("Civitello 2008 Journal of Medical Entomology")`; conversely the removal of invasive *Berberis thunbergii* (Japanese barberry) significantly reduces the survival of *I. scapularis* `r citep("10.1603/EN10131")`. Thus both positive and negative direct effects of invasive plants on tick survival have the potential to influence tick population dynamics. There is also growing evidence of indirect effects mediated by host responses to plant invasions, including increased infestation of *Peromyscus leucopus* (white-footed mice) by *I. scapularis* in mixed stands of invasive shrubs `r citep(list("10.1603/0022-2585(2006)43[1142:DBREUA]2.0.CO;2", "10.1603/022.038.0404"))` and increased abundance of *A. americanum* due to attraction of WTD to dense thickets of *Lonicera maackii* (Amur honeysuckle) `r citep("10.1073/pnas.1008362107")`.
 
 **No ecological studies have addressed the effects of plant invasions and potential interactions with climate change or fire regimes for TBD risk.**
 
@@ -38,13 +39,23 @@ We will perform a second assay during 2019 to determine the effects of fire, and
 
 # Experimental Design - Plant invasion & microclimate suitability (2018)
 
-For this assay we will deploy **1** mesh bag containing **10 nymph** and **10 adult** life stage *A. americanum* ticks in **12** invaded and **12** uninvaded plots (1 m x 1 m) in a pine dominated forest habitat. ~~We aim to identify forests with invaded and uninvaded habitat that were last burned during the past 12-24 months.~~
+## Site Description
 
-Each mesh bag will be partially buried under the existing litter and protected from wildlife predation by a cage made of hardware cloth. Bags were examined weekly to determine the number of nymphs and adults surviving until all ticks succumbed to desiccation. 
+The study site was located in Alachua, FL, on a private landowner's property off FL State Road 121 (29°54'05"N, 82°25'20"W). The site is a longleaf pine (*Pinus palustris*) dominated forest with distinct invaded and uninvaded habitat. There is a substanstial and dense cogongrass (*Imperata cylindrica*) invasion (X m x X m) on the property along the roadside, surrounded on all other sides by an uninvaded area. The uninvaded habitat (X m x X m) features a typical native longleaf pine ecosystem. The native plant community includes wiregrass (*Aristida stricta*), common dewberry (*Rubus flagellaris*), and hickory (*Carya sp.*), and *Andropogon sp.* grasses.
 
-We will collect microclimate data by placing a temperature/relative humidity logger adjacent to each mesh bag. Each logger was housed in a capped 18-inch length of 1.5 inch diameter PVC pipe to protect it from rainfall and direct sunlight. Holes were drilled around the bottom six inches of the pipe to allow greater airflow and better reflect ambient temperature and relative humidity. The temperature/RH logger and tick cage were secured in place by wiring them to a piece of rebar sunk Xinches into the ground.
+## Vegetation Sampling
 
-In each plot area, we collected data on understory vegetation composition (species, functional groups), stem density, and cover of vegetation, litter, and bare ground. We also measured litter depth, vegetation height, and quantified the overstory canopy cover.
+At each of the 24 plots, the plant communities were surveyed within 1 m x 1 m quadrats on the launch day. Data was collected on herbaceous plant height, stem density, litter percent cover, bare ground percent, litter depth, and overstory canopy cover. In addition, light data was obtained at each of the plots using a light bar (xxx type from xxx place) to assess the light availability at ground level where the ticks were placed. 
+
+## Experimental Setup
+
+A total of 24 plots (1 m x 1 m) were established on the property equally spaced approximately X m apart, 12 invaded and 12 uninvaded. At the center of each plot, 0.1 mm? mesh bags were deployed containing **10 nymph**, **5 female adult**, and **5 male adult** life stage *Amblyomma americanum* ticks (reared at National Tick Research and Educational Resource, Department of Entomology and Plant Pathology, Oklahoma State University, Stillwater, OK). The bags were knotted tightly at one end to minimize chance of escape by the ticks. Cylindrical wire mesh cylindrical 0.5 m in height were constructed with lids to contain the mesh bags and deter from wildlife predation and scavengers. Each mesh bag containing ticks was stood up vertically at the base of the litter layer and tied to a flag to mimic natural questing behavior. Microclimate data was collected by placing the temperature/relative humidity logger (HOBO U23 Pro v2, Onset Computer Corporation, Bourne, MA) adjacent to each cage setup. Each logger was housed in a capped 18-inch length of 1.5 inch diameter PVC pipe to protect it from rainfall and direct sunlight. Holes were drilled on four sides six inches apart along the length of the pipe to allow greater airflow and better reflect ambient temperature and relative humidity. The temperature/relative humidity data loggers collected time points of the environmental conditions every five minutes during the full length of the study. Data was transfered off the loggers every 60 days to clear the memory and ensure proper functioning continued. The temperature/RH logger and tick cage were secured vertically in place by wiring them to a piece of rebar sunk six inches into the ground.
+
+## Tick Survival
+
+The mesh bags containing *Amblyomma americanum* ticks within the wire cages complete with tempature/relative humidity loggers were launched at all plots on 21 June 2018. Bags were examined approximately every 10-14 days and after major weather events (dramatic changes in temperature or rainfall) to determine the number of nymphs and adults surviving. At each visit, bags were removed from the cages but not opened. The survival of each individual tick was determined by assessing their reponse to stimulation. Ticks were blown on to release CO_2_ to see any natural tick questing responses to an environmental stimulus. Ticks were also pressed down against a surface (pinching by fingers or clipboards) in attempt to see any responses. Any signs of movement qualified the tick as living. If there was no reponse by the tick, it was marked as dead and continued to be monitored in subsequent visits to assure the previous mortality designation was correct. After each bag was processed, they were placed vertically back into the cages attached to the flag to remain upright. Visits continued to the site until XXXX date when all ticks succumbed to desiccation.
+
+## Tick Survial Analysis
 
 Survival results were analyzed using Cox proportional hazards regression models.
 
@@ -56,6 +67,15 @@ To examine the combined effects of invasions and fire intensity on tick mortalit
 ## Results
 
 The experimental burns all covered at least 75% of the plot area with most plots having >90% area burned. The invasive dominated plots all had >95% area burned. Overall tick mortality was ~98%, with 100% mortality in invaded plots and 95% mortality in native plots. One bag of ticks was untouched by fire (95% mortality) in a plot with native vegetation and no pine tree cover contributing dried needles to the fine fuel load.
+
+```{r survival analysis}
+
+# data(lung, package = "survival")
+# sf.lung <- survival::survfit(Surv(time, status) ~ 1, data = lung)
+# GGally::ggsurv(sf.lung)
+
+```
+
 
 
 # Experimental Design - Effects of interaction of plant invasion and fire on microclimate suitability (2019)
@@ -70,6 +90,13 @@ Similar to 2018 design, but will explicitly address the time since fire (will ex
 - PVC housings as solar shield for loggers/probes
 - Rebar to suspend PVC housing allowing probe to "float"
 - Flags to mark plots and mesh bag locations
+
+
+# Compare biomass differences of invaded vs. uninvaded with the field data
+Auxiliary data collection of tick abundances in invasions especially. 
+
+If abundance is similar/same as uninvaded then increase in risk due to longer survival; if shorter then the effect on risk could be equivocal.
+
 
 # References
 ```{r write_citations, cache=FALSE, include=FALSE}

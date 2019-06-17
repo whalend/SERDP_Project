@@ -1,0 +1,166 @@
+---
+title: "interim-report-review"
+author: "Steven Cabrera"
+date: "`r Sys.Date()`"
+output: 
+  word_document:
+        toc: yes
+        reference_docx: interim-report-stylingbreaks1.docx
+  html_document:
+        toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Longleaf Pine, Fire, & Cogongrass
+
+Longleaf pine (*Pinus palustris*) was at one point the one of the most ecologically significant tree species in the southern United States. A typical longleaf pine forest can be described as open-canpoy, fire-dependant forests with a herbaceous ground layer littered with grasses and diverse showy forbs. Longleaf pine forests are some of the most diverse natural areas in North America, with up to 40 vascular plant species in 1m^2^ (Walker and Peet 1983). Before major logging and industrial efforts, longleaf pine forests dominated the southeast covering approximately 92 million acres (Frost 2007). The longleaf pine's native range stretched along the Gulf and Atlantic coasts from Eastern Texas through to Virginia, and as far south as Central Florida (Boyer 1990). By 2005, an estimated 2.6 million acres of longleaf pine forest remained in its native range (Frost 2006). After decades of conversion  to agricultural lands and industrial urban developments, the longleaf pine is one of the most endangered ecosystems in the U.S. (Noss 1995). 
+
+FIGURE OF HISTORICAL AND CURRENT DISTRIBUTION (White et al 1998, now Structure and Composition of Historical Longleaf Pine Ecosystems
+in Mississippi, USA
+Brice B. Hanberry1 & Keith Coursey2 & John S. Kush3 )
+
+Prescribed fire has been established as an important ecological process for the restoration and maintenance of longleaf pine systems. Frequent fire, every 1-10 years (Chapman 1932), are vital to reducing fuel loads and promoting understory diversity (Kirkman 2001). Regularly burned and maintained longleaf forests provide essential habitat for many threated and endangered wildlife species, including the gopher tortoise (*Gopherus polyphemus*), Eastern indigo snake (*Drymarchon couperi*), and red-cockaded woodpecker (*Picoides borealis*) (Wade et. al 1989). Tree morality can be an issue when reintroducing fire to long-unburned pine forests. Drier duff layers (less than 55% VMC) during fire exhibit the most consumption of duff and can attribute to up to 20% overstory longleaf pine mortality in historically fire excluded areas (Varner et. al 2007). When restorting fire to unburned forests, Varner et. al arugues to implement burn prescriptions at regular intervals when to include effects of duff consumption to minimize tree mortality. Without regular fire in this ecosystem, longleaf forests can suffer by invasion of hardwoods and shrubs, resulting in rapid loss of herbaceous diversity (Christensen 1981).
+
+However, disturbance events such as fire, hurricanes, and harvesting have been shown to increase risk of invasion by exotic plants. Cogongrass (*Imperata cylindrica*) is a cosmopolitan grass species that is a weedy pest in at least 73 countries, and is especially problematic in the southeastern U.S. where it spreads and dominates in disturbed sites (MacDonald 2004, Holm et al. 1977). It is a successful invader in longleaf pine forests due to its extensive rhizome system, adaptation to poor soils, drought tolerance, and fire adaptability (Holm et al., 1977). Cogongrass rhizomes have been reported to account for 60% of plant's total biomass and contribute to its quick regeneration after burning or cutting (Sajise 1976). In areas where cogongrass is already present, areas that have been burned or have had greater biomass removal showed more cogongrass patches and larger patch size (Holzmueller 2012). Two years post-burn, cogongrass production was significantly greater in terms of linear growth and tiller density (Yager et al. 2010). When established, cogongrass will outcompete native vegetation creating a large monotypic understory with low species diversity and richness (Brewer 2008). Cogongrass has been shown to exhibit positive feedback mechanisms with fire by increasing fine fuel loads (Platt and Gottschalk 2001) and fire severity that is detrimental to southeastern pine forests (Lippincott 2000, Matlack 2002). The species can also alter typical fire cycles of southern forests. When burned, the subsequent fires in sites where cogongrass is dominant showed higher maxmimum temperatures at greater heights, with increased mortality of longleaf pines which is typically fire-tolerant (Lippincott 2000). Lippincott's research found cogongrass to burn at a maximum temperature of 458 C with a mean of 260.9 ± 13.7, and native areas burned at a maximum of 318 C with a mean of 218.3 ± 14.5 in Florida sandhill. As a result, the spread of cogongrass is responsible for the loss of thousands of hectares of native habitat in southeastern U.S. forested lands (MacDonald 2004). 
+
+##### end
+
+
+```{r, reference list, eval = F}
+
+Boyer, W. D. (1990). Pinus palustris Mill. Silvics of North America, 1, 405-412.
+Brewer, S. (2008). Declines in plant species richness and endemic plant species in longleaf pine savannas invaded by Imperata cylindrica. Biological Invasions, 10(8), 1257-1264.
+Chapman, H. H. (1932). Is the longleaf type a climax?. Ecology, 13(4), 328-334.
+Christensen, N. L. (1981). Fire regimes in southeastern ecosystems. Fire regimes and ecosystem properties, 112, 136.
+Frost, C. (2007). History and future of the longleaf pine ecosystem. In The longleaf pine ecosystem (pp. 9-48). Springer, New York, NY.
+Hanberry, B. B., Coursey, K., & Kush, J. S. (2018). Structure and composition of historical longleaf pine ecosystems in Mississippi, USA. Human ecology, 46(2), 241-248.
+Holm, L. G., Plucknett, D. L., Pancho, J. V., & Herberger, J. P. (1977). The world's worst weeds. Distribution and biology. University press of Hawaii.
+Holzmueller, E. J., & Jose, S. (2012). Response of the invasive grass Imperata cylindrica to disturbance in the southeastern forests, USA. Forests, 3(4), 853-863.
+Kirkman, L. K., Mitchell, R. J., Helton, R. C., & Drew, M. B. (2001). Productivity and species richness across an environmental gradient in a fire‐dependent ecosystem. American Journal of Botany, 88(11), 2119-2128.
+Lippincott, C. L. (2000). Effects of Imperata cylindrica(L.) Beauv.(Cogongrass) Invasion on Fire Regime in Florida Sandhill(USA). Natural Areas Journal, 20(2), 140-149.
+MacDonald, G. E. (2004). Cogongrass (Imperata cylindrica)—biology, ecology, and management. Critical Reviews in Plant Sciences, 23(5), 367-380.
+Matlack, G. R. (2002). Exotic plant species in Mississippi, USA: Critical issues in management and research. Natural Areas Journal, 22(3), 241-247.
+Noss, R. F., LaRoe, E. T., & Scott, J. M. (1995). Endangered ecosystems of the United States: a preliminary assessment of loss and degradation (Vol. 28, pp. 1-58). Washington, DC, USA: US Department of the Interior, National Biological Service.
+Platt, W. J., & Gottschalk, R. M. (2001). Effects of exotic grasses on potential fine fuel loads in the groundcover of south Florida slash pine savannas. International Journal of Wildland Fire, 10(2), 155-159.
+Sajise, P. E. (1973). Evaluation of cogon (Imperata cylindrica (L.) Beauv.) as a serial stage in Philippine vegetational succession: I. The cogonal serial stage and plant succession. II. Autecological studies on cogon.
+Varner, J. M., Hiers, J. K., Ottmar, R. D., Gordon, D. R., Putz, F. E., & Wade, D. D. (2007). Overstory tree mortality resulting from reintroducing fire to long-unburned longleaf pine forests: the importance of duff moisture. Canadian Journal of Forest Research, 37(8), 1349-1358.
+Wade, D. D., Lunsford, J. D., Dixon, M. J., & Mobley, H. E. (1989). A guide for prescribed fire in southern forests. Technical publication R8-TP-US Department of Agriculture, Forest Service, Southern Region (USA).
+Walker, J., & Peet, R. K. (1984). Composition and species diversity of pine-wiregrass savannas of the Green Swamp, North Carolina. Vegetatio, 55(3), 163-179.
+
+
+
+
+
+```
+
+```{r, echo = F, eval = F}
+
+
+*introduce long leaf pine ecosystem, ideal conditions
+*plant invasions, cogongrass changes conditions
+*ticks in southeastern US, TBDs growing risk
+*prescribed fire as a method to manage invasions and TBDs
+*invasion/fire effects on host and tick abundance
+
+and is responsible for thousands of hectares of lost native habitat in the southeastern U.S. (Gregory E. MacDonald bio mang ecol)
+
+suggest cogongrass can
+adapt to changes in light levels through changes in specific leaf
+area and leaf area ratio and could tolerate a 50% reduction in
+sunlight. Further studies by Gaffney (1996) and Ramsey et al.
+(2003) showed that cogongrass has a light compensation point
+of 32 to 35 µ mol · m−2 · s−1, indicating the ability to survive as
+an understory species. This would explain its ability to rapidly
+invade deforested areas and persist in plantation crops. (mac)
+
+Once established, cogongrass outcompetes native vegetation,
+forming large monotypic expanses with extremely low species
+diversity and richness. MAC
+
+add in some lippincott Lippincott (2000) found that cogongrass
+introduced and altered normal fire cycles of southeastern U.S.
+natural ecosystems (sandhill communities). The fires resulting
+from swards of cogongrass had higher maximum temperatures
+at greater heights and increased fire mortality of long-leaf pine,
+normally a fire-tolerant species
+
+In the southeastern United States, the value of prescribed burning is particularly apparent where forests are dominated by fire-adapted or fire–dependent tree species, such as longleaf pines (Pinus palustris). Specifically, burns reduce fuel load and cause regeneration and diversification of the understory of forests [11], [13]–[16]. In addition, the immediate regeneration of understory vegetation after a burn and the long-term density and diversity of understory vegetation within regularly burned habitat provides resources for many wildlife species including the endangered or threatened gopher tortoise (Gopherus polyphemus), Eastern indigo snake (Drymarchon couperi), and red-cockaded woodpecker (Picoides borealis) [11], [15], [17]–[18].
+
+In particular, longleaf pine forests, which are typically open, fire-dependent, communities, are highly susceptible to cogongrass, which is a pyrogenic species. ENLOE
+
+Cogongrass exhibits positive feedback mechanisms to fire and increases fine fuel load and fire severity in a manner that is exceedingly detrimental to southeastern pine forests (Lippincott 2000, Matlack 2002)
+
+Longleaf pine forests are an historic component of the southeastern United States and are estimated to have covered roughly 37 million ha prior to European settlement (Frost 1993). Longleaf forests are best described as fire-dependent, open-canopy forests with high species richness in the understory (Peet and Allard 1993). Historic fire return intervals for longleaf forests have been estimated at 1 to 10 yr, which strongly promotes high herbaceous richness and diversity (Chapman 1932). Removal of fire from longleaf forests results in a rapid invasion by hardwood trees and shrubs and loss of herbaceous diversity (Christensen 1981). This type of fire- dependent system is very susceptible to cogongrass invasion (Brewer 2008; Yager et al. 2010) and active, aggressive management is needed for control.
+According to Frost (2006), excluding recently established
+plantations; longleaf pine had been extirpated from all but
+2.6 million acres or about 2.2 percent of its original range by
+2005. 
+
+Finally, prescribed fire is a critical tool for thatch removal, which is often a prerequisite for revegetation (DiTomaso et al. 2006; Seymour et al. 2008). Heavy cogongrass thatch may suppress seeding success by reducing soil seed contact, successful germination, and establishment (Lippincott 1997).
+
+Tick-borne diseases (TBDs) represent a major public health threat in North America
+
+to explore several of the predicted consequences of climate change on fire regimes and plant communities, and their interactions with wildlife, for human risk of exposure to TBDs in the southeastern U.S.
+
+"The increased connectivity of the global human population has amplified the frequency and effect of biological invasions and disease outbreaks." 
+
+template target points::
+
+Our specific objectives are to:
+
+1. Evaluate the interactions between fire and plant invasions spanning a gradient in fire management, invasive plant distribution and abundance, and climatic conditions across the southeastern U.S.
+
+2. Quantify the effects of fire and plant invasions and their interactions on wildlife abundance, tick abundance, tick infection rates, and TBD risk to humans.
+
+3. Calibrate a spatially explicit model of TBD risk in response to fire-invasion interactions   and examine the responses of fire, plant invasions, wildlife, TBD risk, using simulations of    climate change scenarios.
+
+```
+
+
+```{r, eval = F, echo = F} 
+
+stuff on fire tree mortality from varner disseratation 2005
+
+
+Hypothesized mechanisms for mortality of large trees after reintroduction of fire
+involve the direct effects of fire, such as root damage (Ryan and Frandsen 1991, Swezy
+and Agee 1991); vascular tissue damage (Martin 1963, Ryan 2000); leaf scorch (Ryan
+2000, Menges and Deyrup 2001); or canopy damage (Menges and Deyrup 2001; Figure
+2-4). Increased insect and pathogen attack of fire-stressed trees has also been suggested
+as an indirect cause of post-fire mortality in these communities (Ostrosina et al. 1997,
+Ostrosina et al. 1999, Menges and Deyrup 2001).
+Where fires have been reintroduced, tree death is reportedly correlated with damage
+to canopy foliage and branch meristems (Herman 1954, van Wagner 1973, Wade and
+Johansen 1986, Menges and Deyrup 2001, McHugh et al. 2003). Foliage scorch is
+considered less stressful than foliage consumption, which is generally associated with
+damaged branch cambia (Wade and Johansen 1986). Foliage consumption has been
+correlated with fire-caused mortality of slash pine in the Southeast (Johansen and Wade
+1987, Menges and Deyrup 2001). Nevertheless, pine mortality after reintroduction of fire
+has been observed without canopy damage (Varner et al. 2000, Kush et al. 2004).
+Regardless, canopy damage is one of many stressors to a tree, exacerbating stem or root
+damage, and ultimately contributing to excessive pine mortality rates after reintroduction
+fires. 
+12
+Post-fire tree decline and mortality can also result from fire-caused root damage
+(Wade and Johansen 1986, Swezy and Agee 1991, Busse et al. 2000). Lateral roots of
+longleaf pines are concentrated in the top 30 cm of mineral soil (Heyward 1933,
+Wahlenberg 1946) and in long-unburned longleaf pine forests, numerous branch roots
+grow up into duff horizons (Gordon and Varner 2002). In frequently-burned pinelands,
+soil heating and resulting root mortality are negligible (e.g., Heyward 1938). With fire
+suppression and duff accumulation, in contrast, pine roots in duff and in the surface
+mineral soil can be heated, damaged, or consumed in long-duration smoldering fires
+where temperatures can exceed lethal values for hours (Flinn and Wein 1977, Wade and
+Johansen 1986). Smoldering fires spread three orders of magnitude slower than surface
+fires and are typically concentrated in the lower duff (Oa horizon) beneath a thermal
+blanket of overlying Oe material (Hungerford et al. 1995). Although localized and small,
+the smoldering front transmits lethal heat loads (hours > 60°C) to 10 to 20 cm deep in the
+mineral soil (J.M. Varner, unpublished data). A similar mechanism of duff root heating
+was proposed as a cause of tree death and decline in ponderosa pine stands (P.
+ponderosa; Swezy and Agee 1991, Busse et al. 2000). Given the potential physiological
+impairment posed by large-scale root heating and consumption, mechanisms involving
+root damage deserve further study. 
+```
+

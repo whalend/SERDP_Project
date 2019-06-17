@@ -72,7 +72,7 @@ fabio_blanding_50cm <- mutate(fabio_blanding_50cm, location = "50cm", probe_type
 # plot(fabio_blanding_50cm$time, fabio_blanding_50cm$tempC)
 
 #+ Load FABIO Burn Biomass Data ----
-fabio_burns <- read_csv("~/Dropbox (UF)/SERDP-Project/data/fabio-burns.csv")
+fabio_burns <- read_csv("data/raw_data/fires_data/fabio-burns.csv")
 fabio_burns$date <- as.Date(
       as.character(fabio_burns$date), format = "%Y%m%d")
 
@@ -831,73 +831,73 @@ ggplot(d2 %>% filter(litter_biomass==0), aes(biomass, s_abv150)) +
       theme_bw()
 
 #+ Load Flame Height Temperature Sensor Data -------------------------------
-flame1_0cm <- read_csv("data/fire_temperatures/bland-c-f1-0cm-20170706.csv")
+flame1_0cm <- read_csv("data/fire_temperatures_raw/bland-c-f1-0cm-20170706.csv")
 names(flame1_0cm) <- c("date","time","tempC")
 flame1_0cm <- mutate(flame1_0cm, location = "0cm", probe_type = "old")
-flame1_25cm <- read_csv("data/fire_temperatures/bland-c-f1-25cm-20170706.csv")
+flame1_25cm <- read_csv("data/fire_temperatures_raw/bland-c-f1-25cm-20170706.csv")
 names(flame1_25cm) <- c("date","time","tempC")
 flame1_25cm <- mutate(flame1_25cm, location = "25cm", probe_type = "old")
-flame1_50cm <- read_csv("data/fire_temperatures/bland-c-f1-50cm-20170706.csv")
+flame1_50cm <- read_csv("data/fire_temperatures_raw/bland-c-f1-50cm-20170706.csv")
 names(flame1_50cm) <- c("date","time","tempC")
 flame1_50cm <- mutate(flame1_50cm, location = "50cm", probe_type = "old")
 
-flame3_0cm <- read_csv("data/fire_temperatures/bland-c-f3-0cm-20170706.csv")
+flame3_0cm <- read_csv("data/fire_temperatures_raw/bland-c-f3-0cm-20170706.csv")
 names(flame3_0cm) <- c("date","time","tempC")
 flame3_0cm <- mutate(flame3_0cm, location = "0cm", probe_type = "old")
-flame3_25cm <- read_csv("data/fire_temperatures/bland-c-f3-25cm-20170706.csv")
+flame3_25cm <- read_csv("data/fire_temperatures_raw/bland-c-f3-25cm-20170706.csv")
 names(flame3_25cm) <- c("date","time","tempC")
 flame3_25cm <- mutate(flame3_25cm, location = "25cm", probe_type = "old")
-# flame3_50cm <- read_csv("data/fire_temperatures/bland-c-f3-50cm-20170706.csv")
+# flame3_50cm <- read_csv("data/fire_temperatures_raw/bland-c-f3-50cm-20170706.csv")
 # names(flame3_50cm) <- c("date","time","tempC")
 ## This logger had failure in correctly recording temperature.
 
-flame4_0cm <- read_csv("data/fire_temperatures/bland-c-f4-0cm-20170706.csv")
+flame4_0cm <- read_csv("data/fire_temperatures_raw/bland-c-f4-0cm-20170706.csv")
 names(flame4_0cm) <- c("date","time","tempC")
 flame4_0cm <- mutate(flame4_0cm, location = "0cm", probe_type = "old")
-flame4_25cm <- read_csv("data/fire_temperatures/bland-c-f4-25cm-20170706.csv")
+flame4_25cm <- read_csv("data/fire_temperatures_raw/bland-c-f4-25cm-20170706.csv")
 names(flame4_25cm) <- c("date","time","tempC")
 flame4_25cm <- mutate(flame4_0cm, location = "25cm", probe_type = "old")
-flame4_50cm <- read_csv("data/fire_temperatures/bland-c-f4-50cm-20170706.csv")
+flame4_50cm <- read_csv("data/fire_temperatures_raw/bland-c-f4-50cm-20170706.csv")
 names(flame4_50cm) <- c("date","time","tempC")
 flame4_50cm <- mutate(flame4_50cm, location = "50cm", probe_type = "old")
 
-flame5_0cm <- read_csv("data/fire_temperatures/bland-c-f5-0cm-20170706.csv")
+flame5_0cm <- read_csv("data/fire_temperatures_raw/bland-c-f5-0cm-20170706.csv")
 names(flame5_0cm) <- c("date","time","tempC")
 flame5_0cm <- mutate(flame5_0cm, location = "0cm", probe_type = "old")
-flame5_25cm <- read_csv("data/fire_temperatures/bland-c-f5-25cm-20170706.csv")
+flame5_25cm <- read_csv("data/fire_temperatures_raw/bland-c-f5-25cm-20170706.csv")
 names(flame5_25cm) <- c("date","time","tempC")
 flame5_25cm <- mutate(flame5_25cm, location = "25cm", probe_type = "old")
-flame5_50cm <- read_csv("data/fire_temperatures/bland-c-f5-50cm-20170706.csv")
+flame5_50cm <- read_csv("data/fire_temperatures_raw/bland-c-f5-50cm-20170706.csv")
 names(flame5_50cm) <- c("date","time","tempC")
 flame5_50cm <- mutate(flame5_50cm, location = "50cm", probe_type = "old")
 
-flame6_0cm <- read_csv("data/fire_temperatures/bland-c-f6-0cm-20170706.csv")
+flame6_0cm <- read_csv("data/fire_temperatures_raw/bland-c-f6-0cm-20170706.csv")
 names(flame6_0cm) <- c("date","time","tempC")
 flame6_0cm <- mutate(flame6_0cm, location = "0cm", probe_type = "old")
-flame6_25cm <- read_csv("data/fire_temperatures/bland-c-f6-25cm-20170706.csv")
+flame6_25cm <- read_csv("data/fire_temperatures_raw/bland-c-f6-25cm-20170706.csv")
 names(flame6_25cm) <- c("date","time","tempC")
 flame6_25cm <- mutate(flame6_25cm, location = "25cm", probe_type = "old")
-flame6_50cm <- read_csv("data/fire_temperatures/bland-c-f6-50cm-20170706.csv")
+flame6_50cm <- read_csv("data/fire_temperatures_raw/bland-c-f6-50cm-20170706.csv")
 names(flame6_50cm) <- c("date","time","tempC")
 flame6_50cm <- mutate(flame6_50cm, location = "50cm", probe_type = "old")
 
-flame7_0cm <- read_csv("data/fire_temperatures/bland-c-f7-0cm-20170706.csv")
+flame7_0cm <- read_csv("data/fire_temperatures_raw/bland-c-f7-0cm-20170706.csv")
 names(flame7_0cm) <- c("date","time","tempC")
 flame7_0cm <- mutate(flame7_0cm, location = "0cm", probe_type = "old")
-flame7_25cm <- read_csv("data/fire_temperatures/bland-c-f7-25cm-20170706.csv")
+flame7_25cm <- read_csv("data/fire_temperatures_raw/bland-c-f7-25cm-20170706.csv")
 names(flame7_25cm) <- c("date","time","tempC")
 flame7_25cm <- mutate(flame7_25cm, location = "25cm", probe_type = "old")
-flame7_50cm <- read_csv("data/fire_temperatures/bland-c-f7-50cm-20170706.csv")
+flame7_50cm <- read_csv("data/fire_temperatures_raw/bland-c-f7-50cm-20170706.csv")
 names(flame7_50cm) <- c("date","time","tempC")
 flame7_50cm <- mutate(flame7_50cm, location = "50cm", probe_type = "old")
 
-flame8_0cm <- read_csv("data/fire_temperatures/bland-c-f8-0cm-20170706.csv")
+flame8_0cm <- read_csv("data/fire_temperatures_raw/bland-c-f8-0cm-20170706.csv")
 names(flame8_0cm) <- c("date","time","tempC")
 flame8_0cm <- mutate(flame8_0cm, location = "0cm", probe_type = "old")
-flame8_25cm <- read_csv("data/fire_temperatures/bland-c-f8-25cm-20170706.csv")
+flame8_25cm <- read_csv("data/fire_temperatures_raw/bland-c-f8-25cm-20170706.csv")
 names(flame8_25cm) <- c("date","time","tempC")
 flame8_25cm <- mutate(flame8_25cm, location = "25cm", probe_type = "old")
-flame8_50cm <- read_csv("data/fire_temperatures/bland-c-f8-50cm-20170706.csv")
+flame8_50cm <- read_csv("data/fire_temperatures_raw/bland-c-f8-50cm-20170706.csv")
 names(flame8_50cm) <- c("date","time","tempC")
 flame8_50cm <- mutate(flame8_50cm, location = "50cm", probe_type = "old")
 
@@ -985,8 +985,8 @@ fabio_blanding_prescribe <- mutate(
 prescribed_fire_temps <- rbind(prescribed_fire_temps, fabio_blanding_prescribe)
 
 ggplot(prescribed_fire_temps, aes(time,tempC, color = id)) +
-      scale_color_brewer(palette = "Spectral", type = "div") +
-      geom_line(aes(linetype = location)) +
+      scale_color_viridis_d() +
+      geom_line() +
       theme_bw() +
       ggtitle("Temperatures from Camp Blanding Prescribed Fire")
 # flame 5 temperature sensors did not record anyting that looks like fire
