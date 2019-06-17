@@ -1,0 +1,19 @@
+"OPEN 5.3.2"
+"Fri May 24 2019 14:04:12"
+"Unit="	"PSC-895"
+"ComputeList="	"/User/Configs/Comps/Default"
+"BLCTable="	"/Sys/Lib/StdBLCTable"
+"LightSource="	"Sun+Sky"	1	0.19
+"LogFormat="	"/User/Configs/LogFormats/Std Output"
+"LogCodes="	-35	-21	-36	30	23	36	21	25	-33	-34	-32	-9	-10	-8	-1	-2	-4	-5	-14	-15	-7	-12	-13	-11	-65	-66	-72	-23
+"PromptList="	"/User/Configs/Prompts/Default (none)"
+"Stability= (CO2S 15s SLP<1)(H2OS 15s SLP<1)(Flow 15s SLP<1)"
+"14:04:23 this is a test"
+$STARTOFDATA$
+"Obs"	"HHMMSS"	"FTime"	"Photo"	"Cond"	"Ci"	"Trmmol"	"VpdL"	"Area"	"StmRat"	"BLCond"	"Tair"	"Tleaf"	"TBlk"	"CO2R"	"CO2S"	"H2OR"	"H2OS"	"RH_R"	"RH_S"	"Flow"	"PARi"	"PARo"	"Press"	"CsMch"	"HsMch"	"StableF"	"Status"
+"14:07:56 14:07:56"
+1	"14:08:12"	261.0	9.17	-0.00093	1.56E+04	-0.0315	3.35	6	1	2.84	31.55	30.74	31.63	316.01	305.02	10.761	10.724	23.53	23.44	500.0	-0	3	101.7	-114	-0.321	0.7	111105
+"14:11:19 Didn't match! Valve stuck or flow problem."
+2	"14:11:36"	465.0	33.4	-0.00248	2.12E+04	-0.0847	3.37	6	1	2.84	31.46	30.71	31.52	310.01	269.98	10.544	10.443	23.17	22.95	500.0	0	3	101.7	-114	-0.321	0.7	111105
+"14:13:31 Didn't match! Valve stuck or flow problem."
+3	"14:13:48"	597.0	11.8	-0.00219	8.68E+03	-0.0746	3.37	6	1	2.84	31.40	30.67	31.47	312.51	298.37	10.491	10.403	23.12	22.93	500.0	0	3	101.7	-114	-0.321	0.7	111105

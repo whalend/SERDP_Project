@@ -1,0 +1,3 @@
+LightSource= "6400-02B RedBlue #SI-1032" 1 0.16 -0.81
+AREA= 3.5
+StableDefs= "light-curve-stability"

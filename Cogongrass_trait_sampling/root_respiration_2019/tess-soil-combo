@@ -1,0 +1,12 @@
+"OPEN 5.3.2"
+"Fri May 31 2019 12:42:30"
+"Unit="	"PSC-895"
+"ComputeList="	"/User/Configs/Comps/Soil Efflux Eqns.LPL"
+"BLCTable="	"/Sys/Lib/StdBLCTable"
+"LightSource="	"Sun+Sky"	1	0.19
+"LogFormat="	"/User/Configs/LogFormats/Soil Efflux Log Fmt"
+"LogCodes="	-35	-21	-36	-104	310	311	320	302	303	306	304	321	322	323	324	300	301	330	331	305	307	308	-8	-2	-5	-9	-13	-11	-61	-23
+"PromptList="	"/User/Configs/Prompts/Soil Efflux Prompts"
+"Stability= (CO2S 15s SLP<1)(H2OS 15s SLP<1)(Flow 15s SLP<1)"
+$STARTOFDATA$
+"Obs"	"HHMMSS"	"FTime"	"Plot#"	"Mode"	"Smpls"	"EFFLUX"	"C2avg"	"Wavg"	"dc'/dt"	"Vtot"	"RHcmbr%"	"Tsoil_C"	"RHirga%"	"Tsch_C"	"dC/dt"	"dW/dt"	"R(C)m"	"R(C)b"	"InsDpth"	"Vbase"	"Area"	"TBlk"	"CO2S"	"H2OS"	"Tair"	"PARo"	"Press"	"uc_21_mV"	"Status"

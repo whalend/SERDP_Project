@@ -1,0 +1,16 @@
+"OPEN 5.3.2"
+"Wed May 22 2019 05:04:25"
+"Unit="	"PSC-895"
+"ComputeList="	"/User/Configs/Comps/Default"
+"BLCTable="	"/Sys/Lib/StdBLCTable"
+"LightSource="	"6400-02B RedBlue #SI-1032"	1	0.16
+"LogFormat="	"/User/Configs/LogFormats/Std Output"
+"LogCodes="	-35	-21	-36	30	23	36	21	25	-33	-34	-32	-9	-10	-8	-1	-2	-4	-5	-14	-15	-7	-12	-13	-11	-65	-66	-72	-23
+"PromptList="	"/User/Configs/Prompts/Default (none)"
+"Stability= (CO2S 60s SLP<1)(H2OS 60s SLP<1)(Flow 60s SLP<1)"
+"05:04:37 cut,day 2"
+$STARTOFDATA$
+"Obs"	"HHMMSS"	"FTime"	"Photo"	"Cond"	"Ci"	"Trmmol"	"VpdL"	"Area"	"StmRat"	"BLCond"	"Tair"	"Tleaf"	"TBlk"	"CO2R"	"CO2S"	"H2OR"	"H2OS"	"RH_R"	"RH_S"	"Flow"	"PARi"	"PARo"	"Press"	"CsMch"	"HsMch"	"StableF"	"Status"
+1	"05:19:15"	910.5	-28.9	0.0904	539	2.85	3.2	3.5	1	3.94	22.50	26.73	20.60	-0.47	33.14	-0.170	3.143	-0.63	11.66	299.7	1599	1	101.4	-3.16	0.268	0.3	111125
+2	"05:52:17"	2892.5	-0.778	-0.00684	262	-0.0935	1.35	3.5	1	3.94	22.57	24.01	22.24	451.08	452.03	16.294	16.186	60.19	59.80	299.8	1600	12	101.5	-3.16	0.268	1.0	111115
+"05:52:45 disregard. trash file"
