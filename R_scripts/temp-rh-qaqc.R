@@ -25,31 +25,24 @@ temp_rh_data <- temp_rh_data %>%
 ## Added invaded/native status and days since launch
 
 
-# Create seperate dataframes for native and invaded ####
-temp_rh_data_invaded <- temp_rh_data %>%
-      filter(status =="invaded")
+# Look at seperate dataframes for native and invaded ####
+temp_rh_data %>%
+      filter(status =="invaded") %>%
+      summary(.)
 
-temp_rh_data_native <- temp_rh_data %>%
-      filter(status =="native")
+temp_rh_data %>%
+      filter(status =="native") %>%
+      summary(.)
 
+temp_rh_data %>%
+      filter(status =="invaded", RH > 15) %>%
+      summary(.)
 
-summary(temp_rh_data_invaded)
-summary(temp_rh_data_native)
-
-temp_rh_data_invaded_filtered <- temp_rh_data_invaded %>%
-      filter(RH > 15)
-
-summary(temp_rh_data_invaded)
-summary(temp_rh_data_invaded_filtered)
+temp_rh_data %>%
+      filter(status =="native", RH > 15) %>%
+      summary(.)
 
 ## invaded 92.16 avg RH all included, 94.65 avg RH excluding < 15 RH
-
-temp_rh_data_native_filtered <- temp_rh_data_native %>%
-      filter(RH > 15)
-
-summary(temp_rh_data_native)
-summary(temp_rh_data_native_filtered)
-
 ## native 92.89 avg RH all included, 93.38 avg RH excluding < 15 RH
 
 messed_up_loggers <- temp_rh_data %>%
@@ -59,7 +52,7 @@ summary(messed_up_loggers)
 unique(messed_up_loggers$logger_id)
 
 ## RH < 10 at loggers 1, 2, and 19. Total of 13353 data points
-## Moves to loggeres 1, 2, 9, and 19 with RH < 15. Total of 14042 data points
+## Moves to loggers 1, 2, 9, and 19 with RH < 15. Total of 14042 data points
 
 # Logger 1 processing ####
 
@@ -78,6 +71,9 @@ logger_1 <- logger_1 %>%
       filter(RH > 15)
 
 summary(logger_1)
+
+rm(logger_1)
+rm(messed_up_logger_1)
 
 ## logger 1 jumps from 85.17 to 88.21 avg RH when removing < 15 RH
 
@@ -103,6 +99,9 @@ logger_2 <- logger_2 %>%
 
 summary(logger_2)
 
+rm(logger_2)
+rm(messed_up_logger_2)
+
 ## logger 2 is most messed up, avg RH jumps from 64.82 to 90.15 when removing < 15
 
 # Logger 9 processing ####
@@ -115,6 +114,9 @@ messed_up_logger_9 <- messed_up_loggers %>%
 
 summary(logger_9)
 summary(messed_up_logger_9)
+
+rm(logger_9)
+rm(messed_up_logger_9)
 
 ## Logger 19 processing ####
 
@@ -132,8 +134,12 @@ logger_19 <- logger_19 %>%
 
 summary(logger_19)
 
+rm(logger_19)
+rm(messed_up_logger_19)
+
 ## logger 19 avg RH jump from 72.72 to 77.57 removing < 15 RH ##
 
+rm(messed_up_loggers)
 
 # filter(temp_rh_data, date == "2018-10-25") %>%
 #       select(date, days)
@@ -155,12 +161,10 @@ temp_rh_data %>%
 
 # lubridate::ymd_hms(paste(temp_rh_data$date, temp_rh_data$time))
 
-## Attempting to average temp and RH per treatment PER DAY ####
-
-## should be 435,392 data points and 127 dates ##
+## Average temp and RH per treatment PER DAY ####
 
 temp_rh_data_grouped <- temp_rh_data %>%
-      filter(RH >= 20, date != "2018-06-21") %>%
+      filter(RH >= 15, date != "2018-06-21") %>%
       group_by(date, status, logger_id, days) %>%
       summarise(avg_daily_tempC = mean(tempC),
                 max_tempC = max(tempC),
@@ -179,52 +183,156 @@ temp_rh_data_grouped <- temp_rh_data %>%
                 avg_dailymin_rh = mean(avg_min_rh)
       )
 
-write_csv(temp_rh_data_grouped, "data/processed_data/tick_temp_rh_grouped.csv")
+# write_csv(temp_rh_data_grouped, "data/processed_data/tsa_temp_rh_trt_grp.csv")
+
+## calculation for coefficient of variation
+### CV = (sd/mean)*100
+
+## calculation of vapor pressure deficit
+## https://physics.stackexchange.com/questions/4343/how-can-i-calculate-vapor-pressure-deficit-from-temperature-and-relative-humidit
+
+### saturation vapor pressure in millibars (mb), corrected for temp in ºC
+get.es <- function(temp){
+      es <- 6.11 * exp((2.5e6 / 461) * (1 / 273 - 1 / (273 + temp)))
+      return(es)
+}
+## Where 𝐿 is the latent heat of vaporization, 2.5×106 J kg−1, 𝑅𝑣 is the gas constant for water vapor (461 J K−1kg−1).
+   
+## Then calculate vapor pressure deficit, which is the difference between the saturation vapor pressure, es,  and the actual vapor pressure
+get.vpd <- function(rh, temp){
+      ## calculate saturation vapor pressure
+      es <- get.es(temp)
+      ## calculate vapor pressure deficit
+      vpd <- ((100 - rh) / 100) * es
+      return(vpd)
+}
+
+## ## Calculate mean saturation vapor pressure (esm)
+get.esm <- function(tmin, tmax){
+      esmn <-  .6108 * exp((17.27 * tmin) / (tmin + 237.3))
+      esmx <-  .6108 * exp((17.27 * tmax) / (tmax + 237.3))
+      esm <- (esmn+esmx)/2
+      return(esm)
+}
+
+## Calculate actual vapor pressure (ea)
+
+get.ea <- function(rh, tmin, tmax){
+      esm <- get.esm(tmin, tmax)
+      ea <- (rh/100) * esm
+      return(ea)
+}
+
+## Calculate vapor pressure deficit (vpd = esm - ea; getting esm and ea functions)
+
+get.vpd <- function(rh, tmin, tmax){
+      esm <- get.esm(tmin, tmax)
+      ea <- get.ea(rh, tmin, tmax)
+      vpd <- esm - ea
+      return(vpd)
+}
+
+get.ea <- function(rhmin, rhmax, tmin, tmax){
+      esmn <- get.esmn(tmin) # other fun same as James suggested
+      esmx <- get.esmx(tmax)
+      ea <- (esmn * rhmax/100 + esmx * rhmin/100) / 2
+      return(ea)
+}
 
 
-##### steven testing for humidity times above below 80-82 ####
 
-temp_rh_humidity_testing_below_80 <- temp_rh_data %>% 
-   filter(between(RH, 20, 80), date != "2018-06-21") %>% 
-  group_by(date, status, logger_id, days) %>%
-  summarise(obs_below_80 = n(),
-            minutes_below_80 = obs_below_80*5) #%>% 
-  # ungroup(.) %>% 
-  # group_by(date, status, days) %>% 
+temp_rh_plot_grp <-  temp_rh_data %>%
+      filter(RH > 15, date != "2018-06-21") %>%
+      group_by(date, status, logger_id, days) %>%
+      summarise(avg_daily_tempC = mean(tempC),
+                daily_max_tempC = max(tempC),
+                daily_min_tempC = min(tempC),
+                avg_daily_RH = mean(RH),
+                daily_max_rh = max(RH),
+                daily_min_rh = min(RH),
+                daily_vpd = get.vpd(avg_daily_RH, avg_daily_tempC)
+                )
+# summary(temp_rh_plot_grp)
+## Plot VPD and temperature values; try to understand the metric
+# qplot(date, daily_vpd, data = filter(temp_rh_plot_grp, logger_id=="05" | logger_id=="17"), color = logger_id) +
+#       geom_point(aes(y=avg_daily_tempC), shape = 1)
+
+
+## slicing and summarizing humidity above below 80-82 ####
+
+rh_below_80 <- temp_rh_data %>%
+      filter(between(RH, 15, 80), date != "2018-06-21") %>%
+      group_by(date, status, logger_id, days) %>%
+      summarise(obs_below_80 = n(),
+            rh_below_80_mins = obs_below_80*5) %>%
+      select(-obs_below_80)
+summary(rh_below_80)
+
+rh_below_75 <- temp_rh_data %>%
+      filter(between(RH, 15, 75), date != "2018-06-21") %>%
+      group_by(date, status, logger_id, days) %>%
+      summarise(obs_below_75 = n(),
+                rh_below_75_mins = obs_below_75*5) %>%
+      select(-obs_below_75)
+  # ungroup(.) %>%
+  # group_by(date, status, days) %>%
   # summarise(minutes_below_80 = minutes_below_80/1,
   #           mean_below_80 = mean(minutes_below_80),
-  #           se_below_80 = sd(minutes_below_80)) %>% 
+  #           se_below_80 = sd(minutes_below_80)) %>%
   # select(date, status, days, minutes_below_80, mean_below_80, se_below_80)
 
-temp_rh_humidity_testing_between_80_82 <- temp_rh_data %>% 
-  filter(between(RH, 80, 82), date != "2018-06-21") %>% 
-  group_by(date, status, logger_id, days) %>%
-  summarise(obs_bw_80_82 = n(),
-            minutes_bw_80_82 = obs_bw_80_82*5) %>% 
-  select(date, status, logger_id, days, minutes_bw_80_82)
+rh_80_82 <- temp_rh_data %>%
+      filter(between(RH, 80, 82), date != "2018-06-21") %>%
+      group_by(date, status, logger_id, days) %>%
+      summarise(obs_80_82 = n(),
+            rh_80_82_mins = obs_80_82*5) %>%
+  select(-obs_80_82)
 
-temp_rh_humidity_testing_above_82 <- temp_rh_data %>% 
-  filter(RH >82, date != "2018-06-21") %>% 
+rh_above_82 <- temp_rh_data %>%
+  filter(RH > 82, date != "2018-06-21") %>%
   group_by(date, status, logger_id, days) %>%
   summarise(obs_above_82 = n(),
-            minutes_above_82 = obs_above_82*5) %>% 
-  select(date, status, logger_id, days, minutes_above_82)
+            rh_above_82_mins = obs_above_82*5) %>%
+      select(-obs_above_82)
 
-test1 <- left_join(temp_rh_humidity_testing_above_82, temp_rh_humidity_testing_between_80_82)
-humidity_minutes_by_logger <- left_join(test1, temp_rh_humidity_testing_below_80)
-
+humidity_minutes_by_logger <- list(
+      rh_above_82, rh_80_82, rh_below_75, rh_below_80) %>%    reduce(left_join) #wow, from purrr package, i've never used
+# summary(humidity_minutes_by_logger)
 humidity_minutes_by_logger[is.na(humidity_minutes_by_logger)] <- 0
+write_csv(humidity_minutes_by_logger, "data/processed_data/rh_by_logger.csv")
 
-write_csv(humidity_minutes_by_logger, "data/processed_data/humidity_80_82_test.csv")
 
-test34 <- humidity_minutes_by_logger %>% 
-  group_by(status) %>% 
+temp_rh_plot_grp <- left_join(
+      temp_rh_plot_grp,
+      humidity_minutes_by_logger
+)
+sum
+mary(temp_rh_plot_grp)
+# filter(temp_rh_plot_grp, is.na(rh_above_82_mins))$logger_id
+## we get 357 NA for RH values. are these from logger failures?
+wri
+temp_rh_plot_grp <- temp_rh_plot_grp %>%
+      mutate(
+            Treatment = ifelse(status=="invaded","Cogongrass","Native"),
+            LocationID = case_when(
+                  status=="invaded"~paste("C",as.integer(logger_id), sep=""),
+                  status=="native"~paste("N",as.integer(logger_id), sep="")
+            )
+      )
+
+# te_csv(temp_rh_plot_grp, "data/processed_data/tsa_temp_rh_plot_grp.csv")
+
+
+
+
+test34 <- humidity_minutes_by_logger %>%
+  group_by(status) %>%
   summarise(mean_above = mean(minutes_above_82),
             mean_bw = mean(minutes_bw_80_82),
             mean_below = mean(minutes_below_80))
 
-humidity_means_se_treatment <- humidity_minutes_by_logger %>% 
-  group_by(date, status, days) %>% 
+humidity_means_se_treatment <- humidity_minutes_by_logger %>%
+  group_by(date, status, days) %>%
   summarise(mean_above_82 = mean(minutes_above_82),
             se_above_82 = sd(minutes_above_82),
             mean_bw_80_82 = mean(minutes_bw_80_82),
@@ -252,25 +360,25 @@ invasion_fill <- scale_color_manual(values = c("red","deepskyblue"))
 
 ## test for 78
 
-temp_rh_humidity_testing_below_78 <- temp_rh_data %>% 
-  filter(between(RH, 20, 78), date != "2018-06-21") %>% 
+temp_rh_humidity_testing_below_78 <- temp_rh_data %>%
+  filter(between(RH, 20, 78), date != "2018-06-21") %>%
   group_by(date, status, logger_id, days) %>%
   summarise(obs_below_78 = n(),
-            minutes_below_78 = obs_below_78*5) %>% 
+            minutes_below_78 = obs_below_78*5) %>%
   select(date, status, days, logger_id, minutes_below_78)
 
-temp_rh_humidity_testing_between_78_85 <- temp_rh_data %>% 
-  filter(between(RH, 78, 85), date != "2018-06-21") %>% 
+temp_rh_humidity_testing_between_78_85 <- temp_rh_data %>%
+  filter(between(RH, 78, 85), date != "2018-06-21") %>%
   group_by(date, status, logger_id, days) %>%
   summarise(obs_bw_78_85 = n(),
-            minutes_bw_78_85 = obs_bw_78_85*5) %>% 
+            minutes_bw_78_85 = obs_bw_78_85*5) %>%
   select(date, status, logger_id, days, minutes_bw_78_85)
 
-temp_rh_humidity_testing_above_85 <- temp_rh_data %>% 
-  filter(RH >85, date != "2018-06-21") %>% 
+temp_rh_humidity_testing_above_85 <- temp_rh_data %>%
+  filter(RH >85, date != "2018-06-21") %>%
   group_by(date, status, logger_id, days) %>%
   summarise(obs_above_85 = n(),
-            minutes_above_85 = obs_above_85*5) %>% 
+            minutes_above_85 = obs_above_85*5) %>%
   select(date, status, logger_id, days, minutes_above_85)
 
 testing_78 <- left_join(temp_rh_humidity_testing_above_85, temp_rh_humidity_testing_between_78_85)
@@ -283,25 +391,25 @@ write_csv(humidity_78, "data/processed_data/humidity_78.csv")
 ## test for 75
 
 
-temp_rh_humidity_testing_below_75 <- temp_rh_data %>% 
-  filter(between(RH, 20, 74.99), date != "2018-06-21") %>% 
+temp_rh_humidity_testing_below_75 <- temp_rh_data %>%
+  filter(between(RH, 20, 74.99), date != "2018-06-21") %>%
   group_by(date, status, logger_id, days) %>%
   summarise(obs_below_75 = n(),
-            minutes_below_75 = obs_below_75*5) %>% 
+            minutes_below_75 = obs_below_75*5) %>%
   select(date, status, days, logger_id, minutes_below_75)
 
-temp_rh_humidity_testing_between_75_85 <- temp_rh_data %>% 
-  filter(between(RH, 75, 85), date != "2018-06-21") %>% 
+temp_rh_humidity_testing_between_75_85 <- temp_rh_data %>%
+  filter(between(RH, 75, 85), date != "2018-06-21") %>%
   group_by(date, status, logger_id, days) %>%
   summarise(obs_bw_75_85 = n(),
-            minutes_bw_75_85 = obs_bw_75_85*5) %>% 
+            minutes_bw_75_85 = obs_bw_75_85*5) %>%
   select(date, status, logger_id, days, minutes_bw_75_85)
 
-temp_rh_humidity_testing_above_85 <- temp_rh_data %>% 
-  filter(RH >85.01, date != "2018-06-21") %>% 
+temp_rh_humidity_testing_above_85 <- temp_rh_data %>%
+  filter(RH >85.01, date != "2018-06-21") %>%
   group_by(date, status, logger_id, days) %>%
   summarise(obs_above_85 = n(),
-            minutes_above_85 = obs_above_85*5) %>% 
+            minutes_above_85 = obs_above_85*5) %>%
   select(date, status, logger_id, days, minutes_above_85)
 
 testing_75 <- left_join(temp_rh_humidity_testing_above_85, temp_rh_humidity_testing_between_75_85)
