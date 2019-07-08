@@ -197,7 +197,7 @@ get.es <- function(temp){
       return(es)
 }
 ## Where 𝐿 is the latent heat of vaporization, 2.5×106 J kg−1, 𝑅𝑣 is the gas constant for water vapor (461 J K−1kg−1).
-   
+
 ## Then calculate vapor pressure deficit, which is the difference between the saturation vapor pressure, es,  and the actual vapor pressure
 get.vpd <- function(rh, temp){
       ## calculate saturation vapor pressure
@@ -208,38 +208,36 @@ get.vpd <- function(rh, temp){
 }
 
 ## ## Calculate mean saturation vapor pressure (esm)
-get.esm <- function(tmin, tmax){
-      esmn <-  .6108 * exp((17.27 * tmin) / (tmin + 237.3))
-      esmx <-  .6108 * exp((17.27 * tmax) / (tmax + 237.3))
-      esm <- (esmn+esmx)/2
-      return(esm)
-}
-
-## Calculate actual vapor pressure (ea)
-
-get.ea <- function(rh, tmin, tmax){
-      esm <- get.esm(tmin, tmax)
-      ea <- (rh/100) * esm
-      return(ea)
-}
-
-## Calculate vapor pressure deficit (vpd = esm - ea; getting esm and ea functions)
-
-get.vpd <- function(rh, tmin, tmax){
-      esm <- get.esm(tmin, tmax)
-      ea <- get.ea(rh, tmin, tmax)
-      vpd <- esm - ea
-      return(vpd)
-}
-
-get.ea <- function(rhmin, rhmax, tmin, tmax){
-      esmn <- get.esmn(tmin) # other fun same as James suggested
-      esmx <- get.esmx(tmax)
-      ea <- (esmn * rhmax/100 + esmx * rhmin/100) / 2
-      return(ea)
-}
-
-
+get# get.esm <- function(tmin, tmax){
+#       esmn <-  .6108 * exp((17.27 * tmin) / (tmin + 237.3))
+#       esmx <-  .6108 * exp((17.27 * tmax) / (tmax + 237.3))
+#       esm <- (esmn+esmx)/2
+#       return(esm)
+# }
+#
+# ## Calculate actual vapor pressure (ea)
+#
+# get.ea <- function(rh, tmin, tmax){
+#       esm <- get.esm(tmin, tmax)
+#       ea <- (rh/100) * esm
+#       return(ea)
+# }
+#
+# ## Calculate vapor pressure deficit (vpd = esm - ea; getting esm and ea functions)
+#
+# get.vpd <- function(rh, tmin, tmax){
+#       esm <- get.esm(tmin, tmax)
+#       ea <- get.ea(rh, tmin, tmax)
+#       vpd <- esm - ea
+#       return(vpd)
+# }
+#
+# get.ea <- function(rhmin, rhmax, tmin, tmax){
+#       esmn <- get.esmn(tmin) # other fun same as James suggested
+#       esmx <- get.esmx(tmax)
+#       ea <- (esmn * rhmax/100 + esmx * rhmin/100) / 2
+#       return(ea)
+# 
 
 temp_rh_plot_grp <-  temp_rh_data %>%
       filter(RH > 15, date != "2018-06-21") %>%
@@ -296,7 +294,8 @@ rh_above_82 <- temp_rh_data %>%
       select(-obs_above_82)
 
 humidity_minutes_by_logger <- list(
-      rh_above_82, rh_80_82, rh_below_75, rh_below_80) %>%    reduce(left_join) #wow, from purrr package, i've never used
+      rh_above_82, rh_80_82, rh_below_75, rh_below_80) %>%
+      reduce(left_join) #wow, from purrr package, i've never used
 # summary(humidity_minutes_by_logger)
 humidity_minutes_by_logger[is.na(humidity_minutes_by_logger)] <- 0
 write_csv(humidity_minutes_by_logger, "data/processed_data/rh_by_logger.csv")
@@ -306,11 +305,11 @@ temp_rh_plot_grp <- left_join(
       temp_rh_plot_grp,
       humidity_minutes_by_logger
 )
-sum
-mary(temp_rh_plot_grp)
+
+summary(temp_rh_plot_grp)
 # filter(temp_rh_plot_grp, is.na(rh_above_82_mins))$logger_id
 ## we get 357 NA for RH values. are these from logger failures?
-wri
+
 temp_rh_plot_grp <- temp_rh_plot_grp %>%
       mutate(
             Treatment = ifelse(status=="invaded","Cogongrass","Native"),
@@ -320,7 +319,7 @@ temp_rh_plot_grp <- temp_rh_plot_grp %>%
             )
       )
 
-# te_csv(temp_rh_plot_grp, "data/processed_data/tsa_temp_rh_plot_grp.csv")
+# write_csv(temp_rh_plot_grp, "data/processed_data/tsa_temp_rh_plot_grp.csv")
 
 
 
