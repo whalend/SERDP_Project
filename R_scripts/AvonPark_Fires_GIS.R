@@ -5,12 +5,12 @@ library(sp); library(rgdal); library(maptools); library(rgeos);
 library(sf)
 library(plyr); library(dplyr)
 
-# common field names ####
+## common field names ####
 field_names <- c("inst_name", "fArea_ac", "fCause", "fType", "fDate",
                  "season", "purpose", "fYear", "fMonth")
 
 
-# read in shapefiles ####
+## Read in shapefiles ####
 # burn2017 <- readOGR("data/Avon-Park/fire_shapefiles/Burns_2017.shp")
 
 ## st_xxxx functions are from the sf package
@@ -25,10 +25,10 @@ for(shp in shp_list){
       # avp_fires = st_join(avp_fires, df)
 }
 # remove duplicated(?) shapefiles
-rm(fixed_Burns_2017)
+# rm(fixed_Burns_2017)# deleted these files from directory
 rm(burn06)
 
-# Combine shapefiles into one ####
+## Combine shapefiles into one ####
 ## check field names: create and rename as necessary
 # Burns_2006
 avp_fires <- Burns_2006 %>%
@@ -292,44 +292,66 @@ avp_fires <- rbind(avp_fires,
 rm(list=ls(pattern = "urn"))
 rm(list=ls(pattern = "shp"))
 
-# burn06$Type[burn06$Type=="prescribed"] <- "Prescribed"
-# burn06@data <- droplevels(burn06@data)
-# writeOGR(burn06, "data/AvonPark/fire_shapefiles/", "Burns_2006", driver = "ESRI Shapefile", overwrite_layer = T)
-# summary(burn07)
-# summary(burn08)
-# summary(Burns_2009)
-# Burns_2009$Type[Burns_2009$Type=="Prescibed"] <- "Prescribed"
-# Burns_2009@data <- droplevels(Burns_2009@data)
-# writeOGR(Burns_2009, "data/AvonPark/fire_shapefiles/", "Burns_2009", driver = "ESRI Shapefile", overwrite_layer = T)
-# summary(Burns_2010)
-# summary(Burns_2011)
-# summary(Burns_2012)
-# summary(Burns_2013)
-# summary(Burns_2014)
-# summary(Burns_2015)
-# Burns_2015$Type[Burns_2015$Type=="Prescibed"|Burns_2015$Type=="Presrcibed"] <- "Prescribed"
-# Burns_2015@data <- droplevels(Burns_2015@data)
-# writeOGR(Burns_2015, "data/AvonPark/fire_shapefiles/", "Burns_2015", driver = "ESRI Shapefile", overwrite_layer = T)
-# summary(Burns_2016)
-# summary(Burns_2017)
+avp_fires
 
-# names(blanding_fire)
-#
-# rm(shp)
-# rm(eglin_fires)
-# shp_list <- as.list(.GlobalEnv)
-# for(shp in shp_list){
-#       df <- shp[shp@data$Type=="Prescribed",]
-#       # df <-
-#       writeOGR(df,
-#                dsn = "data/AvonPark/fire_shapefiles/",
-#                layer = paste("AvonPark_rxfire", sep=""),
-#                driver = "ESRI Shapefile", overwrite_layer = T)
-# }
+plot_locations <- st_read("data/plot_visit.shp")# all plot locations/visits
 
-# all_invasives <- readOGR("data/AvonPark/APAFR_AllInvasives_Merge2.shp")
-# summary(all_invasives)
-# unique(all_invasives$CommonName)
-# avp_cogongrass <- all_invasives[all_invasives$CommonName=="Cogon Grass",]
-# avp_cogongrass@data <- droplevels(avp_cogongrass@data)
-# writeOGR(avp_cogongrass, "data/AvonPark/", "avp_cogon", driver = "ESRI Shapefile")
+plot_locations <- plot_locations %>%
+      dplyr::rename(inst = instal,
+                    visit_date = vist_dt,
+                    last_fire = lst_fr_,
+                    yrs_since_fire = yrs_sn_,
+                    visit_yr = vist_yr,
+                    imcy = imcy_nv) %>%
+      dplyr::select(-instllt, -instl__) %>%
+      dplyr::filter(!is.na(visit_yr))
+
+# unique(plot_locations$inst)
+avp_plots <- filter(plot_locations, inst=="avonpark")
+
+avp2017 <- filter(avp_plots, visit_yr==2017)
+avp2018 <- filter(avp_plots, visit_yr==2018)
+
+avp_fires$FID <- seq(1, nrow(avp_fires), 1)
+
+
+fires2018 <- st_join(st_transform(avp2018, crs = st_crs(avp_fires)),
+                     avp_fires %>%
+                           filter(fYear > 2002,
+                                  fDate < max(avp2018$visit_date))
+)
+
+fri2018 <- fires2018 %>%
+      group_by(plot_id, inst_nm, visit_date) %>%
+      summarise(
+            n_fires = length(plot_id),
+            y_since_fire = max(visit_yr) - max(fYear),
+            fri15yr = 15/n_fires,
+            d_since_fire = max(visit_date) - max(fDate),
+            w_since_fire = d_since_fire/7,
+            frindex = (1/fri15yr)/y_since_fire
+      )
+
+fires2017 <- st_join(st_transform(avp2017, crs = st_crs(avp_fires)),
+                     avp_fires %>%
+                           filter(fYear > 2001,
+                                  fDate < max(avp2017$visit_date))
+)
+fri2017 <- fires2017 %>%
+      group_by(plot_id, inst_nm, visit_date) %>%
+      summarise(
+            n_fires = length(plot_id),
+            y_since_fire = max(visit_yr) - max(fYear),
+            fri15yr = 15/n_fires,
+            d_since_fire = max(visit_date) - max(fDate),
+            w_since_fire = d_since_fire/7,
+            frindex = (1/fri15yr)/(w_since_fire/52)
+      )
+avp_fri <- rbind(fri2017, fri2018)
+summary(avp_fri)
+
+## Write shapefile
+st_write(avp_fri, "data/AvonPark/avp_15yr_fri.shp")
+
+## Write data frame
+readr::write_csv(as.data.frame(avp_fri), "data/AvonPark/avp_15yr_fri.csv")
