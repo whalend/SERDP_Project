@@ -10,33 +10,32 @@ plot_locations <- st_read("data/plot_visit.shp")
 
 plot_locations <- plot_locations %>%
       dplyr::rename(inst = instal,
-             visit_date = vist_dt,
-             last_fire = lst_fr_,
-             yrs_since_fire = yrs_sn_,
+             # visit_date = vist_dt,
+             # last_fire = lst_fr_,
+             # yrs_since_fire = yrs_sn_,
              visit_yr = vist_yr,
              imcy = imcy_nv) %>%
-      dplyr::select(-instllt, -instl__) %>%
-      dplyr::filter(!is.na(visit_yr))
+      dplyr::filter(!is.na(visit_yr)) %>%
+      dplyr::filter(!duplicated(plot_id)) %>%
+      dplyr::select(name:imcy)
 
 # summary(plot_locations)
 # filter(plot_locations, is.na(last_fire))$plot_id
 ## no fire history for shelby k1
 
-# source("R_scripts/AvonPark_Fires_GIS.R")
-# rm(list=ls(pattern = "urn"))
-# rm(list=ls(pattern = "shp"))
-#
-# source("R_scripts/Benning_Fires_GIS.R")
-# source("R_scripts/Blanding_Fires_GIS.R")
-# source("R_scripts/Eglin_Fires_GIS.R")
-#
-# source("R_scripts/Gordon_Fires_GIS.R")
-# source("R_scripts/Jackson_Fires_GIS.R")
-# source("R_scripts/Moody_Fires_GIS.R")
-# source("R_scripts/Shelby_Fires_GIS.R")
+source("R_scripts/AvonPark_Fires_GIS.R")
 
+source("R_scripts/Benning_Fires_GIS.R")
+source("R_scripts/Blanding_Fires_GIS.R")
+source("R_scripts/Eglin_Fires_GIS.R")
 
+source("R_scripts/Gordon_Fires_GIS.R")
+source("R_scripts/Jackson_Fires_GIS.R")
+source("R_scripts/Moody_Fires_GIS.R")
+source("R_scripts/Shelby_Fires_GIS.R")
+source("R_scripts/Tyndall_Fires.R")
 
+rm(field_names)
 
 fire_master <- rbind(
       st_transform(avp_fires, crs = 4326),
@@ -46,10 +45,16 @@ fire_master <- rbind(
       st_transform(gordon_fire, crs = 4326),
       st_transform(jackson_fires, crs = 4326),
       st_transform(moody_fires, crs = 4326),
-      st_transform(shelby_fires, crs = 4326)
+      st_transform(shelby_fires, crs = 4326),
+      st_transform(tyndall_fires, crs = 4326)
 )
 
 fire_master
+# rm(list = ls(pattern = "_fir"))
+
+str(fire_master)
+
+fire_master$fYear <- as.numeric(fire_master$fYear)
 
 ## Working on calculation a fire return interval ####
 
@@ -57,8 +62,16 @@ fire_master
 # plot(st_centroid(rxfire, of), add = T, pch = 3, size = 5)
 # plot(tmp)
 # st_point_on_surface(rxfire)
-temp <- blanding_fires
+
+plot_locations %>%
+      filter(inst=="blanding", visit_yr==2017)
+blanding_fires %>%
+      filter(fYear==2017) %>%
+      summary(.)
+
+temp <- fire_master
 temp$FID <- seq(1,nrow(temp),1)
+st_simplify(temp)
 # temp1 <- gCentroid(temp, byid = T)
 #
 # temp1 <- SpatialPointsDataFrame(temp1, temp[1])
@@ -66,29 +79,41 @@ temp$FID <- seq(1,nrow(temp),1)
 tmp <- st_centroid(temp, of_largest_polygon = T)
 tmp <- select(tmp, FID)
 
+
 tmp <- st_join(tmp, temp)
 
-tmp <- tmp %>%
+fri18 <- tmp %>%
       filter(fYear > 2002) %>%
       group_by(FID.x) %>%
       summarise(
-            lastBrn = 2018-max(fYear, na.rm = T),
+            lastBrn18 = 2018-max(fYear, na.rm = TRUE),
+            # lastBrn17 = 2017-max(fYear, na.rm = T),
             fires = length(FID.x),
-            fri15yr = 15/fires,
-            frindex = (1/fri15yr)/lastBrn)
-tmp <- st_join(temp, tmp)
-plot(tmp[14])
+            fri15yr_2018 = 15/fires,
+            frindex_2018 = (1/fri15yr_2018)/lastBrn18)
+
+fri18 <- st_join(temp,
+                 select(fri18, fri15yr_2018, frindex_2018), largest = TRUE)
+
+summary(fri18)
+
+# plot(tmp[14])
 # plot(plot_locations[1], add = T, pch = 3, size = 10)
 
+### ### ### ### ### ###
+## Seems that it will be better to calculate FRI per installation and then merge the data together
+### ### ### ### ### ###
 
 # st_crs(rxfire)
-temp <- st_transform(plot_locations, crs = st_crs(temp)) %>%
+testFRI <- st_transform(plot_locations, crs = st_crs(fri18)) %>%
       mutate(ptFID = seq(1, nrow(.),1)) %>%
       st_join(.,
-              select(temp, FID, fYear))
+              select(fri18, fri15yr_2018, frindex_2018)) %>%
+      filter(!duplicated(ptFID)) %>%
+      arrange(inst)
+testFRI
 
-# temp <- raster::intersect(plot_locations, rxfire)
-temp17 <- temp %>%
+fri17 <- tmp %>%
       filter(visit_yr == 2017, fYear<2018) %>%
       group_by(plot_id) %>%
       summarise(
@@ -181,15 +206,6 @@ rxfire2015@data <- left_join(
             ),
       by = c("FID"="ptFID")
       )
-
-## how do i randomly distribute points into a multi-polygon shapefile?
-# test_sample <- lapply(rxfire2016,spsample(n=4, type="random"))
-# tmp <- as.SpatialPolygons.owin(rxfire2016)
-#
-# blanding_fire_2018 <- readOGR("data/CampBlanding/Fire_Layer_for_Whalen.shp")
-# summary(blanding_fire_2018)
-# blanding_fire_2018$wildlandFi <- as.character(blanding_fire_2018$wildlandFi)
-# blanding_rx_fire <- blanding_fire_2018[blanding_fire$wildlandFi=="Prescribed",]
 
 
 
