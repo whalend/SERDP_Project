@@ -59,8 +59,8 @@ summary(filter(blanding_fires, season == "Dormant Season"))
 # Calculate 15-year FRI ####
 ## This needs to be done to be accurate for plots visited in 2017 and 2018
 
-temp <- blanding_fires
-temp$FID <- seq(1,nrow(temp),1)
+
+blanding_fires$FID <- seq(1,nrow(temp),1)
 # temp1 <- gCentroid(temp, byid = T)
 #
 # temp1 <- SpatialPointsDataFrame(temp1, temp[1])
@@ -79,32 +79,36 @@ temp$FID <- seq(1,nrow(temp),1)
 
 ## Calculate 15-year fire return interval for 2018 plot visits
 fires2018 <- st_join(st_transform(blanding2018, crs = st_crs(blanding_fires)),
-                 temp %>% filter(fYear > 2002, fDate < "2018-05-25")
+                 blanding_fires %>%
+                       filter(fDate > "2003-05-25",
+                              fDate < max(blanding2018$visit_date))
                  )
 
 fri2018 <- fires2018 %>%
       group_by(plot_id, inst_nm, visit_date) %>%
       summarise(
             n_fires = length(plot_id),
-            y_since_fire = max(visit_yr) - max(fYear),
             fri15yr = 15/n_fires,
             d_since_fire = max(visit_date) - max(fDate),
             w_since_fire = d_since_fire/7,
+            y_since_fire = w_since_fire/52,
             frindex = (1/fri15yr)/y_since_fire
                 )
 
 fires2017 <- st_join(st_transform(blanding2017, crs = st_crs(blanding_fires)),
-                 temp %>% filter(fYear > 2001, fDate < "2017-06-22")
+                 blanding_fires %>%
+                       filter(fDate > "2002-06-22",
+                              fDate < max(blanding2017$visit_date))
                  )
 fri2017 <- fires2017 %>%
       group_by(plot_id, inst_nm, visit_date) %>%
       summarise(
             n_fires = length(plot_id),
-            y_since_fire = max(visit_yr) - max(fYear),
             fri15yr = 15/n_fires,
             d_since_fire = max(visit_date) - max(fDate),
             w_since_fire = d_since_fire/7,
-            frindex = (1/fri15yr)/(w_since_fire/52)
+            y_since_fire = (w_since_fire/52),
+            frindex = (1/fri15yr)/y_since_fire
       )
 blanding_fri <- rbind(fri2017, fri2018)
 summary(blanding_fri)
