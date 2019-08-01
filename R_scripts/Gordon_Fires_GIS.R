@@ -42,35 +42,49 @@ gordon_fire <- gordon_fire %>%
 summary(gordon_fire)
 
 
+plot_locations <- st_read("data/plot_visit.shp")# all plot locations/visits
 
-# yr <- seq(1995,2018,1)
-# library(raster)
-# for(y in yr){
-#       df <- gordon_fire[gordon_fire$fYear == y,]
-#       centroids <- rgeos::gCentroid(df, byid = T)
-#       centroids <- SpatialPointsDataFrame(
-#             centroids, #SpatialPoints object
-#             df[1]@data #Dataframe
-#       )
-#       names(centroids) <- "ptFID"
-#       centroids <- raster::intersect(centroids, gordon_fire)
-#       df@data <- left_join(
-#             df@data,
-#             ## Summarise data to calculate number of fires and fire frequency
-#             gordon_fire@data %>%
-#                   filter(burnYr >= 2003) %>%
-#                   group_by(OBJECTID) %>%
-#                   summarise(fires = length(OBJECTID),
-#                             fri15yr = (2018-2003)/fires,
-#                             lastBrn = max(burnYr)
-#                             # frindex = (1/fri15yr)/range(burnYr)
-#                   ),
-#             by = "OBJECTID"
-#       )
-#       writeOGR(df,
-#                dsn = "data/FtGordon/",
-#                layer = paste("gordon_fire_", y, sep=""),
-#                driver = "ESRI Shapefile", overwrite_layer = T)
-#       assign(paste("gordon_fire_", y, sep=""), df)
-# }
-# detach("package:raster", unload=TRUE)
+plot_locations <- plot_locations %>%
+      dplyr::rename(inst = instal,
+                    visit_date = vist_dt,
+                    last_fire = lst_fr_,
+                    yrs_since_fire = yrs_sn_,
+                    visit_yr = vist_yr,
+                    imcy = imcy_nv) %>%
+      dplyr::select(-instllt, -instl__) %>%
+      dplyr::filter(!is.na(visit_yr))
+
+# unique(plot_locations$inst)
+gordon_plots <- filter(plot_locations, inst=="gordon")
+
+
+gordon2018 <- filter(gordon_plots, visit_yr==2018)
+
+gordon_fire$FID <- seq(1, nrow(gordon_fire), 1)
+
+
+fires2018 <- st_join(st_transform(gordon2018, crs = st_crs(gordon_fire)),
+                     gordon_fire %>%
+                           filter(fDate > "2003-08-22",
+                                  fDate < max(gordon2018$visit_date))
+)
+
+fri2018 <- fires2018 %>%
+      group_by(plot_id, inst_nm, visit_date) %>%
+      summarise(
+            n_fires = length(plot_id),
+            fri15yr = 15/n_fires,
+            d_since_fire = max(visit_date) - max(fDate),
+            w_since_fire = d_since_fire/7,
+            y_since_fire = w_since_fire/52,
+            frindex = (1/fri15yr)/y_since_fire
+      )
+
+gordon_fri <-fri2018
+summary(gordon_fri)
+
+## Write shapefile
+st_write(gordon_fri, "data/FtGordon/gordon_15yr_fri.shp")
+
+## Write data frame
+readr::write_csv(as.data.frame(gordon_fri), "data/FtGordon/gordon_15yr_fri.csv")
