@@ -317,7 +317,7 @@ avp_fires$FID <- seq(1, nrow(avp_fires), 1)
 
 fires2018 <- st_join(st_transform(avp2018, crs = st_crs(avp_fires)),
                      avp_fires %>%
-                           filter(fYear > 2002,
+                           filter(fDate > "2003-06-01",
                                   fDate < max(avp2018$visit_date))
 )
 
@@ -325,27 +325,27 @@ fri2018 <- fires2018 %>%
       group_by(plot_id, inst_nm, visit_date) %>%
       summarise(
             n_fires = length(plot_id),
-            y_since_fire = max(visit_yr) - max(fYear),
             fri15yr = 15/n_fires,
             d_since_fire = max(visit_date) - max(fDate),
             w_since_fire = d_since_fire/7,
+            y_since_fire = w_since_fire/52,
             frindex = (1/fri15yr)/y_since_fire
       )
 
 fires2017 <- st_join(st_transform(avp2017, crs = st_crs(avp_fires)),
                      avp_fires %>%
-                           filter(fYear > 2001,
+                           filter(fDate > "2002-06-30",
                                   fDate < max(avp2017$visit_date))
 )
 fri2017 <- fires2017 %>%
       group_by(plot_id, inst_nm, visit_date) %>%
       summarise(
             n_fires = length(plot_id),
-            y_since_fire = max(visit_yr) - max(fYear),
             fri15yr = 15/n_fires,
             d_since_fire = max(visit_date) - max(fDate),
             w_since_fire = d_since_fire/7,
-            frindex = (1/fri15yr)/(w_since_fire/52)
+            y_since_fire = w_since_fire/52,
+            frindex = (1/fri15yr)/y_since_fire
       )
 avp_fri <- rbind(fri2017, fri2018)
 summary(avp_fri)
