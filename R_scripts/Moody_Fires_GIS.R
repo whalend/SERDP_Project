@@ -40,7 +40,6 @@ rm(path)
 rm(sf); rm(projection)
 
 
-
 moody_fires <- moody_fires %>%
       mutate(inst_name = "Moody AFB",
              # fDate = NA,
@@ -48,34 +47,76 @@ moody_fires <- moody_fires %>%
              fMonth = NA,
              fCause = NA,
              fType = "prescribed",
-             fArea_ac = st_area(moody_fires)/4046.86,
-             purpose = NA,
-             season = NA) %>%
+             fArea_ac = as.numeric(st_area(moody_fires)/4046.86),# convert square meters of st_area calculation to acres
+             season = NA,# no season because don't have actual fire dates
+             purpose = NA) %>%
       select(inst_name, fArea_ac, fCause, fType, fDate, season, purpose,
              fYear, fMonth)
 
 # summary(moody_fires)
 
-# RX2017_select <- spTransform(RX2017_select, crs(RX2013_select))
-# RX2016_select <- spTransform(RX2016_select, crs(RX2013_select))
-# RX2015_select <- spTransform(RX2015_select, crs(RX2013_select))
+st_write(moody_fires, "data/MoodyAFB/moody_fires_2002_2017.shp")
+
+
+plot_locations <- st_read("data/plot_visit.shp")# all plot locations/visits
+
+plot_locations <- plot_locations %>%
+      dplyr::rename(inst = instal,
+                    visit_date = vist_dt,
+                    last_fire = lst_fr_,
+                    yrs_since_fire = yrs_sn_,
+                    visit_yr = vist_yr,
+                    imcy = imcy_nv) %>%
+      dplyr::select(-instllt, -instl__) %>%
+      dplyr::filter(!is.na(visit_yr))
+
+# unique(plot_locations$inst)
+moody_plots <- filter(plot_locations, inst=="moody")
+
+moody2017 <- filter(moody_plots, visit_yr==2017)
+# moody2018 <- filter(moody_plots, visit_yr==2018)
+
+moody_fires$FID <- seq(1, nrow(moody_fires), 1)
+
+## No 2018 visit
+# fires2018 <- st_join(st_transform(moody2018, crs = st_crs(moody_fires)),
+#                      moody_fires %>%
+#                            filter(fDate > "2003-06-01",
+#                                   fDate < max(moody2018$visit_date))
+# )
 #
-# rx_merged <- rbind(RX1996_select, RX1999_select, RX2003_select, RX2005_select, RX2006_select, RX2007_select, RX2009_select, RX2012_select, RX2013_select, RX2015_select, RX2016_select, RX2017_select)
-# rx9699 <- raster::union(RX1996_select, RX1999_select)
+# fri2018 <- fires2018 %>%
+#       group_by(plot_id, inst_nm, visit_date) %>%
+#       summarise(
+#             n_fires = length(plot_id),
+#             fri15yr = 15/n_fires,
+#             d_since_fire = max(visit_date) - max(fDate),
+#             w_since_fire = d_since_fire/7,
+#             y_since_fire = w_since_fire/52,
+#             frindex = (1/fri15yr)/y_since_fire
+#       )
 
-# rx_merged@data$id <- rownames(rx_merged@data)
-# rx_merged_pts <- fortify(rx_merged, region = "id")
-# rx_merged_df <- join(rx_merged_pts, rx_merged@data, by = "id")
+fires2017 <- st_join(st_transform(moody2017, crs = st_crs(moody_fires)),
+                     moody_fires %>%
+                           filter(fDate > "2002-08-30",
+                                  fDate < max(moody2017$visit_date))
+)
+fri2017 <- fires2017 %>%
+      group_by(plot_id, inst_nm, visit_date) %>%
+      summarise(
+            n_fires = length(plot_id),
+            fri15yr = 15/n_fires,
+            d_since_fire = max(visit_date) - max(fDate),
+            w_since_fire = d_since_fire/7,
+            y_since_fire = w_since_fire/52,
+            frindex = (1/fri15yr)/y_since_fire
+      )
+moody_fri <- fri2017
+summary(moody_fri)
 
-# writeOGR(rx_merged, dsn = "data/MoodyAFB/", layer = "rx_selected_fires_merged", driver = "ESRI Shapefile")
+## Write shapefile
+st_write(moody_fri, "data/MoodyAFB/moody_15yr_fri.shp")
 
-# library(RColorBrewer)
-# library(viridis)
+## Write data frame
+readr::write_csv(as.data.frame(moody_fri), "data/MoodyAFB/moody_15yr_fri.csv")
 
-# ggplot(rx_merged_df) +
-#       aes(long, lat, fill = fire_fiscal_year) +
-#       geom_polygon() +
-#       # geom_path(color = "white") +
-#       coord_equal() +
-#       scale_fill_gradientn(colors = inferno(n = n_distinct(rx_merged_df$fire_fiscal_year))) +
-#       theme_bw()
