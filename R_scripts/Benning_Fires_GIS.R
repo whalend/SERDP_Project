@@ -300,6 +300,7 @@ benning_fires <- benning_fires %>%
       select(-tmp)
 
 summary(benning_fires)
+filter(benning_fires, is.na(fDate))
 
 
 rm(list=ls(pattern="shp"))
@@ -308,3 +309,50 @@ rm(sf); rm(projection)
 rm(list=ls(pattern="tmp"))
 rm(rx_fires)
 rm(wildfires)
+
+
+plot_locations <- st_read("data/plot_visit.shp")# all plot locations/visits
+
+plot_locations <- plot_locations %>%
+      dplyr::rename(inst = instal,
+                    visit_date = vist_dt,
+                    last_fire = lst_fr_,
+                    yrs_since_fire = yrs_sn_,
+                    visit_yr = vist_yr,
+                    imcy = imcy_nv) %>%
+      dplyr::select(-instllt, -instl__) %>%
+      dplyr::filter(!is.na(visit_yr))
+
+# unique(plot_locations$inst)
+benning_plots <- filter(plot_locations, inst=="benning")
+
+benning2018 <- filter(benning_plots, visit_yr==2018)
+
+benning_fires$FID <- seq(1, nrow(benning_fires), 1)
+
+
+fires2018 <- st_join(st_transform(benning2018, crs = st_crs(benning_fires)),
+                     benning_fires %>%
+                           filter(fDate > "2003-07-28",
+                                  fDate < max(benning2018$visit_date))
+)
+
+fri2018 <- fires2018 %>%
+      group_by(plot_id, inst_nm, visit_date) %>%
+      summarise(
+            n_fires = length(plot_id),
+            fri15yr = 15/n_fires,
+            d_since_fire = max(visit_date) - max(fDate),
+            w_since_fire = d_since_fire/7,
+            y_since_fire = w_since_fire/52,
+            frindex = (1/fri15yr)/y_since_fire
+      )
+
+benning_fri <- fri2018
+summary(benning_fri)
+
+## Write shapefile
+st_write(benning_fri, "data/FtBenning/benning_15yr_fri.shp")
+
+## Write data frame
+readr::write_csv(as.data.frame(benning_fri), "data/FtBenning/benning_15yr_fri.csv")
