@@ -14,7 +14,7 @@ tyndall_fires <- st_read("data/Tyndall/tyndall_fire_2010_2018.shp")
 tyndall_fires2 <- st_read("data/Tyndall/tyndall_fire_2000_2009.shp")
 
 tyndall_fires$inst_name = "Tyndall AFB"
-summary(tyndall_fires)
+# summary(tyndall_fires)
 tyndall_fires <- tyndall_fires %>%
       select(inst_name,
              fArea_ac = areaSize,
@@ -31,7 +31,7 @@ tyndall_fires <- tyndall_fires %>%
              purpose = NA
       ) %>%
       select(inst_name:fDate, season, purpose, fYear, fMonth)
-tyndall_fires
+# tyndall_fires
 
 summary(tyndall_fires2)
 tyndall_fires2$inst_name = "Tyndall AFB"
@@ -52,48 +52,75 @@ tyndall_fires2 <- tyndall_fires2 %>%
       ) %>%
       select(inst_name:fDate, season, purpose, fYear, fMonth)
 
-tyndall_fires2
+# tyndall_fires2
 
 tyndall_fires <- rbind(tyndall_fires, tyndall_fires2)
 
 rm(tyndall_fires2)
-# filter(eglin_fires, season=="dormant")$fMonth
-# str(eglin_fires)
 
-# convert to date format
-# require(lubridate)
-# eglin_fires@data$fire_date <- lubridate::ymd(eglin_fires@data$FIRESTARTD)
-# eglin_fires@data$fire_year <- lubridate::year(eglin_fires@data$fire_date)
-# eglin_fires@data$fire_mnth <- lubridate::floor_date(eglin_fires@data$fire_date, unit="month")
-# eglin_fires@data$fire_yday <- lubridate::yday(eglin_fires@data$fire_date)
-# detach("package:lubridate", unload=TRUE)
+summary(tyndall_fires)
+st_write(tyndall_fires, "data/Tyndall/tyndall_fires_2000_2018.shp")
 
-## Eglin Rx Fires (Not Run) ####
-# eglin_rxfires <- eglin_fires[eglin_fires$FIRETYPE=="prescribed",]
-# summary(eglin_rxfires)
-# plot(eglin_rxfires[eglin_rxfires$fire_year > 2013,], col = eglin_rxfires$fire_year)
-# # writeOGR(eglin_rxfires, "data/Eglin-AFB/", "eglin_rxfires", driver = "ESRI Shapefile")
-#
-# # shapefiles for each year
-# yr <- seq(2006,2018,1)
-# for(y in yr){
-#       df <- eglin_rxfires[eglin_rxfires@data$fire_year == y,]
-#       writeOGR(df,
-#                dsn = "data/Eglin-AFB/rxfire_by_year/",
-#                layer = paste("Eglin_rxfire", y, sep=""),
-#                driver = "ESRI Shapefile", overwrite_layer = T)
-#
-# }
-#
-# shp_list <- list.files("data/Eglin-AFB/rxfire_by_year/", pattern = ".shp")
-# shp_list <- strsplit(shp_list, ".shp")
-# for(shp in shp_list){
-#       assign(shp,
-#              readOGR(dsn = "data/Eglin-AFB/rxfire_by_year/", layer = shp))
-# }
-#
-# plot(`Eglin-rxfire2015`)
-# plot(`Eglin-rxfire2006`)
-# plot(gDifference(`Eglin-rxfire2006`, `Eglin-rxfire2015`), add = T, col = "blue")
-# plot(`Eglin-rxfire2015`, add = T, col = "orange")
 
+plot_locations <- st_read("data/plot_visit.shp")# all plot locations/visits
+
+plot_locations <- plot_locations %>%
+      dplyr::rename(inst = instal,
+                    visit_date = vist_dt,
+                    last_fire = lst_fr_,
+                    yrs_since_fire = yrs_sn_,
+                    visit_yr = vist_yr,
+                    imcy = imcy_nv) %>%
+      dplyr::select(-instllt, -instl__) %>%
+      dplyr::filter(!is.na(visit_yr))
+
+tyndall_plots <- filter(plot_locations, inst=="tyndall")
+## plots visited in 2017
+tyndall2017 <- filter(tyndall_plots, visit_yr==2017)
+
+## plots visited in 2018
+tyndall2018 <- filter(tyndall_plots, visit_yr==2018)
+
+tyndall_fires$FID <- seq(1,nrow(tyndall_fires),1)
+
+fires2018 <- st_join(st_transform(tyndall2018, crs = st_crs(tyndall_fires)),
+                 tyndall_fires %>%
+                       filter(fDate > "2003-06-27",
+                              fDate < max(tyndall2018$visit_date))
+                 )
+
+fri2018 <- fires2018 %>%
+      group_by(plot_id, inst_nm, visit_date) %>%
+      summarise(
+            n_fires = length(plot_id),
+            fri15yr = 15/n_fires,
+            d_since_fire = max(visit_date) - max(fDate),
+            w_since_fire = d_since_fire/7,
+            y_since_fire = w_since_fire/52,
+            frindex = (1/fri15yr)/y_since_fire
+                )
+
+fires2017 <- st_join(st_transform(tyndall2017, crs = st_crs(tyndall_fires)),
+                 tyndall_fires %>%
+                       filter(fDate > "2002-07-20",
+                              fDate < max(tyndall2017$visit_date))
+                 )
+
+fri2017 <- fires2017 %>%
+      group_by(plot_id, inst_nm, visit_date) %>%
+      summarise(
+            n_fires = length(plot_id),
+            fri15yr = 15/n_fires,
+            d_since_fire = max(visit_date) - max(fDate),
+            w_since_fire = d_since_fire/7,
+            y_since_fire = (w_since_fire/52),
+            frindex = (1/fri15yr)/y_since_fire
+      )
+tyndall_fri <- rbind(fri2017, fri2018)
+summary(tyndall_fri)
+
+## Write shapefile
+st_write(tyndall_fri, "data/Tyndall/tyndall_15yr_fri.shp")
+
+## Write data frame
+readr::write_csv(as.data.frame(tyndall_fri), "data/Tyndall/tyndall_15yr_fri.csv")
