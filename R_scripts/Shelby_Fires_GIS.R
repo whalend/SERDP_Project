@@ -380,10 +380,72 @@ rm(list=ls(pattern = "Presc"))
 rm(list=ls(pattern = "DeSo"))
 rm(FireHistory)
 
-shelby_fires <- st_transform(shelby_fires, crs = 3814)
+# summary(shelby_fires)
+st_write(shelby_fires, "data/CampShelby/shelby_fires_2002_2019.shp")
 
-# shelby_fire <- st_read("data/CampShelby/FireManagementArea.shp")
-# plot(shelby_fires[8])
+
+plot_locations <- st_read("data/plot_visit.shp")# all plot locations/visits
+
+plot_locations <- plot_locations %>%
+      dplyr::rename(inst = instal,
+                    visit_date = vist_dt,
+                    last_fire = lst_fr_,
+                    yrs_since_fire = yrs_sn_,
+                    visit_yr = vist_yr,
+                    imcy = imcy_nv) %>%
+      dplyr::select(-instllt, -instl__) %>%
+      dplyr::filter(!is.na(visit_yr))
+
+# unique(plot_locations$inst)
+shelby_plots <- filter(plot_locations, inst=="shelby")
+
+shelby2017 <- filter(shelby_plots, visit_yr==2017)
+shelby2018 <- filter(shelby_plots, visit_yr==2018)
+
+shelby_fires$FID <- seq(1, nrow(shelby_fires), 1)
+
+
+fires2018 <- st_join(st_transform(shelby2018, crs = st_crs(shelby_fires)),
+                     shelby_fires %>%
+                           filter(fDate > "2003-08-15",
+                                  fDate < max(shelby2018$visit_date))
+)
+
+fri2018 <- fires2018 %>%
+      group_by(plot_id, inst_nm, visit_date) %>%
+      summarise(
+            n_fires = length(plot_id),
+            fri15yr = 15/n_fires,
+            d_since_fire = max(visit_date) - max(fDate),
+            w_since_fire = d_since_fire/7,
+            y_since_fire = w_since_fire/52,
+            frindex = (1/fri15yr)/y_since_fire
+      )
+
+fires2017 <- st_join(st_transform(shelby2017, crs = st_crs(shelby_fires)),
+                     shelby_fires %>%
+                           filter(fDate > "2002-09-25",
+                                  fDate < max(shelby2017$visit_date))
+)
+fri2017 <- fires2017 %>%
+      group_by(plot_id, inst_nm, visit_date) %>%
+      summarise(
+            n_fires = length(plot_id),
+            fri15yr = 15/n_fires,
+            d_since_fire = max(visit_date) - max(fDate),
+            w_since_fire = d_since_fire/7,
+            y_since_fire = w_since_fire/52,
+            frindex = (1/fri15yr)/y_since_fire
+      )
+shelby_fri <- rbind(fri2017, fri2018)
+summary(shelby_fri)
+
+## Write shapefile
+st_write(shelby_fri, "data/CampShelby/shelby_15yr_fri.shp")
+
+## Write data frame
+readr::write_csv(as.data.frame(shelby_fri), "data/CampShelby/shelby_15yr_fri.csv")
+
 
 
 # congongrass data ####
