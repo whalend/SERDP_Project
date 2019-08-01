@@ -292,7 +292,7 @@ avp_fires <- rbind(avp_fires,
 rm(list=ls(pattern = "urn"))
 rm(list=ls(pattern = "shp"))
 
-avp_fires
+st_write(avp_fires, "data/AvonPark/avp_fires_All.shp")
 
 plot_locations <- st_read("data/plot_visit.shp")# all plot locations/visits
 
