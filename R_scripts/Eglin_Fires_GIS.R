@@ -115,7 +115,7 @@ eglin_fri <- rbind(fri2017, fri2018)
 summary(eglin_fri)
 
 ## Write shapefile
-st_write(eglin_fri, "data/AvonPark/eglin_15yr_fri.shp")
+st_write(eglin_fri, "data/EglinAFB/eglin_15yr_fri.shp")
 
 ## Write data frame
-readr::write_csv(as.data.frame(eglin_fri), "data/AvonPark/eglin_15yr_fri.csv")
+readr::write_csv(as.data.frame(eglin_fri), "data/EglinAFB/eglin_15yr_fri.csv")
