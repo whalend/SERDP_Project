@@ -163,6 +163,12 @@ plot_visit_data <- plot_visit_data %>%
 write_csv(plot_visit_data, "data/processed_data/plot_visit_data.csv")
 
 
+## Add a last fire year for shelby k1 ####
+pvisit_data <- read_csv("data/processed_data/plot_visit_data.csv")
+
+pvisit_data$last_fire_year[pvisit_data$plot_id=="shelby k1"] <- 2015
+
+write_csv(pvisit_data, "data/processed_data/plot_visit_data.csv")
 
 # Join plot visit dates to spatial data ####
 pvisit_data <- read_csv("data/processed_data/plot_visit_data.csv")
@@ -170,7 +176,7 @@ pvisit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 plot_shp <- left_join(plot_shp,
                       select(pvisit_data, -installation, -notes, -lon, -lat))
 
-st_write(plot_shp, "data/plot_visit.shp")
+sf::st_write(plot_shp, "data/plot_visit.shp", delete_dsn = TRUE)
 
 #+ initial plotting of plot visit data ####
 # ggplot(plot_visit_data %>%
