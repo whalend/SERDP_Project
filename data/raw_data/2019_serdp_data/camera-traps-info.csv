@@ -1,0 +1,60 @@
+"installation","plot_id","camera_number","sd_card","camera_out","camera_in","position_from_center","notes"
+"wes","i1","28","28-1",20190403,20190423,"S",NA
+"wes","i1","6","6-1",20190403,20190423,"N",NA
+"wes","i2","28","28-2",20190423,20190514,"NW","moved from i1"
+"wes","i2","6","6-2",20190423,20190514,"S","moved from i1"
+"wes","i3","28","28-3",20190514,20190523,"S","moved from i2"
+"wes","i3","6","6-3",20190514,20190523,"N","moved from i2"
+"wes","n1","4","4-1",20190423,20190514,"W","switched to 4-2 on 5/14"
+"wes","n1","4","4-2",20190514,20190523,"W",NA
+"wes","n1","8","8-1",20190423,20190514,"S","switched to 8-2 on 5/14"
+"wes","n1","8","8-2",20190514,20190523,"S",NA
+"brown","n1","101","101-1",20190405,20190425,"S",NA
+"brown","n1","21","21-1",20190405,20190425,"N",NA
+"brown","i1","102","102-1",20190405,20190425,"E",NA
+"brown","i1","34","34-1",20190405,20190425,"W",NA
+"brown","n2","101","101-2",20190425,20190521,"W","moved from n1, checked good for battery and memory on 5/17"
+"brown","n2","21","21-2",20190425,20190521,"N","moved from n1, checked good for battery and memory on 5/17"
+"brown","i2","102","102-2",20190425,20190521,"NE","moved from i1, checked good for battery and memory on 5/17"
+"brown","i2","34","34-2",20190425,20190521,"W","moved from i1, checked good for battery and memory on 5/17"
+"brown","n3","108","108-2",20190517,20190521,"N","transferred from avp"
+"brown","n3","9","9-2",20190517,20190521,"S","transferred from avp"
+"brown","i3","112","112-2",20190517,20190521,"N","transferred from hancock n1"
+"brown","i3","14","14-2",20190517,20190521,"S","transferred from hancock n1"
+"seay","n1","104","104-1",20190408,20190423,"SE",NA
+"seay","n1","25","25-1",20190408,20190423,"NW",NA
+"seay","i1","103","103-1",20190408,20190423,"SE","need to check when 103-1 was switched to 103-2"
+"seay","i1","103","103-2",20190408,20190423,"SE",NA
+"seay","i1","33","33-1",20190408,20190423,"NW","need to check when 33-1 was switched to 33-2"
+"seay","i1","33","33-2",20190408,20190423,"NW",NA
+"seay","n2","104","104-3",20190514,20190523,"SW","moved from n1"
+"seay","n2","25","25-3",20190514,20190523,"NE","moved from n1"
+"seay","i1","103","103-3",20190514,20190523,"N","moved from i1"
+"seay","i1","33","33-3",20190514,20190523,"SE","moved from i1"
+"avonpark","i1","108","108-1",20190411,20190507,"W",NA
+"avonpark","i1","9","9-1",20190411,20190507,"SE",NA
+"avonpark","n1","107","107-1",20190411,20190507,"SE",NA
+"avonpark","n1","37","37-1",20190411,20190507,"NW",NA
+"peaceriver","i1","109","109-1",20190411,20190508,"W",NA
+"peaceriver","i1","22","22-1",20190411,20190508,"S",NA
+"peaceriver","i2","27","27-1",20190411,20190508,"N",NA
+"peaceriver","i2","110","110-1",20190411,20190508,"SW",NA
+"peaceriver","i3","111","111-1",20190411,20190508,"NE",NA
+"peaceriver","i3","10","10-1",20190411,20190508,"S",NA
+"hancock","i1","12","12-1",20190417,20190508,"SW",NA
+"hancock","i1","7","7-1",20190417,20190508,"E",NA
+"hancock","i2","2","2-1",20190417,20190508,"SW",NA
+"hancock","i2","5","5-1",20190417,20190508,"SE",NA
+"hancock","n1","112","112-1",20190417,20190508,"W",NA
+"hancock","n1","14","14-1",20190417,20190508,"E",NA
+"silversprings","i1","105","105-1",20190426,20190522,"S",NA
+"silversprings","i1","15","15-1",20190426,20190522,"N",NA
+"silversprings","n1","23","23-1",20190426,20190517,"S","CAMERA DIED, SWITCHED OUT ON 5/17 WITH REPLACEMENT"
+"silversprings","n1","107","107-2",20190517,20190522,"S","replace 23, 107 came from avp"
+"silversprings","n1","106","106-1",20190426,20190522,"NW",NA
+"munson","n1","35","35-1",20190501,20190606,"E",NA
+"munson","i1","20","20-1",20190501,20190606,"NW",NA
+"riversedge","n1","6-T","6-T-1",20190501,20190606,"S","taylor's camera"
+"riversedge","n1","42","42-1",20190501,20190606,"NE",NA
+"riversedge","i2","4-T","4-T-1",20190501,20190606,"W","taylor's camera"
+"riversedge","i1","38","38-1",20190501,20190606,"NE",NA
