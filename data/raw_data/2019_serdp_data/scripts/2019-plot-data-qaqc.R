@@ -259,7 +259,7 @@ quadrat_data_2019 <- quadrat_data %>%
   filter(visit_year==2019) %>% 
   mutate(plot_id = substr(###########3
 
-  steven stop here sleepy. trying to string out last two characters for plot id to eventually get invaded/native status column.
+  # steven stop here sleepy. trying to string out last two characters for plot id to eventually get invaded/native status column.
 
 quadrat_data_2019_stats <- quadrat_data_2019 %>% 
   group_by(installation, date, plot_id, transect_id) %>% 
@@ -270,5 +270,4 @@ quadrat_data_2019_stats <- quadrat_data_2019 %>%
             avg_herb_veg_ht = sum(herb_veg_ht1, herb_veg_ht2, herb_veg_ht3),
             avg_litter_ht = sum(litter_ht1, litter_ht2, litter_ht3))
 
-TEST HI 
 
