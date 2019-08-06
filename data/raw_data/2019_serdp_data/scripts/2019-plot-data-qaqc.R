@@ -257,17 +257,26 @@ quadrat_data <- read_csv("data/processed_data/quadrat1m.csv")
 
 quadrat_data_2019 <- quadrat_data %>% 
   filter(visit_year==2019) %>% 
-  mutate(plot_id = substr(###########3
+  mutate(plot_id = as.character(stringr::str_sub(plot_id, -2, -1)),
+         status_2 = stringr::str_sub(plot_id, 1, 2),
+         status = if_else(status_2 == "n", "native", "invaded"))
+
 
   # steven stop here sleepy. trying to string out last two characters for plot id to eventually get invaded/native status column.
+quadrat_data_2019[is.na(quadrat_data_2019)] <- 0
 
-quadrat_data_2019_stats <- quadrat_data_2019 %>% 
-  group_by(installation, date, plot_id, transect_id) %>% 
-  filter(!is.na(woody_veg_ht1), !is.na(woody_veg_ht2), !is.na(woody_veg_ht3)) %>% 
-  summarise(avg_woody_veg_ht = mean(woody_veg_ht1, woody_veg_ht2, woody_veg_ht3, na.rm = T))
-            
-            
-            avg_herb_veg_ht = sum(herb_veg_ht1, herb_veg_ht2, herb_veg_ht3),
-            avg_litter_ht = sum(litter_ht1, litter_ht2, litter_ht3))
+quadrat_stats <- quadrat_data_2019 %>% 
+  group_by(installation, date, plot_id, transect_id, status) %>% 
+  filter(!is.na(woody_veg_ht1), !is.na(woody_veg_ht2), !is.na(woody_veg_ht3), !is.na(herb_veg_ht1), !is.na(herb_veg_ht2), !is.na(herb_veg_ht3), !is.na(litter_ht1), !is.na(litter_ht2), !is.na(litter_ht3)) %>% 
+  summarise(avg_woody_veg_ht = mean(woody_veg_ht1, woody_veg_ht2, woody_veg_ht3), 
+            avg_herb_veg_ht = mean(herb_veg_ht1, herb_veg_ht2, herb_veg_ht3),
+            avg_litter_ht = mean(litter_ht1, litter_ht2, litter_ht3))
 
+quadrat_stats$status[quadrat_stats$plot_id=="n1"] <- "native"
+quadrat_stats$status[quadrat_stats$plot_id=="n2"] <- "native"
+
+
+##### reading in secondary logger info #####
+
+loggers <- read_csv("data/processed_data/2019-final-round-loggers-serdp.csv")
 
