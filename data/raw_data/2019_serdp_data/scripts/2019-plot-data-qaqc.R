@@ -54,7 +54,7 @@ def_theme <- theme(legend.title = element_blank(),
                    strip.background = element_blank(),
                    panel.grid = element_blank(),
                    panel.background = element_blank())
-invasion_color <- scale_color_manual(values = c("deepskyblue", "red"))
+invasion_color <- scale_color_manual(values = c("red", "deepskyblue"))
 invasion_fill <- scale_color_manual(values = c("deepskyblue", "red"))
 invasion_color_2 <- scale_color_manual(values = c("deepskyblue", "red", "green", "purple"))
 invasion_fill_2 <- scale_color_manual(values = c("deepskyblue", "red", "green", "purple"))
@@ -267,16 +267,285 @@ quadrat_data_2019[is.na(quadrat_data_2019)] <- 0
 
 quadrat_stats <- quadrat_data_2019 %>% 
   group_by(installation, date, plot_id, transect_id, status) %>% 
-  filter(!is.na(woody_veg_ht1), !is.na(woody_veg_ht2), !is.na(woody_veg_ht3), !is.na(herb_veg_ht1), !is.na(herb_veg_ht2), !is.na(herb_veg_ht3), !is.na(litter_ht1), !is.na(litter_ht2), !is.na(litter_ht3)) %>% 
   summarise(avg_woody_veg_ht = mean(woody_veg_ht1, woody_veg_ht2, woody_veg_ht3), 
             avg_herb_veg_ht = mean(herb_veg_ht1, herb_veg_ht2, herb_veg_ht3),
             avg_litter_ht = mean(litter_ht1, litter_ht2, litter_ht3))
 
+
 quadrat_stats$status[quadrat_stats$plot_id=="n1"] <- "native"
 quadrat_stats$status[quadrat_stats$plot_id=="n2"] <- "native"
+quadrat_stats$avg_herb_veg_ht[quadrat_stats$avg_herb_veg_ht==454] <- 35
+
+
+quadrat_stats_2 <- quadrat_stats %>% 
+  group_by(installation, date, plot_id, status) %>% 
+  summarise(plot_woody_veg_ht = mean(avg_woody_veg_ht),
+            plot_herb_veg_ht = mean(avg_herb_veg_ht),
+            plot_litter_ht = mean(avg_litter_ht))
+
+# filter(!is.na(woody_veg_ht1), !is.na(woody_veg_ht2), !is.na(woody_veg_ht3), !is.na(herb_veg_ht1), !is.na(herb_veg_ht2), !is.na(herb_veg_ht3), !is.na(litter_ht1), !is.na(litter_ht2), !is.na(litter_ht3)) %>%
+
+
+#^ with all installation and summary box
+ggplot(quadrat_stats_2, aes(installation, plot_herb_veg_ht, color = status)) +
+  geom_boxplot() +
+  geom_boxplot(data = quadrat_stats_all, aes(status, plot_herb_veg_ht, color = status)) +
+  invasion_color_2 +
+  theme_bw() +
+  NULL
+
+ggplot(quadrat_stats_2, aes(status, plot_herb_veg_ht, color = status)) +
+  geom_boxplot(outlier.colour = "black", outlier.shape = 24) +
+  geom_point() +
+  invasion_color +
+  theme_bw() +
+  NULL
+
+quadrat_stats_all <- quadrat_stats %>% 
+  group_by(installation, status) %>% 
+  summarise(plot_herb_veg_ht = mean(avg_herb_veg_ht)) 
+
+quadrat_stats_all$status[quadrat_stats_all$status=="invaded"] <- "zummaryI"
+quadrat_stats_all$status[quadrat_stats_all$status=="native"] <- "zummaryN"
 
 
 ##### reading in secondary logger info #####
 
 loggers <- read_csv("data/processed_data/2019-final-round-loggers-serdp.csv")
+
+summary(loggers)
+loggers <- loggers[c(2:5)]
+  
+loggers <- loggers %>% 
+  mutate(date = substr(time, 1,8),
+         time_2 = substr(time, 9,20),
+         date_time = lubridate::mdy_hms(paste(date,time_2)))
+
+loggers <- loggers[-c(1:1)]
+loggers <- loggers[-c(5:5)]
+
+loggers <- loggers %>% 
+  filter(date_time < "2019-08-01 20:00:00") %>% 
+  filter(date_time > "2019-06-12 20:00:00") %>% 
+  filter(tempC > 10) %>% 
+  filter(RH > 20) %>% 
+  filter(logger_id != 19) %>%
+  filter(logger_id != 17) %>%
+  mutate(installation = "test",
+         plot_id = "test",
+         status = "n")
+
+#adding all of installation and status and plot id text ##
+
+loggers$installation[loggers$logger_id=="01"] <- "hancock"
+loggers$installation[loggers$logger_id=="02"] <- "riversedge"
+loggers$installation[loggers$logger_id=="03"] <- "riversedge"
+loggers$installation[loggers$logger_id=="04"] <- "brown"
+loggers$installation[loggers$logger_id=="05"] <- "silversprings"
+loggers$installation[loggers$logger_id=="06"] <- "munson"
+loggers$installation[loggers$logger_id=="07"] <- "silversprings"
+loggers$installation[loggers$logger_id=="08"] <- "hancock"
+loggers$installation[loggers$logger_id=="10"] <- "hancock"
+loggers$installation[loggers$logger_id=="11"] <- "brown"
+loggers$installation[loggers$logger_id=="12"] <- "munson"
+loggers$installation[loggers$logger_id=="15"] <- "hancock"
+loggers$installation[loggers$logger_id=="16"] <- "peace"
+loggers$installation[loggers$logger_id=="17"] <- "wes"
+loggers$installation[loggers$logger_id=="19"] <- "wes"
+loggers$installation[loggers$logger_id=="20"] <- "peace"
+loggers$installation[loggers$logger_id=="21"] <- "peace"
+loggers$installation[loggers$logger_id=="23"] <- "wes"
+loggers$installation[loggers$logger_id=="24"] <- "wes"
+
+loggers$plot_id[loggers$logger_id=="01"] <- "n2"
+loggers$plot_id[loggers$logger_id=="02"] <- "n1"
+loggers$plot_id[loggers$logger_id=="03"] <- "i2"
+loggers$plot_id[loggers$logger_id=="04"] <- "n2"
+loggers$plot_id[loggers$logger_id=="05"] <- "n1"
+loggers$plot_id[loggers$logger_id=="06"] <- "i1"
+loggers$plot_id[loggers$logger_id=="07"] <- "i1"
+loggers$plot_id[loggers$logger_id=="08"] <- "i3"
+loggers$plot_id[loggers$logger_id=="10"] <- "n1"
+loggers$plot_id[loggers$logger_id=="11"] <- "i2"
+loggers$plot_id[loggers$logger_id=="12"] <- "n1"
+loggers$plot_id[loggers$logger_id=="15"] <- "i4"
+loggers$plot_id[loggers$logger_id=="16"] <- "i2"
+loggers$plot_id[loggers$logger_id=="17"] <- "n1"
+loggers$plot_id[loggers$logger_id=="19"] <- "i3"
+loggers$plot_id[loggers$logger_id=="20"] <- "i1"
+loggers$plot_id[loggers$logger_id=="21"] <- "n1"
+loggers$plot_id[loggers$logger_id=="23"] <- "i3"
+loggers$plot_id[loggers$logger_id=="24"] <- "n1"
+
+loggers$status[loggers$logger_id=="01"] <- "native"
+loggers$status[loggers$logger_id=="02"] <- "native"
+loggers$status[loggers$logger_id=="03"] <- "invaded"
+loggers$status[loggers$logger_id=="04"] <- "native"
+loggers$status[loggers$logger_id=="05"] <- "native"
+loggers$status[loggers$logger_id=="06"] <- "invaded"
+loggers$status[loggers$logger_id=="07"] <- "invaded"
+loggers$status[loggers$logger_id=="08"] <- "invaded"
+loggers$status[loggers$logger_id=="10"] <- "native"
+loggers$status[loggers$logger_id=="11"] <- "invaded"
+loggers$status[loggers$logger_id=="12"] <- "native"
+loggers$status[loggers$logger_id=="15"] <- "invaded"
+loggers$status[loggers$logger_id=="16"] <- "invaded"
+loggers$status[loggers$logger_id=="17"] <- "native"
+loggers$status[loggers$logger_id=="19"] <- "invaded"
+loggers$status[loggers$logger_id=="20"] <- "invaded"
+loggers$status[loggers$logger_id=="21"] <- "native"
+loggers$status[loggers$logger_id=="23"] <- "invaded"
+loggers$status[loggers$logger_id=="24"] <- "native"
+
+#fixing error because ggplot wouldnt plot date as character
+loggers <- loggers %>% 
+  mutate(date = as.Date(substr(date_time, 1,10)))
+
+#View(loggers)
+
+loggers_by_status <- loggers %>% 
+  group_by(status, date) %>% 
+  summarise(mean_tempC = mean(tempC),
+            mean_rh = mean(RH))
+
+write_csv(loggers_by_status, "data/raw_data/2019_serdp_data/scripts/loggers_by_status.csv")
+
+#figure for average rh all time
+ggplot(loggers_by_status, aes(date, mean_rh, color = status)) +
+  geom_smooth(method = "lm", formula = y ~ (poly(x,3)), alpha = .2) +
+  geom_point() +
+  invasion_color +
+  theme_bw() +
+  NULL
+
+#figure for average temp all time
+ggplot(loggers_by_status, aes(date, mean_tempC, color = status)) +
+  geom_smooth() +
+  geom_point() +
+  invasion_color +
+  theme_bw() +
+  NULL
+
+loggers_by_logger <- loggers %>% 
+  group_by(logger_id, status, date) %>% 
+  summarise(min_daily_rh = min(RH)) %>% 
+  ungroup(.) %>% 
+  group_by(status, date) %>% 
+  summarise(avg_daily_min_rh = mean(min_daily_rh)) %>% 
+  select(status, date, avg_daily_min_rh)
+
+write_csv(loggers_by_logger, "data/raw_data/2019_serdp_data/scripts/loggers_by_logger.csv")
+
+#figure for daily min rh 
+ggplot(loggers_by_logger, aes(date, avg_daily_min_rh, color = status)) +
+  geom_smooth(method = "lm", formula = y ~ (poly(x,3)), alpha = .2) +
+  geom_point() +
+  invasion_color +
+  theme_bw() +
+  NULL
+
+#starting analysis on time below/above 
+
+thres_1 <- logger_thresholds_below_75 <- loggers %>%
+  filter(between(RH, 20, 74.99)) %>%
+  group_by(date, status, logger_id) %>%
+  summarise(obs_below_75 = n(),
+            minutes_below_75 = obs_below_75*5) %>%
+  select(date, status, logger_id, minutes_below_75)
+
+thres_2 <- logger_thresholds_bw_75_85 <- loggers %>%
+  filter(between(RH, 75, 85)) %>%
+  group_by(date, status, logger_id) %>%
+  summarise(obs_bw_75_85 = n(),
+            minutes_bw_75_85 = obs_bw_75_85*5) %>%
+  select(date, status, logger_id, minutes_bw_75_85)
+
+thres_3 <- logger_thresholds_above_85 <- loggers %>%
+  filter(RH >85.01) %>%
+  group_by(date, status, logger_id) %>%
+  summarise(obs_above_85 = n(),
+            minutes_above_85 = obs_above_85*5) %>%
+  select(date, status, logger_id, minutes_above_85)
+
+threshold_75 <- left_join(thres_2, thres_1)
+humidity_75 <- left_join(thres_3, threshold_75)
+
+humidity_75 <- humidity_75 %>% 
+  mutate(days = julian(date, origin = as.Date("2019-06-12")))
+
+##^save that as csv later for drew
+write_csv(humidity_75, "data/raw_data/2019_serdp_data/scripts/esa_serdp_thresholds.csv")
+
+#above 85
+ggplot(humidity_75, aes(days, minutes_above_85, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", formula = y ~ (poly(x,2)), alpha = .2) +
+  geom_point(data = humidity_75, aes(y = minutes_above_85, color = status), alpha = 0.16) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+  invasion_color +
+  #invasion_fill +
+  ylab("Minutes above 85% RH") +
+  xlab("Days") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "Minutes above 85 % RH")  +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  #expand_limits(x = 0, y = 0) +
+  geom_hline(yintercept = 720, linetype = "dashed") +
+  scale_x_continuous(limits = c(0,50), breaks = c(0, 10, 20, 30, 40, 50)) +
+  scale_y_continuous(limits = c(0,1440), breaks = c(0, 500, 1000, 1400)) +
+  NULL
+
+#below 75
+ggplot(humidity_75, aes(days, minutes_below_75, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", formula = y ~ (poly(x,2)), alpha = .2) +
+  geom_point(data = humidity_75, aes(y = minutes_below_75, color = status), alpha = 0.16) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+  invasion_color +
+  #invasion_fill +
+  ylab("minutes_below_75") +
+  xlab("Days") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "minutes_below_75")  +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  #expand_limits(x = 0, y = 0) +
+  geom_hline(yintercept = 720, linetype = "dashed") +
+  scale_x_continuous(limits = c(0,50), breaks = c(0, 10, 20, 30, 40, 50)) +
+  scale_y_continuous(limits = c(0,1440), breaks = c(0, 500, 1000, 1400)) +
+  NULL
+
+#bw 75-85
+
+ggplot(humidity_75, aes(days, minutes_bw_75_85, color = status)) +
+  geom_smooth(aes(fill = status, color = status), se = T, method = "lm", formula = y ~ (poly(x,2)), alpha = .2) +
+  geom_point(data = humidity_75, aes(y = minutes_bw_75_85, color = status), alpha = 0.16) +
+  #geom_errorbarh(aes(xmin = avg_min_rh - min_rh_se,
+  invasion_color +
+  #invasion_fill +
+  ylab("minutes_bw_75_85") +
+  xlab("Days") +
+  def_theme +
+  guides(fill=FALSE, color=FALSE) +
+  ggtitle(label = "minutes_bw_75_85")  +
+  #theme(plot.title = element_text(hjust = 0.5)) +
+  #scale_y_continuous(limits = c(0, 1 )) +
+  #expand_limits(x = 0, y = 0) +
+  geom_hline(yintercept = 720, linetype = "dashed") +
+  scale_x_continuous(limits = c(0,50), breaks = c(0, 10, 20, 30, 40, 50)) +
+  scale_y_continuous(limits = c(0,1440), breaks = c(0, 500, 1000, 1400)) +
+  NULL
+
+loggers_by_status_2 <- loggers %>% 
+  group_by(status) %>% 
+  summarise(mean_tempC = mean(tempC),
+            mean_rh = mean(RH))
+
+
+
+
+
+
+
 
