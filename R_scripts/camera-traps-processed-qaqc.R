@@ -10,7 +10,7 @@ photos <- read_csv("data/raw_data/2019_serdp_data/TaylorFindsCritters.csv")
 summary(photos)
 #filter(photos, cow >1)
 
-#rearranging column names into something that made more sense
+#rearranging column names into something that made more sense because they were all random out of whack
 photos <- photos[,c(4,9,7,11,14,15,18,6,3,5,12,17,1,2,13,16,8,10,19)]
 
 photos <- photos %>% 
@@ -85,7 +85,7 @@ unique(camera_traps_report$sd_card)
 
 photos_combined <- left_join(photos, camera_traps_report, by = "sd_card")
 
-View(photos_combined)
+#View(photos_combined)
 #it frickin worked
 
 #reorganize column names and rename from join
@@ -97,18 +97,29 @@ colnames(photos_combined)[colnames(photos_combined)=="plot_id.y"] <- "plot_id"
 colnames(photos_combined)[colnames(photos_combined)=="status.y"] <- "status"
 colnames(photos_combined)[colnames(photos_combined)=="camera_number.x"] <- "camera_number"
 
+##### MAIN DATA FRAME TO BE MANIPULATED (photos_combined) #####
+# need to figure out time manipulations for ever 5 or so minutes to remove chance of repeat individuals as best possible
+# "ctime" is uploaded date/time?, "mtime" is date/time photo was actually taken
+
 ##creating frames to merge into one for species counts by installation and invasion
+
+photos_stats <- photos_combined %>% 
+  group_by(status) %>% 
+  summarise(total_cow = sum(cow),
+            total_deer = sum(deer),
+            total_turkey = sum(turkey),
+            total_pig = sum(pig))
+
+photo_stats_cow <- photos_combined %>% 
+  mutate(species = "cow") %>% 
+  #filter(cow < 2) %>% 
+  group_by(status, installation, species) %>% 
+  summarise(count = sum(cow))
 
 photo_stats_deer <- photos_combined %>% 
   mutate(species = "deer") %>% 
   group_by(status, installation, species) %>% 
   summarise(count = sum(deer))
-
-photo_stats_cow <- photos_combined %>% 
-  mutate(species = "cow") %>% 
-  filter(cow < 2) %>% 
-  group_by(status, installation, species) %>% 
-  summarise(count = sum(cow))
 
 photo_stats_turkey <- photos_combined %>% 
   mutate(species = "turkey") %>% 
@@ -120,9 +131,10 @@ photo_stats_pig <- photos_combined %>%
   group_by(status, installation, species) %>% 
   summarise(count = sum(pig))
 
-species_counts <- rbind(photo_stats_deer, photo_stats_turkey, photo_stats_pig)
+species_counts_installation <- rbind(photo_stats_cow, photo_stats_deer, photo_stats_turkey, photo_stats_pig)
 
-species_counts <- species_counts %>% 
+#all individuals across native/invaded only main 4 hosts
+species_counts_status <- species_counts_installation %>% 
   group_by(status, species) %>% 
   summarise(count = sum(count))
 
@@ -136,30 +148,16 @@ species_counts <- species_counts %>%
 invasion_color <- scale_color_manual(values = c("red", "deepskyblue"))
 invasion_fill <- scale_color_manual(values = c("deepskyblue", "red"))
 
-#all individuals across native/invaded only main 4 hosts
-
-ggplot(species_counts, aes(species, count, color = status))+
+ggplot(species_counts_status, aes(species, count, color = status))+
   geom_point(position = "jitter") +
-  # geom_bar(aes(total_pig)) +
-  # geom_bar(aes(total_deer)) +
-  # geom_bar(aes(total_turkey)) +
   invasion_color +
   theme_bw() +
   NULL
 
-ggplot(species_counts, aes(species, count, color = status))+
+ggplot(species_counts_installation, aes(species, count, color = status))+
   geom_boxplot() +
-  # geom_bar(aes(total_pig)) +
-  # geom_bar(aes(total_deer)) +
-  # geom_bar(aes(total_turkey)) +
   invasion_color +
   theme_bw() +
   NULL
 
-ggplot(photo_stats)
 
-total_cow = sum(cow),
-total_deer = sum(deer),
-total_pig = sum(pig),
-total_turkey = sum(turkey),
-total_raccoon = sum(raccoon))
