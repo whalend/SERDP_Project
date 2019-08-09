@@ -101,6 +101,24 @@ colnames(photos_combined)[colnames(photos_combined)=="camera_number.x"] <- "came
 # need to figure out time manipulations for ever 5 or so minutes to remove chance of repeat individuals as best possible
 # "ctime" is uploaded date/time?, "mtime" is date/time photo was actually taken
 
+write_csv(photos_combined, "data/processed_data/2019-camera-trap-photos-batch-one.csv")
+
+photos_cows <- photos_combined %>% 
+  filter(cow > 0)
+write_csv(photos_cows, "C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_cows.csv")
+
+photos_deer <- photos_combined %>% 
+  filter(deer > 0)
+write_csv(photos_deer, "C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_deer.csv")
+
+photos_turkey <- photos_combined %>% 
+  filter(turkey > 0)
+write_csv(photos_turkey, "C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_turkey.csv")
+
+photos_pig <- photos_combined %>% 
+  filter(pig > 0)
+write_csv(photos_pig, "C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_pig.csv")
+
 ##creating frames to merge into one for species counts by installation and invasion
 
 photos_stats <- photos_combined %>% 
@@ -146,7 +164,7 @@ species_counts_status <- species_counts_installation %>%
 
 #color/theme for figures#####
 invasion_color <- scale_color_manual(values = c("red", "deepskyblue"))
-invasion_fill <- scale_color_manual(values = c("deepskyblue", "red"))
+invasion_fill <- scale_color_manual(values = c("red", "deepskyblue"))
 
 ggplot(species_counts_status, aes(species, count, color = status))+
   geom_point(position = "jitter") +
@@ -159,5 +177,109 @@ ggplot(species_counts_installation, aes(species, count, color = status))+
   invasion_color +
   theme_bw() +
   NULL
+
+
+
+#testing done manual
+deer <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_deer.csv")
+pig <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_pig.csv")
+turkey <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_turkey.csv")
+
+trimmed_species <- rbind(deer,turkey,pig)
+#manual enter of days and deletion of repeat images every 5 min
+
+trimmed_deer <- trimmed_species %>% 
+  mutate(species = "deer") %>% 
+  group_by(status, installation, plot_id, camera_number, sd_card, species, days) %>% 
+  summarise(count = sum(deer))
+
+trimmed_turkey <- trimmed_species %>% 
+  mutate(species = "turkey") %>% 
+  group_by(status, installation, plot_id, camera_number, sd_card, species, days) %>%  
+  summarise(count = sum(turkey))
+
+trimmed_pig <- trimmed_species %>% 
+  mutate(species = "pig") %>% 
+  group_by(status, installation, plot_id, camera_number, sd_card, species, days) %>%  
+  summarise(count = sum(pig))
+
+trimmed_species <- rbind(trimmed_deer, trimmed_turkey, trimmed_pig)
+
+#combine multiple cameras on the same plot for counts and days to account for 2 cameras per plot
+trimmed_species <- trimmed_species %>% 
+  group_by(status, installation, plot_id, species) %>% 
+  summarise(days = sum(days),
+            count = sum(count))
+
+
+camera_trap_days <- trimmed_deer %>% 
+  group_by(status, installation) %>% 
+  summarise(total_days = sum(days))
+
+trimmed_species_stats_status <- trimmed_species %>% 
+  group_by(status, installation, plot_id, days, species) %>% 
+  summarise(count_per_day = count/days)
+
+ggplot(trimmed_species_stats_status, aes(species, count_per_day, color = status)) +
+  geom_boxplot() +
+  invasion_color +
+  theme_bw() +
+  NULL
+
+ggplot(trimmed_species_stats_status, aes(installation, count_per_day, color = status)) +
+  geom_boxplot() +
+  invasion_color +
+  theme_bw() +
+  NULL
+
+ggplot() +
+  geom_bar(data = trimmed_species_stats_status, aes(species, count_per_day, color = status, fill = status), stat = "identity", position = "dodge") +
+  invasion_color +
+  invasion_fill +
+  theme_bw() +
+  NULL
+
+ggplot() +
+  geom_bar(data = trimmed_species_stats_status, aes(installation, count_per_day, color = status, fill = status), stat = "identity", position = "dodge") +
+  invasion_color +
+  invasion_fill +
+  theme_bw() +
+  NULL
+
+ggplot() +
+  geom_bar(data = test_3, aes(x = species, y = count_per_day, color = status, fill = status), position = "dodge", stat = "identity") +
+  invasion_color +
+  invasion_fill +
+  theme_bw() +
+  NULL
+
+test_2 <- trimmed_species %>% 
+  group_by(status, species, days) %>% 
+  summarise(totals = sum(count)) 
+
+test_3 <- test_2 %>% 
+  group_by(status, species, days) %>% 
+  summarise(count_per_day = totals/days)
+
+camera_trap_days <- trimmed_species %>% 
+  group_by(status, plot_id, days) %>% 
+  summarise(total_days_trapped = sum(days))
+  
+ggplot() +
+  geom_boxplot(data = camera_trap_days, aes(status, total_days, color = status, fill = status)) +
+  invasion_color +
+  invasion_fill +
+  theme_bw() +
+  NULL
+  
+
+ggplot() +
+  geom_bar(data = camera_trap_days, aes(x = status, y = total_days, color = status, fill = status, position = "dodge"), stat = "identity") +
+  invasion_color +
+  invasion_fill +
+  theme_bw() +
+  NULL
+
+
 
 
