@@ -87,9 +87,9 @@ Update 8/5/2019: Using fire history calculated from GIS layers provided by insta
 
 # Installations Visited and Plots Sampled
 
-* **`r n_distinct(plot_visit_data_no$inst_name)` installations**
-* **`r n_distinct(plot_visit_data_no$plot_id)` different plots, some multiple times**
-* **`r length(plot_visit_data_no$plot_id)` plot visits (some revisits)**
+* **`r n_distinct(plot_visit_data$inst_name)` installations**
+* **`r n_distinct(plot_visit_data$plot_id)` different plots, some multiple times**
+* **`r length(plot_visit_data$plot_id)` plot visits (some revisits)**
 
 
 ```{r make installation map, echo=F, results='hide', eval=F}
@@ -169,7 +169,7 @@ tm_basemap("Esri.WorldGrayCanvas") +
 ```
 
 
-![](figures/Year2bases.png)
+![](figures/installations_visited_map.png)
 
 ```{r summary of plots visited, fig.height=5}
 
@@ -191,7 +191,7 @@ plot_nums %>%
       ggplot(aes(inst_name, plot_ct, label=plot_ct)) +
       geom_col(aes(fill = imcy_inv)) +
       invasion_fill +
-      # geom_text(nudge_y = 0) +
+      geom_text(nudge_y = -.55) +
       # scale_fill_manual(values = c(installation_name = "blue")) +
       # facet_grid(inst_name ~ ., scales = "free_y") +
       ylab("Number of plots sampled") +
@@ -204,9 +204,13 @@ theme(legend.position = c(.88,.95),
       NULL
 
 plot_visit_data %>% 
-      ggplot(aes(x = as.factor(last_fire_year))) +
+      filter(!duplicated(plot_id)) %>% 
+      group_by(round(y_since_fire), imcy_inv) %>% 
+      summarise(plot_ct = n_distinct(plot_id)) %>% 
+      ggplot(aes(`round(y_since_fire)`, plot_ct, label = plot_ct)) +
       # geom_count(aes(fill = imcy_inv, color = imcy_inv)) +
-      geom_bar(aes(fill = imcy_inv), position = "dodge") +
+      geom_col(aes(fill = imcy_inv), position = "dodge") +
+      # geom_text() +
       invasion_fill +
       invasion_color +
       # scale_fill_discrete(h = c(249,200)) +
@@ -215,7 +219,7 @@ plot_visit_data %>%
       # ggtitle("Invaded vs. Uninvaded Plots Across Burn Units") +
       theme_classic() +
       def_theme +
-      theme(legend.position = c(.2,.9)) +
+      theme(legend.position = c(.8,.9)) +
       NULL
 
 # ggplot(plot_data, aes(imcy_inv)) +
@@ -468,7 +472,8 @@ ggplot(quadrat10_summaries,
 
 ```{r litter depth fig}
 
-(litter_depth_fig <- ggplot(quadrat10_summaries, aes(log(y_since_fire), avg_litter_depth_all)) +
+(litter_depth_fig <- ggplot(quadrat10_summaries, 
+                            aes(log(y_since_fire), avg_litter_depth_all)) +
       geom_point(aes(color = imcy_inv), size = 2) +
       geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", alpha = .2) +
       # stat_summary(aes(color = imcy_inv), fun.data = "mean_se", geom = "pointrange") +
@@ -494,7 +499,6 @@ ggplot(quadrat10_summaries, aes(log(fri15yr), avg_litter_depth_all)) +
       ylab("Litter depth (cm)") +
       theme(legend.position = c(.85,.9)) +
       NULL
-)
 
 ggplot(quadrat10_summaries, aes(log(frindex), avg_litter_depth_all)) +
       geom_point(aes(color = imcy_inv), size = 2) +
@@ -508,7 +512,6 @@ ggplot(quadrat10_summaries, aes(log(frindex), avg_litter_depth_all)) +
       ylab("Litter depth (cm)") +
       theme(legend.position = c(.85,.9)) +
       NULL
-)
 
 ```
 
@@ -540,7 +543,6 @@ ggplot(quadrat10_summaries, aes(log(fri15yr), avg_pct_litter)) +
       ylab("Litter cover (%)") +
       # theme(legend.position = c(.85,.1)) +
       NULL
-)
 
 ggplot(quadrat10_summaries, aes(log(frindex), avg_pct_litter)) +
       geom_point(aes(color = imcy_inv), size = 2) +
@@ -554,7 +556,6 @@ ggplot(quadrat10_summaries, aes(log(frindex), avg_pct_litter)) +
       ylab("Litter cover (%)") +
       # theme(legend.position = c(.85,.1)) +
       NULL
-)
 
 ```
 
@@ -666,21 +667,8 @@ veg_cover_data <- left_join(
 ```
 
 ```{r fxgroup fig, eval=T}
-## WTF???
+## What am I even looking at???
 
-# fx_group_data <- species10_data %>% 
-#       mutate(fx_group = case_when(
-#             functional_group=="algae" ~ "moss/lichen",
-#             functional_group=="moss" ~ "moss/lichen",
-#             functional_group=="lichen" ~ "moss/lichen",
-#             functional_group=="forb/shrub" ~ "forb",
-#             functional_group=="shrub/tree" ~ "shrub",
-#             TRUE ~ functional_group
-#             )) %>% 
-#       filter(!is.na(functional_group))
-
-summary(fx_group_data)
-filter(fx_group_data, is.na(imcy_inv))$plot_id
 
 (fxgroup_cover_fig <- ggplot(veg_cover_data, aes(y_since_fire, avg_pct_cover)) +
       geom_point(aes(color = fx_group, shape = imcy_inv)) +
@@ -807,13 +795,18 @@ species_richness <- left_join(
 invaded_quadrats <- species10_data %>% 
       filter(scientific_name=="Imperata cylindrica") %>% 
       mutate(quadrat_invaded = "yes") %>% 
-      select(plot_id:quadrat_id, quadrat_invaded, inst_name)
+      select(plot_id:quadrat_id, quadrat_invaded, inst_name, visit_year)
+invaded_quadrats <- left_join(
+      invaded_quadrats,
+      plot_visit_data
+)
 
 species10_data <- left_join(species10_data, invaded_quadrats)
 species10_data$quadrat_invaded[is.na(species10_data$quadrat_invaded)] <- "no"
+# summary(species10_data)
 
 quadrat_species_richness <- species10_data %>%
-      group_by(inst_name, plot_id, quadrat_invaded, quadrat_id) %>%
+      group_by(inst_name, plot_id, quadrat_invaded, quadrat_id, visit_year) %>%
       summarise(richness = n_distinct(scientific_name)) %>% 
       mutate(ln_richness = log(richness),
              max_richness = max(richness),
@@ -824,7 +817,7 @@ quadrat_species_richness <- species10_data %>%
 
 ```
 
-There were `r length(invaded_quadrats$quadrat_invaded)` (`r round(100*length(invaded_quadrats$quadrat_invaded)/length(quadrat_species_richness$richness), digits = 1)` %) 1-m quadrats located in invaded areas representing `r n_distinct(invaded_quadrats$years_since_fire)` different years since fire at `r n_distinct(invaded_quadrats$installation)` different installations (`r unique(invaded_quadrats$inst_name)`).
+There were `r length(invaded_quadrats$quadrat_invaded)` (`r round(100*length(invaded_quadrats$quadrat_invaded)/length(quadrat_species_richness$richness), digits = 1)` %) 1-m quadrats located in invaded areas representing `r n_distinct(invaded_quadrats$last_fire_year)` different years since fire at `r n_distinct(invaded_quadrats$inst_name)` different installations (`r unique(invaded_quadrats$inst_name)`).
 
 ```{r quadrat richness figure, eval = F}
 
@@ -1074,7 +1067,7 @@ ggplot(biomass_plot_summary,
 ```{r litter biomass fig}
 
 (litter_mass_fig <- ggplot(biomass_plot_summary,
-        aes(log(y_since_fire), avg_dry_litter_gm2, color = imcy_inv)) +  
+        aes((y_since_fire), avg_dry_litter_gm2, color = imcy_inv)) +  
       geom_point() +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "loess", linetype = "dashed", se = F) +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm", show.legend = F) +
@@ -1095,9 +1088,26 @@ ggplot(biomass_plot_summary,
 )
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/litter-biomass.png", height = 7.5, width = 7.5)
+ggplot(biomass_plot_summary,
+        aes((fri15yr), avg_dry_litter_gm2, color = imcy_inv)) +  
+      geom_point() +
+      geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "loess", linetype = "dashed", se = F) +
+      geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm", show.legend = F) +
+      # stat_summary(fun.data = "mean_se", geom = "pointrange") +
+      invasion_color +
+      invasion_fill +
+      # geom_smooth(aes(fill = imcy_inv), se = T, alpha = .2) +
+      # facet_grid(.~installation) +
+      theme_classic() +
+      ylab(expression(paste("Litter biomass (g ", m^{-2}, ")"))) +
+      xlab("Years (15-year fire return interval)") +
+      def_theme +
+      theme(legend.position = c(.88,.88),
+            legend.background = element_rect(color = "black")) +
+       NULL
 
 ggplot(biomass_plot_summary,
-        aes(log(frindex), avg_dry_litter_gm2, color = imcy_inv)) +  
+        aes((frindex), avg_dry_litter_gm2, color = imcy_inv)) +  
       geom_point() +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "loess", linetype = "dashed", se = F) +
       geom_smooth(aes(fill = imcy_inv), alpha = .2, method = "lm", show.legend = F) +
@@ -1842,7 +1852,7 @@ write_csv(tick_data_sum, "data/all_plotlevel_data.csv")
 
 ```{r load all plot level data, results='hide'}
 
-tick_data_sum <- read_csv("data/all_plotlevel_data.csv")
+tick_data_sum <- read_csv("data/processed_data/all_plotlevel_data.csv")
 # summary(tick_data_sum)
 tick_data_sum$imcy_inv <- factor(tick_data_sum$imcy_inv, levels = c("Uninvaded","Invaded"))
 
@@ -1993,8 +2003,8 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
 (tick_fire_fig <- ggplot(filter(tick_data_sum,), 
        aes(y_since_fire, log1p(total_ticks), fill = imcy_inv, color = imcy_inv)) +
       # geom_smooth(aes(fill = imcy_inv), se = F, method = "loess", linetype = "dashed", alpha = .2) +
-      geom_smooth(se = T, method = "loess", alpha = .2) +
-      # geom_smooth(se = F, method = "lm", linetype = 2, alpha = .2) +
+      geom_smooth(se = T, method = "lm", alpha = .2) +
+      geom_smooth(se = F, method = "loess", linetype = 2, alpha = .2) +
       geom_point(position = "jitter") +
       invasion_color +
       invasion_fill +
@@ -2005,19 +2015,20 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
       xlab("Years since fire") +
       ylab("log( tick abundance + 1 )") +
       def_theme +
+       theme(legend.position = "right") +
       NULL)
 
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/ticks-vs-fire.png", height = 7.5, width = 7.5)
 
 ggplot(tick_data_sum, 
-       aes(log(fri15yr), log1p(total_ticks), fill = imcy_inv, color = imcy_inv)) +
+       aes((fri15yr), log1p(total_ticks), fill = imcy_inv, color = imcy_inv)) +
       geom_smooth(se = T, method = "lm", alpha = .2) +
       geom_point(position = "jitter") +
       invasion_color +
       invasion_fill +
       # scale_shape_manual(values = c(inst_name=2, 19, 19, 19, 19, 19, 19, 19, 19)) +
       theme_classic() +
-      xlab("Years (log 15-year fire return)") +
+      xlab("15-year fire return interval (years)") +
       ylab("log( tick abundance + 1 )") +
       def_theme +
       NULL
@@ -2030,7 +2041,7 @@ ggplot(tick_data_sum,
       invasion_fill +
       # scale_shape_manual(values = c(inst_name=2, 19, 19, 19, 19, 19, 19, 19, 19)) +
       theme_classic() +
-      xlab("15-year fire return index") +
+      xlab("15-year fire return index (log)") +
       ylab("log( tick abundance + 1 )") +
       def_theme +
       NULL
@@ -2433,17 +2444,41 @@ summary(host_canopy_model)
 ```{r host-fire}
 
 ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
-        aes(log(y_since_fire), log1p(total_clusters1m))) +
+        aes((y_since_fire), log1p(total_clusters1m))) +
       geom_point(aes(color = imcy_inv), alpha = .5) +
       invasion_color +
       invasion_fill +
       # geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "loess", se = F, alpha = .2, linetype = "dashed") +
       geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", se = T, alpha = .2) +
       theme_classic() +
-      xlab(expression(paste("Years since fire (log)"))) +
+      xlab(expression(paste("Years since fire"))) +
       ylab("log( dung clusters + 1 )") +
       def_theme
 # ggsave("~/Dropbox (UF)/SERDP-Project/figures/hosts-fire.png", height = 7.5, width = 7.5)
+
+ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
+        aes(log(fri15yr), log1p(total_clusters1m))) +
+      geom_point(aes(color = imcy_inv), alpha = .5) +
+      invasion_color +
+      invasion_fill +
+      # geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "loess", se = F, alpha = .2, linetype = "dashed") +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", se = T, alpha = .2) +
+      theme_classic() +
+      xlab("15-year fire return interval (log)") +
+      ylab("log( dung clusters + 1 )") +
+      def_theme
+
+ggplot(filter(tick_data_sum, !is.na(imcy_inv)), 
+        aes(log(frindex), log1p(total_clusters1m))) +
+      geom_point(aes(color = imcy_inv), alpha = .5) +
+      invasion_color +
+      invasion_fill +
+      # geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "loess", se = F, alpha = .2, linetype = "dashed") +
+      geom_smooth(aes(color = imcy_inv, fill = imcy_inv), method = "lm", se = T, alpha = .2) +
+      theme_classic() +
+      xlab("15-year fire return index (log)") +
+      ylab("log( dung clusters + 1 )") +
+      def_theme
 
 ```
 
@@ -2506,6 +2541,14 @@ summary(lm(log1p(total_ticks) ~ avg_pct_litter_moisture, data = tick_data_sum))
 summary(lm(avg_dry_litter_gm2 ~ years_since_fire, data = tick_data_sum))
 summary(lm(avg_canopy_cover ~ years_since_fire, data = tick_data_sum))
 # summary(lm(log1p(total_ticks) ~ log1p(avg_clusters1m), data = tick_data_sum))
+
+## Figure out theoretical range of fire return index ####
+x <- seq(1,15,.5)
+y <- 1/x
+y2 <- runif(length(x), min = .002, max = 15)
+y3 <- y/y2
+plot(log(y3),y2) # Produces log-linear pattern between index and time since fire
+1/15
 
 ```
 
@@ -2572,10 +2615,12 @@ library(piecewiseSEM)
 library(lme4)
 #glmmadmb
 
-m1 <- glmer(total_ticks ~ y_since_fire + (1|inst_name) + (1|plot_id), data = model_data, family = "poisson")
+m1 <- glmer(total_ticks ~ scale(frindex) + scale(avg_pct_litter) +
+                  scale(avg_canopy_cover) +(1|inst_name) + (1|plot_id), data = model_data, family = "poisson")
 summary(m1)
 
-m2 <- glmer.nb(total_ticks ~ y_since_fire + (1|inst_name) + (1|plot_id), data = model_data)
+m2 <- glmer.nb(total_ticks ~ scale(frindex) + scale(avg_pct_litter) +
+                  scale(avg_canopy_cover) + (1|inst_name) + (1|plot_id), data = model_data)
 summary(m2)
 
 AIC(m1,m2)
@@ -2597,43 +2642,52 @@ mod <- psem(
       #             (1|inst_name) + (1|plot_id), 
       #       data = model_data, family = poisson),
       # # summary(tick_mod)
-      
+## Model tick counts as Poisson, negative binomial, or other distribution?
       tick_mod.nb <- glmer.nb(
             total_ticks ~ 
-                  # scale(clusters_1_2) + 
+                  clusters_1_2 +
                   # litter_kg_m2 +
                   # avg_pct_litter_moisture +
                   avg_pct_litter +
                   avg_canopy_cover +
                   # scale(day_of_year) +
-                  y_since_fire +
+                  # y_since_fire +
+                  frindex +
+                  # fri15yr +
                   # f_visit_year +
                   (1|inst_name) + (1|plot_id),
             data = model_data),
       
-      # host_mod <- glmer(clusters_1_2 ~ 
-      #                         # total_stems_100m2 + 
-      #                         # day_of_year + 
-      #                         y_since_fire + 
-      #                         avg_canopy_cover +
-      #                         # f_visit_year +  
-      #                         (1|inst_name) + (1|plot_id),
-      #                   data = model_data, family = poisson),
+      host_mod <- glmer.nb(clusters_1_2 ~
+                              # total_stems_100m2 +
+                              # day_of_year +
+                              frindex +
+                              avg_canopy_cover +
+                              # f_visit_year +
+                              (1|inst_name) + (1|plot_id),
+                        data = model_data),
       
       litter_mod <- lmer(avg_pct_litter ~ 
-                               y_since_fire + avg_canopy_cover +
+                               # y_since_fire + 
+                               frindex +
+                               avg_canopy_cover +
                                (1|inst_name) + (1|plot_id), 
                          data = model_data),
       
-      # div_mod <- lm(log1p(richness) ~ years_since_fire, data = tick_data_sum),
-      
+      # div_mod <- lm(log1p(shrub_sap_rich) ~ 
+      #                     # years_since_fire +
+      #                     frindex,
+      #                     # avg_canopy_cover,
+      #               data = tick_data_sum),
+      # 
       # bare_grnd_mod <- lmer(avg_pct_bare ~ years_since_fire + (1|years_since_fire) + (1|installation), data = tick_data_sum),
       
       # basal_area_mod <- lmer(avg_basal_area ~ years_since_fire + (1|years_since_fire) + (1|installation), data = model_data),
       
-      canopy_mod <- lmer(avg_canopy_cover ~ 
-                               y_since_fire + 
-                               (1|inst_name) + (1|plot_id), 
+      canopy_mod <- lmer(avg_canopy_cover ~
+                               # y_since_fire +
+                               frindex +
+                               (1|inst_name) + (1|plot_id),
                          data = model_data),
       data = model_data
       
@@ -2641,9 +2695,25 @@ mod <- psem(
       
 )
 
+psem.model.summary <- summary(mod, conserve = TRUE)
+psem.model.summary
+# broom::tidy(psem.model.summary)
 
-psem.model.summary <- summary(mod)
+knitr::kable(psem.model.summary$coefficients, digits = 2)
 
+```
+```{r}
+library(dagitty)
+g <- dagitty("dag{
+             x1 -> y1
+          x1 -> y3
+y2 -> y3
+y2 -> y1
+y1 -> y3
+             }")
+plot(graphLayout(g))
+
+impliedConditionalIndependencies(g)
 ```
 
 ```{r plot tick model, eval=F}
