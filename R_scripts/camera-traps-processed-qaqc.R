@@ -13,7 +13,7 @@ summary(photos)
 #rearranging column names into something that made more sense because they were all random out of whack
 photos <- photos[,c(4,9,7,11,14,15,18,6,3,5,12,17,1,2,13,16,8,10,19)]
 
-photos <- photos %>% 
+photos <- photos %>%
   mutate(camera_number = stri_sub(file_name, 1, 3),
          sd_card = stri_sub(file_name, 1, 5),
          plot_id = "test",
@@ -103,60 +103,74 @@ colnames(photos_combined)[colnames(photos_combined)=="camera_number.x"] <- "came
 
 write_csv(photos_combined, "data/processed_data/2019-camera-trap-photos-batch-one.csv")
 
-photos_cows <- photos_combined %>% 
+photos_cows <- photos_combined %>%
   filter(cow > 0)
 write_csv(photos_cows, "C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_cows.csv")
 
-photos_deer <- photos_combined %>% 
+photos_deer <- photos_combined %>%
   filter(deer > 0)
 write_csv(photos_deer, "C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_deer.csv")
 
-photos_turkey <- photos_combined %>% 
+photos_turkey <- photos_combined %>%
   filter(turkey > 0)
 write_csv(photos_turkey, "C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_turkey.csv")
 
-photos_pig <- photos_combined %>% 
+photos_pig <- photos_combined %>%
   filter(pig > 0)
 write_csv(photos_pig, "C:/Users/Steven/Desktop/serdp/testing camera trap stuff/photos_pig.csv")
 
 ##creating frames to merge into one for species counts by installation and invasion
 
-photos_stats <- photos_combined %>% 
-  group_by(status) %>% 
+# filter(photos_combined, !is.na(other))$other %>% unique(.)
+## Done here by using the 'tidyr::gather' function after some other manipulations
+photos_combined_long <- photos_combined %>%
+      mutate(cattle_egret = case_when(
+            other == "cattle egrets" ~ 2,
+            other == "cattle egret" ~ 1,
+            TRUE ~ 0),
+      empty = 0
+      ) %>%
+      select(installation:status, camera_out, camera_in, mtime, empty:cattle_egret, -other) %>%
+      gather(species, count, -installation:-mtime)
+unique(p1$count)
+
+
+photos_stats <- photos_combined %>%
+  group_by(status) %>%
   summarise(total_cow = sum(cow),
             total_deer = sum(deer),
             total_turkey = sum(turkey),
             total_pig = sum(pig))
 
-photo_stats_cow <- photos_combined %>% 
-  mutate(species = "cow") %>% 
-  #filter(cow < 2) %>% 
-  group_by(status, installation, species) %>% 
+photo_stats_cow <- photos_combined %>%
+  mutate(species = "cow") %>%
+  #filter(cow < 2) %>%
+  group_by(status, installation, species) %>%
   summarise(count = sum(cow))
 
-photo_stats_deer <- photos_combined %>% 
-  mutate(species = "deer") %>% 
-  group_by(status, installation, species) %>% 
+photo_stats_deer <- photos_combined %>%
+  mutate(species = "deer") %>%
+  group_by(status, installation, species) %>%
   summarise(count = sum(deer))
 
-photo_stats_turkey <- photos_combined %>% 
-  mutate(species = "turkey") %>% 
-  group_by(status, installation, species) %>% 
+photo_stats_turkey <- photos_combined %>%
+  mutate(species = "turkey") %>%
+  group_by(status, installation, species) %>%
   summarise(count = sum(turkey))
 
-photo_stats_pig <- photos_combined %>% 
-  mutate(species = "pig") %>% 
-  group_by(status, installation, species) %>% 
+photo_stats_pig <- photos_combined %>%
+  mutate(species = "pig") %>%
+  group_by(status, installation, species) %>%
   summarise(count = sum(pig))
 
 species_counts_installation <- rbind(photo_stats_cow, photo_stats_deer, photo_stats_turkey, photo_stats_pig)
 
 #all individuals across native/invaded only main 4 hosts
-species_counts_status <- species_counts_installation %>% 
-  group_by(status, species) %>% 
+species_counts_status <- species_counts_installation %>%
+  group_by(status, species) %>%
   summarise(count = sum(count))
 
-# questionable <- photos_combined %>% 
+# questionable <- photos_combined %>%
 #   filter(is.na(status))
 #View(questionable)
 #fixed a missing entry on camera traps info sheet (25-2 sd card was not there)
@@ -188,36 +202,36 @@ turkey <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/phot
 trimmed_species <- rbind(deer,turkey,pig)
 #manual enter of days and deletion of repeat images every 5 min
 
-trimmed_deer <- trimmed_species %>% 
-  mutate(species = "deer") %>% 
-  group_by(status, installation, plot_id, camera_number, sd_card, species, days) %>% 
+trimmed_deer <- trimmed_species %>%
+  mutate(species = "deer") %>%
+  group_by(status, installation, plot_id, camera_number, sd_card, species, days) %>%
   summarise(count = sum(deer))
 
-trimmed_turkey <- trimmed_species %>% 
-  mutate(species = "turkey") %>% 
-  group_by(status, installation, plot_id, camera_number, sd_card, species, days) %>%  
+trimmed_turkey <- trimmed_species %>%
+  mutate(species = "turkey") %>%
+  group_by(status, installation, plot_id, camera_number, sd_card, species, days) %>%
   summarise(count = sum(turkey))
 
-trimmed_pig <- trimmed_species %>% 
-  mutate(species = "pig") %>% 
-  group_by(status, installation, plot_id, camera_number, sd_card, species, days) %>%  
+trimmed_pig <- trimmed_species %>%
+  mutate(species = "pig") %>%
+  group_by(status, installation, plot_id, camera_number, sd_card, species, days) %>%
   summarise(count = sum(pig))
 
 trimmed_species <- rbind(trimmed_deer, trimmed_turkey, trimmed_pig)
 
 #combine multiple cameras on the same plot for counts and days to account for 2 cameras per plot
-trimmed_species <- trimmed_species %>% 
-  group_by(status, installation, plot_id, species) %>% 
+trimmed_species <- trimmed_species %>%
+  group_by(status, installation, plot_id, species) %>%
   summarise(days = sum(days),
             count = sum(count))
 
 
-camera_trap_days <- trimmed_deer %>% 
-  group_by(status, installation) %>% 
+camera_trap_days <- trimmed_deer %>%
+  group_by(status, installation) %>%
   summarise(total_days = sum(days))
 
-trimmed_species_stats_status <- trimmed_species %>% 
-  group_by(status, installation, plot_id, days, species) %>% 
+trimmed_species_stats_status <- trimmed_species %>%
+  group_by(status, installation, plot_id, days, species) %>%
   summarise(count_per_day = count/days)
 
 ggplot(trimmed_species_stats_status, aes(species, count_per_day, color = status)) +
@@ -253,25 +267,25 @@ ggplot() +
   theme_bw() +
   NULL
 
-test_2 <- trimmed_species %>% 
-  group_by(status, species, days) %>% 
-  summarise(totals = sum(count)) 
+test_2 <- trimmed_species %>%
+  group_by(status, species, days) %>%
+  summarise(totals = sum(count))
 
-test_3 <- test_2 %>% 
-  group_by(status, species, days) %>% 
+test_3 <- test_2 %>%
+  group_by(status, species, days) %>%
   summarise(count_per_day = totals/days)
 
-camera_trap_days <- trimmed_species %>% 
-  group_by(status, plot_id, days) %>% 
+camera_trap_days <- trimmed_species %>%
+  group_by(status, plot_id, days) %>%
   summarise(total_days_trapped = sum(days))
-  
+
 ggplot() +
   geom_boxplot(data = camera_trap_days, aes(status, total_days, color = status, fill = status)) +
   invasion_color +
   invasion_fill +
   theme_bw() +
   NULL
-  
+
 
 ggplot() +
   geom_bar(data = camera_trap_days, aes(x = status, y = total_days, color = status, fill = status, position = "dodge"), stat = "identity") +
