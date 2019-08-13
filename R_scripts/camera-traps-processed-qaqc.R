@@ -97,6 +97,10 @@ colnames(photos_combined)[colnames(photos_combined)=="plot_id.y"] <- "plot_id"
 colnames(photos_combined)[colnames(photos_combined)=="status.y"] <- "status"
 colnames(photos_combined)[colnames(photos_combined)=="camera_number.x"] <- "camera_number"
 
+
+photos_combined <- photos_combined %>% 
+  mutate(camera_number = as.numeric(camera_number))
+
 ##### MAIN DATA FRAME TO BE MANIPULATED (photos_combined) #####
 # need to figure out time manipulations for ever 5 or so minutes to remove chance of repeat individuals as best possible
 # "ctime" is uploaded date/time?, "mtime" is date/time photo was actually taken
@@ -121,6 +125,10 @@ write_csv(photos_pig, "C:/Users/Steven/Desktop/serdp/testing camera trap stuff/p
 
 ##creating frames to merge into one for species counts by installation and invasion
 
+trapped_days <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/CamearaDays.csv")
+#^ read in camera trap days test from drew, true number of days from first photo taken to last photo taken. preferred over camera out/camera in because of failures due to mech/battery dead/sd full in a few days instead of the full range of deployment
+
+photos_combined <- left_join(trapped_days, photos_combined, by = "camera_number")
 # filter(photos_combined, !is.na(other))$other %>% unique(.)
 ## Done here by using the 'tidyr::gather' function after some other manipulations
 photos_combined_long <- photos_combined %>%
@@ -130,40 +138,91 @@ photos_combined_long <- photos_combined %>%
             TRUE ~ 0),
       empty = 0
       ) %>%
-      select(installation:status, camera_out, camera_in, mtime, empty:cattle_egret, -other) %>%
-      gather(species, count, -installation:-mtime)
+      select(installation:sd_card, camera_number, Days, camera_out, camera_in, mtime, empty:cattle_egret, -other) %>%
+      tidyr::gather(species, count, -installation:-mtime)
 unique(p1$count)
 
+photos_long_stats <- photos_combined_long %>% 
+  group_by(installation, status, species, plot_id, camera_number, sd_card) %>% 
+  summarise(total_count = sum(count),
+            days_trapped = sum(unique(Days)))
 
-photos_stats <- photos_combined %>%
-  group_by(status) %>%
-  summarise(total_cow = sum(cow),
-            total_deer = sum(deer),
-            total_turkey = sum(turkey),
-            total_pig = sum(pig))
+trapped_days <- photos_long_stats %>% 
+  group_by(status, installation, plot_id, camera_number, sd_card) %>% 
+  summarise(total_days = sum(unique(days_trapped)))
 
-photo_stats_cow <- photos_combined %>%
-  mutate(species = "cow") %>%
-  #filter(cow < 2) %>%
-  group_by(status, installation, species) %>%
-  summarise(count = sum(cow))
+trapped_days$total_days[trapped_days$sd_card=="6-1"] <- 20
+trapped_days$total_days[trapped_days$sd_card=="28-1"] <- 20
+trapped_days$total_days[trapped_days$sd_card=="6-2"] <- 21
+trapped_days$total_days[trapped_days$sd_card=="28-2"] <- 21
 
-photo_stats_deer <- photos_combined %>%
-  mutate(species = "deer") %>%
-  group_by(status, installation, species) %>%
-  summarise(count = sum(deer))
+trapped_days$total_days[trapped_days$sd_card=="33-1"] <- 15
+trapped_days$total_days[trapped_days$sd_card=="33-2"] <- 21
 
-photo_stats_turkey <- photos_combined %>%
-  mutate(species = "turkey") %>%
-  group_by(status, installation, species) %>%
-  summarise(count = sum(turkey))
+trapped_days$total_days[trapped_days$sd_card=="103-1"] <- 15
+trapped_days$total_days[trapped_days$sd_card=="103-2"] <- 21
 
-photo_stats_pig <- photos_combined %>%
-  mutate(species = "pig") %>%
-  group_by(status, installation, species) %>%
-  summarise(count = sum(pig))
 
-species_counts_installation <- rbind(photo_stats_cow, photo_stats_deer, photo_stats_turkey, photo_stats_pig)
+trapped_days$total_days[trapped_days$sd_card=="25-1"] <- 15
+trapped_days$total_days[trapped_days$sd_card=="25-2"] <- 21
+
+
+days_by_photos <- left_join(trapped_days, photos_long_stats)
+days_cows <- days_by_photos %>% 
+  filter(species == "cow")
+days_deer <- days_by_photos %>% 
+  filter(species == "deer")
+days_pig <- days_by_photos %>% 
+  filter(species == "pig")
+days_turkey <- days_by_photos %>% 
+  filter(species == "turkey")
+days_cattle_egret <- days_by_photos %>% 
+  filter(species == "cattle_egret")
+
+days_by_photos <- rbind(days_cows, days_deer, days_pig, days_turkey, days_cattle_egret)
+
+days_by_photos <- days_by_photos %>%
+  group_by(status, species) %>% 
+  mutate(count_per_day = total_count/total_days) %>%
+  select(status, installation, plot_id, species, count_per_day)
+
+days_by_photos <- days_by_photos %>% 
+  group_by(status, species) %>% 
+  summarise(species_per_day = sum(count_per_day))
+  
+  # ungroup(.) %>% 
+  # group_by(status) %>% 
+  # summarise(mean_days = mean(total_days))
+
+# photos_stats <- photos_combined %>%
+#   group_by(status) %>%
+#   summarise(total_cow = sum(cow),
+#             total_deer = sum(deer),
+#             total_turkey = sum(turkey),
+#             total_pig = sum(pig))
+# 
+# photo_stats_cow <- photos_combined %>%
+#   mutate(species = "cow") %>%
+#   #filter(cow < 2) %>%
+#   group_by(status, installation, species) %>%
+#   summarise(count = sum(cow))
+# 
+# photo_stats_deer <- photos_combined %>%
+#   mutate(species = "deer") %>%
+#   group_by(status, installation, species) %>%
+#   summarise(count = sum(deer))
+# 
+# photo_stats_turkey <- photos_combined %>%
+#   mutate(species = "turkey") %>%
+#   group_by(status, installation, species) %>%
+#   summarise(count = sum(turkey))
+# 
+# photo_stats_pig <- photos_combined %>%
+#   mutate(species = "pig") %>%
+#   group_by(status, installation, species) %>%
+#   summarise(count = sum(pig))
+# 
+# species_counts_installation <- rbind(photo_stats_cow, photo_stats_deer, photo_stats_turkey, photo_stats_pig)
 
 #all individuals across native/invaded only main 4 hosts
 species_counts_status <- species_counts_installation %>%
@@ -284,16 +343,46 @@ ggplot() +
   invasion_color +
   invasion_fill +
   theme_bw() +
+  theme(legend.position = "none") +
   NULL
 
 
 ggplot() +
-  geom_bar(data = camera_trap_days, aes(x = status, y = total_days, color = status, fill = status, position = "dodge"), stat = "identity") +
+  geom_bar(data = trapped_days, aes(x = status, y = total_days, color = status, fill = status, position = "dodge"), stat = "identity") +
   invasion_color +
   invasion_fill +
+  ylab("Total days trapped") +
+  xlab("") +
   theme_bw() +
+  theme(legend.position = "none") +
   NULL
 
+count_per_day_trapped <- ggplot()+
+  geom_bar(data = days_by_photos, aes(x = species, y = species_per_day, group = status, color = status, fill = status), position = "dodge", stat = "identity") +
+  invasion_color +
+  invasion_fill +
+  theme_classic() +
+  xlab("Species") +
+  ylab("Count/day trapped") +
+  NULL
 
+ggsave(plot = count_per_day_trapped, "data/raw_data/2019_serdp_data/esa figures/count_per_day_trapped.png", height = 7, width = 8)
 
+trapping_days <- ggplot(data = trapped_days, mapping = aes(x = status, y = total_days, color= status, position = "jitter")) +
+  #scale_fill_manual(values=c("#E69F00", "#999999", "#56B4E9")) +
+  geom_boxplot(outlier.size = NA) + 
+  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  #geom_boxplot(alpha = 0.5) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'Days trapped per plot') +
+  xlab("") +
+  #annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
+  invasion_color +
+  invasion_fill +
+  theme(legend.position="none") +
+  NULL
+  #geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
+#ylim(-.5,19)
 
+ggsave(plot = trapping_days, "data/raw_data/2019_serdp_data/esa figures/trapping_days_status.png", height = 7, width = 7)
