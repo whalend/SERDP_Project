@@ -188,7 +188,7 @@ temp_rh_data_grouped <- temp_rh_data %>%
 ## calculation for coefficient of variation
 ### CV = (sd/mean)*100
 
-## calculation of vapor pressure deficit
+## Calculation of vapor pressure deficit ####
 ## https://physics.stackexchange.com/questions/4343/how-can-i-calculate-vapor-pressure-deficit-from-temperature-and-relative-humidit
 
 ### saturation vapor pressure in millibars (mb), corrected for temp in ºC
@@ -208,7 +208,7 @@ get.vpd <- function(rh, temp){
 }
 
 ## ## Calculate mean saturation vapor pressure (esm)
-get# get.esm <- function(tmin, tmax){
+# get.esm <- function(tmin, tmax){
 #       esmn <-  .6108 * exp((17.27 * tmin) / (tmin + 237.3))
 #       esmx <-  .6108 * exp((17.27 * tmax) / (tmax + 237.3))
 #       esm <- (esmn+esmx)/2
@@ -237,7 +237,7 @@ get# get.esm <- function(tmin, tmax){
 #       esmx <- get.esmx(tmax)
 #       ea <- (esmn * rhmax/100 + esmx * rhmin/100) / 2
 #       return(ea)
-# 
+#
 
 temp_rh_plot_grp <-  temp_rh_data %>%
       filter(RH > 15, date != "2018-06-21") %>%
