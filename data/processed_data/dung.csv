@@ -479,3 +479,153 @@ gordon,gordon h1,2018-08-22,north,NA,0,0,NA,2018
 gordon,gordon h1,2018-08-22,south,NA,0,0,NA,2018
 gordon,gordon h1,2018-08-22,east,NA,0,0,NA,2018
 gordon,gordon h1,2018-08-22,west,NA,0,0,NA,2018
+wes,i1,2019-04-02,north,NA,0,0,NA,2019
+wes,i1,2019-04-02,south,NA,0,0,NA,2019
+wes,i1,2019-04-02,east,NA,0,0,NA,2019
+wes,i1,2019-04-02,west,NA,0,0,NA,2019
+avonpark,n1,2019-04-11,north,cottontail,54,9,NA,2019
+avonpark,n1,2019-04-11,north,cow,5,2,NA,2019
+avonpark,n1,2019-04-11,south,cottontail,64,3,NA,2019
+avonpark,n1,2019-04-11,south,cow,8,0,NA,2019
+avonpark,n1,2019-04-11,east,cottontail,9,0,NA,2019
+avonpark,n1,2019-04-11,east,cow,2,6,NA,2019
+avonpark,n1,2019-04-11,west,cottontail,42,23,NA,2019
+avonpark,n1,2019-04-11,west,cow,3,3,NA,2019
+avonpark,i1,2019-04-11,north,cottontail,4,0,NA,2019
+avonpark,i1,2019-04-11,north,cow,9,1,NA,2019
+avonpark,i1,2019-04-11,south,cow,7,0,NA,2019
+avonpark,i1,2019-04-11,east,cottontail,22,0,NA,2019
+avonpark,i1,2019-04-11,east,cow,2,0,NA,2019
+avonpark,i1,2019-04-11,west,cottontail,31,11,NA,2019
+avonpark,i1,2019-04-11,west,cow,7,1,NA,2019
+peaceriver,i3,2019-04-11,north,horse,1,0,NA,2019
+peaceriver,i3,2019-04-11,south,NA,0,0,NA,2019
+peaceriver,i3,2019-04-11,east,NA,0,0,NA,2019
+peaceriver,i3,2019-04-11,west,horse,1,0,NA,2019
+peaceriver,i2,2019-04-11,north,NA,0,0,NA,2019
+peaceriver,i2,2019-04-11,south,NA,0,0,NA,2019
+peaceriver,i2,2019-04-11,east,NA,0,0,NA,2019
+peaceriver,i2,2019-04-11,west,NA,0,0,NA,2019
+peaceriver,i1,2019-04-11,north,NA,0,0,NA,2019
+peaceriver,i1,2019-04-11,south,deer,1,0,NA,2019
+peaceriver,i1,2019-04-11,east,NA,0,0,NA,2019
+peaceriver,i1,2019-04-11,west,NA,0,0,NA,2019
+hancock,i1,2019-04-16,north,NA,0,0,NA,2019
+hancock,i1,2019-04-16,south,NA,0,0,inv ends 15m,2019
+hancock,i1,2019-04-16,east,NA,0,0,inv ends 33m,2019
+hancock,i1,2019-04-16,west,NA,0,0,inv ends 13m,2019
+hancock,i2,2019-04-16,north,NA,0,0,inv ends 34m,2019
+hancock,i2,2019-04-16,south,cow,1,0,inv ends 31m,2019
+hancock,i2,2019-04-16,east,NA,0,0,NA,2019
+hancock,i2,2019-04-16,west,NA,0,0,NA,2019
+hancock,n1,2019-04-16,north,cow,48,14,NA,2019
+hancock,n1,2019-04-16,south,cow,14,5,NA,2019
+hancock,n1,2019-04-16,east,cow,44,7,NA,2019
+hancock,n1,2019-04-16,west,cow,46,18,NA,2019
+riversedge,i1,2019-05-01,north,NA,0,0,NA,2019
+riversedge,i1,2019-05-01,south,NA,0,0,NA,2019
+riversedge,i1,2019-05-01,east,NA,0,0,inv ends 25m,2019
+riversedge,i1,2019-05-01,west,NA,0,0,NA,2019
+riversedge,i2,2019-05-01,north,NA,0,0,inv ends 37m,2019
+riversedge,i2,2019-05-01,south,NA,0,0,inv ends 27m,2019
+riversedge,i2,2019-05-01,east,NA,0,0,NA,2019
+riversedge,i2,2019-05-01,west,NA,0,0,NA,2019
+riversedge,i3,2019-05-01,north,NA,0,0,inv ends 38m,2019
+riversedge,i3,2019-05-01,south,deer,2,0,inv ends 454m,2019
+riversedge,i3,2019-05-01,east,NA,0,0,NA,2019
+riversedge,i3,2019-05-01,west,NA,0,0,NA,2019
+riversedge,n1,2019-05-01,north,NA,0,0,inv ends 37m,2019
+riversedge,n1,2019-05-01,south,NA,0,0,NA,2019
+riversedge,n1,2019-05-01,east,NA,0,0,NA,2019
+riversedge,n1,2019-05-01,west,NA,0,0,inv ends 42m,2019
+munson,i1,2019-04-30,north,deer,1,0,inv ends 32m,2019
+munson,i1,2019-04-30,north,racoon,1,0,inv ends 32m,2019
+munson,i1,2019-04-30,south,NA,0,0,inv ends 18m,2019
+munson,i1,2019-04-30,east,NA,0,0,inv ends 10m,2019
+munson,i1,2019-04-30,west,NA,0,0,inv ends 7m (water),2019
+munson,n1,2019-05-01,north,NA,3,0,31m to fence,2019
+munson,n1,2019-05-01,south,NA,0,0,NA,2019
+munson,n1,2019-05-01,east,NA,4,0,NA,2019
+munson,n1,2019-05-01,west,NA,0,0,"inv begins 18m, transect ends 24m (water)",2019
+hancock,i3,2019-05-08,north,cow,7,0,NA,2019
+hancock,i3,2019-05-08,south,cow,0,1,14m to water,2019
+hancock,i3,2019-05-08,east,cow,1,0,"inv ends at 30m, fence at 40m",2019
+hancock,i3,2019-05-08,west,NA,0,0,13m to water,2019
+hancock,i4,2019-05-08,north,NA,0,0,40m to water,2019
+hancock,i4,2019-05-08,south,NA,0,0,"40m to water, inv ends 13m",2019
+hancock,i4,2019-05-08,east,cow,11,2,inv ends 47m,2019
+hancock,i4,2019-05-08,west,cottontail,50,53,inv ends 24m,2019
+hancock,n2,2019-05-08,north,cow,11,1,40m to fence,2019
+hancock,n2,2019-05-08,south,cow,7,1,18m to water,2019
+hancock,n2,2019-05-08,east,NA,0,0,NA,2019
+hancock,n2,2019-05-08,west,NA,0,0,10m to water,2019
+peaceriver,i4,2019-05-08,north,NA,0,0,NA,2019
+peaceriver,i4,2019-05-08,south,NA,0,0,"30m to end, impassable",2019
+peaceriver,i4,2019-05-08,east,rabbit,104,0,NA,2019
+peaceriver,i4,2019-05-08,west,NA,0,0,NA,2019
+peaceriver,i5,2019-05-08,north,deer,1,0,NA,2019
+peaceriver,i5,2019-05-08,south,deer,1,0,NA,2019
+peaceriver,i5,2019-05-08,east,NA,0,0,NA,2019
+peaceriver,i5,2019-05-08,west,NA,0,0,NA,2019
+peaceriver,n1,2019-05-08,north,NA,0,0,NA,2019
+peaceriver,n1,2019-05-08,south,NA,0,0,NA,2019
+peaceriver,n1,2019-05-08,east,NA,0,0,NA,2019
+peaceriver,n1,2019-05-08,west,NA,0,0,NA,2019
+wes,n1,2019-04-24,north,armadillo,1,0,native ends 32m,2019
+wes,n1,2019-04-24,south,deer,1,0,native ends 34m,2019
+wes,n1,2019-04-24,east,NA,0,0,NA,2019
+wes,n1,2019-04-24,west,NA,0,0,native ends 31m,2019
+wes,i2,2019-04-24,north,turkey,1,0,inv ends 22m,2019
+wes,i2,2019-04-24,south,NA,0,0,inv ends 16m,2019
+wes,i2,2019-04-24,east,cottontail,1,0,inv ends 19m,2019
+wes,i2,2019-04-24,west,NA,0,0,inv ends 40m,2019
+seay,n1,2019-04-23,north,NA,0,0,NA,2019
+seay,n1,2019-04-23,south,NA,0,0,NA,2019
+seay,n1,2019-04-23,east,deer,0,1,NA,2019
+seay,n1,2019-04-23,west,gopher tortoise,1,0,NA,2019
+seay,i1,2019-04-23,north,NA,0,0,32m to fence,2019
+seay,i1,2019-04-23,south,deer,1,0,NA,2019
+seay,i1,2019-04-23,east,NA,0,0,inv ends 16m,2019
+seay,i1,2019-04-23,west,NA,0,0,22m to fence,2019
+silversprings,n1,2019-04-26,north,deer,1,0,NA,2019
+silversprings,n1,2019-04-26,south,deer,0,1,NA,2019
+silversprings,n1,2019-04-26,east,deer,3,1,NA,2019
+silversprings,n1,2019-04-26,west,NA,0,0,NA,2019
+silversprings,i1,2019-04-26,north,turkey eggs,10,0,inv ends 14m,2019
+silversprings,i1,2019-04-26,south,NA,0,0,inv ends 11m,2019
+silversprings,i1,2019-04-26,east,turkey eggs,0,1,inv ends 15m,2019
+silversprings,i1,2019-04-26,west,NA,0,0,inv ends 12m,2019
+brown,n2,2019-04-26,north,deer,3,0,NA,2019
+brown,n2,2019-04-26,south,deer,1,0,NA,2019
+brown,n2,2019-04-26,east,cow,2,0,NA,2019
+brown,n2,2019-04-26,east,deer,2,0,NA,2019
+brown,n2,2019-04-26,west,deer,1,1,NA,2019
+brown,i2,2019-04-26,north,deer,1,0,"deer outside invasion, inv ends 14m",2019
+brown,i2,2019-04-26,north,cow,1,0,NA,2019
+brown,i2,2019-04-26,south,cow,4,3,"cow outside invasion, inv ends 13m",2019
+brown,i2,2019-04-26,east,cow,5,0,NA,2019
+brown,i2,2019-04-26,east,turkey eggs,10,0,NA,2019
+brown,i2,2019-04-26,west,deer,1,0,"deer outside invasion, inv ends 11m",2019
+brown,i2,2019-04-26,west,cow,2,0,inv ends 11m,2019
+brown,i3,2019-05-21,north,NA,0,0,inv ends 21m,2019
+brown,i3,2019-05-21,south,cow,2,0,"both outside invasion 2 cow, inv ends 17m",2019
+brown,i3,2019-05-21,south,deer,1,0,"1 deer outside invasion, inv ends 17m",2019
+brown,i3,2019-05-21,east,cow,2,1,"all inside, inv ends 27m starts again 48m",2019
+brown,i3,2019-05-21,west,NA,0,0,inv ends 15m,2019
+brown,n3,2019-05-21,north,deer,1,0,NA,2019
+brown,n3,2019-05-21,south,deer,2,0,NA,2019
+brown,n3,2019-05-21,east,cow,3,0,NA,2019
+brown,n3,2019-05-21,west,cow,3,0,37m to fence,2019
+brown,i1,2019-05-21,north,NA,0,0,NA,2019
+brown,i1,2019-05-21,south,cow,1,0,inv ends 39m,2019
+brown,i1,2019-05-21,east,cow,3,0,inv ends 39m,2019
+brown,i1,2019-05-21,west,cow,4,1,NA,2019
+brown,n1,2019-05-21,north,cow,2,0,NA,2019
+brown,n1,2019-05-21,south,cow,3,0,NA,2019
+brown,n1,2019-05-21,east,deer,1,0,NA,2019
+brown,n1,2019-05-21,west,cow,1,0,NA,2019
+brown,n1,2019-05-21,west,deer,1,0,NA,2019
+wes,i3,2019-05-15,north,NA,0,0,NA,2019
+wes,i3,2019-05-15,south,NA,0,0,inv ends 25m,2019
+wes,i3,2019-05-15,east,NA,0,0,"inv ends 9m, begins again 35m",2019
+wes,i3,2019-05-15,west,NA,0,0,inv ends 11m,2019
