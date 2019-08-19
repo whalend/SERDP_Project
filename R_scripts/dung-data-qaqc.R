@@ -120,4 +120,4 @@ unique(dung_2019$installation)
 
 dung_all <- rbind(dung_data, dung_2019)
 
-write_csv(dung_data, "data/processed_data/dung.csv")
+write_csv(dung_all, "data/processed_data/dung.csv")
