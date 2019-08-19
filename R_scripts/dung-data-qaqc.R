@@ -105,3 +105,19 @@ unique(dung_data$plot_id)
 write_csv(dung_data, "data/processed_data/dung.csv")
 
 #### Steven checked processing, 3 missing Eglin i1 entries, waiting on response from elena 9/17 ####
+
+
+###### steven adding qaqc for 2019 dung data #####
+
+dung_2019 <- read_csv("data/raw_data/2019_serdp_data/dung-data-entry.csv")
+tail(dung_2019)
+
+dung_2019 <- dung_2019 %>% 
+  mutate(date = as.Date(as.character(date), format = "%Y%m%d")) %>% 
+  mutate(visit_year = lubridate::year(date)) %>% 
+  filter(visit_year == 2019)
+unique(dung_2019$installation)
+
+dung_all <- rbind(dung_data, dung_2019)
+
+write_csv(dung_data, "data/processed_data/dung.csv")
