@@ -163,7 +163,7 @@ ggplot(total_ticks_all, aes(installation, ticks_per_plot), color = invaded) +
   invasion_color +
   NULL
 
-###### post ESA looking at 17-18 tick data comparisons to 2019 
+###### post ESA looking at 17-18 tick data comparisons to 2019 #####
 
 old_ticks <- read_csv("data/processed_data/ticks.csv")
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
@@ -637,9 +637,43 @@ loggers_by_status_2 <- loggers %>%
   summarise(mean_tempC = mean(tempC),
             mean_rh = mean(RH))
 
+####### begin looking at dung data for 2019 host abundance####
 
+dung_data <- read_csv("data/processed_data/dung.csv")
 
+summary(dung_data)
+tail(dung_data)
 
+dung_2019 <- dung_data %>%
+  filter(visit_year == 2019)
+
+dung_2019 <- dung_2019 %>%
+  mutate(test = substr(plot_id, 1,1)) %>% 
+  mutate(status = if_else(test =="i", "invaded", "native"))
+dung_2019 <- dung_2019[,-c(10)]
+
+dung_2019 <- dung_2019 %>% 
+  group_by(installation, plot_id, status, species) %>% 
+  summarise(total_1m = sum(dung1m),
+            total_2m = sum(dung2m))
+
+ggplot(dung_2019, aes(installation, total_1m, color = status)) +
+  geom_boxplot() +
+  geom_boxplot(data = dung_2019, aes(status, total_1m, color = status)) +
+  invasion_color +
+  invasion_fill +
+  ylab("Dung in 1m transects/plot") +
+  xlab("Site") +
+  theme_bw()
+
+ggplot(dung_2019, aes(species, total_1m, color = status)) +
+  geom_boxplot() +
+  #geom_boxplot(data = dung_2019, aes(status, total_1m, color = status)) +
+  invasion_color +
+  invasion_fill +
+  ylab("Dung in 1m transects/plot") +
+  xlab("species") +
+  theme_bw()
 
 
 
