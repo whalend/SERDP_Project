@@ -9,10 +9,10 @@ tick_data <- read_csv(file = "data/raw_data/2019_serdp_data/2019-only-tick-data.
 
 
 tick_data <- tick_data %>% 
+  filter(installation !="avonpark") %>% 
   mutate(date = as.Date(as.character(date), format = "%Y%m%d"))
 
 tick_data <- tick_data %>% 
-  filter(installation != "avonpark") %>% 
   mutate(invaded = if_else(invaded=="y", "invaded", "native"))
 
 
@@ -24,6 +24,16 @@ unique(tick_data$location)
 
 ticks_adult <- filter(tick_data, life_stage == "adult")
 ticks_nymphs <- filter(tick_data, life_stage == "nymph")
+
+adults <- ticks_adult %>% 
+  group_by(life_stage) %>% 
+  summarise(total_adult = sum(count))
+nymph <- ticks_nymphs %>% 
+  group_by(life_stage) %>% 
+  summarise(total_nymph = sum(count))
+status <- tick_data %>% 
+  group_by(invaded, life_stage) %>% 
+  summarise(total=sum(count))
 
 ###### setting figure themes #####
 
@@ -77,9 +87,23 @@ ggplot(tick_data_no_brown, aes(invaded, count, color = invaded)) +
   geom_boxplot() +
   theme_bw()
 
-ggplot(tick_data, aes(installation, count, color = invaded)) +
-  geom_boxplot() +
-  theme_bw()
+####### tick abundance BY TRAP  
+ggplot(tick_data, aes(invaded, count, color = invaded, position = "jitter")) +
+                        geom_boxplot(outlier.size = NA) + 
+                        geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+                        theme_classic() +
+                        theme(text = element_text(size=20)) +
+                        labs (y = 'Ticks per trap') +
+                        xlab("") +
+                        annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
+                        invasion_color +
+                        invasion_fill +
+                        theme(legend.position="none")+
+  scale_y_continuous(limits = c(0,10))
+
+status_count <- tick_data %>% 
+  group_by(invaded) %>% 
+  summarise(number_invaded = n())
 
 ticks_per_plot <- tick_data %>% 
   group_by(installation, date, plot_id, invaded) %>% 
@@ -125,7 +149,6 @@ tick_figure_status <- ggplot(data = ticks_per_plot, mapping = aes(x = invaded, y
   invasion_fill +
   theme(legend.position="none") +
   geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
-#ylim(-.5,19)
 
 ggsave(plot = tick_figure_status, "data/raw_data/2019_serdp_data/esa figures/tick_abundance.png", width = 7, height = 7)
 
@@ -139,6 +162,67 @@ ggplot(total_ticks_all, aes(installation, ticks_per_plot), color = invaded) +
   geom_boxplot() +
   invasion_color +
   NULL
+
+###### post ESA looking at 17-18 tick data comparisons to 2019 
+
+old_ticks <- read_csv("data/processed_data/ticks.csv")
+plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
+
+old_w_status <- left_join(old_ticks, plot_visit_data, by = "plot_id")
+old_w_status <- old_w_status[,c(1:19)]
+old_w_status <- old_w_status[,-c(9:18)]
+old_w_status <- old_w_status %>% 
+  mutate(imcy_inv = if_else(imcy_inv=="uninvaded", "native", "invaded"))
+colnames(old_w_status)[colnames(old_w_status)=="imcy_inv"] <- "invaded"
+colnames(old_w_status)[colnames(old_w_status)=="visit_date.x"] <- "date"
+colnames(old_w_status)[colnames(old_w_status)=="installation.x"] <- "installation"
+
+tick_data <- tick_data[,-c(10:11)]
+
+
+serdp_ticks <- rbind(old_w_status, tick_data)
+serdp_ticks <- serdp_ticks %>% 
+  mutate(visit_year = lubridate::year(date))
+dod_ticks <- serdp_ticks %>% 
+  filter(date < "2018-12-31") %>% 
+  filter(invaded != "NA")
+florida_ticks <- serdp_ticks %>% 
+  filter(date > "2018-12-31")
+
+ticks_on_dod <- ggplot(data = dod_ticks, mapping = aes(x = invaded, y = count, color= invaded, position = "jitter")) +
+  geom_boxplot(outlier.size = NA) + 
+  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'Ticks per trap') +
+  xlab("") +
+  annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
+  invasion_color +
+  invasion_fill +
+  #coord_cartesian(ylim =c(0,75)) +
+  theme(legend.position="none") +
+  ggtitle("Ticks on DoD") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(limits = c(0,20), breaks = c(0, 5, 10, 15, 20))
+
+ticks_2019 <- ggplot(data = florida_ticks, mapping = aes(x = invaded, y = count, color= invaded, position = "jitter")) +
+  geom_boxplot(outlier.size = NA) + 
+  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  xlab("") +
+  ylab("") +
+  annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
+  invasion_color +
+  invasion_fill +
+  theme(legend.position="none") +
+  theme(axis.title.y = element_blank()) +
+  ggtitle("2019 Florida Ticks") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  #coord_cartesian(ylim =c(0,75)) +
+  scale_y_continuous(limits = c(0,20), breaks = c(0, 5, 10, 15, 20))
+
+cowplot::plot_grid(ticks_on_dod, ticks_2019, ncol = 2)
 
 ###### begin assessing 2019 plot data for veg hts, bioass, canopy cover, etc ####
 
@@ -220,13 +304,14 @@ veg_ht <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plo
   #geom_boxplot(alpha = 0.5) +
   theme_classic() +
   theme(text = element_text(size=20)) +
-  labs (y = 'Average herbaceous veg height (cm)') +
+  labs (y = 'Vegetation height (cm)') +
   xlab("") +
-  annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
+  #annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
   invasion_color +
   invasion_fill +
   theme(legend.position="none") +
-  geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
+  NULL
+  #geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
 #ylim(-.5,19)
 
 #biomass standing-----
@@ -237,30 +322,32 @@ biomass_standing <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = statu
   #geom_boxplot(alpha = 0.5) +
   theme_classic() +
   theme(text = element_text(size=20)) +
-  labs (y = 'Average herbaceous veg height (cm)') +
+  labs (y = 'Standing biomass (g)') +
   xlab("") +
-  annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
+  #annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
   invasion_color +
   invasion_fill +
   theme(legend.position="none") +
-  geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
+  NULL
+  #geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
 #ylim(-.5,19)
 
 #biomass litter-----
-biomass_litter <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = biomass_litter, color= status, position = "jitter")) +
+biomass_litter <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plot_litter_dry, color= status, position = "jitter")) +
   #scale_fill_manual(values=c("#E69F00", "#999999", "#56B4E9")) +
   geom_boxplot(outlier.size = NA) + 
   geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
   #geom_boxplot(alpha = 0.5) +
   theme_classic() +
   theme(text = element_text(size=20)) +
-  labs (y = 'Average herbaceous veg height (cm)') +
+  labs (y = 'Litter biomass (g)') +
   xlab("") +
-  annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
+  #annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
   invasion_color +
   invasion_fill +
   theme(legend.position="none") +
-  geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
+  NULL
+  #geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
 #ylim(-.5,19)
 
 #canopy cover-----
@@ -271,16 +358,28 @@ canopy_cover <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y
   #geom_boxplot(alpha = 0.5) +
   theme_classic() +
   theme(text = element_text(size=20)) +
-  labs (y = 'Average herbaceous veg height (cm)') +
+  labs (y = 'Canopy cover (%)') +
   xlab("") +
-  annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
+  #annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
   invasion_color +
   invasion_fill +
-  theme(legend.position="none") +
-  geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
+  theme(legend.position="none")
+  #geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
 #ylim(-.5,19)
 
+ggsave(plot = veg_ht, "data/raw_data/2019_serdp_data/esa figures/2019_veg_ht.png", height = 7, width = 7)
+
+ggsave(plot = biomass_standing, "data/raw_data/2019_serdp_data/esa figures/2019_biomass_standing.png", height = 7, width = 7)
+
+ggsave(plot = biomass_litter, "data/raw_data/2019_serdp_data/esa figures/2019_biomass_litter.png", height = 7, width = 7)
+
+ggsave(plot = canopy_cover, "data/raw_data/2019_serdp_data/esa figures/2019_canopy_cover.png", height = 7, width = 7)
+
+
 site_conditions <- cowplot::plot_grid(veg_ht, canopy_cover, biomass_standing, biomass_litter, ncol = 2)
+
+ggsave(plot = site_conditions, "data/raw_data/2019_serdp_data/esa figures/2019_site_conditions.png", height = 8, width = 8)
+
 
 #^ with all installation and summary box
 ggplot(quadrat_stats_2, aes(installation, plot_herb_veg_ht, color = status)) +
