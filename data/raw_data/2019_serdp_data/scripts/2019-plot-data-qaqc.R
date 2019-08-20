@@ -652,21 +652,24 @@ dung_2019 <- dung_2019 %>%
   mutate(status = if_else(test =="i", "invaded", "native"))
 dung_2019 <- dung_2019[,-c(10)]
 
-dung_2019 <- dung_2019 %>% 
+dung_2019_species <- dung_2019 %>% 
+  filter(installation != "avonpark") %>% 
   group_by(installation, plot_id, status, species) %>% 
   summarise(total_1m = sum(dung1m),
-            total_2m = sum(dung2m))
+            total_2m = sum(dung2m),
+            plot_total = sum(dung1m, dung2m))
 
-ggplot(dung_2019, aes(installation, total_1m, color = status)) +
+
+ggplot(dung_2019_species, aes(installation, total_1m, color = status)) +
   geom_boxplot() +
-  geom_boxplot(data = dung_2019, aes(status, total_1m, color = status)) +
+  geom_boxplot(data = dung_2019_species, aes(status, total_1m, color = status)) +
   invasion_color +
   invasion_fill +
   ylab("Dung in 1m transects/plot") +
   xlab("Site") +
   theme_bw()
 
-ggplot(dung_2019, aes(species, total_1m, color = status)) +
+ggplot(dung_2019_species, aes(species, total_1m, color = status)) +
   geom_boxplot() +
   #geom_boxplot(data = dung_2019, aes(status, total_1m, color = status)) +
   invasion_color +
@@ -676,5 +679,60 @@ ggplot(dung_2019, aes(species, total_1m, color = status)) +
   theme_bw()
 
 
+unique(ticks_per_plot$installation)
+unique(dung_2019_species$installation)
 
+ticks_per_plot_2 <- ticks_per_plot %>% 
+  mutate(
+    first = substr(plot_id, 1,1),
+    second = substr(plot_id, 3,3))
 
+ticks_per_plot_2$plot_id <- paste(ticks_per_plot_2$first, ticks_per_plot_2$second, sep = "")
+ticks_per_plot_2 <- ticks_per_plot_2[,-c(6:7)]
+
+ticks_x_dung_species <- left_join(dung_2019, ticks_per_plot_2)
+
+ggplot(ticks_x_dung, aes(total_1m, ticks_per_plot, color = status, fill = status)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  geom_jitter() +
+  theme_bw() +
+  invasion_color +
+  invasion_fill +
+  scale_y_continuous(limits = c(0,60)) +
+  scale_x_continuous(limits = c(0,200)) +
+  NULL
+
+#### "dung_2019_species" dataframe not good? for making figures with dung because multiple duplicate rows for species, also the multiple trap visit on a certain plot but only one dung data entry for the plot
+
+dung_2019_all <- dung_2019 %>%
+  filter(installation != "avonpark") %>%
+  group_by(installation, plot_id, status) %>% 
+  summarise(all_dung = sum(dung1m, dung2m))
+
+ticks_all_2 <- tick_data %>% 
+  mutate(
+    first = substr(plot_id, 1,1),
+    second = substr(plot_id, 3,3))
+ticks_all_2$plot_id <- paste(ticks_all_2$first, ticks_all_2$second, sep = "")
+ticks_all_2 <- ticks_all_2[,-c(6:7)]
+
+ticks_2019_all <- ticks_all_2 %>% 
+  group_by(installation, plot_id, invaded) %>% 
+  summarise(all_ticks = sum(count))
+colnames(ticks_2019_all)[colnames(ticks_2019_all)=="invaded"] <- "status"
+
+ticks_x_dung_all <- left_join(dung_2019_all, ticks_2019_all)
+
+anti_join(ticks_2019_all, dung_2019_all)
+
+ggplot(ticks_x_dung_all, aes(all_dung, all_ticks, color = status, fill = status)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  geom_jitter() +
+  theme_bw() +
+  invasion_color +
+  invasion_fill +
+  #scale_y_continuous(limits = c(0,60)) +
+  #scale_x_continuous(limits = c(0,200)) +
+  NULL
