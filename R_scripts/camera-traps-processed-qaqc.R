@@ -255,31 +255,50 @@ species_counts_status <- species_counts_installation %>%
 invasion_color <- scale_color_manual(values = c("red", "deepskyblue"))
 invasion_fill <- scale_color_manual(values = c("red", "deepskyblue"))
 
-ggplot() +
+species_breakdown <- 
+  ggplot() +
   geom_bar(data = species_counts_installation, aes(species, count, color = status, fill = status), stat = "identity", position = "dodge") +
   invasion_color +
   invasion_fill +
   theme_bw() +
   NULL
 
-ggplot() +
-  geom_bar(data = species_counts_installation, aes(status, count, color = status, fill = status), stat = "identity", position = "dodge") +
-  invasion_color +
-  invasion_fill +
-  theme_bw() +
-  NULL
 
-species <- ggplot(data = species_counts_installation, mapping = aes(x = species, y = count, color= status, position = "jitter")) +
+status_hosts <- ggplot(data = species_counts_status, mapping = aes(x = status, y = count, color= status)) +
   geom_boxplot(outlier.size = NA) + 
   geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
   theme_classic() +
   theme(text = element_text(size=20)) +
-  labs (y = 'Days trapped per plot') +
-  xlab("") +
+  labs (y = 'Photo count of 4 main hosts') +
+  xlab("status") +
   invasion_color +
   invasion_fill +
-  theme(legend.position="none") +
+  #theme(legend.position="none") +
   NULL
+
+species <- ggplot(data = species_counts_installation, mapping = aes(x = species, y = count, color= status)) +
+  geom_boxplot(outlier.size = NA) + 
+  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'Raw # of photos per installation') +
+  xlab("Host species") +
+  invasion_color +
+  invasion_fill +
+  #theme(legend.position="none") +
+  NULL
+
+ggsave(plot = species, "data/raw_data/2019_serdp_data/esa figures/camera_photos_boxplot_species.png", height = 8, width = 8)
+
+ggsave(plot = status_hosts, "data/raw_data/2019_serdp_data/esa figures/camera_photos_boxplot_status.png", height = 8, width = 8)
+
+ggsave(plot = species_breakdown, "data/raw_data/2019_serdp_data/esa figures/camera_photos_bar_species.png", height = 8, width = 8)
+
+#24 cameras in invaded plots and 14 in native
+invaded <- photos_combined %>% 
+  filter(status=="invaded")
+native <- photos_combined %>% 
+  filter(status=="native")
 
 
 ###### begin making actual figures used for esa ####
