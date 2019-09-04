@@ -102,6 +102,21 @@ n_distinct(photos$camera_number)
 sort(unique(photos$sd_card))
 n_distinct(photos$sd_card)
 
+
+hancock <- photos %>% 
+  filter(sd_card=="112-1")
+hancock_2 <- photos %>% 
+  filter(sd_card=="14-1") 
+hancock_all <- rbind(hancock, hancock_2)
+hancock_all <- hancock_all %>% 
+  filter(turkey > 0)
+
+photos <- photos %>% 
+  filter(sd_card!="112-1") %>% 
+  filter(sd_card!="14-1") 
+
+photos <- rbind(photos, hancock_all)
+#unique(photos$installation)
 #^read in camera trap report to pair status and plot id #####
 camera_traps_report <- read_csv("data/raw_data/2019_serdp_data/camera-traps-info.csv")
 camera_traps_report <- camera_traps_report[,c(1:9)]
@@ -134,11 +149,6 @@ colnames(photos_combined)[colnames(photos_combined)=="camera_number.x"] <- "came
 # "ctime" is uploaded date/time?, "mtime" is date/time photo was actually taken
 
 write_csv(photos_combined, "data/processed_data/2019-camera-trap-photos-all.csv")
-
-#testing without hancock n1 cow pasture
-photos_combined <- photos_combined %>% 
-  filter(sd_card!="14-1") %>% 
-  filter(sd_card!="112-1")
 
 trapped_days <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/CamearaDays.csv")
 #^ read in camera trap days test from drew, true number of days from first photo taken to last photo taken. preferred over camera out/camera in because of failures due to mech/battery dead/sd full in a few days instead of the full range of deployment
@@ -244,6 +254,9 @@ species_counts_installation <- rbind(photo_stats_cow, photo_stats_deer, photo_st
 species_counts_status <- species_counts_installation %>%
   group_by(status, species) %>%
   summarise(count = sum(count))
+
+write_csv(species_counts_installation, "data/processed_data/2019_species_counts_installation.csv")
+write_csv(species_counts_status, "data/processed_data/2019_species_counts_status.csv")
 
 # questionable <- photos_combined %>%
 #   filter(is.na(status))
