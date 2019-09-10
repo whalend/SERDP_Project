@@ -114,6 +114,7 @@ hancock_all <- hancock_all %>%
 photos <- photos %>% 
   filter(sd_card!="112-1") %>% 
   filter(sd_card!="14-1") 
+#removed hancock n1 cow pasture plot but kept the turkeys
 
 photos <- rbind(photos, hancock_all)
 #unique(photos$installation)
@@ -153,9 +154,31 @@ write_csv(photos_combined, "data/processed_data/2019-camera-trap-photos-all.csv"
 trapped_days <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/CamearaDays.csv")
 #^ read in camera trap days test from drew, true number of days from first photo taken to last photo taken. preferred over camera out/camera in because of failures due to mech/battery dead/sd full in a few days instead of the full range of deployment
 
-photos_combined <- left_join(trapped_days, photos_combined, by = "camera_number")
 # filter(photos_combined, !is.na(other))$other %>% unique(.)
 ## Done here by using the 'tidyr::gather' function after some other manipulations
+
+##attemping counts/days trapped using file name extractions
+
+write_csv(photos_days, "data/processed_data/2019-camera-trap-photos-with-days.csv") #additions done in excel, writing to not overwrite old photos_combined
+
+photos_combined <- read_csv("data/processed_data/2019-camera-trap-photos-all.csv")
+unique(photos_combined$file_days)
+
+photos_days <- photos_combined %>% 
+  group_by(status, installation, plot_id, camera_number, sd_card, cow, deer, pig, turkey) %>% 
+  mutate(file_days = lubridate::ymd(file_days),
+         start_date = min(file_days),
+         end_date = max(file_days),
+         camera_days = end_date - start_date)
+
+write_csv(photos_days, "data/processed_data/2019-camera-trap-photos-with-days.csv")
+
+brown <- photos_days %>% 
+  filter(installation=="brown")
+unique(brown$camera_days)
+
+photos_days$camera_days[(photos_days$camera_days==0)] <- 1
+
 
 # photos_combined_long <- photos_combined %>%
 #       mutate(cattle_egret = case_when(
@@ -168,74 +191,25 @@ photos_combined <- left_join(trapped_days, photos_combined, by = "camera_number"
 #       tidyr::gather(species, count, -installation:-mtime)
 # unique(p1$count)
 # 
-# photos_long_stats <- photos_combined_long %>% 
-#   group_by(installation, status, species, plot_id, camera_number, sd_card) %>% 
-#   summarise(total_count = sum(count),
-#             days_trapped = sum(unique(Days)))
-# 
-# trapped_days <- photos_long_stats %>% 
-#   group_by(status, installation, plot_id, camera_number, sd_card) %>% 
-#   summarise(total_days = sum(unique(days_trapped)))
-# 
-# trapped_days$total_days[trapped_days$sd_card=="6-1"] <- 20
-# trapped_days$total_days[trapped_days$sd_card=="28-1"] <- 20
-# trapped_days$total_days[trapped_days$sd_card=="6-2"] <- 21
-# trapped_days$total_days[trapped_days$sd_card=="28-2"] <- 21
-# 
-# trapped_days$total_days[trapped_days$sd_card=="33-1"] <- 15
-# trapped_days$total_days[trapped_days$sd_card=="33-2"] <- 21
-# 
-# trapped_days$total_days[trapped_days$sd_card=="103-1"] <- 15
-# trapped_days$total_days[trapped_days$sd_card=="103-2"] <- 21
-# 
-# 
-# trapped_days$total_days[trapped_days$sd_card=="25-1"] <- 15
-# trapped_days$total_days[trapped_days$sd_card=="25-2"] <- 21
 
-
-# days_by_photos <- left_join(trapped_days, photos_long_stats)
-# days_cows <- days_by_photos %>% 
-#   filter(species == "cow")
-# days_deer <- days_by_photos %>% 
-#   filter(species == "deer")
-# days_pig <- days_by_photos %>% 
-#   filter(species == "pig")
-# days_turkey <- days_by_photos %>% 
-#   filter(species == "turkey")
-# days_cattle_egret <- days_by_photos %>% 
-#   filter(species == "cattle_egret")
-# 
-# days_by_photos <- rbind(days_cows, days_deer, days_pig, days_turkey, days_cattle_egret)
-# 
-# days_by_photos <- days_by_photos %>%
-#   group_by(status, species) %>% 
-#   mutate(count_per_day = total_count/total_days) %>%
-#   select(status, installation, plot_id, species, count_per_day)
-# 
-# days_by_photos <- days_by_photos %>% 
-#   group_by(status, species) %>% 
-#   summarise(species_per_day = sum(count_per_day))
-  
-  # ungroup(.) %>% 
-  # group_by(status) %>% 
-  # summarise(mean_days = mean(total_days))
-
-photos_stats <- photos_combined %>%
+photos_stats <- photos_days %>%
   group_by(status) %>%
   summarise(total_cow = sum(cow),
             total_deer = sum(deer),
             total_turkey = sum(turkey),
             total_pig = sum(pig))
+photo_stats_day <- photos_days %>% 
+  group_by(status, installation, plot_id) %>% 
+  summarise(camera_days = substr(end_date - start_date))
 
-photo_stats_cow <- photos_combined %>%
+photo_stats_cow <- photos_days %>%
   mutate(species = "cow") %>%
-  #filter(cow < 2) %>%
-  group_by(status, installation, species) %>%
+  group_by(status, installation, plot_id, species, sd_card, camera_number, camera_days) %>%
   summarise(count = sum(cow))
-
-photo_stats_deer <- photos_combined %>%
+          
+photo_stats_deer <- photos_days %>%
   mutate(species = "deer") %>%
-  group_by(status, installation, species) %>%
+  group_by(status, installation, plot_id, species) %>%
   summarise(count = sum(deer))
 
 photo_stats_turkey <- photos_combined %>%
