@@ -151,7 +151,7 @@ colnames(photos_combined)[colnames(photos_combined)=="camera_number.x"] <- "came
 
 write_csv(photos_combined, "data/processed_data/2019-camera-trap-photos-all.csv")
 
-trapped_days <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/CamearaDays.csv")
+#trapped_days <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/CamearaDays.csv")
 #^ read in camera trap days test from drew, true number of days from first photo taken to last photo taken. preferred over camera out/camera in because of failures due to mech/battery dead/sd full in a few days instead of the full range of deployment
 
 # filter(photos_combined, !is.na(other))$other %>% unique(.)
@@ -159,10 +159,11 @@ trapped_days <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuf
 
 ##attemping counts/days trapped using file name extractions
 
-write_csv(photos_days, "data/processed_data/2019-camera-trap-photos-with-days.csv") #additions done in excel, writing to not overwrite old photos_combined
+#write_csv(photos_days, "data/processed_data/2019-camera-trap-photos-with-days.csv") #additions done in excel, writing to not overwrite old photos_combined
 
 photos_combined <- read_csv("data/processed_data/2019-camera-trap-photos-all.csv")
-unique(photos_combined$file_days)
+
+unique(photos_combined$sd_card)
 
 photos_days <- photos_combined %>%
   select(status, installation, plot_id, sd_card, file_days) #%>%
@@ -180,19 +181,12 @@ photos_days_nodup %>%
                 end_date = max(file_days),
                 camera_days = end_date - start_date) %>%
       View(.)
+test_missing <- anti_join(camera_traps_report, photos_days_nodup)
 
-
-unique(photos_days$camera_days)
-
-write_csv(photos_days, "data/processed_data/2019-camera-trap-photos-with-days.csv")
-
-brown <- photos_days %>%
-  filter(installation=="brown")
-unique(brown$camera_days)
+#write_csv(photos_days, "data/processed_data/2019-camera-trap-photos-with-days.csv")
 
 photos_days$camera_days[(photos_days$camera_days==0)] <- 1
 
-View(brown)
 # photos_combined_long <- photos_combined %>%
 #       mutate(cattle_egret = case_when(
 #             other == "cattle egrets" ~ 2,
