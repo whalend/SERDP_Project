@@ -181,6 +181,7 @@ photos_days_nodup %>%
                 end_date = max(file_days),
                 camera_days = end_date - start_date) %>%
       View(.)
+
 test_missing <- anti_join(camera_traps_report, photos_days_nodup)
 
 #write_csv(photos_days, "data/processed_data/2019-camera-trap-photos-with-days.csv")
