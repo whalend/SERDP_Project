@@ -87,9 +87,7 @@ Update 8/5/2019: Using fire history calculated from GIS layers provided by insta
 
 # Installations Visited and Plots Sampled
 
-* **`r n_distinct(plot_visit_data$inst_name)` installations**
-* **`r n_distinct(plot_visit_data$plot_id)` different plots, some multiple times**
-* **`r length(plot_visit_data$plot_id)` plot visits (some revisits)**
+We established **`r n_distinct(plot_visit_data$plot_id)` different plots** at **`r n_distinct(plot_visit_data$inst_name)` DoD installations** and XX total "installations." Some plots were visited multiple times resulting in a total of **`r length(plot_visit_data$plot_id)` plot visits**
 
 
 ```{r make installation map, echo=F, results='hide', eval=F}
@@ -171,6 +169,8 @@ tm_basemap("Esri.WorldGrayCanvas") +
 
 ![](figures/installations_visited_map.png)
 
+Due to the low number of cogongrass-invaded plots on DoD installations we identified an additional 28(??) sites across Florida that had cogongrass invasions ≥ .1 ha(??) and located at least partially within forested areas. A plot was also established in a nearby uninvaded area at XX of these sites.
+
 ```{r summary of plots visited, fig.height=5}
 
 # xtabs(~ imcy_inv + last_fire_year + inst_name, data = plot_visit_data)
@@ -184,7 +184,6 @@ tm_basemap("Esri.WorldGrayCanvas") +
 # plot_data$inv_colors[plot_data$imcy_inv=="uninvaded"] <- "#5ab4ac"
 
 plot_nums <- plot_visit_data %>%
-      filter() %>% 
       group_by(inst_name, imcy_inv) %>% 
       summarise(plot_ct = n_distinct(plot_id))
 plot_nums %>%       
