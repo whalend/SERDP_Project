@@ -52,6 +52,11 @@ photos$camera_number[photos$camera_number=="T6-"] <- "114"
 photos$camera_number[photos$camera_number=="15-"] <- "15"
 photos$camera_number[photos$camera_number=="20-"] <- "20"
 
+
+photos$camera_number[photos$camera_number=="4-2"] <- "4"
+photos$camera_number[photos$camera_number=="6-3"] <- "6"
+photos$camera_number[photos$camera_number=="8-2"] <- "8"
+
 #correcting for consistent sd card numbers because multiple sd cards on the same camera, when plot was moved/sd was full
 
 photos$sd_card[photos$sd_card=="10-1-"] <- "10-1"
@@ -97,6 +102,11 @@ photos$sd_card[photos$sd_card=="T6-1-"] <- "114-1"
 photos$sd_card[photos$sd_card=="15-1-"] <- "15-1"
 photos$sd_card[photos$sd_card=="20-1-"] <- "20-1"
 
+
+photos$sd_card[photos$sd_card=="4-2-0"] <- "4-2"
+photos$sd_card[photos$sd_card=="6-3-0"] <- "6-3"
+photos$sd_card[photos$sd_card=="8-2-0"] <- "8-2"
+
 sort(unique(photos$camera_number))
 n_distinct(photos$camera_number)
 sort(unique(photos$sd_card))
@@ -132,9 +142,6 @@ photos_combined <- left_join(photos, camera_traps_report, by = "sd_card")
 
 #reorganize column names and rename from join
 #test2
-photos_combined <- photos_combined[,c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,28)]
-
-
 
 photos_combined <- photos_combined[,c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,26,28,29,30,31)]
 
@@ -143,7 +150,6 @@ photos_combined <- photos_combined[,c(22,23,24,20,21,25,26,27,28,1,2,3,4,5,6,7,8
 colnames(photos_combined)[colnames(photos_combined)=="plot_id.y"] <- "plot_id"
 colnames(photos_combined)[colnames(photos_combined)=="status.y"] <- "status"
 colnames(photos_combined)[colnames(photos_combined)=="camera_number.x"] <- "camera_number"
-
 
 ##### MAIN DATA FRAME TO BE MANIPULATED (photos_combined) #####
 # need to figure out time manipulations for ever 5 or so minutes to remove chance of repeat individuals as best possible
