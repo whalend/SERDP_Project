@@ -12,7 +12,7 @@ shelby <- plot_visit %>%
   filter(installation=="shelby")
 
 last_fire <- plot_visit %>% 
-  filter(last_fire_year <= 2010) %>% 
+  filter(last_fire_year <= 2011) %>% 
   mutate(plot_id = paste(installation, plot_id, sep = " "))
 
 invaded <- last_fire %>% 
@@ -76,15 +76,13 @@ new_ticks_manual_edit[is.na(new_ticks_manual_edit)] <- 0
 new_ticks_manual_edit <- new_ticks_manual_edit %>% 
   mutate(visit_date = lubridate::mdy(visit_date))
 
-new_ticks_manual_edit <- new_ticks_manual_edit %>% 
-  mutate(last_fire_year = 1)
-
 all_ticks <- rbind(old_plot_ticks, new_ticks_manual_edit)
 
 all_ticks <- all_ticks %>% 
   mutate(visit_year = lubridate::year(visit_date)) %>% 
   filter(plot_id !="shelby f1") %>% 
-  filter(plot_id !="shelby b1")
+  filter(plot_id !="shelby b1") %>% 
+  mutate(years_since_fire = 2019-last_fire_year)
 
 all_ticks$imcy_inv[(all_ticks$imcy_inv=="uninvaded")] <- "regional"
 
@@ -92,8 +90,8 @@ unique(all_ticks$imcy_inv)
 
   
 
-invasion_color <- scale_color_manual(values = c("red", "deepskyblue"))
-invasion_fill <- scale_color_manual(values = c("red", "deepskyblue"))
+invasion_color <- scale_color_manual(values = c("red", "deepskyblue", "green"))
+invasion_fill <- scale_color_manual(values = c("red", "deepskyblue", "green"))
 region_color <- scale_color_manual(values = c("green"))
 
 all_plot_year <- ggplot(data = all_ticks, mapping = aes(x = visit_year, y = total_ticks, color = imcy_inv)) +
@@ -106,15 +104,72 @@ all_plot_year <- ggplot(data = all_ticks, mapping = aes(x = visit_year, y = tota
   region_color +
   xlab("year") +
   invasion_color +
-  invasion_fill +
   #theme(legend.position="none") +
   scale_x_continuous(breaks = c(2017,2018,2019)) +
   NULL
+
+#adults only
+
+adults <- all_ticks %>% 
+  filter(life_stage=="adult")
+
+all_plot_year_adult <- ggplot(data = adults, mapping = aes(x = visit_year, y = total_ticks, color = imcy_inv)) +
+  geom_boxplot(outlier.size = NA) + 
+  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'adults per plot') +
+  #invasion_color +
+  #region_color +
+  xlab("year") +
+  #invasion_color +
+  #theme(legend.position="none") +
+  scale_x_continuous(breaks = c(2017,2018,2019)) +
+  NULL
+
+ggsave(plot = all_plot_year_adult, "C:/Users/Steven/Desktop/17-18-19-adults.png", width = 7, height = 7)
+
+#nymphs only
+
+nymphs <- all_ticks %>% 
+  filter(life_stage=="nymph")
+
+all_plot_year_nymph <- ggplot(data = nymphs, mapping = aes(x = visit_year, y = total_ticks, color = imcy_inv)) +
+  geom_boxplot(outlier.size = NA) + 
+  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'nymphs per plot') +
+  invasion_color +
+  region_color +
+  xlab("year") +
+  invasion_color +
+  #theme(legend.position="none") +
+  scale_x_continuous(breaks = c(2017,2018,2019)) +
+  NULL
+
+ggsave(plot = all_plot_year_nymph, "C:/Users/Steven/Desktop/17-18-19-nymphs.png", width = 7, height = 7)
+
+#years since fire etc
+
+all_plot_fire_history <- ggplot(data = all_ticks, mapping = aes(x = years_since_fire, color = imcy_inv, fill = imcy_inv)) +
+  geom_histogram(binwidth = 1) + 
+  #geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'number of plots') +
+  xlab("years since fire") +
+  invasion_color +
+  invasion_fill +
+  #theme(legend.position="none") +
+  #scale_x_continuous(breaks = c(2017,2018,2019)) +
+  NULL
+
+ggsave(plot = all_plot_fire_history, "C:/Users/Steven/Desktop/17-18-19-fire-history.png", width = 7, height = 7)
 
 year_breakdown <- 
   ggplot() +
   geom_bar(data = all_ticks, aes(imcy_inv, color = imcy_inv, fill = imcy_inv), stat = "count", position = "dodge") +
   invasion_color +
-  invasion_fill +
   theme_bw() +
   NULL

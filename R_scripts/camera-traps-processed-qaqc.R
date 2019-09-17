@@ -6,6 +6,8 @@ library(ggplot2)
 library(stringi)
 
 photos <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos.csv")
+
+new <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos_without_wes_extras.csv")
 summary(photos)
 #filter(photos, cow >1)
 
@@ -246,15 +248,15 @@ photo_stats_pig <- photos_combined %>%
   group_by(status, installation, plot_id, sd_card, species) %>%
   summarise(count = sum(pig))
 
-# photo_stats_raccoon <- photos_combined %>%
-#   mutate(species = "raccoon") %>%
-#   group_by(status, installation, plot_id, sd_card, species) %>%
-#   summarise(count = sum(raccoon))
-# 
-# photo_stats_armadillo <- photos_combined %>%
-#   mutate(species = "armadillo") %>%
-#   group_by(status, installation, plot_id, sd_card, species) %>%
-#   summarise(count = sum(armadillo))
+photo_stats_raccoon <- photos_combined %>%
+  mutate(species = "raccoon") %>%
+  group_by(status, installation, plot_id, sd_card, species) %>%
+  summarise(count = sum(raccoon))
+
+photo_stats_armadillo <- photos_combined %>%
+  mutate(species = "armadillo") %>%
+  group_by(status, installation, plot_id, sd_card, species) %>%
+  summarise(count = sum(armadillo))
 #raccoon at 4 plots, armadillo at 1
 
 species_counts_by_sd_card <- rbind(photo_stats_cow, photo_stats_deer, photo_stats_turkey, photo_stats_pig)
@@ -305,7 +307,7 @@ species_breakdown <-
   NULL
 
 
-status_hosts <- ggplot(data = species_counts_status, mapping = aes(x = status, y = count, color= status)) +
+status_hosts <- ggplot(data = species_counts_status, mapping = aes(x = status, y = count, color= status, group())) +
   geom_boxplot(outlier.size = NA) +
   geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
   theme_classic() +
@@ -340,6 +342,8 @@ species_plot <- ggplot(data = count_and_days_plot, mapping = aes(x = species, y 
   invasion_fill +
   #theme(legend.position="none") +
   NULL
+
+ggsave(plot = species_plot, "C:/Users/Steven/Desktop/species_per_day_plot_level.png", width = 7, height = 7)
 
 species_camera <- ggplot(data = count_and_days_camera, mapping = aes(x = species, y = count_per_day_camera, color= status)) +
   geom_boxplot(outlier.size = NA) +
