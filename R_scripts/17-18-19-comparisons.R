@@ -12,7 +12,7 @@ shelby <- plot_visit %>%
   filter(installation=="shelby")
 
 last_fire <- plot_visit %>% 
-  filter(last_fire_year <= 2011) %>% 
+  filter(last_fire_year > 1900) %>% 
   mutate(plot_id = paste(installation, plot_id, sep = " "))
 
 invaded <- last_fire %>% 
@@ -26,17 +26,19 @@ old_ticks_stat <- old_ticks %>%
   group_by(installation, plot_id, visit_date, life_stage) %>% 
   summarise(total_ticks = sum(count))
 
-old_plot_ticks <- left_join(last_fire, old_ticks_stat)
+old_plot_ticks <- left_join(old_ticks_stat, last_fire, by = "plot_id")
+
+colnames(old_plot_ticks)[colnames(old_plot_ticks)=="installation.x"] <- "installation"
+colnames(old_plot_ticks)[colnames(old_plot_ticks)=="visit_date.x"] <- "visit_date"
+old_plot_ticks <- old_plot_ticks[,-c(8:10)]
+old_plot_ticks <- old_plot_ticks[,-c(6)]
+
+
 
 sort(unique(old_plot_ticks$plot_id))
 sort(unique(last_fire$plot_id))
 old_plot_ticks[is.na(old_plot_ticks)] <- 0
 old_plot_ticks <- old_plot_ticks[,-c(6)]
-
-old <- old_plot_ticks %>% 
-  group_by(imcy_inv) %>% 
-  summarise(mean_ticks = mean(total_ticks))
-
 
 new_ticks <- read_csv("data/raw_data/2019_serdp_data/2019-only-tick-data.csv")
 
@@ -76,17 +78,37 @@ new_ticks_manual_edit[is.na(new_ticks_manual_edit)] <- 0
 new_ticks_manual_edit <- new_ticks_manual_edit %>% 
   mutate(visit_date = lubridate::mdy(visit_date))
 
+new_ticks_manual_edit <- new_ticks_manual_edit[,-c(7)]
+#temp^
+
 all_ticks <- rbind(old_plot_ticks, new_ticks_manual_edit)
+#^was old_ticks_stat
 
 all_ticks <- all_ticks %>% 
   mutate(visit_year = lubridate::year(visit_date)) %>% 
-  filter(plot_id !="shelby f1") %>% 
-  filter(plot_id !="shelby b1") %>% 
-  mutate(years_since_fire = 2019-last_fire_year)
+  #filter(plot_id !="shelby f1") %>% 
+  #filter(plot_id !="shelby b1") %>% 
+  filter(!is.na(all_ticks$imcy_inv))
+  #mutate(years_since_fire = 2019-last_fire_year)
 
 all_ticks$imcy_inv[(all_ticks$imcy_inv=="uninvaded")] <- "regional"
 
+all_ticks$visit_year[(all_ticks$visit_year==2018)] <- 2017
+
 unique(all_ticks$imcy_inv)
+unique(all_ticks$visit_year)
+
+inv_old <- all_ticks %>% 
+  filter(visit_year==2017) %>% 
+  filter(imcy_inv=="invaded")
+
+all_ticks$imcy_inv[(all_ticks$visit_year==2017 & all_ticks$imcy_inv=="invaded")] <- "weird"
+
+all_ticks_w <- all_ticks %>% 
+  filter(imcy_inv!="weird")
+
+
+
 
   
 
@@ -94,7 +116,7 @@ invasion_color <- scale_color_manual(values = c("red", "deepskyblue", "green"))
 invasion_fill <- scale_color_manual(values = c("red", "deepskyblue", "green"))
 region_color <- scale_color_manual(values = c("green"))
 
-all_plot_year <- ggplot(data = all_ticks, mapping = aes(x = visit_year, y = total_ticks, color = imcy_inv)) +
+all_plot_year <- ggplot(data = all_ticks_w, mapping = aes(x = visit_year, y = total_ticks, color = imcy_inv)) +
   geom_boxplot(outlier.size = NA) + 
   geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
   theme_classic() +
@@ -110,7 +132,7 @@ all_plot_year <- ggplot(data = all_ticks, mapping = aes(x = visit_year, y = tota
 
 #adults only
 
-adults <- all_ticks %>% 
+adults <- all_ticks_w %>% 
   filter(life_stage=="adult")
 
 all_plot_year_adult <- ggplot(data = adults, mapping = aes(x = visit_year, y = total_ticks, color = imcy_inv)) +
@@ -119,7 +141,7 @@ all_plot_year_adult <- ggplot(data = adults, mapping = aes(x = visit_year, y = t
   theme_classic() +
   theme(text = element_text(size=20)) +
   labs (y = 'adults per plot') +
-  #invasion_color +
+  invasion_color +
   #region_color +
   xlab("year") +
   #invasion_color +
@@ -131,7 +153,7 @@ ggsave(plot = all_plot_year_adult, "C:/Users/Steven/Desktop/17-18-19-adults.png"
 
 #nymphs only
 
-nymphs <- all_ticks %>% 
+nymphs <- all_ticks_w %>% 
   filter(life_stage=="nymph")
 
 all_plot_year_nymph <- ggplot(data = nymphs, mapping = aes(x = visit_year, y = total_ticks, color = imcy_inv)) +
