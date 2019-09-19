@@ -1,13 +1,13 @@
-#### qaqc on taylor's sorted out camera trap photos batch 1 ######
+#### qaqc on all camera photos ######
 
 library(readr)
 library(dplyr)
 library(ggplot2)
 library(stringi)
 
-photos <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos.csv")
+old_with_many <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos.csv")
 
-new <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos_without_wes_extras.csv")
+photos <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos_without_wes_extras.csv")
 summary(photos)
 #filter(photos, cow >1)
 
@@ -248,23 +248,25 @@ photo_stats_pig <- photos_combined %>%
   group_by(status, installation, plot_id, sd_card, species) %>%
   summarise(count = sum(pig))
 
-photo_stats_raccoon <- photos_combined %>%
-  mutate(species = "raccoon") %>%
-  group_by(status, installation, plot_id, sd_card, species) %>%
-  summarise(count = sum(raccoon))
-
-photo_stats_armadillo <- photos_combined %>%
-  mutate(species = "armadillo") %>%
-  group_by(status, installation, plot_id, sd_card, species) %>%
-  summarise(count = sum(armadillo))
+# photo_stats_raccoon <- photos_combined %>%
+#   mutate(species = "raccoon") %>%
+#   group_by(status, installation, plot_id, sd_card, species) %>%
+#   summarise(count = sum(raccoon))
+# 
+# photo_stats_armadillo <- photos_combined %>%
+#   mutate(species = "armadillo") %>%
+#   group_by(status, installation, plot_id, sd_card, species) %>%
+#   summarise(count = sum(armadillo))
 #raccoon at 4 plots, armadillo at 1
 
 species_counts_by_sd_card <- rbind(photo_stats_cow, photo_stats_deer, photo_stats_turkey, photo_stats_pig)
 
+t1 <- filter(species_counts_by_sd_card, species=="turkey")
 species_counts_by_sd_card_zero <- species_counts_by_sd_card %>% 
   filter(count > 0)
-#all individuals across native/invaded only main 4 hosts
-species_counts_status <- species_counts_installation %>%
+#all individuals across native/invaded only main 4 hosts, keeping zeros for now
+
+species_counts_status <- species_counts_by_sd_card %>%
   group_by(status, species) %>%
   summarise(count = sum(count))
 
@@ -321,40 +323,42 @@ status_hosts <- ggplot(data = species_counts_status, mapping = aes(x = status, y
 
 species <- ggplot(data = species_counts_installation, mapping = aes(x = species, y = count, color= status)) +
   geom_boxplot(outlier.size = NA) +
-  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  geom_point(size = 3, alpha = 0.5, width = 0.15) +
   theme_classic() +
   theme(text = element_text(size=20)) +
   labs (y = 'Individual counts per sd card') +
   xlab("Host species") +
   invasion_color +
   invasion_fill +
-  #theme(legend.position="none") +
   NULL
 
+
 species_plot <- ggplot(data = count_and_days_plot, mapping = aes(x = species, y = count_per_day_plot, color= status)) +
-  geom_boxplot(outlier.size = NA) +
-  geom_jitter(alpha = 0.5, width = 0.15) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) +
+  geom_point(size = 3, alpha = 0.5, position = position_jitterdodge()) +
   theme_classic() +
   theme(text = element_text(size=20)) +
   labs (y = 'Count per plot per day') +
   xlab("Host species") +
   invasion_color +
   invasion_fill +
-  #theme(legend.position="none") +
+  facet_wrap(~species, scales = "free") +
+  theme(axis.text.x=element_blank(), axis.ticks.x = element_blank()) +
   NULL
 
 ggsave(plot = species_plot, "C:/Users/Steven/Desktop/species_per_day_plot_level.png", width = 7, height = 7)
 
 species_camera <- ggplot(data = count_and_days_camera, mapping = aes(x = species, y = count_per_day_camera, color= status)) +
-  geom_boxplot(outlier.size = NA) +
-  geom_jitter(alpha = 0.5, width = 0.15) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) +
+  geom_point(size = 3, alpha = 0.5, position = position_jitterdodge()) +
   theme_classic() +
   theme(text = element_text(size=20)) +
   labs (y = 'Count per camera per day') +
   xlab("Host species") +
   invasion_color +
   invasion_fill +
-  #theme(legend.position="none") +
+  facet_wrap(~species, scales = "free") +
+  theme(axis.text.x=element_blank(), axis.ticks.x = element_blank(), legend.position = "bottom") +
   NULL
 
 ggsave(plot = species, "data/raw_data/2019_serdp_data/esa figures/camera_photos_boxplot_species.png", height = 8, width = 8)
@@ -407,3 +411,44 @@ trapping_days <- ggplot(data = trapped_days, mapping = aes(x = status, y = total
   NULL
 
 ggsave(plot = trapping_days, "data/raw_data/2019_serdp_data/esa figures/trapping_days_status.png", height = 7, width = 7)
+
+
+
+#playin with no pig
+
+cd_plot_no_pig <- count_and_days_plot %>% 
+  filter(species!="pig")
+
+species_plot_np <- ggplot(data = cd_plot_no_pig, mapping = aes(x = species, y = count_per_day_plot, color= status)) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) +
+  geom_point(size = 3, alpha = 0.5, position = position_jitterdodge()) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'Count per plot per day') +
+  xlab("Host species") +
+  invasion_color +
+  invasion_fill +
+  facet_wrap(~species, scales = "free") + 
+  theme(axis.text.x=element_blank(), axis.ticks.x = element_blank()) +
+  NULL
+
+
+
+cd_cam_no_pig <- count_and_days_camera %>% 
+  filter(species!="pig")
+
+species_camera_np <- ggplot(data = cd_cam_no_pig, mapping = aes(x = species, y = count_per_day_camera, color= status)) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) +
+  geom_point(size = 3, alpha = 0.5, position = position_jitterdodge()) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'Count per camera per day') +
+  xlab("Host species") +
+  invasion_color +
+  invasion_fill +
+  facet_wrap(~species, scales = "free") +
+  theme(axis.text.x=element_blank(), axis.ticks.x = element_blank(), legend.position = "bottom") +
+  NULL
+
+ggsave(plot = species_camera, "C:/Users/Steven/Desktop/host_species_by_camera.png", height = 8, width = 6)
+ggsave(plot = species_camera_np, "C:/Users/Steven/Desktop/host_species_by_camera_no_pig.png", height = 4, width = 6)
