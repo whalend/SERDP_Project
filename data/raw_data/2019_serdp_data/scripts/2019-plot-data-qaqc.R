@@ -168,19 +168,34 @@ ggplot(total_ticks_all, aes(installation, ticks_per_plot), color = invaded) +
 old_ticks <- read_csv("data/processed_data/ticks.csv")
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 
-old_w_status <- left_join(old_ticks, plot_visit_data, by = "plot_id")
-old_w_status <- old_w_status[,c(1:19)]
-old_w_status <- old_w_status[,-c(9:18)]
-old_w_status <- old_w_status %>% 
-  mutate(imcy_inv = if_else(imcy_inv=="uninvaded", "native", "invaded"))
-colnames(old_w_status)[colnames(old_w_status)=="imcy_inv"] <- "invaded"
-colnames(old_w_status)[colnames(old_w_status)=="visit_date.x"] <- "date"
+old_w_status <- left_join(old_ticks, plot_visit_data)
+old_w_status <- old_w_status[,c(1:18)]
+old_w_status <- old_w_status[,-c(9:17)]
+unique(old_w_status$imcy_inv)
+n_distinct(old_w_status)
+
+colnames(old_w_status)[colnames(old_w_status)=="visit_date"] <- "date"
 colnames(old_w_status)[colnames(old_w_status)=="installation.x"] <- "installation"
 
+colnames(tick_data)[colnames(tick_data)=="invaded"] <- "imcy_inv"
+
 tick_data <- tick_data[,-c(10:11)]
+old_w_status
 
+old_w_status$imcy_inv[old_w_status$imcy_inv=="NA"] <- "uninvaded"
+#mutate_each(funs(replace(., which(is.na(.)), 1)))
+old_w_status <- old_w_status %>% 
+  mutate(imcy_inv = replace(imcy_inv, which(is.na(imcy_inv)), "uninvaded"))
 
+unique(old_w_status$imcy_inv)
+filter(old_w_status, is.na(imcy_inv))
+filter(tick_data, is.na(imcy_inv))
 serdp_ticks <- rbind(old_w_status, tick_data)
+unique(serdp_ticks$imcy_inv)
+
+unique(serdp_ticks$imcy_inv)
+write_csv(serdp_ticks, "C:/Users/Steven/Desktop/serdp/2019 data/serdp_ticks_combined_2017_2019.csv")
+
 serdp_ticks <- serdp_ticks %>% 
   mutate(visit_year = lubridate::year(date))
 dod_ticks <- serdp_ticks %>% 
