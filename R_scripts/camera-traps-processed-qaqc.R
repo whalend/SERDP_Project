@@ -5,9 +5,9 @@ library(dplyr)
 library(ggplot2)
 library(stringi)
 
-old_with_many <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos.csv")
+old_with_many_from_wes <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos_with_extra.csv.csv")
 
-photos <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos_without_wes_extras.csv")
+photos <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos.csv")
 summary(photos)
 #filter(photos, cow >1)
 
@@ -163,7 +163,7 @@ photos_combined <- photos_combined %>%
 # need to figure out time manipulations for ever 5 or so minutes to remove chance of repeat individuals as best possible
 # "ctime" is uploaded date/time?, "mtime" is date/time photo was actually taken
 
-write_csv(photos_combined, "data/processed_data/2019-camera-trap-photos-all-no-days.csv")
+write_csv(photos_combined, "data/processed_data/2019 serdp processed data/2019-camera-trap-photos-all.csv")
 
 #trapped_days <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/CamearaDays.csv")
 #^ read in camera trap days test from drew, true number of days from first photo taken to last photo taken. preferred over camera out/camera in because of failures due to mech/battery dead/sd full in a few days instead of the full range of deployment
@@ -179,54 +179,33 @@ photos_combined <- read_csv("data/processed_data/2019-camera-trap-photos-all-no-
 
 sort(unique(photos_combined$sd_card))
 
-photos_days <- photos_combined %>%
-  select(status, installation, plot_id, sd_card, file_days) #%>%
-  # mutate(file_days = lubridate::ymd(file_days),
-  #        start_date = min(file_days),
-  #        end_date = max(file_days),
-  #        camera_days = end_date - start_date)
+# photos_days <- photos_combined %>%
+#   select(status, installation, plot_id, sd_card, file_days) #%>%
+#   # mutate(file_days = lubridate::ymd(file_days),
+#   #        start_date = min(file_days),
+#   #        end_date = max(file_days),
+#   #        camera_days = end_date - start_date)
+# 
+# photos_days_nodup <- photos_days[!duplicated(photos_days),]
+# 
+# before_wes_photos <- photos_days_nodup %>%
+#       mutate(file_days = lubridate::ymd(file_days)) %>%
+#       group_by(status, installation, plot_id, sd_card) %>%
+#       summarise(start_date = min(file_days),
+#                 end_date = max(file_days),
+#                 camera_days = end_date - start_date)
+# 
+# write_csv(before_wes_photos, "data/processed_data/camera-trap-days.csv")
+#below manual edits done after removing edits
 
-photos_days_nodup <- photos_days[!duplicated(photos_days),]
-
-before_wes_photos <- photos_days_nodup %>%
-      mutate(file_days = lubridate::ymd(file_days)) %>%
-      group_by(status, installation, plot_id, sd_card) %>%
-      summarise(start_date = min(file_days),
-                end_date = max(file_days),
-                camera_days = end_date - start_date)
-
-write_csv(before_wes_photos, "data/processed_data/camera-trap-days.csv")
-
-camera_days <- read_csv("data/processed_data/camera-trap-days-all.csv")
+camera_days <- read_csv("data/processed_data/2019 serdp processed data/camera-trap-days-all.csv")
 camera_days <- camera_days %>% 
   filter(installation!="avonpark")
 #^manual addition of the missing cameras in excel 
 
 test_missing <- anti_join(camera_traps_report
                           ,camera_days)
-###### 8 missing sd cards are (4 from avon park removed, 1 from hancock n1 cow pasture, 2 no photos not run from machine learning, 1 sd card set to videos, testing later) #####
-
-# photos_combined_long <- photos_combined %>%
-#       mutate(cattle_egret = case_when(
-#             other == "cattle egrets" ~ 2,
-#             other == "cattle egret" ~ 1,
-#             TRUE ~ 0),
-#       empty = 0
-#       ) %>%
-#       select(installation:sd_card, camera_number, camera_out, camera_in, mtime, empty:cattle_egret, -other) %>%
-#       tidyr::gather(species, count, -installation:-mtime)
-# unique(p1$count)
-#
-
-# photos_stats <- photos_days %>%
-#   group_by(status) %>%
-#   summarise(total_cow = sum(cow),
-#             total_deer = sum(deer),
-#             total_turkey = sum(turkey),
-#             total_pig = sum(pig))
-# photo_stats_day <- photos_days %>%
-#   group_by(status, installation, plot_id) %>%
-#   summarise(camera_days = substr(end_date - start_date))
+###### 6 missing sd cards are (4 from avon park removed,  2 no photos not run from machine learning, #####
 
 photo_stats_cow <- photos_combined %>%
   mutate(species = "cow") %>% 
@@ -261,20 +240,21 @@ photo_stats_pig <- photos_combined %>%
 
 species_counts_by_sd_card <- rbind(photo_stats_cow, photo_stats_deer, photo_stats_turkey, photo_stats_pig)
 
-t1 <- filter(species_counts_by_sd_card, species=="turkey")
-species_counts_by_sd_card_zero <- species_counts_by_sd_card %>% 
-  filter(count > 0)
+# species_counts_by_sd_card_zero <- species_counts_by_sd_card %>% 
+#   filter(count > 0)
 #all individuals across native/invaded only main 4 hosts, keeping zeros for now
 
 species_counts_status <- species_counts_by_sd_card %>%
   group_by(status, species) %>%
   summarise(count = sum(count))
 
-count_and_days <- left_join(species_counts_by_sd_card_zero, camera_days)
+count_and_days <- left_join(species_counts_by_sd_card, camera_days)
 
 count_and_days_camera <- count_and_days %>% 
   group_by(status, installation, plot_id, sd_card, species) %>% 
   summarise(count_per_day_camera = count/camera_days)
+
+write_csv(count_and_days_camera, "data/processed_data/2019 serdp processed data/species-per-camera-per-day.csv")
 #^counts per day per camera (2 usually)
 
 count_and_days_plot <- count_and_days %>% 
@@ -284,17 +264,9 @@ count_and_days_plot <- count_and_days %>%
 
 count_and_days_plot <- count_and_days_plot %>% 
   group_by(status, installation, plot_id, species) %>% 
-  summarise(count_per_day_plot = total_count/total_plot_days)      
+  summarise(count_per_day_plot = total_count/total_plot_days)  
+write_csv(count_and_days_plot, "data/processed_data/2019 serdp processed data/species-per-plot-per-day.csv")
 #^counts per PLOT per day (summed total days of both cameras and their respective counts)
-
-write_csv(species_counts_by_sd_card, "data/processed_data/species_counts_by_sd_card.csv")
-write_csv(species_counts_status, "data/processed_data/2019_species_counts_status.csv")
-
-# questionable <- photos_combined %>%
-#   filter(is.na(status))
-#View(questionable)
-#fixed a missing entry on camera traps info sheet (25-2 sd card was not there)
-
 
 #color/theme for figures#####
 invasion_color <- scale_color_manual(values = c("red", "deepskyblue"))
