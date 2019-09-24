@@ -11,9 +11,11 @@ plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 
 #' ## Tree Stem Data
 #+ tree data ####
-tree_data <- read_csv("data/raw_data/trees.csv")
+#tree_data <- read_csv("data/raw_data/trees.csv")
 ### tree_data_sub <- filter(tree_data, date>"2017-06-01", plot_id != "bland03", plot_id != "bland02")
 
+tree_data <- read_csv("data/raw_data/2019_serdp_data/tree-data-entry.csv")
+###### steven changed file read in to add 2019 data to end of 17/18 data. edited 9/24/19 #####
 summary(tree_data)
 
 filter(tree_data, is.na(plot_id)) %>%
@@ -208,7 +210,7 @@ tree_data$Genus[tree_data$tag==1761 & tree_data$plot_id=="shelby b2"] <- "Quercu
 
 filter(tree_data, is.na(species), plot_id=="shelby c1")$health
 tree_data$Genus[tree_data$azimuth==251 & tree_data$plot_id=="shelby c1"] <- "Pinus"
-tree_data$Species[tree_data$azimuth==251 & tree_data$plot_id=="shelby c1"] <- "taeda"
+tree_data$species[tree_data$azimuth==251 & tree_data$plot_id=="shelby c1"] <- "taeda"
 tree_data$species[tree_data$azimuth==251 & tree_data$plot_id=="shelby c1"] <- "PITA"
 
 

@@ -40,7 +40,7 @@ avonpark,avonpark d1,QUMY,18,2017-06-30,NA,Quercus myrtifolia,tree,Quercus,myrti
 avonpark,avonpark d1,QUMY,3,2017-06-30,NA,Quercus myrtifolia,tree,Quercus,myrtifolia,native,tree,2,Quercus myrtifolia,2017,uninvaded,2017-06-30,2014,3,-81.387992,27.711576,D-1,Avon Park AFR
 avonpark,avonpark d1,QUNI,4,2017-06-30,NA,Quercus nigra,tree,Quercus,nigra,native,tree,2,Quercus nigra,2017,uninvaded,2017-06-30,2014,3,-81.387992,27.711576,D-1,Avon Park AFR
 avonpark,avonpark d1,SERE,14,2017-06-30,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree,8,Serenoa repens,2017,uninvaded,2017-06-30,2014,3,-81.387992,27.711576,D-1,Avon Park AFR
-tyndall,tyndall b1,NA,0,2017-07-18,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA,0,NA NA,2017,invaded,2017-07-20,2017,0,-85.47658,29.998418,B-1,Tyndall AFB
+tyndall,tyndall b1,NA,0,2017-07-18,placeholder zero for plot visit,Asteraceae 0,0,Asteraceae,0,0,0,0,Asteraceae 0,2017,invaded,2017-07-20,2017,0,-85.47658,29.998418,B-1,Tyndall AFB
 tyndall,tyndall b2,SERE,2,2017-07-19,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree,1,Serenoa repens,2017,uninvaded,2017-07-20,2017,0,-85.476082,30.000315,B-2,Tyndall AFB
 tyndall,tyndall h1,HYPER,27,2017-07-20,NA,Hypericum spp.,forb,Hypericum,spp.,native,forb,16,Hypericum spp.,2017,uninvaded,2017-07-20,2011,6,-85.54086117406607,30.046909899289403,H-1,Tyndall AFB
 tyndall,tyndall d1,ILGL,7,2017-07-20,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub,4,Ilex glabra,2017,uninvaded,2017-07-20,2014,3,-85.550225,30.042322,D-1,Tyndall AFB
@@ -156,7 +156,7 @@ blanding,blanding i1,QUIN,2,2018-05-15,NA,Quercus incana,tree,Quercus,incana,nat
 blanding,blanding m1,QUNI,2,2018-05-15,NA,Quercus nigra,tree,Quercus,nigra,native,tree,2,Quercus nigra,2018,uninvaded,2018-05-15,2007,11,-81.968503,29.84575,M-1,Camp Blanding
 blanding,blanding i1,SERE,1,2018-05-15,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree,1,Serenoa repens,2018,uninvaded,2018-05-25,2014,4,-82.032726,29.863529,I-1,Camp Blanding
 blanding,blanding c1,ASTR,2,2018-05-16,corrected arst wiregrass to ASTR pawpaw,Asimina triloba,tree,Asimina,triloba,native,tree,2,Asimina triloba,2018,uninvaded,2018-05-16,2017,1,-81.997211,29.826576,C-1,Camp Blanding
-blanding,blanding theater_cogon,NA,0,2018-05-16,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA,0,NA NA,2018,invaded,2018-05-16,NA,NA,NA,NA,NA,NA
+blanding,blanding theater_cogon,NA,0,2018-05-16,placeholder zero for plot visit,Asteraceae 0,0,Asteraceae,0,0,0,0,Asteraceae 0,2018,invaded,2018-05-16,NA,NA,NA,NA,NA,NA
 blanding,blanding k1,QUNI,2,2018-05-22,NA,Quercus nigra,tree,Quercus,nigra,native,tree,2,Quercus nigra,2018,uninvaded,2018-05-22,2015,3,-82.023445,29.837378,K-1,Camp Blanding
 blanding,blanding n1,ASIMI,6,2018-05-24,NA,Asimina spp.,shrub,Asimina,spp.,native/introduced,shrub,6,Asimina spp.,2018,uninvaded,2018-05-24,2013,5,-81.977192,29.83789,N-1,Camp Blanding
 blanding,blanding n1,DIVI,1,2018-05-24,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,1,Diospyros virginiana,2018,uninvaded,2018-05-24,2013,5,-81.977192,29.83789,N-1,Camp Blanding
@@ -169,7 +169,7 @@ blanding,blanding j1,QUMY,1,2018-05-25,NA,Quercus myrtifolia,tree,Quercus,myrtif
 blanding,blanding i1,QUNI,3,2018-05-25,NA,Quercus nigra,tree,Quercus,nigra,native,tree,3,Quercus nigra,2018,uninvaded,2018-05-25,2014,4,-82.032726,29.863529,I-1,Camp Blanding
 avonpark,avonpark e2,RHCO,1,2018-05-29,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub,1,Rhus copallinum,2018,invaded,2018-05-29,2017,1,-81.245362,27.630246,E-2,Avon Park AFR
 avonpark,avonpark e2,SERE,2,2018-05-29,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree,2,Serenoa repens,2018,invaded,2018-05-29,2017,1,-81.245362,27.630246,E-2,Avon Park AFR
-avonpark,avonpark e1,NA,0,2018-05-29,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA,0,NA NA,2018,uninvaded,2018-05-29,2017,1,-81.283291,27.587665,E-1,Avon Park AFR
+avonpark,avonpark e1,NA,0,2018-05-29,placeholder zero for plot visit,Asteraceae 0,0,Asteraceae,0,0,0,0,Asteraceae 0,2018,uninvaded,2018-05-29,2017,1,-81.283291,27.587665,E-1,Avon Park AFR
 avonpark,avonpark a1,ASIMI,1,2018-05-30,NA,Asimina spp.,shrub,Asimina,spp.,native/introduced,shrub,1,Asimina spp.,2018,invaded,2018-05-30,2017,1,-81.309644,27.67576,A-1,Avon Park AFR
 avonpark,avonpark a2,ILGL,1,2018-05-30,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub,1,Ilex glabra,2018,uninvaded,2018-05-30,2017,1,-81.311222,27.674646,A-2,Avon Park AFR
 avonpark,avonpark a1,SERE,6,2018-05-30,NA,Serenoa repens,shrub/tree,Serenoa,repens,native,shrub/tree,6,Serenoa repens,2018,invaded,2018-05-30,2017,1,-81.309644,27.67576,A-1,Avon Park AFR
@@ -239,8 +239,8 @@ jackson,jackson d1,CARYA,1,2018-07-09,NA,Carya spp.,tree,Carya,spp.,native,tree,
 jackson,jackson c1,DIVI,3,2018-07-09,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,3,Diospyros virginiana,2018,uninvaded,2018-07-09,2017,1,-80.759342,34.078634,C-1,Fort Jackson
 jackson,jackson d1,QUNI,1,2018-07-09,NA,Quercus nigra,tree,Quercus,nigra,native,tree,1,Quercus nigra,2018,uninvaded,2018-07-09,2010,8,-80.75314,34.075136,D-1,Fort Jackson
 jackson,jackson d1,QURU,8,2018-07-09,NA,Quercus rubra,tree,Quercus,rubra,native,tree,8,Quercus rubra,2018,uninvaded,2018-07-09,2010,8,-80.75314,34.075136,D-1,Fort Jackson
-jackson,jackson a1,NA,0,2018-07-09,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA,0,NA NA,2018,uninvaded,2018-07-09,2010,8,-80.749623,34.077337,A-1,Fort Jackson
-jackson,jackson b1,NA,0,2018-07-09,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA,0,NA NA,2018,uninvaded,2018-07-09,2015,3,-80.75528,34.073796,B-1,Fort Jackson
+jackson,jackson a1,NA,0,2018-07-09,placeholder zero for plot visit,Asteraceae 0,0,Asteraceae,0,0,0,0,Asteraceae 0,2018,uninvaded,2018-07-09,2010,8,-80.749623,34.077337,A-1,Fort Jackson
+jackson,jackson b1,NA,0,2018-07-09,placeholder zero for plot visit,Asteraceae 0,0,Asteraceae,0,0,0,0,Asteraceae 0,2018,uninvaded,2018-07-09,2015,3,-80.75528,34.073796,B-1,Fort Jackson
 jackson,jackson e1,PIPA,1,2018-07-10,NA,Pinus palustris,tree,Pinus,palustris,native,tree,1,Pinus palustris,2018,uninvaded,2018-07-10,2007,11,-80.760441,34.081586,E-1,Fort Jackson
 jackson,jackson e1,QULA,1,2018-07-10,NA,Quercus laevis,tree,Quercus,laevis,native,tree,1,Quercus laevis,2018,uninvaded,2018-07-10,2007,11,-80.760441,34.081586,E-1,Fort Jackson
 jackson,jackson f1,QULA,3,2018-07-10,NA,Quercus laevis,tree,Quercus,laevis,native,tree,3,Quercus laevis,2018,uninvaded,2018-07-10,2016,2,-80.765852,34.079753,F-1,Fort Jackson
@@ -254,7 +254,7 @@ jackson,jackson i1,DIVI,8,2018-07-11,NA,Diospyros virginiana,tree,Diospyros,virg
 jackson,jackson j1,QULA,1,2018-07-11,NA,Quercus laevis,tree,Quercus,laevis,native,tree,1,Quercus laevis,2018,uninvaded,2018-07-11,2015,3,-80.764428,34.009336,J-1,Fort Jackson
 jackson,jackson j1,SAAL5,1,2018-07-11,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub,1,Sassafras albidum,2018,uninvaded,2018-07-11,2015,3,-80.764428,34.009336,J-1,Fort Jackson
 jackson,jackson j1,VACCI,3,2018-07-11,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub,3,Vaccinium spp.,2018,uninvaded,2018-07-11,2015,3,-80.764428,34.009336,J-1,Fort Jackson
-jackson,jackson k1,NA,0,2018-07-11,placeholder zero for plot visit,NA,NA,NA,NA,NA,NA,0,NA NA,2018,uninvaded,2018-07-11,2018,0,-80.763432,34.014072,K-1,Fort Jackson
+jackson,jackson k1,NA,0,2018-07-11,placeholder zero for plot visit,Asteraceae 0,0,Asteraceae,0,0,0,0,Asteraceae 0,2018,uninvaded,2018-07-11,2018,0,-80.763432,34.014072,K-1,Fort Jackson
 jackson,jackson h1,CARYA,2,2018-07-12,NA,Carya spp.,tree,Carya,spp.,native,tree,2,Carya spp.,2018,uninvaded,2018-07-12,2009,9,-80.771614,34.007664,H-1,Fort Jackson
 jackson,jackson h1,CARYA,2,2018-07-12,NA,Carya spp.,tree,Carya,spp.,native,tree,2,Carya spp.,2018,uninvaded,2018-07-12,2009,9,-80.771614,34.007664,H-1,Fort Jackson
 jackson,jackson h1,DIVI,5,2018-07-12,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,5,Diospyros virginiana,2018,uninvaded,2018-07-12,2009,9,-80.771614,34.007664,H-1,Fort Jackson
@@ -360,20 +360,20 @@ shelby,shelby h1,VACCI,16,2018-08-13,"elena 7:58, changed to vaccinium from berr
 shelby,shelby h1,VACCI,1,2018-08-13,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub,1,Vaccinium spp.,2018,uninvaded,2018-08-13,2014,4,-88.958222,31.073167,H-1,Camp Shelby
 shelby,shelby i1,VACCI,51,2018-08-13,NA,Vaccinium spp.,shrub,Vaccinium,spp.,native,shrub,51,Vaccinium spp.,2018,uninvaded,2018-08-13,2012,6,-88.954874,31.071573,I-1,Camp Shelby
 shelby,shelby j1,CAAM,32,2018-08-14,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,32,Callicarpa americana,2018,uninvaded,2018-08-14,2012,6,-89.231414,31.208952,J-1,Camp Shelby
-shelby,shelby k1,CAAM,21,2018-08-14,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,21,Callicarpa americana,2018,uninvaded,2018-08-14,NA,NA,-89.209579,31.213312,K-1,Camp Shelby
+shelby,shelby k1,CAAM,21,2018-08-14,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,21,Callicarpa americana,2018,uninvaded,2018-08-14,2015,NA,-89.209579,31.213312,K-1,Camp Shelby
 shelby,shelby j1,DIVI,2,2018-08-14,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,2,Diospyros virginiana,2018,uninvaded,2018-08-14,2012,6,-89.231414,31.208952,J-1,Camp Shelby
-shelby,shelby k1,DIVI,1,2018-08-14,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,1,Diospyros virginiana,2018,uninvaded,2018-08-14,NA,NA,-89.209579,31.213312,K-1,Camp Shelby
+shelby,shelby k1,DIVI,1,2018-08-14,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,1,Diospyros virginiana,2018,uninvaded,2018-08-14,2015,NA,-89.209579,31.213312,K-1,Camp Shelby
 shelby,shelby j1,ILVO,153,2018-08-14,NA,Ilex vomitoria,shrub,Ilex,vomitoria,native,shrub,153,Ilex vomitoria,2018,uninvaded,2018-08-14,2012,6,-89.231414,31.208952,J-1,Camp Shelby
 shelby,shelby j1,MOCE,1,2018-08-14,NA,Morella cerifera,shrub,Morella,cerifera,native,shrub,1,Morella cerifera,2018,uninvaded,2018-08-14,2012,6,-89.231414,31.208952,J-1,Camp Shelby
 shelby,shelby j1,PEBO,8,2018-08-14,NA,Persea borbonia,tree,Persea,borbonia,native,tree,8,Persea borbonia,2018,uninvaded,2018-08-14,2012,6,-89.231414,31.208952,J-1,Camp Shelby
 shelby,shelby j1,PIEL,7,2018-08-14,NA,Pinus elliottii,tree,Pinus,elliottii,native,tree,7,Pinus elliottii,2018,uninvaded,2018-08-14,2012,6,-89.231414,31.208952,J-1,Camp Shelby
 shelby,shelby j1,QUMA,2,2018-08-14,NA,Quercus marilandica,tree,Quercus,marilandica,native,tree,2,Quercus marilandica,2018,uninvaded,2018-08-14,2012,6,-89.231414,31.208952,J-1,Camp Shelby
 shelby,shelby j1,QUNI,1,2018-08-14,NA,Quercus nigra,tree,Quercus,nigra,native,tree,1,Quercus nigra,2018,uninvaded,2018-08-14,2012,6,-89.231414,31.208952,J-1,Camp Shelby
-shelby,shelby k1,QUST,1,2018-08-14,NA,Quercus stellata,tree,Quercus,stellata,native,tree,1,Quercus stellata,2018,uninvaded,2018-08-14,NA,NA,-89.209579,31.213312,K-1,Camp Shelby
+shelby,shelby k1,QUST,1,2018-08-14,NA,Quercus stellata,tree,Quercus,stellata,native,tree,1,Quercus stellata,2018,uninvaded,2018-08-14,2015,NA,-89.209579,31.213312,K-1,Camp Shelby
 shelby,shelby j1,RHCO,3,2018-08-14,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub,3,Rhus copallinum,2018,uninvaded,2018-08-14,2012,6,-89.231414,31.208952,J-1,Camp Shelby
-shelby,shelby k1,RHCO,4,2018-08-14,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub,4,Rhus copallinum,2018,uninvaded,2018-08-14,NA,NA,-89.209579,31.213312,K-1,Camp Shelby
+shelby,shelby k1,RHCO,4,2018-08-14,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub,4,Rhus copallinum,2018,uninvaded,2018-08-14,2015,NA,-89.209579,31.213312,K-1,Camp Shelby
 shelby,shelby j1,RUBUS,1,2018-08-14,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,1,Rubus spp.,2018,uninvaded,2018-08-14,2012,6,-89.231414,31.208952,J-1,Camp Shelby
-shelby,shelby k1,VAAR,14,2018-08-14,NA,Vaccinium arboreum,shrub/tree,Vaccinium,arboreum,native,shrub/tree,14,Vaccinium arboreum,2018,uninvaded,2018-08-14,NA,NA,-89.209579,31.213312,K-1,Camp Shelby
+shelby,shelby k1,VAAR,14,2018-08-14,NA,Vaccinium arboreum,shrub/tree,Vaccinium,arboreum,native,shrub/tree,14,Vaccinium arboreum,2018,uninvaded,2018-08-14,2015,NA,-89.209579,31.213312,K-1,Camp Shelby
 shelby,shelby b3,CAAM,8,2018-08-15,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,8,Callicarpa americana,2018,invaded,2018-08-15,2017,1,-89.048707,31.114496,B-3,Camp Shelby
 shelby,shelby b2,ILGL,2,2018-08-15,NA,Ilex glabra,shrub,Ilex,glabra,native,shrub,2,Ilex glabra,2018,uninvaded,2018-08-15,2017,1,-89.048217,31.11502,B-2,Camp Shelby
 shelby,shelby b2,MAGNO,10,2018-08-15,NA,Magnolia spp.,shrub/tree,Magnolia,spp.,native/introduced,shrub/tree,10,Magnolia spp.,2018,uninvaded,2018-08-15,2017,1,-89.048217,31.11502,B-2,Camp Shelby
@@ -411,3 +411,55 @@ gordon,gordon g1,QUMA,1,2018-08-22,NA,Quercus marilandica,tree,Quercus,marilandi
 gordon,gordon h1,SAAL5,3,2018-08-22,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub,3,Sassafras albidum,2018,uninvaded,2018-08-22,2018,0,-82.2853,33.364136,H-1,Fort Gordon
 gordon,gordon g1,SAAL5,8,2018-08-22,NA,Sassafras albidum,shrub,Sassafras,albidum,native,shrub,8,Sassafras albidum,2018,uninvaded,2018-08-22,2016,2,-82.284032,33.364516,G-1,Fort Gordon
 gordon,gordon g1,VIRO3,1,2018-08-22,NA,Vitis rotundifolia,vine,Vitis,rotundifolia,native,vine,1,Vitis rotundifolia,2018,uninvaded,2018-08-22,2016,2,-82.284032,33.364516,G-1,Fort Gordon
+wes,wes i1,DIVI,1,2019-04-02,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,1,Diospyros virginiana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+munson,munson i1,CARYA,1,2019-04-30,NA,Carya spp.,tree,Carya,spp.,native,tree,1,Carya spp.,2019,NA,NA,NA,NA,NA,NA,NA,NA
+munson,munson i1,LIST,1,2019-04-30,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree,1,Liquidambar styraciflua,2019,NA,NA,NA,NA,NA,NA,NA,NA
+munson,munson i1,PRUNU,1,2019-04-30,NA,Prunus  spp.,shrub/tree,Prunus,spp.,native/introduced,shrub/tree,1,Prunus spp.,2019,NA,NA,NA,NA,NA,NA,NA,NA
+hancock,hancock n2,golden rain tree?,8,2019-05-08,NA,NA,NA,NA,NA,NA,NA,8,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+hancock,hancock n2,soda apple,6,2019-05-08,NA,NA,NA,NA,NA,NA,NA,6,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+hancock,hancock n2,lantana,5,2019-05-08,NA,NA,NA,NA,NA,NA,NA,5,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+hancock,hancock n2,LIST,1,2019-05-08,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree,1,Liquidambar styraciflua,2019,NA,NA,NA,NA,NA,NA,NA,NA
+hancock,hancock i4,soda apple,43,2019-05-08,NA,NA,NA,NA,NA,NA,NA,43,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+hancock,hancock i4,lantana,44,2019-05-08,NA,NA,NA,NA,NA,NA,NA,44,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+hancock,hancock i4,timestamp 11:25,6,2019-05-08,NA,NA,NA,NA,NA,NA,NA,6,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+hancock,hancock i4,CAAM,3,2019-05-08,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,3,Callicarpa americana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+hancock,hancock i3,soda apple,26,2019-05-08,NA,NA,NA,NA,NA,NA,NA,26,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+hancock,hancock i3,lantana,11,2019-05-08,NA,NA,NA,NA,NA,NA,NA,11,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+seay,seay i1,quercus,2,2019-04-24,NA,NA,NA,NA,NA,NA,NA,2,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+seay,seay n1,baharris salt bush,1,2019-04-23,NA,NA,NA,NA,NA,NA,NA,1,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+seay,seay n1,quercus,2,2019-04-23,NA,NA,NA,NA,NA,NA,NA,2,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+seay,seay n1,DIVI,3,2019-04-23,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,3,Diospyros virginiana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+seay,seay n1,CARYA,2,2019-04-23,NA,Carya spp.,tree,Carya,spp.,native,tree,2,Carya spp.,2019,NA,NA,NA,NA,NA,NA,NA,NA
+seay,seay n1,PITA,1,2019-04-23,NA,Pinus taeda,tree,Pinus,taeda,native,tree,1,Pinus taeda,2019,NA,NA,NA,NA,NA,NA,NA,NA
+silversprings,silversprings i1,CAAM,12,2019-05-22,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,12,Callicarpa americana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+silversprings,silversprings i1,sugar berry,2,2019-05-22,NA,NA,NA,NA,NA,NA,NA,2,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+silversprings,silversprings n1,CAAM,21,2019-05-22,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,21,Callicarpa americana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+silversprings,silversprings n1,CT,2,2019-05-22,NA,NA,NA,NA,NA,NA,NA,2,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+silversprings,silversprings n1,trifoliate orange,2,2019-05-22,NA,NA,NA,NA,NA,NA,NA,2,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+silversprings,silversprings n1,QUHE,6,2019-05-22,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree,6,Quercus hemisphaerica,2019,NA,NA,NA,NA,NA,NA,NA,NA
+silversprings,silversprings n1,camphor tree,3,2019-05-22,NA,NA,NA,NA,NA,NA,NA,3,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+wes,wes n1,DIVI,1,2019-05-15,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,1,Diospyros virginiana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+wes,wes n1,ACRU,9,2019-05-15,NA,Acer  rubrum,tree,Acer,rubrum,native,tree,9,Acer rubrum,2019,NA,NA,NA,NA,NA,NA,NA,NA
+wes,wes n1,QUHE,5,2019-05-15,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree,5,Quercus hemisphaerica,2019,NA,NA,NA,NA,NA,NA,NA,NA
+wes,wes n1,PRUNU,7,2019-05-15,NA,Prunus  spp.,shrub/tree,Prunus,spp.,native/introduced,shrub/tree,7,Prunus spp.,2019,NA,NA,NA,NA,NA,NA,NA,NA
+wes,wes n1,sugar berry,2,2019-05-15,NA,NA,NA,NA,NA,NA,NA,2,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+brown,brown i2,QUNI,2,2019-05-21,NA,Quercus nigra,tree,Quercus,nigra,native,tree,2,Quercus nigra,2019,NA,NA,NA,NA,NA,NA,NA,NA
+brown,brown i2,DIVI,1,2019-05-21,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,1,Diospyros virginiana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+brown,brown i2,LIST,4,2019-05-21,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree,4,Liquidambar styraciflua,2019,NA,NA,NA,NA,NA,NA,NA,NA
+brown,brown i2,winged elm,2,2019-05-21,NA,NA,NA,NA,NA,NA,NA,2,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+brown,brown i2,CAAM,4,2019-05-21,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,4,Callicarpa americana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+brown,brown n2,DIVI,6,2019-05-21,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,6,Diospyros virginiana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+brown,brown n2,QUNI,4,2019-05-21,NA,Quercus nigra,tree,Quercus,nigra,native,tree,4,Quercus nigra,2019,NA,NA,NA,NA,NA,NA,NA,NA
+brown,brown n2,CAAM,2,2019-05-21,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,2,Callicarpa americana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+brown,brown n2,LIST,1,2019-05-21,NA,Liquidambar styraciflua,tree,Liquidambar,styraciflua,native,tree,1,Liquidambar styraciflua,2019,NA,NA,NA,NA,NA,NA,NA,NA
+munson,munson n1,CR,22,2019-06-05,NA,NA,NA,NA,NA,NA,NA,22,NA NA,2019,NA,NA,NA,NA,NA,NA,NA,NA
+munson,munson n1,QUNI,3,2019-06-05,NA,Quercus nigra,tree,Quercus,nigra,native,tree,3,Quercus nigra,2019,NA,NA,NA,NA,NA,NA,NA,NA
+munson,munson n1,QUHE,6,2019-06-05,NA,Quercus hemisphaerica,tree,Quercus,hemisphaerica,native,tree,6,Quercus hemisphaerica,2019,NA,NA,NA,NA,NA,NA,NA,NA
+munson,munson n1,DIVI,2,2019-06-05,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,2,Diospyros virginiana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+munson,munson n1,CARYA,1,2019-06-05,NA,Carya spp.,tree,Carya,spp.,native,tree,1,Carya spp.,2019,NA,NA,NA,NA,NA,NA,NA,NA
+munson,munson n1,ACRU,1,2019-06-05,NA,Acer  rubrum,tree,Acer,rubrum,native,tree,1,Acer rubrum,2019,NA,NA,NA,NA,NA,NA,NA,NA
+munson,munson n1,MAGNO,6,2019-06-05,NA,Magnolia spp.,shrub/tree,Magnolia,spp.,native/introduced,shrub/tree,6,Magnolia spp.,2019,NA,NA,NA,NA,NA,NA,NA,NA
+riversedge,riversedge i2,DIVI,5,2019-06-06,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,5,Diospyros virginiana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+riversedge,riversedge n1,CAAM,2,2019-06-06,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,2,Callicarpa americana,2019,NA,NA,NA,NA,NA,NA,NA,NA
+riversedge,riversedge n1,QUNI,1,2019-06-06,NA,Quercus nigra,tree,Quercus,nigra,native,tree,1,Quercus nigra,2019,NA,NA,NA,NA,NA,NA,NA,NA
+riversedge,riversedge n1,DIVI,2,2019-06-06,NA,Diospyros virginiana,tree,Diospyros,virginiana,native,tree,2,Diospyros virginiana,2019,NA,NA,NA,NA,NA,NA,NA,NA

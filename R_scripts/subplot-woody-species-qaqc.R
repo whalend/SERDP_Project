@@ -10,7 +10,10 @@ library(tidyverse)
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 
 #+ subplot data #
-subplot_data <- read_csv("data/raw_data/subplot-woody-species.csv")
+#subplot_data <- read_csv("data/raw_data/subplot-woody-species.csv")
+
+subplot_data <- read_csv("data/raw_data/2019_serdp_data/subplot-woody-species-data-entry.csv")
+###### steven changed file read in to add 2019 data to end of 17/18 data. edited 9/24/19 #####
 
 summary(subplot_data)
 names(subplot_data)
