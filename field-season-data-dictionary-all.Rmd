@@ -1,0 +1,444 @@
+---
+title: "SERDP Field Collection Data Dictionary 2017-2019"
+author: "Steven Cabrera"
+date: "September 23, 2019"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+  pdf_document:
+    toc: yes
+  word_document:
+    toc: yes
+always_allow_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+library(knitr)
+library(kableExtra)
+```
+
+# Common among all dataframes
+
+```{r common parameters across all data, echo=FALSE}
+
+common_fields <- data.frame(
+  field_name = c("plot_id", "date", "visit_year"),
+  data_type = c(
+    "character", "date", "numeric"),
+  description = c("installation name and an assigned letter for the plot",
+    "date that set of data was collected. format: YYYY-MM-DD", 
+    "year the plot was visited"))
+
+kable(common_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Plot visit and invasion status
+
+```{r plot visit & invasion status, echo=FALSE}
+
+plot_visit_cogon_fields <- data.frame(
+  field_name = c("imcy_inv", "avg_tiller_density_m2", "xcoord_lon", "ycoord_lat",
+                 "years_since_fire"),
+  data_type = c(
+    "character", "numeric", "numeric", "numeric", "numeric"),
+  description = c("invasion status of *Imperata cylindrica*",
+    "average number of *Imperata cylindrica* tillers per square meter", 
+    "longitudinal x-coordinate of plot_id", 
+    "latitudinal y-coordinate of plot_id", 
+    "number of years since the sample area was last burned"))
+
+kable(plot_visit_cogon_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Vegetation - quadrat plant species
+
+```{r vegatation plant species of 1m quadrats, echo=FALSE}
+
+quadrat_species_fields <- data.frame(
+  field_name = c("species_name", "functional_group" , "avg_pct_cover", "num_stems_m2"),
+  data_type = c(
+    "character", "character", "numeric", "numeric"),
+  description = c("species of the individals to at least Genus level. if NA, unable to      identify",
+    "functional group of the species. ex: graminoid, forb, shrub, tree", 
+    "estimate of the species' percent cover in the plot based on an average of four square meter quadrats", 
+    "estimate of the species' stem count in the plot based on an average of four square meter quadrats"))
+
+kable(quadrat_species_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Vegetation - quadrat, biomass, and canopy cover 
+
+```{r vegetation data in 1m quadrats, biomass, and canopy cover, echo=FALSE}
+
+quadrat_biomass_canopy_fields <- data.frame(
+  field_name = c("avg_woody_veg_ht", "avg_herb_veg_ht", "avg_litter_ht", "avg_pct_green", "avg_pct_litter", "avg_pct_wood_litter", "avg_pct_bare", "avg_standing_fuel_mass_wet_m2", "avg_litter_mass_wet_m2", "avg_standing_fuel_mass_dry_m2", "avg_litter_mass_dry_m2", "avg_pct_canopy_cover"),
+  data_type = c(
+    "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric"),
+  description = c("estimate of woody plant species height in the plot based on an average of three measurements per four square meter quadrats (cm). maximum height cut off at 2m",
+    "estimate of herbaceous plant species height in the plot based on an average of three measurements per four square meter quadrats (cm). maximum height cut off at 2m", 
+    "estimate of litter depth in the plot based on an average of three measurements per four square meter quadrats (cm)", 
+    "estimate of percent green of plant material in the plot based on the average of estimates at four square meter quadrats", 
+    "estimate of percent litter cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats", 
+    "estimate of percent woody litter cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats. includes: fallen branches/logs, twigs, pine cones", 
+    "estimate of pure bare ground cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats", 
+    "estimate of *fresh* standing vegetation mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
+    "estimate of *fresh* litter mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
+    "estimate of *dried* standing vegetation mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
+    "estimate of *dried* litter mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
+    "estimate of canopy cover in the plot based on the average of four manual densiometer measurements at four square meter quadrats"))
+
+kable(quadrat_biomass_canopy_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Trees - raw
+
+```{r raw tree data, echo=FALSE}
+
+trees_raw_fields <- data.frame(
+  field_name = c("tag", "species_name", "dbh", "canopy", "health", "distance", "azimuth", "height", "char"),
+  data_type = c(
+    "numeric", "character", "numeric", "character", "character", "numeric", "numeric", "numeric", "numeric"),
+  description = c("assigned tag number given to each measured tree. if NA, no tag was assigned",
+    "species of the individals to at least Genus level. if NA, unable to identify",
+    "diameter at breast height of the tree (cm)", 
+    "tree relative canopy position. ex: e = emergent, d = dominant, c = codominant,  i = intermediate, u = understory", 
+    "health class assigned (alive or dead) of each tree", 
+    "distance from the center of the plot to the midpoint of the tree (m)", 
+    "azimuth of the tree relative to plot center using a sighting compass (°)", 
+    "height of the tree (m). if NA, tree height was not measured", 
+    "height of visible char on the tree due to fire (m). if NA, char height was not measured"))
+
+kable(trees_raw_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Trees - summary
+
+```{r summarized tree data to plot level, echo=FALSE}
+
+trees_summary_fields <- data.frame(
+  field_name = c( "species_name", "canopy", "health", "total_dbh", "avg_height", "avg_char"),
+  data_type = c(
+    "character", "character", "character", "numeric", "numeric", "numeric"),
+  description = c("species of the individals to at least Genus level. if NA, unable to identify", 
+    "record of all individuals of the same species in the plot that share common canopy position", 
+    "record of all individuals of the same species in the plot that share common health class", 
+    "total dbh of all individuals of the same species in the plot that share common canopy position and health class (cm)",
+    "estimate of a species tree height in the plot based on average of recorded tree height measurements (m)", 
+    "estimate of a species char height in the plot based on average of recorded char height measurements (m)"))
+
+kable(trees_summary_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Woody subplot
+
+```{r woody subplot, echo=FALSE}
+
+woody_subplot_fields <- data.frame(
+  field_name = c("species_name", "stems_100m2"),
+  data_type = c(
+    "character", "numeric"),
+  description = c("species of the individals to at least Genus level. if NA, unable to identify",
+    "number of woody stems with height greater than 1m within a 5.64m radius from plot center"))
+
+kable(woody_subplot_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+# Ticks
+
+```{r ticks, echo=FALSE}
+
+ticks_fields <- data.frame(
+  field_name = c("species_name", "life_stage", "tick_count"),
+  data_type = c(
+    "character", "character", "numeric"),
+  description = c("species of the individals to at least Genus level. if NA, unable to identify",
+    "life stage of tick. ex: adult, nymph, larvae", 
+    "number of ticks found in the plot based on four dry ice traps per plot and cloth dragging"))
+
+kable(ticks_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = ("Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no ticks were collected."))
+
+```
+
+# Dung
+
+```{r dung, echo=FALSE}
+
+dung_fields <- data.frame(
+  field_name = c("species", "dung1m", "dung2m"),
+  data_type = c(
+    "character", "numeric", "numeric"),
+  description = c("Common name of species that deposited the dung. if NA, unable to identify",
+    "number of dung deposit *events* found from 1m on either side of a 50m transect. note: each individual rabbit pellet was counted as a single event", 
+    "number of dung deposit *events* found from 2m on either side of a 50m transect. note: each individual rabbit pellet was counted as a single event"))
+
+kable(dung_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "Some plot_id may contain NAs for all values in the sampled plot. These are placeholder zeros to show that the plot was sampled and no dung was found.")
+
+```
+
+# Unique 2019 Field Season Datasheets
+
+All datasheets updated with 2019 data (1m veg, 25cm veg, 1m species, canopy cover, trees, woody subplot. 2019 ticks are on their own sheet *(2019-only-tick-data)*)
+
+# Common among all 2019 Datasheets
+
+```{r common 2019, echo=FALSE}
+
+common_2019 <- data.frame(
+  field_name = c("installation", "plot_id", "notes"),
+  data_type = c(
+    "character", "character", "character"),
+  description = c("Name of the installation/site where data was collected",
+    "Assigned plot_id for each plot. In 2019 data, invaded plots were assigned prefix 'i' and native plots assigned 'n'. Numbers after the identifying invasion status letter refer to the specific plot number at the installation", 
+    "General notes/comments on the data entry"))
+
+kable(common_2019) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T)
+
+```
+
+
+# 2019 Plot visit report
+
+```{r 2019 plot visit & invasion status, echo=FALSE}
+
+plot_visit_2019 <- data.frame(
+  field_name = c("imcy_inv",	"visit_date",	"last_fire_year", "visit_number"),
+  data_type = c(
+    "character", "date", "numeric", "numeric"),
+  description = c("invasion status of *Imperata cylindrica*",
+    "date the plot was visited",
+    "last reported date the plot was burned, either prescribed or wildlife, if available",
+    "the number of times that the plot was visited, designated multiple tick trapping events at the same site"))
+
+kable(plot_visit_2019) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "note: multiple 'plot_id' will have multple 'visit_date' as this sheet refers to plot visit when tick trapping events occured.
+           file path: SERDP_Project/data/raw_data/2019_serdp_data/2019-plot-visit-entry.csv")
+
+```
+
+# 2019 only ticks
+
+```{r 2019 only ticks, echo=FALSE}
+
+ticks_2019 <- data.frame(
+  field_name = c("species_name", "life_stage", "tick_count"),
+  data_type = c(
+    "character", "character", "numeric"),
+  description = c("species of the individals to at least Genus level. if NA, unable to identify",
+    "life stage of tick. ex: adult, nymph, larvae", 
+    "number of ticks found in the plot based on four dry ice traps per plot and cloth dragging"))
+
+kable(ticks_2019) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = ("Similar to 2017/2018 tick datasheets.
+                      file path: SERDP_Project/data/raw_data/2019_serdp_data/2019-only-tick-data.csv"))
+
+```
+
+# Camera traps information
+
+```{r camera traps info, echo=FALSE}
+
+camera_info_fields <- data.frame(
+  field_name = c("status",	"camera_number",	"sd_card",	"camera_out",	"camera_in",	"position_from_center"),
+  data_type = c("character",	"numeric",	"numeric",	"date",	"date",	"character"),
+  description = c("Invasion status of the plot_id, dependent on presence of *Imperata cylindrica*",
+    "Number of the trail camera placed in the plot", 
+    "Number of the SD card attached to the camera. If the SD card was filled or camera was moved to a new plot, SD card was changed to -2 or -3 for example to not get mixed up. note: if opening up the .csv file, 'sd_card' may have turned into a date format, but unless saved it will read fine with read_csv. if 'sd_card' reads 2-Sept, the correct 'sd_card' should be 9-2",
+    "Date the camera was set out to begin recording.",
+    "Date the camera was collected, end photo taking",
+    "Cardinal direction reference from plot center where the camera was placed. Each camera faced plot center"))
+
+kable(camera_info_fields) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "Most plots received two cameras to cover the most area. When short on cameras, plots only had one camera. Camera were set on a 3 second delay, and on a 3 shot burst. 
+           file path: SERDP_Project/data/raw_data/2019_serdp_data/camera-traps-info.csv")
+
+
+```
+
+# Raw camera trap photos
+
+```{r all_camera_photos_raw, echo=FALSE}
+
+all_camera_photos <- data.frame(
+  field_name = c("armadillo",	"bobcat",	"cow",	"ctime",	"deer",	"empty",	"file_name",	"fox",	"mtime",	"other",	"path",	"pig",	"raccoon",	"relpath",	"size",	"squirrel",	"turkey",	"type",	"unknown"),
+  data_type = c("numeric",	"numeric",	"numeric",	"date",	"numeric",	"character",	"character",	"numeric",	"date",	"character",	"character",	"numeric",	"numeric",	"character",	"character",	"numeric",	"numeric",	"character",	"numeric"),
+  description = c("number of armadillo captured per photo",
+                  "number of bobcat captured per photo",
+                  "number of cow captured per photo",
+                  "date/time the image was downloaded",
+                  "number of deer captured per photo",
+                  "TRUE/FALSE statement if the photo was empty (did not contain any wildlife)",
+                  "name of the imported file that was inspected. note: most (if not all) of the file names should have an identifier of four characters that give the date in 'mmdd' format",
+                  "number of fox captured per photo",
+                  "actual time the image was taken by the trail camera. note: some photos may have an incorrect 'mtime', actual time to calculate camera active days was taken from file name.",
+                  "if wildlife species not listed, the species is specifically written out here",
+                  "path of where the file was downloaded to/is being accessed",
+                  "number of pig captured per photo",
+                  "number of raccoon captured per photo",
+                  "relative path on device where the image is being accessed, likely same as 'path'",
+                  "size of the media",
+                  "number of squirrel captured per photo",
+                  "number of turkey captured per photo",
+                  "type of media that the file contains (image or video)",
+                  "if wildlife could not be determined, it is labeled unknown and given a value on captured number per photo"))
+
+  
+kable(all_camera_photos) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "file path: SERDP_Project/data/raw_data/2019_serdp_data/all_camera_photos.csv")
+
+
+```
+
+# Processed camera trap photos
+
+```{r photos_combined, echo=FALSE}
+
+photos_combined <- data.frame(
+  field_name = c("note"),
+  data_type = c("character"),
+  description = c("this data frame is the joining of raw camera trap photos with camera traps information. main data to be manipulated for analysis"))
+
+kable(photos_combined) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "Avon Park cameras and Hancock n1 plot (cow pasture) are removed from this selection. 
+           file path: SERDP_Project/data/processed_data/2019 serdp processed data/camera-trap-photos-all.csv")
+
+
+```
+
+# Camera trap days
+
+```{r camera days, echo=FALSE}
+
+camera_days <- data.frame(
+  field_name = c("status", "sd_card",	"start_date",	"end_date",	"camera_days"
+),
+  data_type = c("character",	"numeric",	"date",	"date",	"numeric"),
+  description = c("Invasion status of the plot_id, dependent on presence of *Imperata cylindrica*",
+    "Number of the SD card attached to the camera. If the SD card was filled or camera was moved to a new plot, SD card was changed to -2 or -3 for example to not get mixed up. note: if opening up the .csv file, 'sd_card' may have turned into a date format, but unless saved it will read fine with read_csv. if 'sd_card' reads 2-Sept, the correct 'sd_card' should be 9-2",
+    "Date the camera was set out to begin recording. Calculated by first photo taken on that camera",
+    "Date the camera was collected, end photo taking. Calculated by last photo taken on that camera",
+    "Number of days the camera was out recording, subtraction of end_date - start_date. Zeroes changed to one if camera only recorded and filled up on the first date"))
+
+kable(camera_days) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "file path: SERDP_Project/data/processed_data/2019 serdp processed data/camera-trap-days-all.csv")
+
+
+```
+
+# Camera species by sd card
+
+```{r species summarized to sd card counts, echo=FALSE}
+
+species_sd_card <- data.frame(
+  field_name = c("species", "count",	"camera_days"),
+  data_type = c("character",	"numeric",
+                "numeric"),
+  description = c("species of the potential host. for this summary, the four most popular hosts were used (cow, deer, turkey, pig)",
+                  "sum count number of a certain species captured summarized on **A SINGLE SD CARD**",
+                  "Number of days the camera was out recording, subtraction of end_date - start_date. Zeroes changed to one if camera only recorded and filled up on the first date"))
+
+kable(species_sd_card) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "This data frame can be manipulated to summarize as is (sd_card) or to plot level. 
+           file path: SERDP_Project/data/processed_data/2019 serdp processed data/camera-species-with-days-by-sd-card.csv")
+
+
+```
+
+# Camera species per camera per day
+
+
+```{r species per camera per day, echo=FALSE}
+
+species_per_camera_per_day <- data.frame(
+  field_name = c("count_per_day_camera"),
+  data_type = c("numeric"),
+  description = c("the quotient of the 'count' divided by the 'camera_days' active. note: this dataframe summarizes on a per **CAMERA** basis, there may be more than one camera per plot"))
+
+kable(species_per_camera_per_day) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "file path: SERDP_Project/data/processed_data/2019 serdp processed data/species-per-camera-per-day.csv")
+
+
+```
+
+# Camera species per plot per day
+
+```{r species per plot per day, echo=FALSE}
+
+species_per_plot_per_day <- data.frame(
+  field_name = c("count_per_day_plot"),
+  data_type = c("numeric"),
+  description = c("the quotient of the 'count' divided by the 'camera_days' active. note: this dataframe summarizes on a per **PLOT** basis, there may be more than one camera per plot"))
+
+kable(species_per_plot_per_day) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, border_right = T) %>% 
+  footnote(general = "file path: SERDP_Project/data/processed_data/2019 serdp processed data/species-per-plot-per-day.csv")
+
+
+```
+
