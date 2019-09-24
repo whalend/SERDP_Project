@@ -15,7 +15,11 @@ plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
 #' ## Plant species data recorded in 1-meter quadrats
 #'
 #+ species data ####
-species_data <- read_csv("data/raw_data/species1m.csv")
+#species_data <- read_csv("data/raw_data/species1m.csv")
+
+species_data <- read_csv("data/raw_data/2019_serdp_data/species1m-data-entry.csv")
+##### steven added 2019 species appending to end of 17/18 data, edited 9/24 #####
+
 species_data <- select(species_data, Order:functional_group__1)
 
 species_data$plot_id[species_data$plot_id=="cogon"] <- "theater_cogon"

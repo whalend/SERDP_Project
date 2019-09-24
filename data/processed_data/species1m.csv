@@ -3546,3 +3546,211 @@ Order,installation,date,plot_id,transect_id,quadrat_id,veg_id,pct_cover,ht_under
 3775,gordon,2018-08-22,gordon g1,west,w10,viro3,20,9,NA,NA,NA,NA,Vitis rotundifolia,vine,Vitis,rotundifolia,native,vine,2018
 3776,gordon,2018-08-22,gordon g1,west,w10,rhco,3,2,NA,NA,NA,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub,2018
 3777,gordon,2018-08-22,gordon g1,west,w10,pita,3,NA,NA,NA,NA,NA,Pinus taeda,tree,Pinus,taeda,native,tree,2018
+3778,seay,2019-04-24,seay i1,north,n10,imcy,95,NA,NA,52,NA,52 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3779,seay,2019-04-24,seay i1,south,s10,imcy,50,NA,NA,74,NA,74 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3780,seay,2019-04-24,seay i1,east,e10,imcy,75,NA,NA,81,NA,81 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3781,seay,2019-04-24,seay i1,west,w10,imcy,95,NA,NA,102,NA,102 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3782,seay,2019-04-24,seay n1,north,n10,rubus,5,9,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3783,seay,2019-04-24,seay n1,north,n10,an,25,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3784,seay,2019-04-24,seay n1,north,n10,cnur,0.5,1,NA,NA,NA,NA,Cnidoscolus urens,forb,Cnidoscolus,urens,native,forb,2019
+3785,seay,2019-04-24,seay n1,south,s10,an,60,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3786,seay,2019-04-24,seay n1,south,s10,rubus,0.5,1,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3787,seay,2019-04-24,seay n1,east,e10,gese,5,5,NA,NA,NA,NA,Gelsemium sempervirens,wine,Gelsemium,sempervirens,native,wine,2019
+3788,seay,2019-04-24,seay n1,east,e10,an,60,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3789,seay,2019-04-24,seay n1,east,e10,rubus,5,7,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3790,seay,2019-04-24,seay n1,west,w10,an,60,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3791,seay,2019-04-24,seay n1,west,w10,rubus,5,9,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3792,wes,2019-04-03,wes i1,north,n10,imcy,80,NA,NA,63,NA,63 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3793,wes,2019-04-03,wes i1,south,s10,imcy,65,NA,NA,40,NA,40 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3794,wes,2019-04-03,wes i1,east,e10,imcy,95,NA,NA,60,NA,60 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3795,wes,2019-04-03,wes i1,west,w10,imcy,85,NA,NA,93,NA,93 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3796,peaceriver,2019-04-18,peaceriver i1,north,n10,imcy,70,NA,NA,42,NA,42 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3797,peaceriver,2019-04-18,peaceriver i1,south,s10,imcy,55,NA,NA,65,NA,65 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3798,peaceriver,2019-04-18,peaceriver i1,east,e10,imcy,80,NA,NA,85,NA,85 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3799,peaceriver,2019-04-18,peaceriver i1,west,w10,imcy,90,NA,NA,98,NA,98 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3800,hancock,2019-04-16,hancock n1,north,n10,pano2,65,NA,NA,NA,NA,NA,Paspalum notatum,graminoid,Paspalum,notatum,invasive,graminoid,2019
+3801,hancock,2019-04-16,hancock n1,north,n10,diac,15,NA,NA,NA,NA,NA,Dichanthelium aciculare,graminoid,Dichanthelium,aciculare,native,graminoid,2019
+3802,hancock,2019-04-16,hancock n1,north,n10,carex,10,NA,NA,NA,NA,NA,Carex spp.,graminoid,Carex,spp.,native/introduced,graminoid,2019
+3803,hancock,2019-04-16,hancock n1,south,s10,pano2,80,NA,NA,NA,NA,NA,Paspalum notatum,graminoid,Paspalum,notatum,invasive,graminoid,2019
+3804,hancock,2019-04-16,hancock n1,south,s10,diac,10,NA,NA,NA,NA,NA,Dichanthelium aciculare,graminoid,Dichanthelium,aciculare,native,graminoid,2019
+3805,hancock,2019-04-16,hancock n1,east,e10,pano2,60,NA,NA,NA,NA,NA,Paspalum notatum,graminoid,Paspalum,notatum,invasive,graminoid,2019
+3806,hancock,2019-04-16,hancock n1,east,e10,diac,15,NA,NA,NA,NA,NA,Dichanthelium aciculare,graminoid,Dichanthelium,aciculare,native,graminoid,2019
+3807,hancock,2019-04-16,hancock n1,east,e10,carex,5,NA,NA,NA,NA,NA,Carex spp.,graminoid,Carex,spp.,native/introduced,graminoid,2019
+3808,hancock,2019-04-16,hancock n1,west,w10,pano2,60,NA,NA,NA,NA,NA,Paspalum notatum,graminoid,Paspalum,notatum,invasive,graminoid,2019
+3809,hancock,2019-04-16,hancock n1,west,w10,an,20,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3810,hancock,2019-04-16,hancock n1,west,w10,diac,10,NA,NA,NA,NA,NA,Dichanthelium aciculare,graminoid,Dichanthelium,aciculare,native,graminoid,2019
+3811,munson,2019-04-30,munson i1,north,n10,imcy,30,NA,NA,29,NA,29 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3812,munson,2019-04-30,munson i1,north,n10,viro3,3,3,NA,NA,NA,NA,Vitis rotundifolia,vine,Vitis,rotundifolia,native,vine,2019
+3813,munson,2019-04-30,munson i1,north,n10,near,8,6,NA,NA,NA,NA,Nekemias arborea,vine,Nekemias,arborea,native,vine,2019
+3814,munson,2019-04-30,munson i1,north,n10,rubus,1,1,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3815,munson,2019-04-30,munson i1,south,s10,imcy,65,NA,NA,65,NA,65 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3816,munson,2019-04-30,munson i1,south,s10,bipi,10,9,1,NA,NA,NA,Bidens pilosa,0,Bidens,pilosa,0,0,2019
+3817,munson,2019-04-30,munson i1,east,e10,cica,4,NA,NA,1,NA,NA,Cinnamomum camphora,tree,Cinnamomum,camphora,introduced,tree,2019
+3818,munson,2019-04-30,munson i1,east,e10,imcy,10,NA,NA,13,NA,13 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3819,munson,2019-04-30,munson i1,east,e10,bipi,5,6,NA,NA,NA,NA,Bidens pilosa,0,Bidens,pilosa,0,0,2019
+3820,munson,2019-04-30,munson i1,east,e10,quni,4,2,NA,NA,NA,NA,Quercus nigra,tree,Quercus,nigra,native,tree,2019
+3821,munson,2019-04-30,munson i1,east,e10,rubus,2,3,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3822,riversedge,2019-05-01,riversedge i3,north,n10,imcy,35,NA,NA,35,NA,35 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3823,riversedge,2019-05-01,riversedge i3,north,n10,rubus,3,5,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3824,riversedge,2019-05-01,riversedge i3,north,n10,rhco,2,2,NA,NA,NA,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub,2019
+3825,riversedge,2019-05-01,riversedge i3,south,s10,imcy,50,NA,NA,104,NA,104 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3826,riversedge,2019-05-01,riversedge i3,south,s10,rubus,0.5,4,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3827,riversedge,2019-05-01,riversedge i3,east,e10,imcy,15,NA,NA,46,NA,46 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3828,riversedge,2019-05-01,riversedge i3,east,e10,rubus,2,7,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3829,riversedge,2019-05-01,riversedge i3,east,e10,rhco,1,2,NA,NA,NA,NA,Rhus copallinum,shrub,Rhus,copallinum,native,shrub,2019
+3830,riversedge,2019-05-01,riversedge i3,west,w10,imcy,5,NA,NA,24,NA,24 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3831,riversedge,2019-05-01,riversedge i3,west,w10,rubus,5,9,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3832,peaceriver,2019-05-08,peaceriver n1,north,n10,viro3,1,1,NA,NA,NA,NA,Vitis rotundifolia,vine,Vitis,rotundifolia,native,vine,2019
+3833,peaceriver,2019-05-08,peaceriver n1,north,n10,an,50,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3834,peaceriver,2019-05-08,peaceriver n1,north,n10,mimos,3,7,NA,NA,NA,NA,Mimosa spp.,forb/shrub/tree,Mimosa,spp.,native/introduced,forb/shrub/tree,2019
+3835,peaceriver,2019-05-08,peaceriver n1,east,e10,bipi,20,22,NA,NA,NA,NA,Bidens pilosa,0,Bidens,pilosa,0,0,2019
+3836,peaceriver,2019-05-08,peaceriver n1,east,e10,an,70,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3837,peaceriver,2019-05-08,peaceriver n1,south,s10,mimos,5,16,NA,NA,NA,NA,Mimosa spp.,forb/shrub/tree,Mimosa,spp.,native/introduced,forb/shrub/tree,2019
+3838,peaceriver,2019-05-08,peaceriver n1,south,s10,bipi,18,20,NA,NA,NA,NA,Bidens pilosa,0,Bidens,pilosa,0,0,2019
+3839,peaceriver,2019-05-08,peaceriver n1,south,s10,an,30,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3840,peaceriver,2019-05-08,peaceriver n1,west,w10,trsp,10,5,NA,NA,NA,NA,Tradescantia spathacea,0,Tradescantia,spathacea,invasive,0,2019
+3841,peaceriver,2019-05-08,peaceriver n1,west,w10,mimos,5,6,NA,NA,NA,NA,Mimosa spp.,forb/shrub/tree,Mimosa,spp.,native/introduced,forb/shrub/tree,2019
+3842,peaceriver,2019-05-08,peaceriver n1,west,w10,bipi,1,1,NA,NA,NA,NA,Bidens pilosa,0,Bidens,pilosa,0,0,2019
+3843,peaceriver,2019-05-08,peaceriver n1,west,w10,an,5,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3844,peaceriver,2019-05-08,peaceriver n1,west,w10,sovi,1,1,NA,NA,NA,trop soda apple,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3845,peaceriver,2019-05-08,peaceriver i2,north,n10,imcy,50,NA,NA,55,NA,55 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3846,peaceriver,2019-05-08,peaceriver i2,south,s10,imcy,80,NA,NA,58,NA,58 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3847,peaceriver,2019-05-08,peaceriver i2,east,e10,imcy,75,NA,NA,84,NA,84 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3848,peaceriver,2019-05-08,peaceriver i2,west,w10,imcy,80,NA,NA,52,NA,52 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3849,hancock,2019-05-08,hancock i3,north,n10,imcy,90,NA,NA,131,NA,131 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3850,hancock,2019-05-08,hancock i3,north,n10,shrub,2,NA,1,2,NA,NA,NA NA,NA,NA,NA,NA,NA,2019
+3851,hancock,2019-05-08,hancock i3,south,s10,imcy,7,NA,NA,13,NA,13 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3852,hancock,2019-05-08,hancock i3,south,s10,shrub,1,NA,1,1,NA,NA,NA NA,NA,NA,NA,NA,NA,2019
+3853,hancock,2019-05-08,hancock i3,south,s10,laca,3,NA,2,NA,NA,NA,Lantana camara,0,Lantana,camara,invasive,0,2019
+3854,hancock,2019-05-08,hancock i3,south,s10,forb,10,4,1,NA,NA,NA,NA NA,NA,NA,NA,NA,NA,2019
+3855,hancock,2019-05-08,hancock i3,south,s10,viro3,2,2,NA,NA,NA,NA,Vitis rotundifolia,vine,Vitis,rotundifolia,native,vine,2019
+3856,hancock,2019-05-08,hancock i3,south,s10,sovi,2,3,NA,NA,NA,NA,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3857,hancock,2019-05-08,hancock i3,south,s10,forb 2,2,2,NA,NA,NA,NA,NA NA,NA,NA,NA,NA,NA,2019
+3858,hancock,2019-05-08,hancock i3,south,s10,forb 3,1,1,NA,NA,NA,NA,NA NA,NA,NA,NA,NA,NA,2019
+3859,hancock,2019-05-08,hancock i3,east,e10,imcy,15,NA,NA,19,NA,19 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3860,hancock,2019-05-08,hancock i3,east,e10,sovi,11,10,NA,NA,NA,NA,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3861,hancock,2019-05-08,hancock i3,east,e10,laca,3,6,NA,NA,NA,NA,Lantana camara,0,Lantana,camara,invasive,0,2019
+3862,hancock,2019-05-08,hancock i3,east,e10,shrub,3,NA,NA,3,NA,NA,NA NA,NA,NA,NA,NA,NA,2019
+3863,hancock,2019-05-08,hancock i3,west,w10,imcy,95,NA,NA,283,NA,283 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3864,hancock,2019-05-08,hancock i3,west,w10,sovi,2,5,NA,NA,NA,NA,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3865,hancock,2019-05-08,hancock n2,north,n10,an,80,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3866,hancock,2019-05-08,hancock n2,north,n10,sovi,3,3,NA,NA,NA,NA,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3867,hancock,2019-05-08,hancock n2,north,n10,an,15,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3868,hancock,2019-05-08,hancock n2,south,s10,coer,10,20,NA,NA,NA,ADD LATER,Commelina erecta,forb,Commelina,erecta,native,forb,2019
+3869,hancock,2019-05-08,hancock n2,south,s10,an,15,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3870,hancock,2019-05-08,hancock n2,south,s10,sovi,12,16,NA,NA,NA,NA,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3871,hancock,2019-05-08,hancock n2,south,s10,shrub,2,2,1,NA,NA,NA,NA NA,NA,NA,NA,NA,NA,2019
+3872,hancock,2019-05-08,hancock n2,east,e10,sovi,7,12,NA,NA,NA,NA,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3873,hancock,2019-05-08,hancock n2,east,e10,an,15,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3874,hancock,2019-05-08,hancock n2,east,e10,bipi,10,1,5,NA,NA,NA,Bidens pilosa,0,Bidens,pilosa,0,0,2019
+3875,hancock,2019-05-08,hancock n2,east,e10,coer,3,5,NA,NA,NA,NA,Commelina erecta,forb,Commelina,erecta,native,forb,2019
+3876,hancock,2019-05-08,hancock n2,west,w10,an,65,NA,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3877,hancock,2019-05-08,hancock n2,west,w10,sm,1,1,NA,NA,NA,NA,Smilax spp.,vine,Smilax,spp.,native,vine,2019
+3878,hancock,2019-05-08,hancock n2,west,w10,bipi,1,NA,1,NA,NA,NA,Bidens pilosa,0,Bidens,pilosa,0,0,2019
+3879,hancock,2019-05-08,hancock i4,north,n10,imcy,95,NA,NA,315,NA,315 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3880,hancock,2019-05-08,hancock i4,north,n10,sovi,2,2,NA,NA,NA,NA,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3881,hancock,2019-05-08,hancock i4,south,s10,imcy,65,NA,NA,125,NA,125 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3882,hancock,2019-05-08,hancock i4,south,s10,sovi,5,6,3,NA,NA,NA,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3883,hancock,2019-05-08,hancock i4,east,e10,imcy,40,NA,NA,40,NA,40 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3884,hancock,2019-05-08,hancock i4,east,e10,sovi,30,2,10,5,NA,NA,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3885,hancock,2019-05-08,hancock i4,west,w10,imcy,50,NA,NA,50,NA,50 STEMS,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3886,hancock,2019-05-08,hancock i4,west,w10,sovi,1,1,NA,NA,NA,NA,Solanum viarum,0,Solanum,viarum,invasive,0,2019
+3887,wes,2019-05-15,wes n1,north,n10,sm,3,1,NA,NA,NA,NA,Smilax spp.,vine,Smilax,spp.,native,vine,2019
+3888,wes,2019-05-15,wes n1,north,n10,rubus,2,8,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3889,wes,2019-05-15,wes n1,north,n10,magno,5,NA,NA,NA,NA,NA,Magnolia spp.,shrub/tree,Magnolia,spp.,native/introduced,shrub/tree,2019
+3890,wes,2019-05-15,wes n1,north,n10,juvi,3,1,NA,NA,NA,NA,Juniperus virginiana,tree,Juniperus,virginiana,native,tree,2019
+3891,wes,2019-05-15,wes n1,north,n10,paqu2,6,19,NA,NA,NA,NA,Parthenocissus quinquefolia,vine,Parthenocissus,quinquefolia,native,vine,2019
+3892,wes,2019-05-15,wes n1,north,n10,trad,2,1,NA,NA,NA,NA,Tradescantia spp.,forb,Tradescantia,spp.,native,forb,2019
+3893,wes,2019-05-15,wes n1,north,n10,cela,3,3,NA,NA,NA,NA,Celtis laevigata,tree,Celtis,laevigata,native,tree,2019
+3894,wes,2019-05-15,wes n1,south,s10,trad,1,1,NA,NA,NA,NA,Tradescantia spp.,forb,Tradescantia,spp.,native,forb,2019
+3895,wes,2019-05-15,wes n1,south,s10,an,1,3,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3896,wes,2019-05-15,wes n1,south,s10,rubus,5,18,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3897,wes,2019-05-15,wes n1,south,s10,paqu2,2,5,NA,NA,NA,NA,Parthenocissus quinquefolia,vine,Parthenocissus,quinquefolia,native,vine,2019
+3898,wes,2019-05-15,wes n1,south,s10,diac,1,3,NA,NA,NA,NA,Dichanthelium aciculare,graminoid,Dichanthelium,aciculare,native,graminoid,2019
+3899,wes,2019-05-15,wes n1,south,s10,sm,0.5,1,NA,NA,NA,NA,Smilax spp.,vine,Smilax,spp.,native,vine,2019
+3900,wes,2019-05-15,wes n1,east,e10,soha,35,NA,NA,NA,NA,NA,Sorghanum halepense,graminoid,Sorghanum,halepense,invasive,graminoid,2019
+3901,wes,2019-05-15,wes n1,east,e10,ascle,3,1,NA,NA,NA,NA,Asclepias spp.,forb,Asclepias,spp.,native/introduced,forb,2019
+3902,wes,2019-05-15,wes n1,east,e10,cela,5,9,NA,NA,NA,NA,Celtis laevigata,tree,Celtis,laevigata,native,tree,2019
+3903,wes,2019-05-15,wes n1,east,e10,rubus,3,6,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3904,wes,2019-05-15,wes n1,east,e10,unk forb,1,3,NA,NA,NA,NA,NA NA,NA,NA,NA,NA,NA,2019
+3905,wes,2019-05-15,wes n1,east,e10,laca,1,1,NA,NA,NA,NA,Lantana camara,0,Lantana,camara,invasive,0,2019
+3906,wes,2019-05-15,wes n1,west,w10,trad,1,2,NA,NA,NA,NA,Tradescantia spp.,forb,Tradescantia,spp.,native,forb,2019
+3907,wes,2019-05-15,wes n1,west,w10,rubus,1,3,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3908,wes,2019-05-15,wes n1,west,w10,an,2,5,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3909,wes,2019-05-15,wes n1,west,w10,diac,4,8,NA,NA,NA,NA,Dichanthelium aciculare,graminoid,Dichanthelium,aciculare,native,graminoid,2019
+3910,wes,2019-05-15,wes n1,west,w10,acru,7,NA,NA,NA,NA,NA,Acer rubrum,tree,Acer,rubrum,native,tree,2019
+3911,wes,2019-05-15,wes n1,west,w10,trad,2,4,NA,NA,NA,NA,Tradescantia spp.,forb,Tradescantia,spp.,native,forb,2019
+3912,wes,2019-05-15,wes n1,west,w10,prunu,2,1,NA,NA,NA,NA,Prunus spp.,shrub/tree,Prunus,spp.,native/introduced,shrub/tree,2019
+3913,wes,2019-05-15,wes n1,west,w10,unk forb,5,12,NA,NA,NA,NA,NA NA,NA,NA,NA,NA,NA,2019
+3914,wes,2019-05-15,wes n1,west,w10,querc,1,1,NA,NA,NA,NA,Quercus spp.,tree/shrub,Quercus,spp.,native/introduced,tree/shrub,2019
+3915,brown,2019-05-21,brown i2,north,n10,imcy,80,74,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3916,brown,2019-05-21,brown i2,south,s10,imcy,65,62,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3917,brown,2019-05-21,brown i2,south,s10,sm,5,7,NA,NA,NA,NA,Smilax spp.,vine,Smilax,spp.,native,vine,2019
+3918,brown,2019-05-21,brown i2,south,s10,viro3,3,5,NA,NA,NA,NA,Vitis rotundifolia,vine,Vitis,rotundifolia,native,vine,2019
+3919,brown,2019-05-21,brown i2,east,e10,imcy,55,49,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3920,brown,2019-05-21,brown i2,west,w10,imcy,50,41,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3921,brown,2019-05-21,brown i2,west,w10,sm,5,5,NA,NA,NA,NA,Smilax spp.,vine,Smilax,spp.,native,vine,2019
+3922,silversprings,2019-05-22,silversprings i1,north,n10,imcy,70,75,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3923,silversprings,2019-05-22,silversprings i1,south,s10,imcy,20,15,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3924,silversprings,2019-05-22,silversprings i1,south,s10,ptca3,3,2,NA,NA,NA,NA,Pteridium caudatum,forb,Pteridium,caudatum,native,forb,2019
+3925,silversprings,2019-05-22,silversprings i1,south,s10,caam,3,NA,NA,NA,NA,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,2019
+3926,silversprings,2019-05-22,silversprings i1,south,s10,an,3,8,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3927,silversprings,2019-05-22,silversprings i1,south,s10,trad,2,4,NA,NA,NA,NA,Tradescantia spp.,forb,Tradescantia,spp.,native,forb,2019
+3928,silversprings,2019-05-22,silversprings i1,east,e10,imcy,95,142,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3929,silversprings,2019-05-22,silversprings i1,east,e10,caam,3,1,NA,NA,NA,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,2019
+3930,silversprings,2019-05-22,silversprings i1,west,w10,imcy,95,68,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3931,silversprings,2019-05-22,silversprings i1,west,w10,paqu2,15,17,NA,NA,NA,NA,Parthenocissus quinquefolia,vine,Parthenocissus,quinquefolia,native,vine,2019
+3932,silversprings,2019-05-22,silversprings n1,north,n10,rubus,2,1,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3933,silversprings,2019-05-22,silversprings n1,north,n10,near,10,18,NA,NA,NA,NA,Nekemias arborea,vine,Nekemias,arborea,native,vine,2019
+3934,silversprings,2019-05-22,silversprings n1,north,n10,paqu2,10,13,NA,NA,NA,NA,Parthenocissus quinquefolia,vine,Parthenocissus,quinquefolia,native,vine,2019
+3935,silversprings,2019-05-22,silversprings n1,north,n10,an,2,4,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3936,silversprings,2019-05-22,silversprings n1,north,n10,urlo,6,12,NA,NA,NA,NA,Urena lobata,0,Urena,lobata,invasive,0,2019
+3937,silversprings,2019-05-22,silversprings n1,north,n10,elel,2,1,NA,NA,NA,NA,Elephantopus elatus,forb,Elephantopus,elatus,native,forb,2019
+3938,silversprings,2019-05-22,silversprings n1,north,n10,loja,6,15,NA,NA,NA,NA,Lonicera japonica,vine,Lonicera,japonica,invasive,vine,2019
+3939,silversprings,2019-05-22,silversprings n1,south,s10,caam,1,NA,NA,NA,NA,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,2019
+3940,silversprings,2019-05-22,silversprings n1,south,s10,sm,1,1,NA,NA,NA,NA,Smilax spp.,vine,Smilax,spp.,native,vine,2019
+3941,silversprings,2019-05-22,silversprings n1,south,s10,near,15,13,NA,NA,NA,NA,Nekemias arborea,vine,Nekemias,arborea,native,vine,2019
+3942,silversprings,2019-05-22,silversprings n1,south,s10,diac,7,12,NA,NA,NA,NA,Dichanthelium aciculare,graminoid,Dichanthelium,aciculare,native,graminoid,2019
+3943,silversprings,2019-05-22,silversprings n1,south,s10,an,4,6,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3944,silversprings,2019-05-22,silversprings n1,south,s10,rubus,2,3,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3945,silversprings,2019-05-22,silversprings n1,south,s10,paqu2,6,9,NA,NA,NA,NA,Parthenocissus quinquefolia,vine,Parthenocissus,quinquefolia,native,vine,2019
+3946,silversprings,2019-05-22,silversprings n1,east,e10,soha,25,NA,NA,NA,NA,NA,Sorghanum halepense,graminoid,Sorghanum,halepense,invasive,graminoid,2019
+3947,silversprings,2019-05-22,silversprings n1,east,e10,paqu2,15,14,NA,NA,NA,NA,Parthenocissus quinquefolia,vine,Parthenocissus,quinquefolia,native,vine,2019
+3948,silversprings,2019-05-22,silversprings n1,east,e10,near,10,10,NA,NA,NA,NA,Nekemias arborea,vine,Nekemias,arborea,native,vine,2019
+3949,silversprings,2019-05-22,silversprings n1,east,e10,diac,2,4,NA,NA,NA,NA,Dichanthelium aciculare,graminoid,Dichanthelium,aciculare,native,graminoid,2019
+3950,silversprings,2019-05-22,silversprings n1,east,e10,an,3,5,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3951,silversprings,2019-05-22,silversprings n1,east,e10,erpr,1,1,NA,NA,NA,NA,Eryngium prostratum,forb,Eryngium,prostratum,native,forb,2019
+3952,silversprings,2019-05-22,silversprings n1,east,e10,dica,5,6,NA,NA,NA,NA,Dichondra carolinensis,forb,Dichondra,carolinensis,native,forb,2019
+3953,silversprings,2019-05-22,silversprings n1,west,w10,an,10,14,NA,NA,NA,NA,Andropogon spp.,graminoid,Andropogon,spp.,native,graminoid,2019
+3954,silversprings,2019-05-22,silversprings n1,west,w10,paqu2,15,12,NA,NA,NA,NA,Parthenocissus quinquefolia,vine,Parthenocissus,quinquefolia,native,vine,2019
+3955,silversprings,2019-05-22,silversprings n1,west,w10,nebr,4,10,NA,NA,NA,NA,Nephrolepis brownii,0,Nephrolepis,brownii,invasive,0,2019
+3956,silversprings,2019-05-22,silversprings n1,west,w10,rubus,6,8,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3957,silversprings,2019-05-22,silversprings n1,west,w10,dica,5,15,NA,NA,NA,NA,Dichondra carolinensis,forb,Dichondra,carolinensis,native,forb,2019
+3958,silversprings,2019-05-22,silversprings n1,west,w10,pano2,3,8,NA,NA,NA,NA,Paspalum notatum,graminoid,Paspalum,notatum,invasive,graminoid,2019
+3959,silversprings,2019-05-22,silversprings n1,west,w10,paqu2,3,3,NA,NA,NA,NA,Parthenocissus quinquefolia,vine,Parthenocissus,quinquefolia,native,vine,2019
+3960,silversprings,2019-05-22,silversprings n1,west,w10,diac,1,1,NA,NA,NA,NA,Dichanthelium aciculare,graminoid,Dichanthelium,aciculare,native,graminoid,2019
+3961,munson,2019-06-05,munson n1,south,s10,chla,NA,NA,NA,NA,NA,NA,Chasmanthium latifolium,grass,Chasmanthium,latifolium,native,grass,2019
+3962,munson,2019-06-05,munson n1,south,s10,pham,NA,NA,NA,NA,NA,NA,Phytolacca americana,forb,Phytolacca,americana,native,forb,2019
+3963,munson,2019-06-05,munson n1,south,s10,crata,NA,NA,NA,NA,NA,NA,Crataegus spp.,shrub,Crataegus,spp.,native/introduced,shrub,2019
+3964,munson,2019-06-05,munson n1,south,s10,qula,NA,NA,NA,NA,NA,NA,Quercus laevis,tree,Quercus,laevis,native,tree,2019
+3965,munson,2019-06-05,munson n1,south,s10,viro3,NA,NA,NA,NA,NA,NA,Vitis rotundifolia,vine,Vitis,rotundifolia,native,vine,2019
+3966,munson,2019-06-05,munson n1,south,s10,sm,NA,NA,NA,NA,NA,NA,Smilax spp.,vine,Smilax,spp.,native,vine,2019
+3967,munson,2019-06-05,munson n1,south,s10,caam,NA,NA,NA,NA,NA,NA,Callicarpa americana,shrub,Callicarpa,americana,native,shrub,2019
+3968,munson,2019-06-05,munson n1,north,n10,astr,NA,NA,NA,NA,NA,NA,Asimina triloba,0,Asimina,triloba,native,0,2019
+3969,munson,2019-06-05,munson n1,north,n10,qula,NA,NA,NA,NA,NA,NA,Quercus laevis,tree,Quercus,laevis,native,tree,2019
+3970,munson,2019-06-05,munson n1,east,e10,NA,NA,NA,NA,NA,NA,NO VEG,NA NA,NA,NA,NA,NA,NA,2019
+3971,munson,2019-06-05,munson n1,west,w10,crata,NA,NA,NA,NA,NA,NA,Crataegus spp.,shrub,Crataegus,spp.,native/introduced,shrub,2019
+3972,munson,2019-06-05,munson n1,west,w10,rubus,NA,NA,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3973,munson,2019-06-05,munson n1,west,w10,sm,NA,NA,NA,NA,NA,NA,Smilax spp.,vine,Smilax,spp.,native,vine,2019
+3974,munson,2019-06-05,munson n1,west,w10,paqu2,NA,NA,NA,NA,NA,NA,Parthenocissus quinquefolia,vine,Parthenocissus,quinquefolia,native,vine,2019
+3975,munson,2019-06-05,munson n1,west,w10,cica,NA,NA,NA,NA,NA,NA,Cinnamomum camphora,tree,Cinnamomum,camphora,introduced,tree,2019
+3976,riversedge,2019-06-06,riversedge n1,north,n10,NA,NA,NA,NA,NA,NA,NO VEG,NA NA,NA,NA,NA,NA,NA,2019
+3977,riversedge,2019-06-06,riversedge n1,south,s10,NA,NA,NA,NA,NA,NA,NO VEG,NA NA,NA,NA,NA,NA,NA,2019
+3978,riversedge,2019-06-06,riversedge n1,east,e10,cnur,3,2,NA,NA,NA,NA,Cnidoscolus urens,forb,Cnidoscolus,urens,native,forb,2019
+3979,riversedge,2019-06-06,riversedge n1,east,e10,rhcy,3,2,NA,NA,NA,NA,Rhynchosia cytisoides,forb,Rhynchosia,cytisoides,native,forb,2019
+3980,riversedge,2019-06-06,riversedge n1,west,w10,NA,NA,NA,NA,NA,NA,NO VEG,NA NA,NA,NA,NA,NA,NA,2019
+3981,riversedge,2019-06-06,riversedge i2,north,n10,imcy,50,26,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3982,riversedge,2019-06-06,riversedge i2,south,s10,imcy,95,87,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3983,riversedge,2019-06-06,riversedge i2,east,e10,imcy,65,42,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
+3984,riversedge,2019-06-06,riversedge i2,east,e10,rubus,3,3,NA,NA,NA,NA,Rubus spp.,forb/shrub,Rubus,spp.,native/introduced,forb/shrub,2019
+3985,riversedge,2019-06-06,riversedge i2,west,w10,imcy,25,25,NA,NA,NA,NA,Imperata cylindrica,graminoid,Imperata,cylindrica,invasive,graminoid,2019
