@@ -26,11 +26,19 @@ ticks_adult <- filter(tick_data, life_stage == "adult")
 ticks_nymphs <- filter(tick_data, life_stage == "nymph")
 
 adults <- ticks_adult %>% 
-  group_by(life_stage) %>% 
+  group_by(installation, plot_id, invaded, date) %>% 
   summarise(total_adult = sum(count))
 nymph <- ticks_nymphs %>% 
-  group_by(life_stage) %>% 
+  group_by(installation, plot_id, invaded, date) %>% 
   summarise(total_nymph = sum(count))
+
+
+Maov<- aov(total_adult ~ invaded, data = adults)
+summary(Maov)
+Maov_2<- aov(total_nymph ~ invaded, data = nymph)
+summary(Maov_2)
+
+
 status <- tick_data %>% 
   group_by(invaded, life_stage) %>% 
   summarise(total=sum(count))
@@ -52,6 +60,34 @@ invasion_color_2 <- scale_color_manual(values = c("deepskyblue", "red", "green",
 invasion_fill_2 <- scale_color_manual(values = c("deepskyblue", "red", "green", "purple"))
 
 ##### working on tick figures by installation/status#####
+####
+adult_drew <- ggplot(adults, aes(invaded, total_adult, color = invaded, position = "jitter")) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) + 
+  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'Adults per plot') +
+  xlab("") +
+  invasion_color +
+  invasion_fill +
+  theme(legend.position="none")+
+  scale_y_continuous(limits = c(0,20))
+
+nymph_drew <- ggplot(nymph, aes(invaded, total_nymph, color = invaded, position = "jitter")) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) + 
+  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'Nymphs per plot') +
+  xlab("") +
+  invasion_color +
+  invasion_fill +
+  theme(legend.position="none")
+  #scale_y_continuous(limits = c(0,40))+
+
+# ####
+# ggsave(plot = adult_drew, "C:/Users/Steven/Desktop/adult_ticks_2019.png", height = 4, width = 3)
+# ggsave(plot = nymph_drew, "C:/Users/Steven/Desktop/nymph_ticks_2019.png", height = 3, width = 3)
 
 adult_figure <- ggplot(ticks_adult, aes(date, count, color = invaded)) +
   geom_smooth(aes(color = invaded), method = "lm", alpha = .2) +
