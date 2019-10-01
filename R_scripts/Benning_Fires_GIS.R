@@ -302,6 +302,8 @@ benning_fires <- benning_fires %>%
 summary(benning_fires)
 filter(benning_fires, is.na(fDate))
 
+st_write(benning_fires, "data/FtBenning/benning_fires_2000_2018.shp")
+
 
 rm(list=ls(pattern="shp"))
 rm(path)

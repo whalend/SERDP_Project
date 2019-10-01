@@ -41,6 +41,8 @@ gordon_fire <- gordon_fire %>%
 
 summary(gordon_fire)
 
+st_write(gordon_fire, "data/FtGordon/gordon_fire_199501_201806.shp")
+
 
 plot_locations <- st_read("data/plot_visit.shp")# all plot locations/visits
 

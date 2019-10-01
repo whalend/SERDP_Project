@@ -55,6 +55,7 @@ filter(blanding_fires, season == "Growing Season", fMonth==2)
 summary(filter(blanding_fires, season == "Dormant Season"))
 ## a "Dormant Seson" burn is October through January
 
+st_write(blanding_fires, "data/CampBlanding/blanding_fires_200112_201804.shp")
 
 # Calculate 15-year FRI ####
 ## This needs to be done to be accurate for plots visited in 2017 and 2018
