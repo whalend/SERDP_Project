@@ -23,22 +23,30 @@ plot_locations <- plot_locations %>%
 # filter(plot_locations, is.na(last_fire))$plot_id
 ## no fire history for shelby k1
 
-source("R_scripts/AvonPark_Fires_GIS.R")
+apafr_fires <- st_read("data/AvonPark/avp_fires_All.shp")
+# summary(apafr_fires)
+apafr_fires <- select(apafr_fires, -FID)
 
-source("R_scripts/Benning_Fires_GIS.R")
-source("R_scripts/Blanding_Fires_GIS.R")
-source("R_scripts/Eglin_Fires_GIS.R")
+benning_fires <- st_read("data/FtBenning/benning_fires_2000_2018.shp")
 
-source("R_scripts/Gordon_Fires_GIS.R")
-source("R_scripts/Jackson_Fires_GIS.R")
-source("R_scripts/Moody_Fires_GIS.R")
-source("R_scripts/Shelby_Fires_GIS.R")
-source("R_scripts/Tyndall_Fires.R")
+blanding_fires <- st_read("data/CampBlanding/blanding_fires_200112_201804.shp")
 
-rm(field_names)
+eglin_fires <- st_read("data/EglinAFB/eglin_fires_2002_2018.shp")
+
+gordon_fires <- st_read("data/FtGordon/gordon_fire_199501_201806.shp")
+
+jackson_fires <- st_read("data/FtJackson/jackson_fires_2002_2018.shp")
+
+moody_fires <- st_read("data/MoodyAFB/moody_fires_2002_2017.shp")
+
+shelby_fires <- st_read("data/CampShelby/shelby_fires_2002_2019.shp")
+
+tyndall_fires <- st_read("data/Tyndall/tyndall_fires_2000_2018.shp")
+
+
 
 fire_master <- rbind(
-      st_transform(avp_fires, crs = 4326),
+      st_transform(apafr_fires, crs = 4326),
       st_transform(benning_fires, crs = 4326),
       st_transform(blanding_fires, crs = 4326),
       st_transform(eglin_fires, crs = 4326),
@@ -49,12 +57,133 @@ fire_master <- rbind(
       st_transform(tyndall_fires, crs = 4326)
 )
 
-fire_master
+str(fire_master)
 # rm(list = ls(pattern = "_fir"))
+fire_master$fYear <- as.numeric(fire_master$fYear)
+summary(fire_master)
+
+fire_master %>%
+      filter(is.na(fYear))
+
+fire_master$purpose <- tolower(fire_master$purpose)
+sort(unique(fire_master$purpose))
+
+
+fire_master$fType <- tolower(fire_master$fType)
+sort(unique(fire_master$fType))
+
+fire_master <- fire_master %>%
+      mutate(fType = case_when(
+            grepl("wild", fType) ~ "wildfire",
+            grepl("wf", fType) ~ "wildfire",
+            grepl("pres", fType) ~ "prescribed",
+            grepl("rx", fType) ~ "prescribed",
+            grepl("site", fType) ~ "prescribed",
+            grepl("na", fType) ~ "unknown",
+            grepl("hab", purpose) ~ "prescribed",
+            grepl("res", purpose) ~ "prescribed",
+            grepl("shelt", purpose) ~ "prescribed",
+            grepl("safety", purpose) ~ "prescribed",
+            grepl("training", purpose) ~ "wildfire",
+            grepl("unpl", purpose) ~ "wildfire",
+            grepl("seed", purpose) ~ "prescribed",
+            TRUE ~ fType
+      ))
+
+(fire_master %>%
+      filter(fType=="unknown"))$fCause
+
+(fire_master %>%
+            filter(fCause=="man"))$inst_name
+
+(fire_master %>%
+            filter(fType=="unknown"))$purpose
+
+fire_master$fCause <- tolower(fire_master$fCause)
+sort(unique(fire_master$fCause))
+(pattern_check <- grepl(pattern = "ar", fire_master$fCause, fixed = T))
+unique(pattern_check)
+pattern_check[pattern_check==TRUE] %>% length(.)
+
+fire_master <- fire_master %>%
+      mutate(fCause = case_when(
+            grepl("esc", fCause)  ~ "escaped",
+            grepl("jump", fCause)  ~ "escaped",
+            grepl("wf", fCause) ~ "lightning",
+            grepl("wildfire", fCause) ~ "lightning",
+            grepl("back", fCause)  ~ "prescribed",
+            grepl("rx", fCause) ~ "prescribed",
+            grepl("flank", fCause) ~ "prescribed",
+            grepl("head", fCause) ~ "prescribed",
+            grepl("ground", fCause) ~ "prescribed",
+            grepl("reburn", fCause) ~ "prescribed",
+            grepl("train", fCause) ~ "prescribed",
+            grepl("ground", fCause) ~ "prescribed",
+            grepl("eng", fCause) ~ "prescribed",
+            grepl("man", fCause) ~ "prescribed",
+            grepl("presc", fCause) ~ "prescribed",
+            grepl("rekindle", fCause) ~ "prescribed",
+            fType=="prescribed" ~ "prescribed",
+            grepl("mil", fCause) ~ "mission",
+            grepl("ar", fCause) ~ "mission",
+            grepl("203", fCause) ~ "mission",
+            grepl("aer", fCause) ~ "mission",
+            grepl("af", fCause) ~ "mission",
+            grepl("eod", fCause) ~ "mission",
+            grepl("c4", fCause) ~ "mission",
+            grepl("demo", fCause) ~ "mission",
+            grepl("equip", fCause) ~ "mission",
+            grepl("gren", fCause) ~ "mission",
+            grepl("ordn", fCause) ~ "mission",
+            grepl("rotor", fCause) ~ "mission",
+            grepl("rz", fCause) ~ "mission",
+            grepl("seek", fCause) ~ "mission",
+            grepl("tracer", fCause) ~ "mission",
+            grepl("troops", fCause) ~ "mission",
+            grepl("uav", fCause) ~ "mission",
+            grepl("utv", fCause) ~ "mission",
+            grepl("light", fCause) ~ "lightning",
+            grepl("lght", fCause) ~ "lightning",
+            grepl("pow", fCause) ~ "powerline",
+            grepl("camp", fCause)  ~ "other human",
+            grepl("child", fCause)  ~ "other human",
+            grepl("fireworks", fCause)  ~ "other human",
+            grepl("na", fCause)  ~ "unknown",
+            is.na(fCause) ~ "unknown",
+            TRUE ~ fCause
+            )
+            )
 
 str(fire_master)
 
-fire_master$fYear <- as.numeric(fire_master$fYear)
+fire_master$season <- tolower(fire_master$season)
+unique(fire_master$season)
+
+filter(fire_master, season=="ld/eg") %>% summary(.)
+
+fire_master <- fire_master %>%
+      mutate(season = case_when(
+            season=="d" | grepl("dor", season) ~ "dormant",
+            season=="winter" ~ "dormant",
+            season=="g" | grepl("gro", season) ~ "growing",
+            season=="spring" | season == "summer" ~ "growing",
+            season=="ld/eg" ~ "growing"
+
+      ))
+
+# summary(fire_master)
+
+
+st_write(select(fire_master, -geometry),
+         "data/gis_files/all_installations_fires.shp")
+
+fire_master_df <- as.data.frame(fire_master)
+
+
+readr::write_csv(select(fire_master_df, -geometry),
+                 "data/processed_data/all_installations_fires.csv")
+
+# filter(fire_master, fCause=="proposed")
 
 ## Working on calculation a fire return interval ####
 
