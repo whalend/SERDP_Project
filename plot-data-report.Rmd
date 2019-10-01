@@ -1853,6 +1853,9 @@ write_csv(tick_data_sum, "data/all_plotlevel_data.csv")
 
 tick_data_sum <- read_csv("data/processed_data/all_plotlevel_data.csv")
 # summary(tick_data_sum)
+climate_data <- read_csv("data/processed_data/aggregated_plot_daymet_data.csv")
+tick_data_sum <- left_join(tick_data_sum, climate_data)
+
 tick_data_sum$imcy_inv <- factor(tick_data_sum$imcy_inv, levels = c("Uninvaded","Invaded"))
 
 ```
@@ -1991,6 +1994,38 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
       NULL
 
 ```
+
+## Tick abundance ~ Climate Variables
+
+```{r subset to climate vars data frame}
+
+ticks_climate_15yr <- tick_data_sum %>% 
+      select(plot_id:visit_date, inst_name, total_ticks, starts_with("avg_15yr"), starts_with("cv_15yr"), frindex) %>% 
+      pivot_longer(., avg_15yr_srad..W.m.2.:cv_15yr)
+
+ggplot(ticks_climate_15yr, aes(value, (frindex))) +
+      geom_point(aes(color = inst_name)) +
+      geom_smooth() +
+      scale_color_viridis_d() +
+      # invasion_color +
+      facet_wrap(~ name, scales = "free_x") +
+      theme_bw()
+
+ticks_climate_30yr <- tick_data_sum %>% 
+      select(plot_id:visit_date, inst_name, total_ticks, starts_with("avg_30yr"), starts_with("cv_30yr"), frindex) %>% 
+      pivot_longer(., avg_30yr_srad..W.m.2.:cv_30yr_prcp..mm.day.)
+
+ggplot(ticks_climate_30yr, aes(value, log1p(total_ticks))) +
+      geom_point(aes(color = inst_name)) +
+      geom_smooth() +
+      scale_color_viridis_d() +
+      # invasion_color +
+      facet_wrap(~ name, scales = "free_x") +
+      theme_bw()
+
+
+```
+
 
 ## Tick~fire log-linear relationship 
 
@@ -2517,7 +2552,7 @@ A question asked at the August 2018 PI meeting was whether there was an effect o
 # Initial/exploratory models
 ```{r linear models ticks, eval=F}
 
-GGally::ggpairs(select(tick_data_sum, years_since_fire, avg_pct_litter, avg_pct_litter_moisture, avg_canopy_cover, pct_pinus_dbh))
+GGally::ggpairs(select(tick_data_sum, y_since_fire, avg_pct_litter, avg_pct_litter_moisture, avg_canopy_cover, pct_pinus_dbh, avg_30yr_vp..Pa., avg_30yr_tmax..deg.c., avg_30yr_tmin..deg.c., avg_30yr_prcp..mm.day.))
 
 m1 <- lm(log1p(total_ticks) ~ avg_pct_litter + avg_pct_litter_moisture + pct_pinus_dbh, data = tick_data_sum)
 summary(m1)
@@ -2531,14 +2566,17 @@ sjPlot::plot_model(m2, type = "resid")
 sjPlot::plot_model(m2, type = "std", show.values = T)
 sjPlot::plot_model(m2, type = "resid")
 
+m3 <- lm(log1p(total_ticks) ~ avg_dry_litter_gm2 + avg_pct_litter_moisture + pct_pinus_dbh, data = tick_data_sum)
+summary(m3)
+
 
 # summary(lm(log1p(total_ticks) ~ avg_dry_litter_gm2, data = tick_data_sum))
 summary(lm(log1p(total_ticks) ~ avg_pct_litter, data = tick_data_sum))
 summary(lm(log1p(total_ticks) ~ avg_canopy_cover, data = tick_data_sum))
 summary(lm(log1p(total_ticks) ~ avg_pct_litter_moisture, data = tick_data_sum))
 
-summary(lm(avg_dry_litter_gm2 ~ years_since_fire, data = tick_data_sum))
-summary(lm(avg_canopy_cover ~ years_since_fire, data = tick_data_sum))
+summary(lm(avg_dry_litter_gm2 ~ y_since_fire, data = tick_data_sum))
+summary(lm(avg_canopy_cover ~ y_since_fire, data = tick_data_sum))
 # summary(lm(log1p(total_ticks) ~ log1p(avg_clusters1m), data = tick_data_sum))
 
 ## Figure out theoretical range of fire return index ####
@@ -2551,7 +2589,7 @@ plot(log(y3),y2) # Produces log-linear pattern between index and time since fire
 
 ```
 
-```{r ggpairs plot, eval=T, fig.width=14, fig.height=14}
+```{r model data ggpairs plot, eval=T, fig.width=14, fig.height=14}
 # install.packages("GGally")
 library(GGally)
 
@@ -2564,13 +2602,17 @@ model_data <- tick_data_sum %>%
       mutate(f_visit_year = as.factor(visit_year),
              clusters_1_2 = rowSums(cbind(total_clusters1m,total_clusters2m), na.rm = T),
              day_of_year = lubridate::yday(visit_date),
-             litter_kg_m2 = avg_dry_litter_gm2/1000
+             litter_kg_m2 = avg_dry_litter_gm2/1000,
+             avg_30yr_vp_Pa100 = avg_30yr_vp..Pa./100,
+             avg_15yr_vp_Pa100 = avg_15yr_vp..Pa./100,
+             avg_30yr_prcp_cm = avg_30yr_prcp..mm.day./100,
+             avg_15yr_prcp_cm = avg_15yr_prcp..mm.day./100
              )
 # summary(model_data)
 
 tick_mod_inv_pairs <- ggpairs(select(
       model_data, 
-      total_ticks, y_since_fire, day_of_year, avg_dry_litter_gm2, avg_pct_litter, avg_canopy_cover, total_clusters1m, total_dbh, pct_pinus_dbh, total_stems_100m2, imcy_inv), aes(color = imcy_inv),
+      total_ticks, y_since_fire, day_of_year, avg_30yr_vp..Pa., avg_15yr_vp..Pa., avg_dry_litter_gm2, avg_pct_litter, avg_canopy_cover, total_clusters1m, total_dbh, pct_pinus_dbh, total_stems_100m2, imcy_inv), aes(color = imcy_inv),
        upper = list(
              continuous = function(data, mapping, ...) {
                    ggally_cor(data = data, mapping = mapping) + invasion_color},
@@ -2599,8 +2641,7 @@ tick_mod_inv_pairs <- ggpairs(select(
 
 
 tick_mod_pairs <- ggpairs(select(
-      model_data, 
-      total_ticks, y_since_fire, day_of_year, avg_dry_litter_gm2, avg_canopy_cover, total_clusters1m, clusters_1_2, total_dbh, pct_pinus_dbh, total_stems_100m2, lat)) +
+      model_data, total_ticks, y_since_fire, day_of_year, avg_30yr_vp..Pa., avg_15yr_vp..Pa., avg_dry_litter_gm2, avg_canopy_cover, total_clusters1m, clusters_1_2, total_dbh, pct_pinus_dbh, total_stems_100m2, lat)) +
       theme_bw() +
       theme(panel.grid = element_blank())
 # ggsave(plot = tick_mod_pairs, "figures/pairs_plot_tick_mod_bw.png", width = 18, height = 12)
@@ -2614,7 +2655,7 @@ library(piecewiseSEM)
 library(lme4)
 #glmmadmb
 
-m1 <- glmer(total_ticks ~ scale(frindex) + scale(avg_pct_litter) +
+m1 <- glmer(total_ticks ~ scale(frindex) + scale(litter_kg_m2) +
                   scale(avg_canopy_cover) +(1|inst_name) + (1|plot_id), data = model_data, family = "poisson")
 summary(m1)
 
@@ -2625,51 +2666,67 @@ summary(m2)
 AIC(m1,m2)
 
 # glmer.nb(total_ticks ~  (1|installation) + (1|plot_id), data = model_data)
+
+## Model tick counts as Poisson, negative binomial, or other distribution?
+tick_mod <- glmer(
+      total_ticks ~ 
+            scale(total_clusters1m) +
+            scale(litter_kg_m2) + # AIC: 475.8
+            scale(avg_pct_litter_moisture) +
+            scale(avg_pct_litter) + # AIC: 461.6
+            scale(avg_canopy_cover) +
+            pct_pinus_dbh
+            scale(cv_15yr) + # prcp
+            scale(avg_15yr_prcp_cm) +
+            scale(avg_15yr_tmax..deg.c.) + # no
+            scale(cv_15yr_tmax..deg.c.) + # no, strong -r w/frindex
+            scale(avg_15yr_tmin..deg.c.) + # maybe, AIC: 486.6
+            scale(cv_15yr_tmin..deg.c.) +
+            scale(avg_15yr_vp_Pa100) + # maybe, AIC: 487
+            scale(cv_15yr_vp..Pa.) + # no
+            scale(avg_30yr_vp_Pa100) + # yes, AIC: 486.2
+            scale(cv_30yr_vp..Pa.) + # no, strong -r w/frindex
+            scale(avg_30yr_tmax..deg.c.) + # no
+            scale(cv_30yr_tmax..deg.c.) + # no, strong -r w/frindex
+            scale(avg_30yr_tmin..deg.c.) + # maybe, AIC: 486.6
+            scale(cv_30yr_tmin..deg.c.) + # AIC: 477.4 strong -r w/frindex
+            scale(avg_30yr_prcp_cm) + # no, AIC: 482.6
+            scale(cv_30yr_prcp..mm.day.) + # yes, AIC: 473.9
+            scale(day_of_year) +
+            scale(y_since_fire) + # no clim, AIC: 463.2
+            scale(frindex) + # no clim, AIC: 480.9
+            scale(fri15yr) + # no clim, AIC: 487.6
+            f_visit_year + # no significant effect
+            (1|inst_name) + (1|plot_id),
+      data = model_data, family = "poisson", na.action = "na.fail")
+
+dredge_tick_mod <- MuMIn::dredge(tick_mod, m.lim = c(3,8), 
+                                 extra = "adjR^2")
+
 model_data <- as.data.frame(model_data)
 
 mod <- psem(
-      # tick_mod <- glmer(
-      #       total_ticks ~ 
-      #             # scale(clusters_1_2) + 
-      #             # litter_kg_m2 +
-      #             # avg_pct_litter_moisture +
-      #             avg_pct_litter +
-      #             avg_canopy_cover +
-      #             # scale(day_of_year) +
-      #             y_since_fire +
-      #             # f_visit_year +
-      #             (1|inst_name) + (1|plot_id), 
-      #       data = model_data, family = poisson),
-      # # summary(tick_mod)
-## Model tick counts as Poisson, negative binomial, or other distribution?
-      tick_mod.nb <- glmer.nb(
-            total_ticks ~ 
-                  clusters_1_2 +
-                  # litter_kg_m2 +
-                  # avg_pct_litter_moisture +
-                  avg_pct_litter +
-                  avg_canopy_cover +
-                  # scale(day_of_year) +
-                  # y_since_fire +
-                  frindex +
-                  # fri15yr +
-                  # f_visit_year +
-                  (1|inst_name) + (1|plot_id),
-            data = model_data),
+      tick_mod,
       
-      host_mod <- glmer.nb(clusters_1_2 ~
+      
+      host_mod <- glmer.nb(total_clusters1m ~
                               # total_stems_100m2 +
                               # day_of_year +
                               frindex +
                               avg_canopy_cover +
+                              # avg_30yr_vp_Pa100 +
+                              # avg_15yr_vp_Pa100 +
+                              cv_30yr_prcp..mm.day. +
                               # f_visit_year +
                               (1|inst_name) + (1|plot_id),
                         data = model_data),
       
       litter_mod <- lmer(avg_pct_litter ~ 
-                               # y_since_fire + 
-                               frindex +
+                               # cv_30yr_prcp..mm.day. + 
+                               # avg_30yr_vp_Pa100 +
+                               # avg_15yr_vp_Pa100 +
                                avg_canopy_cover +
+                               frindex +
                                (1|inst_name) + (1|plot_id), 
                          data = model_data),
       
@@ -2685,14 +2742,32 @@ mod <- psem(
       
       canopy_mod <- lmer(avg_canopy_cover ~
                                # y_since_fire +
+                               cv_30yr_prcp..mm.day. + 
+                               # avg_30yr_vp_Pa100 +
+                               # avg_yr_vp_Pa100 +
                                frindex +
                                (1|inst_name) + (1|plot_id),
                          data = model_data),
-      data = model_data
       
-      # fire_mod <- lmer(years_since_fire ~ ycoord_lat + visit_year + (1|installation) + (1|plot_id), tick_data_sum)
       
-)
+      fire_mod <- lmer(fri15yr ~ 
+                             # avg_15yr_tmin..deg.c. + # no, AIC: 36.5
+                             # avg_30yr_fire_days + # no, AIC: 39.5
+                             # avg_15yr_fire_days + # no, AIC: 40.3
+                             # avg_30yr_tmin..deg.c. + # no, AIC: 37.4
+                             # avg_30yr_tmax..deg.c. + # no, AIC: 37.3
+                             # avg_15yr_tmax..deg.c. + # no, AIC: 37.4
+                             # avg_30yr_prcp_cm + # no, AIC: 37.7
+                             # avg_15yr_srad..W.m.2. + # no, AIC: 39.5
+                             # cv_30yr_tmin..deg.c. +
+                             # cv_30yr_prcp..mm.day. + # no, AIC: 37.8
+                             # cv_30yr_vp..Pa. + # no, AIC: 36.5
+                             # cv_15yr_vp..Pa. + # no, AIC: 37.1
+                             # cv_30yr_prcp..mm.day. +
+                             cv_30yr_tmax..deg.c. + #no, AIC: 34.5
+                             # avg_15yr_vp_Pa100 + # no, AIC: 37.1
+                             (1|inst_name), model_data) # AIC: 30.2
+      )
 
 psem.model.summary <- summary(mod, conserve = TRUE)
 psem.model.summary
@@ -2700,8 +2775,11 @@ psem.model.summary
 
 knitr::kable(psem.model.summary$coefficients, digits = 2)
 
+ggplot(model_data, aes(installation, fri15yr)) +
+      geom_boxplot()
+
 ```
-```{r}
+```{r eval=FALSE}
 library(dagitty)
 g <- dagitty("dag{
              x1 -> y1
