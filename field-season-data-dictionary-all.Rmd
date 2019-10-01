@@ -70,8 +70,8 @@ quadrat_species_fields <- data.frame(
     "character", "character", "numeric", "numeric"),
   description = c("species of the individals to at least Genus level. if NA, unable to      identify",
     "functional group of the species. ex: graminoid, forb, shrub, tree", 
-    "estimate of the species' percent cover in the plot based on an average of four square meter quadrats", 
-    "estimate of the species' stem count in the plot based on an average of four square meter quadrats"))
+    "estimate of the species' percent cover in the plot based on an average of four 1-square meter quadrats", 
+    "estimate of the species' stem count in the plot based on an average of four 1-square meter quadrats"))
 
 kable(quadrat_species_fields) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
@@ -88,18 +88,18 @@ quadrat_biomass_canopy_fields <- data.frame(
   field_name = c("avg_woody_veg_ht", "avg_herb_veg_ht", "avg_litter_ht", "avg_pct_green", "avg_pct_litter", "avg_pct_wood_litter", "avg_pct_bare", "avg_standing_fuel_mass_wet_m2", "avg_litter_mass_wet_m2", "avg_standing_fuel_mass_dry_m2", "avg_litter_mass_dry_m2", "avg_pct_canopy_cover"),
   data_type = c(
     "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric"),
-  description = c("estimate of woody plant species height in the plot based on an average of three measurements per four square meter quadrats (cm). maximum height cut off at 2m",
-    "estimate of herbaceous plant species height in the plot based on an average of three measurements per four square meter quadrats (cm). maximum height cut off at 2m", 
-    "estimate of litter depth in the plot based on an average of three measurements per four square meter quadrats (cm)", 
-    "estimate of percent green of plant material in the plot based on the average of estimates at four square meter quadrats", 
-    "estimate of percent litter cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats", 
-    "estimate of percent woody litter cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats. includes: fallen branches/logs, twigs, pine cones", 
-    "estimate of pure bare ground cover that occupies ground space in the plot based on the average of estimates at four square meter quadrats", 
-    "estimate of *fresh* standing vegetation mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
-    "estimate of *fresh* litter mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
-    "estimate of *dried* standing vegetation mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
-    "estimate of *dried* litter mass in the plot based on the average of four harvests at four square meter quadrats (g)", 
-    "estimate of canopy cover in the plot based on the average of four manual densiometer measurements at four square meter quadrats"))
+  description = c("estimate of woody plant species height in the plot based on an average of three measurements per four 1-square meter quadrats (cm). maximum height cut off at 2m",
+    "estimate of herbaceous plant species height in the plot based on an average of three measurements per four 1-square meter quadrats (cm). maximum height cut off at 2m", 
+    "estimate of litter depth in the plot based on an average of three measurements per four 1-square meter quadrats (cm)", 
+    "estimate of percent green of plant cover in the plot based on the average of estimates at four 1-square meter quadrats", 
+    "estimate of percent litter cover that occupies ground space in the plot based on the average of estimates at four 1-square meter quadrats", 
+    "estimate of percent woody litter cover that occupies ground space in the plot based on the average of estimates at four 1-square meter quadrats. includes: fallen branches/logs, twigs, pine cones", 
+    "estimate of bare ground cover that occupies ground space in the plot based on the average of estimates at four 1-square meter quadrats", 
+    "estimate of *fresh* standing vegetation mass in the plot based on the average of four harvests from four 25cm x 25cm quadrats (g)", 
+    "estimate of *fresh* litter mass in the plot based on the average of four harvests from four 25cm x 25cm quadrats (g)", 
+    "estimate of *dried* standing vegetation mass in the plot based on the average of four harvests from four 25cm x 25cm quadrats (g)", 
+    "estimate of *dried* litter mass in the plot based on the average of four harvests from four 25cm x 25cm quadrats (g)", 
+    "estimate of canopy cover in the plot based on the average of four manual densiometer measurements near each 1-square meter quadrat"))
 
 kable(quadrat_biomass_canopy_fields) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
@@ -117,9 +117,9 @@ trees_raw_fields <- data.frame(
   data_type = c(
     "numeric", "character", "numeric", "character", "character", "numeric", "numeric", "numeric", "numeric"),
   description = c("assigned tag number given to each measured tree. if NA, no tag was assigned",
-    "species of the individals to at least Genus level. if NA, unable to identify",
-    "diameter at breast height of the tree (cm)", 
-    "tree relative canopy position. ex: e = emergent, d = dominant, c = codominant,  i = intermediate, u = understory", 
+    "species of the individuals to at least Genus level. if NA, unable to identify",
+    "diameter at breast height of the tree (cm); breast height = 1.37 m", 
+    "tree relative canopy position; e = emergent, d = dominant, c = codominant,  i = intermediate, u = understory", 
     "health class assigned (alive or dead) of each tree", 
     "distance from the center of the plot to the midpoint of the tree (m)", 
     "azimuth of the tree relative to plot center using a sighting compass (°)", 
@@ -164,7 +164,7 @@ woody_subplot_fields <- data.frame(
   data_type = c(
     "character", "numeric"),
   description = c("species of the individals to at least Genus level. if NA, unable to identify",
-    "number of woody stems with height greater than 1m within a 5.64m radius from plot center"))
+    "number of woody stems with height greater than 1m within a 5.64 m radius (100 m2 area) from plot center"))
 
 kable(woody_subplot_fields) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
@@ -181,7 +181,7 @@ ticks_fields <- data.frame(
   field_name = c("species_name", "life_stage", "tick_count"),
   data_type = c(
     "character", "character", "numeric"),
-  description = c("species of the individals to at least Genus level. if NA, unable to identify",
+  description = c("species of the individuals to at least Genus level. if NA, unable to identify",
     "life stage of tick. ex: adult, nymph, larvae", 
     "number of ticks found in the plot based on four dry ice traps per plot and cloth dragging"))
 
@@ -193,7 +193,7 @@ kable(ticks_fields) %>%
 
 ```
 
-# Dung
+# Dung (host surveys)
 
 ```{r dung, echo=FALSE}
 
@@ -201,9 +201,9 @@ dung_fields <- data.frame(
   field_name = c("species", "dung1m", "dung2m"),
   data_type = c(
     "character", "numeric", "numeric"),
-  description = c("Common name of species that deposited the dung. if NA, unable to identify",
-    "number of dung deposit *events* found from 1m on either side of a 50m transect. note: each individual rabbit pellet was counted as a single event", 
-    "number of dung deposit *events* found from 2m on either side of a 50m transect. note: each individual rabbit pellet was counted as a single event"))
+  description = c("Common name of species that deposited the dung. If NA, unable to identify",
+    "number of dung deposit *events* found within 1 m on either side of four 50 m transects. Note: each individual rabbit pellet was counted as a single event", 
+    "number of dung deposit *events* found within 2 m on either side of four 50 m transects. Note: each individual rabbit pellet was counted as a single event"))
 
 kable(dung_fields) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
@@ -226,7 +226,7 @@ common_2019 <- data.frame(
   data_type = c(
     "character", "character", "character"),
   description = c("Name of the installation/site where data was collected",
-    "Assigned plot_id for each plot. In 2019 data, invaded plots were assigned prefix 'i' and native plots assigned 'n'. Numbers after the identifying invasion status letter refer to the specific plot number at the installation", 
+    "Assigned ID for each plot. In 2019 data, invaded plots were assigned prefix 'i' and native plots assigned 'n'. Numbers after the identifying invasion status letter refer to the specific plot number at the installation", 
     "General notes/comments on the data entry"))
 
 kable(common_2019) %>%
@@ -247,14 +247,14 @@ plot_visit_2019 <- data.frame(
     "character", "date", "numeric", "numeric"),
   description = c("invasion status of *Imperata cylindrica*",
     "date the plot was visited",
-    "last reported date the plot was burned, either prescribed or wildlife, if available",
-    "the number of times that the plot was visited, designated multiple tick trapping events at the same site"))
+    "last reported date the plot was burned, either prescribed or wildfire, if available",
+    "the number of times the plot was visited, designated multiple tick trapping events at the same site"))
 
 kable(plot_visit_2019) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T) %>% 
-  footnote(general = "note: multiple 'plot_id' will have multple 'visit_date' as this sheet refers to plot visit when tick trapping events occured.
+  footnote(general = "Note: multiple 'plot_id' will have multiple 'visit_date' as this sheet refers to the plot visit when tick trapping events occured.
            file path: SERDP_Project/data/raw_data/2019_serdp_data/2019-plot-visit-entry.csv")
 
 ```
@@ -267,9 +267,9 @@ ticks_2019 <- data.frame(
   field_name = c("species_name", "life_stage", "tick_count"),
   data_type = c(
     "character", "character", "numeric"),
-  description = c("species of the individals to at least Genus level. if NA, unable to identify",
+  description = c("species of the individuals to at least Genus level. if NA, unable to identify",
     "life stage of tick. ex: adult, nymph, larvae", 
-    "number of ticks found in the plot based on four dry ice traps per plot and cloth dragging"))
+    "number of ticks found in the plot from four dry ice traps per plot and cloth dragging"))
 
 kable(ticks_2019) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
@@ -287,9 +287,9 @@ kable(ticks_2019) %>%
 camera_info_fields <- data.frame(
   field_name = c("status",	"camera_number",	"sd_card",	"camera_out",	"camera_in",	"position_from_center"),
   data_type = c("character",	"numeric",	"numeric",	"date",	"date",	"character"),
-  description = c("Invasion status of the plot_id, dependent on presence of *Imperata cylindrica*",
-    "Number of the trail camera placed in the plot", 
-    "Number of the SD card attached to the camera. If the SD card was filled or camera was moved to a new plot, SD card was changed to -2 or -3 for example to not get mixed up. note: if opening up the .csv file, 'sd_card' may have turned into a date format, but unless saved it will read fine with read_csv. if 'sd_card' reads 2-Sept, the correct 'sd_card' should be 9-2",
+  description = c("Invasion status of the plot, dependent on presence of *Imperata cylindrica*",
+    "Number ID of the trail camera(s)", 
+    "Number of the SD card in the camera. If the SD card was filled or camera was moved to a new plot, SD card was changed to -2 or -3 for example to not get mixed up. Note: if opening up the .csv file, 'sd_card' may have turned into a date format, but unless saved it will read fine with read_csv. if 'sd_card' reads 2-Sept, the correct 'sd_card' should be 9-2",
     "Date the camera was set out to begin recording.",
     "Date the camera was collected, end photo taking",
     "Cardinal direction reference from plot center where the camera was placed. Each camera faced plot center"))
@@ -298,7 +298,7 @@ kable(camera_info_fields) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T) %>% 
-  footnote(general = "Most plots received two cameras to cover the most area. When short on cameras, plots only had one camera. Camera were set on a 3 second delay, and on a 3 shot burst. 
+  footnote(general = "Most plots had two cameras to cover the most area. When short on cameras, plots only had one camera. Cameras were set on a 3 second delay and a 3 shot burst. 
            file path: SERDP_Project/data/raw_data/2019_serdp_data/camera-traps-info.csv")
 
 
@@ -319,7 +319,7 @@ all_camera_photos <- data.frame(
                   "TRUE/FALSE statement if the photo was empty (did not contain any wildlife)",
                   "name of the imported file that was inspected. note: most (if not all) of the file names should have an identifier of four characters that give the date in 'mmdd' format",
                   "number of fox captured per photo",
-                  "actual time the image was taken by the trail camera. note: some photos may have an incorrect 'mtime', actual time to calculate camera active days was taken from file name.",
+                  "actual time the image was taken by the trail camera. Note: some photos may have an incorrect 'mtime', actual time to calculate camera active days was taken from file name.",
                   "if wildlife species not listed, the species is specifically written out here",
                   "path of where the file was downloaded to/is being accessed",
                   "number of pig captured per photo",
@@ -368,11 +368,11 @@ camera_days <- data.frame(
   field_name = c("status", "sd_card",	"start_date",	"end_date",	"camera_days"
 ),
   data_type = c("character",	"numeric",	"date",	"date",	"numeric"),
-  description = c("Invasion status of the plot_id, dependent on presence of *Imperata cylindrica*",
-    "Number of the SD card attached to the camera. If the SD card was filled or camera was moved to a new plot, SD card was changed to -2 or -3 for example to not get mixed up. note: if opening up the .csv file, 'sd_card' may have turned into a date format, but unless saved it will read fine with read_csv. if 'sd_card' reads 2-Sept, the correct 'sd_card' should be 9-2",
+  description = c("Invasion status of the plot, dependent on presence of *Imperata cylindrica*",
+    "Number of the SD card in the camera. If the SD card was filled or camera was moved to a new plot, the SD card was changed and labeled to -2 or -3 for example to not get mixed up. Note: if opening up the .csv file, 'sd_card' may have turned into a date format, but unless saved it will read fine with read_csv. If 'sd_card' reads 2-Sept, the correct 'sd_card' should be 9-2",
     "Date the camera was set out to begin recording. Calculated by first photo taken on that camera",
     "Date the camera was collected, end photo taking. Calculated by last photo taken on that camera",
-    "Number of days the camera was out recording, subtraction of end_date - start_date. Zeroes changed to one if camera only recorded and filled up on the first date"))
+    "Number of days the camera was out recording calculated by subtracting end_date from start_date. Zeroes changed to one if camera only recorded and filled up on the first day."))
 
 kable(camera_days) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
@@ -391,15 +391,15 @@ species_sd_card <- data.frame(
   field_name = c("species", "count",	"camera_days"),
   data_type = c("character",	"numeric",
                 "numeric"),
-  description = c("species of the potential host. for this summary, the four most popular hosts were used (cow, deer, turkey, pig)",
-                  "sum count number of a certain species captured summarized on **A SINGLE SD CARD**",
+  description = c("Species of the potential host. for this summary, the four most popular hosts were used (cow, deer, turkey, pig)",
+                  "Sum count number of a certain species captured on **A SINGLE SD CARD**",
                   "Number of days the camera was out recording, subtraction of end_date - start_date. Zeroes changed to one if camera only recorded and filled up on the first date"))
 
 kable(species_sd_card) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, border_right = T) %>% 
-  footnote(general = "This data frame can be manipulated to summarize as is (sd_card) or to plot level. 
+  footnote(general = "This data frame can be used for SD card level summaries or manipulated to plot level. 
            file path: SERDP_Project/data/processed_data/2019 serdp processed data/camera-species-with-days-by-sd-card.csv")
 
 
@@ -413,7 +413,7 @@ kable(species_sd_card) %>%
 species_per_camera_per_day <- data.frame(
   field_name = c("count_per_day_camera"),
   data_type = c("numeric"),
-  description = c("the quotient of the 'count' divided by the 'camera_days' active. note: this dataframe summarizes on a per **CAMERA** basis, there may be more than one camera per plot"))
+  description = c("The quotient of the 'count' divided by the 'camera_days' active. Note: this dataframe summarizes on a per **CAMERA** basis, there may be more than one camera per plot"))
 
 kable(species_per_camera_per_day) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
@@ -431,7 +431,7 @@ kable(species_per_camera_per_day) %>%
 species_per_plot_per_day <- data.frame(
   field_name = c("count_per_day_plot"),
   data_type = c("numeric"),
-  description = c("the quotient of the 'count' divided by the 'camera_days' active. note: this dataframe summarizes on a per **PLOT** basis, there may be more than one camera per plot"))
+  description = c("The quotient of the 'count' divided by the 'camera_days' active. Note: this dataframe summarizes on a per **PLOT** basis, there may be more than one camera per plot"))
 
 kable(species_per_plot_per_day) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left") %>%
