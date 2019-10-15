@@ -5,7 +5,7 @@ library(dplyr)
 library(ggplot2)
 library(stringi)
 
-old_with_many_from_wes <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos_with_extra.csv.csv")
+old_with_many_from_wes <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos_with_extra.csv")
 
 photos <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos.csv")
 summary(photos)
@@ -268,6 +268,8 @@ count_and_days_plot <- count_and_days_plot %>%
 write_csv(count_and_days_plot, "data/processed_data/2019 serdp processed data/species-per-plot-per-day.csv")
 #^counts per PLOT per day (summed total days of both cameras and their respective counts)
 
+count_and_days_plot <- read_csv("data/processed_data/2019 serdp processed data/species-per-plot-per-day.csv")
+
 #color/theme for figures#####
 invasion_color <- scale_color_manual(values = c("red", "deepskyblue"))
 invasion_fill <- scale_color_manual(values = c("red", "deepskyblue"))
@@ -317,6 +319,24 @@ species_plot <- ggplot(data = count_and_days_plot, mapping = aes(x = species, y 
   facet_wrap(~species, scales = "free") +
   theme(axis.text.x=element_blank(), axis.ticks.x = element_blank()) +
   NULL
+
+#testing turkey only
+turkeys <- count_and_days_plot %>% 
+  filter(species=="turkey")
+
+only_turkey <- ggplot(data = turkeys, mapping = aes(x = species, y = count_per_day_plot, color= status)) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) +
+  geom_point(size = 3, alpha = 0.5, position = position_jitterdodge()) +
+  theme_classic() +
+  theme(text = element_text(size=20)) +
+  labs (y = 'Count per plot per day') +
+  xlab("Turkey") +
+  invasion_color +
+  invasion_fill +
+  theme(axis.text.x=element_blank(), axis.ticks.x = element_blank()) +
+  NULL
+ggsave(plot = only_turkey, "C:/Users/Steven/Desktop/turkey_only_host.png", width = 7, height = 7)
+
 
 ggsave(plot = species_plot, "C:/Users/Steven/Desktop/species_per_day_plot_level.png", width = 7, height = 7)
 
