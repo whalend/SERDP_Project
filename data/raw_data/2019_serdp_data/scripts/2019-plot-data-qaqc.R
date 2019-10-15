@@ -347,76 +347,68 @@ write_csv(quadrat_data_all_2019, "data/processed_data/2019_quadrat_biomass_canop
 
 ###### SITE CONDITIONS figure making #####
 
+quadrat_data_all_2019 <- read_csv("data/processed_data/2019 serdp processed data/2019_quadrat_biomass_canopy_analysis.csv")
+
+quadrat_data_all_2019$status[quadrat_data_all_2019$status=="invaded"] <- "Invaded"
+quadrat_data_all_2019$status[quadrat_data_all_2019$status=="native"] <- "Native"
+#changing to capital letters for turkey
+
+quadrat_data_all_2019 <- quadrat_data_all_2019 %>% 
+  mutate(plot_standing_dry_m2 = plot_standing_dry*16,
+         plot_litter_dry_m2 = plot_litter_dry*16)
+
+
 #veg height-----
 veg_ht <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plot_herb_veg_ht, color= status, position = "jitter")) +
-  #scale_fill_manual(values=c("#E69F00", "#999999", "#56B4E9")) +
-  geom_boxplot(outlier.size = NA) + 
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) + 
   geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
-  #geom_boxplot(alpha = 0.5) +
   theme_classic() +
-  theme(text = element_text(size=20)) +
-  labs (y = 'Vegetation height (cm)') +
+  theme(text = element_text(size=20), axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0))) +  labs (y = 'Vegetation height (cm)') +
   xlab("") +
-  #annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
   invasion_color +
   invasion_fill +
   theme(legend.position="none") +
   NULL
-  #geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
-#ylim(-.5,19)
 
 #biomass standing-----
-biomass_standing <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plot_standing_dry, color= status, position = "jitter")) +
-  #scale_fill_manual(values=c("#E69F00", "#999999", "#56B4E9")) +
-  geom_boxplot(outlier.size = NA) + 
+biomass_standing <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plot_standing_dry_m2, color= status, position = "jitter")) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) + 
   geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
-  #geom_boxplot(alpha = 0.5) +
   theme_classic() +
-  theme(text = element_text(size=20)) +
-  labs (y = 'Standing biomass (g)') +
+  theme(text = element_text(size=20), axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0))) +  labs (y = quote('Standing biomass'~(g/m^2))) +
   xlab("") +
-  #annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
   invasion_color +
   invasion_fill +
   theme(legend.position="none") +
+  scale_y_continuous(breaks = c(0,200,400,600,800,1000), limits = c(0,1120)) +
   NULL
-  #geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
-#ylim(-.5,19)
 
 #biomass litter-----
-biomass_litter <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plot_litter_dry, color= status, position = "jitter")) +
-  #scale_fill_manual(values=c("#E69F00", "#999999", "#56B4E9")) +
-  geom_boxplot(outlier.size = NA) + 
+biomass_litter <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plot_litter_dry_m2, color= status, position = "jitter")) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) + 
   geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
-  #geom_boxplot(alpha = 0.5) +
   theme_classic() +
-  theme(text = element_text(size=20)) +
-  labs (y = 'Litter biomass (g)') +
+  theme(text = element_text(size=20), axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0))) +  labs (y = quote('Litter biomass'~(g/m^2))) +
   xlab("") +
-  #annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
   invasion_color +
   invasion_fill +
   theme(legend.position="none") +
+  scale_y_continuous(breaks = c(0,250,500,750,1000), limits = c(0,1120)) +
   NULL
-  #geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
-#ylim(-.5,19)
 
 #canopy cover-----
 canopy_cover <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plot_canopy_cover_pct, color= status, position = "jitter")) +
-  #scale_fill_manual(values=c("#E69F00", "#999999", "#56B4E9")) +
-  geom_boxplot(outlier.size = NA) + 
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) + 
   geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
-  #geom_boxplot(alpha = 0.5) +
   theme_classic() +
-  theme(text = element_text(size=20)) +
-  labs (y = 'Canopy cover (%)') +
+  theme(text = element_text(size=20), axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0))) +
+  labs (y = 'Overstory canopy cover (%)') +
   xlab("") +
-  #annotate("text", x = 1.5, y = 50.5, label = "n.s.", size = 7) +
   invasion_color +
   invasion_fill +
   theme(legend.position="none")
-  #geom_hline(yintercept=0, linetype="dashed", color = "gray", size=.25) 
-#ylim(-.5,19)
+
+
 
 ggsave(plot = veg_ht, "data/raw_data/2019_serdp_data/esa figures/2019_veg_ht.png", height = 7, width = 7)
 
@@ -427,7 +419,7 @@ ggsave(plot = biomass_litter, "data/raw_data/2019_serdp_data/esa figures/2019_bi
 ggsave(plot = canopy_cover, "data/raw_data/2019_serdp_data/esa figures/2019_canopy_cover.png", height = 7, width = 7)
 
 
-site_conditions <- cowplot::plot_grid(veg_ht, canopy_cover, biomass_standing, biomass_litter, ncol = 2)
+site_conditions <- cowplot::plot_grid(canopy_cover, veg_ht, biomass_standing, biomass_litter, ncol = 2)
 
 ggsave(plot = site_conditions, "data/raw_data/2019_serdp_data/esa figures/2019_site_conditions.png", height = 8, width = 8)
 
