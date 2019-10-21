@@ -45,7 +45,8 @@ abstract: no
 
 
 ```{r setup, include=FALSE, cache=FALSE, message = FALSE}
-library(knitr); library(plyr); library(dplyr); library(readr); library(ggplot2); library(tidyr)
+library(knitr); 
+library(plyr); library(dplyr); library(readr); library(ggplot2); library(tidyr)
 
 #opts_knit$set(root.dir=normalizePath('../'))
 
@@ -62,11 +63,26 @@ opts_chunk$set(cache = 2, cache.path = "cache/")
 
 ## Plots
 opts_chunk$set(fig.path = "figures/")
-opts_chunk$set(dpi = 300)
+opts_chunk$set(dpi = 600)
 # opts_chunk$set(dev = c("png"))
 
-struc_colors <- scale_color_manual(values=c("red","cyan"))
-struc_fill <- scale_fill_manual(values=c("red","cyan"))
+## Fire Ecology figure guidelines ####
+# Figure size and resolution
+# 
+# Figures are resized during publication of the final full text and PDF versions to conform to the SpringerOpen standard dimensions, which are detailed below.
+# 
+# Figures on the web:
+# 
+#     width of 600 pixels (standard), 1200 pixels (high resolution).
+# 
+# Figures in the final PDF version:
+# 
+#     width of 85 mm for half page width figure
+#     width of 170 mm for full page width figure
+#     maximum height of 225 mm for figure and legend
+#     image resolution of approximately 300 dpi (dots per inch) at the final size
+# 
+# Figures should be designed such that all information, including text, is legible at these dimensions. All lines should be wider than 0.25 pt when constrained to standard figure widths. All fonts must be embedded.
 
 ```
 
@@ -233,9 +249,7 @@ fire_temps <- filter(fire_temps1, date > "2017-11-30") %>% select(-probe_type)
 fire_temps <- left_join(
       fire_temps,
       select(fires_biomass, fire_id, structure, biomass),
-      by = "fire_id"
-                        )
-
+      by = "fire_id")
       
 # average the temperature across each vertical level "location"
 fire_temps_avg <- fire_temps %>% 
@@ -454,39 +468,6 @@ ggplot(aes(total_biomass, s_abv100)) +
 ```
 
 
-```{r pairs-panel-fxns}
-
-panel.cor <- function(x, y, digits = 2, cex.cor, ...)
-{
-  usr <- par("usr"); on.exit(par(usr))
-  par(usr = c(0, 1, 0, 1))
-  # correlation coefficient
-  r <- (cor(x, y))
-  txt <- format(c(r, 0.123456789), digits = digits)[1]
-  txt <- paste("r= ", txt, sep = "")
-  if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
-  text(0.5, 0.5, txt, cex = cex.cor * abs(r))
-
-
-  # p-value calculation
-  # p <- cor.test(x, y)$p.value
-  # txt2 <- format(c(p, 0.123456789), digits = digits)[1]
-  # txt2 <- paste("p= ", txt2, sep = "")
-  # if(p<0.01) txt2 <- paste("p= ", "<0.01", sep = "")
-  # text(0.5, 0.4, txt2)
-}
-
-panel.hist <- function(x, ...)
-{
-      usr <- par("usr"); on.exit(par(usr))
-      par(usr = c(usr[1:2], 0, 1.5) )
-      h <- hist(x, plot = FALSE)
-      breaks <- h$breaks; nB <- length(breaks)
-      y <- h$counts; y <- y/max(y)
-      rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
-}
-```
-
 ```{r prescribed fire data}
 
 prescribed_fire <- read_csv("~/SERDP_Project/data/prescribed_fire_data_summarized.csv")
@@ -517,23 +498,16 @@ We used the statistical language `R` `r citep(citation())` for all our analyses.
 # RESULTS
 
 ```{r figures setup, eval = T}
-      
-      # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
-      # geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
-      # geom_point(aes(color = structure, shape = structure)) +
-      #       
-      # ## Prescribed fire data ##
-      # geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, ymax = avg_max_temp + sd_max_temp, ymin = avg_max_temp - sd_max_temp), width = .1) +
-      # geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
-      # geom_point(data = p_fire_summary, aes(avg_biomass, avg_max_temp, shape = type, color = type), size = 2, fill = "gold") +
             
-shapes <- scale_shape_manual(values = c("prescribed" = 23, "piled" = 2, "standing" = 0, "both" = 19))
+legend_order <- c("piled","standing","both", "prescribed")
 
-colors <- scale_color_manual(values = c("piled" = "red", "standing" = "deepskyblue", "prescribed" = "black", "both" = "purple"))
+fig_shapes <- scale_shape_manual(values = c("prescribed" = 23, "piled" = 2, "standing" = 0, "both" = 19), breaks = legend_order)
 
-fills <- scale_fill_manual(values = c("both"="purple","piled"="red","standing"="cyan"))
+fig_colors <- scale_color_manual(values = c("piled" = "red", "standing" = "deepskyblue", "prescribed" = "black", "both" = "purple"), , breaks = legend_order)
 
-linetypes <- scale_linetype_manual(values=c("piled"="solid","standing"="solid","both"="dashed"))
+fig_fills <- scale_fill_manual(values = c("both" = "purple", "piled" = "red", "standing" = "deepskyblue"), breaks = legend_order)
+
+fig_linetypes <- scale_linetype_manual(values = c("piled" = "solid", "standing" = "solid", "both" = "dashed"), breaks = legend_order)
 
 ```
 
@@ -554,11 +528,10 @@ ggplot(d1, aes(structure, pct_fuel_moisture)) +
       geom_point(aes(color = structure),size = 1, alpha = .5, show.legend = F) +
       stat_summary(aes(fill = structure), fun.y = "mean", geom = "point", shape = 22, size = 3, show.legend = F) +
 
-      colors + 
-      scale_fill_manual(values = c("both"="purple","piled"="red","standing"="deepskyblue")) +
-      shapes +
-      linetypes +
-
+      fig_colors +
+      
+      fig_fills +
+      
       theme_classic() +
       ylab("Estimated fuel moisture (%)") +
       # xlab("Date")
@@ -605,19 +578,13 @@ ggplot(fire_temps_avg, aes(time, tempC)) +
 
 model_data <- select(fabio_fires, max_temp, s_abv100, heat_flux_abv100, avg_flame_ht, max_flame_ht, rate_of_spread_50cm, biomass, structure, location, pct_fuel_moisture, avg_air_temp, avg_rh, avg_wind_speed)
 
-# GGally::ggpairs(model_data %>% filter(location == "0cm"),
-                # ggplot(model_data, aes(color = structure)))
+# GGally::ggpairs(model_data %>% filter(location == "0cm"))
 
-pairs(model_data, lower.panel = panel.cor, diag.panel = panel.hist,
-      main = "All Levels of Temperature")
-
-pairs(filter(model_data, location == "0cm"), main = "Ground Level",
-      lower.panel = panel.cor, diag.panel = panel.hist)
 
 model_data2 <- select(fires_biomass, rate_of_spread_ms, pct_consumed, max_flame_ht, avg_flame_ht, biomass, f_structure, pct_fuel_moisture, max_fuel_ht:avg_wind_speed)
 
-pairs(model_data2, lower.panel = panel.cor, diag.panel = panel.hist,
-      main = "Aggregate Fire Data")
+# pairs(model_data2, lower.panel = panel.cor, diag.panel = panel.hist,
+      # main = "Aggregate Fire Data")
 
 ```
 
@@ -666,7 +633,7 @@ Prescribed Fire Summary Table
 
 ```{r rx fire summary table}
 
-kable(select(p_fire_summary, location, avg_max_temp:se_s_abv100), digits = 2)
+knitr::kable(select(p_fire_summary, location, avg_max_temp:se_s_abv100), digits = 2)
 
 ```
 
@@ -731,8 +698,11 @@ d1 %>%
 #             )
 fabio_fires_summary$structure <- stringr::str_to_title(fabio_fires_summary$structure)
 
+d1 %>% 
+      filter(avg2_max_temp > 750) %>% 
+      arrange(avg2_max_temp)
 
-
+str(fabio_fires)
 
 # maxtemp_avg <- ggplot(fabio_fires, aes(biomass, avg2_max_temp)) +
 #       # geom_line(aes(color = location, linetype = structure)) +
@@ -770,71 +740,16 @@ fabio_fires_summary$structure <- stringr::str_to_title(fabio_fires_summary$struc
 
 ```      
 
-```{r maxtemp pub fig}
-
-maxtemp_fig_labels <- data.frame(
-      location = c("50cm","25cm","0cm"), 
-      pid = c("d","e","f"), 
-      total_biomass = c(200,200,200),
-      avg2_max_temp = c(rep(950, 3))
-      )
-
-legend_order <- c("piled","standing","both", "prescribed")
-
-max_temp_fig <- ggplot(d1, aes(total_biomass, avg2_max_temp)) +
-      
-      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
-      geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
-      geom_point(aes(color = structure, shape = structure)) +
-      # geom_smooth(color = "black", linetype = "dotdash", method = "lm") +
-            
-      ## Prescribed fire data ##
-      # geom_point(data = prescribed_fire, aes(total_biomass, max_temp), size = 1) +
-      geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, ymax = avg_max_temp + sd_max_temp, ymin = avg_max_temp - sd_max_temp), width = .1) +
-      geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
-      geom_point(data = p_fire_summary, aes(avg_biomass, avg_max_temp, shape = structure, color = structure), size = 2, fill = "gold") +
-      # geom_boxplot(data = prescribed_fire, aes(total_biomass, max_temp)) +
-      ## ##
-            
-      scale_shape_manual(values = c("piled" = 2, "standing" = 0, "both" = 19, "prescribed" = 23), breaks = legend_order) +
-      scale_color_manual(values = c("piled" = "red", "standing" = "deepskyblue", "both" = "purple", "prescribed" = "black"), breaks = legend_order) +
-      scale_fill_manual(values = c("piled"="red","standing"="cyan", "both"="purple"), breaks = legend_order) +
-      scale_linetype_manual(values=c("piled"="solid","standing"="solid","both"="dashed"), breaks = legend_order) +
-      
-      geom_text(data = maxtemp_fig_labels, aes(label = pid), fontface = "bold") +
-      
-      facet_grid(location~.) +
-      
-      ylab("Maximum temperature (ºC)") +
-      xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
-      theme_bw() +
-      scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
-      # theme_classic() +
-      theme(legend.title = element_blank(),
-            legend.text = element_text(size = 12),
-            # legend.position = c(.92, .1),
-            legend.background = element_blank(),
-            strip.background = element_blank(),
-            panel.grid = element_blank(),
-            axis.title = element_text(size = 14),
-            strip.text = element_text(size = 12)
-            # panel.border = element_blank(),
-            # panel.background = element_blank(),
-            # axis.line = element_line(colour = "black")
-            ) +
-      NULL
-
-# max_temp_fig
-
-```
 
 ```{r maxtemp linear models}
 
 ## Exclude "both" structure from model fitting
 d2 <- filter(d1, structure != "both") %>% 
       mutate(location = as.character(location))
+d2 <- left_join(d2, 
+                select(fire_weather_summary, fire_id, starts_with("avg")))
 
-max_temp_lm_full <- glm(avg2_max_temp ~ total_biomass + total_biomass*structure + total_biomass*location + structure:location,
+max_temp_lm_full <- glm(avg2_max_temp ~ total_biomass + total_biomass*structure + total_biomass*location + structure:location + pct_fuel_moisture,
                   data = d2, na.action = "na.fail")
 # summary(max_temp_lm_full)
 
@@ -844,6 +759,7 @@ max_temp_lm_full <- glm(avg2_max_temp ~ total_biomass + total_biomass*structure 
 # filter(dd, delta < 10)
 
 # 0cm location ####
+### pct_fuel_moisture not significant
 fabio_fires_0cm <- filter(d2, location == "0cm")
 max_temp_0cm <- lm(avg2_max_temp ~ total_biomass*structure, data = fabio_fires_0cm)
 # summary(max_temp_0cm)
@@ -869,6 +785,7 @@ max_temp_25cm <- lm(avg2_max_temp ~ total_biomass*structure, data = fabio_fires_
 # summary(max_temp_25cm)
 # dredge(max_temp_25cm, extra = c("R^2"))
 ## Interaction marginal p=.07, biomass-only model teensy bit better
+## pct_fuel_moisture not significant
 max_temp_25cm <- lm(avg2_max_temp ~ total_biomass + structure, data = fabio_fires_25cm)
 summ_max_temp_25cm <- summary(max_temp_25cm)
 # summ_max_temp_25cm$adj.r.squared
@@ -887,12 +804,13 @@ fabio_fires_50cm <- filter(d2, location == "50cm")
 max_temp_50cm <- lm(avg2_max_temp ~ total_biomass*structure, data = fabio_fires_50cm)
 # summary(max_temp_50cm)
 # dredge(max_temp_50cm, extra = c("R^2"))
-
-max_temp_50cm <- lm(avg2_max_temp ~ total_biomass + structure, data = fabio_fires_50cm)
+## pct_fuel_moisture not significant
+max_temp_50cm <- lm(avg2_max_temp ~ total_biomass + structure + avg_air_temp, data = fabio_fires_50cm)
 summ_max_temp_50cm <- summary(max_temp_50cm)
 # summ_max_temp_50cm$adj.r.squared
+sjPlot::plot_model(max_temp_50cm, type = "pred", terms = c("total_biomass","structure","avg_air_temp"))
 
-my_row_names <- c("Intercept", "Biomass", "Structure: standing")
+my_row_names <- c("Intercept", "Biomass", "Structure: standing", "Air temperature")
 coef50cm <-  as.data.frame(summary(max_temp_50cm)$coefficients)
 rownames(coef50cm) <- my_row_names
 coef50cm <- cbind(coef50cm, confint(max_temp_50cm))
@@ -929,6 +847,117 @@ kable(adj_rsquare_df, digits = 2)
 
 ```
 
+```{r maxtemp pub fig}
+
+maxtemp_fig_labels <- data.frame(
+      location = c("50cm","25cm","0cm"), 
+      pid = c("d","e","f"), 
+      total_biomass = c(200,200,200),
+      avg2_max_temp = c(rep(950, 3))
+      )
+
+
+maxtemp0cm_modelplot <- sjPlot::plot_model(max_temp_0cm, type = "pred", terms = c("total_biomass","structure"))
+maxtemp0cm_modelplot$data$location="0cm"
+maxtemp0cm_modelplot$data$location=factor(maxtemp0cm_modelplot$data$location, levels = c("50cm","25cm","0cm"))
+
+maxtemp25cm_modelplot <- sjPlot::plot_model(max_temp_25cm, type = "pred", terms = c("total_biomass","structure"))
+maxtemp25cm_modelplot$data$location="25cm"
+maxtemp25cm_modelplot$data$location=factor(maxtemp25cm_modelplot$data$location, levels = c("50cm","25cm","0cm"))
+
+maxtemp50cm_modelplot <- sjPlot::plot_model(max_temp_50cm, type = "pred", terms = c("total_biomass","structure"))
+maxtemp50cm_modelplot$data$location="50cm"
+maxtemp50cm_modelplot$data$location=factor(maxtemp50cm_modelplot$data$location, levels = c("50cm","25cm","0cm"))
+
+fabio_fires_0cm$location = factor(fabio_fires_0cm$location, levels = c("50cm","25cm","0cm"))
+fabio_fires_25cm$location = factor(fabio_fires_25cm$location, levels = c("50cm","25cm","0cm"))
+fabio_fires_50cm$location = factor(fabio_fires_50cm$location, levels = c("50cm","25cm","0cm"))
+
+
+## The prediction for 50cm is with air temperature at its mean of 26.55
+max_temp_fig <- ggplot() +
+      
+      ## 50cm model
+      
+      geom_ribbon(data = maxtemp50cm_modelplot$data, aes(x = x, ymin = conf.low, ymax = conf.high, fill = group), alpha = .2, show.legend = F) +
+      geom_smooth(data = maxtemp50cm_modelplot$data, aes(x = x, y = predicted, color = group), method = "lm", show.legend = F) +
+      
+      geom_point(data = rename(fabio_fires_50cm, group=structure), aes(x = total_biomass, y = avg2_max_temp, color = group, shape = group)) +
+      
+      geom_smooth(data = filter(d1, structure=="both", location=="50cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = avg2_max_temp, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+      
+      geom_point(data = filter(d1, structure=="both", location=="50cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = avg2_max_temp, shape = group, color = group), show.legend = F) +
+      
+      ## 25cm model
+      
+      geom_ribbon(data = maxtemp25cm_modelplot$data, aes(x = x, ymin = conf.low, ymax = conf.high, fill = group), alpha = .2, show.legend = F) +
+      geom_smooth(data = maxtemp25cm_modelplot$data, aes(x = x, y = predicted, color = group), method = "lm", show.legend = F) +
+      
+      geom_point(data = rename(fabio_fires_25cm, group=structure), aes(x = total_biomass, y = avg2_max_temp, color = group, shape = group)) +
+      
+      geom_smooth(data = filter(d1, structure=="both", location=="25cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = avg2_max_temp, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+      
+      geom_point(data = filter(d1, structure=="both", location=="25cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = avg2_max_temp, shape = group, color = group), show.legend = F) +
+      
+      ## 0cm model
+      
+      geom_ribbon(data = maxtemp0cm_modelplot$data, aes(x = x, ymin = conf.low, ymax = conf.high, fill = group), alpha = .2, show.legend = F) +
+      geom_smooth(data = maxtemp0cm_modelplot$data, aes(x = x, y = predicted, color = group), method = "lm", show.legend = F) +
+      
+      geom_point(data = rename(fabio_fires_0cm, group=structure), aes(x = total_biomass, y = avg2_max_temp, color = group, shape = group)) +
+      
+      
+      geom_smooth(data = filter(d1, structure=="both", location=="0cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = avg2_max_temp, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+     
+      geom_point(data = filter(d1, structure=="both", location=="0cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = avg2_max_temp, shape = group, color = group), show.legend = F) +
+      
+      geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, ymax = avg_max_temp + sd_max_temp, ymin = avg_max_temp - sd_max_temp), width = .1) +
+      
+      geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
+      
+      geom_point(data = rename(p_fire_summary, group=type), aes(avg_biomass, avg_max_temp, shape = group, color = group), size = 2, fill = "gold") +
+      
+      geom_text(data = maxtemp_fig_labels, 
+                aes(x=total_biomass, y=avg2_max_temp, label = pid),
+                fontface = "bold") +
+      
+      fig_fills + fig_colors + fig_shapes + fig_linetypes +
+
+      facet_grid(location~.) +
+
+      ylab("Maximum temperature (ºC)") +
+      ggtitle("") +
+      theme_bw() + 
+      
+      scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
+      xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
+      theme(legend.title = element_blank(),
+            legend.text = element_text(size = 12),
+            # legend.position = c(.92, .9),
+            legend.background = element_blank(),
+            strip.background = element_blank(),
+            panel.grid = element_blank(),
+            axis.title = element_text(size = 14),
+            strip.text = element_text(size = 12)
+            )
+
+      NULL
+
+# max_temp_fig
+
+```
 
 ## Time above 100 ºC
 
@@ -995,62 +1024,16 @@ d1 %>%
 
 ```
 
-```{r secs abv100 pub fig}
-
-sabv_fig_labels <- data.frame(location = c("50cm","25cm","0cm"), pid = c("a","b","c"), total_biomass = c(200,200,200), s_abv100 = c(162,200,775))
-
-s_abv100_fig <- ggplot(d1, aes(total_biomass, s_abv100)) +
-      # geom_line(aes(color = source, linetype = location)) +
-      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
-      geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
-      geom_point(aes(color = structure, shape = structure)) +
-      # scale_color_grey(start = .2, end = .8) +
-      # scale_color_manual(values=c("red","deepskyblue")) +
-       
-      ## Prescribed fire data ##
-      # geom_point(data = p_fire_summary, aes(avg_biomass, avg_s_abv100), size = 3.5, shape = 15, color = "gold") +
-      geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_s_abv100, ymax = avg_s_abv100 + sd_s_abv100, ymin = avg_s_abv100 - sd_s_abv100), width = .1) +
-      geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_s_abv100, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
-      geom_point(data = p_fire_summary, aes(avg_biomass, avg_s_abv100, shape = type, color = type), size = 2, fill = "gold") +
-      ## ##
-       
-      scale_shape_manual(values = c("prescribed" = 23, "piled" = 2, "standing" = 0, "both" = 19), breaks = legend_order) +
-      scale_color_manual(values = c("piled" = "red", "standing" = "deepskyblue", "prescribed" = "black", "both" = "purple"), breaks = legend_order) +
-      scale_fill_manual(values = c("both"="purple","piled"="red","standing"="cyan"), breaks = legend_order) +
-      scale_linetype_manual(values=c("piled"="solid","standing"="solid","both"="dashed"), breaks = legend_order) +
-      # scale_y_continuous(limits = c(0, 1000)) +
-      
-      geom_text(data = sabv_fig_labels, aes(label = pid), fontface = "bold") +
-      
-      facet_grid(location~., scales = "free_y") +
-      # scale_shape_manual(values = 21) +
-      theme_bw() +
-       scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
-      xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
-      ylab("Temperature residence time (s >100ºC)") +
-      theme(legend.title = element_blank(),
-            legend.text = element_text(size = 12),
-            # legend.position = c(.92, .9),
-            legend.background = element_blank(),
-            strip.background = element_blank(),
-            panel.grid = element_blank(),
-            axis.title = element_text(size = 14),
-            strip.text = element_text(size = 12)
-            )
-
-# s_abv100_fig
-
-```
-
 ```{r s_abv100_linear_models}
 
-s_abv100_lm <- lm(s_abv100 ~ total_biomass + total_biomass*structure + total_biomass*location + structure*location, data = d2, na.action = na.fail)
+s_abv100_lm <- lm(s_abv100 ~ total_biomass + pct_fuel_moisture + total_biomass*structure + total_biomass*location + structure*location, data = d2, na.action = na.fail)
 # summary(s_abv100_lm)
 
 # dd <- dredge(update(s_abv100_lm, .~. -avg_air_temp -avg_rh -pct_fuel_moisture), extra = c("adjR^2"))
 # filter(dd, delta < 10)
 
 ## Above 100 at 0cm model ####
+### pct_fuel_moisture not significant
 s_abv100_0cm <- lm(s_abv100 ~ total_biomass*structure, data = filter(d2, location == "0cm"))
 summ_s_abv100_0cm <- summary(s_abv100_0cm)
 
@@ -1063,6 +1046,7 @@ coef0cm <- mutate(coef0cm, Location = "0cm",
       select(Variable, Estimate:Location)
 
 ## Above 100 at 25cm model ####
+### pct_fuel_moisture not significant
 s_abv100_25cm <- lm(s_abv100 ~ total_biomass*structure, data = filter(d2, location == "25cm"))
 summ_s_abv100_25cm <- summary(s_abv100_25cm)
 coef25cm <- as.data.frame(summary(s_abv100_25cm)$coefficients)
@@ -1073,6 +1057,7 @@ coef25cm <- mutate(coef25cm, Location = "25cm",
       select(Variable, Estimate:Location)
 
 ## Above 100 at 50cm ####
+### pct_fuel_moisture not significant
 s_abv100_50cm <- lm(s_abv100 ~ total_biomass*structure, data = filter(d2, location == "50cm"))
 summ_s_abv100_50cm <- summary(s_abv100_50cm)
 coef50cm <- as.data.frame(summary(s_abv100_50cm)$coefficients)
@@ -1081,6 +1066,107 @@ coef50cm <- as.data.frame(summary(s_abv100_50cm)$coefficients)
 coef50cm <- mutate(coef50cm, Location = "50cm",
                    Variable = my_row_names) %>% 
       select(Variable, Estimate:Location)
+
+```
+
+
+```{r secs abv100 pub fig}
+
+sjp_sabv_0cm <- sjPlot::plot_model(s_abv100_0cm, type = "pred", terms = c("total_biomass","structure"))
+sjp_sabv_0cm$data$location="0cm"
+sjp_sabv_0cm$data$location=factor(sjp_sabv_0cm$data$location, levels = c("50cm","25cm","0cm"))
+
+sjp_sabv_25cm <- sjPlot::plot_model(s_abv100_25cm, type = "pred", terms = c("total_biomass","structure"))
+sjp_sabv_25cm$data$location="25cm"
+sjp_sabv_25cm$data$location=factor(sjp_sabv_25cm$data$location, levels = c("50cm","25cm","0cm"))
+
+sjp_sabv_50cm <- sjPlot::plot_model(s_abv100_50cm, type = "pred", terms = c("total_biomass","structure"))
+sjp_sabv_50cm$data$location="50cm"
+sjp_sabv_50cm$data$location=factor(maxtemp50cm_modelplot$data$location, levels = c("50cm","25cm","0cm"))
+
+sabv_fig_labels <- data.frame(location = c("50cm","25cm","0cm"), pid = c("a","b","c"), total_biomass = c(200,200,200), s_abv100 = c(160,200,775))
+
+
+s_abv100_fig <- ggplot() +
+      
+      ## 50cm model
+      
+      geom_ribbon(data = sjp_sabv_50cm$data, aes(x = x, ymin = conf.low, ymax = conf.high, fill = group), alpha = .2, show.legend = F) +
+      
+      geom_smooth(data = sjp_sabv_50cm$data, aes(x = x, y = predicted, color = group), method = "lm", show.legend = F) +
+      
+      geom_point(data = rename(fabio_fires_50cm, group=structure), aes(x = total_biomass, y = s_abv100, color = group, shape = group)) +
+      
+      geom_smooth(data = filter(d1, structure=="both", location=="50cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = s_abv100, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+      
+      geom_point(data = filter(d1, structure=="both", location=="50cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = s_abv100, shape = group, color = group), show.legend = F) +
+      
+      ## 25cm model
+      
+      geom_ribbon(data = sjp_sabv_25cm$data, aes(x = x, ymin = conf.low, ymax = conf.high, fill = group), alpha = .2, show.legend = F) +
+      
+      geom_smooth(data = sjp_sabv_25cm$data, aes(x = x, y = predicted, color = group), method = "lm", show.legend = F) +
+      
+      geom_point(data = rename(fabio_fires_25cm, group=structure), aes(x = total_biomass, y = s_abv100, color = group, shape = group)) +
+      
+      geom_smooth(data = filter(d1, structure=="both", location=="25cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = s_abv100, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+      
+      geom_point(data = filter(d1, structure=="both", location=="25cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = s_abv100, shape = group, color = group), show.legend = F) +
+      
+      ## 0cm model
+      
+      geom_ribbon(data = sjp_sabv_0cm$data, aes(x = x, ymin = conf.low, ymax = conf.high, fill = group), alpha = .2, show.legend = F) +
+      
+      geom_smooth(data = sjp_sabv_0cm$data, aes(x = x, y = predicted, color = group), method = "lm", show.legend = F) +
+      
+      geom_point(data = rename(fabio_fires_0cm, group=structure), aes(x = total_biomass, y = s_abv100, color = group, shape = group)) +
+      
+      
+      geom_smooth(data = filter(d1, structure=="both", location=="0cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = s_abv100, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+     
+      geom_point(data = filter(d1, structure=="both", location=="0cm") %>% 
+                        rename(group = structure),
+                  aes(x = total_biomass, y = s_abv100, shape = group, color = group), show.legend = F) +
+      
+      geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_s_abv100, ymax = avg_s_abv100 + sd_s_abv100, ymin = avg_s_abv100 - sd_s_abv100), width = .1) +
+      
+      geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_s_abv100, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
+      
+      geom_point(data = rename(p_fire_summary, group=type), aes(avg_biomass, avg_s_abv100, shape = group, color = group), size = 2, fill = "gold") +
+      
+      geom_text(data = sabv_fig_labels, 
+                aes(x=total_biomass, y=s_abv100, label = pid),
+                fontface = "bold") +
+      
+      fig_fills + fig_colors + fig_shapes + fig_linetypes +
+      
+      facet_grid(location~., scales = "free_y") +
+      # scale_shape_manual(values = 21) +
+      theme_bw() +
+      ylab("Temperature residence time (s >100ºC)") +
+       scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
+      xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
+      theme(legend.title = element_blank(),
+            legend.text = element_text(size = 12),
+            # legend.position = c(.92, .9),
+            legend.background = element_blank(),
+            strip.background = element_blank(),
+            panel.grid = element_blank(),
+            axis.title = element_text(size = 14),
+            strip.text = element_text(size = 12)
+            )
+
+# s_abv100_fig
 
 ```
 
@@ -1147,22 +1233,34 @@ kable(abv100_rsquared_df, digits = 2)
 ```
 
 
-## Multi-panel temperature figure
+## Multi-panel temperature figure for publication
 
 ```{r max sabv100 pub figure, fig.height=7.5, fig.width=7.5}
 
-cowplot::plot_grid(
-      s_abv100_fig +
+sfig <- s_abv100_fig +
             theme(
                   strip.text = element_blank(),
-                  legend.position = c(.25,.25)
-                  ),
-      max_temp_fig +
+                  legend.position = c(.28,.25)
+                  )
+
+tfig <- max_temp_fig +
             # xlab("") +
-            theme(legend.position = "none"),
+            theme(legend.position = "none",
+                  strip.text = element_blank())
+
+ggsave("FABIO-manuscript/figures/maxt_models_fig.png", tfig, width = 3.25, height = 7.5, dpi = 600, device = "png")
+
+ggsave("FABIO-manuscript/figures/sabv_models_fig.png", sfig, width = 3.25, height = 7.5, dpi = 600, device = "png")
+
+      
+
+cowplot::plot_grid(
+      sfig, tfig,
       nrow = 1, rel_widths = c(1,1.05)
       # labels = "auto"
       )
+
+
 
 ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
 
@@ -1214,59 +1312,34 @@ ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
 # p_fire_summary
 ```
 
-```{r flame ht pub fig}
+```{r fuel height figure}
 
-flame_height_fig <- ggplot(d1, aes(total_biomass, avg_flame_ht)) +
-      # struc_colors +
-      # geom_point(aes(shape = structure), size = 2) +
-      # stat_summary(fun.data = "mean_se", geom = "pointrange", position = position_dodge(width = 100), aes(shape = structure)) +
-       # geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2) +
-            
-      # struc_colors +
-      # struc_fill +
-      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
-      geom_smooth(data = filter(d1, structure!="both"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
-      geom_point(aes(color = structure, shape = structure)) +
-            
-      ## Prescribed fire data ##
-      geom_errorbar(data = p_fire_flame_ht, aes(x = avg_biomass, y = avg_flame_ht, ymax = avg_flame_ht + sd_flame_ht, ymin = avg_flame_ht - sd_flame_ht), width = .1) +
-      geom_errorbarh(data = p_fire_flame_ht, aes(x = avg_biomass, y = avg_flame_ht, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
-      geom_point(data = p_fire_flame_ht, aes(avg_biomass, avg_flame_ht, shape = type, color = type), size = 2, fill = "gold") +
-      ## ##
-            
-      scale_shape_manual(values = c("prescribed" = 23, "piled" = 2, "standing" = 0, "both" = 19), breaks = legend_order) +
-      scale_color_manual(values = c("piled" = "red", "standing" = "deepskyblue", "prescribed" = "black", "both" = "purple"), breaks = legend_order) +
-      scale_fill_manual(values = c("both" = "purple", "piled" = "red", "standing" = "cyan"), breaks = legend_order) +
-      scale_linetype_manual(values=c("piled" = "solid", "standing" = "solid", "both" = "dashed"), breaks = legend_order) +
+ggplot(fires_biomass, aes(structure, avg_fuel_ht)) +
+      geom_boxplot()
       
-      theme_bw() +
-      scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
-      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
-      ylab("Average flame height (cm)") +
-      theme(legend.title = element_blank(), 
-            # legend.direction = "vertical",
-            legend.position = c(.02,.98),
-            legend.justification = c("left","top"),
-            legend.spacing = unit(x = -.3, units = "cm"),
-            axis.title = element_text(size = 12),
-            axis.text = element_text(size = 12),
-            plot.margin = unit(c(.5,.5,.5,.5), "cm"),
-            panel.grid = element_blank()
-            )
-
-# flame_height_fig
 
 ```
 
+
+
 ```{r flame height modeling}
 
-f_ht_mod <- lm(avg_flame_ht ~ biomass*structure + avg_fuel_ht*structure, data = fires_biomass)
+f_ht_mod <- lm(avg_flame_ht ~ biomass*structure + avg_air_temp , data = fires_biomass)
 # summary(f_ht_mod)
 # sjPlot::plot_model(f_ht_mod, type = "int")
+# no RH, wind speed, fuel height
 
 f_ht_mod2 <- lm(avg_flame_ht ~ biomass*structure + avg_fuel_ht, data = fires_biomass)
 # summary(f_ht_mod2)
+## Measured fuel height doesn't have an effect per se beyond the different structure, which I think makes sense because are fuel heights within a structure didn't have a wide range.
 # sjPlot::plot_model(f_ht_mod2, type = "pred", terms = c("biomass", "structure"))
+## Test for effect of fuel height within the structure treatment
+f_ht_mod2a_piled_only <- lm(avg_flame_ht ~ biomass + max_fuel_ht, data = filter(fires_biomass, structure=="piled"))
+summary(f_ht_mod2a_piled_only)
+
+f_ht_mod2a_standing_only <- lm(avg_flame_ht ~ biomass + max_fuel_ht, data = filter(fires_biomass, structure=="standing"))
+summary(f_ht_mod2a_standing_only)
+## Avg and max fuel height is significant for piled but not for standing
 
 f_ht_mod3 <- lm(avg_flame_ht ~ biomass*structure, data = fires_biomass)
 # summary(f_ht_mod3)
@@ -1286,9 +1359,9 @@ f_ht_mod3 <- lm(avg_flame_ht ~ biomass*structure, data = fires_biomass)
 **Flame height model coefficients**
 ```{r flame ht model coefs}
 
-flame_ht_mod_summ <- summary(f_ht_mod3)
+flame_ht_mod_summ <- summary(f_ht_mod)
 
-my_row_names <- c("Intercept", "Biomass", "Structure: standing", "Biomass X Structure")
+my_row_names <- c("Intercept", "Biomass", "Structure: standing", "Air temperature", "Biomass X Standing")
 flame_ht_coefs <- as.data.frame(flame_ht_mod_summ$coefficients)
 
 flame_ht_coefs <- flame_ht_coefs %>% 
@@ -1303,11 +1376,65 @@ kable(flame_ht_coefs, digits = 2, caption = "Model estimates of flame heights fr
 ```{r flame ht model Anova type2, eval = F}
 
 # require(car)
-f_ht_anova <- car::Anova(f_ht_mod3, type = "II")
+f_ht_anova <- car::Anova(f_ht_mod, type = "II")
 
 kable(f_ht_anova, digits = 3)
 
 ```
+
+```{r flame ht pub fig}
+
+p1 <- sjPlot::plot_model(f_ht_mod, type = "pred", terms = c("biomass","structure"), show.data = F, show.legend = FALSE)
+
+library(ggeffects)
+
+df <- ggpredict(f_ht_mod, terms = c("biomass","structure"))
+
+flame_height_fig <- ggplot(df, aes(x, predicted)) +
+      
+      geom_ribbon(aes(ymin = conf.low, ymax = conf.high, color = group, fill = group), alpha = .2, show.legend = FALSE, linetype = 0) +
+      
+      geom_point(data = filter(d1, location =="0cm") %>% 
+                       rename(group = structure), 
+                 aes(total_biomass, avg_flame_ht, 
+                     color = group, shape = group)) +
+      
+      geom_smooth(
+            data = filter(d1, structure == "both", location=="0cm") %>% 
+                  rename(group = structure),
+            aes(total_biomass, avg_flame_ht, 
+                color = group, linetype = group),
+            method = "lm", se = F, show.legend = F
+            ) +
+      
+      geom_smooth(aes(color = group), method = "lm", show.legend = F, se = FALSE) +
+      
+      geom_errorbar(data = p_fire_flame_ht, aes(x = avg_biomass, y = avg_flame_ht, ymax = avg_flame_ht + sd_flame_ht, ymin = avg_flame_ht - sd_flame_ht), width = .1) +
+      geom_errorbarh(data = p_fire_flame_ht, aes(x = avg_biomass, y = avg_flame_ht, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
+      geom_point(data = p_fire_flame_ht, aes(avg_biomass, avg_flame_ht, shape = type, color = type), size = 2, fill = "gold") +
+      
+      fig_shapes +
+      fig_colors +
+      fig_fills +
+      fig_linetypes +
+      
+      theme_bw() +
+      scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
+      xlab(expression(paste("Fuel load (g/", m^{2}, ")"))) +
+      ylab("Average flame height (cm)") +
+      theme(legend.title = element_blank(), 
+            # legend.direction = "vertical",
+            legend.position = c(.02,.98),
+            legend.justification = c("left","top"),
+            legend.spacing = unit(x = -.3, units = "cm"),
+            axis.title = element_text(size = 12),
+            axis.text = element_text(size = 12),
+            plot.margin = unit(c(.5,.5,.5,.5), "cm"),
+            panel.grid = element_blank()
+            )
+
+```
+
 
 ```{r fuel height, eval=F}
 
@@ -1351,10 +1478,11 @@ ggplot(fires_biomass, aes(avg_fuel_ht, avg_flame_ht, color = structure)) +
 # summary(m1)
 # sjPlot::plot_model(m1, type = "pred", terms = "biomass", show.data = T)
 pct_consumed_data <- d1 %>% filter(!duplicated(fire_id)) %>% 
-      select(structure, total_biomass, pct_consumed) %>% 
+      select(fire_id, structure, total_biomass, pct_consumed) %>% 
       mutate(p_consumed = pct_consumed*.01,
              p_consumed = if_else(p_consumed==1, .99, p_consumed),
-             pct_consumed = p_consumed * 100)
+             pct_consumed = p_consumed * 100) %>% 
+      left_join(., select(fires_biomass, fire_id, pct_fuel_moisture, avg_air_temp:avg_wind_speed))
 
 # ggplot(filter(pct_consumed_data, structure == "standing"),
 #        aes((total_biomass), (pct_consumed))) +
@@ -1364,7 +1492,9 @@ pct_consumed_data <- d1 %>% filter(!duplicated(fire_id)) %>%
 pct_consumed_fig <- ggplot(pct_consumed_data, aes(total_biomass, pct_consumed)) +
       
       geom_smooth(data = filter(pct_consumed_data, structure=="standing"), aes(color = structure, fill = structure, linetype = structure), method = "loess", se = F, size = .8, alpha = .2, show.legend = F) +
+      
       geom_smooth(data = filter(pct_consumed_data, structure!="standing"), aes(color = structure, fill = structure, linetype = structure), method = "lm", se = F, size = .8, alpha = .2, show.legend = F) +
+      
       geom_point(aes(color = structure, shape = structure)) +
       
       scale_shape_manual(values = c("prescribed" = 23, "piled" = 2, "standing" = 0, "both" = 19), breaks = legend_order) +
@@ -1392,18 +1522,6 @@ pct_consumed_fig <- ggplot(pct_consumed_data, aes(total_biomass, pct_consumed)) 
 
 ```
 
-```{r pct consumed skim table, eval = F }
-
-t <- skimr::skim(
-      fires_biomass %>% 
-            filter(structure=="standing") %>% 
-            select(biomass, pct_consumed, structure) %>% 
-            group_by(biomass)
-            )
-str(t)
-select(t)
-
-```
 
 ```{r pct consumed model fitting}
 
@@ -1411,11 +1529,11 @@ pcons_model_data <- filter(pct_consumed_data, structure!="both")
 
 m1 <- glm(p_consumed ~ total_biomass*structure, data = pcons_model_data, family = "gaussian")
 # summary(m1)
-# car::Anova(m1)
+# car::Anova(m1, type="II")
 
 # library(betareg)
-pct_consumed_breg <- betareg::betareg(p_consumed ~ total_biomass*structure, data = pcons_model_data)
-# filter(pct_consumed_data, structure!="both")
+pct_consumed_breg <- betareg::betareg(p_consumed ~ total_biomass*structure + avg_rh, data = pcons_model_data)
+
 # summary(pct_consumed_breg)
 # car::Anova(pct_consumed_breg, type = "II")# suggested don't use in this post http://rcompanion.org/handbook/J_02.html, 
 # lmtest::coeftest(pct_consumed_breg)
@@ -1430,6 +1548,7 @@ m3 <- betareg::betareg(p_consumed ~ total_biomass, data = pcons_model_data)
 # summary(m3)
 
 # AIC(m2, m3, pct_consumed_breg)
+MuMIn::AICc(m2, m3, pct_consumed_breg)
 
 # lmtest::lrtest(m2,m3,pct_consumed_breg)
 
@@ -1470,28 +1589,36 @@ For the piled fires, the small amounts of remaining biomass that weren't consume
 
 ```{r pct consumed fitted model figure}
 
-sjp.p.consumed <- sjPlot::plot_model(pct_consumed_breg, type = "pred", terms = c("total_biomass","structure"), show.data = T, ci.lvl = F)
+sjp.p.consumed <- sjPlot::plot_model(pct_consumed_breg, type = "pred", terms = c("total_biomass","structure"), show.data = F)
 
-pct_consumed_fig <- ggplot(sjp.p.consumed$data, aes(x, predicted)) +
+pct_consumed_fig <- sjp.p.consumed + 
       
-      geom_point(data = pct_consumed_data, aes(total_biomass, p_consumed, color = structure, shape = structure)) +
+      geom_ribbon(data = sjp.p.consumed$data, aes(x = x, ymin = conf.low, ymax = conf.high, fill = group), alpha = .2, linetype = 0, show.legend = FALSE) +
+
+      geom_point(data = rename(pct_consumed_data, group = structure),
+                 aes(total_biomass, p_consumed, 
+                     color = group, shape = group), show.legend = F) +
       geom_smooth(
-            data = filter(pct_consumed_data, structure == "both"),
-            aes(total_biomass, p_consumed, color = structure, linetype = structure),
+            data = filter(pct_consumed_data, structure == "both") %>% 
+                  rename(group = structure),
+            aes(total_biomass, p_consumed, 
+                color = group, linetype = group),
             method = "lm", se = F, show.legend = F
             ) +
-      geom_line(aes(color = group), show.legend = F) +
+      # geom_line(aes(color = group), show.legend = F) +
       
-      scale_shape_manual(values = c("prescribed" = 23, "piled" = 2, "standing" = 0, "both" = 19), breaks = legend_order) +
-      scale_color_manual(values = c("piled" = "red", "standing" = "deepskyblue", "prescribed" = "black", "both" = "purple"), breaks = legend_order) +
-      scale_fill_manual(values = c("both" = "purple", "piled" = "red", "standing" = "cyan"), breaks = legend_order) +
-      scale_linetype_manual(values=c("piled" = "solid", "standing" = "solid", "both" = "dashed"), breaks = legend_order) +
+      fig_shapes +
+      fig_colors + 
+      fig_fills +
+      fig_linetypes +
+      
+      ggtitle("") +
       
       xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
       ylab("Mass consumed (%)") +
-      
       scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
       scale_y_continuous(breaks = c(0, 0.2, 0.4, 0.6, 0.8,1.0), labels = c("0","20","40","60","80", "100"), limits = c(0, 1.0)) +
+      
       theme_bw() +
       theme(legend.title = element_blank(), 
             # legend.direction = "vertical",
@@ -1514,60 +1641,9 @@ pct_consumed_fig <- ggplot(sjp.p.consumed$data, aes(x, predicted)) +
 Rate of spread was measured by recording the number of seconds it took the fire-line to travel 50 cm and then converted to units of m s^-1^. 
 We did not record rate of spread for fires with "both" fuel structure.
 
-```{r rate of spread}
-
-## Analyze rate of spread with zeroes and with zeroes excluded as NA.
-
-## Filter data to fires where rate of spread was measured
-# ros_data <- d1 %>% 
-#       filter(!is.na(rate_of_spread_ms)) %>% 
-#       filter(!duplicated(fire_id)) %>% 
-#       select(structure, total_biomass, rate_of_spread_ms) %>% 
-#       mutate(rate_of_spread_ms = if_else(rate_of_spread_ms==Inf, 0, rate_of_spread_ms))
-
-# unique(ros_data$structure)
-## We did not record rate of spread for fires with "both" fuel structure
-
-# View(filter(fires_biomass, rate_of_spread_50cm>62, structure=="standing"))
-ros_fig <- ggplot(fires_biomass, 
-       aes(biomass, rate_of_spread_ms, color = structure)) +
-            
-      geom_smooth(aes(color = structure, fill = structure, linetype = structure), method = "lm", se = T, size = .8, alpha = .2, show.legend = F) +
-      geom_point(aes(color = structure, shape = structure)) +
-      
-      scale_shape_manual(values = c("prescribed" = 23, "piled" = 2, "standing" = 0, "both" = 19), breaks = legend_order) +
-      scale_color_manual(values = c("piled" = "red", "standing" = "deepskyblue", "prescribed" = "black", "both" = "purple"), breaks = legend_order) +
-      scale_fill_manual(values = c("both" = "purple", "piled" = "red", "standing" = "cyan"), breaks = legend_order) +
-      scale_linetype_manual(values=c("piled" = "solid", "standing" = "solid", "both" = "dashed"), breaks = legend_order) +
-      
-      scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
-      scale_y_continuous(
-            breaks = c(0, 0.3, 0.6),
-            labels = c("0","0.3","0.6"),
-            limits = c(0, 0.72)
-            ) +
-      
-      theme_bw() +
-      xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
-      ylab(expression(paste("Rate of spread (m ", s^{-1}, ")"))) +
-      theme(legend.title = element_blank(), 
-            # legend.direction = "vertical",
-            legend.position = c(.02,.98),
-            legend.justification = c("left","top"),
-            legend.spacing = unit(x = -.3, units = "cm"),
-            axis.title = element_text(size = 12),
-            axis.text = element_text(size = 12),
-            plot.margin = unit(c(.5,.5,.5,.5), "cm"),
-            panel.grid = element_blank()
-            )
-
-# ros_fig
-
-```
-
 ```{r ros modeling}
 
-ros_model1 <- lm(rate_of_spread_ms ~ total_biomass*structure + avg_air_temp, data = fires_biomass)
+ros_model1 <- lm(rate_of_spread_ms ~ total_biomass*structure +  avg_air_temp, data = fires_biomass)
 # summary(ros_model1)
 
 ros_model2 <- lm(rate_of_spread_ms ~ total_biomass*structure, data = fires_biomass)
@@ -1612,23 +1688,78 @@ knitr::kable(ros_anova, digits = 2)
 
 ```
 
+```{r rate of spread figure}
+
+## Analyze rate of spread with zeroes and with zeroes excluded as NA.
+
+## Filter data to fires where rate of spread was measured
+# ros_data <- d1 %>% 
+#       filter(!is.na(rate_of_spread_ms)) %>% 
+#       filter(!duplicated(fire_id)) %>% 
+#       select(structure, total_biomass, rate_of_spread_ms) %>% 
+#       mutate(rate_of_spread_ms = if_else(rate_of_spread_ms==Inf, 0, rate_of_spread_ms))
+
+# unique(ros_data$structure)
+## We did not record rate of spread for fires with "both" fuel structure
+
+# View(filter(fires_biomass, rate_of_spread_50cm>62, structure=="standing"))
+
+sjp.ros <- sjPlot::plot_model(ros_model1, type = "pred", terms = c("total_biomass","structure"), show.data = FALSE)
+
+ros_fig <- sjp.ros +
+      
+      geom_point(data = rename(fires_biomass, group = structure),
+            aes(x = total_biomass, y = rate_of_spread_ms,color = group, shape = group)) +
+      
+      
+      scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
+    
+      ggtitle("") +
+      xlab(expression(paste("Fuel load (g ", m^{-2}, ")"))) +
+      ylab(expression(paste("Rate of spread (m ", s^{-1}, ")"))) +
+      
+      fig_colors + fig_shapes + fig_fills + fig_linetypes +
+      
+      theme_bw() +
+      theme(legend.title = element_blank(), 
+            # legend.direction = "vertical",
+            legend.position = c(.02,.98),
+            legend.justification = c("left","top"),
+            legend.spacing = unit(x = -.3, units = "cm"),
+            axis.title = element_text(size = 12),
+            axis.text = element_text(size = 12),
+            plot.margin = unit(c(.5,.5,.5,.5), "cm"),
+            panel.grid = element_blank()
+            )
+
+# ros_fig
+
+```
+
+
+## Multi-panel publication figure: flame height, ros, % consumed
 ```{r flame ros consumed pub figure, fig.height=7.5, fig.width=4}
 
 cowplot::plot_grid(
       flame_height_fig +
             xlab("") +
-            theme(legend.background = element_blank()),
+            theme(legend.background = element_blank(),
+                  legend.position = c(0, 1.08),
+                  # legend.spacing.y = unit(.5, units = "cm"),
+                  plot.margin = margin(c(15,5,-5,15))),
       ros_fig + 
             xlab("") +
-            theme(legend.position = "none"),
+            theme(legend.position = "none",
+                  plot.margin = margin(c(-5,5,-5,15))),
       pct_consumed_fig +
-            theme(legend.position = "none"),
-      ncol = 1, labels = "auto")
-ggsave("figures/ros-flame-consumed.png", height = 7.5, width = 4)
+            theme(legend.position = "none",
+                  plot.margin = margin(c(-5,5,0,15))),
+      ncol = 1, labels = "auto" )
+
+ggsave("figures/ros-flame-consumed.png", height = 17, width = 8.5, units = "cm", dpi = 600)
 
 ```
 
-The confidence interval around the fitted line for the standing fuels in the rate of spread panel (b) doesn't extend to the 250g fuel load because only one fire at that fuel load had a measurable rate of spread. 
 
 ```{r flame ros consumed tables}
 
@@ -1662,6 +1793,30 @@ flame_ros_consumed_r2 <- data.frame(
 knitr::kable(flame_ros_consumed_r2, digits = 2)
 
 ```
+
+```{r write out model dataframes, eval=F}
+
+t_mod_data <- d2 %>% 
+      select(fire_id, location, structure, total_biomass,
+             avg_max_temp = avg2_max_temp,
+             s_abv100,
+             pct_fuel_moisture, avg_air_temp:avg_wind_speed)
+write_csv(t_mod_data, "FABIO-manuscript/temperature_data.csv")
+
+flameht_ros_data <- fires_biomass %>% 
+      select(fire_id, structure, biomass, rate_of_spread_ms, avg_flame_ht,
+             pct_fuel_moisture, avg_air_temp:avg_wind_speed)
+write_csv(flameht_ros_data, "FABIO-manuscript/flameht_ros_data.csv")
+
+write_csv(pct_consumed_data %>% 
+      filter(structure!="both") %>% 
+      select(fire_id:total_biomass, p_consumed,
+       pct_fuel_moisture:avg_wind_speed),
+      "FABIO-manuscript/pct_consumed_data.csv"
+)
+
+```
+
 
 
 # DISCUSSION
