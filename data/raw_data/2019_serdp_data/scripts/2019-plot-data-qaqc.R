@@ -275,13 +275,15 @@ ticks_2019 <- ggplot(data = florida_ticks, mapping = aes(x = invaded, y = count,
 
 cowplot::plot_grid(ticks_on_dod, ticks_2019, ncol = 2)
 
-###### begin assessing 2019 plot data for veg hts, bioass, canopy cover, etc ####
+###### begin assessing 2019 plot data for veg hts, bioass, canopy cover, species for covers etc ####
 
 quadrat_data <- read_csv("data/processed_data/quadrat1m.csv")
 
 biomass_data <- read_csv("data/processed_data/quadrat25cm.csv")
 
 canopy_data <- read_csv("data/processed_data/canopy-cover.csv")
+
+species_data <- read_csv("data/processed_data/species1m.csv")
 
 quadrat_data_2019 <- quadrat_data %>% 
   filter(visit_year==2019) %>% 
@@ -301,14 +303,22 @@ canopy_data_2019 <- canopy_data %>%
          status_2 = stringr::str_sub(plot_id, 1, 2),
          status = if_else(status_2 == "n", "native", "invaded"))
 
+species_data_2019 <- species_data %>% 
+  filter(visit_year==2019) %>% 
+  mutate(plot_id = as.character(stringr::str_sub(plot_id, -2, -1)),
+         status_2 = stringr::str_sub(plot_id, 1, 2),
+         status = if_else(status_2 == "n", "native", "invaded"),
+         date = as.Date(date, "%m/%d/%Y"))
+
 quadrat_data_2019[is.na(quadrat_data_2019)] <- 0
 
 quadrat_stats <- quadrat_data_2019 %>% 
   group_by(installation, date, plot_id, transect_id, status) %>%
-  filter(!is.na(woody_veg_ht1), !is.na(woody_veg_ht2), !is.na(woody_veg_ht3), !is.na(herb_veg_ht1), !is.na(herb_veg_ht2), !is.na(herb_veg_ht3), !is.na(litter_ht1), !is.na(litter_ht2), !is.na(litter_ht3)) %>%
+  filter(!is.na(woody_veg_ht1), !is.na(woody_veg_ht2), !is.na(woody_veg_ht3), !is.na(herb_veg_ht1), !is.na(herb_veg_ht2), !is.na(herb_veg_ht3), !is.na(litter_ht1), !is.na(litter_ht2), !is.na(litter_ht3), !is.na(pct_green)) %>%
   summarise(avg_woody_veg_ht = mean(woody_veg_ht1, woody_veg_ht2, woody_veg_ht3), 
             avg_herb_veg_ht = mean(herb_veg_ht1, herb_veg_ht2, herb_veg_ht3),
-            avg_litter_ht = mean(litter_ht1, litter_ht2, litter_ht3))
+            avg_litter_ht = mean(litter_ht1, litter_ht2, litter_ht3),
+            avg_pct_green = mean(pct_green))
 
 
 quadrat_stats$status[quadrat_stats$plot_id=="n1"] <- "native"
@@ -320,7 +330,8 @@ quadrat_stats_2 <- quadrat_stats %>%
   group_by(installation, date, plot_id, status) %>% 
   summarise(plot_woody_veg_ht = mean(avg_woody_veg_ht),
             plot_herb_veg_ht = mean(avg_herb_veg_ht),
-            plot_litter_ht = mean(avg_litter_ht))
+            plot_litter_ht = mean(avg_litter_ht),
+            plot_pct_green = mean(avg_pct_green))
 #quadrat1m stats complete ready for join
 
 biomass_stats <- biomass_data_2019 %>% 
@@ -337,17 +348,30 @@ canopy_stats <- canopy_data_2019 %>%
             plot_canopy_cover_pct = mean_canopy_cover_dots*1.04)
 canopy_stats$status[canopy_stats$plot_id=="n1"] <- "native"
 canopy_stats$status[canopy_stats$plot_id=="n2"] <- "native"
-#canopy stats done ready to merge all#
+
+species_data_2019[is.na(species_data_2019)] <- 0
+
+species_stats <- species_data_2019 %>% 
+  group_by(installation, date, plot_id, status, transect_id) %>% 
+  summarise(total_quadrat_pct_cover = sum(pct_cover)) %>% 
+  ungroup(.) %>% 
+  group_by(installation, date, plot_id, status) %>% 
+  summarise(plot_pct_plant_cover = sum(total_quadrat_pct_cover)/4)
+
+species_data_2019[is.na(species_data_2019)] <- 0
+species_stats$status[species_stats$plot_id=="n1"] <- "native"
+species_stats$status[species_stats$plot_id=="n2"] <- "native"
+#species stats done ready to merge all#
 
 total_1 <- left_join(biomass_stats, quadrat_stats_2)
-quadrat_data_all_2019 <- left_join(canopy_stats, total_1)
+quadrat_data_all_2019_no_species <- left_join(canopy_stats, total_1) 
+quadrat_data_all_2019 <- left_join(species_stats, quadrat_data_all_2019_no_species)
 write_csv(quadrat_data_all_2019, "data/processed_data/2019_quadrat_biomass_canopy_analysis.csv")
 
-# filter(!is.na(woody_veg_ht1), !is.na(woody_veg_ht2), !is.na(woody_veg_ht3), !is.na(herb_veg_ht1), !is.na(herb_veg_ht2), !is.na(herb_veg_ht3), !is.na(litter_ht1), !is.na(litter_ht2), !is.na(litter_ht3)) %>%
-
 ###### SITE CONDITIONS figure making #####
+####^ exported above all quadrat data to excel to manually remove plots that were not pairs (previously was all plots sampled. there were multiple invaded sites sampled at some locations but only one native for example. should be 8 total native-invaded paired plots)
 
-quadrat_data_all_2019 <- read_csv("data/processed_data/2019 serdp processed data/2019_quadrat_biomass_canopy_analysis.csv")
+quadrat_data_all_2019 <- read_csv("data/processed_data/2019_quadrat_biomass_canopy_analysis.csv")
 
 quadrat_data_all_2019$status[quadrat_data_all_2019$status=="invaded"] <- "Invaded"
 quadrat_data_all_2019$status[quadrat_data_all_2019$status=="native"] <- "Native"
@@ -368,6 +392,8 @@ veg_ht <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plo
   invasion_color +
   invasion_fill +
   theme(legend.position="none") +
+  scale_y_continuous(breaks = c(0,25,50,75,100,125), limits = c(0,130)) +
+  annotate("text", x = 1.5, y = 117, label = "***", size = 7) +
   NULL
 
 #biomass standing-----
@@ -381,6 +407,7 @@ biomass_standing <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = statu
   invasion_fill +
   theme(legend.position="none") +
   scale_y_continuous(breaks = c(0,200,400,600,800,1000), limits = c(0,1120)) +
+  annotate("text", x = 1.5, y = 1008, label = "*", size = 7) +
   NULL
 
 #biomass litter-----
@@ -394,6 +421,7 @@ biomass_litter <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status,
   invasion_fill +
   theme(legend.position="none") +
   scale_y_continuous(breaks = c(0,250,500,750,1000), limits = c(0,1120)) +
+  annotate("text", x = 1.5, y = 900, label = "n.s.", size = 7) +
   NULL
 
 #canopy cover-----
@@ -406,9 +434,58 @@ canopy_cover <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y
   xlab("") +
   invasion_color +
   invasion_fill +
-  theme(legend.position="none")
+  theme(legend.position="none") +
+  scale_y_continuous(breaks = c(40,60,80,100), limits = c(0,100)) +
+  annotate("text", x = 1.5, y = 65, label = "n.s.", size = 7) +
+  NULL
+
+#pct green, proxy for percent cover of tillers?-----
+pct_green <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plot_pct_green, color= status, position = "jitter")) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) + 
+  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  theme_classic() +
+  theme(text = element_text(size=20), axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0))) +  labs (y = 'Percent green per plot (%)') +
+  xlab("") +
+  invasion_color +
+  invasion_fill +
+  theme(legend.position="none") +
+  scale_y_continuous(limits = c(0,100))+
+  #annotate("text", x = 1.5, y = 115, label = "***", size = 7) +
+  NULL
+
+pct_cover <- ggplot(data = quadrat_data_all_2019, mapping = aes(x = status, y = plot_pct_plant_cover, color= status, position = "jitter")) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) + 
+  geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
+  theme_classic() +
+  theme(text = element_text(size=20), axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0))) +  labs (y = 'Plant cover (%)') +
+  xlab("") +
+  invasion_color +
+  invasion_fill +
+  theme(legend.position="none") +
+  scale_y_continuous(limits = c(0,100)) +
+  annotate("text", x = 1.5, y = 90, label = "**", size = 7) +
+  NULL
 
 
+green_vs_total <- cowplot::plot_grid(pct_green, pct_cover, ncol = 2)
+
+Maov_canopy<- aov(plot_canopy_cover_pct ~ status, data = quadrat_data_all_2019)
+summary(Maov_canopy)
+
+Maov_litter_mass<- aov(plot_litter_dry_m2 ~ status, data = quadrat_data_all_2019)
+summary(Maov_litter_mass)
+
+Maov_standing_mass<- aov(plot_standing_dry_m2 ~ status, data = quadrat_data_all_2019)
+summary(Maov_standing_mass)
+
+Maov_veg_ht<- aov(plot_herb_veg_ht ~ status, data = quadrat_data_all_2019)
+summary(Maov_veg_ht)
+
+Maov_pct_green<- aov(plot_pct_green ~ status, data = quadrat_data_all_2019)
+summary(Maov_pct_green)
+
+Maov_pct_cover<- aov(plot_pct_plant_cover ~ status, data = quadrat_data_all_2019)
+summary(Maov_pct_cover)
 
 ggsave(plot = veg_ht, "data/raw_data/2019_serdp_data/esa figures/2019_veg_ht.png", height = 7, width = 7)
 
@@ -418,11 +495,9 @@ ggsave(plot = biomass_litter, "data/raw_data/2019_serdp_data/esa figures/2019_bi
 
 ggsave(plot = canopy_cover, "data/raw_data/2019_serdp_data/esa figures/2019_canopy_cover.png", height = 7, width = 7)
 
-
-site_conditions <- cowplot::plot_grid(canopy_cover, veg_ht, biomass_standing, biomass_litter, ncol = 2)
+site_conditions <- egg::ggarrange(canopy_cover, veg_ht, pct_cover, biomass_standing, ncol = 2)
 
 ggsave(plot = site_conditions, "data/raw_data/2019_serdp_data/esa figures/2019_site_conditions.png", height = 8, width = 8)
-
 
 #^ with all installation and summary box
 ggplot(quadrat_stats_2, aes(installation, plot_herb_veg_ht, color = status)) +
