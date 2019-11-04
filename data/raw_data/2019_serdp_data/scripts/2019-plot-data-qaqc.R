@@ -2,7 +2,7 @@
 
 #### load packages ####
 library(plyr); library(dplyr); library(ggplot2); library(readr)
-library(stringi)
+library(stringi); library(stringr)
 
 #+read in data ####
 tick_data <- read_csv(file = "data/raw_data/2019_serdp_data/2019-only-tick-data.csv")
@@ -22,15 +22,40 @@ unique(tick_data$plot_id)
 unique(tick_data$life_stage)
 unique(tick_data$location)
 
+
 ticks_adult <- filter(tick_data, life_stage == "adult")
 ticks_nymphs <- filter(tick_data, life_stage == "nymph")
 
-adults <- ticks_adult %>% 
+all_ticks <- tick_data %>% 
+  group_by(installation, plot_id, invaded, life_stage, date) %>% 
+  summarise(ticks_per_plot = sum(count))
+
+ticks_zero <- filter(all_ticks, ticks_per_plot == 0)
+ticks_zero <- ticks_zero %>% 
   group_by(installation, plot_id, invaded, date) %>% 
+  summarise(total_zero = sum(count))
+
+adults <- ticks_adult %>%
+  group_by(installation, plot_id, invaded, date) %>%
   summarise(total_adult = sum(count))
-nymph <- ticks_nymphs %>% 
-  group_by(installation, plot_id, invaded, date) %>% 
+
+nymph <- ticks_nymphs %>%
+  group_by(installation, plot_id, invaded, date) %>%
   summarise(total_nymph = sum(count))
+
+adult_nymph_csv <- left_join(nymph,adults) %>% 
+  ungroup(.) 
+
+test_join <- left_join(ticks_zero, adult_nymph_csv)
+
+ticks_zero <- filter(tick_data, life_stage =="NA")
+
+write_csv(adult_nymph_csv, "data/processed_data/2019_total_ticks_plot.csv")
+  
+  
+  group_by(installation, plot_id, invaded) %>% 
+  summarise(adult_per_plot = mean(total_adult),
+            nymph_per_plot = mean(total_nymph))
 
 
 Maov<- aov(total_adult ~ invaded, data = adults)
@@ -366,7 +391,7 @@ species_stats$status[species_stats$plot_id=="n2"] <- "native"
 total_1 <- left_join(biomass_stats, quadrat_stats_2)
 quadrat_data_all_2019_no_species <- left_join(canopy_stats, total_1) 
 quadrat_data_all_2019 <- left_join(species_stats, quadrat_data_all_2019_no_species)
-write_csv(quadrat_data_all_2019, "data/processed_data/2019_quadrat_biomass_canopy_analysis.csv")
+write_csv(quadrat_data_all_2019, "data/processed_data/2019_quadrat_biomass_canopy_analysis_non_removed_pair.csv")
 
 ###### SITE CONDITIONS figure making #####
 ####^ exported above all quadrat data to excel to manually remove plots that were not pairs (previously was all plots sampled. there were multiple invaded sites sampled at some locations but only one native for example. should be 8 total native-invaded paired plots)
