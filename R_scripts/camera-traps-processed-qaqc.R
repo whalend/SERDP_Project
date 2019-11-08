@@ -9,7 +9,7 @@ old_with_many_from_wes <- read_csv("data/raw_data/2019_serdp_data/all_camera_pho
 
 photos <- read_csv("data/raw_data/2019_serdp_data/all_camera_photos.csv")
 summary(photos)
-#filter(photos, cow >1)
+
 
 #rearranging column names into something that made more sense because they were all random out of whack
 photos <- photos[,c(4,9,7,11,14,15,18,6,3,5,12,17,1,2,13,16,8,10,19)]
@@ -168,8 +168,6 @@ write_csv(photos_combined, "data/processed_data/2019 serdp processed data/2019-c
 #trapped_days <- read_csv("C:/Users/Steven/Desktop/serdp/testing camera trap stuff/CamearaDays.csv")
 #^ read in camera trap days test from drew, true number of days from first photo taken to last photo taken. preferred over camera out/camera in because of failures due to mech/battery dead/sd full in a few days instead of the full range of deployment
 
-# filter(photos_combined, !is.na(other))$other %>% unique(.)
-## Done here by using the 'tidyr::gather' function after some other manipulations
 
 ##attemping counts/days trapped using file name extractions
 
@@ -211,7 +209,7 @@ photo_stats_cow <- photos_combined %>%
   mutate(species = "cow") %>% 
   group_by(status, installation, plot_id, sd_card, species) %>%
   summarise(count = sum(cow))
-          
+
 photo_stats_deer <- photos_combined %>%
   mutate(species = "deer") %>%
   group_by(status, installation, plot_id, sd_card, species) %>%
@@ -227,28 +225,18 @@ photo_stats_pig <- photos_combined %>%
   group_by(status, installation, plot_id, sd_card, species) %>%
   summarise(count = sum(pig))
 
-# photo_stats_raccoon <- photos_combined %>%
-#   mutate(species = "raccoon") %>%
-#   group_by(status, installation, plot_id, sd_card, species) %>%
-#   summarise(count = sum(raccoon))
-# 
-# photo_stats_armadillo <- photos_combined %>%
-#   mutate(species = "armadillo") %>%
-#   group_by(status, installation, plot_id, sd_card, species) %>%
-#   summarise(count = sum(armadillo))
-#raccoon at 4 plots, armadillo at 1
-
 species_counts_by_sd_card <- rbind(photo_stats_cow, photo_stats_deer, photo_stats_turkey, photo_stats_pig)
 
-# species_counts_by_sd_card_zero <- species_counts_by_sd_card %>% 
-#   filter(count > 0)
-#all individuals across native/invaded only main 4 hosts, keeping zeros for now
 
 species_counts_status <- species_counts_by_sd_card %>%
   group_by(status, species) %>%
   summarise(count = sum(count))
 
 count_and_days <- left_join(species_counts_by_sd_card, camera_days)
+
+count_and_days_deer <- count_and_days %>% 
+  filter(species=="deer")
+write_csv(count_and_days_deer, "data/processed_data/2019 serdp processed data/count_and_days_host_deer_only.csv")
 
 count_and_days_camera <- count_and_days %>% 
   group_by(status, installation, plot_id, sd_card, species) %>% 
@@ -320,23 +308,53 @@ species_plot <- ggplot(data = count_and_days_plot, mapping = aes(x = species, y 
   theme(axis.text.x=element_blank(), axis.ticks.x = element_blank()) +
   NULL
 
-#testing turkey only
-turkeys <- count_and_days_plot %>% 
-  filter(species=="turkey")
+Maov<- aov(count_per_day_plot ~ status, data = count_and_days_plot)
+summary(Maov)
 
-only_turkey <- ggplot(data = turkeys, mapping = aes(x = species, y = count_per_day_plot, color= status)) +
+#testing deer only, turkey not signif
+
+deers <- count_and_days_plot %>% 
+  filter(species=="deer")
+Maov_deer<- aov(count_per_day_plot ~ status, data = deers)
+summary(Maov_deer)
+
+deers$status[deers$status=="invaded"] <- "Invaded"
+deers$status[deers$status=="native"] <- "Native"
+
+
+
+
+only_deer <- ggplot(data = deers, mapping = aes(x = status, y = count_per_day_plot, color= status)) +
   geom_boxplot(outlier.size = NA, outlier.alpha = 0) +
   geom_point(size = 3, alpha = 0.5, position = position_jitterdodge()) +
   theme_classic() +
-  theme(text = element_text(size=20)) +
-  labs (y = 'Count per plot per day') +
-  xlab("Turkey") +
+  theme(text = element_text(size=16)) +
+  labs (y = 'Deer camera trap photos (per day)') +
+  #xlab("Deer") +
   invasion_color +
   invasion_fill +
-  theme(axis.text.x=element_blank(), axis.ticks.x = element_blank()) +
+  theme(axis.ticks.x = element_blank(), axis.title.x = element_blank(), legend.position = "none", axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0))) +
+  annotate("text", x = 2, y = 8, label = "*", size = 7) +
   NULL
-ggsave(plot = only_turkey, "C:/Users/Steven/Desktop/turkey_only_host.png", width = 7, height = 7)
+ggsave(plot = only_deer, "C:/Users/Steven/Desktop/deer_only_host.png", width = 3.4, height = 5  )
+write_csv(deers, "C:/Users/Steven/Desktop/paired_only_deer.csv")
 
+paired_manual_edit <- read_csv("C:/Users/Steven/Desktop/paired_only_deer.csv")
+
+only_deer <- ggplot(data = paired_manual_edit, mapping = aes(x = status, y = count_per_day_plot, color= status)) +
+  geom_boxplot(outlier.size = NA, outlier.alpha = 0) +
+  geom_point(size = 3, alpha = 0.5, position = position_jitterdodge()) +
+  theme_classic() +
+  theme(text = element_text(size=16)) +
+  labs (y = 'Deer camera trap photos (per day)') +
+  #xlab("Deer") +
+  invasion_color +
+  invasion_fill +
+  theme(axis.ticks.x = element_blank(), axis.title.x = element_blank(), legend.position = "none", axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0))) +
+  annotate("text", x = 2, y = 8, label = "*", size = 7) +
+  NULL
+Maov_deer<- aov(count_per_day_plot ~ status, data = paired_manual_edit)
+summary(Maov_deer)
 
 ggsave(plot = species_plot, "C:/Users/Steven/Desktop/species_per_day_plot_level.png", width = 7, height = 7)
 

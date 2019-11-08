@@ -98,6 +98,37 @@ adult_drew <- ggplot(adults, aes(invaded, total_adult, color = invaded, position
   theme(legend.position="none")+
   scale_y_continuous(limits = c(0,20))
 
+
+
+sample_plot <- ggplot(adults,
+       aes(invaded, total_adult, color = invaded)) +
+  stat_summary(aes(color = invaded), fun.data = "mean_se", geom = "pointrange", size = 1) +
+  geom_point(alpha = .5, size = 2, position = "jitter") +
+  invasion_color +
+  invasion_fill +
+  theme_classic() +
+  xlab("") +
+  ylab("Adult ticks") +
+  ggtitle("Adults ticks per plot") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+
+ggsave(plot = sample_plot, "C:/Users/Steven/Desktop/example_stat_summary.png", height = 7, width = 7)
+write_csv(adults, "C:/Users/Steven/Desktop/example_stat_summary_adult_ticks.csv")
+
+
+
+ggplot(adults,
+       aes(invaded, total_adult, color = invaded)) +
+  stat_summary(aes(color = invaded), fun.data = "mean_se", geom = "pointrange", size = 1) +
+  geom_point(alpha = .5, size = 2, show.legend = F, position = "jitter") +
+  invasion_color +
+  invasion_fill +
+  theme_classic() +
+  xlab("Status") +
+  ylab("Adults per plot") +
+  def_theme 
+  
 nymph_drew <- ggplot(nymph, aes(invaded, total_nymph, color = invaded, position = "jitter")) +
   geom_boxplot(outlier.size = NA, outlier.alpha = 0) + 
   geom_jitter(size = 3, alpha = 0.5, width = 0.15) +
@@ -548,8 +579,7 @@ quadrat_stats_all$status[quadrat_stats_all$status=="native"] <- "zummaryN"
 
 
 ##### reading in secondary logger info #####
-
-loggers <- read_csv("data/processed_data/2019-final-round-loggers-serdp.csv")
+loggers <- read_csv("data/processed_data/2019 serdp processed data/2019-final-round-loggers-serdp.csv")
 
 summary(loggers)
 loggers <- loggers[c(2:5)]
@@ -567,8 +597,6 @@ loggers <- loggers %>%
   filter(date_time > "2019-06-12 20:00:00") %>% 
   filter(tempC > 10) %>% 
   filter(RH > 20) %>% 
-  filter(logger_id != 19) %>%
-  filter(logger_id != 17) %>%
   mutate(installation = "test",
          plot_id = "test",
          status = "n")
@@ -637,9 +665,213 @@ loggers$status[loggers$logger_id=="24"] <- "native"
 
 #fixing error because ggplot wouldnt plot date as character
 loggers <- loggers %>% 
-  mutate(date = as.Date(substr(date_time, 1,10)))
+  mutate(date = as.Date(substr(date_time, 1,10))) 
+  
+loggers_hancock <- loggers %>% 
+  filter(installation=="hancock")
+loggers_riversedge <- loggers %>% 
+  filter(installation=="riversedge")
+loggers_brown <- loggers %>% 
+  filter(installation=="brown")
+loggers_silversprings <- loggers %>% 
+  filter(installation=="silversprings")
+loggers_munson <- loggers %>% 
+  filter(installation=="munson")
+loggers_peace <- loggers %>% 
+  filter(installation=="peace")
+loggers_wes <- loggers %>% 
+  filter(installation=="wes")
 
-#View(loggers)
+####hancock
+loggers_hancock_min <- loggers_hancock %>% 
+  group_by(date, installation, plot_id, status, logger_id) %>% 
+  summarise(daily_min_rh = min(RH))
+
+loggers_hancock_below <- loggers_hancock %>% 
+  filter(between(RH, 20, 74.99)) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_below_75 = n(),
+            minutes_below_75 = obs_below_75*5,
+            hours_below_75 = minutes_below_75/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_below_75)
+
+loggers_hancock_above <- loggers_hancock %>%
+  filter(RH >85.01) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_above_85 = n(),
+            minutes_above_85 = obs_above_85*5,
+            hours_above_85 = minutes_above_85/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_above_85)
+
+hancock_thresholds_1 <- left_join(loggers_hancock_above, loggers_hancock_below)
+hancock_thresholds <- left_join(hancock_thresholds_1, loggers_hancock_min)
+
+write_csv(hancock_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/hancock_thresholds.csv")
+
+####riversedge
+loggers_riversedge_min <- loggers_riversedge %>% 
+  group_by(date, installation, plot_id, status, logger_id) %>% 
+  summarise(daily_min_rh = min(RH))
+
+loggers_riversedge_below <- loggers_riversedge %>% 
+  filter(between(RH, 20, 74.99)) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_below_75 = n(),
+            minutes_below_75 = obs_below_75*5,
+            hours_below_75 = minutes_below_75/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_below_75)
+
+loggers_riversedge_above <- loggers_riversedge %>%
+  filter(RH >85.01) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_above_85 = n(),
+            minutes_above_85 = obs_above_85*5,
+            hours_above_85 = minutes_above_85/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_above_85)
+
+riversedge_thresholds_1 <- left_join(loggers_riversedge_above, loggers_riversedge_below)
+riversedge_thresholds <- left_join(riversedge_thresholds_1, loggers_riversedge_min)
+
+write_csv(riversedge_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/riversedge_thresholds.csv")
+
+####brown
+
+loggers_brown_min <- loggers_brown %>% 
+  group_by(date, installation, plot_id, status, logger_id) %>% 
+  summarise(daily_min_rh = min(RH))
+
+loggers_brown_below <- loggers_brown %>% 
+  filter(between(RH, 20, 74.99)) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_below_75 = n(),
+            minutes_below_75 = obs_below_75*5,
+            hours_below_75 = minutes_below_75/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_below_75)
+
+loggers_brown_above <- loggers_brown %>%
+  filter(RH >85.01) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_above_85 = n(),
+            minutes_above_85 = obs_above_85*5,
+            hours_above_85 = minutes_above_85/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_above_85)
+
+brown_thresholds_1 <- left_join(loggers_brown_above, loggers_brown_below)
+brown_thresholds <- left_join(brown_thresholds_1, loggers_brown_min)
+
+write_csv(brown_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/brown_thresholds.csv")
+
+####silversprings
+
+loggers_silversprings_min <- loggers_silversprings %>% 
+  group_by(date, installation, plot_id, status, logger_id) %>% 
+  summarise(daily_min_rh = min(RH))
+
+loggers_silversprings_below <- loggers_silversprings %>% 
+  filter(between(RH, 20, 74.99)) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_below_75 = n(),
+            minutes_below_75 = obs_below_75*5,
+            hours_below_75 = minutes_below_75/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_below_75)
+
+loggers_silversprings_above <- loggers_silversprings %>%
+  filter(RH >85.01) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_above_85 = n(),
+            minutes_above_85 = obs_above_85*5,
+            hours_above_85 = minutes_above_85/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_above_85)
+
+silversprings_thresholds_1 <- left_join(loggers_silversprings_above, loggers_silversprings_below)
+silversprings_thresholds <- left_join(silversprings_thresholds_1, loggers_silversprings_min)
+
+write_csv(silversprings_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/silversprings_thresholds.csv")
+
+####munson
+
+loggers_munson_min <- loggers_munson %>% 
+  group_by(date, installation, plot_id, status, logger_id) %>% 
+  summarise(daily_min_rh = min(RH))
+
+loggers_munson_below <- loggers_munson %>% 
+  filter(between(RH, 20, 74.99)) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_below_75 = n(),
+            minutes_below_75 = obs_below_75*5,
+            hours_below_75 = minutes_below_75/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_below_75)
+
+loggers_munson_above <- loggers_munson %>%
+  filter(RH >85.01) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_above_85 = n(),
+            minutes_above_85 = obs_above_85*5,
+            hours_above_85 = minutes_above_85/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_above_85)
+
+munson_thresholds_1 <- left_join(loggers_munson_above, loggers_munson_below)
+munson_thresholds <- left_join(munson_thresholds_1, loggers_munson_min)
+
+write_csv(munson_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/munson_thresholds.csv")
+
+####peace
+
+loggers_peace_min <- loggers_peace %>% 
+  group_by(date, installation, plot_id, status, logger_id) %>% 
+  summarise(daily_min_rh = min(RH))
+
+loggers_peace_below <- loggers_peace %>% 
+  filter(between(RH, 20, 74.99)) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_below_75 = n(),
+            minutes_below_75 = obs_below_75*5,
+            hours_below_75 = minutes_below_75/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_below_75)
+
+loggers_peace_above <- loggers_peace %>%
+  filter(RH >85.01) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_above_85 = n(),
+            minutes_above_85 = obs_above_85*5,
+            hours_above_85 = minutes_above_85/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_above_85)
+
+peace_thresholds_1 <- left_join(loggers_peace_above, loggers_peace_below)
+peace_thresholds <- left_join(peace_thresholds_1, loggers_peace_min)
+
+write_csv(peace_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/peace_thresholds.csv")
+
+###wes
+
+loggers_wes_min <- loggers_wes %>% 
+  group_by(date, installation, plot_id, status, logger_id) %>% 
+  summarise(daily_min_rh = min(RH))
+
+loggers_wes_below <- loggers_wes %>% 
+  filter(between(RH, 20, 74.99)) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_below_75 = n(),
+            minutes_below_75 = obs_below_75*5,
+            hours_below_75 = minutes_below_75/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_below_75)
+
+loggers_wes_above <- loggers_wes %>%
+  filter(RH >85.01) %>%
+  group_by(date, installation, plot_id, status, logger_id) %>%
+  summarise(obs_above_85 = n(),
+            minutes_above_85 = obs_above_85*5,
+            hours_above_85 = minutes_above_85/60) %>%
+  select(date, installation, status, plot_id, logger_id, hours_above_85)
+
+wes_thresholds_1 <- left_join(loggers_wes_above, loggers_wes_below)
+wes_thresholds <- left_join(wes_thresholds_1, loggers_wes_min)
+
+write_csv(wes_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/wes_thresholds.csv")
+
+####end processing each indiviudal installation for sep csv's for drew analysis 
+
+
 
 loggers_by_status <- loggers %>% 
   group_by(status, date) %>% 
@@ -802,13 +1034,25 @@ dung_2019_species <- dung_2019 %>%
             total_2m = sum(dung2m),
             plot_total = sum(dung1m, dung2m))
 
+dung_2019_species <- dung_2019_species %>% 
+  filter(species!="armadillo") %>% 
+  filter(species!="gopher tortoise") %>% 
+  filter(species!="turkey") %>% 
+  filter(species!="turkey eggs") %>% 
+  filter(species!="horse") %>% 
+  filter(species!="racoon") 
 
-ggplot(dung_2019_species, aes(installation, total_1m, color = status)) +
+dung_2019_species$species[dung_2019_species$species=="rabbit"] <- "cottontail"
+  
+  
+
+ggplot(dung_2019_species, aes(species, plot_total, color = status, position = "dodge")) +
   geom_boxplot() +
-  geom_boxplot(data = dung_2019_species, aes(status, total_1m, color = status)) +
+  geom_point(position = "jitter") +
+  #geom_boxplot(data = dung_2019_species, aes(status, total_1m, color = status)) +
   invasion_color +
   invasion_fill +
-  ylab("Dung in 1m transects/plot") +
+  ylab("Plot total dung counts") +
   xlab("Site") +
   theme_bw()
 
