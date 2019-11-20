@@ -65,7 +65,7 @@ plot_visit_data <- left_join(
 )
 # summary(plot_visit_data)
 # sort(unique(plot_visit_data$plot_id))
-# filter(plot_visit_data, is.na(n_fires))$plot_id
+# filter(plot_visit_data, is.na(years_since_fire))$plot_id
 
 # There should be 104 records, 29 in visit year 2017 and 75 in 2018.
 # filter(plot_visit_data, visit_year==2017)
@@ -2814,10 +2814,16 @@ plot_model(tick_mod, type = "pred", terms = c("avg_canopy_cover"), pred.type = "
 
 ```{r cogongrass data, eval=F}
 
+cogon_data_raw <- read_csv("data/raw_data/cogon-data.csv")
+summary(cogon_data_raw)
+
 cogon_data_import <- read_csv("data/processed_data/cogongrass.csv")
 summary(cogon_data_import)
+filter(cogon_data_import, is.na(litter_wet))$plot_id
+
 cogon_biomass <- cogon_data_import %>%
       select(site, plot_id, date, fresh_biomass, dry_biomass, litter_wet, litter_dry) %>%
+      
       filter(!is.na(fresh_biomass)) %>%
       mutate(fresh_biomass_gm2 = fresh_biomass*16,
              dry_biomass_gm2 = dry_biomass*16,
@@ -2864,14 +2870,15 @@ skimr::skim(d1)
 
 cogon_biomass <- left_join(
       cogon_biomass,
-      select(plot_visit_data, installation, visit_date, plot_id, years_since_fire, inst_name))
+      select(plot_visit_data, visit_date, plot_id, y_since_fire, inst_name))
 cogon_biomass$inst_name
 summary(cogon_biomass)
 
 cogon_data <- left_join(
       cogon_data_import %>% 
             mutate(visit_date = lubridate::ymd(date)),
-      select(plot_visit_data, installation, visit_date, plot_id, years_since_fire, inst_name))
+      select(plot_visit_data, visit_date, plot_id, y_since_fire, inst_name))
+summary(cogon_data)
 
 ggplot(cogon_data, 
        aes(years_since_fire, tiller_density)) +
