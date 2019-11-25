@@ -3,16 +3,16 @@ library(dplyr)
 library(readr)
 library(ggplot2)
 
-secondary_loggers <- read_csv("data/processed_data/2019-secondary-logger-sampling.csv")
+secondary_loggers <- read_csv("data/processed_data/2019 serdp processed data/2019-secondary-logger-sampling.csv")
 
 summary(secondary_loggers)
 
-secondary_loggers <- secondary_loggers %>% 
+secondary_loggers <- secondary_loggers %>%
   mutate(date_time = lubridate::ymd_hms(paste(date,time)),
          id = as.character.numeric_version(stringr::str_sub(logger_id, start = 1, end = 2)),
          status = id,
          location = id,
-         installation = id) %>% 
+         installation = id) %>%
   filter(date_time < "2019-05-30 06:16:00")
 
 secondary_loggers$status[secondary_loggers$id=="01"] <- "invaded"
@@ -114,7 +114,7 @@ secondary_loggers <- secondary_loggers %>%
 
 write_csv(secondary_loggers, "data/processed_data/2019-secondary-logger-trimmed.csv")
 
-trimmed_loggers <- read_csv("data/processed_data/2019-secondary-logger-trimmed.csv")
+trimmed_loggers <- read_csv("data/processed_data/2019 serdp processed data/2019-secondary-logger-trimmed.csv")
 
 # define consistent them
 def_theme <- theme(legend.title = element_blank(),
@@ -125,17 +125,18 @@ def_theme <- theme(legend.title = element_blank(),
                    plot.title = element_text(size = 28),
                    strip.background = element_blank(),
                    panel.grid = element_blank(),
-                   panel.background = element_blank())
+                   panel.background = element_blank()
+                   )
 invasion_color <- scale_color_manual(values = c("red","deepskyblue"))
 invasion_fill <- scale_color_manual(values = c("red","deepskyblue"))
 
 max_temp_all_time <- ggplot(trimmed_loggers, aes(date_time, tempC, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm",
               alpha = .2) +
-  geom_point(aes(color = status)) +
+  geom_point(aes(color = status), alpha = .1) +
   #geom_hline(yintercept = 35, linetype = "solid", color = "gray") +
   #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=.2) +
-  geom_point(data = trimmed_loggers, aes(y = tempC, color = status)) +
+  # geom_point(data = trimmed_loggers, aes(y = tempC, color = status)) +
   invasion_color +
   invasion_fill +
   ylab("Average daily maximum temperature °C") +
@@ -147,16 +148,17 @@ max_temp_all_time <- ggplot(trimmed_loggers, aes(date_time, tempC, color = statu
   #scale_x_continuous(expand = c(0,0), limits = c(0,336), breaks = c(0, 50, 100, 150, 200, 250, 300, 350)) +
   #scale_y_continuous(expand = c(0,0), limits = c(5, 44), breaks = c(5, 10, 15, 20, 25, 30, 35, 40)) +
   #guides(fill=FALSE, color=FALSE) +
+  theme_classic() +
   def_theme +
   NULL
 
 min_rh_all_time <- ggplot(trimmed_loggers, aes(date_time, RH, color = status)) +
   geom_smooth(aes(fill = status, color = status), se = T, method = "lm",
               alpha = .2) +
-  geom_point(aes(color = status)) +
+  geom_point(aes(color = status), alpha = .1) +
   #geom_hline(yintercept = 80, linetype = "solid", color = "gray") +
   #geom_vline(xintercept = vline_days, linetype = "dashed", alpha=.2) +
-  geom_point(data = trimmed_loggers, aes(y = RH, color = status)) +
+  # geom_point(data = trimmed_loggers, aes(y = RH, color = status)) +
   invasion_color +
   invasion_fill +
   ylab("Average daily minimum %RH") +
@@ -168,11 +170,11 @@ min_rh_all_time <- ggplot(trimmed_loggers, aes(date_time, RH, color = status)) +
   def_theme +
   NULL
 
-trimmed_loggers_peaceriver_tree <- trimmed_loggers %>% 
-  filter(installation == "peaceriver") %>% 
+trimmed_loggers_peaceriver_tree <- trimmed_loggers %>%
+  filter(installation == "peaceriver") %>%
   filter(location =="tree")
-trimmed_loggers_peaceriver_center <- trimmed_loggers %>% 
-  filter(installation == "peaceriver") %>% 
+trimmed_loggers_peaceriver_center <- trimmed_loggers %>%
+  filter(installation == "peaceriver") %>%
   filter(location =="center")
 
 test1 <- ggplot(trimmed_loggers_peaceriver_tree, aes(date_time, RH, color = status)) +
@@ -182,7 +184,7 @@ alpha = .2) +
   invasion_color +
   ylab("tree") +
   invasion_fill +
-  def_theme + 
+  def_theme +
   NULL
 
 test2 <- ggplot(trimmed_loggers_peaceriver_center, aes(date_time, RH, color = status)) +
@@ -192,7 +194,7 @@ test2 <- ggplot(trimmed_loggers_peaceriver_center, aes(date_time, RH, color = st
   ylab("center") +
   invasion_color +
   invasion_fill +
-  def_theme + 
+  def_theme +
   NULL
 
 
@@ -202,11 +204,11 @@ test3 <- cowplot::plot_grid(test1, test2, ncol = 2)
 
 # brown testing
 
-trimmed_loggers_brown_tree <- trimmed_loggers %>% 
-  filter(installation == "brown") %>% 
+trimmed_loggers_brown_tree <- trimmed_loggers %>%
+  filter(installation == "brown") %>%
   filter(location =="tree")
-trimmed_loggers_brown_center <- trimmed_loggers %>% 
-  filter(installation == "brown") %>% 
+trimmed_loggers_brown_center <- trimmed_loggers %>%
+  filter(installation == "brown") %>%
   filter(location =="center")
 
 
@@ -217,7 +219,7 @@ test4 <- ggplot(trimmed_loggers_brown_tree, aes(date_time, RH, color = status)) 
   invasion_color +
   ylab("tree") +
   invasion_fill +
-  def_theme + 
+  def_theme +
   NULL
 
 test5 <- ggplot(trimmed_loggers_brown_center, aes(date_time, RH, color = status)) +
@@ -227,18 +229,18 @@ test5 <- ggplot(trimmed_loggers_brown_center, aes(date_time, RH, color = status)
   ylab("center") +
   invasion_color +
   invasion_fill +
-  def_theme + 
+  def_theme +
   NULL
 
 test6 <- cowplot::plot_grid(test4, test5, ncol = 2)
 
 ## hancock
 
-trimmed_loggers_hancock_tree <- trimmed_loggers %>% 
-  filter(installation == "hancock") %>% 
+trimmed_loggers_hancock_tree <- trimmed_loggers %>%
+  filter(installation == "hancock") %>%
   filter(location =="tree")
-trimmed_loggers_hancock_center <- trimmed_loggers %>% 
-  filter(installation == "hancock") %>% 
+trimmed_loggers_hancock_center <- trimmed_loggers %>%
+  filter(installation == "hancock") %>%
   filter(location =="center")
 
 
@@ -249,7 +251,7 @@ test7 <- ggplot(trimmed_loggers_hancock_tree, aes(date_time, RH, color = status)
   invasion_color +
   ylab("tree") +
   invasion_fill +
-  def_theme + 
+  def_theme +
   NULL
 
 test8 <- ggplot(trimmed_loggers_hancock_center, aes(date_time, RH, color = status)) +
@@ -259,7 +261,7 @@ test8 <- ggplot(trimmed_loggers_hancock_center, aes(date_time, RH, color = statu
   ylab("center") +
   invasion_color +
   invasion_fill +
-  def_theme + 
+  def_theme +
   NULL
 
 test9 <- cowplot::plot_grid(test7, test8, ncol = 2)
