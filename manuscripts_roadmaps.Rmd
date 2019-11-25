@@ -10,7 +10,11 @@ output:
     toc_float: yes
 ---
 
+# High Priority
+
 ## 1. General Theme: Grass invasion effects on tick survival/abundance & disease risk
+
+Lead by Drew. Main survival analysis by Allie
 
 ### Data Included
 
@@ -57,39 +61,9 @@ output:
     
     - Does potentially more adults feeding at the same time as emerging larvae mean greater possibility of the nymphal-stage becoming infected? Kind of like a "vertical transmission" but not in the true sense of parent directly to offspring, rather indirectly via environmental conditions enhancing adult survival. We have drafted a conceptual figure illustrating this process in terms of disease risk to humans during the tick life-cycle.
 
+## 2. General Theme: Direct and indirect effects of climate and prescribed fire management on tick-borne disease risk
 
-## 2. General Theme: Effects of an invasive grass on tick-borne pathogens and infection prevalence
-
-This theme could fit in with the manuscript above but would mean waiting for pathogen data from the 2019 tick collections.
-
-### Data Included
-
- - Pathogens recovered from ticks in cogongrass-invaded and uninvaded plots
-    - ***in progress*** most invaded plots will be 2019 data
-    
- - Could be limited to 2019 paired plots, but may make sense to leverage all the pathogen data (2017 - 2019) that we generate
-    - this could be complicated due to the sampling across fire history
- 
- - Host species data to explicitly assess species-specific pathogens
-    - e.g. are the ticks "local" or being brought in on larger hosts
-    - local ticks = pathogens associated with hosts found in dung surveys/camera traps; otherwise ticks may be arriving on transient hosts with the caveat of detection issues 
- 
-### Analyses
-
- - Compare abundance, diversity, composition of pathogen communities from ticks collected in cogongrass-invaded vs. uninvaded areas
- 
- - Assess whether any differences in pathogens are related to differencs in host species 
- 
- - Leverage survival experiment results for contextualizing impact
- 
-### Writing
-
-General idea stage. None specifically but this would lean on the manuscript above.
-
-
-## 3. General Theme: Direct and indirect effects of climate and prescribed fire management on tick-borne disease risk
-
-I think this manuscript could easily involve everyone as coauthors.
+Lead by Whalen
 
 ### Data Included
 
@@ -129,7 +103,44 @@ None explicitly but I think this would use some from the proposal and the interi
 Compare and contrast the ecological context of results for these forests in the southeast U.S. with results from studies in the midwest, northeast, and west U.S.
 
 
-## 4. General Theme: Influence of fire return interval on plant communities in pine forest stands across the southeast U.S.
+
+## 3. General Theme: Forecasting tick-borne disease risk under future climate and plant (cogongrass) invasion scenarios
+
+This is related to the forecasting/decision-support objective in the proposal - a major requirement of the SERDP contract.
+
+Lead by Tess and Mike.
+
+Tess is thinking two papers, one focused on the ecological forecasting and one on developing and testing management scenarios.
+
+### Data Included
+
+ - All field survey data
+ - All data Tess is collecting to "grow" cogongrass in ED2
+ - Data from fire experiments involving cogongrass: FABIO, Bivens, Gio's
+ - Tick survival experiment
+ - Tick humidity threshold experiment
+ - Climate change forecasts
+
+Basically all the things
+
+### Analyses
+
+Tess & Mike apply data and results to parameterize the models and develop the decision-support tool.
+
+For forecasting: test multiple invasion and climate scenarios using the relationships established/proven by the structural equation model and discuss the ecological implications
+
+For management: develop a decision support tool to explore how management could change the outcomes of invasion and climate scenarios
+
+ - How can we all contribute in support of their lead efforts?
+ 
+### Writing
+
+None new. Text from the proposal can probably be recycled. 
+
+
+# Medium Priority
+
+## 1. General Theme: Influence of fire return interval on plant communities in pine forest stands across the southeast U.S.
 
 Without regular fire the communities of upland pine and pine savannahs rapidly disassemble. 
 
@@ -155,7 +166,8 @@ Fluctuating resource hypothesis
 None. General idea stage
 
 
-## 5. General Theme: When and where is tick-borne disease risk driven by biotic vs. abiotic conditions?
+
+## 2. General Theme: When and where is tick-borne disease risk driven by biotic vs. abiotic conditions?
 
 General idea that Brian brought up during our last meeting as a question in tick ecology that we could contribute to with our data. 
 
@@ -174,30 +186,36 @@ General idea that Brian brought up during our last meeting as a question in tick
 None. General idea stage
 
 
-## 6. General Theme: Forecasting tick-borne disease risk under future climate and plant (cogongrass) invasion scenarios
+# Low Priority/Scratched
 
-This is related to the forecasting/decision-support objective in the proposal, which I assume is a pretty major thing to fulfill the SERDP contract.
+## General Theme: Effects of an invasive grass on tick-borne pathogens and infection prevalence
+
+This theme could fit in with the manuscript above but would mean waiting for pathogen data from the 2019 tick collections.
 
 ### Data Included
 
- - All field survey data
- - All data Tess is collecting to "grow" cogongrass in ED2
- - Data from fire experiments involving cogongrass: FABIO, Bivens, Gio's
- - Tick survival experiment
- - Tick humidity threshold experiment
- - Climate change forecasts
-
-Basically all the things
-
+ - Pathogens recovered from ticks in cogongrass-invaded and uninvaded plots
+    - ***in progress*** most invaded plots will be 2019 data
+    
+ - Could be limited to 2019 paired plots, but may make sense to leverage all the pathogen data (2017 - 2019) that we generate
+    - this could be complicated due to the sampling across fire history
+ 
+ - Host species data to explicitly assess species-specific pathogens
+    - e.g. are the ticks "local" or being brought in on larger hosts
+    - local ticks = pathogens associated with hosts found in dung surveys/camera traps; otherwise ticks may be arriving on transient hosts with the caveat of detection issues 
+ 
 ### Analyses
 
-Tess & Mike apply data and results to parameterize the models and develop the decision-support tool.
-
- - How can we all contribute in support of their lead efforts?
+ - Compare abundance, diversity, composition of pathogen communities from ticks collected in cogongrass-invaded vs. uninvaded areas
+ 
+ - Assess whether any differences in pathogens are related to differencs in host species 
+ 
+ - Leverage survival experiment results for contextualizing impact
  
 ### Writing
 
-None new. Text from the proposal can probably be recycled. 
+General idea stage. None specifically but this would lean on the manuscript above.
+
 
 
 ## 7. General Theme: Trap avoidance/escape behavior by the lone star tick in north Florida
@@ -215,3 +233,5 @@ Narrative, qualitative.
 ### Writing
 
 A narrative laying out the conditions in which this occurred.
+
+
