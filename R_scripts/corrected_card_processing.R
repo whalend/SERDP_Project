@@ -5,7 +5,7 @@ library(dplyr)
 library(ggplot2)
 library(stringi)
 
-corrected <- read_csv("C://Users/Steven/Desktop/serdp/corrected_cards/corrected_cards_new.csv")
+corrected <- read_csv("data/raw_data/2019_serdp_data/corrected_cards_new.csv")
 
 corrected <- corrected %>% 
   mutate(first_date = stri_sub(first_photo, 1, 9),
@@ -24,7 +24,7 @@ corrected <- corrected %>%
 corrected <- corrected %>% 
   mutate(camera_days_cutoff = cutoff_date - first_date) %>% 
   mutate(camera_days_cutoff = as.integer(camera_days_cutoff))
-View(corrected)
+#View(corrected)
 
 corrected_stats <- corrected %>% 
   group_by(installation, plot_id, status) %>% 
@@ -39,9 +39,9 @@ corrected_stats <- corrected %>%
             camera_days_raw_plot = sum(camera_days_raw),
             camera_days_cutoff_plot = sum(camera_days_cutoff))
 
-write_csv(corrected_stats, "C://Users/Steven/Desktop/serdp/corrected_cards/for final processed/corrected_raw_hosts_per_plot.csv")
+write_csv(corrected_stats, "data/processed_data/2019 serdp processed data/corrected-host-tick-processed/corrected_raw_hosts_per_plot.csv")
 
-corrected_new <- read_csv("C://Users/Steven/Desktop/serdp/corrected_cards/for final processed/COMBINING_PLOTS_corrected_raw_hosts_per_plot.csv")
+corrected_new <- read_csv("data/processed_data/2019 serdp processed data/corrected-host-tick-processed/COMBINING_PLOTS_corrected_raw_hosts_per_plot.csv")
 ##### MANUAL COMBINATION OF wes i2 was combined with wes i3 for equal sampling during the same time period, done so because "same" site sharing space. riversedge combined i1 and i2, there was one camera in each so combined to compensate for the two cameras in n1. -SC
 #^need to change name
 
@@ -56,7 +56,7 @@ corrected_stats_days <- corrected_new %>%
      wildlife_plot_days = cutoff_wildlife_plot/camera_days_cutoff_plot,
      wildlife_no_cow_plot_days = wildlife_no_cow_plot/camera_days_cutoff_plot)
 
-write_csv(corrected_stats_days, "C://Users/Steven/Desktop/serdp/corrected_cards/for final processed/corected_hosts_per_plot_per_day.csv" )
+write_csv(corrected_stats_days, "data/processed_data/2019 serdp processed data/corrected-host-tick-processed/corected_hosts_per_plot_per_day.csv" )
             
 tick_data <- read_csv("C://Users/Steven/Desktop/serdp/corrected_cards/tick_data.csv")
 
