@@ -22,8 +22,10 @@ temp_rh_data <- temp_rh_data %>%
             status = ifelse(id <= 12, "invaded", "native"),
             date_time = lubridate::ymd_hms(paste(date,time)),
             days = julian(date, origin = as.Date("2018-06-21")))
-## Added invaded/native status and days since launch
 
+## Added invaded/native status and days since launch
+test_logger_1 <- temp_rh_data %>% 
+  filter(id==5)
 
 # Look at seperate dataframes for native and invaded ####
 temp_rh_data %>%
@@ -35,11 +37,11 @@ temp_rh_data %>%
       summary(.)
 
 temp_rh_data %>%
-      filter(status =="invaded", RH > 15) %>%
+      filter(status =="invaded", RH < 20) %>%
       summary(.)
 
 temp_rh_data %>%
-      filter(status =="native", RH > 15) %>%
+      filter(status =="native", RH < 20) %>%
       summary(.)
 
 ## invaded 92.16 avg RH all included, 94.65 avg RH excluding < 15 RH
@@ -484,3 +486,41 @@ write_csv(humidity_75, "data/processed_data/humidity_75.csv")
 #   invasion_fill +
 #   def_theme +
 #   NULL
+
+
+
+####### thresholds min, above below 80 only for drew re-do #####
+
+temp_rh_data
+
+temp_rh_data_min <- temp_rh_data %>%
+  mutate(days = julian(date, origin = as.Date("2018-06-21"))) %>% 
+  group_by(date, status, logger_id, days) %>% 
+  summarise(daily_min_rh = min(RH))
+
+temp_rh_data_below <- temp_rh_data %>% 
+  mutate(days = julian(date, origin = as.Date("2018-06-21"))) %>% 
+  filter(RH < 79.99) %>%
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_below_80 = n(),
+            minutes_below_80 = obs_below_80*5,
+            hours_below_80 = minutes_below_80/60) %>%
+  select(date, status, logger_id, days, hours_below_80)
+
+temp_rh_data_above <- temp_rh_data %>%
+  mutate(days = julian(date, origin = as.Date("2018-06-21"))) %>% 
+  filter(RH >80.01) %>%
+  group_by(date, status, logger_id, days) %>%
+  summarise(obs_above_80 = n(),
+            minutes_above_80 = obs_above_80*5,
+            hours_above_80 = minutes_above_80/60) %>%
+  select(date, status, logger_id, days, hours_above_80)
+
+new_thresholds_1 <- left_join(temp_rh_data_min, temp_rh_data_above)
+new_thresholds <- left_join(new_thresholds_1, temp_rh_data_below)
+View(new_thresholds)
+#weird <- merge(temp_rh_data_below, temp_rh_data_above)
+
+new_thresholds[is.na(new_thresholds)] <- 0
+
+write_csv(new_thresholds, "data/processed_data/tsa_above_below_80_all_time.csv")
