@@ -10,6 +10,8 @@ loggers <- loggers %>%
          time_2 = substr(time, 9,20),
          date_time = lubridate::mdy_hms(paste(date,time_2)))
 
+
+
 loggers <- loggers[-c(1:1)]
 loggers <- loggers[-c(5:5)]
 
@@ -21,6 +23,10 @@ loggers <- loggers %>%
   mutate(installation = "test",
          plot_id = "test",
          status = "n")
+
+loggers <- loggers %>% 
+  mutate(date = as.Date(date, "%m/%d/%y"),
+         days = julian(date, origin = as.Date("2019-06-12")))
 
 #adding all of installation and status and plot id text ##
 
@@ -105,7 +111,7 @@ loggers_wes <- loggers %>%
 
 ####hancock
 loggers_hancock_min <- loggers_hancock %>% 
-  group_by(date, installation, plot_id, status, logger_id) %>% 
+  group_by(date, installation, plot_id, status, logger_id, days) %>% 
   summarise(daily_min_rh = min(RH))
 
 loggers_hancock_below <- loggers_hancock %>% 
@@ -126,12 +132,13 @@ loggers_hancock_above <- loggers_hancock %>%
 
 hancock_thresholds_1 <- left_join(loggers_hancock_above, loggers_hancock_below)
 hancock_thresholds <- left_join(hancock_thresholds_1, loggers_hancock_min)
+hancock_thresholds[is.na(hancock_thresholds)] <- 0
 
 write_csv(hancock_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/hancock_thresholds.csv")
 
 ####riversedge
 loggers_riversedge_min <- loggers_riversedge %>% 
-  group_by(date, installation, plot_id, status, logger_id) %>% 
+  group_by(date, installation, plot_id, status, logger_id, days) %>% 
   summarise(daily_min_rh = min(RH))
 
 loggers_riversedge_below <- loggers_riversedge %>% 
@@ -152,13 +159,15 @@ loggers_riversedge_above <- loggers_riversedge %>%
 
 riversedge_thresholds_1 <- left_join(loggers_riversedge_above, loggers_riversedge_below)
 riversedge_thresholds <- left_join(riversedge_thresholds_1, loggers_riversedge_min)
+riversedge_thresholds[is.na(riversedge_thresholds)] <- 0
+
 
 write_csv(riversedge_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/riversedge_thresholds.csv")
 
 ####brown
 
 loggers_brown_min <- loggers_brown %>% 
-  group_by(date, installation, plot_id, status, logger_id) %>% 
+  group_by(date, installation, plot_id, status, logger_id, days) %>% 
   summarise(daily_min_rh = min(RH))
 
 loggers_brown_below <- loggers_brown %>% 
@@ -179,13 +188,15 @@ loggers_brown_above <- loggers_brown %>%
 
 brown_thresholds_1 <- left_join(loggers_brown_above, loggers_brown_below)
 brown_thresholds <- left_join(brown_thresholds_1, loggers_brown_min)
+brown_thresholds[is.na(brown_thresholds)] <- 0
+
 
 write_csv(brown_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/brown_thresholds.csv")
 
 ####silversprings
 
 loggers_silversprings_min <- loggers_silversprings %>% 
-  group_by(date, installation, plot_id, status, logger_id) %>% 
+  group_by(date, installation, plot_id, status, logger_id, days) %>% 
   summarise(daily_min_rh = min(RH))
 
 loggers_silversprings_below <- loggers_silversprings %>% 
@@ -206,13 +217,15 @@ loggers_silversprings_above <- loggers_silversprings %>%
 
 silversprings_thresholds_1 <- left_join(loggers_silversprings_above, loggers_silversprings_below)
 silversprings_thresholds <- left_join(silversprings_thresholds_1, loggers_silversprings_min)
+silversprings_thresholds[is.na(silversprings_thresholds)] <- 0
+
 
 write_csv(silversprings_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/silversprings_thresholds.csv")
 
 ####munson
 
 loggers_munson_min <- loggers_munson %>% 
-  group_by(date, installation, plot_id, status, logger_id) %>% 
+  group_by(date, installation, plot_id, status, logger_id, days) %>% 
   summarise(daily_min_rh = min(RH))
 
 loggers_munson_below <- loggers_munson %>% 
@@ -233,13 +246,15 @@ loggers_munson_above <- loggers_munson %>%
 
 munson_thresholds_1 <- left_join(loggers_munson_above, loggers_munson_below)
 munson_thresholds <- left_join(munson_thresholds_1, loggers_munson_min)
+munson_thresholds[is.na(munson_thresholds)] <- 0
+
 
 write_csv(munson_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/munson_thresholds.csv")
 
 ####peace
 
 loggers_peace_min <- loggers_peace %>% 
-  group_by(date, installation, plot_id, status, logger_id) %>% 
+  group_by(date, installation, plot_id, status, logger_id, days) %>% 
   summarise(daily_min_rh = min(RH))
 
 loggers_peace_below <- loggers_peace %>% 
@@ -260,13 +275,15 @@ loggers_peace_above <- loggers_peace %>%
 
 peace_thresholds_1 <- left_join(loggers_peace_above, loggers_peace_below)
 peace_thresholds <- left_join(peace_thresholds_1, loggers_peace_min)
+peace_thresholds[is.na(peace_thresholds)] <- 0
+
 
 write_csv(peace_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/peace_thresholds.csv")
 
 ###wes
 
 loggers_wes_min <- loggers_wes %>% 
-  group_by(date, installation, plot_id, status, logger_id) %>% 
+  group_by(date, installation, plot_id, status, logger_id, days) %>% 
   summarise(daily_min_rh = min(RH))
 
 loggers_wes_below <- loggers_wes %>% 
@@ -287,6 +304,8 @@ loggers_wes_above <- loggers_wes %>%
 
 wes_thresholds_1 <- left_join(loggers_wes_above, loggers_wes_below)
 wes_thresholds <- left_join(wes_thresholds_1, loggers_wes_min)
+wes_thresholds[is.na(wes_thresholds)] <- 0
+
 
 write_csv(wes_thresholds, "data/processed_data/2019 serdp processed data/logger-sampling/wes_thresholds.csv")
 
