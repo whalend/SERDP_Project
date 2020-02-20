@@ -86,6 +86,19 @@ opts_chunk$set(dpi = 600)
 
 ```
 
+```{r figures setup, eval = T}
+            
+legend_order <- c("piled","standing","both", "prescribed")
+
+fig_shapes <- scale_shape_manual(values = c("prescribed" = 23, "piled" = 2, "standing" = 0, "both" = 19), breaks = legend_order)
+
+fig_colors <- scale_color_manual(values = c("piled" = "red", "standing" = "deepskyblue", "prescribed" = "black", "both" = "purple"), , breaks = legend_order)
+
+fig_fills <- scale_fill_manual(values = c("both" = "purple", "piled" = "red", "standing" = "deepskyblue"), breaks = legend_order)
+
+fig_linetypes <- scale_linetype_manual(values = c("piled" = "solid", "standing" = "solid", "both" = "dashed"), breaks = legend_order)
+
+```
 
 ```{r knitcitations, cache = F}
 
@@ -497,19 +510,7 @@ We used the statistical language `R` `r citep(citation())` for all our analyses.
 
 # RESULTS
 
-```{r figures setup, eval = T}
-            
-legend_order <- c("piled","standing","both", "prescribed")
 
-fig_shapes <- scale_shape_manual(values = c("prescribed" = 23, "piled" = 2, "standing" = 0, "both" = 19), breaks = legend_order)
-
-fig_colors <- scale_color_manual(values = c("piled" = "red", "standing" = "deepskyblue", "prescribed" = "black", "both" = "purple"), , breaks = legend_order)
-
-fig_fills <- scale_fill_manual(values = c("both" = "purple", "piled" = "red", "standing" = "deepskyblue"), breaks = legend_order)
-
-fig_linetypes <- scale_linetype_manual(values = c("piled" = "solid", "standing" = "solid", "both" = "dashed"), breaks = legend_order)
-
-```
 
 ## Fuel moisture
 
@@ -557,6 +558,22 @@ piled_fuels <- d1 %>%
       filter(!duplicated(fire_id), structure=="piled")
 #       mutate(se_moisture = sd_moisture/sqrt(nobs)) %>% 
 #       knitr::kable(., digits = 2)
+
+t.test(filter(d1, structure=="piled")$pct_fuel_moisture, filter(d1, structure=="standing")$pct_fuel_moisture)
+shapiro.test(filter(d1, structure=="piled")$pct_fuel_moisture)
+shapiro.test(filter(d1, structure=="standing")$pct_fuel_moisture)
+car::leveneTest(pct_fuel_moisture~structure, data = filter(d1, structure!="both"), center = "mean")
+car::leveneTest(pct_fuel_moisture~structure, data = filter(d1, structure!="both"), center = "median")
+
+fm <- lm(pct_fuel_moisture ~ structure, data = d1)
+anova(fm)
+aov(fm)
+TukeyHSD(aov(fm))
+
+
+t.test(filter(d1, structure=="piled")$pct_fuel_moisture, filter(d1, structure=="both")$pct_fuel_moisture)
+
+t.test(filter(d1, structure=="standing")$pct_fuel_moisture, filter(d1, structure=="both")$pct_fuel_moisture)
       
 ```
 
@@ -884,13 +901,13 @@ max_temp_fig <- ggplot() +
       
       geom_point(data = rename(fabio_fires_50cm, group=structure), aes(x = total_biomass, y = avg2_max_temp, color = group, shape = group)) +
       
-      geom_smooth(data = filter(d1, structure=="both", location=="50cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = avg2_max_temp, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+      # geom_smooth(data = filter(d1, structure=="both", location=="50cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = avg2_max_temp, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
       
-      geom_point(data = filter(d1, structure=="both", location=="50cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = avg2_max_temp, shape = group, color = group), show.legend = F) +
+      # geom_point(data = filter(d1, structure=="both", location=="50cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = avg2_max_temp, shape = group, color = group), show.legend = F) +
       
       ## 25cm model
       
@@ -899,13 +916,13 @@ max_temp_fig <- ggplot() +
       
       geom_point(data = rename(fabio_fires_25cm, group=structure), aes(x = total_biomass, y = avg2_max_temp, color = group, shape = group)) +
       
-      geom_smooth(data = filter(d1, structure=="both", location=="25cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = avg2_max_temp, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
-      
-      geom_point(data = filter(d1, structure=="both", location=="25cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = avg2_max_temp, shape = group, color = group), show.legend = F) +
+      # geom_smooth(data = filter(d1, structure=="both", location=="25cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = avg2_max_temp, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+      # 
+      # geom_point(data = filter(d1, structure=="both", location=="25cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = avg2_max_temp, shape = group, color = group), show.legend = F) +
       
       ## 0cm model
       
@@ -915,19 +932,19 @@ max_temp_fig <- ggplot() +
       geom_point(data = rename(fabio_fires_0cm, group=structure), aes(x = total_biomass, y = avg2_max_temp, color = group, shape = group)) +
       
       
-      geom_smooth(data = filter(d1, structure=="both", location=="0cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = avg2_max_temp, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
-     
-      geom_point(data = filter(d1, structure=="both", location=="0cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = avg2_max_temp, shape = group, color = group), show.legend = F) +
+      # geom_smooth(data = filter(d1, structure=="both", location=="0cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = avg2_max_temp, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+      # 
+      # geom_point(data = filter(d1, structure=="both", location=="0cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = avg2_max_temp, shape = group, color = group), show.legend = F) +
       
-      geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, ymax = avg_max_temp + sd_max_temp, ymin = avg_max_temp - sd_max_temp), width = .1) +
-      
-      geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
-      
-      geom_point(data = rename(p_fire_summary, group=type), aes(avg_biomass, avg_max_temp, shape = group, color = group), size = 2, fill = "gold") +
+      # geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, ymax = avg_max_temp + sd_max_temp, ymin = avg_max_temp - sd_max_temp), width = .1) +
+      # 
+      # geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_max_temp, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
+      # 
+      # geom_point(data = rename(p_fire_summary, group=type), aes(avg_biomass, avg_max_temp, shape = group, color = group), size = 2, fill = "gold") +
       
       geom_text(data = maxtemp_fig_labels, 
                 aes(x=total_biomass, y=avg2_max_temp, label = pid),
@@ -1097,13 +1114,13 @@ s_abv100_fig <- ggplot() +
       
       geom_point(data = rename(fabio_fires_50cm, group=structure), aes(x = total_biomass, y = s_abv100, color = group, shape = group)) +
       
-      geom_smooth(data = filter(d1, structure=="both", location=="50cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = s_abv100, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
-      
-      geom_point(data = filter(d1, structure=="both", location=="50cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = s_abv100, shape = group, color = group), show.legend = F) +
+      # geom_smooth(data = filter(d1, structure=="both", location=="50cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = s_abv100, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+      # 
+      # geom_point(data = filter(d1, structure=="both", location=="50cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = s_abv100, shape = group, color = group), show.legend = F) +
       
       ## 25cm model
       
@@ -1113,13 +1130,13 @@ s_abv100_fig <- ggplot() +
       
       geom_point(data = rename(fabio_fires_25cm, group=structure), aes(x = total_biomass, y = s_abv100, color = group, shape = group)) +
       
-      geom_smooth(data = filter(d1, structure=="both", location=="25cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = s_abv100, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
-      
-      geom_point(data = filter(d1, structure=="both", location=="25cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = s_abv100, shape = group, color = group), show.legend = F) +
+      # geom_smooth(data = filter(d1, structure=="both", location=="25cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = s_abv100, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+      # 
+      # geom_point(data = filter(d1, structure=="both", location=="25cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = s_abv100, shape = group, color = group), show.legend = F) +
       
       ## 0cm model
       
@@ -1130,19 +1147,19 @@ s_abv100_fig <- ggplot() +
       geom_point(data = rename(fabio_fires_0cm, group=structure), aes(x = total_biomass, y = s_abv100, color = group, shape = group)) +
       
       
-      geom_smooth(data = filter(d1, structure=="both", location=="0cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = s_abv100, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
-     
-      geom_point(data = filter(d1, structure=="both", location=="0cm") %>% 
-                        rename(group = structure),
-                  aes(x = total_biomass, y = s_abv100, shape = group, color = group), show.legend = F) +
+      # geom_smooth(data = filter(d1, structure=="both", location=="0cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = s_abv100, linetype = group, color = group), method = "lm", se = F, show.legend = F) +
+      # 
+      # geom_point(data = filter(d1, structure=="both", location=="0cm") %>% 
+      #                   rename(group = structure),
+      #             aes(x = total_biomass, y = s_abv100, shape = group, color = group), show.legend = F) +
       
-      geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_s_abv100, ymax = avg_s_abv100 + sd_s_abv100, ymin = avg_s_abv100 - sd_s_abv100), width = .1) +
-      
-      geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_s_abv100, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
-      
-      geom_point(data = rename(p_fire_summary, group=type), aes(avg_biomass, avg_s_abv100, shape = group, color = group), size = 2, fill = "gold") +
+      # geom_errorbar(data = p_fire_summary, aes(x = avg_biomass, y = avg_s_abv100, ymax = avg_s_abv100 + sd_s_abv100, ymin = avg_s_abv100 - sd_s_abv100), width = .1) +
+      # 
+      # geom_errorbarh(data = p_fire_summary, aes(x = avg_biomass, y = avg_s_abv100, xmin = avg_biomass - sd_biomass, xmax = avg_biomass + sd_biomass), height = .1) +
+      # 
+      # geom_point(data = rename(p_fire_summary, group=type), aes(avg_biomass, avg_s_abv100, shape = group, color = group), size = 2, fill = "gold") +
       
       geom_text(data = sabv_fig_labels, 
                 aes(x=total_biomass, y=s_abv100, label = pid),
@@ -1256,11 +1273,11 @@ ggsave("FABIO-manuscript/figures/sabv_models_fig.png", sfig, width = 3.25, heigh
 
 cowplot::plot_grid(
       sfig, tfig,
-      nrow = 1, rel_widths = c(1,1.05)
+      nrow = 1,
+      rel_widths = c(1,1.05),
+      rel_heights = c(1,1.5)
       # labels = "auto"
       )
-
-
 
 ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
 
