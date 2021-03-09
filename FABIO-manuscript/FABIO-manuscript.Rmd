@@ -16,9 +16,9 @@ affiliation:
 # - affil: null
 #   affilnum: 3
 output: 
+  word_document: null
   html_document: 
     self_contained: no
-  word_document: null
   pdf_document:
     fig_caption: yes
     # fig_height:
@@ -577,6 +577,27 @@ t.test(filter(d1, structure=="standing")$pct_fuel_moisture, filter(d1, structure
       
 ```
 
+```{r field sampled cogon moisture}
+serdp_cogon <- read_csv("data/processed_data/cogongrass.csv")
+cogon_moisture <- serdp_cogon %>% 
+  select(date, fresh_biomass, dry_biomass) %>% 
+  filter(!is.na(dry_biomass)) %>% 
+  mutate(pct_moisture = 100*(fresh_biomass - dry_biomass)/fresh_biomass,
+         week = lubridate::week(date))
+
+fm <- cogon_moisture$pct_moisture
+
+fm <- c(fm, 13.9, 17, 13.4, 16.1, 17.9, 13.4)
+summary(fm)
+sd(fm)
+length(fm)
+
+ggplot(cogon_moisture, aes(week, pct_moisture, group = week)) +
+  geom_point(position = "jitter")
+summary(cogon_moisture)
+```
+
+
 Across all experimental fires, fuel moisture content ranged from `r round(min(fuel_moisture$min_moisture), digits = 1)` to `r round(max(fuel_moisture$max_moisture), digits = 1)` %. Moisture of fuels used for piled fires ranged from `r round(min(piled_fuels$pct_fuel_moisture), digits = 1)` to `r round(max(piled_fuels$pct_fuel_moisture), digits = 1)` % (mean = `r round(filter(fuel_moisture, structure=="piled")$avg_moisture, digits = 1)` ± 0.7% SE) and for standing fires from 6.8 to 19.6% (mean = `r round(filter(fuel_moisture, structure=="standing")$avg_moisture, digits = 1)` ± 0.9% SE). We did not measure fuel moisture for the prescribed fire.
 
 ```{r fire profiles, eval=F}
@@ -677,7 +698,7 @@ d1 %>%
 ```
 
 ```{r maxtemp-figure, eval = F}
-
+d1
 # bowman_maxtemp <- read_csv("~/SERDP_Project/data/bowman-etal-maxtemp.csv")
 # bowman_maxtemp$source <- "Piled (Bowman et al.)"
 # 
@@ -867,10 +888,10 @@ kable(adj_rsquare_df, digits = 2)
 ```{r maxtemp pub fig}
 
 maxtemp_fig_labels <- data.frame(
-      location = c("50cm","25cm","0cm"), 
+      location = factor(c("50cm","25cm","0cm")),
       pid = c("d","e","f"), 
       total_biomass = c(200,200,200),
-      avg2_max_temp = c(rep(820, 3))
+      avg2_max_temp = c(rep(840, 3))
       )
 
 
@@ -1101,7 +1122,7 @@ sjp_sabv_50cm <- sjPlot::plot_model(s_abv100_50cm, type = "pred", terms = c("tot
 sjp_sabv_50cm$data$location="50cm"
 sjp_sabv_50cm$data$location=factor(maxtemp50cm_modelplot$data$location, levels = c("50cm","25cm","0cm"))
 
-sabv_fig_labels <- data.frame(location = c("50cm","25cm","0cm"), pid = c("a","b","c"), total_biomass = c(200,200,200), s_abv100 = c(160,200,775))
+sabv_fig_labels <- data.frame(location = factor(c("50cm","25cm","0cm")), pid = c("a","b","c"), total_biomass = c(200,200,200), s_abv100 = c(160,200,775))
 
 
 s_abv100_fig <- ggplot() +
@@ -1255,31 +1276,58 @@ kable(abv100_rsquared_df, digits = 2)
 ```{r max sabv100 pub figure, fig.height=7.5, fig.width=7.5}
 
 sfig <- s_abv100_fig +
-            theme(
-                  strip.text = element_blank(),
-                  legend.position = c(.2,.25)
-                  )
+  ylab("Heating duration (s)") +
+  theme(
+    strip.text = element_blank(),
+    legend.position = c(.2,.25)
+        )
 
 tfig <- max_temp_fig +
             # xlab("") +
             theme(legend.position = "none",
-                  strip.text = element_blank(),
+                  # strip.text = element_blank(),
                   plot.margin = unit(c(0,2,0,2), "mm")
                   )
 
-ggsave("FABIO-manuscript/figures/maxt_models_fig.png", tfig, width = 3.25, height = 7.5, dpi = 600, device = "png")
+# ggsave("FABIO-manuscript/figures/maxt_models_fig.png", tfig, width = 3.25, height = 7.5, dpi = 600, device = "png")
 
-ggsave("FABIO-manuscript/figures/sabv_models_fig.png", sfig, width = 3.25, height = 7.5, dpi = 600, device = "png")
+# ggsave("FABIO-manuscript/figures/sabv_models_fig.png", sfig, width = 3.25, height = 7.5, dpi = 600, device = "png")
 
-      
+ggpubr::ggarrange(
+  sfig + 
+            theme(legend.position = c(.21,.95),
+                  legend.key = element_blank(),
+                  axis.text = element_text(size = 12)
+                   ), 
+      tfig +
+            theme(axis.text = element_text(size = 12)
+                  ),
+      nrow = 1, align = "hv"
+)
+
 
 cowplot::plot_grid(
-      sfig, tfig,
+      sfig + 
+        xlab("")+
+            theme(legend.position = c(.21,.95),
+                  legend.key = element_blank(),
+                  axis.text = element_text(size = 12)
+                   ), 
+      tfig +
+        xlab("") +
+            theme(axis.text = element_text(size = 12)
+                  ),
+      labels = c(""),
       nrow = 1,
       # rel_widths = c(1,1.0),
       align = "hv"
       # labels = "auto"
-      )
+      ) +
+  cowplot::draw_label(
+    expression(paste("Fuel load (g ", m^{-2}, ")")), 
+    x = 0.5, y = 0, vjust=-0.2, angle= 0) 
+  # draw_label("ylab", x=  0, y=0.5, vjust= 1.5, angle=90)
+
 
 ggsave("figures/temperature-fig.png", width = 7.5, height = 7.5)
 
@@ -1340,6 +1388,15 @@ ggplot(fires_biomass, aes(structure, avg_fuel_ht)) +
 ```
 
 
+```{r flame height table}
+fires_biomass %>% 
+  group_by(structure) %>% 
+  summarise(avg_max_flame_ht = mean(max_flame_ht),
+            avg_fht = mean(avg_flame_ht),
+            max_flame_ht = max(max_flame_ht)
+            )
+```
+
 
 ```{r flame height modeling}
 
@@ -1377,6 +1434,7 @@ f_ht_mod3 <- lm(avg_flame_ht ~ biomass*structure, data = fires_biomass)
 
 **Flame height model coefficients**
 ```{r flame ht model coefs}
+  
 
 flame_ht_mod_summ <- summary(f_ht_mod)
 
@@ -1445,7 +1503,7 @@ flame_height_fig <- ggplot(df, aes(x, predicted)) +
             # legend.direction = "vertical",
             legend.position = c(.02,.98),
             legend.justification = c("left","top"),
-            legend.spacing = unit(x = -.3, units = "cm"),
+            # legend.spacing = unit(x = -.3, units = "cm"),
             axis.title = element_text(size = 12),
             axis.text = element_text(size = 12),
             plot.margin = unit(c(.5,.5,.5,.5), "cm"),
@@ -1611,20 +1669,17 @@ For the piled fires, the small amounts of remaining biomass that weren't consume
 sjp.p.consumed <- sjPlot::plot_model(pct_consumed_breg, type = "pred", terms = c("total_biomass","structure"), show.data = F)
 
 pct_consumed_fig <- sjp.p.consumed + 
-      
-      geom_ribbon(data = sjp.p.consumed$data, aes(x = x, ymin = conf.low, ymax = conf.high, fill = group), alpha = .2, linetype = 0, show.legend = FALSE) +
+      geom_ribbon(
+        data = sjp.p.consumed$data, 
+        aes(x = x, ymin = conf.low, ymax = conf.high, fill = group_col),
+        alpha = .2, linetype = 0, show.legend = FALSE) +
 
-      geom_point(data = filter(pct_consumed_data, structure!="both") %>% rename(group = structure),
-                 aes(total_biomass, p_consumed, 
-                     color = group, shape = group), show.legend = F) +
-      # geom_smooth(
-      #       data = filter(pct_consumed_data, structure == "both") %>% 
-      #             rename(group = structure),
-      #       aes(total_biomass, p_consumed, 
-      #           color = group, linetype = group),
-      #       method = "lm", se = F, show.legend = F
-      #       ) +
-      # geom_line(aes(color = group), show.legend = F) +
+      geom_point(
+        data = filter(pct_consumed_data, structure!="both") %>%
+          rename(group_col = structure),
+        aes(total_biomass, p_consumed, color = group_col, 
+            shape = group_col), 
+        show.legend = F) +
       
       fig_shapes +
       fig_colors + 
@@ -1670,6 +1725,9 @@ ros_model2 <- lm(rate_of_spread_ms ~ total_biomass*structure, data = fires_bioma
 
 # AIC(ros_model1, ros_model2)
 # anova(ros_model1, ros_model2)
+fires_biomass %>% 
+      group_by(structure) %>% 
+      summarise(mean(rate_of_spread_ms))
 
 ```
 
@@ -1727,8 +1785,8 @@ sjp.ros <- sjPlot::plot_model(ros_model1, type = "pred", terms = c("total_biomas
 
 ros_fig <- sjp.ros +
       
-      geom_point(data = rename(fires_biomass, group = structure),
-            aes(x = total_biomass, y = rate_of_spread_ms,color = group, shape = group)) +
+      geom_point(data = rename(fires_biomass, group_col = structure),
+            aes(x = total_biomass, y = rate_of_spread_ms, color = group_col, shape = group_col)) +
       
       
       scale_x_continuous(breaks = c(250,500,1000,1500,2000), labels = c("250","500","1000","1500","2000")) +
@@ -1763,7 +1821,8 @@ cowplot::plot_grid(
       flame_height_fig +
             xlab("") +
             theme(legend.background = element_blank(),
-                  legend.position = c(0, 1.08),
+                  legend.key = element_blank(),
+                  legend.position = c(-.01, 1.1),
                   # legend.spacing.y = unit(.5, units = "cm"),
                   plot.margin = margin(c(15,5,-5,15))),
       ros_fig + 
@@ -1773,9 +1832,9 @@ cowplot::plot_grid(
       pct_consumed_fig +
             theme(legend.position = "none",
                   plot.margin = margin(c(-5,5,0,15))),
-      ncol = 1, labels = "auto" )
+      ncol = 1, labels = "auto", align = "v")
 
-ggsave("figures/ros-flame-consumed.png", height = 17, width = 8.5, units = "cm", dpi = 600)
+ggsave("figures/ros-flame-consumed.pdf", height = 17, width = 8.5, units = "cm", dpi = 600)
 
 ```
 
@@ -1938,9 +1997,20 @@ fire_wx_table <- left_join(
              wind_speed_avg_se = paste(avg_wind_speed, " ± ", se_wind_speed)) %>% 
       select(fire_id, date, structure, biomass, air_temp_avg_se:wind_speed_avg_se)
 
+
+moisture <- d1 %>% 
+  select(fire_id, pct_fuel_moisture) %>% 
+  distinct(fire_id, pct_fuel_moisture)
+
+fire_wx_table <- left_join(
+  fire_wx_table, moisture
+)
+
 fire_wx_table <- fire_wx_table %>% mutate(fire_id = seq_len(length(fire_id)))
 
-wxtable_col_names <- c("Fire ID", "Date", "Structure", "Biomass", "Air temperature (ºC)", "RH (%)", "Wind Speed (m s^-1^)")
+wxtable_col_names <- c("Fire ID", "Date", "Structure", "Biomass", "Air temperature (ºC)", "RH (%)", "Wind Speed (m s^-1^)", "Fuel moisture (%)")
+
+
 
 # fire_wx_table
 
