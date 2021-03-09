@@ -140,7 +140,7 @@ sites_tbo_sf <- left_join(
 ) %>%
       select(FULLNAME, total_ticks, Human_pathogen_prevalence, ticks_per_trap, PxA)
 
-
+## Make a map ####
 tmap_mode("view")
 # qtm(sites_sf, fill = "red")
 # tmap_mode("plot")
@@ -152,6 +152,8 @@ sites_tbo_sf <- sites_tbo_sf %>%
              Abundance = ticks_per_trap
              )
 
+## Adds layers for abundance, prevalence, and their product.
+## So, need to toggle layers on/off for it to make any kind of sense.
 tp_map <- tm_shape(sites_tbo_sf) +
       # tm_polygons(text = "FULLNAME") +
       # # tm_dots(col = "Pathogen_prevalence", size = "Pathogen_prevalence",

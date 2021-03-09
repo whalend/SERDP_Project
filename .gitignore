@@ -8,4 +8,7 @@
 *.html
 *.pptx
 *.pdf
+*.tif
+*.tfw
+NLCD2011_LC_Florida/
 plot_data_report_files/
