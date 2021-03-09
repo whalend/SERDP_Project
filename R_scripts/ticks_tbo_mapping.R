@@ -1,8 +1,8 @@
 # Map showing variation in the metrics of tick-borne disease risk
 # (tick abundance and infection prevalence) among installations.
-# Maybe something that uses a color ramp to depict variation among the bases?
 
-#Data Description for Preliminary Map of Tick-Borne Disease Risk
+
+# Data Description for Preliminary Map of Tick-Borne Disease Risk
 # SERDP RC 2636
 # 10/20/2020
 # Prepared by Whalen Dillon, whalendillon@gmail.com
@@ -23,12 +23,14 @@ library(sf)
 library(tmap)
 library(tmaptools)
 
-## From pathogen_data.R
+## Load Data ####
+
+## From tbo_data.R
 tbo_plot_agg <- read_csv("data/tbo_ticks_plot_year.csv")
 tbo_trap_ticks <- read_csv("data/tbo_ticks_onTraps.csv")
 tbo_human_strict_traps <- read_csv("data/tbo_human_strict_onTraps.csv")
 
-## From plot-data-report.Rmd
+## From plot_data_report.Rmd
 trap_effort <- read_csv("data/installation_trapping_effort.csv")
 
 sites_sf <- st_read("data/gis_files/selected_installations.shp")
@@ -36,6 +38,7 @@ sites_sf <- st_read("data/gis_files/selected_installations.shp")
 unique(tbo_plot_agg$Installation)
 unique(sites_sf$FULLNAME)
 
+## Munge data ####
 ## Rename installations to match across data
 trap_effort$installation <- str_to_title(trap_effort$installation)
 trap_effort <- trap_effort %>%
@@ -131,8 +134,6 @@ tbo_inst <- tbo_inst %>%
              PxA = Human_pathogen_prevalence*ticks_per_trap
              )
 
-
-
 sites_tbo_sf <- left_join(
       sites_sf,
       tbo_inst,
@@ -140,12 +141,16 @@ sites_tbo_sf <- left_join(
 ) %>%
       select(FULLNAME, total_ticks, Human_pathogen_prevalence, ticks_per_trap, PxA)
 
+
 ## Make a map ####
+
+# toggle between interactive "view" mode and static "plot" mode
 tmap_mode("view")
-# qtm(sites_sf, fill = "red")
 # tmap_mode("plot")
 
-# bm <- read_osm(st_bbox(sites_sf))
+# qtm(sites_sf, fill = "red")
+
+# bm <- read_osm(st_bbox(sites_sf))# this didn't work last attempt
 sites_tbo_sf <- sites_tbo_sf %>%
       mutate(Ticks = total_ticks,
              Prevalence = Human_pathogen_prevalence,
