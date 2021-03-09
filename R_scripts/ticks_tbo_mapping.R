@@ -2,6 +2,22 @@
 # (tick abundance and infection prevalence) among installations.
 # Maybe something that uses a color ramp to depict variation among the bases?
 
+#Data Description for Preliminary Map of Tick-Borne Disease Risk
+# SERDP RC 2636
+# 10/20/2020
+# Prepared by Whalen Dillon, whalendillon@gmail.com
+# 
+# File name: map_tickAbun_strictlyHuman_pathPrev.html
+# 
+# Ticks were primarily collected using a CO2 baited tick-trapping method. While we also collected ticks encountered in the area while making other measurements, i.e. off of personnel, the data underlying this map is only from ticks directly from the tick trapping. This enables a more straightforward estimation of abundance as the number of ticks per trap. The estimate of pathogen prevalence is based strictly on the pathogens positively known to cause human disease, so prevalence is the proportion of ticks that carrying at least one of these pathogens. Finally, we multiplied the abundance value by prevalence value to get the number of ticks per trap carrying at least one human pathogen. The selected data results in a conservative estimate of tick-borne disease exposure risk to humans at this stage of analysis. The map has a layer for each of these values summarized to the installation level. 
+# 
+# •	Tick abundance (A) = total number of ticks / total number of traps 
+# •	Human pathogen prevalence (P) = ticks carrying human pathogens / total number of ticks
+# •	P x A = number of ticks carrying at least one human pathogen
+# 
+# If viewed while connected to the internet the map file should render background tiles of the U.S.A., otherwise the dots will be floating on a white background. Each of the data layers should be viewed independently, so the user will want to toggle off the two that are not of immediate interest.
+
+
 library(tidyverse)
 library(sf)
 library(tmap)

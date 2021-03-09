@@ -6,9 +6,9 @@
 
 PIs: Brian Allan, Mike Dietze, Luke flory
 
-Project Manager (field research): Whalen Dillon
+Field Research Project Manager: Whalen Dillon
 
-Associate Project Manager (field research): Drew Hiatt
+Associate Field Research Project Manager (field research): Drew Hiatt
 
 Tick Pathogen Processing and Analysis: L. Page Fredericks
 
