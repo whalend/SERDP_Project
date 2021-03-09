@@ -1,0 +1,162 @@
+---
+title: "SERDP Project Meeting: Fire, Plant Invasions, & Tick-borne Disease"
+author: "Drew, Luke, Whalen"
+date: "2/1/2018"
+output:
+  slidy_presentation: 
+    fig.width: 7
+    fig.height: 5
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Discussion Topics
+
+- Manuscripts
+
+- Data collection
+
+- Field season
+
+- Budget
+
+- FLN presentation
+
+
+## Project Objectives
+
+1. **Evaluate the relationships between fire, plant invasions (cogongrass), and ticks/tick hosts**
+
+2. Calibrate a spatially explicit model of tick-borne disease risk
+
+3. Use the calibrated model to predict disease based on simulated climate conditions
+
+
+## Objective 1 
+
+1. Evaluate the relationships between fire, plant invasions (cogongrass), and ticks/tick hosts
+
+    - How does cogongrass influence fire? ***We did some experimental burning manipulating fuel load/structure***
+    
+    - Does frequent fire promote cogongrass invasion? Or other landscape disturbances, e.g. road building and maintenance, tree harvesting?
+    
+    - What is the rate of fuel growth/accumulation in invaded vs. uninvaded areas?
+      - Collect data from BARS experiment burn
+    
+    - What is the relationship between cogongrass cover and tick abundances? ***Trapping in cogongrass resulted in few ticks***
+      - Can collect data 
+    
+    - What are the relationships between fire frequency, vegetation, litter, and canopy cover, and tick abundances?
+    
+      - **We collected data on each of these components**
+
+
+## Manuscripts
+
+1. Evaluate the relationship between tick abundances and fire return interval, e.g. Allan 2009, Gleim et al. 2014
+
+2. Evaluate the relationship between tick abundances, plant invasions, and fire in the context of fire return interval
+
+3. Tick survival assays: effects of fire and plant invasions
+
+4. Influence of cogongrass on fire characteristics (FABIO methodology)
+
+5. Describe effects of fire and invasive species management at DoD installations across the southeastern U.S.
+    - Examples habitat and invasive species management (Conservation Letters)
+    
+
+- 1 & 2 may be a single paper
+
+
+## Data collection
+
+- **Issues/challenges from year 1**
+
+  - **Lack of (untreated) cogongrass invasions on DoD installations**
+  - Seemingly few ticks collected
+  - Seemingly low host abundance
+
+
+## Current Plot Design
+- **Sampling Levels**
+  - Installation
+    - Burn unit
+      - Plot
+        - Transect
+          - **Quadrat**
+          - **Tick trap**
+          
+- Vegetation sampling along transects may not be an effective use of resources
+  - primarily for dung surveys, possible tick drags
+
+[Year 1 design](figures/plot-design.png)
+
+
+## Proposed Revised Plot Design
+- **Sampling Levels**
+  - Installation
+    - Burn unit
+      - Plot
+        - **Quadrat**
+        - **Tick trap**
+
+[Revised design](figures/plot-design-revised.png)
+
+
+## Additional experiments
+
+- Tick survival assays
+
+  - while burning plots at BARS?
+
+- Additional experimental or prescribed burns?
+
+
+## Budget
+
+- Vehicle lease
+  - explore 6 or 9 month lease options, 12 is much longer than necessary
+
+- Field help 
+
+- Equipment
+  - dry ice
+  - fire temperature probes/loggers: need to buy 36
+  - microclimate loggers
+  
+
+
+## Burning at BARS
+
+- Outline a data collection plan
+
+- 3 flame height sensors per plot; 3 fire temperatures per sensor
+
+- burn one block at a time (4 plots): 12 flame height sensors, 36 loggers
+
+- Potentially put loggers at tree meristems if flame may feasibly reach that height
+
+- Pre- and post-fire collect data at each of the flame height sensors to characterize plot vegetation heterogeneity
+  - fuel load
+  - physiology
+  - plant diversity
+  - tree heights, diameter, number
+  
+- Post-burn: replant trees
+
+- People to collaborate with?
+
+
+## FABIO Manuscript
+
+- Status
+  - Introduction
+  - Methods
+  - Results
+  - Discussion
+- Discuss diagram, other figures
+

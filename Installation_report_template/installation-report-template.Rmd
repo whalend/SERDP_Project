@@ -23,11 +23,11 @@ bibliography:
       - serdp_references.bib
 csl: bib_styles/ecology.csl
 params:
-  installation_name: Fort Gordon
+  inst_name: Fort Gordon
 ---
 
 ```{r set installation name options, echo=F}
-# installation_name values to go in the params argument in the YAML header above
+# inst_name values to go in the params argument in the YAML header above
 ## provide name without quotation marks
 # 1 Avon Park AFR
 # 2 Camp Blanding
@@ -49,8 +49,7 @@ knitr::opts_chunk$set(dpi = 150)
 
 library(knitr)
 library(kableExtra)
-library(plyr); library(tidyverse)
-# library(dplyr); library(ggplot2); library(readr)
+library(plyr); library(dplyr); library(ggplot2); library(readr)
 library(stringi); library(stringr)
 library(tidyr)
 library(viridisLite); library(viridis)
@@ -83,32 +82,27 @@ library(RefManageR)
 ```{r set installation name, echo=F}
 
 ## set installation name from yaml header parameter
-inst_name = params$installation_name
-# inst_name = "Fort Gordon"
+inst_name = params$inst_name
+
 ```
 
-
-```{r load plot visit data processing}
-# ASK ABOUT WORDING OF PLOT VISIT VS TOTAL
+```{r load plot visit data processing ASK ABOUT WORDING OF PLOT VISIT VS TOTAL}
 
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
-
-plot_visit_data <- plot_visit_data %>% 
-  mutate(imcy_inv = factor(imcy_inv, levels=c("uninvaded","invaded"), labels = c("Uninvaded","Invaded"))) %>% 
-  rename(installation_full_name=inst_name)
+plot_visit_data$imcy_inv <- factor(plot_visit_data$imcy_inv, levels=c("uninvaded","invaded"), labels = c("Uninvaded","Invaded"))
 
 n_plots <- filter(plot_visit_data, installation_full_name==inst_name)
 n_plots <- n_distinct(n_plots$plot_id)
 
 n_fire_yrs <- 
       plot_visit_data %>% 
-      filter(installation_full_name==inst_name) %>% 
+      filter(installation_full_name==paste(inst_name)) %>% 
       n_distinct(.$years_since_fire)
 
 n_total_plots_all <- n_distinct(plot_visit_data$plot_id)
 n_total_plots_all_invaded <- n_distinct(filter(plot_visit_data, imcy_inv=="Invaded"))
 
-n_plots_invaded_inst <- n_distinct(filter(plot_visit_data, imcy_inv=="Invaded" & installation_full_name==inst_name))
+n_plots_invaded_inst <- n_distinct(filter(plot_visit_data, imcy_inv=="Invaded" &  installation_full_name==paste(inst_name)))
                               
 ```
 
@@ -372,7 +366,7 @@ total_ticks <- tick_data %>%
 ```{r summarize-tick-abundance-data, results='hide'}
 
 tick_data_life_stage_summary <- tick_data %>% 
-      group_by(plot_id, visit_year, life_stage, years_since_fire, imcy_inv, installation_full_name, visit_date) %>% 
+      group_by(plot_id, visit_year, life_stage, years_since_fire, imcy_inv, installation_full_name, date) %>% 
       summarise(total_ticks = sum(tick_count)) %>% 
       ungroup(.)
 
@@ -427,7 +421,7 @@ tick_data_sum <- join_all(list(tick_biomass_data, tick_canopycover_data, tick_qu
 summary(tick_data_sum)
 ```
 
-\newpage
+##### Page Break
 
 # Project Summary
 
@@ -447,7 +441,7 @@ This progress report is intended to provide the managers at each installation th
 
 **In most figures, the data points for `r paste(inst_name)` are highlighted in  `r installation_color` in the context of the general pattern from plots sampled across all the installations. Note there may be fewer points plotted than the total number of sample plots visited due to overlap.**
 
-\newpage
+##### Page Break
 
 # Number of plots sampled 
 
@@ -487,7 +481,7 @@ tot_plots %>%
 
 **Figure 1:** The total number of plots sampled at each installation visited in the 2017 and 2018 field seasons. The number of sites with cogongrass invasion are indicated in red.
 
-\newpage
+##### Page Break
 
 ## Range of fire history at all installations
 
@@ -511,7 +505,7 @@ plot_visit_data %>%
 
 **Figure 2:** Cumulative number of plots sampled in a range of fire history in terms of years since fire across all installations. Plots with one year since fire were most common (n = 20), and 10 years since fire least common (n = 1).
 
-\newpage
+##### Page Break
 
 ## Range of fire history sampled `r paste("at ", inst_name)`
 
@@ -535,7 +529,7 @@ plot_nums %>%
 
 **Figure 3:** Specific fire history of plots sampled at `r inst_name`.
 
-\newpage
+##### Page Break
 
 # Tick Abundance Relationships
 
@@ -593,7 +587,7 @@ tick_data %>%
 
 **Figure 4:** The raw number of ticks collected at each installation is recorded for each visit year. The zero values occurring for installations in 2017 and 2018 are because those installations were not visited in those years.
 
-\newpage
+##### Page Break
 
 ## Tick abundance and fire history
 
@@ -655,7 +649,7 @@ inst_data <- tick_data_plot_summary %>%
 
 **Figure 5:** Across all installations, we see a general trend that more time since fire has a positive relationship with tick abundance in both native and invaded plots. 
 
-\newpage
+##### Page Break
 
 ## Tick abundance and percent litter cover
 
@@ -681,7 +675,7 @@ inst_data <- tick_data_sum %>%
 
 **Figure 6:** A positive relationship is seen with percent litter cover and tick abundance across all installations. Litter cover is estimated by averaging the litter cover in four 1m x 1m quadrats in each sampled plot. It is hypothesized that more litter cover creates a more suitable environment for tick survival (see Appendix 2 - Tick survival in cogongrass invasions). 
 
-\newpage
+##### Page Break
 
 ## Tick abundance and average dry litter biomass
 
@@ -707,7 +701,7 @@ inst_data <- tick_data_sum %>%
 
 **Figure 7:** A positive relationship is seen between litter biomass and tick abundance across all installations. Litter biomass estimates are from oven dried biomass collected at four 25cm x 25cm quadrats in each plot. 
 
-\newpage
+##### Page Break
 
 ## Tick abundance and litter moisture
 
@@ -736,7 +730,7 @@ inst_data <- tick_data_sum %>%
 
 Places that maintain higher humidity at ground-level are likely to be more favorable for tick survival, and therefore may be positively associated with tick abundance. Our measurement of litter moisture is very coarse because it is from a single point in time and so highly dependent on weather conditions leading up to sampling. We can't say whether a particular location generally has greater litter moisture from these data alone.
 
-\newpage
+##### Page Break
 
 ## Tick abundance and canopy cover
 
@@ -763,7 +757,7 @@ inst_data <- tick_data_sum %>%
 
 **Figure 9:** There was a positive relationship between tick abundance and overstory canopy cover in uninvaded plots. It is hypothesized denser canopy cover creates a more suitable microclimate at ground level for tick survival (see Appendix 2 - Tick survival in cogongrass invasions). 
 
-\newpage
+##### Page Break
 
 ## Tick abundance and host density 
 
@@ -790,7 +784,7 @@ inst_data <- tick_data_sum %>%
 
 **Figure 10:** We did not detect a relationship between density of host dung clusters in terms of log and tick abundance. The most common host species dung encountered at all installations was deer, with some rabbit and wild turkey. Dung clusters were counted if seen within one meter to either side of four 50-meter line transects surveyed at each plot. 
 
-\newpage
+##### Page Break
 
 # Fire history relationships
 
@@ -816,7 +810,7 @@ ggplot(canopy_cover_summary, aes(years_since_fire, avg_canopy_cover)) +
 
 **Figure 11:** Overstory tree canopy cover tended to be greatest with increasing time since fire. 
 
-\newpage
+##### Page Break
 
 ## Host density and years since fire
 
@@ -840,7 +834,7 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
 
 **Figure 12:** There is a slight negative relationship between the number of host dung clusters and time since last fire in the plots with no cogongrass invasion; in invaded plots there is no trend. 
 
-\newpage
+##### Page Break
 
 ## Host density and canopy cover
 
@@ -864,7 +858,7 @@ inst_data <- tick_data_sum %>%
 
 **Figure 13:** There is a slight negative relationship between observed host dung clusters and overstory tree canopy cover across all plots. 
 
-\newpage
+##### Page Break
 
 ## Deer specific dung clusters and years since fire
 
@@ -893,7 +887,7 @@ inst_data <- dung_plot_data %>%
 
 We examined the relationship between tick abundance and evidence of deer host abundance specifically because deer are particularly mobile and therefore may reintroduce ticks into recently burned areas.
 
-\newpage
+##### Page Break
 
 ## Percent litter and years since fire
 
@@ -920,7 +914,7 @@ inst_data <- quadrat10_summaries %>%
 
 **Figure 15:** We observed a positive relationship between litter cover and time since fire in both uninvaded and invaded plots and cogongrass-invaded plots. Uninvaded plots generally had greater litter cover. 
 
-\newpage
+##### Page Break
 
 ## Litter biomass and years since fire
 
@@ -948,7 +942,7 @@ inst_data <- biomass_plot_summary %>%
 
 Increasing time since last fire generally trends towards a higher accumulation of litter biomass and cover. The higher quantity of litter in these less frequently burned areas could be a potential driver of tick abundance or survival. 
 
-\newpage
+##### Page Break
 
 ## Percent vegetation cover and years since fire
 
@@ -977,7 +971,7 @@ inst_data <- veg_cover_plot_data %>%
 
 **Figure 17:**  In uninvaded sites, there was a negative relationship between herbaceous cover and time since fire. Increasing density of cogongrass invasions drastically increases vegetation cover as time since fire increases in cogongrass-invaded plots. Note that the sample size of invaded plots is very small. 
 
-\newpage
+##### Page Break
 
 ## Understory species richness and years since fire
 
@@ -1003,7 +997,7 @@ inst_data <- species_richness %>%
 
 **Figure 18:** Across all plots there was a slight negative relationship between herbaceous species richness and time since fire. Species richness has large variability that is influenced by management and natural disturbances other than prescribed fire. 
 
-\newpage
+##### Page Break
 
 ## Overstory species richness and years since fire
 
@@ -1031,7 +1025,7 @@ inst_data <- tree_data_plot_summary %>%
 
 **Figure 19:** There was a positive relationship between overstory species richness and time since fire. Only tree species with a DBH ≥ 3 cm and height ≥ 1m were recorded. 
 
-\newpage
+##### Page Break
 
 ## Total tree DBH and years since fire
 
@@ -1093,7 +1087,7 @@ inst_data <- tree_data_plot_summary %>%
 
 ```
 
-\newpage
+##### Page Break
 
 # Appendix 1 - Commonly encountered tick species
 
@@ -1102,35 +1096,35 @@ inst_data <- tree_data_plot_summary %>%
 
 ![](pictures/lone-star-ticks.png)
 
-\newpage
+##### Page Break
 
 ## Gulf coast tick, *Amblyomma maculatum* 
 **abbreviation: Am. mac**
 
 ![](pictures/gulf-coast-ticks.png)
 
-\newpage
+##### Page Break
 
 ## American dog tick, *Dermecentor variablis* 
 **abbreviation: De. var**
 
 ![](pictures/american-dog-ticks.png)
 
-\newpage
+##### Page Break
 
 ## Brown dog tick, *Rhipicephalus sanguineus* 
 **abbreviation: Rh. san**
 
 ![](pictures/brown-dog-ticks.png)
 
-\newpage
+##### Page Break
 
 ## Black-legged or deer tick, *Ixodes scapularis* 
 **abbreviation: Ix. sc**
 
 ![](pictures/deer-ticks.png)
 
-\newpage
+##### Page Break
 
 # Appendix 2 - Tick survival in cogongrass invasions
 
@@ -1142,7 +1136,7 @@ Recent studies demonstrate that invasive plants can alter TBD risk via both dire
 
 This project conducts a survival assay of *A. americanum* to assess tick mortality and plant invasion interactions, as well as microclimate suitability for tick survival. For this assay we will deploy **1** mesh bag containing **10 nymph** and **10 adult** (5 male and 5 female) life stage *A. americanum* ticks in **12** *I. cylindrica* invaded and **12** native plots (1 m x 1 m) in a pine dominated forest habitat. Each mesh bag will be stood up vertically at the litter layer (to mimic natural questing habitat) inside of a constructed metal wire cage to deter scavengers. Microclimate data is taken by temperature and relative humidity loggers that are attached in a PVC housing next to the cage that record measurements every 5 minutes. Ticks were checked regularly approximately every **10-14** days to monitor their survival. Below are the figures for tick survival since launch on June 21, 2018. Ticks will be monitored continuously until all tick life stage mortality has reached 100%.
 
-\newpage
+##### Page Break
 
 ## Comparing Tick Survival
 
@@ -1336,7 +1330,7 @@ tick_survival_all_time <- cowplot::plot_grid(
 
 ```
 
-\newpage
+##### Page Break
 
 # Appendix 3 - Cogongrass fire intensity from small scale experiments
 
@@ -1347,14 +1341,14 @@ In this paper we present an experimental apparatus that can bridge the gap betwe
 We burned three fires using piled fuel and three fires using standing fuel for each of five fuel loads (250 g, 500 g, 1000 g, 1500 g, 2000 g) spanning the range of cogongrass biomass observed from field measurements across Florida, USA. We ultimately burned 32 fires in this experiment, with one additional fire in the 1000g category due to mislabeling during biomass sorting and weighing. We put the fire intensity and behavior measurements from these experimental fires in the context of measurements made during a prescribed fire in a longleaf pine ecosystem, and measurements made for five experimental fires using the FABIO where fuels were both piled and standing. The prescribed fire was conducted in a longleaf pine forest at Camp Blanding Joint Forces Training Center near Keystone Heights, FL, USA. The forest had prescribed fire applied regularly on an 18-36 month interval, promoting a herbaceous understory dominated by the bunch grass *Aristida stricta* (wiregrass). We successfully recorded temperatures and flame height at seven locations across the ~250 hectare management unit.
 
 For the 32 experimental fires where the fuel loads were either piled or standing we used the braided steel insulated thermocouples (TP875 Extech Instruments, Nashua, NH, USA) that were 100 cm long. During the prescribed fire we used braided glass insulated wire probes (TC6-K, Onset Computer Corporation, Bourne, MA, USA) and wire was only good for a single exposure to direct flame. The bead wire probes were more expensive, but ultimately more economical because they didn't degrade when exposed to flames. The probes were attached to HOBO U12 thermocouple temperature data loggers (Onset Computer Corporation, Bourne, MA, USA). Weather data was recorded every two seconds during fires using a Kestrel 5500 Fire Weather Pro pocket weather tracker (Nielsen-Kellerman, Boothwyn, PA, USA) mounted on a tripod 1m above the ground. Data points were matched to the time of each fire and average values were calculated for air temperature, relative humidity, and wind speed.
-\newpage
+##### Page Break
 
-\newpage
+##### Page Break
 ![](figures/fabio-schematic.png)
 
 **Figure 22:** Schematic of the fine aboveground biomass incineration organizer (FABIO) (a), and the FABIO during an experimental burn (b). Schematic legend: 1. 3.18 cm (1-1/4”) punched angle iron holding welded 4ga. wire with approx. 10cm x 10cm openings, 2. 1.91 cm (¾”) metal conduit, 3. flame retardant soaked cotton twine, 4. thermocouple temperature data loggers (HOBO U12), inside of weatherproof cases (Pelican 1010), and 5. type K thermocouples with braided steel wire leads (TP875 Extech Instruments, Nashua, NH, USA).
 
-\newpage
+##### Page Break
 
 ![](figures/max sabv100 pub figure-1.png)
 
@@ -1364,7 +1358,7 @@ The "maximum temperature" at each height is the average of the maximum temperatu
 
 The "Seconds above 100°C" is the amount of time temperatures were recorded above 100°C at each of the heights for each biomass amount.
 
-\newpage
+##### Page Break
 
 # Appendix 4 - Data Dictionary
 
@@ -1400,7 +1394,7 @@ knitr::kable(common_fields, padding = 4, longtable = TRUE, format = "markdown") 
  
 ```
 
-\newpage
+##### Page Break
 
 ## Plot visit and invasion status
 
@@ -1426,7 +1420,7 @@ kable(plot_visit_cogon_fields, padding = 4, longtable = TRUE, format = "markdown
 
 ```
 
-\newpage
+##### Page Break
 
 ## Vegetation - quadrat plant species
 
@@ -1447,7 +1441,7 @@ kable(quadrat_species_fields, padding = 4, longtable = T, format = "markdown")
 
 ```
 
-\newpage
+##### Page Break
 
 ## Vegetation - quadrat, biomass, and canopy cover 
 
@@ -1479,7 +1473,7 @@ kable(quadrat_biomass_canopy_fields, padding = 4, longtable = T, format = "markd
 
 ```
 
-\newpage
+##### Page Break
 
 ## Trees - raw
 
@@ -1508,7 +1502,7 @@ kable(trees_raw_fields, padding = 4, longtable = T, format = "markdown") #%>%
 
 ```
 
-\newpage
+##### Page Break
 
 ## Trees - summary
 
@@ -1535,7 +1529,7 @@ kable(trees_summary_fields, padding = 4, longtable = T, format = "markdown") #%>
 ```
 
 
-\newpage
+##### Page Break
 
 ## Woody subplot
 
@@ -1557,7 +1551,7 @@ kable(woody_subplot_fields, padding = 4, longtable = T, format = "markdown") #%>
 
 ```
 
-\newpage
+##### Page Break
 
 ## Ticks
 
@@ -1583,7 +1577,7 @@ kable(ticks_fields, padding = 4, longtable = T, format = "markdown") #%>%
 
 Some plot_id may contain NAs in the “species_name” and “life_stage” fields at the sampled plot but have zeros for “tick_count”. These are placeholder zeros to show that the plot was sampled and no ticks were collected. 
 
-\newpage
+##### Page Break
 
 ## Dung
 
@@ -1609,7 +1603,7 @@ kable(dung_fields, padding = 4, longtable = T, format = "markdown") #%>%
 
 Some plot_id may contain NAs in the “species” field at the sampled plot but have zeros in “dung1m” and “dung2m”. These are placeholder zeros to show that the plot was sampled and no ticks were collected. 
 
-\newpage
+##### Page Break
 
 # Appendix 5 - Stem Maps
 
@@ -1628,35 +1622,35 @@ for(i in stem_maps){
 
 ![](stem_maps/gordon a1.png)
 
-\newpage
+##### Page Break
 
 ![](stem_maps/gordon b1.png)
 
-\newpage
+##### Page Break
 
 ![](stem_maps/gordon c1.png)
 
-\newpage
+##### Page Break
 
 ![](stem_maps/gordon d1.png)
 
-\newpage
+##### Page Break
 
 ![](stem_maps/gordon e1.png)
 
-\newpage
+##### Page Break
 
 ![](stem_maps/gordon f1.png)
 
-\newpage
+##### Page Break
 
 ![](stem_maps/gordon g1.png)
 
-\newpage
+##### Page Break
 
 ![](stem_maps/gordon h1.png)
 
-\newpage
+##### Page Break
 
 # References
 
