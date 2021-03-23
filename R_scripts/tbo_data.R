@@ -33,7 +33,7 @@ tbo %>% group_by(collection_method) %>%
                 ticks = length(plot_ID))
 
 tbo_long <- tbo %>%
-      select(Installation, plot_ID, date, sample_ID, collection_method, tbo1:tbo8) %>%
+      select(Installation, plot_ID, date, sample_ID, life_stage, collection_method, tbo1:tbo8) %>%
       pivot_longer(cols = c(tbo1:tbo8),
                    names_to = "tboid", values_to = "tbo",
                    values_drop_na = TRUE)
@@ -65,6 +65,7 @@ p <- pathogenecity %>%
 p$Pathogen_Name[p$Pathogen_Name=="Coxiella endosymbiont of Amblyomma americanum"] <- "Coxiella endo. of A. americanum"
 
 d <- left_join(tbo_long, p, by = c("tbo"="Pathogen_Name"))
+write_csv(d, "data/tbo_pathogenicity_all.csv")
 
 d2 <- d %>%
       filter(Human=="Yes" | Human_Endo == "Yes" | Human_Animal == "Yes")
