@@ -1698,6 +1698,15 @@ tick_data <- left_join(
 )
 summary(tick_data)
 
+tick_data$inst_name
+a <- tick_data %>% filter(is.na(inst_name))
+unique(a$location)
+a <- tick_data %>% 
+  mutate(trap_effort = ifelse(collection_method=="trap", 1, 0)) %>% 
+  group_by(installation) %>% 
+  summarise(trap_effort = sum(trap_effort))
+write_csv(a, "data/installation_trapping_effort.csv")
+
 # filter(tick_data, is.na(imcy_inv))$location
 # sort(unique(tick_data$plot_id))
 
@@ -2001,7 +2010,7 @@ ggplot(filter(tick_data_sum, !is.na(imcy_inv)),
 
 ticks_climate_15yr <- tick_data_sum %>% 
       select(plot_id:visit_date, inst_name, total_ticks, starts_with("avg_15yr"), starts_with("cv_15yr"), frindex) %>% 
-      pivot_longer(., avg_15yr_srad..W.m.2.:cv_15yr)
+      pivot_longer(., avg_15yr_srad..W.m.2.:cv_15yr_fire_days)
 
 ggplot(ticks_climate_15yr, aes(value, (frindex))) +
       geom_point(aes(color = inst_name)) +
@@ -2013,7 +2022,7 @@ ggplot(ticks_climate_15yr, aes(value, (frindex))) +
 
 ticks_climate_30yr <- tick_data_sum %>% 
       select(plot_id:visit_date, inst_name, total_ticks, starts_with("avg_30yr"), starts_with("cv_30yr"), frindex) %>% 
-      pivot_longer(., avg_30yr_srad..W.m.2.:cv_30yr_prcp..mm.day.)
+      pivot_longer(., avg_30yr_srad..W.m.2.:cv_30yr_fire_days)
 
 ggplot(ticks_climate_30yr, aes(value, log1p(total_ticks))) +
       geom_point(aes(color = inst_name)) +
