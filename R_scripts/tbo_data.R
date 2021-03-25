@@ -33,8 +33,9 @@ tbo %>% group_by(collection_method) %>%
                 ticks = length(plot_ID))
 
 tbo_long <- tbo %>%
-      select(Installation, plot_ID, date, sample_ID, life_stage, collection_method, tbo1:tbo8) %>%
-      pivot_longer(cols = c(tbo1:tbo8),
+   mutate(plot_ID = tolower(plot_ID)) %>% 
+   select(Installation, plot_ID, date, sample_ID, life_stage, collection_method, tbo1:tbo8) %>%
+   pivot_longer(cols = c(tbo1:tbo8),
                    names_to = "tboid", values_to = "tbo",
                    values_drop_na = TRUE)
 sort(unique(tbo_long$tbo))
