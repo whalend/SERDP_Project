@@ -23,7 +23,9 @@ tbo <- tbo %>%
             tbo6 = `Rickettsia amblyommatis...17`,
             tbo7 = `Francisella sp....18`, tbo8 = `Coxiella endosymbiont`,
             tbo_per_tick = `number of TBAs per tick`
-      )
+      ) %>% 
+   mutate(plot_ID = tolower(plot_ID))
+   
 tbo %>% summary()
 tbo <- filter(tbo, !is.na(date))
 unique(tbo$collection_method)
@@ -33,8 +35,8 @@ tbo %>% group_by(collection_method) %>%
                 ticks = length(plot_ID))
 
 tbo_long <- tbo %>%
-      select(Installation, plot_ID, date, sample_ID, life_stage, collection_method, tbo1:tbo8) %>%
-      pivot_longer(cols = c(tbo1:tbo8),
+   select(Installation, plot_ID, date, sample_ID, life_stage, collection_method, tbo1:tbo8) %>%
+   pivot_longer(cols = c(tbo1:tbo8),
                    names_to = "tboid", values_to = "tbo",
                    values_drop_na = TRUE)
 sort(unique(tbo_long$tbo))
@@ -111,6 +113,7 @@ tbo_human_strict_traps <- tbo_human_strict %>%
                 Tick_abundance = length(plot_ID)) %>%
       mutate(tbo_per_tick = Pathogen_abundance/Tick_abundance)
 write_csv(tbo_human_strict_traps, "data/tbo_human_strict_onTraps.csv")
+
 
 p <- p %>%
       pivot_longer(
