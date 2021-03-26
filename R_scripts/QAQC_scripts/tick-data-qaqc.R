@@ -1,6 +1,6 @@
 #' # Script for doing QA/QC on tick data
 
-library(plyr)
+# library(plyr)
 library(dplyr)
 library(readr)
 library(stringi)
@@ -16,9 +16,9 @@ tick_data <- read_csv("data/raw_data/ticks.csv")
 
 #+ plot visit data ####
 plot_visit_data <- read_csv("data/processed_data/plot_visit_data.csv")
-sort(unique(plot_visit_data$plot_id))
+# sort(unique(plot_visit_data$plot_id))
 
-sort(unique(tick_data$plot_id))
+# sort(unique(tick_data$plot_id))
 tick_data$plot_id <- tolower(tick_data$plot_id)
 tick_data$plot_id[tick_data$plot_id=="c"] <- "c1"
 
@@ -43,12 +43,12 @@ tick_data <- tick_data %>%
          )) %>%
       rename(visit_date = date)
 
-sort(unique(tick_data$plot_id))
-filter(tick_data, plot_id=="tyndall na")
-filter(tick_data, plot_id=="tyndall extra")
+# sort(unique(tick_data$plot_id))
+# filter(tick_data, plot_id=="tyndall na")
+# filter(tick_data, plot_id=="tyndall extra")
 tick_data$plot_id[tick_data$plot_id=="tyndall na"] = "tyndall extra"
 
-plot_visit_data$plot_id[!(plot_visit_data$plot_id%in%(unique(filter(tick_data, location != "extra")$plot_id)))]
+# plot_visit_data$plot_id[!(plot_visit_data$plot_id%in%(unique(filter(tick_data, location != "extra")$plot_id)))]
 
 
 visits <- left_join(
@@ -58,7 +58,7 @@ visits <- left_join(
 
 
 tick_data_join <- full_join(
-      tick_data,
+      tick_data %>% select(-visit_date),
       select(plot_visit_data, installation:lat, inst_name),
       by = c("installation", "plot_id", "visit_year")
 )
@@ -66,6 +66,9 @@ tick_data_join <- full_join(
 unique(tick_data$location)
 
 summary(tick_data)
+
+tick_data <- tick_data %>% 
+  select(-drag_time)
 
 # filter(tick_data, is.na(years_since_fire))
 # "extra" ticks at Moody AFB were from an area last burned in 2005
@@ -101,7 +104,6 @@ anti_join(plot_visit_data, tick_data, "plot_id") %>%
 
 sort(unique(tick_data$plot_id))
 
-# Added zeroes for all visited plots that were missing
 
 
 # Make species id consistent ####
@@ -115,24 +117,11 @@ tick_data$species[tick_data$species=="de. var"] <- "De. var"
 # tick_data$species[tick_data$species=="De. Var"] <- "De. var"
 tick_data$species[tick_data$species=="rh. san"] <- "Rh. san"
 
-# tick_data$date <- lubridate::ymd(tick_data$date)
-# tick_data <- tick_data %>%
-#   mutate(visit_year = lubridate::year(tick_data$date))
-#
-# summary(tick_data)
-# unique(tick_data$plot_id)
-
-# xtabs(~visit_year + plot_id, data = tick_data)
-# filter(tick_data, plot_id!="tyndall c2", species=="Rh. san")
-# write_csv(tick_data, "data/processed_data/ticks.csv")
-
 
 # Merge corrected/confirmed data from Illinois -----------------------
-
 ## Page sent a spreadsheet with all the 2017/2018 vials processed
 ## Species and life stages were confirmed/corrected
 ## A sample id code was added
-## I'm adding back the zeroes in the original data for completeness
 
 library(readxl)
 library(readr)
@@ -158,10 +147,8 @@ illini_data <- illini_data %>%
 
 
 
-
 # tick_data <- read_csv("data/processed_data/ticks.csv")
 tick_data_zeroes <- filter(tick_data, count<1)
-unique(tick_data_zeroes$plot_id)
 
 names(illini_data)
 names(tick_data_zeroes)
@@ -185,32 +172,24 @@ illini_data <- illini_data %>%
              visit_year = lubridate::year(date)) %>%
       rename(visit_date = date)
 
-# unique(tick_data_zeroes$life_stage)
+tick_data_zeroes <- anti_join(tick_data, illini_data,  by = c("plot_id","visit_year", "location"))
+# summary(tick_data_zeroes)
+# sort(unique(tick_data_zeroes$plot_id))
+# tick_data_zeroes
 
-tick_data_zeroes <- anti_join(tick_data, illini_data,  by = c("plot_id","visit_year"))
-summary(tick_data_zeroes)
-sort(unique(tick_data_zeroes$plot_id))
+larva <- tick_data %>% 
+  filter(life_stage == "L") %>% 
+  select(-notes)
+write_csv(larva, "data/processed_data/larval_tick_collections.csv")
 
-tick_data_zeroes
+tick_data_corrected <- union(
+  tick_data_zeroes %>% select(-notes), 
+  illini_data %>% select(installation:count, visit_year)) %>% 
+  union(., larva %>% mutate(count = 1)) %>% 
+  rename(tick_count = count)
 
-
-tick_data_corrected <- full_join(
-      select(tick_data_zeroes, -notes, -drag_time),
-      select(illini_data, -Notes)
-      )
-summary(tick_data_corrected)
-
-sort(unique(tick_data_corrected$plot_id))
-
-
-tick_data_corrected %>%
-      filter(location != "extra") %>%
-      group_by(plot_id, visit_year) %>%
-      summarise(count = sum(count)) %>%
-      arrange(plot_id)
-      ungroup(.) %>%
-      group_by(visit_year) %>%
-      summarise(plot_visits = length(plot_id))
+# summary(tick_data_corrected)
+# sort(unique(tick_data_corrected$plot_id))
 
 
 ## Add full species names ####
@@ -218,14 +197,17 @@ tick_data_corrected %>%
 # summary(tick_data)
 names(tick_data_corrected)
 unique(tick_data_corrected$species)
+tick_data %>% filter(is.na(species), tick_count>0) %>% View
+
 tick_data_corrected <- tick_data_corrected %>%
   mutate(species_name = case_when(
-        species=="Am. am" ~ "Amblyomma americanum",
-        species=="Am. mac" ~ "Amblyomma maculatum",
-        species=="De. var" ~ "Dermacentor variabilis",
-        species=="Rh. san" ~ "Rhipicephalus sanguineus",
-        is.na(species)==TRUE ~ "unknown")
+        species == "Am. am" ~ "Amblyomma americanum",
+        species == "Am. mac" ~ "Amblyomma maculatum",
+        species == "De. var" ~ "Dermacentor variabilis",
+        species == "Rh. san" ~ "Rhipicephalus sanguineus",
+        life_stage == "L" ~ "unknown")
         )
+## "unknown" are larvae
 
 # tick_data_corrected$species_name
 unique(tick_data_corrected$species_name)
@@ -247,39 +229,13 @@ tick_data_corrected <- tick_data_corrected %>%
 sort(unique(tick_data_corrected$plot_id))
 unique(tick_data_corrected$location)
 
-# tmp <- tick_data_corrected %>%
-#       filter(location != "extra") %>%
-#       group_by(plot_id, visit_year) %>%
-#       summarise(tick_count = sum(count))
-# tmp$plot_id
+unique(tick_data$species_name)
+
+v <- unique(tick_data_corrected$location)
+v <- v[v != "extra"]
+
+tick_data_corrected <- tick_data_corrected %>% 
+  mutate(collection_method = ifelse(
+    location %in% v, "trap", collection_method))
 
 write_csv(tick_data_corrected, "data/processed_data/ticks.csv")
-
-
-
-## initial plotting ####
-# ggplot(tick_data %>%
-# group_by(installation,years_since_fire,Species) %>%
-# summarise(tick_number = sum(count)),
-# aes(as.factor(years_since_fire), tick_number)) +
-# # geom_point(position = "jitter") +
-# geom_bar(fill = "#124873", stat = "identity", position = "dodge") +
-# # facet_grid(installation~., scales = "free_y") +
-# xlab("Years since fire") +
-# ylab("Tick abundance") +
-# theme_bw() +
-# theme(axis.text = element_text(size = 18),
-# axis.title = element_text(size = 22))
-#
-# ggplot(tick_data %>%
-# group_by(full_names, years_since_fire, Species) %>%
-# summarise(tick_number = sum(count)),
-# aes(as.factor(years_since_fire), tick_number, fill = Species)) +
-# # geom_point(position = "jitter") +
-# geom_bar(stat = "identity", position = "dodge") +
-# facet_grid(full_names~., scales = "free_y") +
-# xlab("Years since fire") +
-# ylab("Tick abundance") +
-# theme_bw() +
-# theme(axis.text = element_text(size = 18),
-# axis.title = element_text(size = 22))
