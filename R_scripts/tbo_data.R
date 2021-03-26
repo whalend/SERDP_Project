@@ -35,10 +35,7 @@ tbo %>% group_by(collection_method) %>%
                 ticks = length(plot_ID))
 
 tbo_long <- tbo %>%
-<<<<<<< HEAD
-=======
    mutate(plot_ID = tolower(plot_ID)) %>% 
->>>>>>> 3d8e238e82cd0462da04dec834f838d3f4f24b43
    select(Installation, plot_ID, date, sample_ID, life_stage, collection_method, tbo1:tbo8) %>%
    pivot_longer(cols = c(tbo1:tbo8),
                    names_to = "tboid", values_to = "tbo",
