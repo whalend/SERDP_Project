@@ -22,7 +22,8 @@ knitr::opts_chunk$set(message = F)
 ```{r load libraries, echo=F}
 # source(plot-data.R)
 
-library(plyr); library(dplyr); library(ggplot2); library(readr)
+# library(plyr); 
+library(dplyr); library(ggplot2); library(readr)
 library(stringi); library(stringr)
 library(tidyr)
 library(viridisLite); library(viridis)
@@ -125,7 +126,7 @@ ggplot(data = southeast) +
 
 
 
-vignette("tmap-getstarted")
+# vignette("tmap-getstarted")
 
 data("World")
 
@@ -1672,10 +1673,11 @@ names(plot_visit_data)
 names(tick_data_import)
 
 tick_data <- tick_data_import %>%
-      mutate(life_stage = factor(life_stage, 
-                                 levels = c("adult","nymph"), 
-                                 labels = c("Adult","Nymph"))) %>% 
-      rename(tick_count = count)
+      mutate(life_stage = case_when(
+        life_stage == "A" ~ "adult",
+        life_stage == "N" ~ "nymph",
+        life_stage == "L" ~ "larva",
+      ))
 str(tick_data)
 str(plot_visit_data)
 
@@ -1688,24 +1690,38 @@ tick_data %>%
       group_by(visit_year) %>% 
       summarise(plot_visits = length(plot_id))
 
-unique(plot_visit_data$plot_id)
-unique(tick_data$plot_id)
+# unique(plot_visit_data$plot_id)
+# unique(tick_data$plot_id)
 
 
 tick_data <- left_join(
       tick_data,
       select(plot_visit_data, -visit_date)
 )
-summary(tick_data)
+# summary(tick_data)
 
-tick_data$inst_name
+# tick_data$inst_name
 a <- tick_data %>% filter(is.na(inst_name))
-unique(a$location)
+# unique(a$location)
+a <- tick_data %>% distinct(installation, inst_name) %>% 
+  filter(!is.na(inst_name))
+
+tick_data <- left_join(tick_data %>% select(-inst_name), a, 
+                       by = "installation") 
+
 a <- tick_data %>% 
+  distinct(installation, plot_id, location, visit_date, visit_year, collection_method) %>% 
+  # filter(location != "extra") %>% # for plot level effort
   mutate(trap_effort = ifelse(collection_method=="trap", 1, 0)) %>% 
-  group_by(installation) %>% 
-  summarise(trap_effort = sum(trap_effort))
-write_csv(a, "data/installation_trapping_effort.csv")
+  group_by(installation,  
+           plot_id,
+           visit_year
+           ) %>% 
+  summarise(trap_effort = sum(trap_effort, na.rm = TRUE))
+# summary(a)
+a %>% filter(trap_effort == 0)
+# write_csv(a, "data/plot_trapping_effort.csv")
+# write_csv(a, "data/installation_trapping_effort.csv")
 
 # filter(tick_data, is.na(imcy_inv))$location
 # sort(unique(tick_data$plot_id))
@@ -1729,7 +1745,7 @@ write_csv(a, "data/installation_trapping_effort.csv")
 
 ```
 
-```{r summarize-tick-abundance-data, results='hide', eval=FALSE}
+```{r summarize-tick-abundance-data, results='hide', eval=TRUE}
 
 # tick_data_life_stage_summary <- tick_data %>% 
 #       group_by(plot_id, visit_year, life_stage, years_since_fire, imcy_inv, inst_name, visit_date) %>% 
@@ -1737,12 +1753,19 @@ write_csv(a, "data/installation_trapping_effort.csv")
 #       ungroup(.) %>% 
 #       select(plot_id, visit_year, total_ticks, everything())
 
+ticks_per_installation <- tick_data %>% 
+      # filter(location != "extra") %>%
+      group_by(installation, inst_name) %>%
+      summarise(total_ticks = sum(count),) %>% 
+      ungroup(.)
 
-tick_data_plot_summary <- tick_data %>% 
+ticks_per_plot <- tick_data %>% 
       filter(location != "extra") %>%
       group_by(plot_id, visit_year, inst_name) %>%
       summarise(total_ticks = sum(tick_count)) %>% 
       ungroup(.)
+
+tick_stage_per_plot
 
 tick_data_plot_summary <- left_join(
       plot_visit_data,
