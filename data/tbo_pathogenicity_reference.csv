@@ -1,0 +1,33 @@
+Pathogen_Name,Human,Wildlife,Domestic_Animals,Endosymbiont,Unknown,tick_hosts_literature,tick_hosts_data,vertebrate_tick_hosts,disease,disease_host
+Anaplasma phagocytophilum,Yes,Yes,Yes,No,No,"Ixodes scapularis, I. pacificus, I. ricinus, I. persulcatus, Dermacentor spp.","Amblyomma americanum, A. maculatum","rodents, cattle, sheep, goats",febrile disease (human and animal granulocytic anaplasmosis),"domestic and wild small ruminant, horses, dogs, humans"
+Babesia sp.,No,Yes,Yes,No,No,"Rhipicephalus spp., Ixodes spp.","Amblyomma americanum, A. maculatum",cattle; deer; rabbits,babesioses/unknown,"cattle, deer"
+Borrelia burgdorferi,Yes,No,No,No,No,"Ixodes ricinus, I. scapularis, I. pacificus, I. affinis","Amblyomma americanum, A. maculatum","rodents, deer, sheep (British Isles)",Lyme disease (arthritis),humans
+Borrelia kurtenbachii,Yes,No,No,No,No,Ixodes scapularis,Amblyomma americanum,"small rodents (RH), deer",Lyme borreliosis,humans
+Borrelia lonestari,Yes,No,No,No,No,Amblyomma americanum,"Amblyomma americanum, A. maculatum","dogs, deer, horses, rodents",STARI? (probably not?),humans
+Borrelia sp.,Yes,No,No,No,No,Ixodes spp.,"Amblyomma americanum, A. maculatum","deer, rodents, rabbits, birds, small reptiles",borrelioses/non-pathogenic,humans
+Candidatus Rickettsia andeanae,No,No,No,No,Yes,Amblyomma maculatum,"Amblyomma maculatum, Dermacentor variabilis","equids, bovids, canids, birds",unknown pathogenicity,unknown pathogenicity
+Coxiella endo. of A. americanum,No,No,No,Yes,No,No,"Amblyomma americanum, A. maculatum, Dermacentor variabilis, Ixodes scapularis, Rhipicephalus sanguineus",unknown,non-pathogenic,non-pathogenic
+Coxiella sp.,No,No,No,Yes,No,No,"Amblyomma americanum, A. maculatum",unknown,non-pathogenic,non-pathogenic
+Ehrlichia chaffeensis,Yes,No,Yes,No,No,Amblyomma americanum,"Amblyomma americanum, A. maculatum","dogs, deer, horses, rodents",human monocytic ehrlichiosis,"dogs, humans"
+Ehrlichia ewingii,Yes,Yes,Yes,No,No,Amblyomma americanum,"Amblyomma americanum, A. maculatum","dogs, deer, horses, rodents",granulocytic ehrlichiosis,"goats, white-tailed deer, dogs, humans"
+Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Ixodes scapularis,"Amblyomma americanum, A. maculatum, Dermacentor variabilis","cattle, dogs, med/large mammals, mice, sml mammals, ground-frequenting birds, skinks, lizards",ehrlichiosis,humans
+Ehrlichia sp.,No,No,No,No,Yes,Amblyomma spp.,Amblyomma americanum,unknown,ehrlichiosis/unknown pathogensis,ehrlichiosis/unknown pathogensis
+Ehrlichia sp. P-Mtn,No,No,Yes,No,No,"Amblyomma americanum, A. maculatum","Amblyomma americanum, A. maculatum","dogs, deer, horses, rodents",ehrlichiosis,goats
+Francisella endosymbiont,No,No,No,Yes,No,No,"Amblyomma americanum, A. maculatum, Dermacentor variabilis",unknown,non-pathogenic,non-pathogenic
+Francisella sp.,No,No,No,No,Yes,No,"Amblyomma americanum, A. maculatum, Dermacentor variabilis, Rhipicephalus sanguineus",unknown,unknown pathogensis,unknown pathogensis
+Francisella tularensis subsp. tularensis,Yes,Yes,No,No,No,"Dermacentor variabilis, Dermacentor andersoni, Amblyomma americanum",unknown (positive control from unknown source),"Rabbits, hares, and rodents",Tularemia,"lagomorphs, humans"
+Francisella-like endosymbiont,No,No,No,Yes,No,No,"Amblyomma maculatum, Dermacentor variabilis",unknown,non-pathogenic,non-pathogenic
+Rickettsia amblyommatis,Yes,No,No,Yes,No,Amblyomma americanum; A. cajennense; A. oblongoguttanum; A. ovale; Rhipicephalus microplus; R. sanguineus; Dermacentor nitens; A. maculatum; A. coelebs; A. neumanni; A. longirostre; A. geayi; A. auricularium,"Amblyomma americanum, A. maculatum, Dermacentor variabilis",mammals,"endosymbiont, may cause mild human rickettsiosis",perhaps human
+Rickettsia bellii,No,Yes,Yes,No,No,"Amblyomma sabanerae, Amblyomma spp., Dermacentor andersoni, D. occidentalis, D. variabilis, D. parumapertus, D. albipictus, H. leporispalustris, Argas cooleyi, Ornithodoros concanensis, Haemaphysalis juxtakochi, Ixodes loricatus","Amblyomma americanum, A. maculatum, Dermacentor variabilis","rabbits, guinea pigs",eschars develop,"rabbits, guinea pigs"
+Rickettsia felis,Yes,No,No,No,No,"(Ctenocephalides felis, C. canis, Pulex irritans, Archeopsylla erinacei, occasionally carried by hard and/or soft ticks)",Ixodes scapularis,cats (felids),rickettsiosis,humans
+Rickettsia parkeri,Yes,No,Yes,No,No,"Amblyomma maculatum, A. americanum, A. triste, A. tigrinum, Dermacentor variabilis","Amblyomma maculatum, Dermacentor variabilis",mammals,"R. parkeri rickettsiosis; mild, eschar-associated rickettsiosis (North America); no known disease in Central America; spotted fever (South America)","dogs, cattle, humans"
+Rickettsia rhipicephali,No,Yes,Yes,No,No,"Rhipicephalus haemaphysaloides, R. sanguineus, R. lunulatus, Rhipicephalus composites group, Dermacentor occidentalis, D. variabilis, D. andersoni, Haemaphysalis juxtakochi","Amblyomma americanum, A. maculatum, Dermacentor variabilis",mammals,rickettsiosis,dogs and meadow voles
+Rickettsia sp.,No,No,No,No,Yes,"Amblyomma spp., Dermacentor spp., Haemaphysalis spp., Ixodes spp., Rhipicephalus spp.","Amblyomma americanum, A. maculatum, Dermacentor variabilis, Rhipicephalus sanguineus",unknown,rickettsiosis/non-pathogenic,rickettsiosis/non-pathogenic
+Rickettsia sp. Is2FT68-2,No,No,No,No,Yes,Ixodes scapularis,"Amblyomma americanum, A. maculatum, Dermacentor variabilis, Ixodes scapularis",unknown,unknown pathogenicity,unknown pathogenicity
+Theileria cervi,No,Yes,No,No,No,Amblyomma americanum,"Amblyomma americanum, A. maculatum",deer,opportunistic theileriosis,deer & elk
+Theileria cervi-like,No,No,No,No,Yes,No,"Amblyomma americanum, A. maculatum",deer,unknown pathogenicity,unknown pathogenicity
+Theileria sp.,No,No,No,No,Yes,No,"Amblyomma americanum, A. maculatum",unknown,theileriosis/unknown pathogenicity,unknown pathogenicity
+Theileria sp. H8,No,Yes,No,No,No,perhaps Rhipicephalus spp.,"Amblyomma americanum, A. maculatum",deer,theileriosis,white-tailed deer
+Theileria sp. KCS-2015,No,Yes,No,No,No,No,"Amblyomma americanum, A. maculatum",deer,theileriosis,white-tailed deer
+Theileria sp. North Texas white-tailed deer,No,Yes,No,No,No,No,"Amblyomma americanum, A. maculatum",deer,theileriosis,white-tailed deer
+Theileria sp. Ree18,No,Yes,No,No,No,No,"Amblyomma americanum, A. maculatum",deer,theileriosis,white-tailed deer

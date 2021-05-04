@@ -1,0 +1,145 @@
+Installation,plot_id,date,sample_ID,life_stage,collection_method,tboid,tbo,Human,Wildlife,Domestic_Animals,Endosymbiont,Unknown,inst_name
+blanding,blanding a1,2017-06-10T00:00:00Z,BA1ETAA1,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding a1,2017-06-09T00:00:00Z,BA1XDAA2,adult,Drag,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding a1,2017-06-10T00:00:00Z,BA1XWAN1,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding a1,2017-06-10T00:00:00Z,BA1XWAN2,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding c1,2017-06-07T00:00:00Z,BCXWAN1,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding d1,2017-06-10T00:00:00Z,BD1CTAA1,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding f1,2017-06-23T00:00:00Z,BF1CTAA4,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding f1,2017-06-23T00:00:00Z,BF1XWAA5,adult,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding f1,2017-06-23T00:00:00Z,BF1XWAN1,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding f1,2017-06-23T00:00:00Z,BF1XWAN3,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding f1,2017-06-23T00:00:00Z,BF1XWAN4,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding f1,2017-06-23T00:00:00Z,BF1XWAN7,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding f1,2017-06-23T00:00:00Z,BF1XWAN9,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding g1,2018-05-24T00:00:00Z,BG1BTAN1,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding g1,2018-05-24T00:00:00Z,BG1FTAN1,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding g1,2017-06-16T00:00:00Z,BG1STMA1,adult,trap,tbo1,Rickettsia parkeri,Yes,No,Yes,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN03,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN11,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN16,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN19,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN34,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN40,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN41,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN48,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN56,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN58,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1CRAN59,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1CTAA01,adult,trap,tbo1,Borrelia lonestari,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1CTAN05,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1CTAN06,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1CTAN08,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1CTAN10,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1CTAN11,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1CTAN15,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1NTAA1,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1NTAA2,adult,trap,tbo1,Borrelia lonestari,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1SRAA2,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1SRAA3,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1SRAN03,nymph,trap,tbo1,Borrelia lonestari,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1SRAN09,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1SRAN12,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1SRAN15,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-24T00:00:00Z,BH1SRAN21,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1STAA2,adult,trap,tbo1,Ehrlichia ewingii,Yes,Yes,Yes,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1STAA8,adult,trap,tbo1,Borrelia lonestari,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-16T00:00:00Z,BH1WTAN1,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-20T00:00:00Z,BH1XHAN03,nymph,Whalen,tbo1,Borrelia lonestari,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-20T00:00:00Z,BH1XHAN06,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-20T00:00:00Z,BH1XHAN17,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-20T00:00:00Z,BH1XHAN28,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-23T00:00:00Z,BH1XLAN2,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding h1,2017-06-23T00:00:00Z,BH1XLAN5,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding j1,2018-06-20T00:00:00Z,BJ1ATAA5,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding j1,2018-06-20T00:00:00Z,BJ1ATAN3,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding j1,2018-06-20T00:00:00Z,BJ1ATAN5,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding j1,2018-06-20T00:00:00Z,BJ1ATAN7,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding j1,2018-06-20T00:00:00Z,BJ1ATAN8,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding j1,2018-06-20T00:00:00Z,BJ1ATAN9,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding j1,2018-06-20T00:00:00Z,BJ1BTAA1,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding j1,2018-06-20T00:00:00Z,BJ1FTAN1,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding j1,2018-06-20T00:00:00Z,BJ1FTAN4,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1ATAA1,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1ATAN2,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1ATAN3,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1ATAN4,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1ATAN6,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1BTAA09,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1DTAN02,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1DTAN03,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1DTAN12,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1FTAA10,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+blanding,blanding k1,2018-05-24T00:00:00Z,BK1XEAN1,nymph,people,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Blanding
+eglin,eglin d1,2017-08-17T00:00:00Z,ED1XWAN2,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1ETAN4,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1ETAN7,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1NTAN01,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1NTAN04,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1NTAN10,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1NTAN11,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1NTAN13,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1NTAN17,nymph,trap,tbo1,Anaplasma phagocytophilum,Yes,Yes,Yes,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1NTAN19,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1NTAN21,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1NTAN24,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin h1,2017-08-17T00:00:00Z,EH1XWAN5,nymph,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin i1,2018-06-12T00:00:00Z,EI1ATAN1,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+eglin,eglin i1,2018-06-12T00:00:00Z,EI1ATAN4,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Eglin AFB
+gordon,gordon r1,2018-08-23T00:00:00Z,GR1BTAN4,nymph,trap,tbo1,Ehrlichia chaffeensis,Yes,No,Yes,No,No,Fort Gordon
+gordon,gordon r1,2018-08-23T00:00:00Z,GR1BTAN6,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Fort Gordon
+gordon,gordon s1,2018-08-23T00:00:00Z,GS1BTAN2,nymph,trap,tbo1,Ehrlichia chaffeensis,Yes,No,Yes,No,No,Fort Gordon
+gordon,gordon s1,2018-08-23T00:00:00Z,GS1BTAN5,nymph,trap,tbo1,Ehrlichia chaffeensis,Yes,No,Yes,No,No,Fort Gordon
+gordon,gordon s1,2018-08-23T00:00:00Z,GS1BTAN6,nymph,trap,tbo1,Borrelia lonestari,Yes,No,No,No,No,Fort Gordon
+gordon,gordon s1,2018-08-23T00:00:00Z,GS1BTAN6,nymph,trap,tbo2,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Fort Gordon
+gordon,gordon s1,2018-08-23T00:00:00Z,GS1FTAN1,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Fort Gordon
+gordon,gordon w1,2018-08-23T00:00:00Z,GW1DTAN18,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Fort Gordon
+gordon,gordon w1,2018-08-23T00:00:00Z,GW1DTAN23,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Fort Gordon
+jackson,jackson l1,2018-07-13T00:00:00Z,JL1ATAA1,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Fort Jackson
+moody,moody x,2017-09-01T00:00:00Z,MXXTAN1,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Moody AFB
+benning,benning d1,2018-07-26T00:00:00Z,ND1ATAN1,nymph,trap,tbo1,Ehrlichia ewingii,Yes,Yes,Yes,No,No,Fort Benning
+benning,benning extra,2018-07-24T00:00:00Z,NXXEAN1,nymph,people,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Fort Benning
+shelby,shelby b1,2017-09-23T00:00:00Z,SB1NTAN1,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Shelby
+shelby,shelby d1,2017-09-23T00:00:00Z,SD1NTMA1,adult,trap,tbo1,Rickettsia parkeri,Yes,No,Yes,No,No,Camp Shelby
+shelby,shelby g1,2017-09-26T00:00:00Z,SG1NTAN5,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Shelby
+shelby,shelby g1,2017-09-26T00:00:00Z,SG1TTAN1,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Camp Shelby
+tyndall,tyndall 0,2017-07-17T00:00:00Z,T0XWMA1,adult,Whalen,tbo1,Rickettsia parkeri,Yes,No,Yes,No,No,Tyndall AFB
+tyndall,tyndall 1,2017-07-18T00:00:00Z,T1XWMA1,adult,Whalen,tbo1,Rickettsia parkeri,Yes,No,Yes,No,No,Tyndall AFB
+tyndall,tyndall 2,2017-07-20T00:00:00Z,T2XWAA1,adult,Whalen,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall b2,2018-06-27T00:00:00Z,TB2BTAN1,nymph,trap,tbo3,Borrelia sp.,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall b2,2017-07-19T00:00:00Z,TB2NTAA2,adult,trap,tbo1,Anaplasma phagocytophilum,Yes,Yes,Yes,No,No,Tyndall AFB
+tyndall,tyndall b3,2018-06-29T00:00:00Z,TB3FTMA2,adult,trap,tbo1,Rickettsia parkeri,Yes,No,Yes,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1ATAN1,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN02,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN04,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN07,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN10,nymph,trap,tbo2,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN15,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN18,nymph,trap,tbo2,Borrelia burgdorferi,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN20,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN25,nymph,trap,tbo1,Borrelia sp.,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN26,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN28,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN31,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN32,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1BTAN35,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1DTAN03,nymph,trap,tbo1,Borrelia sp.,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1DTAN07,nymph,trap,tbo1,Borrelia burgdorferi,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1DTAN09,nymph,trap,tbo3,Borrelia burgdorferi,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1DTAN10,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1DTAN11,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-28T00:00:00Z,TC1DTAN12,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c1,2018-06-26T00:00:00Z,TC1XEAN2,nymph,people,tbo1,Anaplasma phagocytophilum,Yes,Yes,Yes,No,No,Tyndall AFB
+tyndall,tyndall c2,2018-06-28T00:00:00Z,TC2ATAN2,nymph,trap,tbo1,Ehrlichia chaffeensis,Yes,No,Yes,No,No,Tyndall AFB
+tyndall,tyndall c2,2018-06-28T00:00:00Z,TC2ATAN4,nymph,trap,tbo1,Ehrlichia chaffeensis,Yes,No,Yes,No,No,Tyndall AFB
+tyndall,tyndall c2,2018-06-28T00:00:00Z,TC2ATMA2,adult,trap,tbo1,Rickettsia parkeri,Yes,No,Yes,No,No,Tyndall AFB
+tyndall,tyndall c2,2018-06-28T00:00:00Z,TC2BTAN09,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c2,2018-06-28T00:00:00Z,TC2BTAN14,nymph,trap,tbo2,Borrelia burgdorferi,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c2,2018-06-28T00:00:00Z,TC2BTAN15,nymph,trap,tbo2,Borrelia sp.,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c2,2018-06-28T00:00:00Z,TC2BTAN19,nymph,trap,tbo1,Ehrlichia ewingii,Yes,Yes,Yes,No,No,Tyndall AFB
+tyndall,tyndall c2,2018-06-28T00:00:00Z,TC2BTVA2,adult,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall c2,2018-06-28T00:00:00Z,TC2FTVA1,adult,trap,tbo1,Rickettsia parkeri,Yes,No,Yes,No,No,Tyndall AFB
+tyndall,tyndall d1,2017-07-21T00:00:00Z,TD1WTAN4,nymph,trap,tbo1,Ehrlichia muris subsp. eauclairensis,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall d2,2018-06-27T00:00:00Z,TD2ATAA1,adult,trap,tbo1,Borrelia burgdorferi,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall d2,2018-06-27T00:00:00Z,TD2ATAA1,adult,trap,tbo2,Borrelia kurtenbachii,Yes,No,No,No,No,Tyndall AFB
+tyndall,tyndall d2,2018-06-27T00:00:00Z,TD2ATVA8,adult,trap,tbo1,Rickettsia parkeri,Yes,No,Yes,No,No,Tyndall AFB

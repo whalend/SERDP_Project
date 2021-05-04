@@ -1,0 +1,9 @@
+installation,plot_id,location,visit_date,collection_method,species,life_stage,count,visit_year
+blanding,blanding h1,center,2017-06-24,trap,Am. am,L,13,2017
+blanding,blanding j1,extra,2018-06-20,people,Am. am,L,1,2018
+tyndall,tyndall b2,nw,2018-06-27,trap,Am. am,L,1,2018
+tyndall,tyndall d2,sw,2018-06-27,trap,Am. am,L,1,2018
+tyndall,tyndall c2,nw,2018-06-28,trap,Am. am,L,1,2018
+jackson,jackson g1,ne,2018-07-12,trap,NA,L,4,2018
+benning,benning a1,sw,2018-07-26,trap,NA,L,134,2018
+gordon,gordon e1,ne,2018-08-23,trap,NA,L,923,2018

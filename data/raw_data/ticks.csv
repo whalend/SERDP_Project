@@ -1,6 +1,11 @@
 "installation","plot_id","location","date","collection_method","species","life_stage","count","drag_time","notes"
 "blanding","c","Extra",20170607,"Whalen","Am. am","N",1,NA,NA
 "blanding","c","Extra",20170607,"Whalen","De. var","A",1,NA,NA
+"blanding","c1","North",20170607,"trap",NA,NA,0,NA,NA
+"blanding","c1","South",20170607,"trap",NA,NA,0,NA,NA
+"blanding","c1","East",20170607,"trap",NA,NA,0,NA,NA
+"blanding","c1","West",20170607,"trap",NA,NA,0,NA,NA
+"blanding","c1","Center",20170607,"trap",NA,NA,0,NA,NA
 "blanding","b1","North",20170608,"trap",NA,NA,0,NA,NA
 "blanding","b1","South",20170608,"trap",NA,NA,0,NA,NA
 "blanding","b1","East",20170608,"trap",NA,NA,0,NA,NA
@@ -63,11 +68,21 @@
 "blanding","H1","Center",20170624,"trap","Am. am","A",9,NA,"retrap"
 "blanding","H1","Center",20170624,"trap","Am. am","N",73,NA,"retrap"
 "blanding","H1","Center",20170624,"trap","Am. am","L",13,NA,"retrap"
+"avonpark","a1","North",20170627,"trap",NA,NA,0,NA,NA
+"avonpark","a1","South",20170627,"trap",NA,NA,0,NA,NA
+"avonpark","a1","East",20170627,"trap",NA,NA,0,NA,NA
+"avonpark","a1","West",20170627,"trap",NA,NA,0,NA,NA
+"avonpark","a1","Center",20170627,"trap",NA,NA,0,NA,NA
 "avonpark","b1","North",20170629,"trap",NA,NA,0,NA,NA
 "avonpark","b1","South",20170629,"trap",NA,NA,0,NA,NA
 "avonpark","b1","East",20170629,"trap",NA,NA,0,NA,NA
 "avonpark","b1","West",20170629,"trap",NA,NA,0,NA,NA
 "avonpark","b1","Center",20170629,"trap",NA,NA,0,NA,NA
+"avonpark","c1","North",20170628,"trap",NA,NA,0,NA,NA
+"avonpark","c1","South",20170628,"trap",NA,NA,0,NA,NA
+"avonpark","c1","East",20170628,"trap",NA,NA,0,NA,NA
+"avonpark","c1","West",20170628,"trap",NA,NA,0,NA,NA
+"avonpark","c1","Center",20170628,"trap",NA,NA,0,NA,NA
 "avonpark","D1","West",20170630,"trap","De. var","A",2,NA,NA
 "avonpark","D1","North",20170630,"trap",NA,NA,0,NA,NA
 "avonpark","D1","South",20170630,"trap",NA,NA,0,NA,NA
@@ -82,11 +97,16 @@
 "tyndall","B2","East",20170719,"trap",NA,NA,0,NA,NA
 "tyndall","B2","West",20170719,"trap",NA,NA,0,NA,NA
 "tyndall","B2","Center",20170719,"trap",NA,NA,0,NA,NA
-"tyndall","h1","South",20170721,NA,NA,NA,0,NA,NA
-"tyndall","h1","North",20170721,NA,NA,NA,0,NA,NA
-"tyndall","h1","East",20170721,NA,NA,NA,0,NA,NA
-"tyndall","h1","West",20170721,NA,NA,NA,0,NA,NA
-"tyndall","h1","Center",20170721,NA,NA,NA,0,NA,NA
+"tyndall","b1","South",20170721,"trap",NA,NA,0,NA,NA
+"tyndall","b1","North",20170721,"trap",NA,NA,0,NA,NA
+"tyndall","b1","East",20170721,"trap",NA,NA,0,NA,NA
+"tyndall","b1","West",20170721,"trap",NA,NA,0,NA,NA
+"tyndall","b1","Center",20170721,"trap",NA,NA,0,NA,NA
+"tyndall","h1","South",20170721,"trap",NA,NA,0,NA,NA
+"tyndall","h1","North",20170721,"trap",NA,NA,0,NA,NA
+"tyndall","h1","East",20170721,"trap",NA,NA,0,NA,NA
+"tyndall","h1","West",20170721,"trap",NA,NA,0,NA,NA
+"tyndall","h1","Center",20170721,"trap",NA,NA,0,NA,NA
 "tyndall","H1","Extra",20170720,"Whalen","De. var","A",1,NA,NA
 "tyndall","H1","Extra",20170720,"Whalen","Am. am","A",1,NA,NA
 "tyndall","H1","Extra",20170720,"Whalen","Am. am","N",1,NA,NA
@@ -240,6 +260,10 @@
 "eglin","extra","extra",20180615,"people","Am. Am","A",1,NA,NA
 "eglin","extra","extra",20180615,"people","rh. san","A",1,NA,NA
 "eglin","F1","extra",20180615,"people","am. Am","A",1,NA,NA
+"eglin","g1","nw",20180615,"trap",NA,NA,0,NA,NA
+"eglin","g1","ne",20180615,"trap",NA,NA,0,NA,NA
+"eglin","g1","se",20180615,"trap",NA,NA,0,NA,NA
+"eglin","g1","sw",20180615,"trap",NA,NA,0,NA,NA
 "eglin","g1","extra",20180615,"people","Am. Am","A",2,NA,NA
 "eglin","i1","extra",20180615,"people","Am. Am","A",1,NA,NA
 "eglin","j1","NW",20180615,"trap","Am. Am","N",1,NA,NA
@@ -523,39 +547,39 @@
 "shelby","k1","NE",20180816,"trap",NA,NA,0,NA,NA
 "shelby","k1","SW",20180816,"trap","de. Var","A",1,NA,NA
 "shelby","k1","Se",20180816,"trap",NA,NA,0,NA,NA
-"gordon","r1","NW",20180823,"trap","Am. Am","N",8,NA,NA
-"gordon","r1","NE",20180823,"trap",NA,NA,0,NA,NA
-"gordon","r1","SW",20180823,"trap","Am. Am","N",1,NA,NA
-"gordon","r1","Se",20180823,"trap",NA,NA,0,NA,NA
-"gordon","s1","NW",20180823,"trap","Am. Am","N",9,NA,"changed to 9 from 8 based on species id in vial"
-"gordon","s1","NE",20180823,"trap","Am. Am","N",2,NA,NA
-"gordon","s1","SW",20180823,"trap",NA,NA,0,NA,NA
-"gordon","s1","Se",20180823,"trap","Am. Am","N",1,NA,NA
-"gordon","t1","NW",20180823,"trap","Am. Am","N",1,NA,NA
-"gordon","t1","NE",20180823,"trap",NA,NA,0,NA,NA
-"gordon","t1","SW",20180823,"trap",NA,NA,0,NA,NA
-"gordon","t1","Se",20180823,"trap","Am. Am","N",1,NA,NA
-"gordon","t1","Se",20180823,"trap","Am. Mac","A",1,NA,NA
-"gordon","v1","NW",20180823,"trap","Am. Am","N",7,NA,NA
-"gordon","v1","NW",20180823,"trap","Am. Am","A",3,NA,NA
-"gordon","v1","NE",20180823,"trap","Am. Am","N",9,NA,NA
-"gordon","v1","NE",20180823,"trap","Am. Am","A",1,NA,"male"
-"gordon","v1","NE",20180823,"trap",NA,"L",923,NA,"4 in vial"
-"gordon","v1","SW",20180823,"trap","Am. Am","N",4,NA,NA
-"gordon","v1","Se",20180823,"trap",NA,NA,0,NA,NA
-"gordon","w1","NW",20180823,"trap",NA,NA,0,NA,NA
-"gordon","w1","NE",20180823,"trap",NA,NA,0,NA,NA
-"gordon","w1","SW",20180823,"trap","Am. Am","N",24,NA,"changed to 24 from 25 based on species id in vial"
-"gordon","w1","Se",20180823,"trap",NA,NA,0,NA,NA
-"gordon","x1","NW",20180823,"trap",NA,NA,0,NA,NA
-"gordon","x1","NE",20180823,"trap",NA,NA,0,NA,NA
-"gordon","x1","SW",20180823,"trap",NA,NA,0,NA,NA
-"gordon","x1","Se",20180823,"trap",NA,NA,0,NA,NA
-"gordon","y1","NW",20180823,"trap",NA,NA,0,NA,NA
-"gordon","y1","NE",20180823,"trap",NA,NA,0,NA,NA
-"gordon","y1","SW",20180823,"trap",NA,NA,0,NA,NA
-"gordon","y1","Se",20180823,"trap",NA,NA,0,NA,NA
-"gordon","z1","NW",20180823,"trap",NA,NA,0,NA,NA
-"gordon","z1","NE",20180823,"trap",NA,NA,0,NA,NA
-"gordon","z1","SW",20180823,"trap",NA,NA,0,NA,NA
-"gordon","z1","Se",20180823,"trap",NA,NA,0,NA,NA
+"gordon","h1","NW",20180823,"trap","Am. Am","N",8,NA,NA
+"gordon","h1","NE",20180823,"trap",NA,NA,0,NA,NA
+"gordon","h1","SW",20180823,"trap","Am. Am","N",1,NA,NA
+"gordon","h1","Se",20180823,"trap",NA,NA,0,NA,NA
+"gordon","g1","NW",20180823,"trap","Am. Am","N",9,NA,"changed to 9 from 8 based on species id in vial"
+"gordon","g1","NE",20180823,"trap","Am. Am","N",2,NA,NA
+"gordon","g1","SW",20180823,"trap",NA,NA,0,NA,NA
+"gordon","g1","Se",20180823,"trap","Am. Am","N",1,NA,NA
+"gordon","f1","NW",20180823,"trap","Am. Am","N",1,NA,NA
+"gordon","f1","NE",20180823,"trap",NA,NA,0,NA,NA
+"gordon","f1","SW",20180823,"trap",NA,NA,0,NA,NA
+"gordon","f1","Se",20180823,"trap","Am. Am","N",1,NA,NA
+"gordon","f1","Se",20180823,"trap","Am. Mac","A",1,NA,NA
+"gordon","e1","NW",20180823,"trap","Am. Am","N",7,NA,NA
+"gordon","e1","NW",20180823,"trap","Am. Am","A",3,NA,NA
+"gordon","e1","NE",20180823,"trap","Am. Am","N",9,NA,NA
+"gordon","e1","NE",20180823,"trap","Am. Am","A",1,NA,"male"
+"gordon","e1","NE",20180823,"trap",NA,"L",923,NA,"4 in vial"
+"gordon","e1","SW",20180823,"trap","Am. Am","N",4,NA,NA
+"gordon","e1","Se",20180823,"trap",NA,NA,0,NA,NA
+"gordon","d1","NW",20180823,"trap",NA,NA,0,NA,NA
+"gordon","d1","NE",20180823,"trap",NA,NA,0,NA,NA
+"gordon","d1","SW",20180823,"trap","Am. Am","N",24,NA,"changed to 24 from 25 based on species id in vial"
+"gordon","d1","Se",20180823,"trap",NA,NA,0,NA,NA
+"gordon","c1","NW",20180823,"trap",NA,NA,0,NA,NA
+"gordon","c1","NE",20180823,"trap",NA,NA,0,NA,NA
+"gordon","c1","SW",20180823,"trap",NA,NA,0,NA,NA
+"gordon","c1","Se",20180823,"trap",NA,NA,0,NA,NA
+"gordon","b1","NW",20180823,"trap",NA,NA,0,NA,NA
+"gordon","b1","NE",20180823,"trap",NA,NA,0,NA,NA
+"gordon","b1","SW",20180823,"trap",NA,NA,0,NA,NA
+"gordon","b1","Se",20180823,"trap",NA,NA,0,NA,NA
+"gordon","a1","NW",20180823,"trap",NA,NA,0,NA,NA
+"gordon","a1","NE",20180823,"trap",NA,NA,0,NA,NA
+"gordon","a1","SW",20180823,"trap",NA,NA,0,NA,NA
+"gordon","a1","Se",20180823,"trap",NA,NA,0,NA,NA

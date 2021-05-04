@@ -197,7 +197,7 @@ tick_data_corrected <- union(
 # summary(tick_data)
 names(tick_data_corrected)
 unique(tick_data_corrected$species)
-tick_data %>% filter(is.na(species), tick_count>0) %>% View
+# tick_data %>% filter(is.na(species), tick_count>0) %>% View
 
 tick_data_corrected <- tick_data_corrected %>%
   mutate(species_name = case_when(
@@ -229,7 +229,7 @@ tick_data_corrected <- tick_data_corrected %>%
 sort(unique(tick_data_corrected$plot_id))
 unique(tick_data_corrected$location)
 
-unique(tick_data$species_name)
+unique(tick_data_corrected$species_name)
 
 v <- unique(tick_data_corrected$location)
 v <- v[v != "extra"]

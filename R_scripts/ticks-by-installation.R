@@ -1,6 +1,7 @@
 # Script Description ------------------------------------------------------
 ### Name: ticks-by-installation.R
-### Purpose: Summarize tick data for each installation generating data ### files to send to installation contacts along with the installation
+### Purpose: Summarize tick data for each installation generating data 
+### files to send to installation contacts along with the installation
 ### report.
 ###
 ### Authored by Steven Cabrera & Whalen Dillon
