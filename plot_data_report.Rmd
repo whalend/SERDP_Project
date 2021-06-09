@@ -1463,9 +1463,12 @@ dung_data_import$species[is.na(dung_data_import$species) & dung_data_import$dung
 # filter(dung_data_import, is.na(dung1m)) %>%
       # select(plot_id)
 
+
 dung_data <- dung_data_import 
 # sort(unique(dung_data$plot_id))
 # filter(dung_data, is.na(dung1m))
+dung_data$species2 <- ifelse(!dung_data$species %in% c("cottontail", "cow", "deer", "turkey"), 
+                             "other", dung_data$species)
 
 dung_data <- left_join(
       dung_data,
@@ -1476,26 +1479,37 @@ filter(dung_data, is.na(dung1m))$plot_id
 # dung_data <- rename(dung_data, clusters1m = `1m`, clusters2m = `2m`)
 dung_plot_data <- dung_data %>% 
       # filter(species == "deer") %>% 
-      group_by(plot_id, visit_year, imcy_inv, species, inst_name) %>% 
+      group_by(plot_id, visit_year, imcy_inv, species2, inst_name) %>% 
       summarise(
             total_clusters1m = sum(dung1m, na.rm = T),
             avg_clusters1m = mean(dung1m, na.rm = T),
             total_clusters2m = sum(rowSums(cbind(dung1m,dung2m), na.rm=T)),
             avg_clusters2m = mean(rowSums(cbind(dung1m,dung2m), na.rm=T))
                 )
-dung_plot_data <- left_join(
+
+dung_plot_data <- dung_plot_data %>% 
+  ungroup(.) %>% 
+  select(plot_id:inst_name, species2, total_clusters1m) %>% 
+  pivot_wider(names_from = species2, values_from = total_clusters1m, values_fill = 0) %>% 
+  mutate(total_clusters1m = cottontail  + cow + other + deer + turkey)
+summary(dung_plot_data)
+
+dung_plot_data_summary <- left_join(
       dung_plot_data,
       plot_visit_data
 )
-summary(dung_plot_data)
 
-dung_plot_data_summary <- dung_plot_data %>% 
-      ungroup(.) %>% 
-      group_by(plot_id, visit_year, imcy_inv, inst_name) %>% 
-      summarise(total_clusters1m = sum(total_clusters1m, na.rm = TRUE),
-                total_clusters2m = sum(total_clusters2m, na.rm = TRUE)) %>% 
-      left_join(., plot_visit_data)
-summary(dung_plot_data_summary)
+# dung_plot_data_summary <- dung_plot_data %>% 
+#       ungroup(.) %>% 
+#       group_by(plot_id, visit_year, imcy_inv, inst_name) %>% 
+#       summarise(total_clusters1m = sum(total_clusters1m, na.rm = TRUE),
+#                 total_clusters2m = sum(total_clusters2m, na.rm = TRUE)) %>% 
+#       left_join(., plot_visit_data)
+# summary(dung_plot_data_summary)
+
+# dung_plot_data %>% 
+#   ungroup(.) %>% 
+#   filter(species == "deer")
 
 # skimr::skim(dung_data_avg)
 
@@ -1503,18 +1517,18 @@ summary(dung_plot_data_summary)
 
 ```{r dung species figure}
 
-(dung_species_fig <- ggplot(filter(dung_data, !is.na(dung1m)), 
-                            aes(y_since_fire, log1p(dung1m))) +
-      # geom_bar(aes(fill = imcy_inv), stat = "identity", position = "dodge") +
-      geom_point(aes(color = species), size = 2, position = "jitter") +
+(dung_species_fig <- ggplot(filter(dung_data, !is.na(dung1m), visit_year<2019), 
+                            aes(installation, y=(dung1m))) +
+      geom_bar(aes(fill = species2), stat = "identity") +
+      # geom_point(aes(color = species), size = 2, position = "jitter") +
       # geom_smooth(aes(color = species), alpha = .2) +
-      invasion_fill +
-      scale_color_viridis_d() +
+      # invasion_fill +
+      scale_fill_viridis_d() +
       # invasion_color +
       # geom_smooth(aes(linetype = imcy_inv), se = F, alpha = .2) +
       # geom_smooth(aes(fill = imcy_inv), se = F, alpha = .2, method = "lm") +
       theme_classic() +
-      ylab("log( # of dung clusters )") +
+      ylab("# of dung clusters") +
       xlab("Years since fire") +
       # ylab("Dung clusters") +
       def_theme +
@@ -1756,7 +1770,7 @@ a %>% filter(trap_effort == 0)
 ticks_per_installation <- tick_data %>% 
       # filter(location != "extra") %>%
       group_by(installation, inst_name) %>%
-      summarise(total_ticks = sum(count),) %>% 
+      summarise(total_ticks = sum(tick_count),) %>% 
       ungroup(.)
 
 ticks_per_plot <- tick_data %>% 
@@ -1765,11 +1779,10 @@ ticks_per_plot <- tick_data %>%
       summarise(total_ticks = sum(tick_count)) %>% 
       ungroup(.)
 
-tick_stage_per_plot
 
 tick_data_plot_summary <- left_join(
       plot_visit_data,
-      tick_data_plot_summary
+      ticks_per_plot
 )
 
 summary(tick_data_plot_summary)
@@ -1819,8 +1832,8 @@ tick_data_sum <- left_join(
 tick_data_sum <- left_join(
       tick_data_sum, 
       ungroup(dung_plot_data_summary) %>% 
-            select(plot_id:total_clusters2m)
-      )
+        select(plot_id:total_clusters1m)
+)
 # summary(tick_data_sum)
 
 tick_data_sum <- left_join(
@@ -1868,7 +1881,7 @@ str(tick_data_sum)
 # unique(tick_data_sum$imcy_inv)
 
 
-write_csv(tick_data_sum, "data/all_plotlevel_data.csv")
+write_csv(tick_data_sum, "data/processed_data/all_plotlevel_data.csv")
 
 # filter(tick_data_sum, is.na(avg_pct_litter))$plot_id
 
