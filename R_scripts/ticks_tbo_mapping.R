@@ -42,8 +42,10 @@ unique(sites_sf$FULLNAME)
 ## Rename installations to match across data
 trap_effort$installation <- str_to_title(trap_effort$installation)
 trap_effort <- trap_effort %>%
-      rename(Installation = installation) %>%
-      mutate(
+   group_by(installation) %>% 
+   summarise(trap_effort = sum(trap_effort)) %>% 
+   rename(Installation = installation) %>%
+   mutate(
             Installation = case_when(
                   Installation=="Avonpark" ~ "Avon Park AFR",
                   Installation=="Benning" ~ "Ft. Benning",
@@ -139,7 +141,7 @@ sites_tbo_sf <- left_join(
       tbo_inst,
       by = c("FULLNAME"="Installation")
 ) %>%
-      select(FULLNAME, total_ticks, Human_pathogen_prevalence, ticks_per_trap, PxA)
+      select(FULLNAME, total_ticks, Human_pathogen_prevalence, trap_effort, ticks_per_trap, PxA)
 
 
 ## Make a map ####
@@ -156,6 +158,7 @@ sites_tbo_sf <- sites_tbo_sf %>%
              Prevalence = Human_pathogen_prevalence,
              Abundance = ticks_per_trap
              )
+# st_write()
 
 ## Adds layers for abundance, prevalence, and their product.
 ## So, need to toggle layers on/off for it to make any kind of sense.
