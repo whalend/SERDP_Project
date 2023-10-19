@@ -40,8 +40,9 @@ sem_data <- sem_data %>%
          logit_litter = car::logit(avg_pct_litter)
   )
 
-## Make round-up ticks per trap variable for Poisson and NegBin
-## distribution compatibility
+## Make a rounded-up ticks per trap variable for Poisson and NegBin
+## distribution compatibility, i.e. 0< x <1 == 1, and all other rounded to next
+## larger integer
 sem_data$tpt <- ceiling(sem_data$ticks_per_trap)
 
 ## Tick abundance models ####
@@ -71,7 +72,7 @@ summary(tick_abundance_nb)
 coefs(tick_abundance_nb)
 
 ## This model uses the rounded ticks per trap
-## Outcome for relatinship with time since fire is very different
+## Outcome for relationship with time since fire is very different
 tpt_nb <- glmer.nb(
   tpt ~ d_since_fire_log + logit_litter + avg_litter_depth_all + avg_canopy_cover + biomass_log + total_clusters1m + avg_1yr_vp..Pa. + (1|inst_name/plot_id),
   data = sem_data, na.action = "na.fail",
@@ -83,16 +84,18 @@ effectsize::standardize(tpt_nb) %>% summary()
 
 ## unrounded ticks per trap, violates integer value assumption
 ## compare to rounded integer model
-# ticks_per_trap_nb <- glmer.nb(
-#   ticks_per_trap ~ d_since_fire_log + logit_litter + avg_litter_depth_all + avg_canopy_cover + biomass_log + total_clusters1m + avg_1yr_vp..Pa. + (1|inst_name/plot_id),
-#   data = sem_data, na.action = "na.fail",
-#   control=glmerControl(optimizer = "Nelder_Mead", optCtrl=list(maxfun=1e6))
-#   )
-# plot(ticks_per_trap_nb)
-# simulateResiduals(ticks_per_trap_nb) %>% plot()
-# summary(ticks_per_trap_nb)
-# effectsize::standardize(ticks_per_trap_nb) %>% summary()
+ticks_per_trap_nb <- glmer.nb(
+  ticks_per_trap ~ d_since_fire_log + logit_litter + avg_litter_depth_all + avg_canopy_cover + biomass_log + total_clusters1m + avg_1yr_vp..Pa. + (1|inst_name/plot_id),
+  data = sem_data, na.action = "na.fail",
+  control=glmerControl(optimizer = "Nelder_Mead", optCtrl=list(maxfun=1e6))
+  )
+plot(ticks_per_trap_nb)
+simulateResiduals(ticks_per_trap_nb) %>% plot()
+summary(ticks_per_trap_nb)
+effectsize::standardize(ticks_per_trap_nb) %>% summary()
 
+
+## Gamma ticks per trap model ####
 sem_data$ticks_per_trap001 <- sem_data$ticks_per_trap + .001
 ticks_per_trap_gamma <- glmer(
   ticks_per_trap001 ~ d_since_fire_log + logit_litter + avg_litter_depth_all + avg_canopy_cover + biomass_log + total_clusters1m + avg_1yr_vp..Pa. + (1|inst_name/plot_id),
@@ -104,7 +107,7 @@ plot(ticks_per_trap_gamma)
 simulateResiduals(ticks_per_trap_gamma) %>% plot()
 summary(ticks_per_trap_gamma)
 effectsize::standardize(ticks_per_trap_gamma) %>% summary()
-effectsize::standardize_parameters(ticks_per_trap_gamma)
+# effectsize::standardize_parameters(ticks_per_trap_gamma)
 # effectsize::standardize_posteriors(ticks_per_trap_gamma)
 # coefs(ticks_per_trap_gamma)
 
@@ -113,9 +116,9 @@ plot_models(
   effectsize::standardize(ticks_per_trap_nb), 
   effectsize::standardize(tick_abundance_nb),
   show.values = T)
-tab_model(tpt_nb, ticks_per_trap_nb)
+tab_model(tpt_nb, ticks_per_trap_nb, tick_abundance_nb)
 
-
+## Poisson ticks per trap model ####
 tpt_pois <- glmer(
   tpt ~ d_since_fire_log + logit_litter + avg_litter_depth_all + avg_canopy_cover + biomass_log + total_clusters1m + avg_1yr_vp..Pa. + (1|inst_name/plot_id),
   data = sem_data, na.action = "na.fail",
@@ -130,6 +133,19 @@ coefs(tpt_pois)
 # plot_model(tpt_pois, show.values = T)
 # plot_model(tpt_pois, type = "pred", show.data = T, grid = T)
 
+tpt_pois2 <- glmer(
+  tpt ~ d_since_fire + avg_pct_litter + avg_litter_depth_all + avg_canopy_cover + avg_dry_standing_gm2 + total_clusters1m + avg_1yr_vp..Pa. + (1|inst_name/plot_id), 
+  data = sem_data, na.action = "na.fail",
+  family = poisson(link = "log"),
+  control=glmerControl(optimizer = "Nelder_Mead", optCtrl=list(maxfun=1e6))
+)
+simulateResiduals(tpt_pois2) %>% plot()
+effectsize::standardize(tpt_pois2) %>% summary()
+coefs(tpt_pois2)
+visreg::visreg(tpt_pois2, "d_since_fire")
+plot_model(tpt_pois2, type = "pred", grid = T, auto.label = FALSE)
+
+## Poisson tick abundance model ####
 tick_abundance_pois <- glmer(
   tick_abundance ~ d_since_fire_log + logit_litter + avg_litter_depth_all + avg_canopy_cover + biomass_log + total_clusters1m + avg_1yr_vp..Pa. + (1|inst_name/plot_id),
   data = sem_data, na.action = "na.fail",
@@ -161,7 +177,7 @@ effectsize::standardize_parameters(tick_abundance_pois)
 # simulateResiduals(tpt_pois2) %>% plot()
 
 
-## Deer only ticks model ####
+## Deer-only ticks model ####
 # ticks_per_trap_deer_nb <- glmer.nb(
 #   ticks_per_trap ~ d_since_fire_log + logit_litter + avg_litter_depth_all + avg_canopy_cover + biomass_log + deer + avg_1yr_vp..Pa. + (1|inst_name/plot_id),
 #   data = sem_data, na.action = "na.fail",
@@ -320,10 +336,6 @@ litter_depth_mod <- lmer(avg_litter_depth_all ~ d_since_fire_log + avg_canopy_co
                          data = sem_data)
 coefs(litter_depth_mod)
 
-litter_comp_mod <- lmer(litter_composite ~ d_since_fire_log + avg_canopy_cover + (1|inst_name/plot_id),
-                        data = sem_data)
-summary(litter_comp_mod)
-
 
 standing_biomass_mod <- lmer(biomass_log ~ d_since_fire_log + avg_canopy_cover + (1|inst_name/plot_id), data = sem_data)
 # plot(standing_biomass_mod)
@@ -345,7 +357,7 @@ canopy_mod2 <- lmer(avg_canopy_cover ~ d_since_fire_log + fri15yr + avg_1yr_vp..
 ## Fire regime models ####
 time_since_fire_mod_pred <- glmer.nb(d_since_fire ~ fri15yr + (1|inst_name/plot_id),
          data = sem_data)
-simulateResiduals(time_since_fire_mod) %>% plot()
+simulateResiduals(time_since_fire_mod_pred) %>% plot()
 plot(time_since_fire_mod_pred)
 plot_model(time_since_fire_mod_pred, show.values = T)
 plot_model(time_since_fire_mod_pred, type = "pred", terms = "fri15yr [all]", show.data = T)
@@ -415,13 +427,13 @@ ah_psem_summary
 # ahP_psem_summary <- summary(all_hostsP_psem, .progressBar = FALSE)
 # ahP_psem_summary
 # ahP_psem_summary$AIC
-ah_psem_summary$AIC
+ah_psem_summary$IC
 
 tpt_mod_pred <- plot_model(tpt_pois, type = "pred", show.data = F)
 tpt_mod_pred_grid <- plot_model(
   tpt_pois, type = "pred", show.data = F, grid = T
   )
-tpt_mod_pred_grid + xlab(" ") + ylab("Tick count")
+tpt_mod_pred_grid + xlab(" ") + ylab("Ticks per trap")
 
 tpt_mod_pred_grid$data <- tpt_mod_pred_grid$data %>% 
   filter(!group_col %in% c("total_clusters1m", "avg_canopy_cover","d_since_fire_log")) %>% 
@@ -433,9 +445,9 @@ tpt_mod_pred_grid$data <- tpt_mod_pred_grid$data %>%
     )
     )
 tpt_mod_grid_fig <- tpt_mod_pred_grid + 
-  xlab(" ") + ylab("Predicted tick count") + 
+  xlab(" ") + ylab("Predicted ticks per trap") + 
   theme_bw()
-ggsave("figures/tpt_allhosts_marginal.pdf",tpt_mod_grid_fig, width = 5, height = 5, dpi = 300)
+ggsave("figures/tpt_allhosts_marginal.png",tpt_mod_grid_fig, width = 5, height = 5, dpi = 300)
 
 tpt_lcov <- tpt_mod_pred$logit_litter +
   xlab("Litter cover (logit)") + ylab("Predicted tick count") + ggtitle(" ") +
@@ -444,19 +456,22 @@ tpt_ldep <- tpt_mod_pred$avg_litter_depth_all +
   xlab("Litter depth (cm)") + ylab("Predicted tick count") + ggtitle(" ") +
   theme_classic()
 tpt_ccov <- tpt_mod_pred$avg_canopy_cover +
+  # geom_point(data = sem_df, aes(avg_canopy_cover, tpt)) +
   xlab("Canopy cover (%)") + ylab("Predicted tick count") + ggtitle(" ") +
   theme_classic()
 tpt_vprs <- tpt_mod_pred$avg_1yr_vp..Pa. +
   geom_point(data = sem_df, aes(avg_1yr_vp..Pa., tpt)) +
   xlab("Vapor pressure (Pa)") + ylab("Predicted tick count") + ggtitle(" ") +
   theme_classic()
-tpt_lcov + tpt_ldep + tpt_ccov + tpt_vprs
+tpt_lcov + tpt_ldep + ylab(" ") + tpt_ccov + tpt_vprs + ylab(" ") &
+  plot_annotation(tag_levels = 'A')
+ggsave("figures/ticks_per_trap_allhosts_significant_marginal_effects.png", width = 5, height = 5, dpi = 600)
 
 
+host_mod_pred <- plot_model(host_mod_all, type = "pred", show.data = F)
 host_mod_pred_grid <- plot_model(
   host_mod_all, type = "pred", show.data = F, grid = T
 )
-host_mod_pred_grid + xlab(" ") + ylab("Tick count")
 
 host_mod_pred_grid$data <- host_mod_pred_grid$data %>% 
   mutate(group = case_when(
@@ -466,28 +481,63 @@ host_mod_pred_grid$data <- host_mod_pred_grid$data %>%
     group == "d_since_fire_log" ~ "Days since fire (log)"
   )
   )
-host_mod_pred_grid <- host_mod_pred_grid + 
+(host_mod_pred_grid <- host_mod_pred_grid + 
   xlab(" ") + ylab("Predicted count of dung clusters") + 
   theme_bw()
-ggsave("figures/hosts_allhosts_marginal.pdf", host_mod_pred_grid, width = 5, height = 5, dpi = 300)
+)
+ggsave("figures/hosts_allhosts_marginal.png", host_mod_pred_grid, width = 5, height = 5, dpi = 300)
+
+host_lcov <- host_mod_pred$logit_litter +
+  xlab("Litter cover (logit)") + ylab("Predicted count of dung clusters") +
+  ggtitle(" ") +
+  theme_classic()
+host_ldepth <- host_mod_pred$avg_litter_depth_all +
+  xlab("Litter depth (cm)") + ylab("Predicted count of dung clusters") + 
+  ggtitle(" ") +
+  theme_classic()
+host_ccov <- host_mod_pred$avg_canopy_cover +
+  xlab("Canopy cover (%)") + ylab("Predicted count of dung clusters") + 
+  ggtitle(" ") +
+  theme_classic()
+host_dfire <- host_mod_pred$d_since_fire_log +
+  xlab("Days since fire (log)") + ylab("Predicted count of dung clusters") + 
+  ggtitle(" ") +
+  theme_classic()
+host_lcov + host_ldepth + ylab(" ") + host_ccov + host_dfire + ylab(" ") &
+  plot_annotation(tag_levels = 'A')
+ggsave("figures/dung_clusters_significant_marginal_effects.png", width = 5, height = 5, dpi = 600)
 
 
+lcov_mod_pred <- plot_model(litter_cover_mod, type = "pred", show.data = F)
 lcov_mod_pred_grid <- plot_model(
   litter_cover_mod, type = "pred", show.data = F, grid = T
 )
-lcov_mod_pred_grid + xlab(" ") + ylab("Litter cover (logit)")
-
 lcov_mod_pred_grid$data <- lcov_mod_pred_grid$data %>% 
   mutate(group = case_when(
     group == "avg_canopy_cover" ~ "Canopy cover (%)",
     group == "d_since_fire_log" ~ "Days since fire (log)"
   )
   )
-lcov_mod_pred_grid <- lcov_mod_pred_grid + 
+(lcov_mod_pred_grid <- lcov_mod_pred_grid + 
   xlab(" ") + ylab("Predicted litter cover (logit)") + 
   theme_bw()
+)
+ggsave("figures/litter_cover_allhosts_marginal.png", lcov_mod_pred_grid, width = 5, height = 5, dpi = 300)
+
+lcov_ccov <- lcov_mod_pred$avg_canopy_cover +
+  xlab("Canopy cover (%)") + ylab("Predicted litter cover (logit)") +
+  ggtitle(" ") +
+  theme_classic()
+lcov_dfire <- lcov_mod_pred$d_since_fire_log +
+  xlab("Days since fire (log)") + ylab("Predicted litter cover (logit)") + 
+  ggtitle(" ") +
+  theme_classic()
+lcov_ccov + lcov_dfire + ylab(" ") &
+  plot_annotation(tag_levels = 'A')
+ggsave("figures/litter_cover_significant_marginal_effects.png", width = 5, height = 5, dpi = 600)
 
 
+ldep_mod_pred <- plot_model(litter_depth_mod, type = "pred", show.data = F)
 ldep_mod_pred_grid <- plot_model(
   litter_depth_mod, type = "pred", show.data = F, grid = T
 )
@@ -498,31 +548,71 @@ ldep_mod_pred_grid <- ldep_mod_pred_grid +
   xlab(" ") + ylab("Predicted litter depth (cm)") + 
   theme_bw()
 
+ldep_ccov <- ldep_mod_pred$avg_canopy_cover +
+  xlab("Canopy cover (%)") + ylab("Predicted litter depth (cm)") +
+  ggtitle(" ") +
+  theme_classic()
+ldep_dfire <- ldep_mod_pred$d_since_fire_log +
+  xlab("Days since fire (log)") + ylab("Predicted litter depth (cm)") + 
+  ggtitle(" ") +
+  theme_classic()
+ldep_ccov + ldep_dfire + ylab(" ") &
+  plot_annotation(tag_levels = 'A')
+ggsave("figures/litter_depth_marginal_effects.png", width = 5, height = 5, dpi = 600)
 
+
+sbio_mod_pred <- plot_model(standing_biomass_mod, type = "pred")
 sbio_mod_pred_grid <- plot_model(
   standing_biomass_mod, type = "pred", grid = T
   )
 sbio_mod_pred_grid$data <- sbio_mod_pred_grid$data %>% 
   filter(group == "avg_canopy_cover") %>% 
   mutate(group = "Canopy cover (%)")
-sbio_mod_pred_grid <- sbio_mod_pred_grid +
-  xlab(" ") + ylab("Predicted understory biomass (log)") +
+(sbio_mod_pred_grid <- sbio_mod_pred_grid +
+  xlab(" ") + ylab("Predicted understory biomass (ln grams)") +
   theme_bw()
-
+)
 lcov_mod_pred_grid / (ldep_mod_pred_grid + sbio_mod_pred_grid)
-ggsave("figures/veg_vars_allhosts_marginal.pdf", width = 5, height = 5, dpi = 300)
+ggsave("figures/veg_vars_allhosts_marginal.png", width = 5, height = 5, dpi = 300)
 
+sbio_ccov <- sbio_mod_pred$avg_canopy_cover +
+  xlab("Canopy cover (%)") + ylab("Predicted understory biomass (ln grams)") +
+  ggtitle(" ") +
+  theme_classic()
+sbio_dfire <- sbio_mod_pred$d_since_fire_log +
+  xlab("Days since fire (log)") + ylab("Predicted understory biomass (ln grams)") + 
+  ggtitle(" ") +
+  theme_classic()
+sbio_ccov + sbio_dfire +ylab(" ") &
+  plot_annotation(tag_levels = 'A')
+ggsave("figures/understory_biomass_marginal_effects.png", width = 5, height = 5, dpi = 600)
 
+canp_mod_pred <- plot_model(canopy_mod, type = "pred")
 canp_mod_pred_grid <- plot_model(
   canopy_mod, type = "pred", grid = T
   )
 canp_mod_pred_grid$data <- canp_mod_pred_grid$data %>% 
   filter(group == "d_since_fire_log") %>% 
   mutate(group = "Days since fire (log)")
-canp_mod_pred_grid <- canp_mod_pred_grid +
+(canp_mod_pred_grid <- canp_mod_pred_grid +
   xlab(" ") + ylab ("Predicted canopy cover (%)") +
   theme_bw()
+)
 
+canp_fri <- canp_mod_pred$fri15yr +
+  xlab("15-yr fire return interval") + ylab("Predicted canopy cover (%)") +
+  ggtitle(" ") +
+  theme_classic()
+canp_dfire <- canp_mod_pred$d_since_fire_log +
+  xlab("Days since fire (log)") + ylab("Predicted canopy cover (%)") + 
+  ggtitle(" ") +
+  theme_classic()
+canp_fri + canp_dfire + ylab(" ") &
+  plot_annotation(tag_levels = 'A')
+ggsave("figures/canopy_cover_marginal_effects.png", width = 5, height = 5, dpi = 600)
+
+
+fire_mod_pred <- plot_model(time_since_fire_mod, type = "pred")
 fire_mod_pred_grid <- plot_model(
   time_since_fire_mod, type = "pred", grid = T
 )
@@ -531,7 +621,15 @@ fire_mod_pred_grid$data <- fire_mod_pred_grid$data %>%
 fire_mod_pred_grid <- fire_mod_pred_grid +
   xlab(" ") + ylab("Predicted log-days since fire") +
   theme_bw()
+fire_fri <- fire_mod_pred$fri15yr +
+  xlab("15-yr fire return interval") + ylab("Predicted days since fire (ln)") +
+  ggtitle(" ") +
+  theme_classic()
+fire_fri
+ggsave("figures/days_since_fire_marginal_effects.png", width = 5, height = 5, dpi = 600)
 
+
+fri_mod_pred <- plot_model(fri_mod, type = "pred")
 fri_mod_pred_grid <- plot_model(
   fri_mod, type = "pred", grid = T
 )
@@ -540,11 +638,17 @@ fri_mod_pred_grid$data <- fri_mod_pred_grid$data %>%
 fri_mod_pred_grid <- fri_mod_pred_grid +
   xlab(" ") + ylab("Predicted fire return interval (years)") +
   theme_bw()
+fri_cv30yr <- fri_mod_pred$cv_30yr_fire_days +
+  xlab("30-y Average CV of Fire Days") + ylab("Predicted 15-y FRI (years)") +
+  ggtitle(" ") +
+  theme_classic()
+fri_cv30yr
+ggsave("figures/fire_return_interval_fire_marginal_effects.png", width = 5, height = 5, dpi = 600)
 
 canp_mod_pred_grid + fire_mod_pred_grid + fri_mod_pred_grid
-ggsave("figures/can_fire_vars_allhosts_marginal.pdf", width = 7, height = 3, dpi = 300)
+ggsave("figures/can_fire_vars_allhosts_marginal.png", width = 7, height = 3, dpi = 300)
 
-## Treat all correlations as spurious/having a common unmeasured driver.
+## Treat all correlations as spurious/having a common unmeasured driver. ####
 all_hosts_psem2 <- psem(
   tpt_pois,
   host_mod_all,
@@ -572,7 +676,7 @@ all_hosts_psem2 <- psem(
 ah_psem2_summary <- summary(all_hosts_psem2, .progressBar = FALSE)
 ah_psem2_summary
 
-# Compare models without and wit correlations
+# Compare models without and with correlations ####
 ah_psem_summary$coefficients %>% 
   knitr::kable(digits = 3, caption = "Table xx. Coeffcient estimates all hosts path model")
 ah_psem2_summary$coefficients %>% 
@@ -581,14 +685,14 @@ ah_psem_summary$R2 %>%
   knitr::kable(digits = 3, caption = "R2 all hosts path model")
 ah_psem2_summary$R2 %>% 
   knitr::kable(digits = 3, caption = "R2 all hosts path model w/correlations for missing paths")
-ah_psem_summary$AIC
-ah_psem2_summary$AIC
+ah_psem_summary$IC
+ah_psem2_summary$IC
 ## Same AIC
 ah_psem_summary$Cstat
 ah_psem2_summary$Cstat
 ## Change in C-statistic
-ah_psem_summary$ChiSq
-ah_psem2_summary$ChiSq
+# ah_psem_summary$ChiSq
+# ah_psem2_summary$ChiSq
 ## No Chisq value because negative Chi-squared values during estimation
 ## stemming from the total_clusters1m %~~% avg_1yr_vp..Pa. correlation (??)
 
@@ -648,11 +752,10 @@ noHost_psem <- psem(
 noHosts_psem_summary <- summary(noHost_psem, .progressBar = FALSE)
 noHosts_psem_summary
 
-
-rbind(ah_psem_summary$AIC,
+rbind(ah_psem_summary$IC,
       # noRabbit_psem_summary$AIC,
       # deer_psem_summary$AIC,
-      noHosts_psem_summary$AIC) %>% 
+      noHosts_psem_summary$IC) %>% 
   mutate(model = c("all hosts", 
                    # "no rabbit", "deer only", 
                    "no hosts")) %>% 
@@ -668,14 +771,14 @@ rbind(ah_psem_summary$Cstat,
                    "no hosts")) %>% 
   knitr::kable(digits = 3)
 
-rbind(ah_psem_summary$ChiSq,
+# rbind(ah_psem_summary$ChiSq,
       # noRabbit_psem_summary$ChiSq,
       # deer_psem_summary$ChiSq,
-      noHosts_psem_summary$ChiSq) %>% 
-  mutate(model = c("all hosts", 
+      # noHosts_psem_summary$ChiSq) %>% 
+  # mutate(model = c("all hosts", 
                    # "no rabbit", "deer only", 
-                   "no hosts")) %>% 
-  knitr::kable(digits = 3)
+                   # "no hosts")) %>% 
+  # knitr::kable(digits = 3)
 
 
 # rbind(ah_psem_summary$coefficients[6,],
